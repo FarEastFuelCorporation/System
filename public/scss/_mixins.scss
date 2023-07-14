@@ -1,0 +1,10 @@
+@mixin shapeDesign($shape-width, $shape-height) {
+  width: $shape-width;
+  height: $shape-height;
+}
+
+@mixin ellipseDesign ($shape-width, $shape-height) {
+  width: $shape-width;
+  height: $shape-height;
+  border-radius: 50%;
+}
