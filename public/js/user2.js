@@ -24,113 +24,23 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         // Code that depends on the fetched data
         // username_data
-        const admin = document.getElementById("admin");
-        const user = document.getElementById("admin_user");
+        const user_sidebar = document.getElementById("user_sidebar");
+        const user_sidebar_officer = document.getElementById("user_sidebar_officer");
+        const user = document.getElementById("user");
 
-        admin.value = username_data.content[2][3];
-        user.innerHTML = username_data.content[2][3];
-
-        // wcf_data_list
-        const search_sf_wcf_form_no = document.getElementById("search_sf_wcf_form_no");
-        const search_sf_wcf_form_no_button = document.getElementById("search_sf_wcf_form_no_button");
-        const sf_wcf_client = document.getElementById("sf_wcf_client");
-        const search_sf_wcf_result = document.getElementById("search_sf_wcf_result");
-        const batch_weight = document.getElementById("batch_weight");
-        const batch_weight_list = document.getElementById("batch_weight_list");
-        const additional_item1 = document.getElementById("additional_item1");
-        const header = document.getElementById("header");
-        const clear_sf_wcf_form_no_button = document.getElementById("clear_sf_wcf_form_no_button");
-        const add_item_button = document.getElementById("add_item_button");
-        const remove_item_button = document.getElementById("remove_item_button");
-        const weights = document.getElementById("weights");
-        const buttons = document.getElementById("buttons");
-        const hauling_date = document.getElementById("hauling_date");
-    
-        search_sf_wcf_form_no_button.addEventListener("click", () => {
-            var data_value;
-            for(a=1; a<wcf_data_list.content.length; a++){
-                if(search_sf_wcf_form_no.value == wcf_data_list.content[a][1]){
-                    data_value = `
-                    WCF #: ${wcf_data_list.content[a][1]}<br>
-                    CLIENT: ${wcf_data_list.content[a][3]}<br>
-                    TYPE OF WASTE: ${wcf_data_list.content[a][4]}<br>
-                    WASTE DESCRIPTION: ${wcf_data_list.content[a][5]}<br>
-                    TYPE OF DOCUMENT: ${wcf_data_list.content[a][6]}<br>
-                    DOCUMENT #: ${wcf_data_list.content[a][7]}<br>
-                    PERMIT TO TRAVEL #: ${wcf_data_list.content[a][8]}<br>
-                    PLATE NO: ${wcf_data_list.content[a][9]}<br>
-                    DRIVER: ${wcf_data_list.content[a][10]}<br>
-                    DATE IN: ${date_decoder(wcf_data_list.content[a][11])}<br>
-                    TIME IN: ${time_decoder(wcf_data_list.content[a][12])}<br>
-                    GROSS WEIGHT: ${wcf_data_list.content[a][15]}<br>
-                    TARE WEIGHT: ${wcf_data_list.content[a][16]}<br>
-                    NET WEIGHT: ${wcf_data_list.content[a][17]}<br>
-                    HAULING DATE: ${date_decoder(wcf_data_list.content[a][19])}<br>
-                    REMARKS: ${wcf_data_list.content[a][18]}<br>
-                    SUBMITTED BY: ${wcf_data_list.content[a][20]}<br>
-                    `
-                    sf_wcf_client.value = wcf_data_list.content[a][3];
-                    batch_weight.value = wcf_data_list.content[a][17];
-                    hauling_date.value = date_decoder(wcf_data_list.content[a][19]);
-                    batch_weight_list.style.display = "grid";
-                    additional_item1.style.display = "grid";
-                    header.style.display = "grid";
-                    add_item_button.style.display = "block";
-                    weights.style.display = "flex";
-                    buttons.style.display = "flex";
-                    rem_weight.value = batch_weight.value - total_weight.value;
-                }
-            }
-            if(data_value == undefined){
-                search_sf_wcf_result.innerHTML = `
-                <div class="search_sf_wcf_result">
-                <h2>INFORMATION</h2>
-                No Data Found
-                </div><br>`            
-            }
-            else{
-                search_sf_wcf_result.innerHTML = `
-                <div class="search_sf_wcf_result">
-                <h2>INFORMATION</h2>
-                ${data_value}
-                </div><br>`
-            }
-        });
-    
-        clear_sf_wcf_form_no_button.addEventListener("click", () => {
-            search_sf_wcf_result.innerHTML = ``;
-            search_sf_wcf_form_no.value = ``;
-        })
+        user.value = username_data.content[2][3];
+        user_sidebar.innerHTML = `<u>${username_data.content[2][3]}</u>`;
+        user_sidebar_officer.innerText = username_data.content[2][4];
 
         // sf_data_list
         const total = document.getElementById("total");
         const sorted = document.getElementById("sorted");
         const unsorted = document.getElementById("unsorted");
-        const sf_form_no = document.getElementById("sf_form_no");
-        const sf_form_no2 = document.getElementById("sf_form_no2");
-        const sf_form_no3 = document.getElementById("sf_form_no3");
-        const sf_form_no4 = document.getElementById("sf_form_no4");
-        const sf_form_no5 = document.getElementById("sf_form_no5");
-        const sf_form_no6 = document.getElementById("sf_form_no6");
-        const sf_form_no7 = document.getElementById("sf_form_no7");
-        const sf_form_no8 = document.getElementById("sf_form_no8");
-        const sf_form_no9 = document.getElementById("sf_form_no9");
-        const sf_form_no10 = document.getElementById("sf_form_no10");
         const today = new Date();
         const today_year = today.getFullYear();
         const today_month = today.getMonth()+1;
         var month_new;
         var code_year_month;
-        var data_counter;
-        var data_counter2;
-        var data_counter3;
-        var data_counter4;
-        var data_counter5;
-        var data_counter6;
-        var data_counter7;
-        var data_counter8;
-        var data_counter9;
-        var data_counter10;
     
         // dashboard
         var unsorted_list = document.getElementById("unsorted_list");
@@ -154,16 +64,15 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
 
         // Get elements from wcf_transaction not included in wcf_sf_transaction
-        const newElements = wcf_transaction.filter((element) => !wcf_sf_transaction.includes(element));
-
+        const pending = wcf_transaction.filter((element) => !wcf_sf_transaction.includes(element));
         sorted.innerText = wcf_sf_transaction_counter;
         total.innerText = wcf_transaction_counter
         unsorted.innerText = wcf_transaction_counter - wcf_sf_transaction_counter;
         var data_value = "";
         var data_value_counter = 1;
-        for(let i = 0; i < newElements.length; i++){
+        for(let i = 0; i < pending.length; i++){
             for(let j = 1; j < wcf_data_list.content.length; j++){
-                if(newElements[i] == wcf_data_list.content[j][1]){
+                if(pending[i] == wcf_data_list.content[j][1]){
                     data_value +=`
                     <tr>
                         <td>${data_value_counter}</td>
@@ -186,7 +95,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     
         code_year_month = `SF${today_year}${month_new}`;
     
-        var data_content = 1;
         var data_info;
         var data_last_3digit = 0;
     
@@ -198,139 +106,124 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         }
                 
-        data_content = parseInt(data_last_3digit) +1
-    
-        var data_content2 = data_content + 1;
-        var data_content3 = data_content + 2;
-        var data_content4 = data_content + 3;
-        var data_content5 = data_content + 4;
-        var data_content6 = data_content + 5;
-        var data_content7 = data_content + 6;
-        var data_content8 = data_content + 7;
-        var data_content9 = data_content + 8;
-        var data_content10 = data_content + 9;
-    
-        if(data_content.toString().length == 1){
-            data_counter = `00${data_content}`;
-        }
-        else if(data_content.toString().length == 2){
-            data_counter = `0${data_content}`;
-        }
-        else if(data_content.toString().length == 3){
-            data_counter = `${data_content}`;
-        }
-    
-        if(data_content2.toString().length == 1){
-            data_counter2 = `00${data_content2}`;
-        }
-        else if(data_content2.toString().length == 2){
-            data_counter2 = `0${data_content2}`;
-        }
-        else if(data_content2.toString().length == 3){
-            data_counter2 = `${data_content2}`;
-        }
-    
-        if(data_content3.toString().length == 1){
-            data_counter3 = `00${data_content3}`;
-        }
-        else if(data_content3.toString().length == 2){
-            data_counter3 = `0${data_content3}`;
-        }
-        else if(data_content3.toString().length == 3){
-            data_counter3 = `${data_content3}`;
-        }
-    
-        if(data_content4.toString().length == 1){
-            data_counter4 = `00${data_content4}`;
-        }
-        else if(data_content4.toString().length == 2){
-            data_counter4 = `0${data_content4}`;
-        }
-        else if(data_content4.toString().length == 3){
-            data_counter4 = `${data_content4}`;
-        }
-    
-        if(data_content5.toString().length == 1){
-            data_counter5 = `00${data_content5}`;
-        }
-        else if(data_content5.toString().length == 2){
-            data_counter5 = `0${data_content5}`;
-        }
-        else if(data_content5.toString().length == 3){
-            data_counter5 = `${data_content5}`;
-        }
-    
-        if(data_content6.toString().length == 1){
-            data_counter6 = `00${data_content6}`;
-        }
-        else if(data_content6.toString().length == 2){
-            data_counter6 = `0${data_content6}`;
-        }
-        else if(data_content6.toString().length == 3){
-            data_counter6 = `${data_content6}`;
-        }
-    
-        if(data_content7.toString().length == 1){
-            data_counter7 = `00${data_content7}`;
-        }
-        else if(data_content7.toString().length == 2){
-            data_counter7 = `0${data_content7}`;
-        }
-        else if(data_content7.toString().length == 3){
-            data_counter7 = `${data_content7}`;
-        }
-    
-        if(data_content8.toString().length == 1){
-            data_counter8 = `00${data_content8}`;
-        }
-        else if(data_content8.toString().length == 2){
-            data_counter8 = `0${data_content8}`;
-        }
-        else if(data_content8.toString().length == 3){
-            data_counter8 = `${data_content8}`;
-        }
-    
-        if(data_content9.toString().length == 1){
-            data_counter9 = `00${data_content9}`;
-        }
-        else if(data_content9.toString().length == 2){
-            data_counter9 = `0${data_content9}`;
-        }
-        else if(data_content9.toString().length == 3){
-            data_counter9 = `${data_content9}`;
+        const data_content = parseInt(data_last_3digit) + 1;
+        const data_counters = [];
+        const sf_form_nos = [];
+        
+        for (let i = 0; i < 10; i++) {
+        const data_counter = data_content + i;
+        let formatted_counter = data_counter.toString();
+        
+        if (formatted_counter.length === 1) {
+            formatted_counter = `00${formatted_counter}`;
+        } else if (formatted_counter.length === 2) {
+            formatted_counter = `0${formatted_counter}`;
         }
         
-        if(data_content10.toString().length == 1){
-            data_counter10 = `00${data_conten10t}`;
+        data_counters.push(formatted_counter);
+        sf_form_nos.push(`${code_year_month}${formatted_counter}`);
         }
-        else if(data_content10.toString().length == 2){
-            data_counter10 = `0${data_content10}`;
+        
+        // Assigning values to sf_form_no variables
+        for (let i = 0; i < 10; i++) {
+        const sf_form_no = document.getElementById(`sf_form_no${i + 1}`);
+        sf_form_no.value = sf_form_nos[i];
         }
-        else if(data_content10.toString().length == 3){
-            data_counter10 = `${data_content10}`;
-        }
+        
+        // wcf_data_list
+        const search_sf_wcf_form_no = document.getElementById("search_sf_wcf_form_no");
+        const search_sf_wcf_form_no_button = document.getElementById("search_sf_wcf_form_no_button");
+        const sf_wcf_client = document.getElementById("sf_wcf_client");
+        const search_sf_wcf_result = document.getElementById("search_sf_wcf_result");
+        const batch_weight = document.getElementById("batch_weight");
+        const batch_weight_list = document.getElementById("batch_weight_list");
+        const additional_item1 = document.getElementById("additional_item1");
+        const header = document.getElementById("header");
+        const clear_sf_wcf_form_no_button = document.getElementById("clear_sf_wcf_form_no_button");
+        const add_item_button = document.getElementById("add_item_button");
+        const remove_item_button = document.getElementById("remove_item_button");
+        const weights = document.getElementById("weights");
+        const buttons = document.getElementById("buttons");
+        const hauling_date = document.getElementById("hauling_date");
     
-        sf_form_no.value = `${code_year_month}${data_counter}`
-        sf_form_no2.value = `${code_year_month}${data_counter2}`
-        sf_form_no3.value = `${code_year_month}${data_counter3}`
-        sf_form_no4.value = `${code_year_month}${data_counter4}`
-        sf_form_no5.value = `${code_year_month}${data_counter5}`
-        sf_form_no6.value = `${code_year_month}${data_counter6}`
-        sf_form_no7.value = `${code_year_month}${data_counter7}`
-        sf_form_no8.value = `${code_year_month}${data_counter8}`
-        sf_form_no9.value = `${code_year_month}${data_counter9}`
-        sf_form_no10.value = `${code_year_month}${data_counter10}`
+        search_sf_wcf_form_no_button.addEventListener("click", () => {
+            var data_value;
+            for(a=1; a<wcf_data_list.content.length; a++){
+                for(b=0; b<pending.length; b++){
+                    if(search_sf_wcf_form_no.value == wcf_data_list.content[a][1]){
+                        if(search_sf_wcf_form_no.value == pending[b]){
+                            data_value = `
+                            WCF #: ${wcf_data_list.content[a][1]}<br>
+                            CLIENT: ${wcf_data_list.content[a][3]}<br>
+                            TYPE OF WASTE: ${wcf_data_list.content[a][4]}<br>
+                            WASTE DESCRIPTION: ${wcf_data_list.content[a][5]}<br>
+                            TYPE OF DOCUMENT: ${wcf_data_list.content[a][6]}<br>
+                            DOCUMENT #: ${wcf_data_list.content[a][7]}<br>
+                            PERMIT TO TRAVEL #: ${wcf_data_list.content[a][8]}<br>
+                            PLATE NO: ${wcf_data_list.content[a][9]}<br>
+                            DRIVER: ${wcf_data_list.content[a][10]}<br>
+                            DATE IN: ${date_decoder(wcf_data_list.content[a][11])}<br>
+                            TIME IN: ${time_decoder(wcf_data_list.content[a][12])}<br>
+                            GROSS WEIGHT: ${wcf_data_list.content[a][15]}<br>
+                            TARE WEIGHT: ${wcf_data_list.content[a][16]}<br>
+                            NET WEIGHT: ${wcf_data_list.content[a][17]}<br>
+                            HAULING DATE: ${date_decoder(wcf_data_list.content[a][19])}<br>
+                            REMARKS: ${wcf_data_list.content[a][18]}<br>
+                            SUBMITTED BY: ${wcf_data_list.content[a][20]}<br>
+                            `
+                            sf_wcf_client.value = wcf_data_list.content[a][3];
+                            batch_weight.value = wcf_data_list.content[a][17];
+                            hauling_date.value = date_decoder(wcf_data_list.content[a][19]);
+                            batch_weight_list.style.display = "grid";
+                            additional_item1.style.display = "grid";
+                            header.style.display = "grid";
+                            add_item_button.style.display = "block";
+                            weights.style.display = "flex";
+                            buttons.style.display = "flex";
+                            rem_weight.value = batch_weight.value - total_weight.value;
+        
+                        }
+                        search_sf_wcf_result.innerHTML = `
+                        <div class="search_sf_wcf_result">
+                        <h2>INFORMATION</h2>
+                        No Data Found
+                        </div><br>`
+                        break    
+                    }
+                }
+            }
+            if(data_value == undefined){
+                search_sf_wcf_result.innerHTML = `
+                <div class="search_sf_wcf_result">
+                <h2>INFORMATION</h2>
+                No Data Found
+                </div><br>`            
+            }
+            else{
+                search_sf_wcf_result.innerHTML = `
+                <div class="search_sf_wcf_result">
+                <h2>INFORMATION</h2>
+                ${data_value}
+                </div><br>`
+            }
+        });
     
+        clear_sf_wcf_form_no_button.addEventListener("click", () => {
+            search_sf_wcf_result.innerHTML = ``;
+            search_sf_wcf_form_no.value = ``;
+        })
+
         // type_of_waste_data
         var data_value = [];
 
         for (var x = 1; x < type_of_waste_data.content.length; x++) {
             data_value.push(type_of_waste_data.content[x][1]);
         }
-
+        
         const total_weight = document.getElementById("total_weight");
         const rem_weight = document.getElementById("rem_weight");
         const itemcounter = document.querySelectorAll(".search_input_type");
+        const item_counter = document.getElementById("item_counter");
         const search_wrapper = [];
         const destruction_process = [];
         const weight = [];
@@ -392,7 +285,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
 
             // Batch Weight Calculator
-            weight[z].addEventListener("change", () => {
+            weight[z].addEventListener("input", () => {
                 var new_weight = 0;
                 var inputWeights = [];
 
@@ -427,6 +320,46 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                 })
             });
+
+            item_counter.addEventListener("input", () => {
+                var new_weight = 0;
+                var inputWeights = [];
+
+                // Store the input values in the array and exclude NaN values
+                for (let i = 1; i <= 10; i++) {
+                    var weightInput = document.getElementById(`weight${i}`);
+                    var intWeight = parseInt(weightInput.value);
+                    if (!isNaN(intWeight)) {
+                        inputWeights.push(intWeight);
+                    }
+                }
+
+                // Calculate the new weight by summing the input values
+                new_weight = inputWeights.reduce((total, weight) => total + weight, 0);
+
+                // Update the total weight input
+                total_weight.value = new_weight;
+
+                // Calculate and update the remaining weight
+                rem_weight.value = batch_weight.value - total_weight.value;
+
+                var form_id = document.getElementById("form_id");
+
+                form_id.addEventListener("submit", () => {               
+                    if(rem_weight.value == 0){
+                        return true;
+                    }
+                    else if(rem_weight.value != 0){
+                        alert("Please Input the Remaining Weight");
+                        event.preventDefault();
+                        return false;
+                    }
+                })
+            });
+
+            // Create and dispatch the input event
+            const inputEvent = new Event('input', { bubbles: true, cancelable: true });
+            item_counter.dispatchEvent(inputEvent);
         }
 
         const additional_item2 = document.getElementById("additional_item2");
@@ -438,7 +371,15 @@ document.addEventListener('DOMContentLoaded', async function() {
         const additional_item8 = document.getElementById("additional_item8");
         const additional_item9 = document.getElementById("additional_item9");
         const additional_item10 = document.getElementById("additional_item10");
-        const item_counter = document.getElementById("item_counter");
+        const weight2 = document.getElementById("weight2");
+        const weight3 = document.getElementById("weight3");
+        const weight4 = document.getElementById("weight4");
+        const weight5 = document.getElementById("weight5");
+        const weight6 = document.getElementById("weight6");
+        const weight7 = document.getElementById("weight7");
+        const weight8 = document.getElementById("weight8");
+        const weight9 = document.getElementById("weight9");
+        const weight10 = document.getElementById("weight10");
         var item_counter_int = parseInt(item_counter.value)
         const form_id = document.getElementById("form_id");
 
@@ -447,7 +388,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         function add_new_item(){
             item_counter_int += 1;
             item_counter.value = item_counter_int;
-            console.log(item_counter)
 
             if(item_counter_int == 2){
                 additional_item2.style.display ="grid";
@@ -496,37 +436,64 @@ document.addEventListener('DOMContentLoaded', async function() {
                 additional_item2.style.display ="none";        
                 // FOR 1
                 remove_item_button.style.display = "none"
+                weight2.value = 0;4            
+                const inputEvent = new Event('input', { bubbles: true, cancelable: true });
+                item_counter.dispatchEvent(inputEvent);
             }
             else if(item_counter_int == 3){
                 additional_item3.style.display ="none";
+                weight3.value = 0;
+                const inputEvent = new Event('input', { bubbles: true, cancelable: true });
+                item_counter.dispatchEvent(inputEvent);
                 // FOR 2
             }
             else if(item_counter_int == 4){
                 additional_item4.style.display ="none";
+                weight4.value = 0;
+                const inputEvent = new Event('input', { bubbles: true, cancelable: true });
+                item_counter.dispatchEvent(inputEvent);
                 // FOR 3
             }
             else if(item_counter_int == 5){
                 additional_item5.style.display ="none";
+                weight5.value = 0;
+                const inputEvent = new Event('input', { bubbles: true, cancelable: true });
+                item_counter.dispatchEvent(inputEvent);
                 // FOR 4
             }
             else if(item_counter_int == 6){
                 additional_item6.style.display ="none";
+                weight6.value = 0;
+                const inputEvent = new Event('input', { bubbles: true, cancelable: true });
+                item_counter.dispatchEvent(inputEvent);
                 // FOR 5
             }
             else if(item_counter_int == 7){
                 additional_item7.style.display ="none";
+                weight7.value = 0;
+                const inputEvent = new Event('input', { bubbles: true, cancelable: true });
+                item_counter.dispatchEvent(inputEvent);
                 // FOR 6
             }
             else if(item_counter_int == 8){
                 additional_item8.style.display ="none";
+                weight8.value = 0;
+                const inputEvent = new Event('input', { bubbles: true, cancelable: true });
+                item_counter.dispatchEvent(inputEvent);
                 // FOR 7
             }
             else if(item_counter_int == 9){
                 additional_item9.style.display ="none";
+                weight9.value = 0;
+                const inputEvent = new Event('input', { bubbles: true, cancelable: true });
+                item_counter.dispatchEvent(inputEvent);
                 // FOR 8
             }
             else if(item_counter_int == 10){
                 additional_item10.style.display ="none";
+                weight10.value = 0;
+                const inputEvent = new Event('input', { bubbles: true, cancelable: true });
+                item_counter.dispatchEvent(inputEvent);
                 // FOR 9
                 add_item_button.style.display = "block"
             }

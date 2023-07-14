@@ -20,9 +20,8 @@
         </div>
         <div class="sidebar">
             <ul>
-                <div id="admin_user">
-
-                </div>
+                <div id="user_sidebar"></div>
+                <div id="user_sidebar_officer"></div>
                 <li class="hover">
                     <a onclick="" href="#">
                         <i class="fas fa-th-large"></i>
@@ -111,8 +110,8 @@
             <!-- Sorting -->
             <section id="sorting_form">
                 <h2>SORTING FORM</h2><br>
-                <form id="form_id" action="https://script.google.com/macros/s/AKfycbwRhhX35Uzal0ujws_6QcGbSt6b6e5tyYjhPtYCCv5YAdxnIxaM8g6E6TUFDBaAgpCK/exec" method="post">
-                    <input type="hidden" name="user" id="admin">
+                <form id="form_id" action="https://script.google.com/macros/s/AKfycbwAtIaqu44OeZinc0ojVMqXd3otVn3mPi_8iACCh7-t368t3hlAnTssWo6is9ceotxW/exec" method="post">
+                    <input type="hidden" name="user" id="user">
                     <input type="hidden" name="hauling_date" id="hauling_date">
                     <div class="sf_form">
                         <div>
@@ -168,10 +167,15 @@
                             <input type="number" id="batch_weight" class="form-control" readonly>
                         </div>
                     </div><br>
-                    <label for="type_of_waste1" id="header">
-                        <i class="fa-solid fa-table-list"></i>
-                        Items
-                    </label>
+                    <div id="header">
+                        <div>
+                            <label for="type_of_waste1">
+                                <i class="fa-solid fa-table-list"></i>
+                                Items
+                            </label>
+                        </div>
+
+                    </div>
                     <div class="items_header" id="additional_item1">
                         <div class="wrapper">
                             <label for="type_of_waste1">
@@ -203,7 +207,7 @@
                             </div>
                         </div>
                         <div class="wrapper">
-                            <label for="sf_form_no">
+                            <label for="sf_form_no1">
                                 <i class="fa-solid fa-list-ol"></i>
                                 SF #
                             </label><br>
@@ -212,7 +216,7 @@
                             </div>
                         </div>
                     </div>
-                    <input onchange="change_action_post()" type="hidden" id="item_counter" value="1">
+                    <input type="hidden" id="item_counter" name="item_counter" value="1">
                     <div class="items" id="additional_item2">
                         <div class="wrapper">
                             <label for="type_of_waste2">

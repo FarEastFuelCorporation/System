@@ -20,9 +20,8 @@
         </div>
         <div class="sidebar">
             <ul>
-                <div id="admin_user">
-
-                </div>
+                <div id="user_sidebar"></div>
+                <div id="user_sidebar_officer"></div>
                 <li class="hover">
                     <a href="#">
                         <i class="fas fa-th-large"></i>
@@ -157,7 +156,7 @@
                                 <th>HAULING TIME</th>
                                 <th>CLIENT</th>
                                 <th>WASTE DESCRIPTION</th>
-                                <th>BATCH WEIGHT</th>
+                                <th>TYPE OF VEHICLE</th>
                                 <th>REMARKS</th>
                             </thead>
                             <tbody id="pending_list">
@@ -195,7 +194,8 @@
                             <thead>
                                 <th>#</th>
                                 <th>PLATE #</th>
-                                <th>VEHICLE TYPE</th>
+                                <th>VEHICLE</th>
+                                <th>TYPE OF VEHICLE</th>
                                 <th>NET CAPACITY</th>
                                 <th>STATUS</th>
                             </thead>
@@ -211,7 +211,7 @@
             <section id="logistics_travel_form">
                 <h2>LOGISTICS TRAVEL FORM</h2><br>
                 <form id="form_id" action="https://script.google.com/macros/s/AKfycbzHaBErOWak2k3TsWlrwSlhhec0xSveNfBFoiTBcmieVYkxoOrWWYBAiqdadhHZfdXp/exec" method="post">
-                    <input type="hidden" name="user" id="admin">
+                    <input type="hidden" name="user" id="user">
                     <input type="hidden" name="mtf_form_no" id="mtf_form_no">
                     <input type="hidden" name="client" id="client">
                     <input type="hidden" name="type_of_waste" id="type_of_waste">

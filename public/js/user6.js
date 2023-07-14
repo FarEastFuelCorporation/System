@@ -35,13 +35,13 @@ document.addEventListener('DOMContentLoaded', async function() {
         const sff_data_list  = await sf_response.json();
 
         // Code that depends on the fetched data
-        // username_data
+        // username_data3
         const user_sidebar = document.getElementById("user_sidebar");
         const user_sidebar_officer = document.getElementById("user_sidebar_officer");
         const user = document.getElementById("user");
 
         user.value = username_data.content[6][3];
-        user_sidebar.innerText = username_data.content[6][3];
+        user_sidebar.innerHTML = `<u>${username_data.content[6][3]}</u>`;
         user_sidebar_officer.innerText = username_data.content[6][4];
         
         // dashboard
@@ -120,11 +120,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         for(let j = 1; j < mtf_data_list.content.length; j++){
             var status = "PENDING";
             // for logistics
-            for(let k = 1; k < ltf_data_list.content.length; k++){
-                if(mtf_data_list.content[j][8] == "LOGISTICS"){
+            if(mtf_data_list.content[j][8] == "LOGISTICS"){
+                for(let k = 1; k < ltf_data_list.content.length; k++){
                     if(mtf_data_list.content[j][1] == ltf_data_list.content[k][2]){
                         status = "ON HAULING";
                         for_logistics_on_haul_counter += 1;
+                        for_logistics_pending_counter -= 1;
                         for(let m = 1; m < wcf_data_list.content.length; m++){
                             if(ltf_data_list.content[k][1] == wcf_data_list.content[m][2]){
                                 status = "RECEIVED";
@@ -133,25 +134,24 @@ document.addEventListener('DOMContentLoaded', async function() {
                             }
                         }
                     }
-                    else{
-                        for_logistics_pending_counter += 1;
-                    }
                 }
+                for_logistics_pending_counter += 1;
             }
+
             // for receiving
-            for(let m = 1; m < wcf_data_list.content.length; m++){
-                if(mtf_data_list.content[j][8] == "RECEIVING"){
+            if(mtf_data_list.content[j][8] == "RECEIVING"){
+                for(let m = 1; m < wcf_data_list.content.length; m++){
                     if((wcf_data_list.content[m][2]).slice(0,3) == "MTF"){
                         if(mtf_data_list.content[j][1] == wcf_data_list.content[m][2]){
                             status = "RECEIVED";
                             for_receiving_received_counter += 1;
+                            for_receiving_pending_counter -= 1;
                         }
                     }
-                    else{
-                        for_receiving_pending_counter += 1;
-                    }
                 }
+                for_receiving_pending_counter += 1;
             }
+
             data_value +=`
             <tr>
                 <td>${data_value_counter}</td>
@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <td>${time_decoder(mtf_data_list.content[j][5])}</td>
                 <td>${mtf_data_list.content[j][2]}</td>
                 <td>${mtf_data_list.content[j][3]}</td>
-                <td>${mtf_data_list.content[j][6]} kg.</td>
+                <td>${mtf_data_list.content[j][6]}</td>
                 <td>${mtf_data_list.content[j][8]}</td>
                 <td>${status}</td>
             </tr>

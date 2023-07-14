@@ -24,11 +24,13 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         // Code that depends on the fetched data
         // username_data
-        const admin = document.getElementById("admin");
-        const user = document.getElementById("admin_user");
+        const user_sidebar = document.getElementById("user_sidebar");
+        const user_sidebar_officer = document.getElementById("user_sidebar_officer");
+        const user = document.getElementById("user");
 
-        admin.value = username_data.content[5][3];
-        user.innerHTML = username_data.content[5][3];
+        user.value = username_data.content[5][3];
+        user_sidebar.innerHTML = `<u>${username_data.content[5][3]}</u>`;
+        user_sidebar_officer.innerText = username_data.content[5][4];
     
         // dashboard
         var unsorted_list = document.getElementById("unsorted_list");

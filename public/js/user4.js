@@ -28,11 +28,13 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         // Code that depends on the fetched data
         // username_data
-        const admin = document.getElementById("admin");
-        const user = document.getElementById("admin_user");
+        const user_sidebar = document.getElementById("user_sidebar");
+        const user_sidebar_officer = document.getElementById("user_sidebar_officer");
+        const user = document.getElementById("user");
 
-        admin.value = username_data.content[4][3];
-        user.innerHTML = username_data.content[4][3];
+        user.value = username_data.content[4][3];
+        user_sidebar.innerHTML = `<u>${username_data.content[4][3]}</u>`;
+        user_sidebar_officer.innerText = username_data.content[4][4];
     
         // dashboard
         var unsorted_list = document.getElementById("unsorted_list");
@@ -71,8 +73,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 if(newElements[i] == tpf_data_list.content[j][1]){
                     date_accomplished = new Date(date_decoder(tpf_data_list.content[j][11]));
                     target_date = new Date(date_decoder(tpf_data_list.content[j][10]));
-                    console.log(date_accomplished.getDate())
-                    console.log(target_date.getDate())
                     if(date_accomplished.getDate() < target_date.getDate()){
                         status = "AHEAD OF TIME";
                     }
@@ -82,7 +82,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     else if(date_accomplished.getDate() > target_date.getDate()){
                         status = "DELAYED";
                     }
-                    console.log(status)
                     data_value +=`
                     <tr>
                         <td>${data_value_counter}</td>
@@ -213,47 +212,52 @@ document.addEventListener('DOMContentLoaded', async function() {
                         var certification_day = new Date(certification_date).getDate();
                         var certification_day_ordinal = convertToOrdinal(certification_day);
                         var certification_month = convertToMonthName(month);
-                        if (waste_description.value == tpf_data_list.content[x][5] &&
-                            year_covered.value == year &&
-                            month_covered.value == month) {
-                            table_data_counter += 1;
-                            table_data_value +=
-                                `<tr>
-                                <td>${date_decoder(tpf_data_list.content[x][9])}</td>
-                                <td>${tpf_data_list.content[x][5]}</td>
-                                <td>${tpf_data_list.content[x][6]}</td>
-                                <td>${tpf_data_list.content[x][7]} Kgs.</td>
-                                <td>${tpf_data_list.content[x][8]}</td>
-                                <td>${date_decoder(tpf_data_list.content[x][10])}</td>
-                                </tr>
-                                `;
-                            table_data_input += `
-                            <input type="hidden" value="${tpf_data_list.content[x][1]}" name="tpf_no_input${table_data_counter}" id="tpf_no_input${table_data_counter}">
-                                <input type="hidden" value="${tpf_data_list.content[x][2]}" name="sf_no_input${table_data_counter}" id="sf_no_input${table_data_counter}">
-                                <input type="hidden" value="${tpf_data_list.content[x][3]}" name="wcf_no_input${table_data_counter}" id="wcf_no_input${table_data_counter}">
-                                <input type="hidden" value="${tpf_data_list.content[x][4]}" name="client_input${table_data_counter}" id="client_input${table_data_counter}">
-                                <input type="hidden" value="${tpf_data_list.content[x][5]}" name="waste_description_input${table_data_counter}" id="waste_description_input${table_data_counter}">
-                                <input type="hidden" value="${tpf_data_list.content[x][6]}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
-                                <input type="hidden" value="${tpf_data_list.content[x][7]}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
-                                <input type="hidden" value="${tpf_data_list.content[x][8]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
-                                <input type="hidden" value="${date_decoder(tpf_data_list.content[x][10])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
-                                `
-                            var certification_day_ordinal = convertToOrdinal(certification_day);
-                            var certification_month = convertToMonthName(month);
-                            certification.innerText = `${certification_day_ordinal} of ${certification_month} ${year}`;
-                            table_company.innerHTML = tpf_data_list.content[x][4];
-                            table_data_input_value.innerHTML = table_data_input;
-                            for (let y = 1; y < client_list_data.content.length; y++) {
-                                if (input_box.value == client_list_data.content[y][1]) {
-                                    table_company_address.innerHTML = client_list_data.content[y][3];
+                        for(let a = 0; a <= newElements.length; a++){
+                            if(tpf_data_list.content[x][1] == newElements[a]){
+                                if (waste_description.value == tpf_data_list.content[x][5] &&
+                                    year_covered.value == year &&
+                                    month_covered.value == month) {
+                                    table_data_counter += 1;
+                                    table_data_value +=
+                                    `<tr>
+                                    <td>${date_decoder(tpf_data_list.content[x][9])}</td>
+                                    <td>${tpf_data_list.content[x][5]}</td>
+                                    <td>${tpf_data_list.content[x][6]}</td>
+                                    <td>${tpf_data_list.content[x][7]} Kgs.</td>
+                                    <td>${tpf_data_list.content[x][8]}</td>
+                                    <td>${date_decoder(tpf_data_list.content[x][10])}</td>
+                                    </tr>
+                                    `;
+                                    table_data_input += `
+                                    <input type="hidden" value="${tpf_data_list.content[x][1]}" name="tpf_no_input${table_data_counter}" id="tpf_no_input${table_data_counter}">
+                                    <input type="hidden" value="${tpf_data_list.content[x][2]}" name="sf_no_input${table_data_counter}" id="sf_no_input${table_data_counter}">
+                                    <input type="hidden" value="${tpf_data_list.content[x][3]}" name="wcf_no_input${table_data_counter}" id="wcf_no_input${table_data_counter}">
+                                    <input type="hidden" value="${tpf_data_list.content[x][4]}" name="client_input${table_data_counter}" id="client_input${table_data_counter}">
+                                    <input type="hidden" value="${tpf_data_list.content[x][5]}" name="waste_description_input${table_data_counter}" id="waste_description_input${table_data_counter}">
+                                    <input type="hidden" value="${tpf_data_list.content[x][6]}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
+                                    <input type="hidden" value="${tpf_data_list.content[x][7]}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                    <input type="hidden" value="${tpf_data_list.content[x][8]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
+                                    <input type="hidden" value="${date_decoder(tpf_data_list.content[x][10])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                    `
+                                    var certification_day_ordinal = convertToOrdinal(certification_day);
+                                    var certification_month = convertToMonthName(month);
+                                    certification.innerText = `${certification_day_ordinal} of ${certification_month} ${year}`;
+                                    table_company.innerHTML = tpf_data_list.content[x][4];
+                                    table_data_input_value.innerHTML = table_data_input;
+                                    for (let y = 1; y < client_list_data.content.length; y++) {
+                                        if (input_box.value == client_list_data.content[y][1]) {
+                                            table_company_address.innerHTML = client_list_data.content[y][3];
+                                        }
+                                    }
+                                    what_to_print.style.display = "block";
+                                    convertToPDFandDownload_button.style.display = "block";    
+                                    table_data.innerHTML = table_data_value;
+                                    result_remarks.innerHTML = "";
                                 }
                             }
                         }
-                    }
-                    else{
-                        result_remarks.innerHTML = `No Data Found`
-                    }
-                }    
+                    }    
+                }
             }
             else if(type_of_cod.value == "By Date"){
                 for (let x = 1; x < tpf_data_list.content.length; x++) {
@@ -267,22 +271,24 @@ document.addEventListener('DOMContentLoaded', async function() {
                         var certification_day = new Date(certification_date).getDate();
                         var certification_day_ordinal = convertToOrdinal(certification_day);
                         var certification_month = convertToMonthName(month);
-                        if (waste_description.value == certification_day &&
-                            year_covered.value == year &&
-                            month_covered.value == month) {
-                                table_data_counter += 1;
-                                table_data_value +=
-                                `<tr>
-                                <td>${date_decoder(tpf_data_list.content[x][9])}</td>
-                                <td>${tpf_data_list.content[x][5]}</td>
-                                <td>${tpf_data_list.content[x][6]}</td>
-                                <td>${tpf_data_list.content[x][7]} Kgs.</td>
-                                <td>${tpf_data_list.content[x][8]}</td>
-                                <td>${date_decoder(tpf_data_list.content[x][10])}</td>
-                                </tr>
-                                `;
-                                table_data_input += `
-                                <input type="hidden" value="${tpf_data_list.content[x][1]}" name="tpf_no_input${table_data_counter}" id="tpf_no_input${table_data_counter}">
+                        for(let a = 0; a <= newElements.length; a++){
+                            if(tpf_data_list.content[x][1] == newElements[a]){
+                                if (waste_description.value == certification_day &&
+                                    year_covered.value == year &&
+                                    month_covered.value == month) {
+                                    table_data_counter += 1;
+                                    table_data_value +=
+                                    `<tr>
+                                    <td>${date_decoder(tpf_data_list.content[x][9])}</td>
+                                    <td>${tpf_data_list.content[x][5]}</td>
+                                    <td>${tpf_data_list.content[x][6]}</td>
+                                    <td>${tpf_data_list.content[x][7]} Kgs.</td>
+                                    <td>${tpf_data_list.content[x][8]}</td>
+                                    <td>${date_decoder(tpf_data_list.content[x][10])}</td>
+                                    </tr>
+                                    `;
+                                    table_data_input += `
+                                    <input type="hidden" value="${tpf_data_list.content[x][1]}" name="tpf_no_input${table_data_counter}" id="tpf_no_input${table_data_counter}">
                                     <input type="hidden" value="${tpf_data_list.content[x][2]}" name="sf_no_input${table_data_counter}" id="sf_no_input${table_data_counter}">
                                     <input type="hidden" value="${tpf_data_list.content[x][3]}" name="wcf_no_input${table_data_counter}" id="wcf_no_input${table_data_counter}">
                                     <input type="hidden" value="${tpf_data_list.content[x][4]}" name="client_input${table_data_counter}" id="client_input${table_data_counter}">
@@ -291,24 +297,33 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <input type="hidden" value="${tpf_data_list.content[x][7]}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
                                     <input type="hidden" value="${tpf_data_list.content[x][8]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                     <input type="hidden" value="${date_decoder(tpf_data_list.content[x][10])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
-                                    `
-                                certification.innerText = `${certification_day_ordinal} of ${certification_month} ${year}`;
-                                table_company.innerHTML = tpf_data_list.content[x][4];
-                                table_data_input_value.innerHTML = table_data_input;
-                                for (let y = 1; y < client_list_data.content.length; y++) {
-                                if (input_box.value == client_list_data.content[y][1]) {
-                                    table_company_address.innerHTML = client_list_data.content[y][3];
+                                        `
+                                    certification.innerText = `${certification_day_ordinal} of ${certification_month} ${year}`;
+                                    table_company.innerHTML = tpf_data_list.content[x][4];
+                                    table_data_input_value.innerHTML = table_data_input;
+                                    for (let y = 1; y < client_list_data.content.length; y++) {
+                                        if (input_box.value == client_list_data.content[y][1]) {
+                                            table_company_address.innerHTML = client_list_data.content[y][3];
+                                        }
+                                    }
+                                    what_to_print.style.display = "block";
+                                    convertToPDFandDownload_button.style.display = "block";    
+                                    table_data.innerHTML = table_data_value;
+                                    result_remarks.innerHTML = "";
                                 }
+
                             }
                         }
-                    }
+                    }    
                 }    
             }
-            what_to_print.style.display = "block";
-            convertToPDFandDownload_button.style.display = "block";    
-            table_data.innerHTML = table_data_value;
-            table_data.innerHTML = table_data_value;
-
+            if(table_data_value == undefined || table_data_value == ""){
+                result_remarks.innerHTML = `
+                <div class="search_cod_result">
+                <h2>INFORMATION</h2>
+                No Data Found
+                </div><br>`            
+            }  
         }
 
         function show_suggestions(list) {

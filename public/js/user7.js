@@ -40,11 +40,13 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         // Code that depends on the fetched data
         // username_data
-        const admin = document.getElementById("admin");
-        const user = document.getElementById("admin_user");
+        const user_sidebar = document.getElementById("user_sidebar");
+        const user_sidebar_officer = document.getElementById("user_sidebar_officer");
+        const user = document.getElementById("user");
 
-        admin.value = username_data.content[7][3];
-        user.innerHTML = username_data.content[7][3];
+        user.value = username_data.content[7][3];
+        user_sidebar.innerHTML = `<u>${username_data.content[7][3]}</u>`;
+        user_sidebar_officer.innerText = username_data.content[7][4];
         
         // dashboard
         var booked_transactions = document.getElementById("booked_transactions");
@@ -58,14 +60,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         var mtf_ltf_transaction_counter = 0;
         var ltf_transaction_counter = 0;
         var ltf_wcf_transaction_counter = 0;
-        var wcf_transaction_counter = 0;
-        var wcf_sf_transaction_counter = 0;
         let mtf_transaction = []; // Variable containing existing elements
         let mtf_ltf_transaction = []; // Variable containing existing elements
         let ltf_transaction = []; // Variable containing existing elements
         let ltf_wcf_transaction = []; // Variable containing existing elements
-        let wcf_transaction = []; // Variable containing existing elements
-        let wcf_sf_transaction = []; // Variable containing existing elements
         
         for (let i = 1; i < mtf_data_list.content.length; i++) {
             if(mtf_data_list.content[i][8] == "LOGISTICS"){
@@ -93,23 +91,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                 ltf_wcf_transaction.push(wcf_data_list.content[i][2]);
                 ltf_wcf_transaction_counter += 1
             }
-            if (!wcf_transaction.includes(wcf_data_list.content[i][1])) {
-                wcf_transaction.push(wcf_data_list.content[i][1]);
-                wcf_transaction_counter += 1
-            }
-
-        }
-        
-        for (let i = 1; i < sf_data_list.content.length; i++) {
-            if (!wcf_sf_transaction.includes(sf_data_list.content[i][2])) {
-                wcf_sf_transaction.push(sf_data_list.content[i][2]);
-                wcf_sf_transaction_counter += 1
-            }
         }
 
         const newElements = mtf_transaction.filter((element) => !mtf_ltf_transaction.includes(element));
         const newElements2 = ltf_transaction.filter((element) => !ltf_wcf_transaction.includes(element));
-        const newElements3 = wcf_transaction.filter((element) => !wcf_sf_transaction.includes(element));
+        const newElements3 = ltf_transaction.filter((element) => ltf_wcf_transaction.includes(element));
 
         on_hauling_transactions.innerText = newElements2.length;
         hauled_transactions.innerText = newElements3.length;
@@ -190,9 +176,10 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             data2_value +=`
             <tr>
-            <td>${data2_value_counter}</td>
-            <td>${vehicle_data.content[j][0]}</td>
+                <td>${data2_value_counter}</td>
+                <td>${vehicle_data.content[j][0]}</td>
                 <td>${vehicle_data.content[j][1]}</td>
+                <td>${vehicle_data.content[j][4]}</td>
                 <td>${vehicle_data.content[j][2]}</td>
                 <td>${vehicle_status}</td>
             </tr>
@@ -376,8 +363,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     
         // Search Button
         search_mtf_form_no_button.addEventListener("click", () => {
-        
-            for(a=1; a<mtf_data_list.content.length; a++){
+            for(a=0; a<=newElements.length; a++){
                 var data_value;
                 if(search_mtf_form_no.value == mtf_data_list.content[a][1]){
                     data_value =`

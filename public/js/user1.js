@@ -36,11 +36,13 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         // Code that depends on the fetched data
         // username_data
-        const admin = document.getElementById("admin");
-        const user = document.getElementById("admin_user");
+        const user_sidebar = document.getElementById("user_sidebar");
+        const user_sidebar_officer = document.getElementById("user_sidebar_officer");
+        const user = document.getElementById("user");
 
-        admin.value = username_data.content[1][3];
-        user.innerHTML = username_data.content[1][3];
+        user.value = username_data.content[1][3];
+        user_sidebar.innerHTML = `<u>${username_data.content[1][3]}</u>`;
+        user_sidebar_officer.innerText = username_data.content[1][4];
         
         // dashboard
         const to_received = document.getElementById("to_received");
@@ -103,7 +105,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td>${time_decoder(ltf_data_list.content[j][6])}</td>
                         <td>${ltf_data_list.content[j][3]}</td>
                         <td>${ltf_data_list.content[j][4]}</td>
-                        <td>${ltf_data_list.content[j][7]} kg.</td>
+                        <td>${ltf_data_list.content[j][7]}</td>
                         <td>${ltf_data_list.content[j][8]}</td>
                         <td>${ltf_data_list.content[j][9]}</td>
                     </tr>
@@ -123,7 +125,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td>${time_decoder(mtf_data_list.content[j][5])}</td>
                         <td>${mtf_data_list.content[j][2]}</td>
                         <td>${mtf_data_list.content[j][3]}</td>
-                        <td>${mtf_data_list.content[j][6]} kg.</td>
+                        <td>PROVIDED BY CLIENT</td>
                         <td>PROVIDED BY CLIENT</td>
                         <td>PROVIDED BY CLIENT</td>
                     </tr>
@@ -150,7 +152,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         search_ltf_form_no_button.addEventListener("click", () => {
             var data_value;
-            for(a=1; a<ltf_data_list.content.length; a++){
+            for(a=0; a<=newElements.length; a++){
                 if(search_ltf_form_no.value == ltf_data_list.content[a][1]){
                     data_value = `
                     LTF #: ${ltf_data_list.content[a][1]}<br>

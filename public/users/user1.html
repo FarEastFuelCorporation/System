@@ -20,9 +20,8 @@
         </div>
         <div class="sidebar">
             <ul>
-                <div id="admin_user">
-
-                </div>
+                <div id="user_sidebar"></div>
+                <div id="user_sidebar_officer"></div>
                 <li class="hover">
                     <a href="#">
                         <i class="fas fa-th-large"></i>
@@ -138,7 +137,7 @@
                                 <th>HAULING TIME</th>
                                 <th>CLIENT</th>
                                 <th>WASTE DESCRIPTION</th>
-                                <th>BATCH WEIGHT</th>
+                                <th>TYPE OF VEHICLE</th>
                                 <th>PLATE #</th>
                                 <th>DRIVER</th>
                             </thead>
@@ -154,7 +153,7 @@
             <section id="waste_collection_form">
                 <h2>WASTE COLLECTION FORM</h2><br>
                 <form id="form_id" action="https://script.google.com/macros/s/AKfycbwAeIuhiQmoncrxpFiUShZ8Wr6XlC0b-_HSBGILsMjk1IWOv_upLDG4eGHstGuvyeOQcg/exec" method="post">
-                    <input type="hidden" name="user" id="admin">
+                    <input type="hidden" name="user" id="user">
                     <input type="hidden" name="ltf_form_no" id="ltf_form_no">
                     <input type="hidden" name="waste_description" id="waste_description">
                     <input type="hidden" name="hauling_date" id="hauling_date">

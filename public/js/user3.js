@@ -24,93 +24,15 @@ document.addEventListener('DOMContentLoaded', async function() {
     
         // Code that depends on the fetched data
         // username_data
-        const admin = document.getElementById("admin");
-        const user = document.getElementById("admin_user");
+        const user_sidebar = document.getElementById("user_sidebar");
+        const user_sidebar_officer = document.getElementById("user_sidebar_officer");
+        const user = document.getElementById("user");
 
-        admin.value = username_data.content[3][3];
-        user.innerHTML = username_data.content[3][3];
+        user.value = username_data.content[3][3];
+        user_sidebar.innerHTML = `<u>${username_data.content[3][3]}</u>`;
+        user_sidebar_officer.innerText = username_data.content[3][4];
 
-        // sf_data_list
-        const wcf_form_no = document.getElementById("wcf_form_no");
-        const client = document.getElementById("client");
-        const waste_description = document.getElementById("waste_description");
-        const weight = document.getElementById("weight");
-        const destruction_process = document.getElementById("destruction_process");
-        const hauling_date = document.getElementById("hauling_date");
-        const target_date_of_completion = document.getElementById("target_date_of_completion");
-        const search_sf_form_no = document.getElementById("search_sf_form_no");
-        const search_sf_form_no_button = document.getElementById("search_sf_form_no_button");
-        const search_sf_result = document.getElementById("search_sf_result");
-        const additional_item1 = document.getElementById("additional_item1");
-        const add_item_button = document.getElementById("add_item_button");
-        const remove_item_button = document.getElementById("remove_item_button");
-        const completion = document.getElementById("completion");
-        const buttons = document.getElementById("buttons");
-
-        search_sf_form_no_button.addEventListener("click", () => {
-            var data_value;
-            for(a=1; a<sf_data_list.content.length; a++){
-                if(search_sf_form_no.value == sf_data_list.content[a][1]){
-                    data_value = `
-                    SF #: ${sf_data_list.content[a][1]}<br>
-                    WCF #: ${sf_data_list.content[a][2]}<br>
-                    CLIENT: ${sf_data_list.content[a][3]}<br>
-                    TYPE OF WASTE: ${sf_data_list.content[a][4]}<br>
-                    DESTRUCTION PROCESS: ${sf_data_list.content[a][5]}<br>
-                    WEIGHT: ${sf_data_list.content[a][6]} kg.<br>
-                    HAULING DATE: ${date_decoder(sf_data_list.content[a][7])}<br>
-                    SUBMITTED BY: ${sf_data_list.content[a][8]}<br>
-                    `
-                    if(sf_data_list.content[a][5] == 'THERMAL DECOMPOSITION'){
-                        machine_list.innerHTML = `
-                        <label for="tpf_form_no">
-                            <i class="fa-solid fa-gears"></i>
-                            Machine
-                        </label><br>
-                        <div>
-                            <select name="machine" id="machine" class="form-control">
-                                <option value="">Select Machine</option>
-                                <option value="THERMAL 1 (ALPHA)">THERMAL 1 (ALPHA)</option>
-                                <option value="THERMAL 2 (BRAVO)">THERMAL 2 (BRAVO)</option>
-                                <option value="THERMAL 3 (CHARLIE)">THERMAL 3 (CHARLIE)</option>
-                            </select>
-                        </div><br>
-                        `
-                    }
-                    wcf_form_no.value = sf_data_list.content[a][2];
-                    client.value = sf_data_list.content[a][3];
-                    waste_description.value = sf_data_list.content[a][4];
-                    weight.value = sf_data_list.content[a][6];
-                    waste_description.value = sf_data_list.content[a][4];
-                    destruction_process.value = sf_data_list.content[a][5];
-                    hauling_date.value = date_decoder(sf_data_list.content[a][7]);
-                    var hauling_date_plus2 = new Date(date_decoder(sf_data_list.content[a][7]));
-                    target_date_of_completion.value = date_decoder(hauling_date_plus2.setDate(hauling_date_plus2.getDate()+2));
-                    console.log(hauling_date.value);
-                    console.log(target_date_of_completion.value);
-                    additional_item1.style.display = "grid";
-                    add_item_button.style.display = "block";
-                    completion.style.display = "grid";
-                    buttons.style.display = "flex";
-                }
-            }
-            if(data_value == undefined){
-                search_sf_result.innerHTML = `
-                <div class="search_sf_result">
-                <h2>INFORMATION</h2>
-                No Data Found
-                </div><br>`            
-            }
-            else{
-                search_sf_result.innerHTML = `
-                <div class="search_sf_result">
-                <h2>INFORMATION</h2>
-                ${data_value}
-                </div><br>`
-            }
-        });
-
-        // tpf_data_list
+                // tpf_data_list
         const tpf_form_no = document.getElementById("tpf_form_no"); 
         const today = new Date();
         const today_year = today.getFullYear();
@@ -200,6 +122,84 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
 
         tpf_form_no.value = `${code_year_month}${data_counter}`
+
+        // sf_data_list
+        const wcf_form_no = document.getElementById("wcf_form_no");
+        const client = document.getElementById("client");
+        const waste_description = document.getElementById("waste_description");
+        const weight = document.getElementById("weight");
+        const destruction_process = document.getElementById("destruction_process");
+        const hauling_date = document.getElementById("hauling_date");
+        const target_date_of_completion = document.getElementById("target_date_of_completion");
+        const search_sf_form_no = document.getElementById("search_sf_form_no");
+        const search_sf_form_no_button = document.getElementById("search_sf_form_no_button");
+        const search_sf_result = document.getElementById("search_sf_result");
+        const additional_item1 = document.getElementById("additional_item1");
+        const add_item_button = document.getElementById("add_item_button");
+        const remove_item_button = document.getElementById("remove_item_button");
+        const completion = document.getElementById("completion");
+        const buttons = document.getElementById("buttons");
+
+        search_sf_form_no_button.addEventListener("click", () => {
+            var data_value;
+            for(a=0; a<=newElements.length; a++){
+                if(search_sf_form_no.value == sf_data_list.content[a][1]){
+                    data_value = `
+                    SF #: ${sf_data_list.content[a][1]}<br>
+                    WCF #: ${sf_data_list.content[a][2]}<br>
+                    CLIENT: ${sf_data_list.content[a][3]}<br>
+                    TYPE OF WASTE: ${sf_data_list.content[a][4]}<br>
+                    DESTRUCTION PROCESS: ${sf_data_list.content[a][5]}<br>
+                    WEIGHT: ${sf_data_list.content[a][6]} kg.<br>
+                    HAULING DATE: ${date_decoder(sf_data_list.content[a][7])}<br>
+                    SUBMITTED BY: ${sf_data_list.content[a][8]}<br>
+                    `
+                    if(sf_data_list.content[a][5] == 'THERMAL DECOMPOSITION'){
+                        machine_list.innerHTML = `
+                        <label for="tpf_form_no">
+                            <i class="fa-solid fa-gears"></i>
+                            Machine
+                        </label><br>
+                        <div>
+                            <select name="machine" id="machine" class="form-control">
+                                <option value="">Select Machine</option>
+                                <option value="THERMAL 1 (ALPHA)">THERMAL 1 (ALPHA)</option>
+                                <option value="THERMAL 2 (BRAVO)">THERMAL 2 (BRAVO)</option>
+                                <option value="THERMAL 3 (CHARLIE)">THERMAL 3 (CHARLIE)</option>
+                            </select>
+                        </div><br>
+                        `
+                    }
+                    wcf_form_no.value = sf_data_list.content[a][2];
+                    client.value = sf_data_list.content[a][3];
+                    waste_description.value = sf_data_list.content[a][4];
+                    weight.value = sf_data_list.content[a][6];
+                    waste_description.value = sf_data_list.content[a][4];
+                    destruction_process.value = sf_data_list.content[a][5];
+                    hauling_date.value = date_decoder(sf_data_list.content[a][7]);
+                    var hauling_date_plus2 = new Date(date_decoder(sf_data_list.content[a][7]));
+                    target_date_of_completion.value = date_decoder(hauling_date_plus2.setDate(hauling_date_plus2.getDate()+2));
+                    additional_item1.style.display = "grid";
+                    add_item_button.style.display = "block";
+                    completion.style.display = "grid";
+                    buttons.style.display = "flex";
+                }
+            }
+            if(data_value == undefined){
+                search_sf_result.innerHTML = `
+                <div class="search_sf_result">
+                <h2>INFORMATION</h2>
+                No Data Found
+                </div><br>`            
+            }
+            else{
+                search_sf_result.innerHTML = `
+                <div class="search_sf_result">
+                <h2>INFORMATION</h2>
+                ${data_value}
+                </div><br>`
+            }
+        });
 
         const additional_item2 = document.getElementById("additional_item2");
         const additional_item3 = document.getElementById("additional_item3");

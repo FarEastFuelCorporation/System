@@ -165,7 +165,7 @@
                                 <th>HAULING TIME</th>
                                 <th>CLIENT</th>
                                 <th>WASTE DESCRIPTION</th>
-                                <th>WEIGHT</th>
+                                <th>TYPE OF VEHICLE</th>
                                 <th>TO</th>
                                 <th>STATUS</th>
                             </thead>
@@ -199,7 +199,7 @@
             <section id="marketing_transaction_form">
                 <div class="section_container">
                     <h2>MARKETING TRANSACTION FORM</h2><br>
-                    <form id="form_id" action="https://script.google.com/macros/s/AKfycbwVq35VsaMBczjhtRZliGaxVYTYgdC-IpMInJcsP_LW4T28CWH21jdABX-FpZRPtEagGg/exec" method="post">
+                    <form id="form_id" action="https://script.google.com/macros/s/AKfycbwZa-rvBaEqNpMI4vUG5DhRh9Rcf5PaONk87s1csvHEyeNXsKhPUoeMaQu1n3hbZs6GOw/exec" method="post">
                         <input type="hidden" name="user" id="user">
                         <div class="mtf_form">
                             <div>
@@ -280,17 +280,25 @@
                                 </div>
                                 <div>
                                     <label for="hauling_time">
-                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                        <i class="fa-solid fa-right-from-bracket"></i>
                                         Hauling Time
                                     </label>
                                     <input type="time" autocomplete="off" name="hauling_time" id="hauling_time" class="form-control" required><br>
                                 </div>
                                 <div>
                                     <label for="weight">
-                                    <i class="fa-solid fa-right-from-bracket"></i>
-                                        Weight (Kg)
+                                        <i class="fa-solid fa-truck"></i>
+                                        Type of Vehicle
                                     </label>
-                                    <input type="number" autocomplete="off" name="weight" id="weight" class="form-control" required><br>
+                                    <select name="type_of_vehicle" id="type_of_vehicle" class="form-control" required>
+                                        <option value="">Select</option>
+                                        <option value="6 WHEELER CLOSED VAN">6 WHEELER CLOSED VAN</option>
+                                        <option value="10 WHEELER WING VAN">10 WHEELER WING VAN</option>
+                                        <option value="DUMP TRUCK">DUMP TRUCK</option>
+                                        <option value="FX">FX</option>
+                                        <option value="BOOM TRUCK">BOOM TRUCK</option>
+                                        <option value="CRAINE">CRAINE</option>
+                                    </select>
                                 </div>
                             </div>
                             <label for="remarks">
