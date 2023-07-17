@@ -43,7 +43,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         var code_year_month;
     
         // dashboard
-        var unsorted_list = document.getElementById("unsorted_list");
+        const unsorted_list = document.getElementById("unsorted_list");
+        const sorted_list = document.getElementById("sorted_list");
+        const sorted_items = document.getElementById("sorted_items");
+        const sorted_items_list = document.getElementById("sorted_items_list");
         var wcf_sf_transaction_counter = 0;
         var wcf_transaction_counter = 0;
         let wcf_transaction = []; // Variable containing existing elements
@@ -65,6 +68,9 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         // Get elements from wcf_transaction not included in wcf_sf_transaction
         const pending = wcf_transaction.filter((element) => !wcf_sf_transaction.includes(element));
+        const done_sorting = wcf_transaction.filter((element) => wcf_sf_transaction.includes(element));
+        
+        // unsorted_list
         sorted.innerText = wcf_sf_transaction_counter;
         total.innerText = wcf_transaction_counter
         unsorted.innerText = wcf_transaction_counter - wcf_sf_transaction_counter;
@@ -77,8 +83,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <tr>
                         <td>${data_value_counter}</td>
                         <td>${wcf_data_list.content[j][1]}</td>
-                        <td>${date_decoder(wcf_data_list.content[j][11])}</td>
+                        <td>${date_decoder(wcf_data_list.content[j][11])} /<br> ${time_decoder(wcf_data_list.content[j][12])}</td>
                         <td>${wcf_data_list.content[j][3]}</td>
+                        <td>${wcf_data_list.content[j][5]}</td>
                         <td>${wcf_data_list.content[j][17]} kg.</td>
                     </tr>
                     `
@@ -87,6 +94,69 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         }
         unsorted_list.innerHTML = data_value;    
+
+        // sorted_list
+        var data_value_done = "";
+        var data_value__done_counter = 1;
+        for(let i = 0; i < done_sorting.length; i++){
+            for(let j = 1; j < wcf_data_list.content.length; j++){
+                if(done_sorting[i] == wcf_data_list.content[j][1]){
+                    var discrepancy_weight = 0;
+                    var discrepancy_remarks ="COMPLETE";
+                    var finished_date;
+                    var finished_time;
+                    for(let k = 1; k < sf_data_list.content.length; k++){
+                        finished_date = date_decoder(sf_data_list.content[k][8]);
+                        finished_time = time_decoder(sf_data_list.content[k][9]);
+                        if(done_sorting[i] == sf_data_list.content[k][2]){
+                            if(sf_data_list.content[k][4] == "DISCREPANCY"){
+                                discrepancy_weight = sf_data_list.content[k][6];
+                                discrepancy_remarks = sf_data_list.content[k][5];
+                            }
+                        }
+                    }
+                    data_value_done +=`
+                    <tr>
+                        <td>${data_value__done_counter}</td>
+                        <td>${wcf_data_list.content[j][1]}</td>
+                        <td>${date_decoder(wcf_data_list.content[j][11])} /<br> ${time_decoder(wcf_data_list.content[j][12])}</td>
+                        <td>${wcf_data_list.content[j][3]}</td>
+                        <td>${wcf_data_list.content[j][17]} kg.</td>
+                        <td>${discrepancy_weight} kg.</td>
+                        <td>${discrepancy_remarks}</td>
+                        <td>${finished_date} /<br> ${finished_time}</td>
+                        <td>${calculateTravelTime(date_decoder(wcf_data_list.content[j][11]),time_decoder(wcf_data_list.content[j][12]),finished_date,finished_time)}</td>
+                    </tr>
+                    `
+                    data_value__done_counter += 1;
+                }
+            }
+        }
+        sorted_list.innerHTML = data_value_done;
+
+        // sorted_items_list
+        var data_value_done = "";
+        var data_value__done_counter = 1;
+        for(let i = 1; i < sf_data_list.content.length; i++){
+            if(sf_data_list.content[i][4] !== "DISCREPANCY"){
+                data_value_done +=`
+                <tr>
+                    <td>${data_value__done_counter}</td>
+                    <td>${sf_data_list.content[i][1]}</td>
+                    <td>${sf_data_list.content[i][2]}</td>
+                    <td>${date_decoder(sf_data_list.content[i][8])} /<br> ${time_decoder(sf_data_list.content[i][9])}</td>
+                    <td>${sf_data_list.content[i][3]}</td>
+                    <td>${sf_data_list.content[i][4]}</td>
+                    <td>${sf_data_list.content[i][6]} kg.</td>
+                    <td>${sf_data_list.content[i][5]}</td>
+                </tr>
+                `
+                data_value__done_counter += 1;
+    
+            }
+        }
+        sorted_items_list.innerHTML = data_value_done;    
+        sorted_items.innerText = data_value__done_counter;
 
         // FORM GENERATOR
         if(today_month.toString().length == 1){
@@ -110,7 +180,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const data_counters = [];
         const sf_form_nos = [];
         
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 11; i++) {
         const data_counter = data_content + i;
         let formatted_counter = data_counter.toString();
         
@@ -125,7 +195,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
         
         // Assigning values to sf_form_no variables
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 11; i++) {
         const sf_form_no = document.getElementById(`sf_form_no${i + 1}`);
         sf_form_no.value = sf_form_nos[i];
         }
@@ -139,6 +209,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const batch_weight_list = document.getElementById("batch_weight_list");
         const additional_item1 = document.getElementById("additional_item1");
         const header = document.getElementById("header");
+        const completion = document.getElementById("completion");
         const clear_sf_wcf_form_no_button = document.getElementById("clear_sf_wcf_form_no_button");
         const add_item_button = document.getElementById("add_item_button");
         const remove_item_button = document.getElementById("remove_item_button");
@@ -176,12 +247,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                             hauling_date.value = date_decoder(wcf_data_list.content[a][19]);
                             batch_weight_list.style.display = "grid";
                             additional_item1.style.display = "grid";
+                            completion.style.display = "grid";
                             header.style.display = "grid";
                             add_item_button.style.display = "block";
                             weights.style.display = "flex";
                             buttons.style.display = "flex";
                             rem_weight.value = batch_weight.value - total_weight.value;
-        
                         }
                         search_sf_wcf_result.innerHTML = `
                         <div class="search_sf_wcf_result">
@@ -224,11 +295,23 @@ document.addEventListener('DOMContentLoaded', async function() {
         const rem_weight = document.getElementById("rem_weight");
         const itemcounter = document.querySelectorAll(".search_input_type");
         const item_counter = document.getElementById("item_counter");
+        const form_id = document.getElementById("form_id");
         const search_wrapper = [];
         const destruction_process = [];
         const weight = [];
         const input_box = [];
         const sugg_box = [];
+
+        form_id.addEventListener("submit", () => {               
+            if(rem_weight.value == 0){
+                return true;
+            }
+            else if(rem_weight.value != 0){
+                alert("Please Input the Remaining Weight");
+                event.preventDefault();
+                return false;
+            }
+        })
 
         for (let z = 1; z <= itemcounter.length; z++) {
             search_wrapper[z] = document.getElementById(`search_type_of_waste${z}`);
@@ -264,11 +347,17 @@ document.addEventListener('DOMContentLoaded', async function() {
             function select(element, index) {
                 let select_user_data = element;
                 input_box[index].value = select_user_data;
-                console.log(input_box[index].value);
                 search_wrapper[index].classList.remove("active");
+                var treatment_input = document.getElementById(`destruction_process${index}`);
                 for (var a = 1; a < type_of_waste_data.content.length; a++) {
                     if (input_box[z].value == type_of_waste_data.content[a][1]) {
                         destruction_process[z].value = type_of_waste_data.content[a][2];
+                        treatment_input.setAttribute("readonly", "true")
+                        break
+                    }
+                    else{
+                        destruction_process[z].value = "";
+                        treatment_input.removeAttribute("readonly")
                     }
                 }
             }
@@ -290,7 +379,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 var inputWeights = [];
 
                 // Store the input values in the array and exclude NaN values
-                for (let i = 1; i <= 10; i++) {
+                for (let i = 1; i <= 11; i++) {
                     var weightInput = document.getElementById(`weight${i}`);
                     var intWeight = parseInt(weightInput.value);
                     if (!isNaN(intWeight)) {
@@ -306,19 +395,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
                 // Calculate and update the remaining weight
                 rem_weight.value = batch_weight.value - total_weight.value;
-
-                var form_id = document.getElementById("form_id");
-
-                form_id.addEventListener("submit", () => {               
-                    if(rem_weight.value == 0){
-                        return true;
-                    }
-                    else if(rem_weight.value != 0){
-                        alert("Please Input the Remaining Weight");
-                        event.preventDefault();
-                        return false;
-                    }
-                })
+                  
             });
 
             item_counter.addEventListener("input", () => {
@@ -342,19 +419,6 @@ document.addEventListener('DOMContentLoaded', async function() {
 
                 // Calculate and update the remaining weight
                 rem_weight.value = batch_weight.value - total_weight.value;
-
-                var form_id = document.getElementById("form_id");
-
-                form_id.addEventListener("submit", () => {               
-                    if(rem_weight.value == 0){
-                        return true;
-                    }
-                    else if(rem_weight.value != 0){
-                        alert("Please Input the Remaining Weight");
-                        event.preventDefault();
-                        return false;
-                    }
-                })
             });
 
             // Create and dispatch the input event
@@ -362,145 +426,141 @@ document.addEventListener('DOMContentLoaded', async function() {
             item_counter.dispatchEvent(inputEvent);
         }
 
-        const additional_item2 = document.getElementById("additional_item2");
-        const additional_item3 = document.getElementById("additional_item3");
-        const additional_item4 = document.getElementById("additional_item4");
-        const additional_item5 = document.getElementById("additional_item5");
-        const additional_item6 = document.getElementById("additional_item6");
-        const additional_item7 = document.getElementById("additional_item7");
-        const additional_item8 = document.getElementById("additional_item8");
-        const additional_item9 = document.getElementById("additional_item9");
-        const additional_item10 = document.getElementById("additional_item10");
-        const weight2 = document.getElementById("weight2");
-        const weight3 = document.getElementById("weight3");
-        const weight4 = document.getElementById("weight4");
-        const weight5 = document.getElementById("weight5");
-        const weight6 = document.getElementById("weight6");
-        const weight7 = document.getElementById("weight7");
-        const weight8 = document.getElementById("weight8");
-        const weight9 = document.getElementById("weight9");
-        const weight10 = document.getElementById("weight10");
-        var item_counter_int = parseInt(item_counter.value)
-        const form_id = document.getElementById("form_id");
+        // treatment_type
+        const itemcounter2 = document.querySelectorAll(".search_treatment_type");
+        const search_wrapper2 = [];
+        const input_box2 = [];
+        const sugg_box2 = [];
 
+        for (let z = 1; z <= itemcounter2.length; z++) {
+            search_wrapper2[z] = document.getElementById(`search_type_of_treatment${z}`);
+            input_box2[z] = search_wrapper2[z].querySelector("input");
+            sugg_box2[z] = search_wrapper2[z].querySelector(".autocom_box");
+
+            var data_value2 = ["FOR STORAGE"];
+
+            for (let i = 1; i < type_of_waste_data.content.length; i++) {
+                if (!data_value2.includes(type_of_waste_data.content[i][2])) {
+                    data_value2.push(type_of_waste_data.content[i][2]);
+                }
+            }
+
+            input_box2[z].onkeyup = (e) => {
+                let user_data = e.target.value;
+                let empty_array = [];
+                if (user_data) {
+                    empty_array = data_value2.filter((data) => {
+                        return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
+                    });
+                    empty_array = empty_array.map((data) => {
+                        return '<li>' + data + '</li>';
+                    });
+                    console.log(empty_array);
+                    search_wrapper2[z].classList.add("active");
+                    show_suggestions2(empty_array, z);
+                } else {
+                    search_wrapper2[z].classList.remove("active");
+                }
+            };
+
+            sugg_box2[z].addEventListener("click", (e) => {
+                if (e.target.tagName === "LI") {
+                    select2(e.target.innerHTML, z);
+                }
+            });
+
+            function select2(element, index) {
+                let select_user_data = element;
+                input_box2[index].value = select_user_data;
+                search_wrapper2[index].classList.remove("active");
+            }
+
+            function show_suggestions2(list, index) {
+                let list_data;
+                if (!list.length) {
+                    user_value = input_box[index].value;
+                    list_data = '<li>' + user_value + '</li>';
+                } else {
+                    list_data = list.join("");
+                }
+                sugg_box2[index].innerHTML = list_data;
+            }
+        }
+
+        const discrepancy = document.getElementById("discrepancy");
+        const discrepancy_button = document.getElementById("discrepancy_button");
+        
+        discrepancy_button.addEventListener("click", add_discrepancy_input);
         add_item_button.addEventListener("click", add_new_item);
-
-        function add_new_item(){
-            item_counter_int += 1;
-            item_counter.value = item_counter_int;
-
-            if(item_counter_int == 2){
-                additional_item2.style.display ="grid";
-                // FOR 2
-                remove_item_button.style.display = "block"
-            }
-            else if(item_counter_int == 3){
-                additional_item3.style.display ="grid";
-                // FOR 3
-            }
-            else if(item_counter_int == 4){
-                additional_item4.style.display ="grid";
-                // FOR 4
-            }
-            else if(item_counter_int == 5){
-                additional_item5.style.display ="grid";
-                // FOR 5
-            }
-            else if(item_counter_int == 6){
-                additional_item6.style.display ="grid";
-                // FOR 6
-            }
-            else if(item_counter_int == 7){
-                additional_item7.style.display ="grid";
-                // FOR 7
-            }
-            else if(item_counter_int == 8){
-                additional_item8.style.display ="grid";
-                // FOR 8
-            }
-            else if(item_counter_int == 9){
-                additional_item9.style.display ="grid";
-                // FOR 9
-            }
-            else if(item_counter_int == 10){
-                additional_item10.style.display ="grid";
-                // FOR 10
-                add_item_button.style.display = "none"
-            }
-        }
-
         remove_item_button.addEventListener("click", remove_new_item);
-
-        function remove_new_item(){
-            if(item_counter_int == 2){
-                additional_item2.style.display ="none";        
-                // FOR 1
-                remove_item_button.style.display = "none"
-                weight2.value = 0;4            
-                const inputEvent = new Event('input', { bubbles: true, cancelable: true });
-                item_counter.dispatchEvent(inputEvent);
-            }
-            else if(item_counter_int == 3){
-                additional_item3.style.display ="none";
-                weight3.value = 0;
-                const inputEvent = new Event('input', { bubbles: true, cancelable: true });
-                item_counter.dispatchEvent(inputEvent);
-                // FOR 2
-            }
-            else if(item_counter_int == 4){
-                additional_item4.style.display ="none";
-                weight4.value = 0;
-                const inputEvent = new Event('input', { bubbles: true, cancelable: true });
-                item_counter.dispatchEvent(inputEvent);
-                // FOR 3
-            }
-            else if(item_counter_int == 5){
-                additional_item5.style.display ="none";
-                weight5.value = 0;
-                const inputEvent = new Event('input', { bubbles: true, cancelable: true });
-                item_counter.dispatchEvent(inputEvent);
-                // FOR 4
-            }
-            else if(item_counter_int == 6){
-                additional_item6.style.display ="none";
-                weight6.value = 0;
-                const inputEvent = new Event('input', { bubbles: true, cancelable: true });
-                item_counter.dispatchEvent(inputEvent);
-                // FOR 5
-            }
-            else if(item_counter_int == 7){
-                additional_item7.style.display ="none";
-                weight7.value = 0;
-                const inputEvent = new Event('input', { bubbles: true, cancelable: true });
-                item_counter.dispatchEvent(inputEvent);
-                // FOR 6
-            }
-            else if(item_counter_int == 8){
-                additional_item8.style.display ="none";
-                weight8.value = 0;
-                const inputEvent = new Event('input', { bubbles: true, cancelable: true });
-                item_counter.dispatchEvent(inputEvent);
-                // FOR 7
-            }
-            else if(item_counter_int == 9){
-                additional_item9.style.display ="none";
-                weight9.value = 0;
-                const inputEvent = new Event('input', { bubbles: true, cancelable: true });
-                item_counter.dispatchEvent(inputEvent);
-                // FOR 8
-            }
-            else if(item_counter_int == 10){
-                additional_item10.style.display ="none";
-                weight10.value = 0;
-                const inputEvent = new Event('input', { bubbles: true, cancelable: true });
-                item_counter.dispatchEvent(inputEvent);
-                // FOR 9
-                add_item_button.style.display = "block"
-            }
-            item_counter_int -= 1;
-            item_counter.value = item_counter_int;
+        
+        function add_discrepancy_input() {
+          const is_discrepancy = document.getElementById("is_discrepancy");
+          const sf_discrepancy = document.getElementById(`sf_discrepancy`);
+          const sf_form_no = document.getElementById(`sf_form_no${parseInt(item_counter.value) + 1}`);
+          sf_discrepancy.value = sf_form_no.value;
+          
+          discrepancy.style.display = "grid";
+          add_item_button.style.display = "none";
+          remove_item_button.style.display = "none";
+          is_discrepancy.value = "true";
         }
+        
+        function add_new_item() {
+          const item_counter_int = parseInt(item_counter.value) + 1;
+          item_counter.value = item_counter_int;
 
+          
+          if (item_counter_int >= 2 && item_counter_int <= 10) {
+            const additional_item = document.getElementById(`additional_item${item_counter_int}`);
+            const type_of_waste = document.getElementById(`type_of_waste${item_counter_int}`);
+            const weight = document.getElementById(`weight${item_counter_int}`);
+            const destruction_process = document.getElementById(`destruction_process${item_counter_int}`);
+            additional_item.style.display = "grid";
+            type_of_waste.setAttribute("required", "true");
+            weight.setAttribute("required", "true");
+            destruction_process.setAttribute("required", "true");
+            
+            if (item_counter_int === 2) {
+              remove_item_button.style.display = "block";
+            }
+            
+            if (item_counter_int === 10) {
+              add_item_button.style.display = "none";
+            }
+          }
+        }
+        
+        function remove_new_item() {
+            const item_counter_int = parseInt(item_counter.value);
+            
+            if (item_counter_int >= 2 && item_counter_int <= 10) {
+                const additional_item = document.getElementById(`additional_item${item_counter_int}`);
+                additional_item.style.display = "none";
+                const type_of_waste = document.getElementById(`type_of_waste${item_counter_int}`);
+                const destruction_process = document.getElementById(`destruction_process${item_counter_int}`);
+                const weight = document.getElementById(`weight${item_counter_int}`);
+                weight.value = 0;
+                
+                type_of_waste.removeAttribute("required")
+                destruction_process.removeAttribute("required")
+                weight.removeAttribute("required")
+
+                const inputEvent = new Event('input', { bubbles: true, cancelable: true });
+                item_counter.dispatchEvent(inputEvent);
+                
+                if (item_counter_int === 2) {
+                    remove_item_button.style.display = "none";
+                }
+                
+                if (item_counter_int === 10) {
+                    add_item_button.style.display = "block";
+                }
+            }
+            
+            item_counter.value = item_counter_int - 1;
+        }
+        
     } catch (error) {
         console.error('Error fetching data:', error);
     }

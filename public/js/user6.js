@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const mtf_data_list  = await mtf_response.json();
         const ltf_data_list  = await ltf_response.json();
         const wcf_data_list  = await wcf_response.json();
-        const sff_data_list  = await sf_response.json();
+        const sf_data_list  = await sf_response.json();
 
         // Code that depends on the fetched data
         // username_data3
@@ -242,6 +242,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <td>${client_list_data.content[x][1]}</td>
                 <td>${client_list_data.content[x][2]}</td>
                 <td>${client_list_data.content[x][3]}</td>
+                <td>${client_list_data.content[x][4]}</td>
             </tr>
             `
             data_value_counter += 1;
@@ -249,6 +250,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         client_list.innerHTML = client_list_data_value
 
         // type_of_waste_data
+        const type_of_waste_list = document.getElementById("type_of_waste_list");
+        const treatment_process = document.getElementById("treatment_process");
+        const code = document.getElementById("code");
         const search_wrapper2 = document.getElementById("search_type_of_waste");
         const input_box2 = search_wrapper2.querySelector("input");
         const sugg_box2 = search_wrapper2.querySelector(".autocom_box");
@@ -299,6 +303,44 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             sugg_box2.innerHTML = list_data;
         }
+
+        var type_of_waste__list_data_value = "";
+        var type_of_waste__list_data_value_counter = 1;
+        for(let x = 1; x < type_of_waste_data.content.length; x++){
+            type_of_waste__list_data_value += `
+            <tr>
+                <td>${type_of_waste__list_data_value_counter}</td>
+                <td>${type_of_waste_data.content[x][1]}</td>
+                <td>${type_of_waste_data.content[x][2]}</td>
+                <td>${type_of_waste_data.content[x][3]}</td>
+            </tr>
+            `
+            type_of_waste__list_data_value_counter += 1;
+        }
+        type_of_waste_list.innerHTML = type_of_waste__list_data_value
+
+        var treatment_process_list = [];
+        var code_list = [];
+        for (let i = 1; i < type_of_waste_data.content.length; i++) {
+            if (!treatment_process_list.includes(type_of_waste_data.content[i][2])) {
+                treatment_process_list.push(type_of_waste_data.content[i][2]);
+            }
+            if (!code_list.includes(type_of_waste_data.content[i][3])) {
+                code_list.push(type_of_waste_data.content[i][3]);
+            }
+        }
+
+        var select_value = `<option value="">Select Treatment Process</option>`;
+        for(let i = 0; i < treatment_process_list.length; i++){
+            select_value += `<option value="${treatment_process_list[i]}">${treatment_process_list[i]}</option>`
+        }
+        treatment_process.innerHTML = select_value;
+
+        var select_value = `<option value="">Select Code</option>`;
+        for(let i = 0; i < code_list.length; i++){
+            select_value += `<option value="${code_list[i]}">${code_list[i]}</option>`
+        }
+        code.innerHTML = select_value;
 
 
         // mtf_data_list

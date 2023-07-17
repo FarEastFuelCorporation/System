@@ -37,7 +37,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         user_sidebar_officer.innerText = username_data.content[4][4];
     
         // dashboard
-        var unsorted_list = document.getElementById("unsorted_list");
+        const pending_list = document.getElementById("pending_list");
+        const finished_list = document.getElementById("finished_list");
         var sf_tpf_transaction_counter = 0;
         var sf_transaction_counter = 0;
         let sf_transaction = []; // Variable containing existing elements
@@ -58,19 +59,20 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
 
         // Get elements from sf_transaction not included in sf_tpf_transaction
-        const newElements = sf_transaction.filter((element) => !sf_tpf_transaction.includes(element));
+        const pending = sf_transaction.filter((element) => !sf_tpf_transaction.includes(element));
+        const finish = sf_transaction.filter((element) => sf_tpf_transaction.includes(element));
 
         sorted.innerText = sf_tpf_transaction_counter;
         total.innerText = sf_transaction_counter
         unsorted.innerText = sf_transaction_counter - sf_tpf_transaction_counter;
         var data_value = "";
         var data_value_counter = 1;
-        for(let i = 0; i < newElements.length; i++){
+        for(let i = 0; i < pending.length; i++){
             var status;
             var date_accomplished;
             var target_date;
             for(let j = 1; j < tpf_data_list.content.length; j++){
-                if(newElements[i] == tpf_data_list.content[j][1]){
+                if(pending[i] == tpf_data_list.content[j][1]){
                     date_accomplished = new Date(date_decoder(tpf_data_list.content[j][11]));
                     target_date = new Date(date_decoder(tpf_data_list.content[j][10]));
                     if(date_accomplished.getDate() < target_date.getDate()){
@@ -86,19 +88,70 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <tr>
                         <td>${data_value_counter}</td>
                         <td>${tpf_data_list.content[j][1]}</td>
-                        <td>${date_decoder(tpf_data_list.content[j][11])}</td>
+                        <td>${date_decoder(tpf_data_list.content[j][11])} /<br> ${time_decoder(tpf_data_list.content[j][12])}</td>
                         <td>${tpf_data_list.content[j][4]}</td>
                         <td>${tpf_data_list.content[j][5]}</td>
                         <td>${tpf_data_list.content[j][7]} kg.</td>
                         <td>${date_decoder(tpf_data_list.content[j][10])}</td>
                         <td>${status}</td>
+                        </tr>
+                    `
+                    data_value_counter += 1;
+                }
+            }
+        }
+        pending_list.innerHTML = data_value;
+
+        var data_value = "";
+        var data_value_counter = 1;
+        for(let i = 0; i < finish.length; i++){
+            var status;
+            var date_accomplished;
+            var target_date;
+            for(let j = 1; j < tpf_data_list.content.length; j++){
+                if(finish[i] == tpf_data_list.content[j][1]){
+                    date_accomplished = new Date(date_decoder(tpf_data_list.content[j][11]));
+                    target_date = new Date(date_decoder(tpf_data_list.content[j][10]));
+                    if(date_accomplished.getDate() < target_date.getDate()){
+                        status = "AHEAD OF TIME";
+                    }
+                    else if(date_accomplished.getDate() == target_date.getDate()){
+                        status = "ON TIME";
+                    }
+                    else if(date_accomplished.getDate() > target_date.getDate()){
+                        status = "DELAYED";
+                    }
+                    var cod_no;
+                    var finished_date;
+                    var finished_time;
+                    for(let k = 1; k < cod_data_list.content.length; k++){
+                        if(tpf_data_list.content[j][1] == cod_data_list.content[k][2]){
+                            cod_no = cod_data_list.content[k][1];
+                            finished_date = date_decoder(cod_data_list.content[k][11]);
+                            finished_time = time_decoder(cod_data_list.content[k][12]);
+                        }
+                    }
+                    data_value +=`
+                    <tr>
+                        <td>${data_value_counter}</td>
+                        <td>${cod_no}</td>
+                        <td>${tpf_data_list.content[j][1]}</td>
+                        <td>${date_decoder(tpf_data_list.content[j][11])} /<br> ${time_decoder(tpf_data_list.content[j][12])}</td>
+                        <td>${tpf_data_list.content[j][4]}</td>
+                        <td>${tpf_data_list.content[j][5]}</td>
+                        <td>${tpf_data_list.content[j][7]} kg.</td>
+                        <td>${date_decoder(tpf_data_list.content[j][10])}</td>
+                        <td>${status}</td>
+                        <td>${finished_date} /<br> ${finished_time}</td>
+                        <td>${calculateTravelTime(date_decoder(tpf_data_list.content[j][11]),time_decoder(tpf_data_list.content[j][12]),finished_date,finished_time)}</td>
                     </tr>
                     `
                     data_value_counter += 1;
                 }
             }
         }
-        unsorted_list.innerHTML = data_value;
+        finished_list.innerHTML = data_value;
+
 
         // cod_data_list
         const cod_form_no = document.getElementById("cod_form_no");
@@ -186,6 +239,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const generate_button = document.getElementById("generate_button");
         const what_to_print = document.getElementById("what_to_print");
         const convertToPDFandDownload_button = document.getElementById("convertToPDFandDownload_button");
+        const client_container = document.getElementById("client_container");
+        const completion = document.getElementById("completion");
         const type_of_cod = document.getElementById("type_of_cod");
         const table_company = document.getElementById("table_company");
         const table_company_address = document.getElementById("table_company_address");
@@ -212,8 +267,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                         var certification_day = new Date(certification_date).getDate();
                         var certification_day_ordinal = convertToOrdinal(certification_day);
                         var certification_month = convertToMonthName(month);
-                        for(let a = 0; a <= newElements.length; a++){
-                            if(tpf_data_list.content[x][1] == newElements[a]){
+                        for(let a = 0; a <= pending.length; a++){
+                            if(tpf_data_list.content[x][1] == pending[a]){
                                 if (waste_description.value == tpf_data_list.content[x][5] &&
                                     year_covered.value == year &&
                                     month_covered.value == month) {
@@ -250,6 +305,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         }
                                     }
                                     what_to_print.style.display = "block";
+                                    completion.style.display = "grid";    
                                     convertToPDFandDownload_button.style.display = "block";    
                                     table_data.innerHTML = table_data_value;
                                     result_remarks.innerHTML = "";
@@ -271,8 +327,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                         var certification_day = new Date(certification_date).getDate();
                         var certification_day_ordinal = convertToOrdinal(certification_day);
                         var certification_month = convertToMonthName(month);
-                        for(let a = 0; a <= newElements.length; a++){
-                            if(tpf_data_list.content[x][1] == newElements[a]){
+                        for(let a = 0; a <= pending.length; a++){
+                            if(tpf_data_list.content[x][1] == pending[a]){
                                 if (waste_description.value == certification_day &&
                                     year_covered.value == year &&
                                     month_covered.value == month) {
@@ -307,6 +363,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         }
                                     }
                                     what_to_print.style.display = "block";
+                                    completion.style.display = "grid";    
                                     convertToPDFandDownload_button.style.display = "block";    
                                     table_data.innerHTML = table_data_value;
                                     result_remarks.innerHTML = "";
@@ -351,15 +408,15 @@ document.addEventListener('DOMContentLoaded', async function() {
                     </label><br>
                     <div>
                         <input type="text" id="waste_description" autocomplete="off" name="waste_description" class="form-control"><br>
-                    </div>
-                </div>
-                <div>
-                    <label for="year_covered">
+                        </div>
+                        </div>
+                        <div>
+                        <label for="year_covered">
                         <i class="fa-solid fa-list-ol"></i>
                         Year Covered
                     </label><br>
                     <div class="form">
-                        <input type="text" autocomplete="off" name="year_covered" id="year_covered" class="form-control"><br>
+                    <input type="text" autocomplete="off" name="year_covered" id="year_covered" class="form-control"><br>
                     </div>
                 </div>
                 <div>
@@ -386,20 +443,22 @@ document.addEventListener('DOMContentLoaded', async function() {
                     </div>
                 </div>
                 `
+                what_to_print.style.display = "none";
+                client_container.style.display = "grid";    
                 type_of_cod_list.innerHTML = data_content;
             }
             if(type_of_cod.value == "By Date"){
                 data_content = 
                 `
                 <div>
-                    <label for="waste_description">
+                <label for="waste_description">
                         <i class="fa-solid fa-list-ol"></i>
                         Day
-                    </label><br>
+                        </label><br>
                     <div>
                         <input type="number" id="waste_description" autocomplete="off" name="waste_description" class="form-control"><br>
                     </div>
-                </div>
+                    </div>
                 <div>
                     <label for="year_covered">
                         <i class="fa-solid fa-list-ol"></i>
@@ -431,17 +490,19 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <option value="12">DECEMBER</option>
                         </select>
                     </div>
-                </div>
+                    </div>
                 `
+                what_to_print.style.display = "none";
+                client_container.style.display = "grid";    
                 type_of_cod_list.innerHTML = data_content;
             }
         })
-
+        
         const search_cod_form_no_button = document.getElementById("search_cod_form_no_button");
         const search_cod_form_no = document.getElementById("search_cod_form_no");
-
+        
         search_cod_form_no_button.addEventListener("click", search)
-    
+        
         function search() {
             var table_data_value = "";
             var table_data_counter = 0;

@@ -379,6 +379,75 @@ h5{
     border: 1px solid variables.$accent1;
 }
 
+// system_log
+.system_log
+{
+    background-color: #ffbf00;
+    width: 100%;
+    height: 100vh;
+    padding-top: 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.system_log .employee_picture
+{
+    width: calc(100vh - 10%);
+    height: calc(100vh - 10%);
+    padding: 5%;
+}
+
+.system_log .employee_picture div
+{
+    width: 100%;
+    height: 100%;
+    border: 5px solid black;
+    border-radius: 100%;
+    overflow: hidden;
+}
+
+.system_log .employee_picture div img
+{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.system_log .employee_details
+{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.system_log .employee_details #exactDate
+{
+    font-size: 100px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.system_log .employee_details #exactTime
+{
+    font-size: 125px;
+    font-weight: bold;
+}
+
+.system_log .employee_details .employee_name
+{
+    margin-top: 10%;
+    font-size: 75px;
+    font-weight: bold;
+}
+
+.system_log .employee_details .employee_department
+{
+    font-size: 50px;
+    font-style: italic;
+}
+
 /* sidebar starts here */
 .sidebar{
     position: fixed;
@@ -452,19 +521,26 @@ h5{
 
 /* main starts here */
 #dashboard_section,
-#sorting_dashboard_section,
-#treatment_process_dashboard,
-#certification_dashboard,
-#billing_dashboard,
 #waste_collection_form,
+#sorting_dashboard_section,
 #sorting_form,
+#treatment_process_dashboard,
 #treatment_process_form,
+#certification_dashboard,
 #destruction_form,
+#billing_dashboard,
 #billing_process_form,
 #marketing_dashboard,
 #marketing_transaction_form,
+#client_list_section,
+#new_client_form,
+#type_of_waste_list_section,
+#type_of_waste_form,
 #logistic_dashboard,
 #logistics_travel_form,
+#vehicle_list_section,
+#new_vehicle_form,
+#vehicle_maintenance_form,
 #directorySection,
 #accountingSection,
 #settingsSection,
@@ -485,7 +561,14 @@ h5{
 #destruction_form,
 #billing_process_form,
 #marketing_transaction_form,
+#client_list_section,
+#new_client_form,
+#type_of_waste_list_section,
+#type_of_waste_form,
 #logistics_travel_form,
+#vehicle_list_section,
+#new_vehicle_form,
+#vehicle_maintenance_form,
 #directorySection,
 #accountingSection,
 #settingsSection,
@@ -575,7 +658,7 @@ section h2
 
 #dashboard_section table tr
 {
-    border-bottom: 2px solid white;
+    border-bottom: 1px solid white;
 }
 
 #dashboard_section table td,
@@ -583,7 +666,7 @@ section h2
 {
     padding: 0 10px;
     text-align: center;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 #dashboard_section table th
@@ -797,13 +880,16 @@ section h2
     background-color: green;
 }
 
+// new_client_form
+
+
 // sorting dashboard
 #sorting_dashboard_section .cards{
     width: 100%;
     height: 120px;
     padding: 10px 0px 0 0px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     grid-gap: 20px;
     background: #f5f5f5;
 }
@@ -865,7 +951,7 @@ section h2
 
 #sorting_dashboard_section table tr
 {
-    border-bottom: 2px solid white;
+    border-bottom: 1px solid white;
 }
 
 #sorting_dashboard_section table td,
@@ -873,7 +959,7 @@ section h2
 {
     padding: 0 10px;
     text-align: center;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 #sorting_dashboard_section table th
@@ -895,17 +981,25 @@ section h2
     gap: 20px;
 }
 
+#sorting_form form textarea,
 #sorting_form form input,
 #sorting_form form select
 {
     border: 3px solid red !important;
 }
 
+#sorting_form form textarea,
 #sorting_form form label,
 #sorting_form form select,
 #sorting_form form input
 {
     font-size: 30px !important;
+}
+
+#sorting_form form textarea
+{
+    height: 150px;
+    resize: none;
 }
 
 #sorting_form form .search_sf_wcf_result
@@ -987,6 +1081,13 @@ section h2
     background-color: #efefef;
 }
 
+#sorting_form form .completion
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
 #sorting_form form .items,
 #sorting_form form .items_header
 {
@@ -1005,10 +1106,12 @@ section h2
 #sorting_form form #header,
 #sorting_form form #add_item_button,
 #sorting_form form #weights,
-#sorting_form form #buttons
+#sorting_form form #buttons,
+#sorting_form form .completion
 {
     display: none;
 }
+
 
 #sorting_form form .add_item
 {
@@ -1045,6 +1148,23 @@ section h2
     border-radius: 60px;
     text-align: center;
     display: none;
+}
+
+#sorting_form form .discrepancy_button_holder
+{
+    display: flex;
+    align-items: end;
+}
+
+#sorting_form form #discrepancy_button
+{
+    height: 60px;
+    background-color: red;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
 }
 
 #sorting_form form .buttons
@@ -1141,7 +1261,7 @@ section h2
 
 #treatment_process_dashboard table tr
 {
-    border-bottom: 2px solid white;
+    border-bottom: 1px solid white;
 }
 
 #treatment_process_dashboard table td,
@@ -1149,7 +1269,7 @@ section h2
 {
     padding: 0 10px;
     text-align: center;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 #treatment_process_dashboard table th
@@ -1280,7 +1400,7 @@ section h2
     margin-bottom: 20px;
 }
 
-#treatment_process_form form .items,
+#treatment_process_form form .items
 #treatment_process_form form .items_header,
 #treatment_process_form form .completion,
 #treatment_process_form form #add_item_button,
@@ -1420,7 +1540,7 @@ section h2
 
 #certification_dashboard table tr
 {
-    border-bottom: 2px solid white;
+    border-bottom: 1px solid white;
 }
 
 #certification_dashboard table td,
@@ -1428,7 +1548,7 @@ section h2
 {
     padding: 0 10px;
     text-align: center;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 #certification_dashboard table th
@@ -1560,6 +1680,13 @@ section h2
     font-weight: bold;
 }
 
+#destruction_form form .completion
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
 #destruction_form form .buttons
 {
     display: flex;
@@ -1599,6 +1726,8 @@ section h2
     background-color: green;
 }
 
+#destruction_form form #client_container,
+#destruction_form form #completion,
 #destruction_form form #convertToPDFandDownload_button,
 #destruction_form form #convertToPDF_button
 {
@@ -1673,7 +1802,7 @@ section h2
 
 #billing_dashboard table tr
 {
-    border-bottom: 2px solid white;
+    border-bottom: 1px solid white;
 }
 
 #billing_dashboard table td,
@@ -1681,7 +1810,7 @@ section h2
 {
     padding: 0 10px;
     text-align: center;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 #billing_dashboard table th
@@ -1850,7 +1979,7 @@ section h2
 }
 
 /* marketing dashboard section starts here */
-#marketing_dashboard .cards
+.marketing .cards
 {
     width: 100%;
     height: 120px;
@@ -1861,7 +1990,7 @@ section h2
     background: #f5f5f5;
 }
 
-#marketing_dashboard .cards2
+.marketing .cards2
 {
     width: 100%;
     padding: 10px 0px 0 0px;
@@ -1871,7 +2000,7 @@ section h2
     background: #f5f5f5;
 }
 
-#marketing_dashboard .cards3
+.marketing .cards3
 {
     width: 100%;
     height: 120px;
@@ -1881,7 +2010,7 @@ section h2
     grid-gap: 20px;
 }
 
-#marketing_dashboard .cards4
+.marketing .cards4
 {
     width: 100%;
     height: 120px;
@@ -1891,7 +2020,7 @@ section h2
     grid-gap: 20px;
 }
 
-#marketing_dashboard .cards5
+.marketing .cards5
 {
     display: flex;
     flex-direction: column;
@@ -1901,7 +2030,7 @@ section h2
     background-color: #ffbf00;
 }
 
-#marketing_dashboard .card
+.marketing .card
 {
     padding: 0 10px;
     display: flex;
@@ -1914,91 +2043,91 @@ section h2
     border: 3px solid #ffbf00;
 }
 
-#marketing_dashboard .cards .card:hover
+.marketing .cards .card:hover
 {
     background: #ffbf00;
 }
 
-#marketing_dashboard .cards .card:hover .number, 
-#marketing_dashboard .cards .card:hover .card-name,
-#marketing_dashboard .cards .card:hover .icon-box i
+.marketing .cards .card:hover .number, 
+.marketing .cards .card:hover .card-name,
+.marketing .cards .card:hover .icon-box i
 {
     color: black;
 }
 
-#marketing_dashboard .number{
+.marketing .number{
     font-size: 35px;
     font-weight: bold;
     color: #ffbf00;
     text-align: center;
 }
 
-#marketing_dashboard .card-name{
+.marketing .card-name{
     color: white;
     font-weight: 600;    
 }
 
-#marketing_dashboard .icon-box i{
+.marketing .icon-box i{
     font-size: 45px;
     color: #ffbf00;
 }
 
-#marketing_dashboard .list
+.marketing .list
 {
     width: 100%;
     font-size: 25px;
     color: white;
 }
 
-#marketing_dashboard table
+.marketing table
 {
     width: 100%;
 }
 
-#marketing_dashboard table tr
+.marketing table tr
 {
-    border-bottom: 2px solid white;
+    border-bottom: 1px solid white;
 }
 
-#marketing_dashboard table td,
-#marketing_dashboard table th
+.marketing table td,
+.marketing table th
 {
     padding: 0 10px;
     text-align: center;
-    font-size: 20px;
+    font-size: 16px;
 }
 
-#marketing_dashboard table th
+.marketing table th
 {
     color: #ffbf00;
 }
 
 /* MARKETING TRANSACTION FORM section starts here */
-#marketing_transaction_form form .form
+.marketing form .form
 {
     max-width: 250px !important;
 }
 
-#marketing_transaction_form form .mtf_form
+.marketing form .mtf_form
 {
     display: flex;
     gap: 20px;
 }
 
-#marketing_transaction_form form input,
-#marketing_transaction_form form select
+.marketing form input,
+.marketing form select
 {
     border: 3px solid orangered !important;
 }
 
-#marketing_transaction_form form label,
-#marketing_transaction_form form select,
-#marketing_transaction_form form input
+.marketing form label,
+.marketing form select,
+.marketing form input
 {
     font-size: 30px !important;
 }
 
-#marketing_transaction_form form .search_mtf_result
+.marketing form .search_mtf_result
 {
     width: 100%;
     padding: 20px;
@@ -2007,7 +2136,7 @@ section h2
     font-size: 30px !important;
 }
 
-#marketing_transaction_form form .search_input 
+.marketing form .search_input 
 {
     position: relative;
     background-color: #fff;
@@ -2016,7 +2145,7 @@ section h2
     box-shadow: 0px 1px 5px 3px rgba(0,0,0,0.12);
 }
 
-#marketing_transaction_form form .search_input input
+.marketing form .search_input input
 {
     height: 55px;
     width: 100%;
@@ -2028,7 +2157,7 @@ section h2
     box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
 }
 
-#marketing_transaction_form form .search_input .icon
+.marketing form .search_input .icon
 {
     height: 55px;
     width: 55px;
@@ -2041,7 +2170,7 @@ section h2
     cursor: pointer;
 }
 
-#marketing_transaction_form form .search_input .autocom_box
+.marketing form .search_input .autocom_box
 {
     padding: 0px;
     max-height: 280px;
@@ -2050,14 +2179,14 @@ section h2
     pointer-events: none;
 }
 
-#marketing_transaction_form form .search_input.active .autocom_box
+.marketing form .search_input.active .autocom_box
 {
     padding: 10px 8px;
     opacity: 1;
     pointer-events: auto;
 }
 
-#marketing_transaction_form form .search_input .autocom_box li
+.marketing form .search_input .autocom_box li
 {
     list-style: none;
     padding: 8px 12px;
@@ -2067,17 +2196,17 @@ section h2
     display: none;
 }
 
-#marketing_transaction_form form .search_input.active .autocom_box li
+.marketing form .search_input.active .autocom_box li
 {
     display: block;
 }
 
-#marketing_transaction_form form .search_input .autocom_box li:hover
+.marketing form .search_input .autocom_box li:hover
 {
     background-color: #efefef;
 }
 
-#marketing_transaction_form form .date_time_weight
+.marketing form .date_time_weight
 {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -2085,17 +2214,17 @@ section h2
     width: 100%;
 }
 
-#marketing_transaction_form form .date_time_weight label
+.marketing form .date_time_weight label
 {
     width: 100%;
 }
 
-#marketing_transaction_form form .date_time_weight input
+.marketing form .date_time_weight input
 {
     font-size: 25px !important;
 }
 
-#marketing_transaction_form form .items
+.marketing form .items
 {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -2103,26 +2232,26 @@ section h2
     width: 100%;
 }
 
-#marketing_transaction_form form #mtf_data
+.marketing form #mtf_data
 {
     display: none;
 }
 
-#marketing_transaction_form form .add_item
+.marketing form .add_item
 {
     display: flex;
     width: 100%;
     position: relative;
 }
 
-#marketing_transaction_form form .item_buttons
+.marketing form .item_buttons
 {
     position: absolute;
     right: 0;
     display: flex;
 }
 
-#marketing_transaction_form form #add_item_button
+.marketing form #add_item_button
 {
     max-width: 60px !important;
     background-color: orangered;
@@ -2133,7 +2262,7 @@ section h2
     text-align: center;
 }
 
-#marketing_transaction_form form #remove_item_button
+.marketing form #remove_item_button
 {
     max-width: 60px !important;
     background-color: red;
@@ -2145,15 +2274,15 @@ section h2
     display: none;
 }
 
-#marketing_transaction_form form .buttons
+.marketing form .buttons
 {
     display: flex;
     gap: 20px;
     margin-top: 50px;
 }
 
-#marketing_transaction_form form #submit,
-#marketing_transaction_form form button
+.marketing form #submit,
+.marketing form button
 {
     max-width: 200px !important;
     background-color: orangered;
@@ -2162,7 +2291,7 @@ section h2
     color: black;
 }
 
-#marketing_transaction_form form #reset
+.marketing form #reset
 {
     max-width: 200px !important;
     background-color: orangered;
@@ -2171,15 +2300,13 @@ section h2
     color: black;
 }
 
-#marketing_transaction_form form #clear_wcf_form_no_button
+.marketing form #clear_wcf_form_no_button
 {
     background-color: orangered;
 }
-
-
 
 /* logistics dashboard section starts here */
-#logistic_dashboard .cards{
+.logistic .cards{
     width: 100%;
     height: 120px;
     padding: 10px 0px 0 0px;
@@ -2189,7 +2316,7 @@ section h2
     background: #f5f5f5;
 }
 
-#logistic_dashboard .cards2{
+.logistic .cards2{
     width: 100%;
     height: 120px;
     padding: 10px 0px 0 0px;
@@ -2199,7 +2326,7 @@ section h2
     background: #f5f5f5;
 }
 
-#logistic_dashboard .card{
+.logistic .card{
     padding: 0 10px;
     display: flex;
     flex-direction: row;
@@ -2211,90 +2338,90 @@ section h2
     border: 3px solid #ffbf00;
 }
 
-#logistic_dashboard .cards .card:hover{
+.logistic .cards .card:hover{
     background: #ffbf00;
 }
 
-#logistic_dashboard .cards .card:hover .number, 
-#logistic_dashboard .cards .card:hover .card-name,
-#logistic_dashboard .cards .card:hover .icon-box i{
+.logistic .cards .card:hover .number, 
+.logistic .cards .card:hover .card-name,
+.logistic .cards .card:hover .icon-box i{
     color: black;
 }
 
-#logistic_dashboard .number{
+.logistic .number{
     font-size: 35px;
     font-weight: bold;
     color: #ffbf00;
     text-align: center;
 }
 
-#logistic_dashboard .card-name{
+.logistic .card-name{
     color: white;
     font-weight: 600;    
 }
 
-#logistic_dashboard .icon-box i{
+.logistic .icon-box i{
     font-size: 45px;
     color: #ffbf00;
 }
 
-#logistic_dashboard .list
+.logistic .list
 {
     width: 100%;
     font-size: 25px;
     color: white;
 }
 
-#logistic_dashboard table
+.logistic table
 {
     width: 100%;
 }
 
-#logistic_dashboard table tr
+.logistic table tr
 {
-    border-bottom: 2px solid white;
+    border-bottom: 1px solid white;
 }
 
-#logistic_dashboard table td,
-#logistic_dashboard table th
+.logistic table td,
+.logistic table th
 {
     padding: 0 10px;
     text-align: center;
-    font-size: 20px;
+    font-size: 16px;
 }
 
-#logistic_dashboard table th
+.logistic table th
 {
     color: #ffbf00;
 }
 
 
 /* LOGISTICS TRAVEL FORM section starts here */
-#logistics_travel_form form .form
+.logistic form .form
 {
     max-width: 250px !important;
 }
 
-#logistics_travel_form form .ltf_form
+.logistic form .ltf_form
 {
     display: flex;
     gap: 20px;
 }
 
-#logistics_travel_form form input,
-#logistics_travel_form form select
+.logistic form input,
+.logistic form select
 {
     border: 3px solid yellowgreen !important;
 }
 
-#logistics_travel_form form label,
-#logistics_travel_form form select,
-#logistics_travel_form form input
+.logistic form label,
+.logistic form select,
+.logistic form input
 {
     font-size: 30px !important;
 }
 
-#logistics_travel_form form .search_ltf_result
+.logistic form .search_ltf_result
 {
     width: 100%;
     padding: 20px;
@@ -2303,7 +2430,7 @@ section h2
     font-size: 30px !important;
 }
 
-#logistics_travel_form form .search_input 
+.logistic form .search_input 
 {
     position: relative;
     background-color: #fff;
@@ -2312,7 +2439,7 @@ section h2
     box-shadow: 0px 1px 5px 3px rgba(0,0,0,0.12);
 }
 
-#logistics_travel_form form .search_input input
+.logistic form .search_input input
 {
     height: 55px;
     width: 100%;
@@ -2324,7 +2451,7 @@ section h2
     box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
 }
 
-#logistics_travel_form form .search_input .icon
+.logistic form .search_input .icon
 {
     height: 55px;
     width: 55px;
@@ -2337,7 +2464,7 @@ section h2
     cursor: pointer;
 }
 
-#logistics_travel_form form .search_input .autocom_box
+.logistic form .search_input .autocom_box
 {
     padding: 0px;
     max-height: 280px;
@@ -2346,14 +2473,14 @@ section h2
     pointer-events: none;
 }
 
-#logistics_travel_form form .search_input.active .autocom_box
+.logistic form .search_input.active .autocom_box
 {
     padding: 10px 8px;
     opacity: 1;
     pointer-events: auto;
 }
 
-#logistics_travel_form form .search_input .autocom_box li
+.logistic form .search_input .autocom_box li
 {
     list-style: none;
     padding: 8px 12px;
@@ -2363,18 +2490,18 @@ section h2
     display: none;
 }
 
-#logistics_travel_form form .search_input.active .autocom_box li
+.logistic form .search_input.active .autocom_box li
 {
     display: block;
 }
 
-#logistics_travel_form form .search_input .autocom_box li:hover
+.logistic form .search_input .autocom_box li:hover
 {
     background-color: #efefef;
 }
 
-#logistics_travel_form form .time_in_out,
-#logistics_travel_form form .plate_and_driver
+.logistic form .time_in_out,
+.logistic form .plate_and_driver
 {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -2382,7 +2509,7 @@ section h2
     width: 100%;
 }
 
-#logistics_travel_form form .plate_driver_truck_helper
+.logistic form .plate_driver_truck_helper
 {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -2390,17 +2517,17 @@ section h2
     width: 100%;
 }
 
-#logistics_travel_form form .time_in_out label
+.logistic form .time_in_out label
 {
     width: 100%;
 }
 
-#logistics_travel_form form .time_in_out input
+.logistic form .time_in_out input
 {
     font-size: 25px !important;
 }
 
-#logistics_travel_form form .items
+.logistic form .items
 {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -2408,26 +2535,26 @@ section h2
     width: 100%;
 }
 
-#logistics_travel_form form #ltf_data
+.logistic form #ltf_data
 {
     display: none;
 }
 
-#logistics_travel_form form .add_item
+.logistic form .add_item
 {
     display: flex;
     width: 100%;
     position: relative;
 }
 
-#logistics_travel_form form .item_buttons
+.logistic form .item_buttons
 {
     position: absolute;
     right: 0;
     display: flex;
 }
 
-#logistics_travel_form form #add_item_button
+.logistic form #add_item_button
 {
     max-width: 60px !important;
     background-color: yellowgreen;
@@ -2438,7 +2565,7 @@ section h2
     text-align: center;
 }
 
-#logistics_travel_form form #remove_item_button
+.logistic form #remove_item_button
 {
     max-width: 60px !important;
     background-color: red;
@@ -2450,15 +2577,15 @@ section h2
     display: none;
 }
 
-#logistics_travel_form form .buttons
+.logistic form .buttons
 {
     display: flex;
     gap: 20px;
     margin-top: 50px;
 }
 
-#logistics_travel_form form #submit,
-#logistics_travel_form form button
+.logistic form #submit,
+.logistic form button
 {
     max-width: 200px !important;
     background-color: yellowgreen;
@@ -2467,7 +2594,7 @@ section h2
     color: black;
 }
 
-#logistics_travel_form form #reset
+.logistic form #reset
 {
     max-width: 200px !important;
     background-color: yellowgreen;
@@ -2476,11 +2603,17 @@ section h2
     color: black;
 }
 
-#logistics_travel_form form #clear_wcf_form_no_button
+.logistic form #clear_wcf_form_no_button
 {
     background-color: yellowgreen;
 }
 
+.logistic form .data
+{
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
 
 
 /* Responsive starts here */

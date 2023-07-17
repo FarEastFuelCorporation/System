@@ -40,17 +40,34 @@ function time_decoder(timestamp) {
   // date.setUTCMinutes(date.getUTCMinutes() + 23);
 
   // Retrieve the hour and minute components
-  let hours = date.getUTCHours();
-  const minutes = date.getUTCMinutes();
-  const minutes_set = minutes - 23;
+  var hours = date.getUTCHours();
+  var minutes = date.getUTCMinutes();
+  var minutes_set = 0;
 
+  if (minutes >= 0 && minutes <= 22) {
+    // Code to be executed if minutes is between 0 and 22
+    if(hours >= 0 && minutes <= 22){
+      hours = parseInt(hours) + 24 - 1;
+      minutes_set = parseInt(minutes) + 60 - 23;  
+    } else {
+      hours = parseInt(hours) - 1;
+      minutes_set = parseInt(minutes) + 60 - 23;  
+    }
+  } else {
+    minutes_set = parseInt(minutes) - 23;
+  }
   // Determine AM or PM
-  const period = hours >= 12 ? 'PM' : 'AM';
+  var period = hours >= 12 ? 'PM' : 'AM';
 
   // Convert to 12-hour format
-  hours = hours % 12;
-  hours = hours ? hours : 12;
+  if(hours == 24){
+    hours = 12;
+    period = "AM";
+  } else{
+    hours = hours % 12;
+    hours = hours ? hours : 12;
 
+  }
   // Format the time string
   const timeString = hours.toString().padStart(2, '0') + ':' + minutes_set.toString().padStart(2, '0') + ' ' + period;
 
@@ -184,3 +201,49 @@ window.addEventListener('keydown', resetIdleTimer);
 window.addEventListener('scroll', resetIdleTimer);
 // Add any other relevant event listeners
 
+function calculateTravelTime(departureDate, departureTime, arrivalDate, arrivalTime) {
+  const departureDateTime = new Date(`${departureDate} ${departureTime}`);
+  const arrivalDateTime = new Date(`${arrivalDate} ${arrivalTime}`);
+
+  // Calculate the time difference in milliseconds
+  const timeDifference = arrivalDateTime - departureDateTime;
+
+  // Convert milliseconds to hours and minutes
+  let hours = Math.floor(timeDifference / (1000 * 60 * 60));
+  let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+  // Check if travel time exceeds 24 hours
+  if (hours >= 24) {
+    const days = Math.floor(hours / 24);
+    hours = hours % 24;
+
+    // Determine the correct plural form for days, hours, and minutes
+    const pluralDays = days > 1 ? 'days' : 'day';
+    const pluralHours = hours > 1 ? 'hrs' : 'hr';
+    const pluralMinutes = minutes > 1 ? 'mins' : 'min';
+
+    return `${days} ${pluralDays} ${hours} ${pluralHours} ${minutes} ${pluralMinutes}`;
+  } else {
+    let travelTime = '';
+
+    // Determine the correct plural form for hours and minutes
+    const pluralHours = hours > 1 ? 'hrs' : 'hr';
+    const pluralMinutes = minutes > 1 ? 'mins' : 'min';
+
+    if (hours > 0) {
+      travelTime += `${hours} ${pluralHours} `;
+    }
+    if (minutes > 0) {
+      travelTime += `${minutes} ${pluralMinutes}`;
+    }
+    return travelTime.trim();
+  }
+}
+
+function capitalizeInputs(event) {
+  const form = event.target;
+  const inputs = form.getElementsByTagName('input');
+  for (let i = 0; i < inputs.length; i++) {
+    inputs[i].value = inputs[i].value.toUpperCase();
+  }
+}

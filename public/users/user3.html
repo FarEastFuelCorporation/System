@@ -64,19 +64,10 @@
                         <div class="card">
                             <div class="card-content">
                                 <div class="number" id="total"></div>
-                                <div class="card-name">Sorted Transaction</div>
+                                <div class="card-name">Sorted Items Transaction</div>
                             </div>
                             <div class="icon-box">
                                 <i class="fa-solid fa-arrow-up-short-wide"></i>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-content">
-                                <div class="number" id="sorted"></div>
-                                <div class="card-name">Treated Transaction</div>
-                            </div>
-                            <div class="icon-box">
-                                <i class="fa-solid fa-temperature-half"></i>
                             </div>
                         </div>
                         <div class="card">
@@ -88,6 +79,15 @@
                                 <i class="fa-solid fa-clipboard-list"></i>
                             </div>
                         </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="sorted"></div>
+                                <div class="card-name">Treated Transaction</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-clipboard-check"></i>
+                            </div>
+                        </div>
                     </div><br>
                     <h2>PENDING TRANSACTION LIST</h2>
                     <div class="card">
@@ -96,17 +96,39 @@
                                 <thead>
                                     <th>#</th>
                                     <th>SF #</th>
-                                    <th>DATE OF SORTING</th>
+                                    <th>SORTED<br>DATE/TIME</th>
                                     <th>CLIENT</th>
                                     <th>WASTE DESCRIPTION</th>
                                     <th>TREATMENT PROCESS</th>
-                                    <th>BATCH WEIGHT</th>
+                                    <th>WEIGHT</th>
                                 </thead>
-                                <tbody id="unsorted_list">
+                                <tbody id="pending_list">
 
                                 </tbody>
                             </table>
-                            <div class="text-center">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                            <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                        </div>
+                    </div><br>
+                    <h2>TREATED HISTORY LIST</h2>
+                    <div class="card">
+                        <div class="list">
+                            <table>
+                                <thead>
+                                    <th>#</th>
+                                    <th>TPF #</th>
+                                    <th>SORTED<br>DATE/TIME</th>
+                                    <th>CLIENT</th>
+                                    <th>WASTE DESCRIPTION</th>
+                                    <th>TREATMENT PROCESS</th>
+                                    <th>WEIGHT</th>
+                                    <th>TREATED<br>DATE/TIME</th>
+                                    <th>DURATION</th>
+                                </thead>
+                                <tbody id="finished_list">
+
+                                </tbody>
+                            </table>
+                            <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
                         </div>
                     </div>
                 </div>
@@ -114,7 +136,7 @@
             <!-- Treatment -->
             <section id="treatment_process_form">
                 <h2>TREATMENT PROCESS FORM</h2><br>
-                <form id="form_id" action="https://script.google.com/macros/s/AKfycby6mIrmbEiK74S9dqFwizyQ13EGE_vfcQTxnP7soPXPQXg7vQEx0Df7TV5JCeQJJpcQ7A/exec" method="post">
+                <form id="form_id" action="https://script.google.com/macros/s/AKfycbwY0IlNn-Iv8TypgQFv9np29U4XauGZaW1QTdVJexx6MY6so8YGIJAquqxROGC24iukPw/exec" method="post">
                     <input type="hidden" name="user" id="user">
                     <input type="hidden" name="wcf_form_no" id="wcf_form_no">
                     <input type="hidden" name="client" id="client">
@@ -185,9 +207,8 @@
                     </div>
                     <div id="machine_list">
 
-
                     </div>
-                    <input onchange="change_action_post()" type="hidden" id="item_counter" value="1">
+                    <input type="hidden" id="item_counter" name="item_counter" value="1">
                     <div class="items_header" id="additional_item1">
                         <div>
                             <label for="recovered_item1">
@@ -270,10 +291,10 @@
                     </div>
                     <div class="add_item">
                         <div class="item_buttons">
-                            <button onclick="add_new_item()" type="button" id="add_item_button" class="form-control">
+                            <button type="button" id="add_item_button" class="form-control">
                                 <i class="fa-solid fa-plus"></i>
                             </button>
-                            <button onclick="remove_new_item()" type="button" id="remove_item_button" class="form-control">
+                            <button type="button" id="remove_item_button" class="form-control">
                                 <i class="fa-solid fa-minus"></i>
                             </button>
                         </div>

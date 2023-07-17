@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const received = document.getElementById("received");
         const pending = document.getElementById("pending");
         const pending_list = document.getElementById("pending_list");
+        const received_list = document.getElementById("received_list");
         var ltf_transaction_counter = 0;
         var ltf_wcf_transaction_counter = 0;
         var mtf_transaction_counter = 0;
@@ -88,6 +89,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         // Get elements from wcf_transaction not included in wcf_sf_transaction
         const newElements = ltf_transaction.filter((element) => !ltf_wcf_transaction.includes(element));
         const newElements2 = mtf_transaction.filter((element) => !mtf_wcf_transaction.includes(element));
+        const newElements3 = ltf_transaction.filter((element) => ltf_wcf_transaction.includes(element));
+        const newElements4 = mtf_transaction.filter((element) => mtf_wcf_transaction.includes(element));
 
         received.innerText = ltf_wcf_transaction_counter;
         to_received.innerText = ltf_transaction_counter + mtf_transaction_counter;
@@ -101,8 +104,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <tr>
                         <td>${data_value_counter}</td>
                         <td>${ltf_data_list.content[j][1]}</td>
-                        <td>${date_decoder(ltf_data_list.content[j][5])}</td>
-                        <td>${time_decoder(ltf_data_list.content[j][6])}</td>
+                        <td>${date_decoder(ltf_data_list.content[j][5])} /<br> ${time_decoder(ltf_data_list.content[j][6])}</td>
                         <td>${ltf_data_list.content[j][3]}</td>
                         <td>${ltf_data_list.content[j][4]}</td>
                         <td>${ltf_data_list.content[j][7]}</td>
@@ -121,8 +123,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <tr>
                         <td>${data_value_counter}</td>
                         <td>${mtf_data_list.content[j][1]}</td>
-                        <td>${date_decoder(mtf_data_list.content[j][4])}</td>
-                        <td>${time_decoder(mtf_data_list.content[j][5])}</td>
+                        <td>${date_decoder(mtf_data_list.content[j][4])} /<br> ${time_decoder(mtf_data_list.content[j][5])}</td>
                         <td>${mtf_data_list.content[j][2]}</td>
                         <td>${mtf_data_list.content[j][3]}</td>
                         <td>PROVIDED BY CLIENT</td>
@@ -135,6 +136,73 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         }
         pending_list.innerHTML = data_value;
+
+        var data_value = "";
+        var data_value_counter = 1;
+        for(let i = 0; i < newElements3.length; i++){
+            for(let j = 1; j < wcf_data_list.content.length; j++){
+                if(newElements3[i] == wcf_data_list.content[j][2]){
+                    for(let k = 1; k < ltf_data_list.content.length; k++){
+                        var hauling_date_info;
+                        var hauling_time_info;
+                        if(wcf_data_list.content[j][2] == ltf_data_list.content[k][1]){
+                            hauling_date_info =  date_decoder(ltf_data_list.content[k][5]);
+                            hauling_time_info =  time_decoder(ltf_data_list.content[k][6]);
+                            break
+                        }
+                    }
+                    data_value +=`
+                    <tr>
+                        <td>${data_value_counter}</td>
+                        <td>${wcf_data_list.content[j][1]}</td>
+                        <td>${hauling_date_info} /<br> ${hauling_time_info}</td>
+                        <td>${wcf_data_list.content[j][3]}</td>
+                        <td>${wcf_data_list.content[j][4]}</td>
+                        <td>${wcf_data_list.content[j][17]}</td>
+                        <td>${wcf_data_list.content[j][9]}</td>
+                        <td>${wcf_data_list.content[j][10]}</td>
+                        <td>${date_decoder(wcf_data_list.content[j][11])} /<br> ${time_decoder(wcf_data_list.content[j][12])}</td>
+                        <td>${date_decoder(wcf_data_list.content[j][13])} /<br> ${time_decoder(wcf_data_list.content[j][14])}</td>
+                        <td>${calculateTravelTime(date_decoder(wcf_data_list.content[j][11]),time_decoder(wcf_data_list.content[j][12]),date_decoder(wcf_data_list.content[j][13]),time_decoder(wcf_data_list.content[j][14]))}</td>
+                        </tr>
+                        `
+                        data_value_counter += 1;
+                    }
+                }
+            }
+            for(let i = 0; i < newElements4.length; i++){
+            for(let j = 1; j < wcf_data_list.content.length; j++){
+                if(newElements4[i] == wcf_data_list.content[j][2]){
+                    for(let k = 1; k < mtf_data_list.content.length; k++){
+                        var hauling_date_info;
+                        var hauling_time_info;
+                        if(wcf_data_list.content[j][2] == mtf_data_list.content[k][1]){
+                            hauling_date_info =  date_decoder(mtf_data_list.content[k][4]);
+                            hauling_time_info =  time_decoder(mtf_data_list.content[k][5]);
+                            break
+                        }
+                    }
+                    data_value +=`
+                    <tr>
+                    <td>${data_value_counter}</td>
+                        <td>${wcf_data_list.content[j][1]}</td>
+                        <td>${hauling_date_info} /<br> ${hauling_time_info}</td>
+                        <td>${wcf_data_list.content[j][3]}</td>
+                        <td>${wcf_data_list.content[j][4]}</td>
+                        <td>${wcf_data_list.content[j][17]}</td>
+                        <td>${wcf_data_list.content[j][9]}</td>
+                        <td>${wcf_data_list.content[j][10]}</td>
+                        <td>${date_decoder(wcf_data_list.content[j][11])} /<br> ${time_decoder(wcf_data_list.content[j][12])}</td>
+                        <td>${date_decoder(wcf_data_list.content[j][13])} /<br> ${time_decoder(wcf_data_list.content[j][14])}</td>
+                        <td>${calculateTravelTime(date_decoder(wcf_data_list.content[j][11]),time_decoder(wcf_data_list.content[j][12]),date_decoder(wcf_data_list.content[j][13]),time_decoder(wcf_data_list.content[j][14]))}</td>
+                        </tr>
+                        `
+                    data_value_counter += 1;
+                }
+            }
+        }
+        received_list.innerHTML = data_value;
+
 
         const wcf_data2 = document.getElementById("wcf_data2");
         const ltf_form_no = document.getElementById("ltf_form_no");
@@ -213,7 +281,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </label>
                         <select onchange="GetClientCategory()" class="form-control" name="type_of_waste"  required id="type_of_waste">
                             <option value="">Select Category</option>
-                            <option value="RW">RW - Raw Waste</option>
+                            <option value="RW">RW - Residual Waste</option>
                             <option value="HW">HW - Hazardous Waste</option>
                             <option value="NHW">NHW - Non Hazardous Waste</option>
                         </select><br>
@@ -227,7 +295,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </label>
                         <select onchange="GetClientCategory()" class="form-control" name="type_of_waste"  required id="type_of_waste">
                             <option value="">Select Category</option>
-                            <option value="RW">RW - Raw Waste</option>
+                            <option value="RW">RW - Residual Waste</option>
                         </select><br>
                         `
                     }
@@ -263,7 +331,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </label>
                         <select onchange="GetClientCategory()" class="form-control" name="type_of_waste"  required id="type_of_waste">
                             <option value="">Select Category</option>
-                            <option value="RW">RW - Raw Waste</option>
+                            <option value="RW">RW - Residual Waste</option>
                             <option value="HW">HW - Hazardous Waste</option>
                         </select><br>
                         `
@@ -276,7 +344,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </label>
                         <select onchange="GetClientCategory()" class="form-control" name="type_of_waste"  required id="type_of_waste">
                             <option value="">Select Category</option>
-                            <option value="RW">RW - Raw Waste</option>
+                            <option value="RW">RW - Residual Waste</option>
                             <option value="NHW">NHW - Non Hazardous Waste</option>
                         </select><br>
                         `

@@ -111,8 +111,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <tr>
                         <td>${data_value_counter}</td>
                         <td>${mtf_data_list.content[j][1]}</td>
-                        <td>${date_decoder(mtf_data_list.content[j][4])}</td>
-                        <td>${time_decoder(mtf_data_list.content[j][5])}</td>
+                        <td>${date_decoder(mtf_data_list.content[j][4])} / ${time_decoder(mtf_data_list.content[j][5])}</td>
                         <td>${mtf_data_list.content[j][2]}</td>
                         <td>${mtf_data_list.content[j][3]}</td>
                         <td>${mtf_data_list.content[j][6]}</td>
@@ -120,7 +119,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </tr>
                         `
                         data_value_counter += 1;        
-    
                     }
                 }
             }
@@ -129,22 +127,41 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         var data3_value = "";
         var data_value3_counter = 1;
-        for(let i = 0; i < newElements2.length; i++){
-            for(let j = 1; j < ltf_data_list.content.length; j++){
-                if(newElements2[i] == ltf_data_list.content[j][1]){
+        for(let j = 1; j < ltf_data_list.content.length; j++){
+            for(let k = 0; k <= newElements2.length; k++){
+                if(ltf_data_list.content[j][1] == newElements2[k]){
                     data3_value +=`
                     <tr>
                     <td>${data_value3_counter}</td>
                     <td>${ltf_data_list.content[j][1]}</td>
-                    <td>${date_decoder(ltf_data_list.content[j][11])}</td>
-                    <td>${time_decoder(ltf_data_list.content[j][12])}</td>
+                    <td>${date_decoder(ltf_data_list.content[j][11])} / ${time_decoder(ltf_data_list.content[j][12])}</td>
                     <td>${ltf_data_list.content[j][3]}</td>
                     <td>${ltf_data_list.content[j][4]}</td>
                     <td>${ltf_data_list.content[j][8]}</td>
                     <td>${ltf_data_list.content[j][9]}</td>
+                    <td>ON HAULING</td>
+                    <td>PENDING</td>
                     </tr>
                     `
-                    data_value3_counter += 1;        
+                    data_value3_counter += 1;
+                }
+            }
+            for(let k = 1; k < wcf_data_list.content.length; k++){
+                if(ltf_data_list.content[j][1] == wcf_data_list.content[k][2]){
+                    data3_value +=`
+                    <tr>
+                    <td>${data_value3_counter}</td>
+                    <td>${ltf_data_list.content[j][1]}</td>
+                    <td>${date_decoder(ltf_data_list.content[j][11])} /<br> ${time_decoder(ltf_data_list.content[j][12])}</td>
+                    <td>${ltf_data_list.content[j][3]}</td>
+                    <td>${ltf_data_list.content[j][4]}</td>
+                    <td>${ltf_data_list.content[j][8]}</td>
+                    <td>${ltf_data_list.content[j][9]}</td>
+                    <td>${date_decoder(wcf_data_list.content[j][11])} /<br> ${time_decoder(wcf_data_list.content[j][12])}</td>
+                    <td>${calculateTravelTime(date_decoder(ltf_data_list.content[j][11]),time_decoder(ltf_data_list.content[j][12]),date_decoder(wcf_data_list.content[j][11]),time_decoder(wcf_data_list.content[j][12]))}</td>
+                    </tr>
+                    `
+                    data_value3_counter += 1;            
                 }
             }
         }
@@ -181,6 +198,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <td>${vehicle_data.content[j][1]}</td>
                 <td>${vehicle_data.content[j][4]}</td>
                 <td>${vehicle_data.content[j][2]}</td>
+                <td>${vehicle_data.content[j][3]}</td>
                 <td>${vehicle_status}</td>
             </tr>
             `
