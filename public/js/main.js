@@ -247,3 +247,82 @@ function capitalizeInputs(event) {
     inputs[i].value = inputs[i].value.toUpperCase();
   }
 }
+
+// Get all the forms on the page
+const forms = document.getElementsByTagName('form');
+
+// Attach the event listener to each form
+for (let i = 0; i < forms.length; i++) {
+  forms[i].addEventListener('submit', capitalizeInputs);
+}
+
+function refreshPage() {
+  location.reload();
+}
+
+function generateExactTime() {
+  var now = new Date();
+  var hours = now.getHours();
+  var minutes = now.getMinutes();
+  var seconds = now.getSeconds();
+  var ampm = hours >= 12 ? "PM" : "AM";
+
+  // Convert hours to 12-hour format
+  hours = hours % 12;
+  hours = hours ? hours : 12; // If hours is 0, set it to 12
+
+  // Format the time to ensure leading zeros for single-digit values
+  hours = hours < 10 ? "0" + hours : hours;
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  seconds = seconds < 10 ? "0" + seconds : seconds;
+
+  var exactTime = hours + ":" + minutes + ":" + seconds + " " + ampm;
+  return exactTime;
+  }
+
+
+  // Update the content of the HTML element with the exact time every second
+  function updateExactTime() {
+  var exactTimeElement = document.getElementById("exactTime");
+  exactTimeElement.textContent = generateExactTime();
+  }
+
+  // Call the updateExactTime function every second
+  setInterval(updateExactTime, 1000);
+
+
+  function generateFormattedDate() {
+  var now = new Date();
+  
+  // Define the month names
+  var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+  // Get the date components
+  var month = monthNames[now.getMonth()];
+  var day = now.getDate();
+  var year = now.getFullYear();
+
+  // Define the day names
+  var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  
+  // Get the day of the week
+  var dayOfWeek = dayNames[now.getDay()];
+
+  // Format the date
+  var formattedDate = month.toUpperCase() + " " + day + ", " + year + "<br>" + dayOfWeek.toUpperCase();
+
+  return formattedDate;
+  }
+
+  function updateDate() {
+  var dateElement = document.getElementById("exactDate");
+  dateElement.innerHTML = generateFormattedDate();
+  }
+
+  // Update the date every second (1000 milliseconds)
+  setInterval(updateDate, 1000);
+
+  function goBack() {
+    window.history.back();
+  }
+  

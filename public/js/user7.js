@@ -309,7 +309,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         function select3(element) {
             let select_user_data = element;
             input_box3.value = select_user_data;
-            console.log(input_box3.value);
             search_wrapper3.classList.remove("active");            
         }
     
@@ -322,6 +321,57 @@ document.addEventListener('DOMContentLoaded', async function() {
                 list_data = list.join("");
             }
             sugg_box3.innerHTML = list_data;
+        }    
+
+        const search_wrapper4 = document.getElementById("maintenance_plate_no");
+        const input_box4 = search_wrapper4.querySelector("input");
+        const sugg_box4 = search_wrapper4.querySelector(".autocom_box");
+        var data_value4 = [];
+
+        for (x = 1; x < vehicle_data.content.length; x++) {
+            data_value4.push(vehicle_data.content[x][0]);
+            total_vehicle_counter += 1;
+        }
+        
+        input_box4.onkeyup = (e) => {
+            let user_data = e.target.value;
+            let empty_array = [];
+            if (user_data) {
+                empty_array = data_value4.filter((data) => {
+                    return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
+                });
+                empty_array = empty_array.map((data) => {
+                    return '<li>' + data + '</li>';
+                });
+                console.log(empty_array);
+                search_wrapper4.classList.add("active");
+                show_suggestions4(empty_array);
+            } else {
+                search_wrapper4.classList.remove("active");
+            }
+        };
+    
+        sugg_box4.addEventListener("click", (e) => {
+            if (e.target.tagName === "LI") {
+                select4(e.target.innerHTML);
+            }
+        });
+    
+        function select4(element) {
+            let select_user_data = element;
+            input_box4.value = select_user_data;
+            search_wrapper4.classList.remove("active");            
+        }
+    
+        function show_suggestions4(list) {
+            let list_data;
+            if (!list.length) {
+                user_value = input_box4.value;
+                list_data = '<li>' + user_value + '</li>';
+            } else {
+                list_data = list.join("");
+            }
+            sugg_box4.innerHTML = list_data;
         }    
 
         // ltf_data_list

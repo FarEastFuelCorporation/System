@@ -527,8 +527,11 @@ h5 {
 #vehicle_list_section,
 #new_vehicle_form,
 #vehicle_maintenance_form,
+#safety_dashboard,
+#incident_documentation_form,
 #directorySection,
 #accountingSection,
+#incident_report_form,
 #settingsSection,
 #helpSection {
   position: absolute;
@@ -554,8 +557,10 @@ h5 {
 #vehicle_list_section,
 #new_vehicle_form,
 #vehicle_maintenance_form,
+#incident_documentation_form,
 #directorySection,
 #accountingSection,
+#incident_report_form,
 #settingsSection,
 #helpSection {
   display: none;
@@ -563,6 +568,65 @@ h5 {
 
 section h2 {
   font-weight: bold;
+}
+
+.header_date_time {
+  display: flex;
+  position: fixed;
+  right: 140px;
+  z-index: 2;
+  color: white;
+  gap: 20px;
+}
+
+.header_date {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.header_time {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.refresh_button {
+  position: fixed;
+  right: 20px;
+  z-index: 2;
+}
+
+.refresh_button button {
+  height: 50px;
+  width: 50px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.refresh_button button i {
+  font-size: 30px;
+  color: blue;
+}
+
+.back_button {
+  position: fixed;
+  right: 70px;
+  z-index: 2;
+}
+
+.back_button button {
+  height: 50px;
+  width: 50px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.back_button button i {
+  font-size: 30px;
+  color: blue;
 }
 
 /* dashboard section starts here */
@@ -1282,7 +1346,8 @@ section h2 {
   margin-bottom: 20px;
 }
 
-#treatment_process_form form .items #treatment_process_form form .items_header,
+#treatment_process_form form .items,
+#treatment_process_form form .items_header,
 #treatment_process_form form .completion,
 #treatment_process_form form #add_item_button,
 #treatment_process_form form #buttons {
@@ -2045,6 +2110,15 @@ section h2 {
   display: none;
 }
 
+.marketing form .flex {
+  display: flex;
+  gap: 20px;
+}
+
+.marketing form .flex > div {
+  width: 100%;
+}
+
 .marketing form .buttons {
   display: flex;
   gap: 20px;
@@ -2346,6 +2420,252 @@ section h2 {
   display: flex;
   gap: 20px;
   width: 100%;
+}
+
+/* safety_dashboard section starts here */
+.safety .cards {
+  width: 100%;
+  height: 120px;
+  padding: 10px 0px 0 0px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+  background: #f5f5f5;
+}
+
+.safety .cards2 {
+  width: 100%;
+  height: 120px;
+  padding: 10px 0px 0 0px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+  background: #f5f5f5;
+}
+
+.safety .card {
+  padding: 0 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  background: black;
+  border-radius: 10px;
+  box-shadow: 0 7px 25px 0 rgba(0, 0, 0, 0.08);
+  border: 3px solid #ffbf00;
+}
+
+.safety .cards .card:hover {
+  background: #ffbf00;
+}
+
+.safety .cards .card:hover .number,
+.safety .cards .card:hover .card-name,
+.safety .cards .card:hover .icon-box i {
+  color: black;
+}
+
+.safety .number {
+  font-size: 35px;
+  font-weight: bold;
+  color: #ffbf00;
+  text-align: center;
+}
+
+.safety .card-name {
+  color: white;
+  font-weight: 600;
+}
+
+.safety .icon-box i {
+  font-size: 45px;
+  color: #ffbf00;
+}
+
+.safety .list {
+  width: 100%;
+  font-size: 25px;
+  color: white;
+}
+
+.safety table {
+  width: 100%;
+}
+
+.safety table tr {
+  border-bottom: 1px solid white;
+}
+
+.safety table td,
+.safety table th {
+  padding: 0 10px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.safety table th {
+  color: #ffbf00;
+}
+
+/* incident_documentation_form section starts here */
+.safety form .form {
+  max-width: 250px !important;
+}
+
+.safety form .idf_form {
+  display: flex;
+  gap: 20px;
+}
+
+.safety form input,
+.safety form select {
+  border: 3px solid violet !important;
+}
+
+.safety form label,
+.safety form select,
+.safety form input {
+  font-size: 30px !important;
+}
+
+.safety .flex {
+  display: flex;
+  gap: 20px;
+}
+
+.safety .flex > div {
+  width: 100%;
+}
+
+.safety form .search_irf_result {
+  width: 100%;
+  padding: 20px;
+  background-color: white;
+  border: 3px solid violet;
+  font-size: 30px !important;
+}
+
+.safety form .search_input {
+  position: relative;
+  background-color: #fff;
+  width: 100%;
+  border-radius: 5px;
+  box-shadow: 0px 1px 5px 3px rgba(0, 0, 0, 0.12);
+}
+
+.safety form .search_input input {
+  height: 55px;
+  width: 100%;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  padding: 0 60px 0 20px;
+  font-size: 30px;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.safety form .search_input .icon {
+  height: 55px;
+  width: 55px;
+  line-height: 55px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: center;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.safety form .search_input .autocom_box {
+  padding: 0px;
+  max-height: 280px;
+  overflow-y: auto;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.safety form .search_input.active .autocom_box {
+  padding: 10px 8px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.safety form .search_input .autocom_box li {
+  list-style: none;
+  padding: 8px 12px;
+  width: 100%;
+  cursor: default;
+  border-radius: 3px;
+  display: none;
+}
+
+.safety form .search_input.active .autocom_box li {
+  display: block;
+}
+
+.safety form .search_input .autocom_box li:hover {
+  background-color: #efefef;
+}
+
+.safety form .buttons {
+  display: flex;
+  gap: 20px;
+  margin-top: 50px;
+}
+
+.safety form #submit,
+.safety form button {
+  max-width: 200px;
+  background-color: violet;
+  font-size: 30px;
+  font-weight: bold;
+  color: black;
+}
+
+.safety form #reset {
+  max-width: 200px !important;
+  background-color: violet;
+  font-size: 30px;
+  font-weight: bold;
+  color: black;
+}
+
+.safety form #clear_wcf_form_no_button {
+  background-color: violet;
+}
+
+.safety .head_button {
+  display: flex;
+  gap: 20px;
+  width: 100% !important;
+}
+
+.safety .head_button button {
+  font-size: 30px;
+  font-weight: bold;
+  width: 100% !important;
+  max-width: 100%;
+}
+
+.safety .head_button :nth-child(1) {
+  background-color: yellow;
+}
+
+.safety .head_button :nth-child(2) {
+  background-color: orange;
+}
+
+.safety .head_button :nth-child(3) {
+  background-color: red;
+}
+
+.safety #form_details,
+.safety #uarf_form,
+.safety #nmrf_form,
+.safety #airf_form,
+.safety #search_irf_result,
+.safety #head_button {
+  display: none;
 }
 
 /* Responsive starts here */

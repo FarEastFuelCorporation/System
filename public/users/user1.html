@@ -55,13 +55,39 @@
             </ul>
         </div>
         <div class="main">
-            <!-- dashboard -->
-            <section id="dashboard_section">
-                <h2>DASHBOARD</h2><br>
-                <h2>RECEIVING SUMMARY</h2>
-                <div class="cards2">
-                    <div class="card">
-                        <div class="card-content">
+            <div class="header_date_time">
+                <div class="header_date">
+                    <div id="exactDate"></div>
+                </div>
+                <div class="header_time">
+                    <div id="exactTime"></div>    
+                </div>
+            </div>
+            <div class="back_button">
+                <button onclick="goBack()">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+            </div>
+            <div class="refresh_button">
+                            <div class="header_date_time">
+                <div class="header_date">
+                    <div id="exactDate"></div>
+                </div>
+                <div class="header_time">
+                    <div id="exactTime"></div>    
+                </div>
+            </div>
+            <button onclick="refreshPage()">
+                <i class="fa-solid fa-arrows-rotate"></i>
+            </button>
+        </div>
+        <!-- dashboard -->
+        <section id="dashboard_section">
+            <h2>DASHBOARD</h2><br>
+            <h2>RECEIVING SUMMARY</h2>
+            <div class="cards2">
+                <div class="card">
+                    <div class="card-content">
                             <div class="number" id="to_received"></div>
                             <div class="card-name">Travel Transaction</div>
                         </div>

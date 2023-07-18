@@ -74,6 +74,24 @@
             </ul>
         </div>
         <div class="main">
+            <div class="header_date_time">
+                <div class="header_date">
+                    <div id="exactDate"></div>
+                </div>
+                <div class="header_time">
+                    <div id="exactTime"></div>    
+                </div>
+            </div>
+            <div class="back_button">
+                <button onclick="goBack()">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+            </div>
+            <div class="refresh_button">
+                <button onclick="refreshPage()">
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                </button>
+            </div>
             <!-- dashboard -->
             <section class="logistic" id="logistic_dashboard">
                 <h2>DASHBOARD</h2><br>
@@ -376,7 +394,7 @@
                 <form action="https://script.google.com/macros/s/AKfycbwtUd1A6MGvhh6axwd9DEiutRi0nePAv2sk5YFe49kH41KxWpy3JL3yFGvGbd7MLGMF/exec" method="post">
                     <label for="plate_no">
                         <i class="fa-regular fa-rectangle-list"></i>
-                        Plate #
+                        Plate #f
                     </label><br>
                     <input type="text" autocomplete="off" name="plate_no" id="plate_no" class="form-control form" required placeholder="Input Plate #..."><br>
                     <label for="vehicle">
@@ -429,7 +447,12 @@
                         <i class="fa-regular fa-rectangle-list"></i>
                         Plate #
                     </label><br>
-                    <input type="text" autocomplete="off" name="plate_no" id="plate_no" class="form-control form" required placeholder="Input Plate #..."><br>
+                    <div class="search_input" id="maintenance_plate_no">
+                        <input type="text" autocomplete="off" name="plate_no" id="plate_no" class="form-control" required placeholder="Type to Search Plate #...">
+                        <div class="autocom_box">
+                        </div>
+                        <div class="icon"><i class="fas fa-search"></i></div>
+                    </div>        
                     <div class="buttons">
                         <button type="submit" id="submit" class="form-control" >
                             Submit
