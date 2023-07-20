@@ -562,7 +562,7 @@ h5{
 #sorting_form,
 #treatment_process_form,
 #destruction_form,
-#billing_process_form,
+#billing_dashboard,
 #marketing_transaction_form,
 #client_list_section,
 #new_client_form,
@@ -1765,22 +1765,12 @@ section h2
     gap: 20px;
 }
 
-#destruction_form form #what_to_print
+#destruction_form form #what_to_print2
 {
     width: 816px;
     height: 1056px;
     border: 3px solid black;
     background-color: white;
-    display: none;
-}
-
-#destruction_form form #submit
-{
-    max-width: 200px !important;
-    background-color: green;
-    font-size: 30px;
-    font-weight: bold;
-    color: black;
 }
 
 #destruction_form form #reset,
@@ -1791,11 +1781,6 @@ section h2
     font-size: 30px;
     font-weight: bold;
     color: black;
-}
-
-#destruction_form form #search_sf_wcf_form_no_button
-{
-    background-color: green;
 }
 
 #destruction_form form #client_container,
@@ -2012,13 +1997,13 @@ section h2
     gap: 20px;
 }
 
-#billing_process_form form #what_to_print
+#billing_process_form form .what_to_print
 {
     width: 816px;
     height: 1056px;
     border: 3px solid black;
     background-color: white;
-    display: none;
+    // display: none;
 }
 
 #billing_process_form form #submit
@@ -2045,10 +2030,12 @@ section h2
     background-color: cyan;
 }
 
-#billing_process_form form #convertToPDF_button
-{
-    display: none;
-}
+// #billing_process_form form #convertToPDF_button
+// {
+//     display: none;
+// }
+
+
 
 /* marketing dashboard section starts here */
 .marketing .cards

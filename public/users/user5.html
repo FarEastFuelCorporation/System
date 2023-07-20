@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User 5</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.9/mammoth.browser.min.js"></script>  
     <link rel="shortcut icon" href="../images/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="../css/main-css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
@@ -226,187 +228,1005 @@
                             </div>
                         </div>
                     </div>
-                    <div id="what_to_print">
-                        <h2 class="text-center">C E R T I F I C A T I O N</h2>
-                        <div class="cod text-center">
-                            <h4>C. No. </h4>
-                            <div id="df_no" class="fw-bold"></div>    
-                        </div><br>
-                        <div class="header_detail">
-                            <h3>Pursuant to the provisions of Republic Act 9003 also known as Ecological Solid Waste Management Act of 2000 we are issuing this certificate of destruction to:</h3>
-                        </div><br>
-                        <div class="company">
-                            <h2 id="table_company"></h2>
-                            <h4 id="table_company_address"></h4>
-                        </div><br>
-                        <h4>For the waste(s) processed/ treated as follows:</h4>
-                        <table>
-                            <thead>
-                                <th>Hauling Date</th>
-                                <th>Waste Description</th>
-                                <th>Waste Code</th>
-                                <th>Quantity</th>
-                                <th>Destruction Process</th>
-                                <th>Date of Completion</th>
-                            </thead>
-                            <tbody id="table_data">
-                            </tbody>
-                        </table>
-                        <h4>That is/are transported by <b>FAR EAST FUEL CORPORATION</b> to our TSD facility located at No. 888 Purok 5, Irabagon St., Barangay Anyatam, San Ildefonso, Bulacan with <b>TSD No. OL-TR-R3-14-000152.</b></h4><br>
-                        <div class="d-flex">
-                            <h4 class="fw-bold me-1">Certified this</h4>
-                            <h4 class="fw-bold" id="certification"></h4>
-                        </div>
-                        <br>
-                        <h4>Certified By:</h4><br><br><br><br>
-                        <div class="signature">
-                            <div>
-                                <h3 class="fw-bold"><u>LAWRENCE R. ANTONIO</u></h3>
-                                <h4>Pollution Control Officer</h4>
-                                <img class="pco" src="../images/pco_signature.JPG" alt="">
+                    <div class="buttons">
+                        <button type="button" id="generate_button" class="form-control form">
+                            Generate COD
+                        </button>
+                        <button type="button" onclick="convertToPDFandDownload()" id="convertToPDFandDownload_button" class="form-control form">
+                            Download and Submit
+                        </button>
+                        <button type="button" onclick="convertToPDF()" id="convertToPDF_button" class="form-control form">
+                            Download
+                        </button>
+                        <button type="submit" id="submit_button" class="form-control form">
+                            Submit
+                        </button>
+                    </div><br>
+                    <div class="what_to_print" id="what_to_print">
+                        <div class="pdf_container">
+                            <div d-flex>
+                                <div class="client_copy">
+                                    <h4 class="bold">CLIENT'S COPY</h4>
+                                </div>
+                                <div class="pdf_header">
+                                    <h4 class="bold">BILLING STATEMENT</h4>
+                                </div>
+                                <div class="billing_number">
+                                    <h4 class="italic">Billing Number</h4>
+                                    <h4 class="bold">B23-07-542</h4>
+                                    <h4 class="italic">Statement Date</h4>
+                                    <h4 class="bold">18-Jul-23</h4>
+                                </div>
+                                <div class="customer_summary">
+                                    <div class="customer">
+                                        <div class="customer_header">
+                                            <h3 class="bold">CUSTOMER</h3>
+                                        </div>
+                                        <div class="customer_detail">
+                                            <h3 class="bold">SODEXO ON-SITE SERVICE PHILIPPINES INC.</h3>
+                                            <h4>11th flr Lepanto Condominium</h4>
+                                            <h4>8747 Paseo de Roxas, Makati City</h4>
+                                            <h4>008-648-866-000</h4>
+                                            <h4>Facilities Management and Food Services</h4>
+                                            <h4>Tel.</h4>
+                                            <h4>Fax.</h4>
+                                            <h4>Email.</h4>
+                                        </div>
+                                    </div>
+                                    <div class="account_summary">
+                                        <div class="account_summary_header">
+                                            <h3 class="bold">ACCOUNT SUMMARY</h3>
+                                        </div>
+                                        <div class="account_summary_detail">
+                                            <div class="payable grid2">
+                                                <h2 class="bold">Total Amount Payable</h2>
+                                                <h2 class="amount bold">52,344.22</h2>
+                                            </div>
+                                            <div class="grid2">
+                                                <h3>Total Non-Vatable Sale</h3>
+                                                <h3 class="amount"></h3>
+                                            </div>
+                                            <div class="grid2">
+                                                <h3>Total Vatable Sale</h3>
+                                                <h3 class="amount">46,736.00</h3>
+                                            </div>
+                                            <div class="grid2">
+                                                <h3>VAT (12%)</h3>
+                                                <h3 class="amount">5,608.32</h3>
+                                            </div><br>
+                                            <div class="payable grid2">
+                                                <h3><b>LESS:</b><b class="none">______</b>Credits</h3>
+                                                <h3 class="amount bold">-</h3>
+                                            </div><br>
+                                            <div class="payable grid2">
+                                                <h3 class="bold">Total Amount Due</h3>
+                                                <h3 class="amount bold">52,344.32</h3>
+                                            </div><br>
+                                            <div class="grid2">
+                                                <h3><b>DUE DATE:</b></h3>
+                                                <h3 class="amount bold"></h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><br><br>
+                                <div class="account_details">
+                                    <div class="account_details_header">
+                                        <h3><b>DETAILS</b></h3>
+                                    </div>
+                                    <table class="account_details_detail">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>D.R.#</th>
+                                                <th>S.I.#</th>
+                                                <th>Description</th>
+                                                <th>Qty.</th>
+                                                <th>Unit</th>
+                                                <th>Unit Price</th>
+                                                <th>Amount</th>
+                                                <th>Vat</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>23-Jun-23</td>
+                                                <td></td>
+                                                <td>4648</td>
+                                                <td>Wrapper<br>Floor Gum<br>Barbage<br>Transportation Charge</td>
+                                                <td>2,640.00<br>650.00<br>1,230.00<br>1.00</td>
+                                                <td>kgs<br>kgs<br>kgs<br>trip</td>
+                                                <td>6.80<br>6.80<br>6.80<br>16,000.00</td>
+                                                <td>17,952.00<br>4,420.00<br>8,364.00<br>16,000.00</td>
+                                                <td>VAT-Ex<br>VAT-Ex<br>VAT-Ex<br>VAT-Ex</td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="total_amount">
+                                    <div class="total_amount_label">
+                                        Total Amount
+                                    </div>
+                                    <div class="total_amount_amount">
+                                        46,736.00
+                                    </div>
+                                </div>
+                                <div class="notes">
+                                    <h5 class="italic">Please examine your BILLING STATEMENT for any errors. If no error is reported to FEFC office Tel. No. (02) 8366-9072 within 7 days frome statement date,<br>the SOA will be considered conclusively correct and final.</h5>
+                                </div>
+                                <div class="footer">
+                                    <div>
+                                        <div class="footer_header">
+                                            <h3>Prepared By:</h3>
+                                        </div>
+                                        <div class="assignatory">
+                                            <div>
+                                                <h3 class="bold"><u>Frank Florence Flores</u></h3>
+                                            </div>
+                                            <div>
+                                                <h4>Finance Staff / AR</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="footer_header">
+                                            <h3>Checked By:</h3>
+                                        </div>
+                                        <div class="assignatory">
+                                            <div>
+                                                <h3 class="bold"><u>Daisy Cardinez</u></h3>
+                                            </div>
+                                            <div>
+                                                <h4>Accounting Manager</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="footer_header">
+                                            <h3>Noted By:</h3>
+                                        </div>
+                                        <div class="assignatory">
+                                            <div>
+                                                <h3 class="bold"><u>Exequiel B. De Vera</u></h3>
+                                            </div>
+                                            <div>
+                                                <h4>Vice-President</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="footer_header">
+                                            <h3>Received By:</h3>
+                                        </div>
+                                        <div class="assignatory">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <h3 class="fw-bold"><u>CRIS DURAN</u></h3>
-                                <h4>Plant Manager</h4>
-                                <img class="pm" src="../images/pm_signature.JPG" alt="">
-                            </div>    
-                        </div><br>
-                        <div>
-                            <h4 class="fw-bold">COA No. 2023-RIII-5575</h4>
-                            <h4>Not Valid Without FEFC Dry Seal. </h4>
                         </div>
-                        <div class="overflow-element">
-                            <!-- Overflow element 1 -->
-                          </div>
-                          <div class="overflow-element">
-                            <!-- Overflow element 2 -->
-                          </div>
                         <style>
-                            #what_to_print
+                            #what_to_print 
                             {
                                 padding: 123px 38px 38px 76px;
+                                position: relative;
+                            }
+
+                            #what_to_print .pdf_container
+                            {
+                                position: relative;
                             }
 
                             #what_to_print h2
                             {
-                                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-                                font-size: 24px;
-                                font-weight: bold;
+                                font-size: 16px;
                                 margin: 0;
                             }
 
                             #what_to_print h3
                             {
-                                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-                                font-size: 16px;
-                                margin: 0;
-                            }
-
-                            #what_to_print h4,
-                            #what_to_print #df_no
-                            {
-                                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
                                 font-size: 14px;
                                 margin: 0;
                             }
 
-                            #what_to_print .cod
+                            #what_to_print h4
+                            {
+                                font-size: 12px;
+                                margin: 0;
+                            }
+
+                            #what_to_print h5
+                            {
+                                font-size: 10px;
+                                margin: 0;
+                            }
+
+                            #what_to_print .amount
+                            {
+                                text-align: end;
+                            }
+
+                            #what_to_print .none
+                            {
+                            color: white;
+                            }
+
+                            #what_to_print .bold
+                            {
+                            font-weight: bold;
+                            }
+
+                            #what_to_print .italic
+                            {
+                            font-style: italic;
+                            }
+
+                            #what_to_print .grid2
+                            {
+                                display: grid;
+                                grid-template-columns: 2fr 1fr;
+                            }
+
+                            #what_to_print .client_copy
+                            {
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                width: 227px;
+                                height: 30px;
+                                border: 2px solid black;
+                                font-size: 12px;
+                                font-weight: bold;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                            }
+
+                            #what_to_print .billing_number
+                            {
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                width: 80px;
+                                text-align: center;
+                            }
+
+                            #what_to_print .pdf_header
+                            {
+                                position: absolute;
+                                top: 0;
+                                left: 230px;
+                                width: calc(100% - 312px);
+                                text-align: center;
+                            }
+
+                            #what_to_print .customer_summary
+                            {
+                                position: absolute;
+                                top: 95px;
+                                left: 0;
+                                width: 100%;
+                                display: flex;
+                                align-items: start;
+                                justify-content: start;
+                                border: 2px solid black ;
+                            }
+
+                            #what_to_print .customer
+                            {
+                                width: 50%;
+                                display: flex;
+                                flex-direction: column;
+                            }
+
+                            #what_to_print .account_summary
+                            {
+                                width: 50%;
+                                display: flex;
+                                flex-direction: column;
+                                border-left: 2px solid black ;
+                            }
+
+                            #what_to_print .customer_header,
+                            #what_to_print .account_summary_header
+                            {
+                                text-align: center;
+                                border-bottom: 1px solid black;
+                                background-color: lightgray;
+                            }
+
+                            #what_to_print .customer_detail
+                            {
+                                padding: 5px;
+                            }
+
+                            #what_to_print .account_summary_detail
+                            {
+                                padding: 5px 20px;
+                            }
+
+                            #what_to_print .payable
+                            {
+                                border-bottom: 2px solid black;
+                            }
+
+                            #what_to_print .account_details
+                            {
+                                position: absolute;
+                                top: 340px;
+                                width: 100%;
+                                display: flex;
+                                flex-direction: column;
+                                border: 1px solid black ;
+                                max-height: 400px;
+                                overflow: hidden;
+                            }
+
+
+                            #what_to_print .account_details_header
+                            {
+                                width: 100%;
+                                text-align: center;
+                                border-top: 2px solid black;
+                                border-bottom: 2px solid black;
+                                border-left: 1px solid black;
+                                border-right: 1px solid black;
+                                background-color: lightgray;
+                            }
+
+                            #what_to_print .account_details_detail
+                            {
+                                width: 100%;
+                                height: 425px;
+                            }
+
+                            #what_to_print .account_details_detail tbody
+                            {
+                                overflow: hidden;
+                            }
+
+                            #what_to_print .account_details_detail thead tr,
+                            #what_to_print .account_details_detail tbody tr
+                            {
+                                width: 100%;
+                                display: grid;
+                                grid-template-columns: 1.5fr 1fr 1fr 5fr 1.5fr 1fr 2fr 2.5fr 1.5fr;
+                            }
+
+                            #what_to_print .account_details_detail th,
+                            #what_to_print .account_details_detail td
+                            {
+                                width: 100%;
+                                border-left: 1px solid black;
+                                border-right: 1px solid black;
+                                text-align: center;
+                                font-size: 12px;
+                            }
+
+                            #what_to_print .account_details_detail tr
+                            {
+                                width: 100%;
+                                height: 18px;
+                                border-bottom: 1px solid black;
+                                text-align: center;
+                                font-size: 12px;
+                            }
+
+
+                            #what_to_print .total_amount
+                            {
+                                position: absolute;
+                                top: 740px;
+                                width: 100%;
+                                height: 25px;
+                                display: grid;
+                                grid-template-columns: 13fr 2.5fr 1.5fr;
+                                border: 2px solid black ;
+                                overflow: hidden;
+                                font-size: 12px;
+                            }
+
+                            #what_to_print .total_amount_label
                             {
                                 display: flex;
                                 justify-content: center;
                                 align-items: center;
-                                gap: 10px;
+                                font-weight: bold;
+                                font-size: 12px;
                             }
 
-                            #what_to_print .header_detail
+                            #what_to_print .total_amount_amount
                             {
-                                text-align: justify;
+                                display: flex;
+                                justify-content: end;
+                                align-items: center;
+                                font-weight: bold;
                             }
-
-                            #what_to_print .company
+                                
+                            #what_to_print .notes
                             {
+                                position: absolute;
+                                top: 770px;
+                                width: 100%;
                                 text-align: center;
                             }
-
-                            #what_to_print .company h2
+                                
+                            #what_to_print .footer
                             {
-                                font-family: Arial, Helvetica, sans-serif;
-                                font-size: 18px;
+                                position: absolute;
+                                top: 800px;
+                                width: 100%;
+                                display: grid;
+                                grid-template-columns: 1fr 1fr 1fr .4fr;
+                                border: 1px solid black ;
+                            }
+                                
+                            #what_to_print .footer > div
+                            {
+                                display: flex;
+                                flex-direction: column;
+                                text-align: center;
+                            }
+                                
+                            #what_to_print .footer_header
+                            {
+                                background-color: lightgray;
+                                border: 1px solid black ;
                             }
 
-                            #what_to_print table
+                            #what_to_print .assignatory
+                            {
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: end;
+                                height: 60px;
+                                border: 1px solid black ;
+                            }
+
+                        </style>
+                    </div><br>
+                    <div class="what_to_print" id="what_to_print2">
+                        <div class="si_header">
+                            <div>
+                                SODEXO ON-SITE SERVICE PHILIPPINES INC.
+                            </div>
+                            <div>
+                                11th flr Lepanto Condominium, 8747 Paseo de Roxas, Makati City
+                            </div>
+                            <div class="si_tin">
+                                008-648-866-000 / Facilities Management and Food Services
+                            </div>
+                        </div>
+                        <div class="si_number">
+                        </div>
+                        <div class="si_date">
+                            July 20, 2023
+                        </div>
+                        <div class="si_dr_po">
+                        </div>
+                        <div class="si_delivered_to">
+                        </div>
+                        <table class="si_details">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td class="amount">2,640.00</td>
+                                    <td>kgs</td>
+                                    <td>23-Jun-23</td>
+                                    <td>WRAPPER</td>
+                                    <td class="amount">6.80</td>
+                                    <td class="amount">20,106.24</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td class="amount">650.00</td>
+                                    <td>kgs</td>
+                                    <td>23-Jun-23</td>
+                                    <td>FLOOR GUM</td>
+                                    <td class="amount">6.80</td>
+                                    <td class="amount">4,950.40</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td class="amount">1,230.00</td>
+                                    <td>kgs</td>
+                                    <td>23-Jun-23</td>
+                                    <td>GARBAGE</td>
+                                    <td class="amount">6.80</td>
+                                    <td class="amount">9,367.48</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td class="amount">1.00</td>
+                                    <td>trip</td>
+                                    <td>23-Jun-23</td>
+                                    <td>TRANSPORTATION CHARGE</td>
+                                    <td class="amount">16,000.00</td>
+                                    <td class="amount">17,920.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="add-ins">
+                            <div>
+                                <div class="amount">VAT Exclusive</div>
+                                <div class="amount bold">46,736.00</div>
+                            </div>
+                            <div>
+                                <div class="amount">VAT 12%</div>
+                                <div class="amount bold">5,608.32</div>
+                            </div>
+                            <div>
+                                <div></div>
+                                <div class="amount"></div>
+                            </div>
+                            <div class="total_amount">
+                                <div></div>
+                                <div class="amount bold">52,344.32</div>
+                            </div>
+                        </div>
+                        <div class="terms">
+                            30 Days Term
+                        </div>
+                        <div class="assignatory">
+                            <div class="assignatory_name">
+                                Frank Florence Flores
+                            </div>
+                        </div>
+                        <div class="total_sales amount bold">
+                            52,344.32
+                        </div>
+                        <style>
+                            #what_to_print2
+                            {
+                                padding: 29px 47px 76px 29px;
+                                position: relative;
+                                font-size: 14px;
+                            }
+                            
+                            #what_to_print2 .amount
+                            {
+                                text-align: end;
+                                padding-right: 10px;
+                            }
+
+                            #what_to_print2 .bold
+                            {
+                                font-weight: bold;
+                            }
+                            
+                            #what_to_print2 .si_header,
+                            #what_to_print2 .si_header > div,
+                            #what_to_print2 .si_details,
+                            #what_to_print2 .si_details thead tr th,
+                            #what_to_print2 .si_details tbody tr td,
+                            #what_to_print2 .add-ins,
+                            #what_to_print2 .add-ins > div > div
+                            {
+                                border: 1px solid black;
+                            }
+
+                            #what_to_print2 .si_number,
+                            #what_to_print2 .si_date,
+                            #what_to_print2 .si_dr_po,
+                            #what_to_print2 .si_delivered_to,
+                            #what_to_print2 .terms,
+                            #what_to_print2 .total_sales,
+                            #what_to_print2 .assignatory
                             {
                                 border: 2px solid black;
                             }
 
-                            #what_to_print table th,
-                            #what_to_print table td
+                            #what_to_print2 .si_header
                             {
-                                border: 1px solid black;
-                                padding: 0 5px;
+                                position: absolute;
+                                top: 100px;
+                                left: 29px;
+                                width: 555px;
+                                height: 70px;
+                            }
+
+                            #what_to_print2 .si_header > div
+                            {
+                                height: calc(70px / 3);
+                                padding-left: 75px;
+                            }
+
+                            #what_to_print2 .si_header .si_tin
+                            {
+                                padding-left: 132px;
+                            }
+
+                            #what_to_print2 .si_number
+                            {
+                                position: absolute;
+                                top: 100px;
+                                left: 585px;
+                                height: 65px;
+                                width: 179px;
+                            }
+
+                            #what_to_print2 .si_date
+                            {
+                                position: absolute;
+                                top: 166px;
+                                left: 585px;
+                                height: 22px;
+                                width: 179px;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                padding-left: 28px;
+                                font-size: 14px;
+                            }
+
+                            #what_to_print2 .si_dr_po
+                            {
+                                position: absolute;
+                                top: 190px;
+                                left: 585px;
+                                height: 43px;
+                                width: 179px;
+                            }
+
+                            #what_to_print2 .si_delivered_to
+                            {
+                                position: absolute;
+                                top: 173px;
+                                left: 29px;
+                                width: 555px;
+                                height: 60px
+                            }
+
+                            #what_to_print2 .si_details
+                            {
+                                position: absolute;
+                                top: 236px;
+                                left: 29px;
+                                width: 735px;
+                                height: 335px;
                                 text-align: center;
                             }
 
-                            #what_to_print .signature
+                            #what_to_print2 .si_details thead tr
                             {
-                                position: relative;
-                                width: 660px;
                                 display: grid;
-                                grid-template-columns: 1fr 1fr;
+                                grid-template-columns: .9fr 2.5fr 2.5fr 1.4fr 5fr 3.7fr 3.7fr;
+                                height: 16px;
+                            }
+
+                            #what_to_print2 .si_details tbody tr
+                            {
+                                display: grid;
+                                grid-template-columns: .9fr 2.5fr 2.5fr 1.4fr 5fr 3.7fr 3.7fr;
+                                height: calc(319px / 13);
+                                font-size: 12px;
+                            }
+
+                            #what_to_print2 .si_details tbody tr td
+                            {
+                                padding-top: 3px;
+                            }
+
+                            #what_to_print2 .add-ins
+                            {
+                                position: absolute;
+                                top: 570px;
+                                left: 29px;
+                                width: 735px;
+                                height: 100.75px;
+                            }
+
+                            #what_to_print2 .add-ins > div
+                            {
+                                height: 24.75px;
+                                display: grid;
+                                grid-template-columns: 16fr 3.7fr;
+                            }
+
+                            #what_to_print2 .add-ins .total_amount
+                            {
+                                height: 26.5px;
+                                display: grid;
+                                grid-template-columns: 16fr 3.7fr;
+                            }
+
+
+                            #what_to_print2 .terms
+                            {
+                                position: absolute;
+                                top: 715px;
+                                left: 29px;
+                                height: 45px;
+                                width: 175px;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                            }
+
+                            #what_to_print2 .assignatory
+                            {
+                                position: absolute;
+                                top: 762px;
+                                left: 29px;
+                                height: 132px;
+                                width: 175px;
+                                display: flex;
+                                justify-content: center;
+                                align-items: end;
+                            }
+
+                            #what_to_print2 .assignatory_name
+                            {
                                 text-align: center;
+                                padding-bottom: 20px;
                             }
 
-                            #what_to_print .signature .pco
+                            #what_to_print2 .total_sales
                             {
                                 position: absolute;
-                                top: -90px;
-                                left: 75px;
-                                width: 200px;
-
+                                top: 715px;
+                                right: 48px;
+                                height: 45px;   
+                                width: 136px;
+                                display: flex;
+                                justify-content: end;
+                                align-items: center;
                             }
-
-                            #what_to_print .signature .pm
-                            {
-                                position: absolute;
-                                top: -100px;
-                                left: 430px;
-                                width: 120px;
-
-                            }
-
-                            .overflow-element 
-                            {
-                            break-inside: avoid; /* Prevent the element from being split across pages */
-                            page-break-inside: avoid; /* Additional property for better cross-browser support */
-                            }
-
 
                         </style>
-                    </div>
-                    <div class="completion" id="completion">
-                        <div class="">
-                            <label for="date_of_completion">
-                                <i class="fa-solid fa-right-to-bracket"></i>
-                                Date of Completion
-                            </label>
-                            <input type="date" autocomplete="off" name="date_of_completion" id="date_of_completion" class="form-control" required>
-                        </div>
-                        <div class="">
-                            <label for="time_of_completion">
-                            <i class="fa-solid fa-right-from-bracket"></i>
-                                Time of Completion
-                            </label>
-                            <input type="time" autocomplete="off" name="time_of_completion" id="time_of_completion" class="form-control" required><br>
-                        </div>
-                    </div>
-                    <div class="buttons" id="buttons">
-                        <button type="submit" id="submit" class="form-control" >
-                            Submit
-                        </button>
-                        <button type="reset" id="reset" class="form-control" >
-                            Clear
-                        </button>
-                    </div>
+                    </div><br>
                 </form>
             </section>
             <!-- settings -->
@@ -423,5 +1243,88 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.37.1/apexcharts.min.js"></script>
     <script src="../js/main.js"></script>
     <script src="../js/user5.js"></script>
+    <script>
+        function convertToPDFandDownload() {
+            const element = document.getElementById('what_to_print');
+            const cod_form_no = document.getElementById('cod_form_no').value;
+            const opt = {
+                filename: `${cod_form_no}`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
+            };
+
+            const marginTop = 32.5; // Top margin in mm
+            const marginBottom = 10; // Bottom margin in mm
+            const pageHeight = 236.9; // Adjust the value based on your available space for each page
+
+            const totalPages = Math.ceil(element.clientHeight / pageHeight);
+
+            let promises = [];
+
+            for (let i = 0; i < totalPages; i++) {
+                const promise = html2pdf()
+                .set(opt)
+                .from(element)
+                .toContainer()
+                .then(() => {
+                    const newPosition = -pageHeight * (i + 1) - marginTop;
+                    element.style.transform = `translate(0, ${newPosition}px)`;
+                });
+
+                promises.push(promise);
+            }
+
+            Promise.all(promises)
+                .then(() => {
+                element.style.transform = 'none';
+                html2pdf().set(opt).from(element).save().then(() => {
+                    // Call the submit button click event immediately after the PDF is downloaded
+                    document.getElementById('submit_button').click();
+                });
+            });
+        }
+
+        function convertToPDF() {
+            const element = document.getElementById('what_to_print2');
+            const bpf_form_no = document.getElementById('bpf_form_no').value;
+            const opt = {
+                filename: `${bpf_form_no}`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
+            };
+
+            const marginTop = 32.5; // Top margin in mm
+            const marginBottom = 10; // Bottom margin in mm
+            const pageHeight = 236.9; // Adjust the value based on your available space for each page
+
+            const totalPages = Math.ceil(element.clientHeight / pageHeight);
+
+            let promises = [];
+
+            for (let i = 0; i < totalPages; i++) {
+                const promise = html2pdf()
+                .set(opt)
+                .from(element)
+                .toContainer()
+                .then(() => {
+                    const newPosition = -pageHeight * (i + 1) - marginTop;
+                    element.style.transform = `translate(0, ${newPosition}px)`;
+                });
+
+                promises.push(promise);
+            }
+
+            Promise.all(promises)
+                .then(() => {
+                element.style.transform = 'none';
+                html2pdf().set(opt).from(element).save().then(() => {
+                    // Call the submit button click event immediately after the PDF is downloaded
+                });
+            });
+        }
+      
+    </script>
 </body>
 </html>

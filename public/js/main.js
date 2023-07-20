@@ -321,8 +321,9 @@ function generateExactTime() {
 
   // Update the date every second (1000 milliseconds)
   setInterval(updateDate, 1000);
-
+  
   function goBack() {
-    window.history.back();
+    history.back();
   }
+  
   

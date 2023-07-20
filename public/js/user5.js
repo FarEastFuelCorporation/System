@@ -122,7 +122,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     
         bpf_form_no.value = `${code_year_month}${data_counter4}`
-        df_no.innerHTML = `${code_year_month}${data_counter4}`
         
 
 
