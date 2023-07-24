@@ -564,7 +564,7 @@ h5{
 #sorting_form,
 #treatment_process_form,
 #destruction_form,
-#billing_dashboard,
+#billing_process_form,
 #marketing_transaction_form,
 #client_list_section,
 #new_client_form,
@@ -1768,7 +1768,7 @@ section h2
     gap: 20px;
 }
 
-#destruction_form form #what_to_print2
+#destruction_form form #what_to_print
 {
     width: 816px;
     height: 1056px;
@@ -1786,6 +1786,7 @@ section h2
     color: black;
 }
 
+#destruction_form form #what_to_print,
 #destruction_form form #client_container,
 #destruction_form form #completion,
 #destruction_form form #convertToPDFandDownload_button,
