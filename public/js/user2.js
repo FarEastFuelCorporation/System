@@ -49,8 +49,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         const sorted_items_list = document.getElementById("sorted_items_list");
         var wcf_sf_transaction_counter = 0;
         var wcf_transaction_counter = 0;
+        var sf_transaction_counter = 0;
         let wcf_transaction = []; // Variable containing existing elements
         let wcf_sf_transaction = []; // Variable containing existing elements
+        let sf_transaction = []; // Variable containing existing elements
         
         for (let i = 1; i < wcf_data_list.content.length; i++) {
             if (!wcf_transaction.includes(wcf_data_list.content[i][1])) {
@@ -64,16 +66,20 @@ document.addEventListener('DOMContentLoaded', async function() {
                 wcf_sf_transaction.push(sf_data_list.content[i][2]);
                 wcf_sf_transaction_counter += 1
             }
+            if (!sf_transaction.includes(sf_data_list.content[i][1])) {
+                sf_transaction.push(sf_data_list.content[i][1]);
+                sf_transaction_counter += 1
+            }
         }
 
         // Get elements from wcf_transaction not included in wcf_sf_transaction
         const pending = wcf_transaction.filter((element) => !wcf_sf_transaction.includes(element));
         const done_sorting = wcf_transaction.filter((element) => wcf_sf_transaction.includes(element));
         
-        // unsorted_list
-        sorted.innerText = wcf_sf_transaction_counter;
         total.innerText = wcf_transaction_counter
         unsorted.innerText = wcf_transaction_counter - wcf_sf_transaction_counter;
+        sorted.innerText = wcf_sf_transaction_counter;
+        sorted_items.innerText = sf_transaction_counter;
         var data_value = "";
         var data_value_counter = 1;
         for(let i = 0; i < pending.length; i++){
@@ -156,7 +162,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         }
         sorted_items_list.innerHTML = data_value_done;    
-        sorted_items.innerText = data_value__done_counter;
 
         // FORM GENERATOR
         if(today_month.toString().length == 1){
