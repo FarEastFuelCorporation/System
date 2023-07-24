@@ -280,7 +280,6 @@ function generateExactTime() {
   return exactTime;
   }
 
-
   // Update the content of the HTML element with the exact time every second
   function updateExactTime() {
   var exactTimeElement = document.getElementById("exactTime");
@@ -326,4 +325,47 @@ function generateExactTime() {
     history.back();
   }
   
+  function calculateWorkHours(timeInValue, timeOutValue) {
+    // Convert time strings to Date objects
+    const timeInDate = new Date(`2000-01-01T${timeInValue}`);
+    const timeOutDate = new Date(`2000-01-01T${timeOutValue}`);
   
+    // Calculate the time difference in milliseconds
+    let timeDiff = timeOutDate - timeInDate;
+  
+    // Handle overnight work scenario
+    if (timeDiff < 0) {
+      const nextDay = new Date(timeOutDate);
+      nextDay.setDate(nextDay.getDate() + 1);
+      timeDiff = nextDay - timeInDate;
+    }
+  
+    // Convert time difference from milliseconds to hours
+    const hours = timeDiff / (1000 * 60 * 60);
+  
+    // Round down to the nearest whole hour or half-hour
+    const roundedHours = Math.floor(hours * 2) / 2;
+  
+    // Display the result
+    return roundedHours;
+  }
+  
+  function roundHourRate(rate) {
+    const roundedRate = Math.floor(rate * 2) / 2;
+    return roundedRate;
+  }
+  
+  function roundDownTime(timeStr) {
+    // Parse the time string to get hours and minutes
+    const [time, meridian] = timeStr.split(' ');
+    const [hour, minute] = time.split(':').map(Number);
+    
+    // Calculate the decimal representation of the time
+    const decimalTime = hour + minute / 60;
+    
+    // Round down to the nearest 0, 0.5, or 1
+    const roundedTime = Math.floor(decimalTime * 2) / 2;
+    
+    return roundedTime;
+  }
+    
