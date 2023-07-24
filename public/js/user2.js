@@ -66,9 +66,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                 wcf_sf_transaction.push(sf_data_list.content[i][2]);
                 wcf_sf_transaction_counter += 1
             }
-            if (!sf_transaction.includes(sf_data_list.content[i][1])) {
-                sf_transaction.push(sf_data_list.content[i][1]);
-                sf_transaction_counter += 1
+            if (sf_data_list.content[i][4] !==  "DISCREPANCY") {
+                if (!sf_transaction.includes(sf_data_list.content[i][1])) {
+                    sf_transaction.push(sf_data_list.content[i][1]);
+                    sf_transaction_counter += 1
+                }
             }
         }
 
