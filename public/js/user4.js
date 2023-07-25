@@ -36,43 +36,46 @@ document.addEventListener('DOMContentLoaded', async function() {
         user_sidebar.innerHTML = `<u>${username_data.content[4][3]}</u>`;
         user_sidebar_officer.innerText = username_data.content[4][4];
     
-        // dashboard
-        const pending_list = document.getElementById("pending_list");
-        const finished_list = document.getElementById("finished_list");
-        var sf_tpf_transaction_counter = 0;
-        var sf_transaction_counter = 0;
-        let sf_transaction = []; // Variable containing existing elements
-        let sf_tpf_transaction = []; // Variable containing existing elements
+        // certification_dashboard
+        const treated_counter_certification = document.querySelector("#certification_dashboard #treated_counter");
+        const pending_counter_certification = document.querySelector("#certification_dashboard #pending_counter");
+        const certified_counter_certification = document.querySelector("#certification_dashboard #certified_counter");
+        const pending_list_certification = document.querySelector("#certification_dashboard #pending_list");
+        const finished_list_certification = document.querySelector("#certification_dashboard #finished_list");
+        var sf_tpf_transaction_counter_certification = 0;
+        var sf_transaction_counter_certification = 0;
+        let sf_transaction_certification = []; // Variable containing existing elements
+        let sf_tpf_transaction_certification = []; // Variable containing existing elements
         
         for (let i = 1; i < tpf_data_list.content.length; i++) {
-            if (!sf_transaction.includes(tpf_data_list.content[i][1])) {
-                sf_transaction.push(tpf_data_list.content[i][1]);
-                sf_transaction_counter += 1
+            if (!sf_transaction_certification.includes(tpf_data_list.content[i][1])) {
+                sf_transaction_certification.push(tpf_data_list.content[i][1]);
+                sf_transaction_counter_certification += 1
             }
         }
 
         for (let i = 1; i < cod_data_list.content.length; i++) {
-            if (!sf_tpf_transaction.includes(cod_data_list.content[i][2])) {
-                sf_tpf_transaction.push(cod_data_list.content[i][2]);
-                sf_tpf_transaction_counter += 1
+            if (!sf_tpf_transaction_certification.includes(cod_data_list.content[i][2])) {
+                sf_tpf_transaction_certification.push(cod_data_list.content[i][2]);
+                sf_tpf_transaction_counter_certification += 1
             }
         }
 
         // Get elements from sf_transaction not included in sf_tpf_transaction
-        const pending = sf_transaction.filter((element) => !sf_tpf_transaction.includes(element));
-        const finish = sf_transaction.filter((element) => sf_tpf_transaction.includes(element));
+        const pending_certification = sf_transaction_certification.filter((element) => !sf_tpf_transaction_certification.includes(element));
+        const finish_certification = sf_transaction_certification.filter((element) => sf_tpf_transaction_certification.includes(element));
 
-        sorted.innerText = sf_tpf_transaction_counter;
-        total.innerText = sf_transaction_counter
-        unsorted.innerText = sf_transaction_counter - sf_tpf_transaction_counter;
+        treated_counter_certification.innerText = sf_transaction_counter_certification;
+        pending_counter_certification.innerText = sf_transaction_counter_certification - sf_tpf_transaction_counter_certification;
+        certified_counter_certification.innerText = sf_tpf_transaction_counter_certification;
         var data_value = "";
         var data_value_counter = 1;
-        for(let i = 0; i < pending.length; i++){
+        for(let i = 0; i < pending_certification.length; i++){
             var status;
             var date_accomplished;
             var target_date;
             for(let j = 1; j < tpf_data_list.content.length; j++){
-                if(pending[i] == tpf_data_list.content[j][1]){
+                if(pending_certification[i] == tpf_data_list.content[j][1]){
                     date_accomplished = new Date(date_decoder(tpf_data_list.content[j][11]));
                     target_date = new Date(date_decoder(tpf_data_list.content[j][10]));
                     if(date_accomplished.getDate() < target_date.getDate()){
@@ -100,16 +103,16 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         }
-        pending_list.innerHTML = data_value;
+        pending_list_certification.innerHTML = data_value;
 
         var data_value = "";
         var data_value_counter = 1;
-        for(let i = 0; i < finish.length; i++){
+        for(let i = 0; i < finish_certification.length; i++){
             var status;
             var date_accomplished;
             var target_date;
             for(let j = 1; j < tpf_data_list.content.length; j++){
-                if(finish[i] == tpf_data_list.content[j][1]){
+                if(finish_certification[i] == tpf_data_list.content[j][1]){
                     date_accomplished = new Date(date_decoder(tpf_data_list.content[j][11]));
                     target_date = new Date(date_decoder(tpf_data_list.content[j][10]));
                     if(date_accomplished.getDate() < target_date.getDate()){
@@ -150,8 +153,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         }
-        finished_list.innerHTML = data_value;
-
+        finished_list_certification.innerHTML = data_value;
 
         // cod_data_list
         const cod_form_no = document.getElementById("cod_form_no");

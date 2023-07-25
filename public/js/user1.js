@@ -44,62 +44,90 @@ document.addEventListener('DOMContentLoaded', async function() {
         user_sidebar.innerHTML = `<u>${username_data.content[1][3]}</u>`;
         user_sidebar_officer.innerText = username_data.content[1][4];
         
-        // dashboard
-        const to_received = document.getElementById("to_received");
-        const received = document.getElementById("received");
-        const pending = document.getElementById("pending");
-        const pending_list = document.getElementById("pending_list");
-        const received_list = document.getElementById("received_list");
-        var ltf_transaction_counter = 0;
-        var ltf_wcf_transaction_counter = 0;
-        var mtf_transaction_counter = 0;
-        var mtf_wcf_transaction_counter = 0;
-        let ltf_transaction = []; // Variable containing existing elements
-        let ltf_wcf_transaction = []; // Variable containing existing elements
-        let mtf_transaction = []; // Variable containing existing elements
-        let mtf_wcf_transaction = []; // Variable containing existing elements
+        // receiving_dashboard
+        const to_received_receiving = document.querySelector("#dashboard_section #to_received");
+        const received_receiving = document.querySelector("#dashboard_section #received");
+        const pending_receiving = document.querySelector("#dashboard_section #pending");
+        const pending_list_receiving = document.querySelector("#dashboard_section #pending_list");
+        const received_list_receiving = document.querySelector("#dashboard_section #received_list");
+        var ltf_transaction_counter_receiving = 0;
+        var ltf_wcf_transaction_counter_receiving = 0;
+        var mtf_transaction_counter_receiving = 0;
+        var mtf_wcf_transaction_counter_receiving = 0;
+        var ltf_transaction_receiving = []; // Variable containing existing elements
+        var ltf_wcf_transaction_receiving = []; // Variable containing existing elements
+        var mtf_transaction_receiving = []; // Variable containing existing elements
+        var mtf_wcf_transaction_receiving = []; // Variable containing existing elements
         
         for (let i = 1; i < mtf_data_list.content.length; i++) {
             if(mtf_data_list.content[i][8] ==  "RECEIVING"){
-                if (!mtf_transaction.includes(mtf_data_list.content[i][1])) {
-                    mtf_transaction.push(mtf_data_list.content[i][1]);
-                    mtf_transaction_counter += 1
+                if (!mtf_transaction_receiving.includes(mtf_data_list.content[i][1])) {
+                    mtf_transaction_receiving.push(mtf_data_list.content[i][1]);
+                    mtf_transaction_counter_receiving += 1
                 }
             }
         }
 
         for (let i = 1; i < ltf_data_list.content.length; i++) {
-            if (!ltf_transaction.includes(ltf_data_list.content[i][1])) {
-                ltf_transaction.push(ltf_data_list.content[i][1]);
-                ltf_transaction_counter += 1
+            if (!ltf_transaction_receiving.includes(ltf_data_list.content[i][1])) {
+                ltf_transaction_receiving.push(ltf_data_list.content[i][1]);
+                ltf_transaction_counter_receiving += 1
             }
         }
         
         for (let i = 1; i < wcf_data_list.content.length; i++) {
-            if (!ltf_wcf_transaction.includes(wcf_data_list.content[i][2])) {
-                ltf_wcf_transaction.push(wcf_data_list.content[i][2]);
-                ltf_wcf_transaction_counter += 1
+            if (!ltf_wcf_transaction_receiving.includes(wcf_data_list.content[i][2])) {
+                ltf_wcf_transaction_receiving.push(wcf_data_list.content[i][2]);
+                ltf_wcf_transaction_counter_receiving += 1
             }
-            if (!mtf_wcf_transaction.includes(wcf_data_list.content[i][2])) {
-                mtf_wcf_transaction.push(wcf_data_list.content[i][2]);
-                mtf_wcf_transaction_counter += 1
+            if (!mtf_wcf_transaction_receiving.includes(wcf_data_list.content[i][2])) {
+                mtf_wcf_transaction_receiving.push(wcf_data_list.content[i][2]);
+                mtf_wcf_transaction_counter_receiving += 1
             }
         }
         
         // Get elements from wcf_transaction not included in wcf_sf_transaction
-        const newElements = ltf_transaction.filter((element) => !ltf_wcf_transaction.includes(element));
-        const newElements2 = mtf_transaction.filter((element) => !mtf_wcf_transaction.includes(element));
-        const newElements3 = ltf_transaction.filter((element) => ltf_wcf_transaction.includes(element));
-        const newElements4 = mtf_transaction.filter((element) => mtf_wcf_transaction.includes(element));
+        const newElements_receiving = ltf_transaction_receiving.filter((element) => !ltf_wcf_transaction_receiving.includes(element));
+        const newElements2_receiving = mtf_transaction_receiving.filter((element) => !mtf_wcf_transaction_receiving.includes(element));
+        const newElements3_receiving = ltf_transaction_receiving.filter((element) => ltf_wcf_transaction_receiving.includes(element));
+        const newElements4_receiving = mtf_transaction_receiving.filter((element) => mtf_wcf_transaction_receiving.includes(element));
 
-        received.innerText = ltf_wcf_transaction_counter;
-        to_received.innerText = ltf_transaction_counter + mtf_transaction_counter;
-        pending.innerText = newElements.length +newElements2.length;
+        received_receiving.innerText = ltf_wcf_transaction_counter_receiving;
+        to_received_receiving.innerText = ltf_transaction_counter_receiving + mtf_transaction_counter_receiving;
+        pending_receiving.innerText = newElements_receiving.length + newElements2_receiving.length;
+        
+        const raw_waste_receiving = document.querySelector("#dashboard_section #raw_waste"); 
+        const hazardous_waste_receiving = document.querySelector("#dashboard_section #hazardous_waste"); 
+        const non_hazardous_waste_receiving = document.querySelector("#dashboard_section #non_hazardous_waste");
+        const total_receiving = document.querySelector("#dashboard_section #total");
+    
+        var rw = 0;
+        var hw = 0;
+        var nhw = 0;
+    
+        for(y=1; y<wcf_data_list.content.length; y++){
+    
+            if(wcf_data_list.content[y][4] === "RW"){
+                rw += parseInt(wcf_data_list.content[y][17]);
+            }
+            else if(wcf_data_list.content[y][4] === "HW"){
+                hw += parseInt(wcf_data_list.content[y][17]);
+            }
+            else if(wcf_data_list.content[y][4] === "NHW"){
+                nhw += parseInt(wcf_data_list.content[y][17]);
+            }
+        }
+    
+        raw_waste_receiving.innerText = parseInt(rw) + " kg";
+        hazardous_waste_receiving.innerText = parseInt(hw) + " kg";
+        non_hazardous_waste_receiving.innerText = parseInt(nhw) + " kg";
+        total_receiving.innerText = parseInt(rw) + parseInt(hw) + parseInt(nhw)  + " kg";    
+        
         var data_value = "";
         var data_value_counter = 1;
-        for(let i = 0; i < newElements.length; i++){
+        for(let i = 0; i < newElements_receiving.length; i++){
             for(let j = 1; j < ltf_data_list.content.length; j++){
-                if(newElements[i] == ltf_data_list.content[j][1]){
+                if(newElements_receiving[i] == ltf_data_list.content[j][1]){
                     data_value +=`
                     <tr>
                         <td>${data_value_counter}</td>
@@ -116,9 +144,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         }
-        for(let i = 0; i < newElements2.length; i++){
+        for(let i = 0; i < newElements2_receiving.length; i++){
             for(let j = 1; j < mtf_data_list.content.length; j++){
-                if(newElements2[i] == mtf_data_list.content[j][1]){
+                if(newElements2_receiving[i] == mtf_data_list.content[j][1]){
                     data_value +=`
                     <tr>
                         <td>${data_value_counter}</td>
@@ -135,13 +163,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         }
-        pending_list.innerHTML = data_value;
+        pending_list_receiving.innerHTML = data_value;
 
         var data_value = "";
         var data_value_counter = 1;
-        for(let i = 0; i < newElements3.length; i++){
+        for(let i = 0; i < newElements3_receiving.length; i++){
             for(let j = 1; j < wcf_data_list.content.length; j++){
-                if(newElements3[i] == wcf_data_list.content[j][2]){
+                if(newElements3_receiving[i] == wcf_data_list.content[j][2]){
                     for(let k = 1; k < ltf_data_list.content.length; k++){
                         var hauling_date_info;
                         var hauling_time_info;
@@ -170,9 +198,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                 }
             }
-            for(let i = 0; i < newElements4.length; i++){
+            for(let i = 0; i < newElements4_receiving.length; i++){
             for(let j = 1; j < wcf_data_list.content.length; j++){
-                if(newElements4[i] == wcf_data_list.content[j][2]){
+                if(newElements4_receiving[i] == wcf_data_list.content[j][2]){
                     for(let k = 1; k < mtf_data_list.content.length; k++){
                         var hauling_date_info;
                         var hauling_time_info;
@@ -201,8 +229,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         }
-        received_list.innerHTML = data_value;
-
+        received_list_receiving.innerHTML = data_value;
 
         const wcf_data2 = document.getElementById("wcf_data2");
         const ltf_form_no = document.getElementById("ltf_form_no");
@@ -587,34 +614,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             search_wcf_form_no.value = ``;
         })
     
-        // Dashboard Data
-        const raw_waste = document.getElementById("raw_waste"); 
-        const hazardous_waste = document.getElementById("hazardous_waste"); 
-        const non_hazardous_waste = document.getElementById("non_hazardous_waste");
-        const total = document.getElementById("total");
-    
-        var rw = 0;
-        var hw = 0;
-        var nhw = 0;
-    
-        for(y=1; y<wcf_data_list.content.length; y++){
-    
-            if(wcf_data_list.content[y][4] === "RW"){
-                rw += parseInt(wcf_data_list.content[y][17]);
-            }
-            else if(wcf_data_list.content[y][4] === "HW"){
-                hw += parseInt(wcf_data_list.content[y][17]);
-            }
-            else if(wcf_data_list.content[y][4] === "NHW"){
-                nhw += parseInt(wcf_data_list.content[y][17]);
-            }
-        }
-    
-        raw_waste.innerText = parseInt(rw) + " kg";
-        hazardous_waste.innerText = parseInt(hw) + " kg";
-        non_hazardous_waste.innerText = parseInt(nhw) + " kg";
-        total.innerText = parseInt(rw) + parseInt(hw) + parseInt(nhw)  + " kg";    
-
     } catch (error) {
         console.error('Error fetching data:', error);
     }

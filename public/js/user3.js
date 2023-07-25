@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         user_sidebar.innerHTML = `<u>${username_data.content[3][3]}</u>`;
         user_sidebar_officer.innerText = username_data.content[3][4];
 
-                // tpf_data_list
+        // tpf_data_list
         const tpf_form_no = document.getElementById("tpf_form_no"); 
         const today = new Date();
         const today_year = today.getFullYear();
@@ -41,45 +41,48 @@ document.addEventListener('DOMContentLoaded', async function() {
         var code_year_month;
         var data_counter;
 
-        // dashboard
-        var pending_list = document.getElementById("pending_list");
-        var finished_list = document.getElementById("finished_list");
-        var sf_tpf_transaction_counter = 0;
-        var sf_transaction_counter = 0;
-        let sf_transaction = []; // Variable containing existing elements
-        let sf_tpf_transaction = []; // Variable containing existing elements
+        // treatment_process_dashboard
+        const total_counter_treatment = document.querySelector("#treatment_process_dashboard #total_counter");
+        const pending_counter_treatment = document.querySelector("#treatment_process_dashboard #pending_counter");
+        const treated_counter_treatment = document.querySelector("#treatment_process_dashboard #treated_counter");
+        const pending_list_treatment = document.querySelector("#treatment_process_dashboard #pending_list");
+        const finished_list_treatment = document.querySelector("#treatment_process_dashboard #finished_list");
+        var sf_tpf_transaction_counter_treatment = 0;
+        var sf_transaction_counter_treatment = 0;
+        let sf_transaction_treatment = []; // Variable containing existing elements
+        let sf_tpf_transaction_treatment = []; // Variable containing existing elements
         
         for (let i = 1; i < sf_data_list.content.length; i++) {
             if(sf_data_list.content[i][4] !== "DISCREPANCY"){
                 if(sf_data_list.content[i][5] !== "FOR STORAGE"){
-                    if (!sf_transaction.includes(sf_data_list.content[i][1])) {
-                        sf_transaction.push(sf_data_list.content[i][1]);
-                        sf_transaction_counter += 1
+                    if (!sf_transaction_treatment.includes(sf_data_list.content[i][1])) {
+                        sf_transaction_treatment.push(sf_data_list.content[i][1]);
+                        sf_transaction_counter_treatment += 1
                     }
                 }
             }
         }
 
         for (let i = 1; i < tpf_data_list.content.length; i++) {
-            if (!sf_tpf_transaction.includes(tpf_data_list.content[i][2])) {
-                sf_tpf_transaction.push(tpf_data_list.content[i][2]);
-                sf_tpf_transaction_counter += 1
+            if (!sf_tpf_transaction_treatment.includes(tpf_data_list.content[i][2])) {
+                sf_tpf_transaction_treatment.push(tpf_data_list.content[i][2]);
+                sf_tpf_transaction_counter_treatment += 1
             }
         }
 
         // Get elements from sf_transaction not included in sf_tpf_transaction
-        const pending = sf_transaction.filter((element) => !sf_tpf_transaction.includes(element));
-        const finished = sf_transaction.filter((element) => sf_tpf_transaction.includes(element));
+        const pending_treatment = sf_transaction_treatment.filter((element) => !sf_tpf_transaction_treatment.includes(element));
+        const finished_treatment = sf_transaction_treatment.filter((element) => sf_tpf_transaction_treatment.includes(element));
 
         // pending_list
-        sorted.innerText = sf_tpf_transaction_counter;
-        total.innerText = sf_transaction_counter
-        unsorted.innerText = sf_transaction_counter - sf_tpf_transaction_counter;
+        treated_counter_treatment.innerText = sf_tpf_transaction_counter_treatment;
+        total_counter_treatment.innerText = sf_transaction_counter_treatment;
+        pending_counter_treatment.innerText = sf_transaction_counter_treatment - sf_tpf_transaction_counter_treatment;
         var data_value = "";
         var data_value_counter = 1;
-        for(let i = 0; i < pending.length; i++){
+        for(let i = 0; i < pending_treatment.length; i++){
             for(let j = 1; j < sf_data_list.content.length; j++){
-                if(pending[i] == sf_data_list.content[j][1]){
+                if(pending_treatment[i] == sf_data_list.content[j][1]){
                     data_value +=`
                     <tr>
                         <td>${data_value_counter}</td>
@@ -95,14 +98,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         }
-        pending_list.innerHTML = data_value;    
+        pending_list_treatment.innerHTML = data_value;    
 
         // finished_list
         var data_value = "";
         var data_value_counter = 1;
-        for(let i = 0; i < finished.length; i++){
+        for(let i = 0; i < finished_treatment.length; i++){
             for(let j = 1; j < sf_data_list.content.length; j++){
-                if(finished[i] == sf_data_list.content[j][1]){
+                if(finished_treatment[i] == sf_data_list.content[j][1]){
                     var sorted_date;
                     var sorted_time;
                     var tpf_no;
@@ -131,7 +134,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         }
-        finished_list.innerHTML = data_value;    
+        finished_list_treatment.innerHTML = data_value;    
 
         // FORM GENERATOR
         if(today_month.toString().length == 1){

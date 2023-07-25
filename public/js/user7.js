@@ -48,64 +48,64 @@ document.addEventListener('DOMContentLoaded', async function() {
         user_sidebar.innerHTML = `<u>${username_data.content[7][3]}</u>`;
         user_sidebar_officer.innerText = username_data.content[7][4];
         
-        // dashboard
-        var booked_transactions = document.getElementById("booked_transactions");
-        var on_hauling_transactions = document.getElementById("on_hauling_transactions");
-        var hauled_transactions = document.getElementById("hauled_transactions");
-        var pending_transactions = document.getElementById("pending_transactions");
-        var ongoing_list = document.getElementById("ongoing_list");
-        var pending_list = document.getElementById("pending_list");
-        var vehicle_list = document.getElementById("vehicle_list");
-        var mtf_transaction_counter = 0;
-        var mtf_ltf_transaction_counter = 0;
-        var ltf_transaction_counter = 0;
-        var ltf_wcf_transaction_counter = 0;
-        let mtf_transaction = []; // Variable containing existing elements
-        let mtf_ltf_transaction = []; // Variable containing existing elements
-        let ltf_transaction = []; // Variable containing existing elements
-        let ltf_wcf_transaction = []; // Variable containing existing elements
+        // logistic_dashboard
+        const booked_transactions_logistics = document.querySelector("#logistic_dashboard #booked_transactions");
+        const on_hauling_transactions_logistics = document.querySelector("#logistic_dashboard #on_hauling_transactions");
+        const hauled_transactions_logistics = document.querySelector("#logistic_dashboard #hauled_transactions");
+        const pending_transactions_logistics = document.querySelector("#logistic_dashboard #pending_transactions");
+        const ongoing_list_logistics = document.querySelector("#logistic_dashboard #ongoing_list");
+        const pending_list_logistics = document.querySelector("#logistic_dashboard #pending_list");
+        const vehicle_list_logistics = document.querySelector("#vehicle_list_section #vehicle_list");
+        var mtf_transaction_logistics = [];
+        var mtf_transaction_counter_logistics = 0;
+        var mtf_ltf_transaction_logistics = [];
+        var mtf_ltf_transaction_counter_logistics = 0;
+        var ltf_transaction_logistics = [];
+        var ltf_transaction_counter_logistics = 0;
+        var ltf_wcf_transaction_logistics = [];
+        var ltf_wcf_transaction_counter_logistics = 0;
         
         for (let i = 1; i < mtf_data_list.content.length; i++) {
             if(mtf_data_list.content[i][8] == "LOGISTICS"){
-                if (!mtf_transaction.includes(mtf_data_list.content[i][1])) {
-                    mtf_transaction.push(mtf_data_list.content[i][1]);
-                    mtf_transaction_counter += 1
+                if (!mtf_transaction_logistics.includes(mtf_data_list.content[i][1])) {
+                    mtf_transaction_logistics.push(mtf_data_list.content[i][1]);
+                    mtf_transaction_counter_logistics += 1
                 }
             }
         }
 
         for (let i = 1; i < ltf_data_list.content.length; i++) {
-            if (!mtf_ltf_transaction.includes(ltf_data_list.content[i][2])) {
-                mtf_ltf_transaction.push(ltf_data_list.content[i][2]);
-                mtf_ltf_transaction_counter += 1
+            if (!mtf_ltf_transaction_logistics.includes(ltf_data_list.content[i][2])) {
+                mtf_ltf_transaction_logistics.push(ltf_data_list.content[i][2]);
+                mtf_ltf_transaction_counter_logistics += 1
             }
-            if (!ltf_transaction.includes(ltf_data_list.content[i][1])) {
-                ltf_transaction.push(ltf_data_list.content[i][1]);
-                ltf_transaction_counter += 1
+            if (!ltf_transaction_logistics.includes(ltf_data_list.content[i][1])) {
+                ltf_transaction_logistics.push(ltf_data_list.content[i][1]);
+                ltf_transaction_counter_logistics += 1
             }
 
         }
 
         for (let i = 1; i < wcf_data_list.content.length; i++) {
-            if (!ltf_wcf_transaction.includes(wcf_data_list.content[i][2])) {
-                ltf_wcf_transaction.push(wcf_data_list.content[i][2]);
-                ltf_wcf_transaction_counter += 1
+            if (!ltf_wcf_transaction_logistics.includes(wcf_data_list.content[i][2])) {
+                ltf_wcf_transaction_logistics.push(wcf_data_list.content[i][2]);
+                ltf_wcf_transaction_counter_logistics += 1
             }
         }
 
-        const newElements = mtf_transaction.filter((element) => !mtf_ltf_transaction.includes(element));
-        const newElements2 = ltf_transaction.filter((element) => !ltf_wcf_transaction.includes(element));
-        const newElements3 = ltf_transaction.filter((element) => ltf_wcf_transaction.includes(element));
+        const newElements_logistics = mtf_transaction_logistics.filter((element) => !mtf_ltf_transaction_logistics.includes(element));
+        const newElements2_logistics = ltf_transaction_logistics.filter((element) => !ltf_wcf_transaction_logistics.includes(element));
+        const newElements3_logistics = ltf_transaction_logistics.filter((element) => ltf_wcf_transaction_logistics.includes(element));
 
-        on_hauling_transactions.innerText = newElements2.length;
-        hauled_transactions.innerText = newElements3.length;
-        booked_transactions.innerText = mtf_transaction_counter
-        pending_transactions.innerText = newElements.length;
+        on_hauling_transactions_logistics.innerText = newElements2_logistics.length;
+        hauled_transactions_logistics.innerText = newElements3_logistics.length;
+        booked_transactions_logistics.innerText = mtf_transaction_counter_logistics;
+        pending_transactions_logistics.innerText = newElements_logistics.length;
         var data_value = "";
         var data_value_counter = 1;
-        for(let i = 0; i < newElements.length; i++){
+        for(let i = 0; i < newElements_logistics.length; i++){
             for(let j = 1; j < mtf_data_list.content.length; j++){
-                if(newElements[i] == mtf_data_list.content[j][1]){
+                if(newElements_logistics[i] == mtf_data_list.content[j][1]){
                     if(mtf_data_list.content[j][8] == "LOGISTICS"){
                         data_value +=`
                         <tr>
@@ -123,13 +123,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         }
-        pending_list.innerHTML = data_value;    
+        pending_list_logistics.innerHTML = data_value;    
 
         var data3_value = "";
         var data_value3_counter = 1;
         for(let j = 1; j < ltf_data_list.content.length; j++){
-            for(let k = 0; k <= newElements2.length; k++){
-                if(ltf_data_list.content[j][1] == newElements2[k]){
+            for(let k = 0; k <= newElements2_logistics.length; k++){
+                if(ltf_data_list.content[j][1] == newElements2_logistics[k]){
                     data3_value +=`
                     <tr>
                     <td>${data_value3_counter}</td>
@@ -165,29 +165,29 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         }
-        ongoing_list.innerHTML = data3_value;    
+        ongoing_list_logistics.innerHTML = data3_value;    
         
-        var on_hauling_vehicle_counter = 0;
-        var under_maintenance_vehicle_counter = 0;
-        var for_maintenance_vehicle_counter = 0;
+        var on_hauling_vehicle_counter_logistics = 0;
+        var under_maintenance_vehicle_counter_logistics = 0;
+        var for_maintenance_vehicle_counter_logistics = 0;
         var data2_value = "";
         var data2_value_counter = 1;
         for(let j = 1; j < vehicle_data.content.length; j++){
-            var vehicle_status = `AVAILABLE`;
+            var vehicle_status_logistics = `AVAILABLE`;
             for(let k = 1; k < vehicle_log_data.content.length; k++){
                 if(vehicle_data.content[j][0] == vehicle_log_data.content[k][2]){
-                    vehicle_status = vehicle_log_data.content[k][5];
-                    if(vehicle_status == "ON HAUL"){
-                        on_hauling_vehicle_counter += 1
+                    vehicle_status_logistics = vehicle_log_data.content[k][5];
+                    if(vehicle_status_logistics == "ON HAUL"){
+                        on_hauling_vehicle_counter_logistics += 1
                     }
-                    if(vehicle_status == "AVAILABLE"){
-                        on_hauling_vehicle_counter -= 1
+                    if(vehicle_status_logistics == "AVAILABLE"){
+                        on_hauling_vehicle_counter_logistics -= 1
                     }
-                    else if(vehicle_status == "UNDER MAINTENANCE"){
-                        under_maintenance_vehicle_counter += 1
+                    else if(vehicle_status_logistics == "UNDER MAINTENANCE"){
+                        under_maintenance_vehicle_counter_logistics += 1
                     }
-                    else if(vehicle_status == "FOR MAINTENANCE"){
-                        for_maintenance_vehicle_counter += 1
+                    else if(vehicle_status_logistics == "FOR MAINTENANCE"){
+                        for_maintenance_vehicle_counter_logistics += 1
                     }
                 }
             }
@@ -199,13 +199,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <td>${vehicle_data.content[j][4]}</td>
                 <td>${vehicle_data.content[j][2]}</td>
                 <td>${vehicle_data.content[j][3]}</td>
-                <td>${vehicle_status}</td>
+                <td>${vehicle_status_logistics}</td>
             </tr>
             `
             data2_value_counter += 1;
 
         }
-        vehicle_list.innerHTML = data2_value;    
+        vehicle_list_logistics.innerHTML = data2_value;    
 
         // driver_data
         const search_wrapper2 = document.getElementById("search_driver");
@@ -259,29 +259,28 @@ document.addEventListener('DOMContentLoaded', async function() {
             sugg_box2.innerHTML = list_data;
         }
     
-        // vehicle_data
-        const total_vehicle = document.getElementById("total_vehicle");
-        const available_vehicle = document.getElementById("available_vehicle");
-        const on_hauling_vehicle = document.getElementById("on_hauling_vehicle");
-        const under_maintenance_vehicle = document.getElementById("under_maintenance_vehicle");
-        const for_maintenance_vehicle = document.getElementById("for_maintenance_vehicle");
-        const search_wrapper3 = document.getElementById("search_plate_no");
-        const input_box3 = search_wrapper3.querySelector("input");
-        const sugg_box3 = search_wrapper3.querySelector(".autocom_box");
-        var data_value3 = [];
-        var total_vehicle_counter = 0;
+        // vehicle_list_section 
+        const total_vehicle_vehicle_list_section = document.querySelector("#total_vehicle");
+        const available_vehicle_vehicle_list_section = document.querySelector("#available_vehicle");
+        const on_hauling_vehicle_vehicle_list_section = document.querySelector("#on_hauling_vehicle");
+        const under_maintenance_vehicle_vehicle_list_section = document.querySelector("#under_maintenance_vehicle");
+        const for_maintenance_vehicle_vehicle_list_section = document.querySelector("#for_maintenance_vehicle");        var data_value3 = [];
+        var total_vehicle_counter_vehicle_list_section = 0;
 
         for (x = 1; x < vehicle_data.content.length; x++) {
             data_value3.push(vehicle_data.content[x][0]);
-            total_vehicle_counter += 1;
+            total_vehicle_counter_vehicle_list_section += 1;
         }
     
-        total_vehicle.innerHTML = total_vehicle_counter;
-        available_vehicle.innerHTML = total_vehicle_counter - (for_maintenance_vehicle_counter + under_maintenance_vehicle_counter + on_hauling_vehicle_counter) ;
-        on_hauling_vehicle.innerHTML = on_hauling_vehicle_counter;
-        under_maintenance_vehicle.innerHTML = under_maintenance_vehicle_counter;
-        for_maintenance_vehicle.innerHTML = for_maintenance_vehicle_counter;
-    
+        total_vehicle_vehicle_list_section.innerHTML = total_vehicle_counter_vehicle_list_section;
+        available_vehicle_vehicle_list_section.innerHTML = total_vehicle_counter_vehicle_list_section - (for_maintenance_vehicle_counter_logistics + under_maintenance_vehicle_counter_logistics + on_hauling_vehicle_counter_logistics) ;
+        on_hauling_vehicle_vehicle_list_section.innerHTML = on_hauling_vehicle_counter_logistics;
+        under_maintenance_vehicle_vehicle_list_section.innerHTML = under_maintenance_vehicle_counter_logistics;
+        for_maintenance_vehicle_vehicle_list_section.innerHTML = for_maintenance_vehicle_counter_logistics;
+        
+        const search_wrapper3 = document.getElementById("search_plate_no");
+        const input_box3 = search_wrapper3.querySelector("input");
+        const sugg_box3 = search_wrapper3.querySelector(".autocom_box");
         input_box3.onkeyup = (e) => {
             let user_data = e.target.value;
             let empty_array = [];
@@ -327,11 +326,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         const input_box4 = search_wrapper4.querySelector("input");
         const sugg_box4 = search_wrapper4.querySelector(".autocom_box");
         var data_value4 = [];
-
-        for (x = 1; x < vehicle_data.content.length; x++) {
-            data_value4.push(vehicle_data.content[x][0]);
-            total_vehicle_counter += 1;
-        }
         
         input_box4.onkeyup = (e) => {
             let user_data = e.target.value;

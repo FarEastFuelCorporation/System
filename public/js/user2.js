@@ -42,51 +42,55 @@ document.addEventListener('DOMContentLoaded', async function() {
         var month_new;
         var code_year_month;
     
-        // dashboard
-        const unsorted_list = document.getElementById("unsorted_list");
-        const sorted_list = document.getElementById("sorted_list");
-        const sorted_items = document.getElementById("sorted_items");
-        const sorted_items_list = document.getElementById("sorted_items_list");
-        var wcf_sf_transaction_counter = 0;
-        var wcf_transaction_counter = 0;
-        var sf_transaction_counter = 0;
-        let wcf_transaction = []; // Variable containing existing elements
-        let wcf_sf_transaction = []; // Variable containing existing elements
-        let sf_transaction = []; // Variable containing existing elements
+        // sorting_dashboard_section
+        const total_sorting = document.querySelector("#sorting_dashboard_section #total");
+        const sorted_sorting = document.querySelector("#sorting_dashboard_section #sorted");
+        const unsorted_sorting = document.querySelector("#sorting_dashboard_section #unsorted");
+        const unsorted_list_sorting = document.querySelector("#sorting_dashboard_section #unsorted_list");
+        const sorted_list_sorting = document.querySelector("#sorting_dashboard_section #sorted_list");
+        const sorted_items_sorting = document.querySelector("#sorting_dashboard_section #sorted_items");
+        const sorted_items_list_sorting = document.querySelector("#sorting_dashboard_section #sorted_items_list");
+        var wcf_sf_transaction_counter_sorting = 0;
+        var wcf_transaction_counter_sorting = 0;
+        var sf_transaction_counter_sorting = 0;
+        var wcf_transaction_sorting = []; // Variable containing existing elements
+        var wcf_sf_transaction_sorting = []; // Variable containing existing elements
+        var sf_transaction_sorting = []; // Variable containing existing elements
         
         for (let i = 1; i < wcf_data_list.content.length; i++) {
-            if (!wcf_transaction.includes(wcf_data_list.content[i][1])) {
-                wcf_transaction.push(wcf_data_list.content[i][1]);
-                wcf_transaction_counter += 1
+            if (!wcf_transaction_sorting.includes(wcf_data_list.content[i][1])) {
+                wcf_transaction_sorting.push(wcf_data_list.content[i][1]);
+                wcf_transaction_counter_sorting += 1
             }
         }
 
         for (let i = 1; i < sf_data_list.content.length; i++) {
-            if (!wcf_sf_transaction.includes(sf_data_list.content[i][2])) {
-                wcf_sf_transaction.push(sf_data_list.content[i][2]);
-                wcf_sf_transaction_counter += 1
+            if (!wcf_sf_transaction_sorting.includes(sf_data_list.content[i][2])) {
+                wcf_sf_transaction_sorting.push(sf_data_list.content[i][2]);
+                wcf_sf_transaction_counter_sorting += 1
             }
             if (sf_data_list.content[i][4] !==  "DISCREPANCY") {
-                if (!sf_transaction.includes(sf_data_list.content[i][1])) {
-                    sf_transaction.push(sf_data_list.content[i][1]);
-                    sf_transaction_counter += 1
+                if (!sf_transaction_sorting.includes(sf_data_list.content[i][1])) {
+                    sf_transaction_sorting.push(sf_data_list.content[i][1]);
+                    sf_transaction_counter_sorting += 1
                 }
             }
         }
 
         // Get elements from wcf_transaction not included in wcf_sf_transaction
-        const pending = wcf_transaction.filter((element) => !wcf_sf_transaction.includes(element));
-        const done_sorting = wcf_transaction.filter((element) => wcf_sf_transaction.includes(element));
+        const pending_sorting = wcf_transaction_sorting.filter((element) => !wcf_sf_transaction_sorting.includes(element));
+        const done_sorting_sorting = wcf_transaction_sorting.filter((element) => wcf_sf_transaction_sorting.includes(element));
         
-        total.innerText = wcf_transaction_counter
-        unsorted.innerText = wcf_transaction_counter - wcf_sf_transaction_counter;
-        sorted.innerText = wcf_sf_transaction_counter;
-        sorted_items.innerText = sf_transaction_counter;
+        total_sorting.innerText = wcf_transaction_counter_sorting;
+        unsorted_sorting.innerText = wcf_transaction_counter_sorting - wcf_sf_transaction_counter_sorting;
+        sorted_sorting.innerText = wcf_sf_transaction_counter_sorting;
+        sorted_items_sorting.innerText = sf_transaction_counter_sorting;
+
         var data_value = "";
         var data_value_counter = 1;
-        for(let i = 0; i < pending.length; i++){
+        for(let i = 0; i < pending_sorting.length; i++){
             for(let j = 1; j < wcf_data_list.content.length; j++){
-                if(pending[i] == wcf_data_list.content[j][1]){
+                if(pending_sorting[i] == wcf_data_list.content[j][1]){
                     data_value +=`
                     <tr>
                         <td>${data_value_counter}</td>
@@ -101,14 +105,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         }
-        unsorted_list.innerHTML = data_value;    
+        unsorted_list_sorting.innerHTML = data_value;    
 
         // sorted_list
         var data_value_done = "";
         var data_value__done_counter = 1;
-        for(let i = 0; i < done_sorting.length; i++){
+        for(let i = 0; i < done_sorting_sorting.length; i++){
             for(let j = 1; j < wcf_data_list.content.length; j++){
-                if(done_sorting[i] == wcf_data_list.content[j][1]){
+                if(done_sorting_sorting[i] == wcf_data_list.content[j][1]){
                     var discrepancy_weight = 0;
                     var discrepancy_remarks ="COMPLETE";
                     var finished_date;
@@ -116,7 +120,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     for(let k = 1; k < sf_data_list.content.length; k++){
                         finished_date = date_decoder(sf_data_list.content[k][8]);
                         finished_time = time_decoder(sf_data_list.content[k][9]);
-                        if(done_sorting[i] == sf_data_list.content[k][2]){
+                        if(done_sorting_sorting[i] == sf_data_list.content[k][2]){
                             if(sf_data_list.content[k][4] == "DISCREPANCY"){
                                 discrepancy_weight = sf_data_list.content[k][6];
                                 discrepancy_remarks = sf_data_list.content[k][5];
@@ -140,7 +144,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         }
-        sorted_list.innerHTML = data_value_done;
+        sorted_list_sorting.innerHTML = data_value_done;
 
         // sorted_items_list
         var data_value_done = "";
@@ -163,7 +167,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     
             }
         }
-        sorted_items_list.innerHTML = data_value_done;    
+        sorted_items_list_sorting.innerHTML = data_value_done;    
 
         // FORM GENERATOR
         if(today_month.toString().length == 1){

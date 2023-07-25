@@ -32,38 +32,41 @@ document.addEventListener('DOMContentLoaded', async function() {
         user_sidebar.innerHTML = `<u>${username_data.content[5][3]}</u>`;
         user_sidebar_officer.innerText = username_data.content[5][4];
     
-        // dashboard
-        var unsorted_list = document.getElementById("unsorted_list");
-        var sf_tpf_transaction_counter = 0;
-        var sf_transaction_counter = 0;
-        let sf_transaction = []; // Variable containing existing elements
-        let sf_tpf_transaction = []; // Variable containing existing elements
+        // billing_dashboard
+        const certified_counter_billing = document.querySelector("#billing_dashboard #certified_counter");
+        const pending_counter_billing = document.querySelector("#billing_dashboard #pending_counter");
+        const billed_counter_billing = document.querySelector("#billing_dashboard #billed_counter");
+        const unsorted_list_billing = document.querySelector("#billing_dashboard #unsorted_list");
+        var sf_tpf_transaction_counter_billing = 0;
+        var sf_transaction_counter_billing = 0;
+        let sf_transaction_billing = []; // Variable containing existing elements
+        let sf_tpf_transaction_billing = []; // Variable containing existing elements
 
         for (let i = 1; i < cod_data_list.content.length; i++) {
-            if (!sf_transaction.includes(cod_data_list.content[i][1])) {
-                sf_transaction.push(cod_data_list.content[i][1]);
-                sf_transaction_counter += 1
+            if (!sf_transaction_billing.includes(cod_data_list.content[i][1])) {
+                sf_transaction_billing.push(cod_data_list.content[i][1]);
+                sf_transaction_counter_billing += 1
             }
         }
 
         for (let i = 1; i < bpf_data_list.content.length; i++) {
-            if (!sf_tpf_transaction.includes(bpf_data_list.content[i][2])) {
-                sf_tpf_transaction.push(bpf_data_list.content[i][2]);
-                sf_tpf_transaction_counter += 1
+            if (!sf_tpf_transaction_billing.includes(bpf_data_list.content[i][2])) {
+                sf_tpf_transaction_billing.push(bpf_data_list.content[i][2]);
+                sf_tpf_transaction_counter_billing += 1
             }
         }
 
         // Get elements from sf_transaction not included in sf_tpf_transaction
-        const newElements = sf_transaction.filter((element) => !sf_tpf_transaction.includes(element));
+        const newElements_billing = sf_transaction_billing.filter((element) => !sf_tpf_transaction_billing.includes(element));
 
-        sorted.innerText = sf_tpf_transaction_counter;
-        total.innerText = sf_transaction_counter
-        unsorted.innerText = sf_transaction_counter - sf_tpf_transaction_counter;
+        certified_counter_billing.innerText = sf_transaction_counter_billing;
+        pending_counter_billing.innerText = sf_transaction_counter_billing - sf_tpf_transaction_counter_billing;
+        billed_counter_billing.innerText = sf_tpf_transaction_counter_billing;
         var data_value = "";
         var data_value_counter = 1;
-        for(let i = 0; i < newElements.length; i++){
+        for(let i = 0; i < newElements_billing.length; i++){
             for(let j = 1; j < cod_data_list.content.length; j++){
-                if(newElements[i] == cod_data_list.content[j][1]){
+                if(newElements_billing[i] == cod_data_list.content[j][1]){
                     data_value +=`
                     <tr>
                         <td>${data_value_counter}</td>
@@ -78,7 +81,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         }
-        unsorted_list.innerHTML = data_value;            
+        unsorted_list_billing.innerHTML = data_value;            
 
         // cod_data_list
         const bpf_form_no = document.getElementById("bpf_form_no");

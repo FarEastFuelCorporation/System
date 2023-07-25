@@ -32,78 +32,85 @@ document.addEventListener('DOMContentLoaded', async function() {
         user_sidebar.innerHTML = `<u>${username_data.content[8][3]}</u>`;
         user_sidebar_officer.innerText = username_data.content[8][4];
         
-        // dashboard
         // incident_history_list
-        const pending_list = document.getElementById("pending_list");
-        const incident_history_list = document.getElementById("incident_history_list");
-        var incident_history_data_value = "";
-        var incident_history_data_value_counter = 1;
-        for(let x = 1; x < irf_data_list.content.length; x++){
-            incident_history_data_value += `
-            <tr>
-                <td>${incident_history_data_value_counter}</td>
-                <td>${irf_data_list.content[x][1]}</td>
-                <td>${date_decoder(irf_data_list.content[x][6])} /<br> ${time_decoder(irf_data_list.content[x][7])}</td>
-                <td>${irf_data_list.content[x][3]}</td>
-                <td>${irf_data_list.content[x][2]}</td>
-                <td>${irf_data_list.content[x][4]}</td>
-                <td>${irf_data_list.content[x][8]}</td>
-                <td>${date_decoder(irf_data_list.content[x][9])} /<br> ${time_decoder(irf_data_list.content[x][10])}</td>
-                <td>${calculateTravelTime(date_decoder(irf_data_list.content[x][6]),time_decoder(irf_data_list.content[x][7]),date_decoder(irf_data_list.content[x][9]),time_decoder(irf_data_list.content[x][10]))}</td>
-            </tr>
-            `
-            incident_history_data_value_counter += 1;
-        }
-        pending_list.innerHTML = incident_history_data_value
-
-        var incident_history_data_value = "";
-        var incident_history_data_value_counter = 1;
-        for(let x = 1; x < irf_data_list.content.length; x++){
-            incident_history_data_value += `
-            <tr>
-                <td>${incident_history_data_value_counter}</td>
-                <td>${irf_data_list.content[x][1]}</td>
-                <td>${date_decoder(irf_data_list.content[x][6])} /<br> ${time_decoder(irf_data_list.content[x][7])}</td>
-                <td>${irf_data_list.content[x][3]}</td>
-                <td>${irf_data_list.content[x][2]}</td>
-                <td>${irf_data_list.content[x][4]}</td>
-                <td>${irf_data_list.content[x][8]}</td>
-                <td>${date_decoder(irf_data_list.content[x][9])} /<br> ${time_decoder(irf_data_list.content[x][10])}</td>
-                <td>${calculateTravelTime(date_decoder(irf_data_list.content[x][6]),time_decoder(irf_data_list.content[x][7]),date_decoder(irf_data_list.content[x][9]),time_decoder(irf_data_list.content[x][10]))}</td>
-            </tr>
-            `
-            incident_history_data_value_counter += 1;
-        }
-        incident_history_list.innerHTML = incident_history_data_value
-
-
-        const pending_counter = document.getElementById("pending_counter");
-        const documented = document.getElementById("documented");
-        var irf_transaction = [];
-        var irf_idf_transaction = [];
-        var irf_transaction_counter = 0;
-        var irf_idf_transaction_counter = 0;
+        const incident_report_safety = document.querySelector("#safety_dashboard #incident_report");
+        const pending_counter_safety = document.querySelector("#safety_dashboard #pending_counter");
+        const documented_safety = document.querySelector("#safety_dashboard #documented");
+        const pending_list_safety = document.querySelector("#safety_dashboard #pending_list");
+        const incident_history_list_safety = document.querySelector("#safety_dashboard #incident_history_list");
+        var irf_transaction_safety = [];
+        var irf_idf_transaction_safety = [];
+        var irf_transaction_counter_safety = 0;
+        var irf_idf_transaction_counter_safety = 0;
 
         for (let i = 1; i < irf_data_list.content.length; i++) {
-            if (!irf_transaction.includes(irf_data_list.content[i][1])) {
-                irf_transaction.push(irf_data_list.content[i][1]);
-                irf_transaction_counter += 1
+            if (!irf_transaction_safety.includes(irf_data_list.content[i][1])) {
+                irf_transaction_safety.push(irf_data_list.content[i][1]);
+                irf_transaction_counter_safety += 1
             }
         }
 
         for (let i = 1; i < idf_data_list.content.length; i++) {
-            if (!irf_idf_transaction.includes(idf_data_list.content[i][2])) {
-                irf_idf_transaction.push(idf_data_list.content[i][2]);
-                irf_idf_transaction_counter += 1
+            if (!irf_idf_transaction_safety.includes(idf_data_list.content[i][2])) {
+                irf_idf_transaction_safety.push(idf_data_list.content[i][2]);
+                irf_idf_transaction_counter_safety += 1
             }
         }
 
-        const pending = irf_transaction.filter((element) => !irf_idf_transaction.includes(element));
-        const finished = irf_transaction.filter((element) => irf_idf_transaction.includes(element));
+        const pending_safety = irf_transaction_safety.filter((element) => !irf_idf_transaction_safety.includes(element));
+        const finished_safety = irf_transaction_safety.filter((element) => irf_idf_transaction_safety.includes(element));
 
-        incident_report.innerText = pending.length + finished.length;
-        pending_counter.innerText = pending.length;
-        documented.innerText = finished.length;
+        incident_report_safety.innerText = pending_safety.length + finished_safety.length;
+        pending_counter_safety.innerText = pending_safety.length;
+        documented_safety.innerText = finished_safety.length;
+
+        var incident_history_data_value = "";
+        var incident_history_data_value_counter = 1;
+        for(let x = 1; x < irf_data_list.content.length; x++){
+            for(let y = 0; y < pending_counter_safety.length; y++){
+                if(irf_data_list.content[x][1] == pending_counter_safety[y]){
+                    incident_history_data_value += `
+                    <tr>
+                        <td>${incident_history_data_value_counter}</td>
+                        <td>${irf_data_list.content[x][1]}</td>
+                        <td>${date_decoder(irf_data_list.content[x][6])} /<br> ${time_decoder(irf_data_list.content[x][7])}</td>
+                        <td>${irf_data_list.content[x][3]}</td>
+                        <td>${irf_data_list.content[x][2]}</td>
+                        <td>${irf_data_list.content[x][4]}</td>
+                        <td>${irf_data_list.content[x][8]}</td>
+                        <td>${date_decoder(irf_data_list.content[x][9])} /<br> ${time_decoder(irf_data_list.content[x][10])}</td>
+                        <td>${calculateTravelTime(date_decoder(irf_data_list.content[x][6]),time_decoder(irf_data_list.content[x][7]),date_decoder(irf_data_list.content[x][9]),time_decoder(irf_data_list.content[x][10]))}</td>
+                    </tr>
+                    `
+                    incident_history_data_value_counter += 1;    
+                }
+            }
+        }
+        pending_list_safety.innerHTML = incident_history_data_value
+
+        var incident_history_data_value = "";
+        var incident_history_data_value_counter = 1;
+        for(let x = 1; x < irf_data_list.content.length; x++){
+            for(let y = 0; y < finished_safety.length; y++){
+                if(irf_data_list.content[x][1] == pending_counter_safety[y]){
+                    incident_history_data_value += `
+                    <tr>
+                        <td>${incident_history_data_value_counter}</td>
+                        <td>${irf_data_list.content[x][1]}</td>
+                        <td>${date_decoder(irf_data_list.content[x][6])} /<br> ${time_decoder(irf_data_list.content[x][7])}</td>
+                        <td>${irf_data_list.content[x][3]}</td>
+                        <td>${irf_data_list.content[x][2]}</td>
+                        <td>${irf_data_list.content[x][4]}</td>
+                        <td>${irf_data_list.content[x][8]}</td>
+                        <td>${date_decoder(irf_data_list.content[x][9])} /<br> ${time_decoder(irf_data_list.content[x][10])}</td>
+                        <td>${calculateTravelTime(date_decoder(irf_data_list.content[x][6]),time_decoder(irf_data_list.content[x][7]),date_decoder(irf_data_list.content[x][9]),time_decoder(irf_data_list.content[x][10]))}</td>
+                    </tr>
+                    `
+                    incident_history_data_value_counter += 1;                 
+                }
+            }
+        }
+        incident_history_list_safety.innerHTML = incident_history_data_value
 
         // FORM GENERATOR
         const today = new Date();

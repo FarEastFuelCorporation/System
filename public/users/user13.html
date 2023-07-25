@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User 13</title>
+    <link rel="shortcut icon" href="../images/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/main-css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+    <link href="https://fonts.cdnfonts.com/css/script-mt?styles=95594" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+</head>
+<body>
+    <div class="admin-container">
+        <div class="topbar">
+            <div class="logo">
+                <img src="../images/logo.png" alt="">
+                <h2 >FAR EAST FUEL CORPORATION</h2>
+            </div>
+        </div>
+        <div class="sidebar">
+            <ul>
+                <div id="user_sidebar"></div>
+                <div id="user_sidebar_officer"></div>
+                <li class="hover">
+                    <a href="#">
+                        <i class="fas fa-th-large"></i>
+                        Marketing Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-th-large"></i>
+                        Logistics Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-th-large"></i>
+                        Receiving Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-th-large"></i>
+                        Sorting Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-th-large"></i>
+                        Treatment Process Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-th-large"></i>
+                        Certification Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-th-large"></i>
+                        Billing Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-th-large"></i>
+                        Safety Officer Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-th-large"></i>
+                        Vehicle List
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-cog"></i>
+                        Settings
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-question"></i>
+                        Help
+                    </a>
+                </li>
+                <li>
+                    <a href="https://fareastfuelcorporation.github.io/System/">
+                        <i class="fa-solid fa-power-off"></i>
+                        Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="main">
+            <div class="header_date_time">
+                <div class="header_date">
+                    <div id="exactDate"></div>
+                </div>
+                <div class="header_time">
+                    <div id="exactTime"></div>    
+                </div>
+            </div>
+            <div class="back_button">
+                <button onclick="goBack()">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+            </div>
+            <div class="refresh_button">
+                <button onclick="refreshPage()">
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                </button>
+            </div>
+        </div>
+        <div class="main section_container">
+            <!-- marketing_dashboard -->
+            <section class="marketing" id="marketing_dashboard">
+                <h2>DASHBOARD</h2><br>
+                <h2>TRANSACTION SUMMARY</h2>
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="booked_transactions"></div>
+                            <div class="card-name">Booked Transactions</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-book-bookmark"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="pending"></div>
+                            <div class="card-name">Pending</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-clipboard-list"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="on_hauling"></div>
+                            <div class="card-name">On Hauling</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-truck"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="received"></div>
+                            <div class="card-name">Received</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-clipboard-check"></i>
+                        </div>
+                    </div>
+                </div><br>
+                <div class="cards2">
+                    <div class="cards5">
+                        <h2 class="m-0">TO LOGISTICS</h2>
+                        <div class="cards3">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="number" id="for_logistics_pending"></div>
+                                    <div class="card-name">Pending</div>
+                                </div>
+                                <div class="icon-box">
+                                    <i class="fa-solid fa-clipboard-list"></i>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="number" id="for_logistics_on_haul"></div>
+                                    <div class="card-name">On Hauling</div>
+                                </div>
+                                <div class="icon-box">
+                                    <i class="fa-solid fa-truck"></i>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="number" id="for_logistics_received"></div>
+                                    <div class="card-name">Received</div>
+                                </div>
+                                <div class="icon-box">
+                                    <i class="fa-solid fa-clipboard-check"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cards5">
+                        <h2 class="m-0">TO RECEIVING</h2>
+                        <div class="cards4">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="number" id="for_receiving_pending"></div>
+                                    <div class="card-name">Pending</div>
+                                </div>
+                                <div class="icon-box">
+                                    <i class="fa-solid fa-clipboard-list"></i>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="number" id="for_receiving_received"></div>
+                                    <div class="card-name">Received</div>
+                                </div>
+                                <div class="icon-box">
+                                    <i class="fa-solid fa-clipboard-check"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><br>
+                <h2>BOOKED TRANSACTION LIST</h2>
+                <div class="card">
+                    <div class="list">
+                        <table>
+                            <thead>
+                                <th>#</th>
+                                <th>MTF #</th>
+                                <th>HAULING<br>DATE/TIME</th>
+                                <th>CLIENT</th>
+                                <th>WASTE DESCRIPTION</th>
+                                <th>TYPE OF VEHICLE</th>
+                                <th>TO</th>
+                                <th>STATUS</th>
+                            </thead>
+                            <tbody id="pending_list">
+
+                            </tbody>
+                        </table>
+                        <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
+                </div><br>
+                <h2>INCIDENT HISTORY LIST</h2>
+                <div class="card">
+                    <div class="list">
+                        <table>
+                            <thead>
+                                <th>#</th>
+                                <th>IRF #</th>
+                                <th>INCIDENT<br>DATE/TIME</th>
+                                <th>DEPARTMENT</th>
+                                <th>PERSON<br>INVOLVE</th>
+                                <th>DESIGNATION</th>
+                                <th>INCIDENT DETAILS</th>
+                                <th>REPORT<br>DATE/TIME</th>
+                                <th>DURATION<br>REPORT</th>
+                            </thead>
+                            <tbody id="incident_history_list">
+
+                            </tbody>
+                        </table>
+                        <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
+                </div><br>
+            </section>
+            <!-- logistic_dashboard -->
+            <section class="logistic" id="logistic_dashboard">
+                <h2>DASHBOARD</h2><br>
+                <h2>TRAVEL SUMMARY</h2>
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="booked_transactions"></div>
+                            <div class="card-name">Booked Transactions</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-book-bookmark"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="pending_transactions"></div>
+                            <div class="card-name">Pending Transaction</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-clipboard-list"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="on_hauling_transactions"></div>
+                            <div class="card-name">Ongoing Transactions</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-clipboard-user"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="hauled_transactions"></div>
+                            <div class="card-name">Hauled Transactions</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-clipboard-check"></i>
+                        </div>
+                    </div>
+                </div><br>
+                <h2>VEHICLE SUMMARY</h2>
+                <div class="cards2">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="available_vehicle"></div>
+                            <div class="card-name">Available Vehicles</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-truck"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="on_hauling_vehicle"></div>
+                            <div class="card-name">On Hauling</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-truck-ramp-box"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="under_maintenance_vehicle"></div>
+                            <div class="card-name">Under Maintenance</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="for_maintenance_vehicle"></div>
+                            <div class="card-name">For Maintenance</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-wrench"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="total_vehicle"></div>
+                            <div class="card-name">Total Vehicles</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-truck-moving"></i>
+                        </div>
+                    </div>
+                </div><br>
+                <h2>PENDING TRANSACTION LIST</h2>
+                <div class="card">
+                    <div class="list">
+                        <table>
+                            <thead>
+                                <th>#</th>
+                                <th>MTF #</th>
+                                <th>HAULING<br>DATE/TIME</th>
+                                <th>CLIENT</th>
+                                <th>WASTE DESCRIPTION</th>
+                                <th>TYPE OF VEHICLE</th>
+                                <th>REMARKS</th>
+                            </thead>
+                            <tbody id="pending_list">
+
+                            </tbody>
+                        </table>
+                        <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
+                </div><br>
+                <h2>TRAVEL HISTORY LIST</h2>
+                <div class="card">
+                    <div class="list">
+                        <table>
+                            <thead>
+                                <th>#</th>
+                                <th>LTF #</th>
+                                <th>DEPARTURE<br>DATE/TIME</th>
+                                <th>CLIENT</th>
+                                <th>WASTE DESCRIPTION</th>
+                                <th>PLATE #</th>
+                                <th>DRIVER</th>
+                                <th>ARRIVAL<br>DATE/TIME</th>
+                                <th>DURATION</th>
+                            </thead>
+                            <tbody id="ongoing_list">
+
+                            </tbody>
+                        </table>
+                        <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
+                </div><br>
+            </section>
+            <!-- receiving_dashboard -->
+            <section id="dashboard_section">
+                <h2>DASHBOARD</h2><br>
+                <h2>RECEIVING SUMMARY</h2>
+                <div class="cards2">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="to_received"></div>
+                            <div class="card-name">Travel Transaction</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-truck-arrow-right"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="pending"></div>
+                            <div class="card-name">Pending Transaction</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-clipboard-list"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="received"></div>
+                            <div class="card-name">Received</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-clipboard-check"></i>
+                        </div>
+                    </div>
+                </div><br>
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="raw_waste"></div>
+                            <div class="card-name">Residual Waste</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="hazardous_waste"></div>
+                            <div class="card-name">Hazardous Waste</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-sharp fa-solid fa-biohazard"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="non_hazardous_waste"></div>
+                            <div class="card-name">Non Hazardous Waste</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-ban"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="total"></div>
+                            <div class="card-name">Total</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-sharp fa-solid fa-dumpster"></i>
+                        </div>
+                    </div>
+                </div><br>
+                <h2>PENDING TRANSACTION LIST</h2>
+                <div class="card">
+                    <div class="list">
+                        <table>
+                            <thead>
+                                <th>#</th>
+                                <th>LTF / MTF #</th>
+                                <th>HAULING<br>DATE/TIME</th>
+                                <th>CLIENT</th>
+                                <th>WASTE DESCRIPTION</th>
+                                <th>TYPE OF VEHICLE</th>
+                                <th>PLATE #</th>
+                                <th>DRIVER</th>
+                            </thead>
+                            <tbody id="pending_list">
+
+                            </tbody>
+                        </table>
+                        <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
+                </div><br>
+                <h2>RECEIVING HISTORY LIST</h2>
+                <div class="card">
+                    <div class="list">
+                        <table>
+                            <thead>
+                                <th>#</th>
+                                <th>WCF #</th>
+                                <th>HAULING<br>DATE/TIME</th>
+                                <th>CLIENT</th>
+                                <th>TYPE OF WASTE</th>
+                                <th>NET WEIGHT</th>
+                                <th>PLATE #</th>
+                                <th>DRIVER</th>
+                                <th>WEIGH-IN<BR>DATE/TIME</th>
+                                <th>WEIGH-OUT<BR>DATE/TIME</th>
+                                <th>DURATION</th>
+                            </thead>
+                            <tbody id="received_list">
+
+                            </tbody>
+                        </table>
+                        <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
+                </div>
+            </section>
+            <!-- sorting_dashboard_section -->
+            <section id="sorting_dashboard_section">
+                <h2>DASHBOARD</h2><br>
+                <h2>SORTING SUMMARY</h2>
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="total"></div>
+                            <div class="card-name">Received Transaction</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-sharp fa-solid fa-dumpster"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="unsorted"></div>
+                            <div class="card-name">Pending Transaction</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-clipboard-list"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="sorted"></div>
+                            <div class="card-name">Sorted Transaction</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-clipboard-check"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="sorted_items"></div>
+                            <div class="card-name">Sorted Items</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-arrow-up-short-wide"></i>
+                        </div>
+                    </div>
+                </div><br>
+                <h2>PENDING TRANSACTION LIST</h2>
+                <div class="card">
+                    <div class="list">
+                        <table>
+                            <thead>
+                                <th>#</th>
+                                <th>WCF #</th>
+                                <th>RECEIVING<br>DATE/TIME</th>
+                                <th>CLIENT</th>
+                                <th>WASTE DESCRIPTION</th>
+                                <th>BATCH WEIGHT</th>
+                            </thead>
+                            <tbody id="unsorted_list">
+
+                            </tbody>
+                        </table>
+                        <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
+                </div><br>
+                <h2>SORTING HISTORY LIST</h2>
+                <div class="card">
+                    <div class="list">
+                        <table>
+                            <thead>
+                                <th>#</th>
+                                <th>WCF #</th>
+                                <th>RECEIVING<br>DATE/TIME</th>
+                                <th>CLIENT</th>
+                                <th>BATCH<br>WEIGHT</th>
+                                <th>DISCREPANCY<br>WEIGHT</th>
+                                <th>REMARKS</th>
+                                <th>FINISHED<br>DATE/TIME</th>
+                                <th>DURATION</th>
+                            </thead>
+                            <tbody id="sorted_list">
+
+                            </tbody>
+                        </table>
+                        <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
+                </div><br>
+                <h2>SORTED ITEMS LIST</h2>
+                <div class="card">
+                    <div class="list">
+                        <table>
+                            <thead>
+                                <th>#</th>
+                                <th>SF #</th>
+                                <th>WCF #</th>
+                                <th>SORTED<br>DATE/TIME</th>
+                                <th>CLIENT</th>
+                                <th>WASTE DESCRIPTION</th>
+                                <th>WEIGHT</th>
+                                <th>TREATMENT PROCESS</th>
+                            </thead>
+                            <tbody id="sorted_items_list">
+
+                            </tbody>
+                        </table>
+                        <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
+                </div>
+            </section> 
+            <!-- treatment_process_dashboard -->
+            <section id="treatment_process_dashboard">
+                <h2>DASHBOARD</h2><br>
+                <h2>TREATMENT PROCESS SUMMARY</h2>
+                <div>
+                    <div class="cards">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="total_counter"></div>
+                                <div class="card-name">Sorted Items Transaction</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-arrow-up-short-wide"></i>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="pending_counter"></div>
+                                <div class="card-name">Pending Transaction</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-clipboard-list"></i>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="treated_counter"></div>
+                                <div class="card-name">Treated Transaction</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-clipboard-check"></i>
+                            </div>
+                        </div>
+                    </div><br>
+                    <h2>PENDING TRANSACTION LIST</h2>
+                    <div class="card">
+                        <div class="list">
+                            <table>
+                                <thead>
+                                    <th>#</th>
+                                    <th>SF #</th>
+                                    <th>SORTED<br>DATE/TIME</th>
+                                    <th>CLIENT</th>
+                                    <th>WASTE DESCRIPTION</th>
+                                    <th>TREATMENT PROCESS</th>
+                                    <th>WEIGHT</th>
+                                </thead>
+                                <tbody id="pending_list">
+
+                                </tbody>
+                            </table>
+                            <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                        </div>
+                    </div><br>
+                    <h2>TREATED HISTORY LIST</h2>
+                    <div class="card">
+                        <div class="list">
+                            <table>
+                                <thead>
+                                    <th>#</th>
+                                    <th>TPF #</th>
+                                    <th>SORTED<br>DATE/TIME</th>
+                                    <th>CLIENT</th>
+                                    <th>WASTE DESCRIPTION</th>
+                                    <th>TREATMENT PROCESS</th>
+                                    <th>WEIGHT</th>
+                                    <th>TREATED<br>DATE/TIME</th>
+                                    <th>DURATION</th>
+                                </thead>
+                                <tbody id="finished_list">
+
+                                </tbody>
+                            </table>
+                            <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- certification_dashboard -->
+            <section id="certification_dashboard">
+                <h2>DASHBOARD</h2><br>
+                <h2>CERTIFICATION SUMMARY</h2>
+                <div>
+                    <div class="cards">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="treated_counter"></div>
+                                <div class="card-name">Treated Transaction</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-temperature-half"></i>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="pending_counter"></div>
+                                <div class="card-name">Pending Transaction</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-clipboard-list"></i>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="certified_counter"></div>
+                                <div class="card-name">Certified Transaction</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-clipboard-check"></i>
+                            </div>
+                        </div>
+                    </div><br>
+                    <h2>PENDING TRANSACTION LIST</h2>
+                    <div class="card">
+                        <div class="list">
+                            <table>
+                                <thead>
+                                    <th>#</th>
+                                    <th>TPF #</th>
+                                    <th>TREATMENT<br>DATE/TIME</th>
+                                    <th>CLIENT</th>
+                                    <th>WASTE DESCRIPTION</th>
+                                    <th>BATCH WEIGHT</th>
+                                    <th>TARGET DATE OF COMPLETION</th>
+                                    <th>STATUS</th>
+                                </thead>
+                                <tbody id="pending_list">
+
+                                </tbody>
+                            </table>
+                            <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                        </div>
+                    </div>
+                </div><br>
+                <h2>CERTIFICATION HISTORY LIST</h2>
+                <div class="card">
+                    <div class="list">
+                        <table>
+                            <thead>
+                                <th>#</th>
+                                <th>COD #</th>
+                                <th>TPF #</th>
+                                <th>TREATMENT<br>DATE/TIME</th>
+                                <th>CLIENT</th>
+                                <th>WASTE DESCRIPTION</th>
+                                <th>BATCH WEIGHT</th>
+                                <th>TARGET DATE OF COMPLETION</th>
+                                <th>STATUS</th>
+                                <th>CERTIFICATION<br>DATE/TIME</th>
+                                <th>DURATION</th>
+                            </thead>
+                            <tbody id="finished_list">
+
+                            </tbody>
+                        </table>
+                        <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
+                </div>
+            </section>
+            <!-- billing_dashboard -->
+            <section id="billing_dashboard">
+                <h2>DASHBOARD</h2><br>
+                <h2>BILLING SUMMARY</h2>
+                <div>
+                    <div class="cards">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="certified_counter"></div>
+                                <div class="card-name">Certified Transaction</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-stamp"></i>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="pending_counter"></div>
+                                <div class="card-name">Pending Transaction</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-clipboard-list"></i>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="billed_counter"></div>
+                                <div class="card-name">Billed Transaction</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-clipboard-check"></i>
+                            </div>
+                        </div>
+                    </div><br>
+                    <h2>PENDING TRANSACTION LIST</h2>
+                    <div class="card">
+                        <div class="list">
+                            <table>
+                                <thead>
+                                    <th>#</th>
+                                    <th>COD #</th>
+                                    <th>DATE OF CERTIFICATION</th>
+                                    <th>CLIENT</th>
+                                    <th>WASTE DESCRIPTION</th>
+                                    <th>BATCH WEIGHT</th>
+                                </thead>
+                                <tbody id="unsorted_list">
+
+                                </tbody>
+                            </table>
+                            <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- safety_dashboard -->
+            <section class="safety" id="safety_dashboard">
+                <h2>DASHBOARD</h2><br>
+                <h2>INCIDENT REPORT SUMMARY</h2>
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="incident_report"></div>
+                            <div class="card-name">Incident Report</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-person-falling-burst"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="pending_counter"></div>
+                            <div class="card-name">Pending</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-clipboard-list"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="documented"></div>
+                            <div class="card-name">Documented</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-clipboard-check"></i>
+                        </div>
+                    </div>
+                </div><br>
+                <h2>INCIDENT REPORT PENDING LIST</h2>
+                <div class="card">
+                    <div class="list">
+                        <table>
+                            <thead>
+                                <th>#</th>
+                                <th>IRF #</th>
+                                <th>INCIDENT<br>DATE/TIME</th>
+                                <th>DEPARTMENT</th>
+                                <th>PERSON<br>INVOLVE</th>
+                                <th>DESIGNATION</th>
+                                <th>INCIDENT DETAILS</th>
+                                <th>REPORT<br>DATE/TIME</th>
+                                <th>DURATION<br>REPORT</th>
+                            </thead>
+                            <tbody id="pending_list">
+
+                            </tbody>
+                        </table>
+                        <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
+                </div><br>
+                <h2>INCIDENT HISTORY LIST</h2>
+                <div class="card">
+                    <div class="list">
+                        <table>
+                            <thead>
+                                <th>#</th>
+                                <th>IRF #</th>
+                                <th>INCIDENT<br>DATE/TIME</th>
+                                <th>DEPARTMENT</th>
+                                <th>PERSON<br>INVOLVE</th>
+                                <th>DESIGNATION</th>
+                                <th>INCIDENT DETAILS</th>
+                                <th>REPORT<br>DATE/TIME</th>
+                                <th>DURATION<br>REPORT</th>
+                            </thead>
+                            <tbody id="incident_history_list">
+
+                            </tbody>
+                        </table>
+                        <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
+                </div><br>
+            </section>
+            <!-- vehicle_list_section -->
+            <section class="logistic" id="vehicle_list_section">
+                <h2>VEHICLE LIST</h2>
+                <div class="card">
+                    <div class="list">
+                        <table>
+                            <thead>
+                                <th>#</th>
+                                <th>PLATE #</th>
+                                <th>VEHICLE</th>
+                                <th>TYPE OF VEHICLE</th>
+                                <th>NET<br>CAPACITY</th>
+                                <th>OWNERSHIP TYPE</th>
+                                <th>STATUS</th>
+                            </thead>
+                            <tbody id="vehicle_list">
+
+                            </tbody>
+                        </table>
+                        <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
+                </div><br>
+            </section>
+            <!-- settings -->
+            <section id="settingsSection">
+                <h2>SETTINGS</h2><br>
+            </section>
+            </section>
+            <!-- help -->
+            <section id="helpSection">
+                <h2>HELP</h2><br>
+            </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/user13.js"></script>
+</body>
+</html>

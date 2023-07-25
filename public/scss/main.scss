@@ -580,7 +580,14 @@ h5{
 #hr_dashboard,
 #incident_report_form,
 #settingsSection,
-#helpSection
+#helpSection,
+.section_container #logistic_dashboard,
+.section_container #dashboard_section,
+.section_container #sorting_dashboard_section,
+.section_container #treatment_process_dashboard,
+.section_container #certification_dashboard,
+.section_container #billing_dashboard,
+.section_container #safety_dashboard
 {
     display: none;
 }

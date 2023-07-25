@@ -50,78 +50,74 @@ document.addEventListener('DOMContentLoaded', async function() {
         user_sidebar.innerHTML = `<u>${username_data.content[6][3]}</u>`;
         user_sidebar_officer.innerText = username_data.content[6][4];
         
-        // dashboard
-        const booked_transactions = document.getElementById("booked_transactions");
-        const on_hauling = document.getElementById("on_hauling");
-        const pending = document.getElementById("pending");
-        const received = document.getElementById("received");
-        const pending_list = document.getElementById("pending_list");
-        const incident_history_list = document.getElementById("incident_history_list");
-        const for_logistics_pending = document.getElementById("for_logistics_pending");
-        const for_logistics_on_haul = document.getElementById("for_logistics_on_haul");
-        const for_logistics_received = document.getElementById("for_logistics_received");
-        const for_receiving_pending = document.getElementById("for_receiving_pending");
-        const for_receiving_received = document.getElementById("for_receiving_received");
-        var mtf_transaction_counter = 0;
-        var mtf_ltf_transaction_counter = 0;
-        var mtf_transaction_logistic_transaction_counter = 0;
-        var mtf_transaction_receiving_transaction_counter = 0;
-        var ltf_transaction_counter = 0;
-        var ltf_wcf_transaction_counter = 0;
-        var for_logistics_pending_counter = 0;
-        var for_logistics_on_haul_counter = 0;
-        var for_logistics_received_counter = 0;
-        var for_receiving_pending_counter = 0;
-        var for_receiving_received_counter = 0;
-        let mtf_transaction = []; // Variable containing existing elements
-        let mtf_ltf_transaction = []; // Variable containing existing elements
-        let mtf_transaction_logistic_transaction = []; // Variable containing existing elements
-        let mtf_transaction_receiving_transaction = []; // Variable containing existing elements
-        let ltf_transaction = []; // Variable containing existing elements
-        let ltf_wcf_transaction = []; // Variable containing existing elements
+        // marketing_dashboard
+        const booked_transactions_marketing = document.getElementById("booked_transactions");
+        const on_hauling_marketing = document.getElementById("on_hauling");
+        const pending_marketing = document.getElementById("pending");
+        const received_marketing = document.getElementById("received");
+        const pending_list_marketing = document.getElementById("pending_list");
+        const for_logistics_pending_marketing = document.getElementById("for_logistics_pending");
+        const for_logistics_on_haul_marketing = document.getElementById("for_logistics_on_haul");
+        const for_logistics_received_marketing = document.getElementById("for_logistics_received");
+        const for_receiving_pending_marketing = document.getElementById("for_receiving_pending");
+        const for_receiving_received_marketing = document.getElementById("for_receiving_received");
+        var mtf_transaction_counter_marketing = 0;
+        var mtf_ltf_transaction_counter_marketing = 0;
+        var mtf_transaction_logistic_transaction_counter_marketing = 0;
+        var mtf_transaction_receiving_transaction_counter_marketing = 0;
+        var ltf_transaction_counter_marketing = 0;
+        var ltf_wcf_transaction_counter_marketing = 0;
+        var for_logistics_pending_counter_marketing = 0;
+        var for_logistics_on_haul_counter_marketing = 0;
+        var for_logistics_received_counter_marketing = 0;
+        var for_receiving_pending_counter_marketing = 0;
+        var for_receiving_received_counter_marketing = 0;
+        var mtf_transaction_marketing = []; // Variable containing existing elements
+        var mtf_ltf_transaction_marketing = []; // Variable containing existing elements
+        var mtf_transaction_logistic_transaction_marketing = []; // Variable containing existing elements
+        var mtf_transaction_receiving_transaction_marketing = []; // Variable containing existing elements
+        var ltf_transaction_marketing = []; // Variable containing existing elements
+        var ltf_wcf_transaction_marketing = []; // Variable containing existing elements
         
         for (let i = 1; i < mtf_data_list.content.length; i++) {
-            if (!mtf_transaction.includes(mtf_data_list.content[i][1])) {
-                mtf_transaction.push(mtf_data_list.content[i][1]);
-                mtf_transaction_counter += 1
+            if (!mtf_transaction_marketing.includes(mtf_data_list.content[i][1])) {
+                mtf_transaction_marketing.push(mtf_data_list.content[i][1]);
+                mtf_transaction_counter_marketing += 1
             }
             if(mtf_data_list.content[i][8] == "LOGISTICS"){
-                if (!mtf_transaction_logistic_transaction.includes(mtf_data_list.content[i][1])) {
-                    mtf_transaction_logistic_transaction.push(mtf_data_list.content[i][1]);
-                    mtf_transaction_logistic_transaction_counter += 1
+                if (!mtf_transaction_logistic_transaction_marketing.includes(mtf_data_list.content[i][1])) {
+                    mtf_transaction_logistic_transaction_marketing.push(mtf_data_list.content[i][1]);
+                    mtf_transaction_logistic_transaction_counter_marketing += 1
                 }
             }
             if(mtf_data_list.content[i][8] == "RECEIVING"){
-                if (!mtf_transaction_receiving_transaction.includes(mtf_data_list.content[i][1])) {
-                    mtf_transaction_receiving_transaction.push(mtf_data_list.content[i][1]);
-                    mtf_transaction_receiving_transaction_counter += 1
+                if (!mtf_transaction_receiving_transaction_marketing.includes(mtf_data_list.content[i][1])) {
+                    mtf_transaction_receiving_transaction_marketing.push(mtf_data_list.content[i][1]);
+                    mtf_transaction_receiving_transaction_counter_marketing += 1
                 }
             }
         }
 
         for (let i = 1; i < ltf_data_list.content.length; i++) {
-            if (!mtf_ltf_transaction.includes(ltf_data_list.content[i][2])) {
-                mtf_ltf_transaction.push(ltf_data_list.content[i][2]);
-                mtf_ltf_transaction_counter += 1
+            if (!mtf_ltf_transaction_marketing.includes(ltf_data_list.content[i][2])) {
+                mtf_ltf_transaction_marketing.push(ltf_data_list.content[i][2]);
+                mtf_ltf_transaction_counter_marketing += 1
             }
-            if (!ltf_transaction.includes(ltf_data_list.content[i][1])) {
-                ltf_transaction.push(ltf_data_list.content[i][1]);
-                ltf_transaction_counter += 1
+            if (!ltf_transaction_marketing.includes(ltf_data_list.content[i][1])) {
+                ltf_transaction_marketing.push(ltf_data_list.content[i][1]);
+                ltf_transaction_counter_marketing += 1
             }
         }
 
         for (let i = 1; i < wcf_data_list.content.length; i++) {
-            if (!ltf_wcf_transaction.includes(wcf_data_list.content[i][2])) {
-                ltf_wcf_transaction.push(wcf_data_list.content[i][2]);
-                ltf_wcf_transaction_counter += 1
+            if (!ltf_wcf_transaction_marketing.includes(wcf_data_list.content[i][2])) {
+                ltf_wcf_transaction_marketing.push(wcf_data_list.content[i][2]);
+                ltf_wcf_transaction_counter_marketing += 1
             }
         }
 
-        const in_mtf_not_in_ltf = mtf_transaction.filter((element) => !mtf_ltf_transaction.includes(element));
+        booked_transactions_marketing.innerText = mtf_transaction_counter_marketing
 
-        booked_transactions.innerText = mtf_transaction_counter
-        // for_logistics.innerText = mtf_transaction_logistic_transaction_counter;
-        // for_receiving.innerText = mtf_transaction_receiving_transaction_counter;
         var data_value = "";
         var data_value_counter = 1;
         for(let j = 1; j < mtf_data_list.content.length; j++){
@@ -131,18 +127,18 @@ document.addEventListener('DOMContentLoaded', async function() {
                 for(let k = 1; k < ltf_data_list.content.length; k++){
                     if(mtf_data_list.content[j][1] == ltf_data_list.content[k][2]){
                         status = "ON HAULING";
-                        for_logistics_on_haul_counter += 1;
-                        for_logistics_pending_counter -= 1;
+                        for_logistics_on_haul_counter_marketing += 1;
+                        for_logistics_pending_counter_marketing -= 1;
                         for(let m = 1; m < wcf_data_list.content.length; m++){
                             if(ltf_data_list.content[k][1] == wcf_data_list.content[m][2]){
                                 status = "RECEIVED";
-                                for_logistics_received_counter += 1;
-                                for_logistics_on_haul_counter -= 1;
+                                for_logistics_received_counter_marketing += 1;
+                                for_logistics_on_haul_counter_marketing -= 1;
                             }
                         }
                     }
                 }
-                for_logistics_pending_counter += 1;
+                for_logistics_pending_counter_marketing += 1;
             }
 
             // for receiving
@@ -151,12 +147,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                     if((wcf_data_list.content[m][2]).slice(0,3) == "MTF"){
                         if(mtf_data_list.content[j][1] == wcf_data_list.content[m][2]){
                             status = "RECEIVED";
-                            for_receiving_received_counter += 1;
-                            for_receiving_pending_counter -= 1;
+                            for_receiving_received_counter_marketing += 1;
+                            for_receiving_pending_counter_marketing -= 1;
                         }
                     }
                 }
-                for_receiving_pending_counter += 1;
+                for_receiving_pending_counter_marketing += 1;
             }
 
             data_value +=`
@@ -173,15 +169,15 @@ document.addEventListener('DOMContentLoaded', async function() {
             `
             data_value_counter += 1;
         }
-        pending_list.innerHTML = data_value;    
-        for_logistics_pending.innerText = for_logistics_pending_counter;
-        for_logistics_on_haul.innerText = for_logistics_on_haul_counter;
-        for_logistics_received.innerText = for_logistics_received_counter;
-        for_receiving_pending.innerText = for_receiving_pending_counter;
-        for_receiving_received.innerText = for_receiving_received_counter;
-        on_hauling.innerText = for_logistics_on_haul_counter;
-        pending.innerText = for_logistics_pending_counter + for_receiving_pending_counter;
-        received.innerText = for_logistics_received_counter + for_receiving_received_counter;
+        pending_list_marketing.innerHTML = data_value;    
+        for_logistics_pending_marketing.innerText = for_logistics_pending_counter_marketing;
+        for_logistics_on_haul_marketing.innerText = for_logistics_on_haul_counter_marketing;
+        for_logistics_received_marketing.innerText = for_logistics_received_counter_marketing;
+        for_receiving_pending_marketing.innerText = for_receiving_pending_counter_marketing;
+        for_receiving_received_marketing.innerText = for_receiving_received_counter_marketing;
+        on_hauling_marketing.innerText = for_logistics_on_haul_counter_marketing;
+        pending_marketing.innerText = for_logistics_pending_counter_marketing + for_receiving_pending_counter_marketing;
+        received_marketing.innerText = for_logistics_received_counter_marketing + for_receiving_received_counter_marketing;
 
         // incident_history_list
         var incident_history_data_value = "";
