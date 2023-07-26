@@ -62,6 +62,135 @@ document.addEventListener('DOMContentLoaded', async function() {
         user_sidebar.innerHTML = `<u>${username_data.content[11][3]}</u>`;
         user_sidebar_officer.innerText = username_data.content[11][4];
 
+        // marketing_dashboard
+        const booked_transactions_marketing = document.getElementById("booked_transactions");
+        const on_hauling_marketing = document.getElementById("on_hauling");
+        const pending_marketing = document.getElementById("pending");
+        const received_marketing = document.getElementById("received");
+        const pending_list_marketing = document.getElementById("pending_list");
+        const for_logistics_pending_marketing = document.getElementById("for_logistics_pending");
+        const for_logistics_on_haul_marketing = document.getElementById("for_logistics_on_haul");
+        const for_logistics_received_marketing = document.getElementById("for_logistics_received");
+        const for_receiving_pending_marketing = document.getElementById("for_receiving_pending");
+        const for_receiving_received_marketing = document.getElementById("for_receiving_received");
+        var mtf_transaction_counter_marketing = 0;
+        var mtf_ltf_transaction_counter_marketing = 0;
+        var mtf_transaction_logistic_transaction_counter_marketing = 0;
+        var mtf_transaction_receiving_transaction_counter_marketing = 0;
+        var ltf_transaction_counter_marketing = 0;
+        var ltf_wcf_transaction_counter_marketing = 0;
+        var for_logistics_pending_counter_marketing = 0;
+        var for_logistics_on_haul_counter_marketing = 0;
+        var for_logistics_received_counter_marketing = 0;
+        var for_receiving_pending_counter_marketing = 0;
+        var for_receiving_received_counter_marketing = 0;
+        var mtf_transaction_marketing = []; // Variable containing existing elements
+        var mtf_ltf_transaction_marketing = []; // Variable containing existing elements
+        var mtf_transaction_logistic_transaction_marketing = []; // Variable containing existing elements
+        var mtf_transaction_receiving_transaction_marketing = []; // Variable containing existing elements
+        var ltf_transaction_marketing = []; // Variable containing existing elements
+        var ltf_wcf_transaction_marketing = []; // Variable containing existing elements
+        
+        for (let i = 1; i < mtf_data_list.content.length; i++) {
+            if (!mtf_transaction_marketing.includes(mtf_data_list.content[i][1])) {
+                mtf_transaction_marketing.push(mtf_data_list.content[i][1]);
+                mtf_transaction_counter_marketing += 1
+            }
+            if(mtf_data_list.content[i][8] == "LOGISTICS"){
+                if (!mtf_transaction_logistic_transaction_marketing.includes(mtf_data_list.content[i][1])) {
+                    mtf_transaction_logistic_transaction_marketing.push(mtf_data_list.content[i][1]);
+                    mtf_transaction_logistic_transaction_counter_marketing += 1
+                }
+            }
+            if(mtf_data_list.content[i][8] == "RECEIVING"){
+                if (!mtf_transaction_receiving_transaction_marketing.includes(mtf_data_list.content[i][1])) {
+                    mtf_transaction_receiving_transaction_marketing.push(mtf_data_list.content[i][1]);
+                    mtf_transaction_receiving_transaction_counter_marketing += 1
+                }
+            }
+        }
+
+        for (let i = 1; i < ltf_data_list.content.length; i++) {
+            if (!mtf_ltf_transaction_marketing.includes(ltf_data_list.content[i][2])) {
+                mtf_ltf_transaction_marketing.push(ltf_data_list.content[i][2]);
+                mtf_ltf_transaction_counter_marketing += 1
+            }
+            if (!ltf_transaction_marketing.includes(ltf_data_list.content[i][1])) {
+                ltf_transaction_marketing.push(ltf_data_list.content[i][1]);
+                ltf_transaction_counter_marketing += 1
+            }
+        }
+
+        for (let i = 1; i < wcf_data_list.content.length; i++) {
+            if (!ltf_wcf_transaction_marketing.includes(wcf_data_list.content[i][2])) {
+                ltf_wcf_transaction_marketing.push(wcf_data_list.content[i][2]);
+                ltf_wcf_transaction_counter_marketing += 1
+            }
+        }
+
+        booked_transactions_marketing.innerText = mtf_transaction_counter_marketing
+
+        var data_value = "";
+        var data_value_counter = 1;
+        for(let j = 1; j < mtf_data_list.content.length; j++){
+            var status = "PENDING";
+            // for logistics
+            if(mtf_data_list.content[j][8] == "LOGISTICS"){
+                for(let k = 1; k < ltf_data_list.content.length; k++){
+                    if(mtf_data_list.content[j][1] == ltf_data_list.content[k][2]){
+                        status = "ON HAULING";
+                        for_logistics_on_haul_counter_marketing += 1;
+                        for_logistics_pending_counter_marketing -= 1;
+                        for(let m = 1; m < wcf_data_list.content.length; m++){
+                            if(ltf_data_list.content[k][1] == wcf_data_list.content[m][2]){
+                                status = "RECEIVED";
+                                for_logistics_received_counter_marketing += 1;
+                                for_logistics_on_haul_counter_marketing -= 1;
+                            }
+                        }
+                    }
+                }
+                for_logistics_pending_counter_marketing += 1;
+            }
+
+            // for receiving
+            if(mtf_data_list.content[j][8] == "RECEIVING"){
+                for(let m = 1; m < wcf_data_list.content.length; m++){
+                    if((wcf_data_list.content[m][2]).slice(0,3) == "MTF"){
+                        if(mtf_data_list.content[j][1] == wcf_data_list.content[m][2]){
+                            status = "RECEIVED";
+                            for_receiving_received_counter_marketing += 1;
+                            for_receiving_pending_counter_marketing -= 1;
+                        }
+                    }
+                }
+                for_receiving_pending_counter_marketing += 1;
+            }
+
+            data_value +=`
+            <tr>
+                <td>${data_value_counter}</td>
+                <td>${mtf_data_list.content[j][1]}</td>
+                <td>${date_decoder(mtf_data_list.content[j][4])} /<br> ${time_decoder(mtf_data_list.content[j][5])}</td>
+                <td>${mtf_data_list.content[j][2]}</td>
+                <td>${mtf_data_list.content[j][3]}</td>
+                <td>${mtf_data_list.content[j][6]}</td>
+                <td>${mtf_data_list.content[j][8]}</td>
+                <td>${status}</td>
+            </tr>
+            `
+            data_value_counter += 1;
+        }
+        pending_list_marketing.innerHTML = data_value;    
+        for_logistics_pending_marketing.innerText = for_logistics_pending_counter_marketing;
+        for_logistics_on_haul_marketing.innerText = for_logistics_on_haul_counter_marketing;
+        for_logistics_received_marketing.innerText = for_logistics_received_counter_marketing;
+        for_receiving_pending_marketing.innerText = for_receiving_pending_counter_marketing;
+        for_receiving_received_marketing.innerText = for_receiving_received_counter_marketing;
+        on_hauling_marketing.innerText = for_logistics_on_haul_counter_marketing;
+        pending_marketing.innerText = for_logistics_pending_counter_marketing + for_receiving_pending_counter_marketing;
+        received_marketing.innerText = for_logistics_received_counter_marketing + for_receiving_received_counter_marketing;
+
         // logistic_dashboard
         const booked_transactions_logistics = document.querySelector("#logistic_dashboard #booked_transactions");
         const on_hauling_transactions_logistics = document.querySelector("#logistic_dashboard #on_hauling_transactions");
@@ -767,6 +896,57 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         }
         finished_list_certification.innerHTML = data_value;
+
+        // billing_dashboard
+        const certified_counter_billing = document.querySelector("#billing_dashboard #certified_counter");
+        const pending_counter_billing = document.querySelector("#billing_dashboard #pending_counter");
+        const billed_counter_billing = document.querySelector("#billing_dashboard #billed_counter");
+        const unsorted_list_billing = document.querySelector("#billing_dashboard #unsorted_list");
+        var sf_tpf_transaction_counter_billing = 0;
+        var sf_transaction_counter_billing = 0;
+        let sf_transaction_billing = []; // Variable containing existing elements
+        let sf_tpf_transaction_billing = []; // Variable containing existing elements
+
+        for (let i = 1; i < cod_data_list.content.length; i++) {
+            if (!sf_transaction_billing.includes(cod_data_list.content[i][1])) {
+                sf_transaction_billing.push(cod_data_list.content[i][1]);
+                sf_transaction_counter_billing += 1
+            }
+        }
+
+        for (let i = 1; i < bpf_data_list.content.length; i++) {
+            if (!sf_tpf_transaction_billing.includes(bpf_data_list.content[i][2])) {
+                sf_tpf_transaction_billing.push(bpf_data_list.content[i][2]);
+                sf_tpf_transaction_counter_billing += 1
+            }
+        }
+
+        // Get elements from sf_transaction not included in sf_tpf_transaction
+        const newElements_billing = sf_transaction_billing.filter((element) => !sf_tpf_transaction_billing.includes(element));
+
+        certified_counter_billing.innerText = sf_transaction_counter_billing;
+        pending_counter_billing.innerText = sf_transaction_counter_billing - sf_tpf_transaction_counter_billing;
+        billed_counter_billing.innerText = sf_tpf_transaction_counter_billing;
+        var data_value = "";
+        var data_value_counter = 1;
+        for(let i = 0; i < newElements_billing.length; i++){
+            for(let j = 1; j < cod_data_list.content.length; j++){
+                if(newElements_billing[i] == cod_data_list.content[j][1]){
+                    data_value +=`
+                    <tr>
+                        <td>${data_value_counter}</td>
+                        <td>${cod_data_list.content[j][1]}</td>
+                        <td>${date_decoder(cod_data_list.content[j][10])}</td>
+                        <td>${cod_data_list.content[j][5]}</td>
+                        <td>${cod_data_list.content[j][6]}</td>
+                        <td>${cod_data_list.content[j][8]}</td>
+                    </tr>
+                    `
+                    data_value_counter += 1;
+                }
+            }
+        }
+        unsorted_list_billing.innerHTML = data_value;            
 
         // incident_history_list
         const incident_report_safety = document.querySelector("#safety_dashboard #incident_report");

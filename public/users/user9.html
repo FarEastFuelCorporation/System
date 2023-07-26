@@ -76,7 +76,89 @@
             <!-- dashboard -->
             <section class="hr" id="hr_dashboard">
                 <h2>DASHBOARD</h2><br>
+                <h2>EMPLOYEE SUMMARY</h2>
+                <div>
+                    <div class="cards">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="regular_employee"></div>
+                                <div class="card-name">Regular Employee</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-user-tie"></i>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="project_based_employee"></div>
+                                <div class="card-name">Project Based Employee</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-user-tag"></i>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="subcon_employee"></div>
+                                <div class="card-name">Subcon Employee</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-user-pen"></i>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="total_employee"></div>
+                                <div class="card-name">Total Employee</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-users"></i>
+                            </div>
+                        </div>
+                    </div><br>
+                    <h2>PENDING TRANSACTION LIST</h2>
+                    <!-- <div class="card">
+                        <div class="list">
+                            <table>
+                                <thead>
+                                    <th>#</th>
+                                    <th>SF #</th>
+                                    <th>SORTED<br>DATE/TIME</th>
+                                    <th>CLIENT</th>
+                                    <th>WASTE DESCRIPTION</th>
+                                    <th>TREATMENT PROCESS</th>
+                                    <th>WEIGHT</th>
+                                </thead>
+                                <tbody id="pending_list">
 
+                                </tbody>
+                            </table>
+                            <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                        </div>
+                    </div><br> -->
+                    <!-- <h2>TREATED HISTORY LIST</h2>
+                    <div class="card">
+                        <div class="list">
+                            <table>
+                                <thead>
+                                    <th>#</th>
+                                    <th>TPF #</th>
+                                    <th>SORTED<br>DATE/TIME</th>
+                                    <th>CLIENT</th>
+                                    <th>WASTE DESCRIPTION</th>
+                                    <th>TREATMENT PROCESS</th>
+                                    <th>WEIGHT</th>
+                                    <th>TREATED<br>DATE/TIME</th>
+                                    <th>DURATION</th>
+                                </thead>
+                                <tbody id="finished_list">
+
+                                </tbody>
+                            </table>
+                            <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                        </div>
+                    </div> -->
+                </div>
             </section>
             <!-- attendance_form -->
             <section class="hr" id="attendance_form">
@@ -105,13 +187,18 @@
                         </div>
                     </div>
                     <div class="hrf_form_grid">
-                        <div>
+                        <div class="wrapper">
                             <label for="employee_name">
                                 <i class="fa-solid fa-id-card"></i>
                                 Employee Name
                             </label><br>
-                            <input type="text" id="employee_name" name="employee_name" class="form-control" required autocomplete="off"><br>    
-                        </div>
+                            <div class="search_input" id="search_employee_name">
+                                <input type="text" name="employee_name" id="employee_name" autocomplete="off" class="form-control" required placeholder="Type to Search Employee Name...">
+                                <div class="autocom_box">
+                                </div>
+                                <div class="icon"><i class="fas fa-search"></i></div>
+                            </div>
+                        </div><br>
                         <div>
                             <label for="department">
                                 <i class="fa-solid fa-id-card"></i>
@@ -133,7 +220,7 @@
                                 <i class="fa-solid fa-id-card"></i>
                                 Daily Rate
                             </label><br>
-                            <input type="number" id="daily_rate" name="daily_rate" class="form-control form" required autocomplete="off" value="0"><br>    
+                            <input type="number" id="daily_rate" name="daily_rate" class="form-control form" required autocomplete="off"><br>    
                         </div>
                         <div>
                             <label for="time_in_sched">

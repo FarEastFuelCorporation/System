@@ -577,7 +577,7 @@ h5{
 #incident_documentation_form,
 #directorySection,
 #accountingSection,
-#hr_dashboard,
+#attendance_form,
 #incident_report_form,
 #settingsSection,
 #helpSection,
@@ -2980,7 +2980,7 @@ section h2
     height: 120px;
     padding: 10px 0px 0 0px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     grid-gap: 20px;
     background: #f5f5f5;
 }

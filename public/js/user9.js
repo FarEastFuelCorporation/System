@@ -1,38 +1,112 @@
 document.addEventListener('DOMContentLoaded', async function() {
     try {
-        // const username_response_promise = fetch('https://script.google.com/macros/s/AKfycbwmA97K4sdfq6dhzSsp14JU9KgQrFgSARNZbvSfiU7vuH8oEipt6TmcFo_o-jCI0kiQ/exec');
-        // const idf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyXPvq606vmfSlFG3nVjYuJLN8Jnv4BFGbhEmDp6e4wLL1kUQVa4kIi2dGGRKuSklT2bg/exec');
-        // const sf_response_promise = fetch('https://script.google.com/macros/s/AKfycby9b2VCfXc0ifkwBXJRi2UVUwgZIj9F4FTOdZa_SYKZdsTwbVtAzAXzNMFeklE35bg1/exec');
-        // const irf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzTmhNOz5cXeKitSXAriUJ_FEahAQugYEKIRwDuFt9tjhj2AtPKEf2H4yTMmZ1igpUxlQ/exec');
+        const username_response_promise = fetch('https://script.google.com/macros/s/AKfycbwmA97K4sdfq6dhzSsp14JU9KgQrFgSARNZbvSfiU7vuH8oEipt6TmcFo_o-jCI0kiQ/exec');
+        const idf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyXPvq606vmfSlFG3nVjYuJLN8Jnv4BFGbhEmDp6e4wLL1kUQVa4kIi2dGGRKuSklT2bg/exec');
+        const sf_response_promise = fetch('https://script.google.com/macros/s/AKfycby9b2VCfXc0ifkwBXJRi2UVUwgZIj9F4FTOdZa_SYKZdsTwbVtAzAXzNMFeklE35bg1/exec');
+        const irf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzTmhNOz5cXeKitSXAriUJ_FEahAQugYEKIRwDuFt9tjhj2AtPKEf2H4yTMmZ1igpUxlQ/exec');
+        const employee_response_promise = fetch('https://script.google.com/macros/s/AKfycbwns5R6TA8U64ywbb9hwYu4LKurAjTM0Z18NYNZMt0Ft0m-_NUHYbYqblk_5KWugvt7lA/exec');
 
-        // const [
-        //     username_response,
-        //     idf_response,
-        //     sf_response,
-        //     irf_response
-        // ] = await Promise.all([
-        //     username_response_promise,
-        //     idf_response_promise,
-        //     sf_response_promise,
-        //     irf_response_promise
-        // ]);
+        const [
+            username_response,
+            idf_response,
+            sf_response,
+            irf_response,
+            employee_response,
+        ] = await Promise.all([
+            username_response_promise,
+            idf_response_promise,
+            sf_response_promise,
+            irf_response_promise,
+            employee_response_promise,
+        ]);
 
-        // const username_data  = await username_response.json();
-        // const idf_data_list  = await idf_response.json();
-        // const sf_data_list  = await sf_response.json();
-        // const irf_data_list  = await irf_response.json();
+        const username_data  = await username_response.json();
+        const idf_data_list  = await idf_response.json();
+        const sf_data_list  = await sf_response.json();
+        const irf_data_list  = await irf_response.json();
+        const employee_data_list  = await employee_response.json();
 
-        // // Code that depends on the fetched data
-        // // username_data3
-        // const user_sidebar = document.getElementById("user_sidebar");
-        // const user_sidebar_officer = document.getElementById("user_sidebar_officer");
-        // const user = document.getElementById("user");
+        // Code that depends on the fetched data
+        // username_data3
+        const user_sidebar = document.getElementById("user_sidebar");
+        const user_sidebar_officer = document.getElementById("user_sidebar_officer");
+        const user = document.getElementById("user");
         
+        user.value = username_data.content[9][3];
+        user_sidebar.innerHTML = `<u>${username_data.content[9][3]}</u>`;
+        user_sidebar_officer.innerText = username_data.content[9][4];
         
-        // user.value = username_data.content[9][3];
-        // user_sidebar.innerHTML = `<u>${username_data.content[9][3]}</u>`;
-        // user_sidebar_officer.innerText = username_data.content[9][4];
-        
+        // hr_dashboard
+        const regular_employee = document.querySelector("#hr_dashboard #regular_employee");
+        const project_based_employee = document.querySelector("#hr_dashboard #project_based_employee");
+        const subcon_employee = document.querySelector("#hr_dashboard #subcon_employee");
+        const total_employee = document.querySelector("#hr_dashboard #total_employee");
+        var total_employee_name = [];
+        var total_employee_male = 0;
+        var total_employee_female = 0;
+        var regular_employee_name = [];
+        var regular_employee_male = 0;
+        var regular_employee_female = 0;
+        var project_based_employee_name = [];
+        var project_based_employee_male = 0;
+        var project_based_employee_female = 0;
+        var subcon_employee_name = [];
+        var subcon_employee_male = 0;
+        var subcon_employee_female = 0;
+
+        for(let x = 1; x < employee_data_list.content.length; x++){
+            if(employee_data_list.content[x][33] == "ACTIVE"){
+                var full_name = `${employee_data_list.content[x][2]}, ${employee_data_list.content[x][3]} ${employee_data_list.content[x][4]}`
+                var gender = employee_data_list.content[x][7];
+                if(employee_data_list.content[x][31] == "REGULAR"){
+                    if (!regular_employee_name.includes(full_name)) {
+                        regular_employee_name.push(full_name);
+                        if(gender == "MALE"){
+                            regular_employee_male += 1;
+                        }
+                        else{
+                            regular_employee_female += 1;
+                        }
+                    }
+                }
+                if(employee_data_list.content[x][31] == "PROJECT BASED"){
+                    if (!project_based_employee_name.includes(full_name)) {
+                        project_based_employee_name.push(full_name);
+                        if(gender == "MALE"){
+                            project_based_employee_male += 1;
+                        }
+                        else{
+                            project_based_employee_female += 1;
+                        }
+                    }
+                }
+                if(employee_data_list.content[x][31] == "SUBCON"){
+                    if (!subcon_employee_name.includes(full_name)) {
+                        subcon_employee_name.push(full_name);
+                        if(gender == "MALE"){
+                            subcon_employee_male += 1;
+                        }
+                        else{
+                            subcon_employee_female += 1;
+                        }
+                    }
+                }
+                if (!total_employee_name.includes(full_name)) {
+                    total_employee_name.push(full_name);
+                    if(gender == "MALE"){
+                        total_employee_male += 1;
+                    }
+                    else{
+                        total_employee_female += 1;
+                    }
+                }
+            }
+        }
+        regular_employee.innerText = `M:${regular_employee_male}/F:${regular_employee_female}/T:${regular_employee_name.length}`
+        project_based_employee.innerText = `M:${project_based_employee_male}/F:${project_based_employee_female}/T:${project_based_employee_name.length}`
+        subcon_employee.innerText = `M:${subcon_employee_male}/F:${subcon_employee_female}/T:${subcon_employee_name.length}`
+        total_employee.innerText = `M:${total_employee_male}/F:${total_employee_female}/T:${total_employee_name.length}`
+
         // attendance form
         const days = document.getElementById("days");
         const daily_rate = document.getElementById("daily_rate");
@@ -91,6 +165,80 @@ document.addEventListener('DOMContentLoaded', async function() {
         const cash_advance = document.getElementById("cash_advance");
         const total_deductions = document.getElementById("total_deductions");
         const net_salary = document.getElementById("net_salary");
+
+                // client_list_data
+        const search_wrapper = document.getElementById("search_client");
+        const input_box = search_wrapper.querySelector("input");
+        const sugg_box = search_wrapper.querySelector(".autocom_box");
+        const mtf_data = document.getElementById("mtf_data");
+        const client_list = document.getElementById("client_list");
+        var data_value = [];
+
+        for(let x = 1; x < employee_data_list.content.length; x++){
+            if(employee_data_list.content[x][33] == "ACTIVE"){
+                var data_value = `${employee_data_list.content[x][2]}, ${employee_data_list.content[x][3]} ${employee_data_list.content[x][4]}`
+            }
+        }
+
+        input_box.onkeyup = (e) => {
+            let user_data = e.target.value;
+            let empty_array = [];
+            if (user_data) {
+                empty_array = data_value.filter((data) => {
+                    return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
+                });
+                empty_array = empty_array.map((data) => {
+                    return '<li>' + data + '</li>';
+                });
+                console.log(empty_array);
+                search_wrapper.classList.add("active");
+                show_suggestions(empty_array);
+            } else {
+                search_wrapper.classList.remove("active");
+            }
+        };
+    
+        sugg_box.addEventListener("click", (e) => {
+            if (e.target.tagName === "LI") {
+                select(e.target.innerHTML);
+            }
+        });
+    
+        function select(element) {
+            let select_user_data = element;
+            input_box.value = select_user_data;
+            console.log(input_box.value);
+            search_wrapper.classList.remove("active");
+            mtf_data.style.display = "block";
+                
+        }
+    
+        function show_suggestions(list) {
+            let list_data;
+            if (!list.length) {
+                user_value = input_box.value;
+                list_data = '<li>' + user_value + '</li>';
+            } else {
+                list_data = list.join("");
+            }
+            sugg_box.innerHTML = list_data;
+        }
+
+        var client_list_data_value = "";
+        var data_value_counter = 1;
+        for(let x = 1; x < client_list_data.content.length; x++){
+            client_list_data_value += `
+            <tr>
+                <td>${data_value_counter}</td>
+                <td>${client_list_data.content[x][1]}</td>
+                <td>${client_list_data.content[x][2]}</td>
+                <td>${client_list_data.content[x][3]}</td>
+                <td>${client_list_data.content[x][4]}</td>
+            </tr>
+            `
+            data_value_counter += 1;
+        }
+        client_list.innerHTML = client_list_data_value
 
         for(let x = 1; x <= 7; x++){
             if(x == 1){
@@ -453,38 +601,38 @@ document.addEventListener('DOMContentLoaded', async function() {
             // Use a function to create a new scope for each iteration
             
             function calculateAll(){
-                regular_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1) * 100) / 100;
-                night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.1) * 100) / 100;
+                regular_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1);
+                night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.1);
                 if (with_ot_box[x].checked == true) {
-                    ot_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.25) * 100) / 100;
-                    ot_night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.375) * 100) / 100;
+                    ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.25);
+                    ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.375);
                 }
                 else{
                     ot_rate_per_hour[x].value = 0;
                     ot_night_rate_per_hour[x].value = 0;
                 }
                 calculateHours();
-                regular_hours_pay[x].value = Math.round((parseInt(regular_hours[x].value) * parseInt(regular_rate_per_hour[x].value)) * 100) / 100;
-                night_hours_pay[x].value = Math.round((parseInt(night_hours[x].value) * parseInt(night_rate_per_hour[x].value)) * 100) / 100;
-                subtotal[x].value = Math.round((parseInt(regular_hours_pay[x].value) + parseInt(night_hours_pay[x].value)) * 100) / 100;
-                late_deduction[x].value = Math.round((parseInt(late_mins[x].value) * (parseInt(subtotal[x].value) / 8 / 60)) * 100) / 100;
-                under_time_deduction[x].value = Math.round((parseInt(under_time_mins[x].value) * (parseInt(subtotal[x].value) / 8 / 60)) * 100) / 100;
-                regular_pay[x].value = Math.round((parseInt(subtotal[x].value) - (parseInt(late_deduction[x].value) + parseInt(under_time_deduction[x].value))) * 100) / 100;
-                ot_pay[x].value = Math.round((parseInt(ot_hours[x].value) * parseInt(ot_rate_per_hour[x].value)) * 100) / 100;
-                ot_night_pay[x].value = Math.round((parseInt(ot_night_hours[x].value) * parseInt(ot_night_rate_per_hour[x].value)) * 100) / 100;
-                ot_pay_subtotal[x].value = Math.round((parseInt(ot_pay[x].value) + parseInt(ot_night_pay[x].value)) * 100) / 100;
-                salary_day[x].value = Math.round((parseInt(regular_pay[x].value) + parseInt(ot_pay_subtotal[x].value)) * 100) / 100;
+                regular_hours_pay[x].value = (parseFloat(regular_hours[x].value) * parseFloat(regular_rate_per_hour[x].value));
+                night_hours_pay[x].value = (parseFloat(night_hours[x].value) * parseFloat(night_rate_per_hour[x].value));
+                subtotal[x].value = (parseFloat(regular_hours_pay[x].value) + parseFloat(night_hours_pay[x].value)).toFixed(2);
+                late_deduction[x].value = (parseFloat(late_mins[x].value) * (parseFloat(subtotal[x].value) / 8 / 60));
+                under_time_deduction[x].value = (parseFloat(under_time_mins[x].value) * (parseFloat(subtotal[x].value) / 8 / 60));
+                regular_pay[x].value = (parseFloat(subtotal[x].value) - (parseFloat(late_deduction[x].value) + parseFloat(under_time_deduction[x].value))).toFixed(2);
+                ot_pay[x].value = (parseFloat(ot_hours[x].value) * parseFloat(ot_rate_per_hour[x].value));
+                ot_night_pay[x].value = (parseFloat(ot_night_hours[x].value) * parseFloat(ot_night_rate_per_hour[x].value));
+                ot_pay_subtotal[x].value = (parseFloat(ot_pay[x].value) + parseFloat(ot_night_pay[x].value)).toFixed(2);
+                salary_day[x].value = (parseFloat(regular_pay[x].value) + parseFloat(ot_pay_subtotal[x].value)).toFixed(2);
             }
 
             function calculateSalary(){
                 var net_income = 0;
                 for(let y = 1; y <= 7; y++){
-                    net_income += parseInt(salary_day[y].value)
+                    net_income += parseFloat(salary_day[y].value)
                 }
                 gross_salary.value = net_income;
 
                 var deduction = 0;
-                deduction = parseInt(sss_deduction.value) + parseInt(pag_ibig_deduction.value) + parseInt(philhealth_deduction.value) + parseInt(cash_advance.value);
+                deduction = parseFloat(sss_deduction.value) + parseFloat(pag_ibig_deduction.value) + parseFloat(philhealth_deduction.value) + parseFloat(cash_advance.value);
             
                 total_deductions.value = deduction;
                 net_salary.value = net_income - deduction
@@ -496,8 +644,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                 const night_hours_start = 22;
                 let night_hours_end = 6; // 6 am
                 
-                let time_start = parseInt(timeInValue.slice(0, 2));
-                let time_end = parseInt(timeOutValue.slice(0, 2));
+                let time_start = parseFloat(timeInValue.slice(0, 2));
+                let time_end = parseFloat(timeOutValue.slice(0, 2));
                 
                 let reg_hours = 0;
                 let nd_hours = 0;
@@ -586,9 +734,9 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             
             function calculateOvertimeHours(){
-                const scheduleTimeIn = parseInt(roundDownTime(time_in_sched.value));
-                const scheduleTimeOut = parseInt(roundDownTime(time_out_sched.value));
-                var actualTime = parseInt(roundDownTime(time_out_input[x].value));
+                const scheduleTimeIn = parseFloat(roundDownTime(time_in_sched.value));
+                const scheduleTimeOut = parseFloat(roundDownTime(time_out_sched.value));
+                var actualTime = parseFloat(roundDownTime(time_out_input[x].value));
                 const NIGHT_START_HOUR = 22; // 10 PM (24-hour format)
                 var NIGHT_END_HOUR = 6;    // 6 AM (24-hour format)
                 var regularOvertimeHours = 0;
@@ -598,7 +746,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     if (actualTime == scheduleTimeOut) {
                         regularOvertimeHours = 0;
                         nightDifferentialOvertimeHours = 0;
-                        console.log("pass 0")
                     }
                     // Handle cases where actualTime crosses midnight
                     else if (actualTime < scheduleTimeOut) {
@@ -609,13 +756,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                         if(scheduleTimeOut < NIGHT_END_HOUR - 24 && actualTime > NIGHT_START_HOUR && actualTime <= NIGHT_END_HOUR){
                             regularOvertimeHours = (actualTime - scheduleTimeOut) - (((NIGHT_END_HOUR -24 ) - scheduleTimeOut) + (actualTime - NIGHT_START_HOUR));
                             nightDifferentialOvertimeHours = ((NIGHT_END_HOUR -24 ) - scheduleTimeOut) + (actualTime - NIGHT_START_HOUR);
-                            console.log("pass 1")
                         }
                         // start 6 - 21.5 end 22.5 - 30
                         else if(scheduleTimeOut >= NIGHT_END_HOUR - 24 && scheduleTimeOut <= NIGHT_START_HOUR && actualTime > NIGHT_START_HOUR && actualTime <= NIGHT_END_HOUR){
                             regularOvertimeHours = (actualTime - scheduleTimeOut) - (actualTime - NIGHT_START_HOUR);
                             nightDifferentialOvertimeHours = actualTime - NIGHT_START_HOUR;
-                            console.log("pass 2")
                         }
                         // start 6 - 21.5 end 30.5 - 46
                         else if(scheduleTimeOut >= NIGHT_END_HOUR - 24 && scheduleTimeOut <= NIGHT_START_HOUR && actualTime > NIGHT_END_HOUR && actualTime <= NIGHT_START_HOUR + 24){
@@ -625,55 +770,45 @@ document.addEventListener('DOMContentLoaded', async function() {
                         // start 22 - 23.5 end 22.5 - 30
                         else if(scheduleTimeOut >= NIGHT_START_HOUR && actualTime > NIGHT_START_HOUR && actualTime <= NIGHT_END_HOUR){
                             nightDifferentialOvertimeHours = actualTime - scheduleTimeOut;
-                            console.log("pass 4")
                         }
                         // start 22 - 23.5 end 30.5 - 46
                         else if(scheduleTimeOut >= NIGHT_START_HOUR && actualTime > NIGHT_END_HOUR && actualTime <= NIGHT_START_HOUR + 24){
                             regularOvertimeHours = (actualTime - scheduleTimeOut) - (NIGHT_END_HOUR - scheduleTimeOut);
                             nightDifferentialOvertimeHours = NIGHT_END_HOUR - scheduleTimeOut;
-                            console.log("pass 5")
                         }
                         // start 22 - 23.5 end 46.5 - 47.5
                         else if(scheduleTimeOut >= NIGHT_START_HOUR && actualTime >= NIGHT_START_HOUR + 24){
                             regularOvertimeHours = (actualTime - scheduleTimeOut) - ((NIGHT_END_HOUR - scheduleTimeOut) + (actualTime - (NIGHT_START_HOUR + 24)));
                             nightDifferentialOvertimeHours = (NIGHT_END_HOUR - scheduleTimeOut) + (actualTime - (NIGHT_START_HOUR + 24));
-                            console.log("pass 6")
                         }
                     }
                     else if (actualTime > scheduleTimeOut) {
-                        console.log("bracket 2")
                         // start 0 - 5.5 end 0.5 - 6
                         if(scheduleTimeOut < NIGHT_END_HOUR && actualTime <= NIGHT_END_HOUR){
                             nightDifferentialOvertimeHours = actualTime - scheduleTimeOut;
-                            console.log("pass 7")
                         }
                         // start 0 - 5.5 end 6.5 - 22
                         else if(scheduleTimeOut < NIGHT_END_HOUR && actualTime > NIGHT_END_HOUR && actualTime <= NIGHT_START_HOUR){
                             regularOvertimeHours = (actualTime - scheduleTimeOut) - (NIGHT_END_HOUR - scheduleTimeOut);
                             nightDifferentialOvertimeHours = NIGHT_END_HOUR - scheduleTimeOut;
-                            console.log("pass 8")
                         }
                         // start 0 - 5.5 end 22.5 - 23.5
                         else if(scheduleTimeOut < NIGHT_END_HOUR && actualTime > NIGHT_START_HOUR){
                             regularOvertimeHours = (actualTime - scheduleTimeOut) - ((NIGHT_END_HOUR - scheduleTimeOut) + (actualTime - NIGHT_START_HOUR));
                             nightDifferentialOvertimeHours = (NIGHT_END_HOUR - scheduleTimeOut) + (actualTime - NIGHT_START_HOUR);
-                            console.log("pass 9")
                         }
                         // start 6 - 21.5 end 6.5 - 22 
                         else if(scheduleTimeOut >= NIGHT_END_HOUR && actualTime <= NIGHT_START_HOUR){
                             regularOvertimeHours = actualTime - scheduleTimeOut;
-                            console.log("pass 10")
                         }
                         // start 6 - 21.5 end 22.5 - 23.5
                         else if(scheduleTimeOut >= NIGHT_END_HOUR && scheduleTimeOut <= NIGHT_START_HOUR && actualTime > NIGHT_START_HOUR){
                             regularOvertimeHours = (actualTime - scheduleTimeOut) - (actualTime - NIGHT_START_HOUR);
                             nightDifferentialOvertimeHours = actualTime - NIGHT_START_HOUR;
-                            console.log("pass 11")
                         }
                         // start 22 - 23 end 22.5 - 23.5
                         else if(scheduleTimeOut >= NIGHT_START_HOUR && actualTime > NIGHT_START_HOUR){
                             nightDifferentialOvertimeHours = actualTime - scheduleTimeOut;
-                            console.log("pass 12")
                         }
                     }
                               
@@ -717,7 +852,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     day_input_time_elements.forEach((inputElement) => {
                         inputElement.value = "";
                     });
-                    calculateAll();
                     calculateSalary();
                 }
                 else {
@@ -744,7 +878,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     day_input_time_elements.forEach((inputElement) => {
                         inputElement.value = "";
                     });
-                    calculateAll();
                     calculateSalary();
                 }
                 else {
@@ -759,84 +892,84 @@ document.addEventListener('DOMContentLoaded', async function() {
                 if (rest_day_ot_box[x].checked == true) {
                     absent_box_input[x].classList.add('disabled');
                     rest_day_box_input[x].classList.add('disabled');
-                    regular_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.3) * 100) / 100;
-                    night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.43) * 100) / 100;
+                    regular_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.3);
+                    night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.43);
                     regular_hour_rate[x].innerText = "1.30";
                     night_hour_rate[x].innerText = "1.43";
                     ot_regular_hour_rate[x].innerText = "1.69";
                     ot_night_hour_rate[x].innerText = "1.859";
                     if (with_ot_box[x].checked == true) {
-                        ot_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.69) * 100) / 100;
-                        ot_night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.859) * 100) / 100;
+                        ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.69);
+                        ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.859);
                     }
                     if (special_holiday_box[x].checked == true) {
-                        regular_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.5) * 100) / 100;
-                        night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.65) * 100) / 100;
+                        regular_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.5);
+                        night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.65);
                         regular_hour_rate[x].innerText = "1.5";
                         night_hour_rate[x].innerText = "1.65";
                         ot_regular_hour_rate[x].innerText = "1.95";
                         ot_night_hour_rate[x].innerText = "2.145";
                         if (with_ot_box[x].checked == true) {
-                            ot_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.95) * 100) / 100;
-                            ot_night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 2.145) * 100) / 100;
+                            ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.95);
+                            ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 2.145);
                         }
                     }
                     if (regular_holiday_box[x].checked == true) {
-                        regular_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 2.6) * 100) / 100;
-                        night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 2.86) * 100) / 100;
+                        regular_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 2.6);
+                        night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 2.86);
                         regular_hour_rate[x].innerText = "2.6";
                         night_hour_rate[x].innerText = "2.86";
                         ot_regular_hour_rate[x].innerText = "3.38";
                         ot_night_hour_rate[x].innerText = "3.718";
                         if (with_ot_box[x].checked == true) {
-                            ot_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 3.38) * 100) / 100;
-                            ot_night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 3.718) * 100) / 100;
+                            ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 3.38);
+                            ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 3.718);
                         }
                     }
                 } 
                 else {
                     absent_box_input[x].classList.remove('disabled');
                     rest_day_box_input[x].classList.remove('disabled');
-                    regular_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1) * 100) / 100;
-                    night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.1) * 100) / 100;
+                    regular_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1);
+                    night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.1);
                     regular_hour_rate[x].innerText = "1.00";
                     night_hour_rate[x].innerText = "1.10";
                     ot_regular_hour_rate[x].innerText = "1.25";
                     ot_night_hour_rate[x].innerText = "1.375";
                     if (with_ot_box[x].checked == true) {
-                        ot_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.25) * 100) / 100;
-                        ot_night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.375) * 100) / 100;
+                        ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.25);
+                        ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.375);
                     }
                     if (special_holiday_box[x].checked == true) {
-                        regular_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.3) * 100) / 100;
-                        night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.43) * 100) / 100;
+                        regular_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.3);
+                        night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.43);
                         regular_hour_rate[x].innerText = "1.30";
                         night_hour_rate[x].innerText = "1.43";
                         ot_regular_hour_rate[x].innerText = "1.69";
                         ot_night_hour_rate[x].innerText = "1.859";
                         if (with_ot_box[x].checked == true) {
-                            ot_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.69) * 100) / 100;
-                            ot_night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.859) * 100) / 100;
+                            ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.69);
+                            ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.859);
                         }
                         else{
-                            ot_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.69) * 100) / 100;
-                            ot_night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.859) * 100) / 100;
+                            ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.69);
+                            ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.859);
                         }
                     }
                     if (regular_holiday_box[x].checked == true) {
-                        regular_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 2) * 100) / 100;
-                        night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 2.2) * 100) / 100;
+                        regular_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 2);
+                        night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 2.2);
                         regular_hour_rate[x].innerText = "2.00";
                         night_hour_rate[x].innerText = "2.20";
                         ot_regular_hour_rate[x].innerText = "2.60";
                         ot_night_hour_rate[x].innerText = "2.86";
                         if (with_ot_box[x].checked == true) {
-                            ot_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 2.6) * 100) / 100;
-                            ot_night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 2.86) * 100) / 100;
+                            ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 2.6);
+                            ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 2.86);
                         }
                         else{
-                            ot_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 2.6) * 100) / 100;
-                            ot_night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 2.86) * 100) / 100;
+                            ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 2.6);
+                            ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 2.86);
                         }
                     }
                 }
@@ -849,61 +982,61 @@ document.addEventListener('DOMContentLoaded', async function() {
                 rest_day_box_input[x].classList.add('disabled');
                 special_holiday_box_input[x].classList.add('disabled');
                 if (regular_holiday_box[x].checked == true) {
-                    regular_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 2) * 100) / 100;
-                    night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 2.2) * 100) / 100;
+                    regular_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 2);
+                    night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 2.2);
                     regular_hour_rate[x].innerText = "2.00";
                     night_hour_rate[x].innerText = "2.20";
                     ot_regular_hour_rate[x].innerText = "2.60";
                     ot_night_hour_rate[x].innerText = "2.86";
                     if (with_ot_box[x].checked == true) {
-                        ot_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 2.6) * 100) / 100;
-                        ot_night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 2.86) * 100) / 100;
+                        ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 2.6);
+                        ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 2.86);
                     }
                     if (rest_day_ot_box[x].checked == true) {
-                        regular_rate_per_hour[x].value = parseInt(daily_rate.value)/8 * 2.6;
-                        night_rate_per_hour[x].value = parseInt(daily_rate.value)/8 * 2.86;
+                        regular_rate_per_hour[x].value = parseFloat(daily_rate.value)/8 * 2.6;
+                        night_rate_per_hour[x].value = parseFloat(daily_rate.value)/8 * 2.86;
                         regular_hour_rate[x].innerText = "2.6";
                         night_hour_rate[x].innerText = "2.86";
                         ot_regular_hour_rate[x].innerText = "3.38";
                         ot_night_hour_rate[x].innerText = "3.718";
                         if (with_ot_box[x].checked == true) {
-                            ot_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 3.38) * 100) / 100;
-                            ot_night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 3.718) * 100) / 100;
+                            ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 3.38);
+                            ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 3.718);
                         }
                     }
                     else{
-                        ot_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 2.6) * 100) / 100;
-                        ot_night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 2.86) * 100) / 100;
+                        ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 2.6);
+                        ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 2.86);
                     }
                 } 
                 else {
                     absent_box_input[x].classList.remove('disabled');
                     rest_day_box_input[x].classList.remove('disabled');
                     special_holiday_box_input[x].classList.remove('disabled');
-                    regular_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1) * 100) / 100;
-                    night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.1) * 100) / 100;
+                    regular_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1);
+                    night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.1);
                     regular_hour_rate[x].innerText = "1.00";
                     night_hour_rate[x].innerText = "1.10";
                     ot_regular_hour_rate[x].innerText = "1.25";
                     ot_night_hour_rate[x].innerText = "1.375";
                     if (with_ot_box[x].checked == true) {
-                        ot_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.25) * 100) / 100;
-                        ot_night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.375) * 100) / 100;
+                        ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.25);
+                        ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.375);
                     }
                     if (rest_day_ot_box[x].checked == true) {
-                        regular_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.3) * 100) / 100;
-                        night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.43) * 100) / 100;
+                        regular_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.3);
+                        night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.43);
                         regular_hour_rate[x].innerText = "1.30";
                         night_hour_rate[x].innerText = "1.43";
                         ot_regular_hour_rate[x].innerText = "1.69";
                         ot_night_hour_rate[x].innerText = "1.859";
                         if (with_ot_box[x].checked == true) {
-                            ot_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.69) * 100) / 100;
-                            ot_night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.859) * 100) / 100;
+                            ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.69);
+                            ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.859);
                         }
                         else{
-                            ot_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.69) * 100) / 100;
-                            ot_night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.859) * 100) / 100;
+                            ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.69);
+                            ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.859);
                         }
                     }
                 }
@@ -916,26 +1049,26 @@ document.addEventListener('DOMContentLoaded', async function() {
                     absent_box_input[x].classList.add('disabled');
                     rest_day_box_input[x].classList.add('disabled');
                     regular_holiday_box_input[x].classList.add('disabled');
-                    regular_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.3) * 100) / 100;
-                    night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.43) * 100) / 100;
+                    regular_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.3);
+                    night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.43);
                     regular_hour_rate[x].innerText = "1.30";
                     night_hour_rate[x].innerText = "1.43";
                     ot_regular_hour_rate[x].innerText = "1.69";
                     ot_night_hour_rate[x].innerText = "1.859";
                     if (with_ot_box[x].checked == true) {
-                        ot_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.69) * 100) / 100;
-                        ot_night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.859) * 100) / 100;
+                        ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.69);
+                        ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.859);
                     }
                     if (rest_day_ot_box[x].checked == true) {
-                        regular_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.5) * 100) / 100;
-                        night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.65) * 100) / 100;
+                        regular_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.5);
+                        night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.65);
                         regular_hour_rate[x].innerText = "1.5";
                         night_hour_rate[x].innerText = "1.65";
                         ot_regular_hour_rate[x].innerText = "1.95";
                         ot_night_hour_rate[x].innerText = "2.145";
                         if (with_ot_box[x].checked == true) {
-                            ot_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.95) * 100) / 100;
-                            ot_night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 2.145) * 100) / 100;
+                            ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.95);
+                            ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 2.145);
                         }
                     }
                 } 
@@ -943,30 +1076,30 @@ document.addEventListener('DOMContentLoaded', async function() {
                     absent_box_input[x].classList.remove('disabled');
                     rest_day_box_input[x].classList.remove('disabled');
                     regular_holiday_box_input[x].classList.remove('disabled');
-                    regular_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1) * 100) / 100;
-                    night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.1) * 100) / 100;
+                    regular_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1);
+                    night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.1);
                     regular_hour_rate[x].innerText = "1.00";
                     night_hour_rate[x].innerText = "1.10";
                     ot_regular_hour_rate[x].innerText = "1.25";
                     ot_night_hour_rate[x].innerText = "1.375";
                     if (with_ot_box[x].checked == true) {
-                        ot_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.25) * 100) / 100;
-                        ot_night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.375) * 100) / 100;
+                        ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.25);
+                        ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.375);
                     }
                     if (rest_day_ot_box[x].checked == true) {
-                        regular_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.3) * 100) / 100;
-                        night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.43) * 100) / 100;
+                        regular_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.3);
+                        night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.43);
                         regular_hour_rate[x].innerText = "1.30";
                         night_hour_rate[x].innerText = "1.43";
                         ot_regular_hour_rate[x].innerText = "1.69";
                         ot_night_hour_rate[x].innerText = "1.859";
                         if (with_ot_box[x].checked == true) {
-                            ot_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.69) * 100) / 100;
-                            ot_night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.859) * 100) / 100;
+                            ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.69);
+                            ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.859);
                         }
                         else{
-                            ot_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.69) * 100) / 100;
-                            ot_night_rate_per_hour[x].value = Math.round((parseInt(daily_rate.value)/8 * 1.859) * 100) / 100;
+                            ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.69);
+                            ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.859);
                         }
                     }
                 }
@@ -999,10 +1132,10 @@ document.addEventListener('DOMContentLoaded', async function() {
             
             day_break[x].addEventListener("click", () => {
                 if (day_break[x].checked == true) {
-                    regular_hours[x].value = parseInt(regular_hours[x].value) - 1;
+                    regular_hours[x].value = parseFloat(regular_hours[x].value) - 1;
                     night_break_input[x].classList.add("disabled")
                 } else {
-                    regular_hours[x].value = parseInt(regular_hours[x].value) + 1;
+                    regular_hours[x].value = parseFloat(regular_hours[x].value) + 1;
                     night_break_input[x].classList.remove("disabled")
                 }
                 calculateAll();
@@ -1010,10 +1143,10 @@ document.addEventListener('DOMContentLoaded', async function() {
             });
             night_break[x].addEventListener("click", () => {
                 if (night_break[x].checked == true) {
-                    night_hours[x].value = parseInt(night_hours[x].value) - 1;
+                    night_hours[x].value = parseFloat(night_hours[x].value) - 1;
                     day_break_input[x].classList.add("disabled")
                 } else {
-                    night_hours[x].value = parseInt(night_hours[x].value) + 1;
+                    night_hours[x].value = parseFloat(night_hours[x].value) + 1;
                     day_break_input[x].classList.remove("disabled")
                 }
                 calculateAll();
