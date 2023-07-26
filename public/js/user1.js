@@ -247,7 +247,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         search_ltf_form_no_button.addEventListener("click", () => {
             var data_value;
-            for(a=0; a<=newElements.length; a++){
+            for(a=0; a<=newElements_receiving.length; a++){
                 if(search_ltf_form_no.value == ltf_data_list.content[a][1]){
                     data_value = `
                     LTF #: ${ltf_data_list.content[a][1]}<br>
