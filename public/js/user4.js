@@ -269,8 +269,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                         var certification_day = new Date(certification_date).getDate();
                         var certification_day_ordinal = convertToOrdinal(certification_day);
                         var certification_month = convertToMonthName(month);
-                        for(let a = 0; a <= pending.length; a++){
-                            if(tpf_data_list.content[x][1] == pending[a]){
+                        for(let a = 0; a <= pending_certification.length; a++){
+                            if(tpf_data_list.content[x][1] == pending_certification[a]){
                                 if (waste_description.value == tpf_data_list.content[x][5] &&
                                     year_covered.value == year &&
                                     month_covered.value == month) {
@@ -329,8 +329,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                         var certification_day = new Date(certification_date).getDate();
                         var certification_day_ordinal = convertToOrdinal(certification_day);
                         var certification_month = convertToMonthName(month);
-                        for(let a = 0; a <= pending.length; a++){
-                            if(tpf_data_list.content[x][1] == pending[a]){
+                        for(let a = 0; a <= pending_certification.length; a++){
+                            if(tpf_data_list.content[x][1] == pending_certification[a]){
                                 if (waste_description.value == certification_day &&
                                     year_covered.value == year &&
                                     month_covered.value == month) {

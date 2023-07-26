@@ -189,9 +189,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         search_sf_form_no_button.addEventListener("click", () => {
             var data_value;
             for(let a = 1; a < sf_data_list.content.length; a++){
-                for(let b=0; b<=pending.length; b++){
+                for(let b=0; b<=pending_treatment.length; b++){
                     if(search_sf_form_no.value == sf_data_list.content[a][1]){
-                        if(search_sf_form_no.value == pending[b]){
+                        if(search_sf_form_no.value == pending_treatment[b]){
                             data_value = `
                             SF #: ${sf_data_list.content[a][1]}<br>
                             WCF #: ${sf_data_list.content[a][2]}<br>
