@@ -425,7 +425,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     
         // Search Button
         search_mtf_form_no_button.addEventListener("click", () => {
-            for(a=0; a<=newElements.length; a++){
+            for(a=0; a<=newElements_logistics.length; a++){
                 var data_value;
                 if(search_mtf_form_no.value == mtf_data_list.content[a][1]){
                     data_value =`
