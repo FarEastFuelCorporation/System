@@ -231,9 +231,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         search_sf_wcf_form_no_button.addEventListener("click", () => {
             var data_value;
             for(a=1; a<wcf_data_list.content.length; a++){
-                for(b=0; b<pending.length; b++){
+                for(b=0; b<pending_sorting.length; b++){
                     if(search_sf_wcf_form_no.value == wcf_data_list.content[a][1]){
-                        if(search_sf_wcf_form_no.value == pending[b]){
+                        if(search_sf_wcf_form_no.value == pending_sorting[b]){
                             data_value = `
                             WCF #: ${wcf_data_list.content[a][1]}<br>
                             CLIENT: ${wcf_data_list.content[a][3]}<br>
