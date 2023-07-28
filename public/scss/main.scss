@@ -543,7 +543,9 @@ h5{
 #vehicle_maintenance_form,
 #safety_dashboard,
 #hr_dashboard,
+#employee_list_section,
 #attendance_form,
+#employee_form,
 #incident_documentation_form,
 #directorySection,
 #accountingSection,
@@ -577,7 +579,9 @@ h5{
 #incident_documentation_form,
 #directorySection,
 #accountingSection,
+#employee_list_section,
 #attendance_form,
+#employee_form,
 #incident_report_form,
 #settingsSection,
 #helpSection,
@@ -3061,12 +3065,19 @@ section h2
 // attendance form
 .hr form .form
 {
-    max-width: 250px !important;
+    max-width: 300px !important;
 }
 
 .hr form .hrf_form
 {
     display: flex;
+    gap: 20px;
+}
+
+.hr form .hrf_form_attendance
+{
+    display: grid;
+    grid-template-columns: .8fr 1.3fr 1.3fr 1.2fr 1.2fr 1.2fr;
     gap: 20px;
 }
 
@@ -3097,16 +3108,7 @@ section h2
 .hr form select,
 .hr form input
 {
-    font-size: 30px !important;
-}
-
-.hr form .search_hrf_result
-{
-    width: 100%;
-    padding: 20px;
-    background-color: white;
-    border: 3px solid cyan;
-    font-size: 30px !important;
+    font-size: 20px !important;
 }
 
 .hr form .search_input 
@@ -3192,7 +3194,7 @@ section h2
 
 .hr form .hrf_form_grid3
 {
-    display: grid !important;
+    display: grid;
     width: 100%;
     grid-template-columns: 28% 12% 12% 12% 12% 12% 12%;
 }
@@ -3221,6 +3223,12 @@ section h2
     display: flex;
     justify-content: end;
 }
+
+// .hr form .hrf_form_grid3,
+// .hr form .hide
+// {    
+//     display: none;
+// }
 
 .disabled {
     pointer-events: none;
@@ -3279,7 +3287,7 @@ section h2
 {
     max-width: 200px;
     background-color: cyan;
-    font-size: 30px;
+    font-size: 25px;
     font-weight: bold;
     color: black;
 }
@@ -3291,6 +3299,67 @@ section h2
     font-size: 30px;
     font-weight: bold;
     color: black;
+}
+
+.hr #employee_form i
+{
+    font-size: 20px;
+}
+
+.hr #new_employee_form,
+.hr #update_record_form,
+.hr #update_record_form #details
+{
+    display: none;
+}
+
+.hr .line1
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr 2fr 2fr 2fr;
+    gap: 20px;
+}
+
+.hr .line2
+{
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr 2fr 2fr;
+    gap: 20px;
+}
+
+.hr .line3
+{
+    display: grid;
+    grid-template-columns: 4fr 4fr 2fr;
+    gap: 20px;
+}
+
+.hr .line4
+{
+    display: grid;
+    grid-template-columns: 4fr 4fr 2fr;
+    gap: 20px;
+}
+
+.hr .line5
+{
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr 2fr;
+    gap: 20px;
+}
+
+.hr .line6
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 3fr 3fr;
+    gap: 20px;
+}
+
+.hr .line7
+{
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr 2fr 2fr;
+    gap: 20px;
 }
 
 

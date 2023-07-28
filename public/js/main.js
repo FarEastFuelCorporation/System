@@ -74,6 +74,23 @@ function time_decoder(timestamp) {
   return timeString;
 }
 
+function convertTo24HourFormat(timeStr) {
+  // Split the time string into hour, minute, and AM/PM components
+  const [time, amPm] = timeStr.split(' ');
+
+  // Convert hour and minute to integers
+  const [hour, minute] = time.split(':').map(Number);
+
+  // Convert to 24-hour format if PM
+  let hour24 = hour;
+  if (amPm.toLowerCase() === 'pm') {
+    hour24 = (hour + 12) % 24;
+  }
+
+  // Return the formatted time
+  return `${hour24.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+}
+
 function convertToOrdinal(cardinal) {
     var lastDigit = cardinal % 10;
     var lastTwoDigits = cardinal % 100;
@@ -126,7 +143,7 @@ function GetClientCategory(){
           <input type="hidden" name="supporting_document" value="Manifest Form #">
           Manifest Form #
       </label>
-      <input class="form-control" autocomplete="off" name="supporting_document_input" required type="text" placeholder="Enter Document #"><br>        
+      <input class="form-control" autocomplete="off" name="supporting_document_input" type="text" placeholder="Enter Document #"><br>        
       <label for="ptt_form_no">
           <i class="fa-solid fa-file-invoice"></i>
           Permit to Transport Form #
@@ -369,3 +386,18 @@ function generateExactTime() {
     return roundedTime;
   }
     
+  function formatDateToInputValue(dateString) {
+    // Convert the date string to a Date object
+    const dateObject = new Date(dateString);
+  
+    // Get the year, month, and day from the Date object
+    const year = dateObject.getFullYear();
+    const month = String(dateObject.getMonth() + 1).padStart(2, "0");
+    const day = String(dateObject.getDate()).padStart(2, "0");
+  
+    // Format the date in "YYYY-MM-DD" format
+    const formattedDate = `${year}-${month}-${day}`;
+  
+    return formattedDate;
+  }
+  

@@ -31,7 +31,19 @@
                 <li>
                     <a href="#">
                         <i class="fa-solid fa-person-falling-burst"></i>
+                        Employee List
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-person-falling-burst"></i>
                         Attendance Form
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-cog"></i>
+                        New Employee Form
                     </a>
                 </li>
                 <li>
@@ -160,32 +172,35 @@
                     </div> -->
                 </div>
             </section>
+            <!-- settings -->
+            <section class="hr" id="employee_list_section">
+                <h2>EMPLOYEE LIST</h2><br>
+                    <div class="card">
+                        <div class="list">
+                            <table>
+                                <thead>
+                                    <th>ID #</th>
+                                    <th>FULL NAME</th>
+                                    <th>DEPARTMENT</th>
+                                    <th>DESIGNATION</th>
+                                    <th>GENDER</th>
+                                    <th>CIVIL<br>STATUS</th>
+                                    <th>BIRTHDAY</th>
+                                    <th>MOBILE<br>NUMBER</th>
+                                </thead>
+                                <tbody id="employee_list">
+
+                                </tbody>
+                            </table>
+                            <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                        </div>
+                    </div><br>
+            </section>
             <!-- attendance_form -->
             <section class="hr" id="attendance_form">
                 <h2>ATTENDANCE FORM</h2><br>
                 <form action="" method="post">
                     <input type="hidden" name="user" id="user">
-                    <label for="id_no">
-                        <i class="fa-solid fa-id-card"></i>
-                        ID No.
-                    </label><br>
-                    <div class="hrf_form">
-                        <div>
-                            <div class="form">
-                                <input type="text" id="id_no" name="id_no" class="form-control" required autocomplete="off" placeholder="Input ID No."><br>
-                            </div>
-                        </div>
-                        <div>
-                            <button id="search_ltf_form_no_button" type="button" class="form-control">
-                                <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
-                            </button>
-                        </div>
-                        <div>
-                            <button id="clear_ltf_form_no_button" type="button" class="form-control">
-                                <i class="fa-solid fa-rectangle-xmark" style="color: #ffffff;"></i>
-                            </button>
-                        </div>
-                    </div>
                     <div class="hrf_form_grid">
                         <div class="wrapper">
                             <label for="employee_name">
@@ -198,36 +213,40 @@
                                 </div>
                                 <div class="icon"><i class="fas fa-search"></i></div>
                             </div>
-                        </div><br>
-                        <div>
+                        </div>
+                        <div class="wrapper">
                             <label for="department">
                                 <i class="fa-solid fa-id-card"></i>
                                 Department
                             </label><br>
-                            <input type="text" id="department" name="department" class="form-control" required autocomplete="off"><br>    
+                            <div class="search_input">
+                                <input type="text" name="department" id="department" autocomplete="off" class="form-control" required readonly>
+                            </div>
                         </div>
-                        <div>
+                        <div class="wrapper">
                             <label for="designation">
                                 <i class="fa-solid fa-id-card"></i>
                                 Designation
                             </label><br>
-                            <input type="text" id="designation" name="designation" class="form-control" required autocomplete="off"><br>    
+                            <div class="search_input">
+                                <input type="text" name="designation" id="designation" autocomplete="off" class="form-control" required readonly>
+                            </div>
                         </div>
-                    </div>
-                    <div class="hrf_form">
+                    </div><br>
+                    <div class="hrf_form_attendance">
                         <div>
-                            <label for="daily_rate">
+                            <label for="id_no">
                                 <i class="fa-solid fa-id-card"></i>
-                                Daily Rate
-                            </label><br>
-                            <input type="number" id="daily_rate" name="daily_rate" class="form-control form" required autocomplete="off"><br>    
+                                ID No.
+                            </label><br>    
+                            <input type="text" id="id_no" name="id_no" class="form-control" required autocomplete="off"><br>
                         </div>
                         <div>
                             <label for="time_in_sched">
                                 <i class="fa-solid fa-id-card"></i>
                                 Time In Schedule
                             </label><br>
-                            <input type="time" id="time_in_sched" name="time_in_sched" class="form-control form" required autocomplete="off"><br>    
+                            <input type="time" id="time_in_sched" name="time_in_sched" class="form-control form" required autocomplete="off" readonly><br>    
                         </div>
                         <div>
                             <label for="time_in_sched">
@@ -236,152 +255,662 @@
                             </label><br>
                             <input type="time" id="time_out_sched" name="time_out_sched" class="form-control form" required autocomplete="off"><br>    
                         </div>
+                        <div>
+                            <label for="daily_rate">
+                                <i class="fa-solid fa-id-card"></i>
+                                Daily Rate
+                            </label><br>
+                            <input type="number" id="daily_rate" name="daily_rate" class="form-control form" required autocomplete="off" readonly><br>    
+                        </div>
+                        <div>
+                            <label for="day_allowance">
+                                <i class="fa-solid fa-id-card"></i>
+                                Day Allowance
+                            </label><br>
+                            <input type="number" id="day_allowance" name="day_allowance" class="form-control form" required autocomplete="off" readonly><br>    
+                        </div>
+                        <div>
+                            <label for="night_allowance">
+                                <i class="fa-solid fa-id-card"></i>
+                                Night Allowance
+                            </label><br>
+                            <input type="number" id="night_allowance" name="night_allowance" class="form-control form" required autocomplete="off" readonly><br>    
+                        </div>    
                     </div>
                     <div class="hrf_form_grid3" id="days">
 
                     </div><br>
-                    <div class="net_salary">
-                        <div>
-                            <label for="net_salary">
-                                <i class="fa-solid fa-money-bill-wave"></i>
-                                Gross Salary
-                            </label><br>
-                            <input type="number" id="gross_salary" name="gross_salary" class="form-control form" required readonly autocomplete="off" value="0"><br>        
-                        </div>
-                    </div>
-                    <label for="net_salary">
-                        Additional
-                    </label>
-                    <div style="display: flex; justify-content: space-between;">
-                        <div class="hrf_form">
+                    <div class="hide">
+                        <div class="net_salary">
                             <div>
-                                <label for="sss_deduction">
-                                    <i class="fa-solid fa-address-card"></i>
-                                    SSS
-                                </label><br>
-                                <input type="number" id="sss_deduction" name="sss_deduction" class="form-control form" required autocomplete="off" value="0"><br>        
-                            </div>
-                            <div>
-                                <label for="pag_ibig_deduction">
-                                    <i class="fa-solid fa-address-card"></i>
-                                    Pag-ibig
-                                </label><br>
-                                <input type="number" id="pag_ibig_deduction" name="pag_ibig_deduction" class="form-control form" required autocomplete="off" value="0"><br>        
-                            </div>
-                            <div>
-                                <label for="philhealth_deduction">
-                                    <i class="fa-solid fa-address-card"></i>
-                                    Philhealth
-                                </label><br>
-                                <input type="number" id="philhealth_deduction" name="philhealth_deduction" class="form-control form" required autocomplete="off" value="0"><br>        
-                            </div>
-                            <div>
-                                <label for="cash_advance">
+                                <label for="net_salary">
                                     <i class="fa-solid fa-money-bill-wave"></i>
-                                    Cash Advance
+                                    Gross Salary
                                 </label><br>
-                                <input type="number" id="cash_advance" name="cash_advance" class="form-control form" required autocomplete="off" value="0"><br>        
+                                <input type="number" id="gross_salary" name="gross_salary" class="form-control form" required readonly autocomplete="off" value="0"><br>        
                             </div>
                         </div>
-                        <div>
-                            <label for="total_deductions">
-                                <i class="fa-solid fa-money-bill-wave"></i>
-                                Total Additional
-                            </label><br>
-                            <input type="number" id="total_deductions" name="total_deductions" class="form-control form" required readonly autocomplete="off" value="0"><br>        
-                        </div>
-                    </div>
-                    <label for="net_salary">
-                        Deductions
-                    </label>
-                    <div style="display: flex; justify-content: space-between;">
-                        <div class="hrf_form">
-                            <div>
-                                <label for="sss_deduction">
-                                    <i class="fa-solid fa-address-card"></i>
-                                    SSS
-                                </label><br>
-                                <input type="number" id="sss_deduction" name="sss_deduction" class="form-control form" required autocomplete="off" value="0"><br>        
+                        <label for="net_salary">
+                            Additional
+                        </label>
+                        <div style="display: flex; justify-content: space-between;">
+                            <div class="hrf_form">
+                                <div>
+                                    <label for="adjustment">
+                                        <i class="fa-solid fa-address-card"></i>
+                                        Adjustment
+                                    </label><br>
+                                    <input type="number" id="adjustment" name="adjustment" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                                <div>
+                                    <label for="cash_advance">
+                                        <i class="fa-solid fa-address-card"></i>
+                                        Cash Advance
+                                    </label><br>
+                                    <input type="number" id="cash_advance" name="cash_advance" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
                             </div>
                             <div>
-                                <label for="pag_ibig_deduction">
-                                    <i class="fa-solid fa-address-card"></i>
-                                    Pag-ibig
-                                </label><br>
-                                <input type="number" id="pag_ibig_deduction" name="pag_ibig_deduction" class="form-control form" required autocomplete="off" value="0"><br>        
-                            </div>
-                            <div>
-                                <label for="philhealth_deduction">
-                                    <i class="fa-solid fa-address-card"></i>
-                                    Philhealth
-                                </label><br>
-                                <input type="number" id="philhealth_deduction" name="philhealth_deduction" class="form-control form" required autocomplete="off" value="0"><br>        
-                            </div>
-                            <div>
-                                <label for="cash_advance">
+                                <label for="total_additional">
                                     <i class="fa-solid fa-money-bill-wave"></i>
-                                    Cash Advance
+                                    Total Additional
                                 </label><br>
-                                <input type="number" id="cash_advance" name="cash_advance" class="form-control form" required autocomplete="off" value="0"><br>        
+                                <input type="number" id="total_additional" name="total_additional" class="form-control form" required readonly autocomplete="off" value="0"><br>        
                             </div>
                         </div>
-                    </div>
-                    <div style="display: flex; justify-content: space-between;">
-                        <div class="hrf_form">
-                            <div>
-                                <label for="sss_deduction">
-                                    <i class="fa-solid fa-address-card"></i>
-                                    SSS
-                                </label><br>
-                                <input type="number" id="sss_deduction" name="sss_deduction" class="form-control form" required autocomplete="off" value="0"><br>        
+                        <label for="net_salary">
+                            Deductions
+                        </label>
+                        <div style="display: flex; justify-content: space-between;">
+                            <div class="hrf_form">
+                                <div>
+                                    <label for="sss_deduction">
+                                        <i class="fa-solid fa-address-card"></i>
+                                        SSS
+                                    </label><br>
+                                    <input type="number" id="sss_deduction" name="sss_deduction" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                                <div>
+                                    <label for="pag_ibig_deduction">
+                                        <i class="fa-solid fa-address-card"></i>
+                                        Pag-ibig
+                                    </label><br>
+                                    <input type="number" id="pag_ibig_deduction" name="pag_ibig_deduction" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                                <div>
+                                    <label for="philhealth_deduction">
+                                        <i class="fa-solid fa-address-card"></i>
+                                        Philhealth
+                                    </label><br>
+                                    <input type="number" id="philhealth_deduction" name="philhealth_deduction" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                                <div>
+                                    <label for="ca_deduction">
+                                        <i class="fa-solid fa-money-bill-wave"></i>
+                                        C/A Deduction
+                                    </label><br>
+                                    <input type="number" id="ca_deduction" name="ca_deduction" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <div class="hrf_form">
+                                <div>
+                                    <label for="uniform">
+                                        <i class="fa-solid fa-address-card"></i>
+                                        Uniform
+                                    </label><br>
+                                    <input type="number" id="uniform" name="uniform" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                                <div>
+                                    <label for="housing">
+                                        <i class="fa-solid fa-address-card"></i>
+                                        Housing
+                                    </label><br>
+                                    <input type="number" id="housing" name="housing" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                                <div>
+                                    <label for="st_peter">
+                                        <i class="fa-solid fa-address-card"></i>
+                                        St. Peter
+                                    </label><br>
+                                    <input type="number" id="st_peter" name="st_peter" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                                <div>
+                                    <label for="cash_not_return">
+                                        <i class="fa-solid fa-money-bill-wave"></i>
+                                        Cash Not Return
+                                    </label><br>
+                                    <input type="number" id="cash_not_return" name="cash_not_return" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <div class="hrf_form">
+                                <div>
+                                    <label for="hard_hat">
+                                        <i class="fa-solid fa-address-card"></i>
+                                        Hard Hat
+                                    </label><br>
+                                    <input type="number" id="hard_hat" name="hard_hat" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                                <div>
+                                    <label for="safety_shoes">
+                                        <i class="fa-solid fa-address-card"></i>
+                                        Safety Shoes
+                                    </label><br>
+                                    <input type="number" id="safety_shoes" name="safety_shoes" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                                <div>
+                                    <label for="over_meals">
+                                        <i class="fa-solid fa-address-card"></i>
+                                        Over Meals
+                                    </label><br>
+                                    <input type="number" id="over_meals" name="over_meals" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                                <div>
+                                    <label for="bereavement_assistance">
+                                        <i class="fa-solid fa-money-bill-wave"></i>
+                                        Beravement Assistance
+                                    </label><br>
+                                    <input type="number" id="bereavement_assistance" name="bereavement_assistance" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
                             </div>
                             <div>
-                                <label for="pag_ibig_deduction">
-                                    <i class="fa-solid fa-address-card"></i>
-                                    Pag-ibig
-                                </label><br>
-                                <input type="number" id="pag_ibig_deduction" name="pag_ibig_deduction" class="form-control form" required autocomplete="off" value="0"><br>        
-                            </div>
-                            <div>
-                                <label for="philhealth_deduction">
-                                    <i class="fa-solid fa-address-card"></i>
-                                    Philhealth
-                                </label><br>
-                                <input type="number" id="philhealth_deduction" name="philhealth_deduction" class="form-control form" required autocomplete="off" value="0"><br>        
-                            </div>
-                            <div>
-                                <label for="cash_advance">
+                                <label for="total_deductions">
                                     <i class="fa-solid fa-money-bill-wave"></i>
-                                    Cash Advance
+                                    Total Deductions
                                 </label><br>
-                                <input type="number" id="cash_advance" name="cash_advance" class="form-control form" required autocomplete="off" value="0"><br>        
+                                <input type="number" id="total_deductions" name="total_deductions" class="form-control form" required readonly autocomplete="off" value="0"><br>        
                             </div>
                         </div>
-                        <div>
-                            <label for="total_deductions">
-                                <i class="fa-solid fa-money-bill-wave"></i>
-                                Total Deductions
-                            </label><br>
-                            <input type="number" id="total_deductions" name="total_deductions" class="form-control form" required readonly autocomplete="off" value="0"><br>        
+                        <div class="net_salary">
+                            <div>
+                                <label for="net_salary">
+                                    <i class="fa-solid fa-money-bill-wave"></i>
+                                    Net Salary
+                                </label><br>
+                                <input type="number" id="net_salary" name="net_salary" class="form-control form" required readonly autocomplete="off" value="0"><br>        
+                            </div>
                         </div>
+                        <div class="buttons">
+                            <button type="submit" id="submit" class="form-control" >
+                                Submit
+                            </button>
+                            <button type="reset" id="reset" class="form-control" >
+                                Clear
+                            </button>
+                        </div><br>
                     </div>
-                    <div class="net_salary">
-                        <div>
-                            <label for="net_salary">
-                                <i class="fa-solid fa-money-bill-wave"></i>
-                                Net Salary
-                            </label><br>
-                            <input type="number" id="net_salary" name="net_salary" class="form-control form" required readonly autocomplete="off" value="0"><br>        
+                </form>
+            </section>
+            <!-- employee_form -->
+            <section class="hr" id="employee_form">
+                <h2>EMPLOYEE FORM</h2><br>
+                <label class="d-flex gap-3">
+                    <button type="button" id="new_employee_button" class="form-control fw-bold fs-3 bg-success text-white">
+                        NEW EMPLOYEE
+                    </button>
+                    <button type="button" id="update_record_button" class="form-control fw-bold fs-3">
+                        UPDATE RECORD
+                    </button>
+                    <button type="button" id="resign_button" class="form-control fw-bold fs-3 bg-danger text-white">
+                        RESIGN
+                    </button>
+                </label><br>
+                <form id="new_employee_form" action="https://script.google.com/macros/s/AKfycbwG1ZMNTWOo02GyjOHjybPyNTqmHnUjK6AP5Kd6sg4LzIqIsK26R5ARrjXOWa6HoSSCqQ/exec" method="post">
+                    <label for="employee_id">
+                        <b>Employee ID</b>
+                        <div  class="d-flex gap-3">
+                            <div>
+                                <input type="text" name="employee_id" id="employee_id" class="form-control" required autocomplete="off" autocomplete="off">
+                            </div>
+                            <div>
+                                <button id="search_employee_id_button" type="button" class="form-control">
+                                    <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="buttons">
-                        <button type="submit" id="submit" class="form-control" >
+                    </label><br><br>
+                    <div id="details">
+                        <label><b>Personal Information</b></label><br>
+                        <div class="line1">
+                            <label for="gender">
+                                Gender
+                                <select name="gender" id="gender" class="form-control">
+                                    <option value="">Choose</option>
+                                    <option value="MALE">MALE</option>
+                                    <option value="FEMALE">FEMALE</option>
+                                </select>
+                            </label>
+                            <label for="civil_status">
+                                Civil Status
+                                <select name="civil_status" id="civil_status" class="form-control">
+                                    <option value="">Choose</option>
+                                    <option value="SINGLE">SINGLE</option>
+                                    <option value="MARRIED">MARRIED</option>
+                                    <option value="SEPARATED">SEPARATED</option>
+                                </select>
+                            </label>
+                            <label for="first_name">
+                                First Name
+                                <input type="text" name="first_name" id="first_name" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="middle_name">
+                                Middle Name
+                                <input type="text" name="middle_name" id="middle_name" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="last_name">
+                                Last Name
+                                <input type="text" name="last_name" id="last_name" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="spouse_name" id="spouse_name_container">
+                                Spouse Name
+                                <input type="text" name="spouse_name" id="spouse_name" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="affix" id="affix_container">
+                                Affix
+                                <input type="text" name="affix" id="affix" class="form-control" required autocomplete="off" >
+                            </label>
+                        </div><br>
+                        <div class="line2">
+                            <label for="birthday">
+                                Birthday
+                                <input type="date" name="birthday" id="birthday" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="birth_place">
+                                Birth Place
+                                <input type="text" name="birth_place" id="birth_place" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="mobile_number">
+                                Mobile Number
+                                <input type="text" name="mobile_number" id="mobile_number" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="email_address">
+                                Email Address
+                                <input type="text" name="email_address" id="email_address" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="nationality">
+                                Nationality
+                                <input type="text" name="nationality" id="nationality" class="form-control" required autocomplete="off">
+                            </label>    
+                        </div><br>
+                        <div class="line3">
+                            <label for="address">
+                                Address
+                                <input type="text" name="address" id="address" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="other_address">
+                                Other Address
+                                <input type="text" name="other_address" id="other_address" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="mothers_maiden_name">
+                                Mother's Maiden Name
+                                <input type="text" name="mothers_maiden_name" id="mothers_maiden_name" class="form-control" required autocomplete="off">
+                            </label>    
+                        </div><br><br>
+                        <label><b>Educational Background</b></label><br>
+                        <div class="line4">
+                            <label for="educational_attainment">
+                                Educational Attainment
+                                <input type="text" name="educational_attainment" id="educational_attainment" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="course">
+                                Course
+                                <input type="text" name="course" id="course" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="year">
+                                Year
+                                <input type="text" name="year" id="year" class="form-control" required autocomplete="off">
+                            </label>
+                        </div><br><br>
+                        <label><b>ID Numbers</b></label><br>
+                        <div class="line5">
+                            <label for="tin_no">
+                                Tin No.
+                                <input type="text" name="tin_no" id="tin_no" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="sss_no">
+                                SSS/GSIS No.
+                                <input type="text" name="sss_no" id="sss_no" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="philhealth_no">
+                                Philhealth No.
+                                <input type="text" name="philhealth_no" id="philhealth_no" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="pag_ibig_no">
+                                Pag-ibig No.
+                                <input type="text" name="pag_ibig_no" id="pag_ibig_no" class="form-control" required autocomplete="off">
+                            </label>
+                        </div>
+                        <div class="line5">
+                            <label for="drivers_license_no">
+                                Driver's License No.
+                                <input type="text" name="drivers_license_no" id="drivers_license_no" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="nbi_no">
+                                NBI No.
+                                <input type="text" name="nbi_no" id="nbi_no" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="police_clearance_no">
+                                Police Clearance No.
+                                <input type="text" name="police_clearance_no" id="police_clearance_no" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="cedula_no">
+                                Cedula No.
+                                <input type="text" name="cedula_no" id="cedula_no" class="form-control" required autocomplete="off">
+                            </label>
+                        </div><br><br>
+                        <label><b>Employment Details</b></label><br>
+                        <div class="line6">
+                            <label for="date_hire">
+                                Date Hire
+                                <input type="date" name="date_hire" id="date_hire" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="employee_type">
+                                Employee Type
+                                <select name="employee_type" id="employee_type" class="form-control">
+                                    <option value="">Choose</option>
+                                    <option value="REGULAR">REGULAR</option>
+                                    <option value="PROJECT BASED">PROJECT BASED</option>
+                                    <option value="SUB CONTRACTOR">SUB CONTRACTOR</option>
+                                </select>                    
+                            </label>
+                            <label for="payroll_type">
+                                Payroll Type
+                                <select name="payroll_type" id="payroll_type" class="form-control">
+                                    <option value="">Choose</option>
+                                    <option value="WEEKLY">WEEKLY</option>
+                                    <option value="MONTHLY">MONTHLY</option>
+                                </select>                    
+                            </label>
+                            <label for="employee_status">
+                                Employee Status
+                                <select name="employee_status" id="employee_status" class="form-control">
+                                    <option value="">Choose</option>
+                                    <option value="ACTIVE">ACTIVE</option>
+                                    <option value="INACTIVE">INACTIVE</option>
+                                </select>                    
+                            </label>
+                            <label for="department">
+                                Department
+                                <select name="department" id="department" class="form-control">
+                                    <option value="">Choose</option>
+                                    <option value="LOGISTICS DEPARTMENT">LOGISTICS DEPARTMENT</option>
+                                    <option value="CONSTRUCTION DEPARTMENT">CONSTRUCTION DEPARTMENT</option>
+                                    <option value="TREATMENT DEPARTMENT">TREATMENT DEPARTMENT</option>
+                                    <option value="ADMIN DEPARTMENT">ADMIN DEPARTMENT</option>
+                                    <option value="WAREHOUSE AND RENDERING DEPARTMENT">WAREHOUSE AND RENDERING DEPARTMENT</option>
+                                    <option value="FACILITY MANAGEMENT SERVICES DEPARTMENT">FACILITY MANAGEMENT SERVICES DEPARTMENT</option>
+                                </select>                    
+                            </label>
+                            <label for="designation">
+                                Designation
+                                <input type="text" name="designation" id="designation" class="form-control" required autocomplete="off" value="">
+                            </label>
+                        </div>
+                        <div class="line7">
+                            <label for="rate">
+                                Daily Rate
+                                <input type="number" name="rate" id="rate" class="form-control" required autocomplete="off" value="">
+                            </label>
+                            <label for="day_allowance">
+                                Day Allowance
+                                <input type="text" name="day_allowance" id="day_allowance" class="form-control" required autocomplete="off" value="">
+                            </label>
+                            <label for="night_allowance">
+                                Day Allowance
+                                <input type="text" name="night_allowance" id="night_allowance" class="form-control" required autocomplete="off" value="">
+                            </label>
+                            <label for="time_in_schedule">
+                                Time In Schedule
+                                <input type="time" name="time_in_schedule" id="time_in_schedule" class="form-control" required autocomplete="off" value="">
+                            </label>
+                            <label for="time_out_schedule">
+                                Time Out Schedule
+                                <input type="time" name="time_out_schedule" id="time_out_schedule" class="form-control" required autocomplete="off" value="">
+                            </label>
+                        </div><br>
+                        <label for="date_resignation" class="d-none">
+                            Date of Resignation
+                            <input type="text" name="date_resignation" id="date_resignation" class="form-control" required autocomplete="off" value="">
+                        </label>
+                        <label for="reason_resignation" class="d-none">
+                            Reason of Resignation
+                            <input type="text" name="reason_resignation" id="reason_resignation" class="form-control" required autocomplete="off" value="">
+                        </label>
+                        <br><br>
+                        <button type="submit" class="form-control">
                             Submit
-                        </button>
-                        <button type="reset" id="reset" class="form-control" >
-                            Clear
-                        </button>
-                    </div><br>
+                        </button>    
+                    </div>
+                </form>
+                <form id="update_record_form" action="https://script.google.com/macros/s/AKfycbwG1ZMNTWOo02GyjOHjybPyNTqmHnUjK6AP5Kd6sg4LzIqIsK26R5ARrjXOWa6HoSSCqQ/exec" method="post">
+                    <label for="employee_id">
+                        <b>Employee ID</b>
+                        <div  class="d-flex gap-3">
+                            <div>
+                                <input type="text" name="employee_id" id="employee_id" class="form-control" required autocomplete="off" autocomplete="off">
+                            </div>
+                            <div>
+                                <button id="search_employee_id_button" type="button" class="form-control">
+                                    <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </label><br><br>
+                    <div id="details">
+                        <label><b>Personal Information</b></label><br>
+                        <div class="line1">
+                            <label for="gender">
+                                Gender
+                                <select name="gender" id="gender" class="form-control">
+                                    <option value="">Choose</option>
+                                    <option value="MALE">MALE</option>
+                                    <option value="FEMALE">FEMALE</option>
+                                </select>
+                            </label>
+                            <label for="civil_status">
+                                Civil Status
+                                <select name="civil_status" id="civil_status" class="form-control">
+                                    <option value="">Choose</option>
+                                    <option value="SINGLE">SINGLE</option>
+                                    <option value="MARRIED">MARRIED</option>
+                                    <option value="SEPARATED">SEPARATED</option>
+                                </select>
+                            </label>
+                            <label for="first_name">
+                                First Name
+                                <input type="text" name="first_name" id="first_name" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="middle_name">
+                                Middle Name
+                                <input type="text" name="middle_name" id="middle_name" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="last_name">
+                                Last Name
+                                <input type="text" name="last_name" id="last_name" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="spouse_name" id="spouse_name_container">
+                                Spouse Name
+                                <input type="text" name="spouse_name" id="spouse_name" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="affix" id="affix_container">
+                                Affix
+                                <input type="text" name="affix" id="affix" class="form-control" required autocomplete="off" >
+                            </label>
+                        </div><br>
+                        <div class="line2">
+                            <label for="birthday">
+                                Birthday
+                                <input type="date" name="birthday" id="birthday" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="birth_place">
+                                Birth Place
+                                <input type="text" name="birth_place" id="birth_place" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="mobile_number">
+                                Mobile Number
+                                <input type="text" name="mobile_number" id="mobile_number" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="email_address">
+                                Email Address
+                                <input type="text" name="email_address" id="email_address" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="nationality">
+                                Nationality
+                                <input type="text" name="nationality" id="nationality" class="form-control" required autocomplete="off">
+                            </label>    
+                        </div><br>
+                        <div class="line3">
+                            <label for="address">
+                                Address
+                                <input type="text" name="address" id="address" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="other_address">
+                                Other Address
+                                <input type="text" name="other_address" id="other_address" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="mothers_maiden_name">
+                                Mother's Maiden Name
+                                <input type="text" name="mothers_maiden_name" id="mothers_maiden_name" class="form-control" required autocomplete="off">
+                            </label>    
+                        </div><br><br>
+                        <label><b>Educational Background</b></label><br>
+                        <div class="line4">
+                            <label for="educational_attainment">
+                                Educational Attainment
+                                <input type="text" name="educational_attainment" id="educational_attainment" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="course">
+                                Course
+                                <input type="text" name="course" id="course" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="year">
+                                Year
+                                <input type="text" name="year" id="year" class="form-control" required autocomplete="off">
+                            </label>
+                        </div><br><br>
+                        <label><b>ID Numbers</b></label><br>
+                        <div class="line5">
+                            <label for="tin_no">
+                                Tin No.
+                                <input type="text" name="tin_no" id="tin_no" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="sss_no">
+                                SSS/GSIS No.
+                                <input type="text" name="sss_no" id="sss_no" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="philhealth_no">
+                                Philhealth No.
+                                <input type="text" name="philhealth_no" id="philhealth_no" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="pag_ibig_no">
+                                Pag-ibig No.
+                                <input type="text" name="pag_ibig_no" id="pag_ibig_no" class="form-control" required autocomplete="off">
+                            </label>
+                        </div>
+                        <div class="line5">
+                            <label for="drivers_license_no">
+                                Driver's License No.
+                                <input type="text" name="drivers_license_no" id="drivers_license_no" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="nbi_no">
+                                NBI No.
+                                <input type="text" name="nbi_no" id="nbi_no" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="police_clearance_no">
+                                Police Clearance No.
+                                <input type="text" name="police_clearance_no" id="police_clearance_no" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="cedula_no">
+                                Cedula No.
+                                <input type="text" name="cedula_no" id="cedula_no" class="form-control" required autocomplete="off">
+                            </label>
+                        </div><br><br>
+                        <label><b>Employment Details</b></label><br>
+                        <div class="line6">
+                            <label for="date_hire">
+                                Date Hire
+                                <input type="date" name="date_hire" id="date_hire" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="employee_type">
+                                Employee Type
+                                <select name="employee_type" id="employee_type" class="form-control">
+                                    <option value="">Choose</option>
+                                    <option value="REGULAR">REGULAR</option>
+                                    <option value="PROJECT BASED">PROJECT BASED</option>
+                                    <option value="SUB CONTRACTOR">SUB CONTRACTOR</option>
+                                </select>                    
+                            </label>
+                            <label for="payroll_type">
+                                Payroll Type
+                                <select name="payroll_type" id="payroll_type" class="form-control">
+                                    <option value="">Choose</option>
+                                    <option value="WEEKLY">WEEKLY</option>
+                                    <option value="MONTHLY">MONTHLY</option>
+                                </select>                    
+                            </label>
+                            <label for="employee_status">
+                                Employee Status
+                                <select name="employee_status" id="employee_status" class="form-control">
+                                    <option value="">Choose</option>
+                                    <option value="ACTIVE">ACTIVE</option>
+                                    <option value="INACTIVE">INACTIVE</option>
+                                </select>                    
+                            </label>
+                            <label for="department">
+                                Department
+                                <select name="department" id="department" class="form-control">
+                                    <option value="">Choose</option>
+                                    <option value="LOGISTICS DEPARTMENT">LOGISTICS DEPARTMENT</option>
+                                    <option value="CONSTRUCTION DEPARTMENT">CONSTRUCTION DEPARTMENT</option>
+                                    <option value="TREATMENT DEPARTMENT">TREATMENT DEPARTMENT</option>
+                                    <option value="ADMIN DEPARTMENT">ADMIN DEPARTMENT</option>
+                                    <option value="WAREHOUSE AND RENDERING DEPARTMENT">WAREHOUSE AND RENDERING DEPARTMENT</option>
+                                    <option value="FACILITY MANAGEMENT SERVICES DEPARTMENT">FACILITY MANAGEMENT SERVICES DEPARTMENT</option>
+                                </select>                    
+                            </label>
+                            <label for="designation">
+                                Designation
+                                <input type="text" name="designation" id="designation" class="form-control" required autocomplete="off" value="">
+                            </label>
+                        </div>
+                        <div class="line7">
+                            <label for="rate">
+                                Daily Rate
+                                <input type="number" name="rate" id="rate" class="form-control" required autocomplete="off" value="">
+                            </label>
+                            <label for="day_allowance">
+                                Day Allowance
+                                <input type="text" name="day_allowance" id="day_allowance" class="form-control" required autocomplete="off" value="">
+                            </label>
+                            <label for="night_allowance">
+                                Day Allowance
+                                <input type="text" name="night_allowance" id="night_allowance" class="form-control" required autocomplete="off" value="">
+                            </label>
+                            <label for="time_in_schedule">
+                                Time In Schedule
+                                <input type="time" name="time_in_schedule" id="time_in_schedule" class="form-control" required autocomplete="off" value="">
+                            </label>
+                            <label for="time_out_schedule">
+                                Time Out Schedule
+                                <input type="time" name="time_out_schedule" id="time_out_schedule" class="form-control" required autocomplete="off" value="">
+                            </label>
+                        </div><br>
+                        <label for="date_resignation" class="d-none">
+                            Date of Resignation
+                            <input type="text" name="date_resignation" id="date_resignation" class="form-control" required autocomplete="off" value="">
+                        </label>
+                        <label for="reason_resignation" class="d-none">
+                            Reason of Resignation
+                            <input type="text" name="reason_resignation" id="reason_resignation" class="form-control" required autocomplete="off" value="">
+                        </label>
+                        <br><br>
+                        <button type="submit" class="form-control">
+                            Submit
+                        </button>    
+                    </div>
                 </form>
             </section>
             <!-- settings -->
