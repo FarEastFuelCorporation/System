@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td>${employee_data_list.content[b][32]}</td>
                         <td>${employee_data_list.content[b][33]}</td>
                         <td>${employee_data_list.content[b][7]}</td>
-                        <td>${employee_data_list.content[b][8]}</td>
+                        <td>${employee_data_list.content[b][29]}</td>
                         <td>${date_decoder(employee_data_list.content[b][9])}</td>
                         <td>${employee_data_list.content[b][11]}</td>
                     </tr>
@@ -1556,7 +1556,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 update_nbi_no.value = employee_data_list.content[a][25];
                 update_police_clearance_no.value = employee_data_list.content[a][26];
                 update_cedula_no.value = employee_data_list.content[a][27];
-                update_date_hire.value = employee_data_list.content[a][28];
+                update_date_hire.value = formatDateToInputValue(employee_data_list.content[a][28]);
                 update_employee_type.value = employee_data_list.content[a][29];
                 update_payroll_type.value = employee_data_list.content[a][30];
                 update_employee_status.value = employee_data_list.content[a][31];
@@ -1565,10 +1565,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                 update_rate.value = employee_data_list.content[a][34];
                 update_day_allowance.value = employee_data_list.content[a][35];
                 update_night_allowance.value = employee_data_list.content[a][36];
-                update_time_in_schedule.value = employee_data_list.content[a][37];
-                update_time_out_schedule.value = employee_data_list.content[a][38];
+                update_time_in_schedule.value = formatTimeToInputValue(employee_data_list.content[a][37]);
+                update_time_out_schedule.value = formatTimeToInputValue(employee_data_list.content[a][38]);
                 update_date_resignation.value = employee_data_list.content[a][39];
-                reason_resignation.value = employee_data_list.content[a][40];        
+                reason_resignation.value = formatDateToInputValue(employee_data_list.content[a][40]);        
             }
             update_details.style.display = "block";
             if(update_gender.value == "MALE"){

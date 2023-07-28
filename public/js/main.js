@@ -70,7 +70,7 @@ function time_decoder(timestamp) {
   }
   // Format the time string
   const timeString = hours.toString().padStart(2, '0') + ':' + minutes_set.toString().padStart(2, '0') + ' ' + period;
-
+  console.log(timeString)
   return timeString;
 }
 
@@ -400,4 +400,21 @@ function generateExactTime() {
   
     return formattedDate;
   }
+  
+  function formatTimeToInputValue(timeString) {
+    // Extract the hours, minutes, and period (AM/PM) from the time string
+    const [time, period] = timeString.split(" ");
+    const [hours, minutes] = time.split(":");
+  
+    // Convert hours to 24-hour format
+    let formattedHours = parseInt(hours, 10);
+    if (period.toLowerCase() === "pm") {
+      formattedHours += 12;
+    }
+  
+    // Format the time in "HH:mm" format
+    const formattedTime = `${String(formattedHours).padStart(2, "0")}:${minutes}`;
+  
+    return formattedTime;
+  }  
   
