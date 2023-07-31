@@ -2082,6 +2082,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const update_record_button = employee_form.querySelector("#update_record_button");
         const resign_button = employee_form.querySelector("#resign_button");
         const new_employee_form = employee_form.querySelector("#new_employee_form");
+        const new_employee_id = new_employee_form.querySelector("#employee_id");
         const update_record_form = employee_form.querySelector("#update_record_form");
         const update_employee_id = update_record_form.querySelector("#employee_id");
         const update_search_employee_id_button = update_record_form.querySelector("#search_employee_id_button");
@@ -2223,7 +2224,7 @@ document.addEventListener('DOMContentLoaded', async function() {
           }
         }
         last_three_digit += 1;
-        employee_id.value = `${lastTwoDigitsOfYear}${String(last_three_digit).padStart(3, '0')}`;        
+        new_employee_id.value = `${lastTwoDigitsOfYear}${String(last_three_digit).padStart(3, '0')}`;        
 
     } catch (error) {
         console.error('Error fetching data:', error);
