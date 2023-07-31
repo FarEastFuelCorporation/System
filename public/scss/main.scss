@@ -3237,6 +3237,14 @@ section h2
     cursor: default; /* Set the cursor to the default (usually an arrow) to indicate it's not clickable */
 }
 
+input:disabled {
+    /* Add your styles here for disabled input fields */
+    background-color: #fafafa !important; /* For example, changing the background color */
+    color: black; /* Changing the text color */
+    cursor: not-allowed; /* Changing the cursor to indicate it's not clickable */
+    /* Add any other styles you want to apply to disabled inputs */
+  }
+
 /* Hide the default checkbox */
 .hr form .custom-checkbox input[type="checkbox"] {
     display: none;
@@ -3245,7 +3253,7 @@ section h2
 .hr form .custom-checkbox{
     display: flex;
     justify-content: center;
-    padding: 10px;
+    padding: 10px 5px;
 }
 
 /* Style the custom checkbox */
@@ -3257,7 +3265,6 @@ section h2
     border: 2px solid #555;
     border-radius: 4px;
     vertical-align: middle;
-    margin-right: 10px; /* Space between checkbox and label */
 }
 
 /* Style the custom checkbox when checked */
@@ -3360,6 +3367,140 @@ section h2
     display: grid;
     grid-template-columns: 2fr 2fr 2fr 2fr 2fr;
     gap: 20px;
+}
+
+.hr #payroll_button
+{
+    position: absolute;
+    z-index: 2;
+    top: 20px;
+    right: 50px;
+    width: 50px !important;
+    font-size: 40px;
+    padding: 5px;
+    color: blue;
+    border: 3px solid cyan;
+}
+
+.hr #payroll_tab
+{
+    position: absolute;
+    z-index: 2;
+    top: 100px;
+    right: 20px;
+    width: calc(100vw - 300px);
+    background-color: white;
+    padding: 20px;
+    border: 3px solid cyan;
+    border-radius: 10px;
+    overflow: scroll;
+    display: none;
+}
+
+.hr #generate_payslip_button
+{
+    max-width: 300px !important;
+}
+
+#payroll_form
+{
+    width: 1344px;
+    height: 816px;
+    border: 3px solid black;
+    background-color: white;
+}
+
+#payroll_form .payroll
+{
+    margin: 20px 20px 20px 70px;
+    width: calc(100% - 90px);
+    height: 775px;
+    border: 3px solid black;
+    padding: 5px;
+}
+
+#payroll_form .bold
+{
+    font-weight: bold;
+}
+
+#payroll_form h1
+{
+    font-size: 16px;
+    margin: 0;
+}
+
+#payroll_form h2
+{
+    font-size: 12px;
+    margin: 0;
+}
+
+#payroll_form h3
+{
+    font-size: 11px;
+    margin: 0;
+}
+
+#payroll_form h4
+{
+    font-size: 10px;
+    margin: 0;
+}
+                                
+.border-top-bottom{
+    border-top: 1px solid black !important;
+    border-bottom: 1px solid black !important;
+}
+
+.border-top{
+    border-top: 1px solid black !important;
+}
+
+.border-bottom{
+    border-bottom: 1px solid black !important;
+}
+
+.border-left{
+    border-left: 1px solid black !important;
+}
+
+.border-right{
+    border-right: 1px solid black !important;
+}
+
+#payroll_form .payroll img
+{
+    height: 25px;
+}
+
+#payroll_form .payroll .header
+{
+    display: flex;
+}
+
+#payroll_form .payroll .header .header_title
+{
+    padding-left: 5px;
+}
+
+#payroll_form .payroll table
+{
+
+}
+
+#payroll_form .payroll table thead th,
+#payroll_form .payroll table tbody td
+{
+    color: black !important;
+    font-size: 8px !important;
+    border: 1px solid black;
+    padding: 0 !important;
+}
+
+#payroll_form .payroll table tbody td
+{
+    height: 20px;
 }
 
 
