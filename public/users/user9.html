@@ -201,7 +201,7 @@
             <!-- attendance_form -->
             <section class="hr" id="attendance_form">
                 <h2>ATTENDANCE FORM</h2><br>
-                <form action="https://script.google.com/macros/s/AKfycbwIRRKPp56UHyuPu4tKTGz28SUxFeqheZivjVeuyEy6AXxJ0YUIn-sL6RNNGb4i_m8xoA/exec" method="post">
+                <form action="https://script.google.com/macros/s/AKfycbyYvzp3MnrYpjspzSvZltbIAA9_aQ9V7e3nobJXxYYIUZUYT19ufYoQgSRqnqt_vy-Jgw/exec" method="post">
                     <input type="hidden" name="user" id="user">
                     <input type="hidden" name="number_of_days" id="number_of_days" value="7">
                     <div class="hrf_form_grid">
@@ -360,16 +360,30 @@
                                     <input type="number" id="philhealth_deduction" name="philhealth_deduction" class="form-control form" required autocomplete="off" value="0"><br>        
                                 </div>
                                 <div>
+                                    <label for="sss_loan">
+                                        <i class="fa-solid fa-money-bill-wave"></i>
+                                        SSS Loan
+                                    </label><br>
+                                    <input type="number" id="sss_loan" name="sss_loan" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                                <div>
+                                    <label for="pag_ibig_loan">
+                                        <i class="fa-solid fa-money-bill-wave"></i>
+                                        Pag-ibig Loan
+                                    </label><br>
+                                    <input type="number" id="pag_ibig_loan" name="pag_ibig_loan" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <div class="hrf_form">
+                                <div>
                                     <label for="ca_deduction">
                                         <i class="fa-solid fa-money-bill-wave"></i>
                                         C/A Deduction
                                     </label><br>
                                     <input type="number" id="ca_deduction" name="ca_deduction" class="form-control form" required autocomplete="off" value="0"><br>        
                                 </div>
-                            </div>
-                        </div>
-                        <div style="display: flex; justify-content: space-between;">
-                            <div class="hrf_form">
                                 <div>
                                     <label for="uniform">
                                         <i class="fa-solid fa-address-card"></i>
@@ -466,594 +480,43 @@
                     <form action="">
                         <input type="hidden" name="user" id="user">
                         <div class="d-flex">
-                            <button class="form-control" id="generate_payslip_button" onclick="convertToPDF()">
+                            <div>
+                                <label>
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                    Year
+                                </label>
+                                <input type="number" id="search_year" name="search_year" class="form-control form" required autocomplete="off" placeholder="Input Year">
+                            </div>
+                            <div>
+                                <label>
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                    Week Number
+                                </label>
+                                <input type="number" id="search_week_number" name="search_week_number" class="form-control form" required autocomplete="off" placeholder="Input Week Number"><br>
+                            </div>
+                            <div>
+                                <label>
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                    Pay Date
+                                </label>
+                                <input type="date" id="pay_date" name="pay_date" class="form-control form" required autocomplete="off"><br>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="d-flex">
+                            <button type="button" class="form-control" id="generate_payslip_button">
                                 Generate Payslip
                             </button>
-                            <button class="form-control" id="generate_payslip_button" onclick="convertToPDF2()">
-                                Generate Payroll
+                            <button class="form-control" id="download_payslip_button" onclick="convertToPDF()">
+                                Download Payslip
                             </button>
+                            <!-- <button class="form-control" id="generate_payslip_button" onclick="convertToPDF2()">
+                                Generate Payroll
+                            </button> -->
                         </div>
-                        <div id="payslip_form">
-                            <div class="payslip">
-                                <div class="summary">
-                                    <div class="header">
-                                        <img src="../images/logo.png" alt="">
-                                        <div class="header_title">
-                                            <h2 class="bold">FAR EAST FUEL CORPORATION</h2>
-                                            <h3>#888 Purok 5, Irabagon St. Brgy. Anyatam, San Ildefonso, Bulacan, 3010</h3>
-                                        </div>
-                                    </div>
-                                    <div class="employee_details">
-                                        <div class="grid1">
-                                            <div class="d-flex">
-                                                <h4 class="bold">Name:</h4><h4 class="ps-1">SALAYSAY, ELNARD SABANGAN </h4>
-                                            </div>
-                                            <div class="d-flex">
-                                                <h4 class="bold">Department:</h4><h4 class="ps-1">ADMIN DEPARTMENT</h4>
-                                            </div>
-                                            <div class="d-flex">
-                                                <h4 class="bold">Designation:</h4><h4 class="ps-1">MESSENGER/UTILITY</h4>
-                                            </div>
-                                            <div class="d-flex">
-                                                <h4 class="bold">ID No:</h4><h4 class="ps-1">22057</h4>
-                                            </div>
-                                            <div class="d-flex">
-                                                <h4 class="bold">Pay Period:</h4><h4 class="ps-1">July 17, 2023-July 23, 2023</h4>
-                                            </div>
-                                            <div class="d-flex">
-                                                <h4 class="bold">Pay Date:</h4><h4 class="ps-1">December 29, 2023</h4>
-                                            </div>
-                                            <div class="d-flex">
-                                                <h4 class="bold">Tin No:</h4><h4 class="ps-1">311-038-999-000</h4>
-                                            </div>
-                                            <div class="d-flex">
-                                                <h4 class="bold">Tax Code:</h4><h4 class="ps-1">M</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="summary_details_header">
-                                        <h3 class="bold">BREAKDOWN</h3>
-                                    </div>
-                                    <div class="summary_details_details">
-                                        <div class="vertical-table">
-                                            <table>
-                                            <tr class="bold">
-                                                <th>Day</th>
-                                                <td>Monday</td>
-                                                <td>Tuesday</td>
-                                                <td>Wednesday</td>
-                                                <td>Thursday</td>
-                                                <td>Friday</td>
-                                                <td>Saturday</td>
-                                                <td>Sunday</td>
-                                                <td>Total</td>
-                                            </tr>
-                                            <tr id="payslip_date">
-                                                <th>Date</th>
-                                                <td>Data 1</td>
-                                                <td>Data 2</td>
-                                                <td>Data 3</td>
-                                                <td>Data 4</td>
-                                                <td>Data 5</td>
-                                                <td>Data 6</td>
-                                                <td>Data 7</td>
-                                                <td>Data 8</td>
-                                            </tr>
-                                            <tr id="payslip_type_of_day">
-                                                <th>Type of Day</th>
-                                                <td>Data 1</td>
-                                                <td>Data 2</td>
-                                                <td>Data 3</td>
-                                                <td>Data 4</td>
-                                                <td>Data 5</td>
-                                                <td>Data 6</td>
-                                                <td>Data 7</td>
-                                                <td>Data 8</td>
-                                            </tr>
-                                            <tr id="payslip_time_in_time_out">
-                                                <th>Time IN/Time OUT</th>
-                                                <td>Data 1</td>
-                                                <td>Data 2</td>
-                                                <td>Data 3</td>
-                                                <td>Data 4</td>
-                                                <td>Data 5</td>
-                                                <td>Data 6</td>
-                                                <td>Data 7</td>
-                                                <td>Data 8</td>
-                                            </tr>
-                                            <tr class="border-top">
-                                                <th>Work Shifts</th>
-                                                <td>Day || Night D.</td>
-                                                <td>Day || Night D.</td>
-                                                <td>Day || Night D.</td>
-                                                <td>Day || Night D.</td>
-                                                <td>Day || Night D.</td>
-                                                <td>Day || Night D.</td>
-                                                <td>Day || Night D.</td>
-                                                <td>Day || Night D.</td>
-                                            </tr>
-                                            <tr id="payslip_regular_hours">
-                                                <th>Hours</th>
-                                                <td>Data 1 || Data 1</td>
-                                                <td>Data 2 || Data 2</td>
-                                                <td>Data 3 || Data 3</td>
-                                                <td>Data 4 || Data 4</td>
-                                                <td>Data 5 || Data 5</td>
-                                                <td>Data 6 || Data 6</td>
-                                                <td>Data 7 || Data 7</td>
-                                                <td>Data 8 || Data 8</td>
-                                            </tr>
-                                            <tr id="payslip_regular_hours_rate">
-                                                <th>Rate/hour</th>
-                                                <td>Data 1 || Data 1</td>
-                                                <td>Data 2 || Data 2</td>
-                                                <td>Data 3 || Data 3</td>
-                                                <td>Data 4 || Data 4</td>
-                                                <td>Data 5 || Data 5</td>
-                                                <td>Data 6 || Data 6</td>
-                                                <td>Data 7 || Data 7</td>
-                                                <td>Data 8 || Data 8</td>
-                                            </tr>
-                                            <tr class="border-top-bottom" id="payslip_regular_pay">
-                                                <th>Subtotal</th>
-                                                <td>Data 1</td>
-                                                <td>Data 2</td>
-                                                <td>Data 3</td>
-                                                <td>Data 4</td>
-                                                <td>Data 5</td>
-                                                <td>Data 6</td>
-                                                <td>Data 7</td>
-                                                <td>Data 8</td>
-                                            </tr>
-                                            <tr id="payslip_late_mins">
-                                                <th>Late (mins)</th>
-                                                <td>Data 1</td>
-                                                <td>Data 2</td>
-                                                <td>Data 3</td>
-                                                <td>Data 4</td>
-                                                <td>Data 5</td>
-                                                <td>Data 6</td>
-                                                <td>Data 7</td>
-                                                <td>Data 8</td>
-                                            </tr>
-                                            <tr id="payslip_late_deduction">
-                                                <th>Late Deduction</th>
-                                                <td>Data 1</td>
-                                                <td>Data 2</td>
-                                                <td>Data 3</td>
-                                                <td>Data 4</td>
-                                                <td>Data 5</td>
-                                                <td>Data 6</td>
-                                                <td>Data 7</td>
-                                                <td>Data 8</td>
-                                            </tr>
-                                            <tr id="payslip_under_time_hour">
-                                                <th>Under Time (hour)</th>
-                                                <td>Data 1</td>
-                                                <td>Data 2</td>
-                                                <td>Data 3</td>
-                                                <td>Data 4</td>
-                                                <td>Data 5</td>
-                                                <td>Data 6</td>
-                                                <td>Data 7</td>
-                                                <td>Data 8</td>
-                                            </tr>
-                                            <tr id="payslip_under_time_deduction">
-                                                <th>Under Time Deduction</th>
-                                                <td>Data 1</td>
-                                                <td>Data 2</td>
-                                                <td>Data 3</td>
-                                                <td>Data 4</td>
-                                                <td>Data 5</td>
-                                                <td>Data 6</td>
-                                                <td>Data 7</td>
-                                                <td>Data 8</td>
-                                            </tr>
-                                            <tr class="border-top-bottom" id="payslip_late_undertime">
-                                                <th>Subtotal</th>
-                                                <td>Data 1</td>
-                                                <td>Data 2</td>
-                                                <td>Data 3</td>
-                                                <td>Data 4</td>
-                                                <td>Data 5</td>
-                                                <td>Data 6</td>
-                                                <td>Data 7</td>
-                                                <td>Data 8</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Work Shifts</th>
-                                                <td>Day || Night D.</td>
-                                                <td>Day || Night D.</td>
-                                                <td>Day || Night D.</td>
-                                                <td>Day || Night D.</td>
-                                                <td>Day || Night D.</td>
-                                                <td>Day || Night D.</td>
-                                                <td>Day || Night D.</td>
-                                                <td>Day || Night D.</td>
-                                            </tr>
-                                            <tr id="payslip_ot_hours">
-                                                <th>Overtime Hours</th>
-                                                <td>Data 1 || Data 1</td>
-                                                <td>Data 2 || Data 2</td>
-                                                <td>Data 3 || Data 3</td>
-                                                <td>Data 4 || Data 4</td>
-                                                <td>Data 5 || Data 5</td>
-                                                <td>Data 6 || Data 6</td>
-                                                <td>Data 7 || Data 7</td>
-                                                <td>Data 8 || Data 8</td>
-                                            </tr>
-                                            <tr id="payslip_ot_hours_rate">
-                                                <th>Overtime Rate/hour</th>
-                                                <td>Data 1 || Data 1</td>
-                                                <td>Data 2 || Data 2</td>
-                                                <td>Data 3 || Data 3</td>
-                                                <td>Data 4 || Data 4</td>
-                                                <td>Data 5 || Data 5</td>
-                                                <td>Data 6 || Data 6</td>
-                                                <td>Data 7 || Data 7</td>
-                                                <td>Data 8 || Data 8</td>
-                                            </tr>
-                                            <tr class="bold border-top" id="payslip_ot_subtotal">
-                                                <th>Subtotal</th>
-                                                <td>Data 1</td>
-                                                <td>Data 2</td>
-                                                <td>Data 3</td>
-                                                <td>Data 4</td>
-                                                <td>Data 5</td>
-                                                <td>Data 6</td>
-                                                <td>Data 7</td>
-                                                <td>Data 8</td>
-                                            </tr>
-                                            <tr id="payslip_allowance">
-                                                <th>Allowance</th>
-                                                <td>Data 1</td>
-                                                <td>Data 2</td>
-                                                <td>Data 3</td>
-                                                <td>Data 4</td>
-                                                <td>Data 5</td>
-                                                <td>Data 6</td>
-                                                <td>Data 7</td>
-                                                <td>Data 8</td>
-                                            </tr>
-                                            <tr class="bold border-top" id="payslip_total">
-                                                <th>Total</th>
-                                                <td>Data 1</td>
-                                                <td>Data 2</td>
-                                                <td>Data 3</td>
-                                                <td>Data 4</td>
-                                                <td>Data 5</td>
-                                                <td>Data 6</td>
-                                                <td>Data 7</td>
-                                                <td>Data 8</td>
-                                            </tr>
-                        
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="summary_details_header">
-                                        <h3 class="bold">SUMMARY</h3>
-                                    </div>
-                                    <div id="footer" class="border-bottom">
-                                        <div class="ps-1 border-left border-right">
-                                            <div class="summary_details_header">
-                                                <h3 class="bold">DEDUCTIONS</h3>
-                                            </div>
-                                            <div class="deductions_detail">
-                                                <h4 class="bold">SSS JUNE 2023</h4><h4 class="ps-1">Data 1</h4>
-                                                <h4 class="bold">PHIC JUNE 2023</h4><h4 class="ps-1">Data 1</h4>
-                                                <h4 class="bold">HDMF JUNE 2023</h4><h4 class="ps-1">Data 1</h4>
-                                                <h4 class="bold">SSS Loan Payment</h4><h4 class="ps-1">Data 1</h4>
-                                                <h4 class="bold">HDMF Loan Payment</h4><h4 class="ps-1">Data 1</h4>
-                                            </div>
-                                        </div>
-                                        <div id="payslip_gross_salary" class="border-right">
-                                            <h4 class="ps-1">Total Earnings:</h4>
-                                            <h3 class="text-center bold pt-1">DATA 1</h3>
-                                            <h4 class="ps-1">Total Deductions:</h4>
-                                            <h3 class="text-center bold pt-1 border-bottom">DATA 1</h3>
-                                            <h4 class="ps-1">Net Pay:</h4>
-                                            <h1 class="text-center bold">DATA 1</h1>
-                                        </div>
-                                        <div class="border-right text-center">
-                                            <h4 class="pt-5">______________</h4>
-                                            <h4>Employee Signature</h4>
-                                        </div>
-                                        <div class="border-right text-center">
-                                            <h4 class="pt-5">______________</h4>
-                                            <h4>Authorized Signature</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><hr>
-                            <div class="payslip">
-                                <div class="summary">
-                                    <div class="header">
-                                        <img src="../images/logo.png" alt="">
-                                        <div class="header_title">
-                                            <h2 class="bold">FAR EAST FUEL CORPORATION</h2>
-                                            <h3>#888 Purok 5, Irabagon St. Brgy. Anyatam, San Ildefonso, Bulacan, 3010</h3>
-                                        </div>
-                                    </div>
-                                    <div class="employee_details">
-                                        <div class="grid1">
-                                            <div class="d-flex">
-                                                <h4 class="bold">Name:</h4><h4 class="ps-1">SALAYSAY, ELNARD SABANGAN </h4>
-                                            </div>
-                                            <div class="d-flex">
-                                                <h4 class="bold">Department:</h4><h4 class="ps-1">ADMIN DEPARTMENT</h4>
-                                            </div>
-                                            <div class="d-flex">
-                                                <h4 class="bold">Designation:</h4><h4 class="ps-1">MESSENGER/UTILITY</h4>
-                                            </div>
-                                            <div class="d-flex">
-                                                <h4 class="bold">ID No:</h4><h4 class="ps-1">22057</h4>
-                                            </div>
-                                            <div class="d-flex">
-                                                <h4 class="bold">Pay Period:</h4><h4 class="ps-1">July 17, 2023-July 23, 2023</h4>
-                                            </div>
-                                            <div class="d-flex">
-                                                <h4 class="bold">Pay Date:</h4><h4 class="ps-1">December 29, 2023</h4>
-                                            </div>
-                                            <div class="d-flex">
-                                                <h4 class="bold">Tin No:</h4><h4 class="ps-1">311-038-999-000</h4>
-                                            </div>
-                                            <div class="d-flex">
-                                                <h4 class="bold">Tax Code:</h4><h4 class="ps-1">M</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="summary_details_header">
-                                        <h3 class="bold">BREAKDOWN</h3>
-                                    </div>
-                                    <div class="summary_details_details">
-                                        <div class="vertical-table">
-                                            <table>
-                                            <tr class="bold">
-                                                <th>Day</th>
-                                                <td>Monday</td>
-                                                <td>Tuesday</td>
-                                                <td>Wednesday</td>
-                                                <td>Thursday</td>
-                                                <td>Friday</td>
-                                                <td>Saturday</td>
-                                                <td>Sunday</td>
-                                                <td>Total</td>
-                                            </tr>
-                                            <tr id="payslip_date">
-                                                <th>Date</th>
-                                                <td>Data 1</td>
-                                                <td>Data 2</td>
-                                                <td>Data 3</td>
-                                                <td>Data 4</td>
-                                                <td>Data 5</td>
-                                                <td>Data 6</td>
-                                                <td>Data 7</td>
-                                                <td>Data 8</td>
-                                            </tr>
-                                            <tr id="payslip_type_of_day">
-                                                <th>Type of Day</th>
-                                                <td>Data 1</td>
-                                                <td>Data 2</td>
-                                                <td>Data 3</td>
-                                                <td>Data 4</td>
-                                                <td>Data 5</td>
-                                                <td>Data 6</td>
-                                                <td>Data 7</td>
-                                                <td>Data 8</td>
-                                            </tr>
-                                            <tr id="payslip_time_in_time_out">
-                                                <th>Time IN/Time OUT</th>
-                                                <td>Data 1</td>
-                                                <td>Data 2</td>
-                                                <td>Data 3</td>
-                                                <td>Data 4</td>
-                                                <td>Data 5</td>
-                                                <td>Data 6</td>
-                                                <td>Data 7</td>
-                                                <td>Data 8</td>
-                                            </tr>
-                                            <tr class="border-top">
-                                                <th>Work Shifts</th>
-                                                <td>Day || Night D.</td>
-                                                <td>Day || Night D.</td>
-                                                <td>Day || Night D.</td>
-                                                <td>Day || Night D.</td>
-                                                <td>Day || Night D.</td>
-                                                <td>Day || Night D.</td>
-                                                <td>Day || Night D.</td>
-                                                <td>Day || Night D.</td>
-                                            </tr>
-                                            <tr id="payslip_regular_hours">
-                                                <th>Hours</th>
-                                                <td>Data 1 || Data 1</td>
-                                                <td>Data 2 || Data 2</td>
-                                                <td>Data 3 || Data 3</td>
-                                                <td>Data 4 || Data 4</td>
-                                                <td>Data 5 || Data 5</td>
-                                                <td>Data 6 || Data 6</td>
-                                                <td>Data 7 || Data 7</td>
-                                                <td>Data 8 || Data 8</td>
-                                            </tr>
-                                            <tr id="payslip_regular_hours_rate">
-                                                <th>Rate/hour</th>
-                                                <td>Data 1 || Data 1</td>
-                                                <td>Data 2 || Data 2</td>
-                                                <td>Data 3 || Data 3</td>
-                                                <td>Data 4 || Data 4</td>
-                                                <td>Data 5 || Data 5</td>
-                                                <td>Data 6 || Data 6</td>
-                                                <td>Data 7 || Data 7</td>
-                                                <td>Data 8 || Data 8</td>
-                                            </tr>
-                                            <tr class="border-top-bottom" id="payslip_regular_pay">
-                                                <th>Subtotal</th>
-                                                <td>Data 1</td>
-                                                <td>Data 2</td>
-                                                <td>Data 3</td>
-                                                <td>Data 4</td>
-                                                <td>Data 5</td>
-                                                <td>Data 6</td>
-                                                <td>Data 7</td>
-                                                <td>Data 8</td>
-                                            </tr>
-                                            <tr id="payslip_late_mins">
-                                                <th>Late (mins)</th>
-                                                <td>Data 1</td>
-                                                <td>Data 2</td>
-                                                <td>Data 3</td>
-                                                <td>Data 4</td>
-                                                <td>Data 5</td>
-                                                <td>Data 6</td>
-                                                <td>Data 7</td>
-                                                <td>Data 8</td>
-                                            </tr>
-                                            <tr id="payslip_late_deduction">
-                                                <th>Late Deduction</th>
-                                                <td>Data 1</td>
-                                                <td>Data 2</td>
-                                                <td>Data 3</td>
-                                                <td>Data 4</td>
-                                                <td>Data 5</td>
-                                                <td>Data 6</td>
-                                                <td>Data 7</td>
-                                                <td>Data 8</td>
-                                            </tr>
-                                            <tr id="payslip_under_time_hour">
-                                                <th>Under Time (hour)</th>
-                                                <td>Data 1</td>
-                                                <td>Data 2</td>
-                                                <td>Data 3</td>
-                                                <td>Data 4</td>
-                                                <td>Data 5</td>
-                                                <td>Data 6</td>
-                                                <td>Data 7</td>
-                                                <td>Data 8</td>
-                                            </tr>
-                                            <tr id="payslip_under_time_deduction">
-                                                <th>Under Time Deduction</th>
-                                                <td>Data 1</td>
-                                                <td>Data 2</td>
-                                                <td>Data 3</td>
-                                                <td>Data 4</td>
-                                                <td>Data 5</td>
-                                                <td>Data 6</td>
-                                                <td>Data 7</td>
-                                                <td>Data 8</td>
-                                            </tr>
-                                            <tr class="border-top-bottom" id="payslip_late_undertime">
-                                                <th>Subtotal</th>
-                                                <td>Data 1</td>
-                                                <td>Data 2</td>
-                                                <td>Data 3</td>
-                                                <td>Data 4</td>
-                                                <td>Data 5</td>
-                                                <td>Data 6</td>
-                                                <td>Data 7</td>
-                                                <td>Data 8</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Work Shifts</th>
-                                                <td>Day || Night D.</td>
-                                                <td>Day || Night D.</td>
-                                                <td>Day || Night D.</td>
-                                                <td>Day || Night D.</td>
-                                                <td>Day || Night D.</td>
-                                                <td>Day || Night D.</td>
-                                                <td>Day || Night D.</td>
-                                                <td>Day || Night D.</td>
-                                            </tr>
-                                            <tr id="payslip_ot_hours">
-                                                <th>Overtime Hours</th>
-                                                <td>Data 1 || Data 1</td>
-                                                <td>Data 2 || Data 2</td>
-                                                <td>Data 3 || Data 3</td>
-                                                <td>Data 4 || Data 4</td>
-                                                <td>Data 5 || Data 5</td>
-                                                <td>Data 6 || Data 6</td>
-                                                <td>Data 7 || Data 7</td>
-                                                <td>Data 8 || Data 8</td>
-                                            </tr>
-                                            <tr id="payslip_ot_hours_rate">
-                                                <th>Overtime Rate/hour</th>
-                                                <td>Data 1 || Data 1</td>
-                                                <td>Data 2 || Data 2</td>
-                                                <td>Data 3 || Data 3</td>
-                                                <td>Data 4 || Data 4</td>
-                                                <td>Data 5 || Data 5</td>
-                                                <td>Data 6 || Data 6</td>
-                                                <td>Data 7 || Data 7</td>
-                                                <td>Data 8 || Data 8</td>
-                                            </tr>
-                                            <tr class="bold border-top" id="payslip_ot_subtotal">
-                                                <th>Subtotal</th>
-                                                <td>Data 1</td>
-                                                <td>Data 2</td>
-                                                <td>Data 3</td>
-                                                <td>Data 4</td>
-                                                <td>Data 5</td>
-                                                <td>Data 6</td>
-                                                <td>Data 7</td>
-                                                <td>Data 8</td>
-                                            </tr>
-                                            <tr id="payslip_allowance">
-                                                <th>Allowance</th>
-                                                <td>Data 1</td>
-                                                <td>Data 2</td>
-                                                <td>Data 3</td>
-                                                <td>Data 4</td>
-                                                <td>Data 5</td>
-                                                <td>Data 6</td>
-                                                <td>Data 7</td>
-                                                <td>Data 8</td>
-                                            </tr>
-                                            <tr class="bold border-top" id="payslip_total">
-                                                <th>Total</th>
-                                                <td>Data 1</td>
-                                                <td>Data 2</td>
-                                                <td>Data 3</td>
-                                                <td>Data 4</td>
-                                                <td>Data 5</td>
-                                                <td>Data 6</td>
-                                                <td>Data 7</td>
-                                                <td>Data 8</td>
-                                            </tr>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="summary_details_header">
-                                        <h3 class="bold">SUMMARY</h3>
-                                    </div>
-                                    <div id="footer" class="border-bottom">
-                                        <div class="ps-1 border-left border-right">
-                                            <div class="summary_details_header">
-                                                <h3 class="bold">DEDUCTIONS</h3>
-                                            </div>
-                                            <div class="deductions_detail">
-                                                <h4 class="bold">SSS JUNE 2023</h4><h4 class="ps-1">Data 1</h4>
-                                                <h4 class="bold">PHIC JUNE 2023</h4><h4 class="ps-1">Data 1</h4>
-                                                <h4 class="bold">HDMF JUNE 2023</h4><h4 class="ps-1">Data 1</h4>
-                                                <h4 class="bold">SSS Loan Payment</h4><h4 class="ps-1">Data 1</h4>
-                                                <h4 class="bold">HDMF Loan Payment</h4><h4 class="ps-1">Data 1</h4>
-                                            </div>
-                                        </div>
-                                        <div id="payslip_gross_salary" class="border-right">
-                                            <h4 class="ps-1">Total Earnings:</h4>
-                                            <h3 class="text-center bold pt-1">DATA 1</h3>
-                                            <h4 class="ps-1">Total Deductions:</h4>
-                                            <h3 class="text-center bold pt-1 border-bottom">DATA 1</h3>
-                                            <h4 class="ps-1">Net Pay:</h4>
-                                            <h1 class="text-center bold">DATA 1</h1>
-                                        </div>
-                                        <div class="border-right text-center">
-                                            <h4 class="pt-5">______________</h4>
-                                            <h4>Employee Signature</h4>
-                                        </div>
-                                        <div class="border-right text-center">
-                                            <h4 class="pt-5">______________</h4>
-                                            <h4>Authorized Signature</h4>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div id="payslip_form_container_container">
+                            <div id="payslip_container">
+
                             </div>
                             <style>
                                 #payslip_form
@@ -1070,6 +533,12 @@
                                     width: calc(100% - 40px);
                                     height: 485px;
                                     border: 3px solid black;
+                                }
+
+                                .truncate_text {
+                                    white-space: nowrap;
+                                    overflow: hidden; 
+                                    text-overflow: ellipsis;
                                 }
                         
                                 #payslip_form .bold
@@ -1101,6 +570,10 @@
                                     margin: 0;
                                 }
                                                                 
+                                .left{
+                                    text-align: start !important;
+                                }
+
                                 .border-top-bottom{
                                     border-top: 1px solid black !important;
                                     border-bottom: 1px solid black !important;
@@ -1121,6 +594,16 @@
                                 .border-right{
                                     border-right: 1px solid black !important;
                                 }
+                                
+                                .border-bottom-right{
+                                    border-bottom: 1px solid black !important;
+                                    border-right: 1px solid black !important;
+                                }
+                                
+                                .border{
+                                    border: 1px solid black !important;
+                                }
+                                
                         
                                 #payslip_form .payslip img
                                 {
@@ -1154,7 +637,7 @@
                                 #payslip_form .payslip .summary .employee_details .grid1
                                 {
                                     display: grid;
-                                    grid-template-columns: 30% 25% 25% 20%;
+                                    grid-template-columns: 30% 30% 30% 10%;
                                 }
                         
                                 #payslip_form .payslip .summary .employee_details .grid1 .ps-1
@@ -1191,7 +674,7 @@
                                 .vertical-table table tr
                                 {
                                     display: grid !important;
-                                    grid-template-columns: 15% repeat(8,calc(85%/8)) !important;
+                                    grid-template-columns: 15% repeat(7,calc(85%/7)) !important;
                                     text-align: center;
                                     width: 100% !important;
                                 }
@@ -1206,7 +689,7 @@
                                 {
                                     text-align: left;
                                     color: black !important;
-                                    font-size: 8px !important;
+                                    font-size: 9px !important;
                                 }
                         
                                 .vertical-table td
@@ -1218,24 +701,43 @@
                                 #payslip_form .payslip .summary #footer
                                 {
                                     display: grid;
-                                    grid-template-columns: 50% 20% 15% 15%;
+                                    grid-template-columns: 48.75% 16.25%  20% 7.5% 7.5%;
                                 }
                         
                                 #payslip_form .payslip .summary .deductions_detail
                                 {
                                     display: grid;
-                                    grid-template-columns: 30% 70%;
+                                    grid-template-columns: repeat(3, calc(100%/3));
+                                }
+                                #payslip_form .payslip .summary .additional_detail
+                                {
+                                    display: grid;
+                                    grid-template-columns: 100%;
+                                }
+                                
+                                #payslip_form .payslip .summary .deductions_detail > div,
+                                #payslip_form .payslip .summary .additional_detail > div
+                                {
+                                    display: grid;
+                                    grid-template-columns: 80% 20%;
+                                    height: 12px;
                                 }
                         
                                 #payslip_form .payslip .summary #payslip_gross_salary
                                 {
                                     display: grid;
-                                    grid-template-columns: 40% 60%;
+                                    grid-template-columns: 60% 40%;
                                 }
-                            </style>
                         
+                                #payslip_form .payslip .summary #payslip_type_of_day
+                                {
+                                    font-size: 7px !important;
+                                }
+
+
+                            </style>
                         </div>
-                        <div id="payroll_form">
+                        <!-- <div id="payroll_form">
                             <div class="payroll">
                                 <div class="header">
                                     <img src="../images/logo.png" alt="">
@@ -1407,7 +909,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
+                        </div> -->
                     </form>
                 </div>
             </section>
@@ -1937,9 +1439,9 @@
         // }
 
         function convertToPDF() {
-            const element = document.getElementById('payslip_form');
+            const element = document.getElementById('payslip_form_container_container');
             const opt = {
-                filename: `Payslip Week Number`,
+                filename: `Payslip Week Number ${search_week_number.value}`,
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 2 },
                 jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }

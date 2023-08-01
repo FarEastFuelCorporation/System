@@ -3031,11 +3031,17 @@ input:disabled {
   border: 3px solid cyan;
   border-radius: 10px;
   overflow: scroll;
+  min-height: 80%;
   display: none;
 }
 
-.hr #generate_payslip_button {
+.hr #generate_payslip_button,
+.hr #download_payslip_button {
   max-width: 300px !important;
+}
+
+.hr #download_payslip_button {
+  display: none;
 }
 
 #payroll_form {

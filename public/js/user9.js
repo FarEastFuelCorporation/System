@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const sf_response_promise = fetch('https://script.google.com/macros/s/AKfycby9b2VCfXc0ifkwBXJRi2UVUwgZIj9F4FTOdZa_SYKZdsTwbVtAzAXzNMFeklE35bg1/exec');
         const irf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzTmhNOz5cXeKitSXAriUJ_FEahAQugYEKIRwDuFt9tjhj2AtPKEf2H4yTMmZ1igpUxlQ/exec');
         const employee_response_promise = fetch('https://script.google.com/macros/s/AKfycbwns5R6TA8U64ywbb9hwYu4LKurAjTM0Z18NYNZMt0Ft0m-_NUHYbYqblk_5KWugvt7lA/exec');
+        const payroll_transaction_response_promise = fetch('https://script.google.com/macros/s/AKfycbzYyGI99twep_njWGI4_Cd7Gd6bBERGhpP3IuwFRtUZ6hXYD-mpP2gRse2KEqjqKyNckw/exec');
+        const payroll_summary_response_promise = fetch('https://script.google.com/macros/s/AKfycbxOfQ8EeEUegve06wUBw4afHRkHSnTP4QwnB8N9AKyHfp8x00pDhLkGiCKkECUm2Iuy2g/exec');
 
         const [
             username_response,
@@ -12,12 +14,16 @@ document.addEventListener('DOMContentLoaded', async function() {
             sf_response,
             irf_response,
             employee_response,
+            payroll_transaction_response,
+            payroll_summary_response,
         ] = await Promise.all([
             username_response_promise,
             idf_response_promise,
             sf_response_promise,
             irf_response_promise,
             employee_response_promise,
+            payroll_transaction_response_promise,
+            payroll_summary_response_promise,
         ]);
 
         const username_data  = await username_response.json();
@@ -25,6 +31,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const sf_data_list  = await sf_response.json();
         const irf_data_list  = await irf_response.json();
         const employee_data_list  = await employee_response.json();
+        const payroll_transaction_data_list  = await payroll_transaction_response.json();
+        const payroll_summary_data_list  = await payroll_summary_response.json();
 
         // Code that depends on the fetched data
         // username_data3
@@ -223,6 +231,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const total_additional = document.querySelector("#attendance_form #total_additional");
         const sss_deduction = document.querySelector("#attendance_form #sss_deduction");
         const pag_ibig_deduction = document.querySelector("#attendance_form #pag_ibig_deduction");
+        const sss_loan = document.querySelector("#attendance_form #sss_loan");
+        const pag_ibig_loan = document.querySelector("#attendance_form #pag_ibig_loan");
         const philhealth_deduction = document.querySelector("#attendance_form #philhealth_deduction");
         const ca_deduction = document.querySelector("#attendance_form #ca_deduction");
         const uniform = document.querySelector("#attendance_form #uniform");
@@ -1061,7 +1071,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 additional = parseFloat(adjustment.value) + parseFloat(cash_advance.value)
 
                 var deduction = 0;
-                deduction = parseFloat(sss_deduction.value) + parseFloat(pag_ibig_deduction.value) + parseFloat(philhealth_deduction.value) + parseFloat(ca_deduction.value) + parseFloat(uniform.value) + parseFloat(housing.value) + parseFloat(st_peter.value) + parseFloat(cash_not_return.value) + parseFloat(hard_hat.value) + parseFloat(safety_shoes.value) + parseFloat(over_meals.value) + parseFloat(bereavement_assistance.value);
+                deduction = parseFloat(sss_deduction.value) + parseFloat(pag_ibig_deduction.value) + parseFloat(philhealth_deduction.value) + parseFloat(sss_loan.value) + parseFloat(pag_ibig_loan.value) + parseFloat(ca_deduction.value) + parseFloat(uniform.value) + parseFloat(housing.value) + parseFloat(st_peter.value) + parseFloat(cash_not_return.value) + parseFloat(hard_hat.value) + parseFloat(safety_shoes.value) + parseFloat(over_meals.value) + parseFloat(bereavement_assistance.value);
             
                 total_additional.value = additional;
                 total_deductions.value = deduction;
@@ -2037,6 +2047,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         sss_deduction.addEventListener("keyup", calculateNetSalary);
         pag_ibig_deduction.addEventListener("keyup", calculateNetSalary);
         philhealth_deduction.addEventListener("keyup", calculateNetSalary);
+        sss_loan.addEventListener("keyup", calculateNetSalary);
+        pag_ibig_loan.addEventListener("keyup", calculateNetSalary);
         ca_deduction.addEventListener("keyup", calculateNetSalary);
         uniform.addEventListener("keyup", calculateNetSalary);
         housing.addEventListener("keyup", calculateNetSalary);
@@ -2059,22 +2071,589 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         })
 
-        const payslip_date =document.querySelector("#payslip_date")
-        const type_of_day =document.querySelector("#type_of_day")
-        const payslip_time_in_time_out =document.querySelector("#payslip_time_in_time_out")
-        const payslip_regular_hours =document.querySelector("#payslip_regular_hours")
-        const payslip_regular_hours_rate =document.querySelector("#payslip_regular_hours_rate")
-        const payslip_regular_pay =document.querySelector("#payslip_regular_pay")
-        const payslip_late_mins =document.querySelector("#payslip_late_mins")
-        const payslip_late_deduction =document.querySelector("#payslip_late_deduction")
-        const payslip_under_time_hour =document.querySelector("#payslip_under_time_hour")
-        const payslip_under_time_deduction =document.querySelector("#payslip_under_time_deduction")
-        const payslip_late_undertime =document.querySelector("#payslip_late_undertime")
-        const payslip_ot_hours =document.querySelector("#payslip_ot_hours")
-        const payslip_ot_hours_rate =document.querySelector("#payslip_ot_hours_rate")
-        const payslip_ot_subtotal =document.querySelector("#payslip_ot_subtotal")
-        const payslip_allowance =document.querySelector("#payslip_allowance")
-        const payslip_total =document.querySelector("#payslip_total")
+
+        const payslip_container = document.querySelector("#payslip_container")
+        const generate_payslip_button = document.querySelector("#generate_payslip_button")
+        const download_payslip_button = document.querySelector("#download_payslip_button")
+        const search_year = document.querySelector("#search_year")
+        const search_week_number = document.querySelector("#search_week_number")
+        const pay_date = document.querySelector("#pay_date")
+
+        generate_payslip_button.addEventListener("click", () => {
+            var payslip_employee_id = [];
+            for(let c = 1; c < payroll_transaction_data_list.content.length; c++){
+                if(payroll_transaction_data_list.content[c][1] == search_year.value && payroll_transaction_data_list.content[c][2] == search_week_number.value){
+                    if (!payslip_employee_id.includes(payroll_transaction_data_list.content[c][3])) {
+                        payslip_employee_id.push(payroll_transaction_data_list.content[c][3]);
+                    }
+                }
+            }
+
+            for(let x = 0; x < payslip_employee_id.length; x++){
+                var duration = [];
+                var type_of_day = [];
+                var date = [];
+                var time_in = [];
+                var time_out = [];
+                var hours = [];
+                var hours_rate_per_hour = [];
+                var night_hours = [];
+                var night_hours_rate_per_hour = [];
+                var late_mins = [];
+                var late_deduction = [];
+                var under_time_hour = [];
+                var under_time_deduction = [];
+                var ot_hours = [];
+                var ot_hours_rate_per_hour = [];
+                var ot_night_hours = [];
+                var ot_night_hours_rate_per_hour = [];
+                var allowance = [];
+                var gross = [];
+
+                for(let c = 1; c < payroll_transaction_data_list.content.length; c++){
+                    if(payslip_employee_id[x] == payroll_transaction_data_list.content[c][3] &&
+                        search_year.value == payroll_transaction_data_list.content[c][1]  && 
+                        search_week_number.value == payroll_transaction_data_list.content[c][2]){
+        
+    
+                        duration.push({[payroll_transaction_data_list.content[c][3]] : payroll_transaction_data_list.content[c][5]});
+                        type_of_day.push(payroll_transaction_data_list.content[c][6]);
+                        date.push(date_decoder(payroll_transaction_data_list.content[c][8]));
+                        if (payroll_transaction_data_list.content[c][9] !== null && payroll_transaction_data_list.content[c][9] !== "") {
+                            time_in.push(time_decoder(payroll_transaction_data_list.content[c][9]));
+                        } else {
+                            time_in.push("N/A");
+                        }                        
+                        if (payroll_transaction_data_list.content[c][10] !== null && payroll_transaction_data_list.content[c][10] !== "") {
+                            time_out.push(time_decoder(payroll_transaction_data_list.content[c][10]));
+                        } else {
+                            time_out.push("N/A");
+                        }                        
+                        hours.push(payroll_transaction_data_list.content[c][16]);
+                        hours_rate_per_hour.push(payroll_transaction_data_list.content[c][17]);
+                        night_hours.push(payroll_transaction_data_list.content[c][18]);
+                        night_hours_rate_per_hour.push(payroll_transaction_data_list.content[c][19]);
+                        late_mins.push(payroll_transaction_data_list.content[c][12]);
+                        late_deduction.push(payroll_transaction_data_list.content[c][13]);
+                        under_time_hour.push(payroll_transaction_data_list.content[c][14]);
+                        under_time_deduction.push(payroll_transaction_data_list.content[c][15]);
+                        ot_hours.push(payroll_transaction_data_list.content[c][20]);
+                        ot_hours_rate_per_hour.push(payroll_transaction_data_list.content[c][21]);
+                        ot_night_hours.push(payroll_transaction_data_list.content[c][22]);
+                        ot_night_hours_rate_per_hour.push(payroll_transaction_data_list.content[c][23]);
+                        allowance.push(payroll_transaction_data_list.content[c][24]);
+                        gross.push(payroll_transaction_data_list.content[c][25]);        
+                    }
+
+                }
+    
+                var subtotal_1 = hours.map((hours, index) => {
+                    const daySubtotal = hours * hours_rate_per_hour[index];
+                    const nightSubtotal = night_hours[index] * night_hours_rate_per_hour[index];
+                    return daySubtotal + nightSubtotal;
+                });
+                var subtotal_2 = late_deduction.map((late_deduction, index) => {
+                    const late_under_time_subtotal = late_deduction + under_time_deduction[index];
+                    return late_under_time_subtotal;
+                });
+                var subtotal_3 = ot_hours.map((ot_hours, index) => {
+                    const day_ot_Subtotal = ot_hours * ot_hours_rate_per_hour[index];
+                    const night_ot_Subtotal = ot_night_hours[index] * ot_night_hours_rate_per_hour[index];
+                    return day_ot_Subtotal + night_ot_Subtotal;
+                });
+    
+    
+                var payslip_form_data ="";
+                for(let d = 0; d < payslip_employee_id.length; d++){
+                    for(let e = 1; e < payroll_summary_data_list.content.length; e++){
+                        if(payslip_employee_id[d] == payroll_summary_data_list.content[e][3] && search_year.value == payroll_summary_data_list.content[e][1] && search_week_number.value == payroll_summary_data_list.content[e][2]){
+                            var department = "";
+                            var designation = "";
+                            for(let f =1; f < employee_data_list.content.length; f++){
+                                if(payslip_employee_id[d] == employee_data_list.content[f][1]){
+                                    department = employee_data_list.content[f][32];
+                                    designation = employee_data_list.content[f][33];
+                                    tin_id = employee_data_list.content[f][20];
+                                }
+                            }
+                            payslip_form_data += `
+                            <div id="payslip_form">
+                                <div class="payslip">
+                                    <div class="summary">
+                                        <div class="header">
+                                            <img src="../images/logo.png" alt="">
+                                            <div class="header_title">
+                                                <h2 class="bold">FAR EAST FUEL CORPORATION</h2>
+                                                <h3>#888 Purok 5, Irabagon St. Brgy. Anyatam, San Ildefonso, Bulacan, 3010</h3>
+                                            </div>
+                                        </div>
+                                        <div class="employee_details">
+                                            <div class="grid1">
+                                                <div class="d-flex">
+                                                    <h4 class="bold">Name:</h4><h4 class="ps-1 truncate_text">${payroll_summary_data_list.content[e][4]}</h4>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <h4 class="bold">Department:</h4><h4 class="ps-1 truncate_text">${department}</h4>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <h4 class="bold">Designation:</h4><h4 class="ps-1 truncate_text">${designation}</h4>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <h4 class="bold">ID No:</h4><h4 class="ps-1 truncate_text">${payslip_employee_id[d]}</h4>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <h4 class="bold">Pay Period:</h4><h4 class="ps-1 truncate_text">${date[0]} - ${date[6]}</h4>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <h4 class="bold">Pay Date:</h4><h4 class="ps-1 truncate_text">${date_decoder(pay_date.value)}</h4>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <h4 class="bold">Tin No:</h4><h4 class="ps-1 truncate_text">${tin_id}</h4>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <h4 class="bold">Tax Code:</h4><h4 class="ps-1 truncate_text"></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="summary_details_header">
+                                            <h3 class="bold">BREAKDOWN</h3>
+                                        </div>
+                                        <div class="summary_details_details">
+                                            <div class="vertical-table">
+                                                <table>
+                                                    <tr class="bold">
+                                                        <th>Day</th>
+                                                        <td>Monday</td>
+                                                        <td>Tuesday</td>
+                                                        <td>Wednesday</td>
+                                                        <td>Thursday</td>
+                                                        <td>Friday</td>
+                                                        <td>Saturday</td>
+                                                        <td>Sunday</td>
+                                                    </tr>
+                                                    <tr id="payslip_date">
+                                                        <th>Date</th>
+                                                        ${date.map(item => `<td>${item}</td>`).join('')}
+                                                    </tr>
+                                                    <tr id="payslip_type_of_day">
+                                                        <th>Type of Day</th>
+                                                        ${type_of_day.map(item => `<td>${item}</td>`).join('')}
+                                                    </tr>
+                                                    <tr id="payslip_time_in_time_out">
+                                                        <th>Time IN/Time OUT</th>
+                                                        ${time_in.map((item1, index) => `<td>${item1} || ${time_out[index]}</td>`).join('')}                                
+                                                    </tr>
+                                                    <tr class="border-top">
+                                                        <th>Work Shifts</th>
+                                                        <td>Day || Night D.</td>
+                                                        <td>Day || Night D.</td>
+                                                        <td>Day || Night D.</td>
+                                                        <td>Day || Night D.</td>
+                                                        <td>Day || Night D.</td>
+                                                        <td>Day || Night D.</td>
+                                                        <td>Day || Night D.</td>
+                                                    </tr>
+                                                    <tr id="payslip_regular_hours">
+                                                        <th>Hours</th>
+                                                        ${hours.map((item1, index) => `<td>${item1} || ${night_hours[index]}</td>`).join('')}
+                                                    </tr>
+                                                    <tr id="payslip_regular_hours_rate">
+                                                        <th>Rate/hour</th>
+                                                        ${hours_rate_per_hour.map((item1, index) => `<td>${item1} || ${night_hours_rate_per_hour[index]}</td>`).join('')}                                
+                                                    </tr>
+                                                    <tr class="border-top-bottom" id="payslip_regular_pay">
+                                                    <th>Subtotal</th>
+                                                        ${subtotal_1.map(item => `<td>${item}</td>`).join('')}
+                                                    </tr>
+                                                    <tr id="payslip_late_mins">
+                                                        <th>Late (mins)</th>
+                                                        ${late_mins.map(item => `<td>${item}</td>`).join('')}
+                                                    </tr>
+                                                    <tr id="payslip_late_deduction">
+                                                        <th>Late Deduction</th>
+                                                        ${late_deduction.map(item => `<td>${item}</td>`).join('')}
+                                                    </tr>
+                                                    <tr id="payslip_under_time_hour">
+                                                        <th>Under Time (hour)</th>
+                                                        ${under_time_hour.map(item => `<td>${item}</td>`).join('')}
+                                                    </tr>
+                                                    <tr id="payslip_under_time_deduction">
+                                                        <th>Under Time Deduction</th>
+                                                        ${under_time_deduction.map(item => `<td>${item}</td>`).join('')}
+                                                    </tr>
+                                                    <tr class="border-top-bottom" id="payslip_late_undertime">
+                                                        <th>Subtotal</th>
+                                                        ${subtotal_2.map(item => `<td>${item}</td>`).join('')}
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Work Shifts</th>
+                                                        <td>Day || Night D.</td>
+                                                        <td>Day || Night D.</td>
+                                                        <td>Day || Night D.</td>
+                                                        <td>Day || Night D.</td>
+                                                        <td>Day || Night D.</td>
+                                                        <td>Day || Night D.</td>
+                                                        <td>Day || Night D.</td>
+                                                    </tr>
+                                                    <tr id="payslip_ot_hours">
+                                                        <th>Overtime Hours</th>
+                                                        ${ot_hours.map((item1, index) => `<td>${item1} || ${ot_night_hours[index]}</td>`).join('')}                                </tr>
+                                                    </tr>
+                                                    <tr id="payslip_ot_hours_rate">
+                                                        <th>Overtime Rate/hour</th>
+                                                        ${ot_hours_rate_per_hour.map((item1, index) => `<td>${item1} || ${ot_night_hours_rate_per_hour[index]}</td>`).join('')}                                </tr>
+                                                    </tr>
+                                                    <tr class="bold border-top" id="payslip_ot_subtotal">
+                                                        <th>Subtotal</th>
+                                                        ${subtotal_3.map(item => `<td>${item}</td>`).join('')}
+                                                    </tr>
+                                                    <tr id="payslip_allowance">
+                                                        <th>Allowance</th>
+                                                        ${allowance.map(item => `<td>${item}</td>`).join('')}
+                                                    </tr>
+                                                    <tr class="bold border-top" id="payslip_total">
+                                                        <th>Total</th>
+                                                        ${gross.map(item => `<td>${item}</td>`).join('')}
+                                                    </tr>            
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="summary_details_header">
+                                            <h3 class="bold">SUMMARY</h3>
+                                        </div>
+                                        <div id="footer" class="border-bottom">
+                                            <div class="px-1 border-left border-right">
+                                            <div class="summary_details_header">
+                                                <h3 class="bold">DEDUCTIONS</h3>
+                                            </div>
+                                            <div class="deductions_detail border">
+                                                <div class="border-bottom-right">
+                                                    <h4 class="bold ps-1 truncate_text">SSS JUNE 2023</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][9]}</h4>
+                                                </div>
+                                                <div class="border-bottom-right">
+                                                    <h4 class="bold ps-1 truncate_text">PHIC JUNE 2023</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][11]}</h4>
+                                                </div>
+                                                <div class="border-bottom">
+                                                    <h4 class="bold ps-1 truncate_text">HDMF JUNE 2023</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][10]}</h4>
+                                                </div>
+                                                <div class="border-bottom-right">
+                                                    <h4 class="bold ps-1 truncate_text">SSS Loan Payment</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][12]}</h4>
+                                                </div>
+                                                <div class="border-bottom-right">
+                                                    <h4 class="bold ps-1 truncate_text">HDMF Loan Payment</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][13]}</h4>
+                                                </div>
+                                                <div class="border-bottom">
+                                                </div>
+                                                <div class="border-bottom-right">
+                                                </div>
+                                                <div class="border-bottom-right">
+                                                </div>
+                                                <div class="border-bottom">
+                                                </div>
+                                                <div class="border-bottom-right">
+                                                </div>
+                                                <div class="border-bottom-right">
+                                                </div>
+                                                <div class="border-bottom">
+                                                </div>
+                                                <div class="border-right">
+                                                </div>
+                                                <div class="border-right">
+                                                </div>
+                                                <div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="px-1 border-left border-right">
+                                            <div class="summary_details_header">
+                                                    <h3 class="bold">ADDITIONAL</h3>
+                                                    <div class="additional_detail border">
+                                                        <div class="border-bottom">
+                                                            <h4 class="bold ps-1 truncate_text left">Adjustments</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][6]}</h4>
+                                                        </div>
+                                                        <div class="border-bottom">
+                                                        </div>
+                                                        <div class="border-bottom">
+                                                        </div>
+                                                        <div class="border-bottom">
+                                                        </div>
+                                                        <div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="payslip_gross_salary" class="border-right">
+                                                <h4 class="ps-1 pt-1">Total Earnings:</h4>
+                                                <h3 class="text-end bold pt-1 pe-1">${(payroll_summary_data_list.content[e][5]).toFixed(2)}</h3>
+                                                <h4 class="ps-1 pt-1">Total Additionals:</h4>
+                                                <h3 class="text-end bold pt-1 pe-1">${(payroll_summary_data_list.content[e][6]).toFixed(2)}</h3>
+                                                <h4 class="ps-1 pt-1 border-bottom">Total Deductions:</h4>
+                                                <h3 class="text-end bold pt-1 pe-1 border-bottom">${(payroll_summary_data_list.content[e][9] + payroll_summary_data_list.content[e][10] + payroll_summary_data_list.content[e][11] + payroll_summary_data_list.content[e][12] + payroll_summary_data_list.content[e][13]).toFixed(2)}</h3>
+                                                <h4 class="ps-1 pt-1">Net Pay:</h4>
+                                                <h1 class="text-end bold pe-1">${((payroll_summary_data_list.content[e][5] + payroll_summary_data_list.content[e][6]) - (payroll_summary_data_list.content[e][9] + payroll_summary_data_list.content[e][10] + payroll_summary_data_list.content[e][11] + payroll_summary_data_list.content[e][12] + payroll_summary_data_list.content[e][13])).toFixed(2)}</h1>
+                                            </div>
+                                            <div class="border-right text-center">
+                                                <br>
+                                                <h4 class="pt-3">__________</h4>
+                                                <h4>Employee Signature</h4>
+                                            </div>
+                                            <div class="border-right text-center">
+                                                <br>
+                                                <h4 class="pt-3">__________</h4>
+                                                <h4>Authorized Signature</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="payslip">
+                                    <div class="summary">
+                                        <div class="header">
+                                            <img src="../images/logo.png" alt="">
+                                            <div class="header_title">
+                                                <h2 class="bold">FAR EAST FUEL CORPORATION</h2>
+                                                <h3>#888 Purok 5, Irabagon St. Brgy. Anyatam, San Ildefonso, Bulacan, 3010</h3>
+                                            </div>
+                                        </div>
+                                        <div class="employee_details">
+                                            <div class="grid1">
+                                                <div class="d-flex">
+                                                    <h4 class="bold">Name:</h4><h4 class="ps-1 truncate_text">${payroll_summary_data_list.content[e][4]}</h4>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <h4 class="bold">Department:</h4><h4 class="ps-1 truncate_text">${department}</h4>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <h4 class="bold">Designation:</h4><h4 class="ps-1 truncate_text">${designation}</h4>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <h4 class="bold">ID No:</h4><h4 class="ps-1 truncate_text">${payslip_employee_id[d]}</h4>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <h4 class="bold">Pay Period:</h4><h4 class="ps-1 truncate_text">${date[0]} - ${date[6]}</h4>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <h4 class="bold">Pay Date:</h4><h4 class="ps-1 truncate_text">${date_decoder(pay_date.value)}</h4>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <h4 class="bold">Tin No:</h4><h4 class="ps-1 truncate_text">${tin_id}</h4>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <h4 class="bold">Tax Code:</h4><h4 class="ps-1 truncate_text"></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="summary_details_header">
+                                            <h3 class="bold">BREAKDOWN</h3>
+                                        </div>
+                                        <div class="summary_details_details">
+                                            <div class="vertical-table">
+                                                <table>
+                                                    <tr class="bold">
+                                                        <th>Day</th>
+                                                        <td>Monday</td>
+                                                        <td>Tuesday</td>
+                                                        <td>Wednesday</td>
+                                                        <td>Thursday</td>
+                                                        <td>Friday</td>
+                                                        <td>Saturday</td>
+                                                        <td>Sunday</td>
+                                                    </tr>
+                                                    <tr id="payslip_date">
+                                                        <th>Date</th>
+                                                        ${date.map(item => `<td>${item}</td>`).join('')}
+                                                    </tr>
+                                                    <tr id="payslip_type_of_day">
+                                                        <th>Type of Day</th>
+                                                        ${type_of_day.map(item => `<td>${item}</td>`).join('')}
+                                                    </tr>
+                                                    <tr id="payslip_time_in_time_out">
+                                                        <th>Time IN/Time OUT</th>
+                                                        ${time_in.map((item1, index) => `<td>${item1} || ${time_out[index]}</td>`).join('')}                                
+                                                    </tr>
+                                                    <tr class="border-top">
+                                                        <th>Work Shifts</th>
+                                                        <td>Day || Night D.</td>
+                                                        <td>Day || Night D.</td>
+                                                        <td>Day || Night D.</td>
+                                                        <td>Day || Night D.</td>
+                                                        <td>Day || Night D.</td>
+                                                        <td>Day || Night D.</td>
+                                                        <td>Day || Night D.</td>
+                                                    </tr>
+                                                    <tr id="payslip_regular_hours">
+                                                        <th>Hours</th>
+                                                        ${hours.map((item1, index) => `<td>${item1} || ${night_hours[index]}</td>`).join('')}
+                                                    </tr>
+                                                    <tr id="payslip_regular_hours_rate">
+                                                        <th>Rate/hour</th>
+                                                        ${hours_rate_per_hour.map((item1, index) => `<td>${item1} || ${night_hours_rate_per_hour[index]}</td>`).join('')}                                
+                                                    </tr>
+                                                    <tr class="border-top-bottom" id="payslip_regular_pay">
+                                                    <th>Subtotal</th>
+                                                        ${subtotal_1.map(item => `<td>${item}</td>`).join('')}
+                                                    </tr>
+                                                    <tr id="payslip_late_mins">
+                                                        <th>Late (mins)</th>
+                                                        ${late_mins.map(item => `<td>${item}</td>`).join('')}
+                                                    </tr>
+                                                    <tr id="payslip_late_deduction">
+                                                        <th>Late Deduction</th>
+                                                        ${late_deduction.map(item => `<td>${item}</td>`).join('')}
+                                                    </tr>
+                                                    <tr id="payslip_under_time_hour">
+                                                        <th>Under Time (hour)</th>
+                                                        ${under_time_hour.map(item => `<td>${item}</td>`).join('')}
+                                                    </tr>
+                                                    <tr id="payslip_under_time_deduction">
+                                                        <th>Under Time Deduction</th>
+                                                        ${under_time_deduction.map(item => `<td>${item}</td>`).join('')}
+                                                    </tr>
+                                                    <tr class="border-top-bottom" id="payslip_late_undertime">
+                                                        <th>Subtotal</th>
+                                                        ${subtotal_2.map(item => `<td>${item}</td>`).join('')}
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Work Shifts</th>
+                                                        <td>Day || Night D.</td>
+                                                        <td>Day || Night D.</td>
+                                                        <td>Day || Night D.</td>
+                                                        <td>Day || Night D.</td>
+                                                        <td>Day || Night D.</td>
+                                                        <td>Day || Night D.</td>
+                                                        <td>Day || Night D.</td>
+                                                    </tr>
+                                                    <tr id="payslip_ot_hours">
+                                                        <th>Overtime Hours</th>
+                                                        ${ot_hours.map((item1, index) => `<td>${item1} || ${ot_night_hours[index]}</td>`).join('')}                                </tr>
+                                                    </tr>
+                                                    <tr id="payslip_ot_hours_rate">
+                                                        <th>Overtime Rate/hour</th>
+                                                        ${ot_hours_rate_per_hour.map((item1, index) => `<td>${item1} || ${ot_night_hours_rate_per_hour[index]}</td>`).join('')}                                </tr>
+                                                    </tr>
+                                                    <tr class="bold border-top" id="payslip_ot_subtotal">
+                                                        <th>Subtotal</th>
+                                                        ${subtotal_3.map(item => `<td>${item}</td>`).join('')}
+                                                    </tr>
+                                                    <tr id="payslip_allowance">
+                                                        <th>Allowance</th>
+                                                        ${allowance.map(item => `<td>${item}</td>`).join('')}
+                                                    </tr>
+                                                    <tr class="bold border-top" id="payslip_total">
+                                                        <th>Total</th>
+                                                        ${gross.map(item => `<td>${item}</td>`).join('')}
+                                                    </tr>            
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="summary_details_header">
+                                            <h3 class="bold">SUMMARY</h3>
+                                        </div>
+                                        <div id="footer" class="border-bottom">
+                                            <div class="px-1 border-left border-right">
+                                                <div class="summary_details_header">
+                                                    <h3 class="bold">DEDUCTIONS</h3>
+                                                </div>
+                                                <div class="deductions_detail border">
+                                                    <div class="border-bottom-right">
+                                                        <h4 class="bold ps-1 truncate_text">SSS JUNE 2023</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][9]}</h4>
+                                                    </div>
+                                                    <div class="border-bottom-right">
+                                                        <h4 class="bold ps-1 truncate_text">PHIC JUNE 2023</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][11]}</h4>
+                                                    </div>
+                                                    <div class="border-bottom">
+                                                        <h4 class="bold ps-1 truncate_text">HDMF JUNE 2023</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][10]}</h4>
+                                                    </div>
+                                                    <div class="border-bottom-right">
+                                                        <h4 class="bold ps-1 truncate_text">SSS Loan Payment</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][12]}</h4>
+                                                    </div>
+                                                    <div class="border-bottom-right">
+                                                        <h4 class="bold ps-1 truncate_text">HDMF Loan Payment</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][13]}</h4>
+                                                    </div>
+                                                    <div class="border-bottom">
+                                                        <h4 class="bold ps-1 truncate_text">C/A Deduction</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][14]}</h4>
+                                                        </div>
+                                                    <div class="border-bottom-right">
+                                                        <h4 class="bold ps-1 truncate_text">Uniform</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][15]}</h4>
+                                                    </div>
+                                                    <div class="border-bottom-right">
+                                                        <h4 class="bold ps-1 truncate_text">Housing</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][16]}</h4>
+                                                    </div>
+                                                    <div class="border-bottom">
+                                                        <h4 class="bold ps-1 truncate_text">St. Peter</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][17]}</h4>
+                                                    </div>
+                                                    <div class="border-bottom-right">
+                                                        <h4 class="bold ps-1 truncate_text">Cash Not Return</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][18]}</h4>
+                                                    </div>
+                                                    <div class="border-bottom-right">
+                                                        <h4 class="bold ps-1 truncate_text">Hard Hat</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][19]}</h4>
+                                                    </div>
+                                                    <div class="border-bottom">
+                                                        <h4 class="bold ps-1 truncate_text">Safety Shoes</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][20]}</h4>
+                                                    </div>
+                                                    <div class="border-right">
+                                                        <h4 class="bold ps-1 truncate_text">Over Meals</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][21]}</h4>
+                                                    </div>
+                                                    <div class="border-right">
+                                                        <h4 class="bold ps-1 truncate_text">Bereavement Assistance</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][22]}</h4>
+                                                    </div>
+                                                    <div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="px-1 border-left border-right">
+                                                <div class="summary_details_header">
+                                                    <h3 class="bold">ADDITIONAL</h3>
+                                                    <div class="additional_detail border">
+                                                        <div class="border-bottom">
+                                                            <h4 class="bold ps-1 truncate_text left">Adjustments</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][6]}</h4>
+                                                        </div>
+                                                        <div class="border-bottom">
+                                                            <h4 class="bold ps-1 truncate_text left">Cash Advance</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][7]}</h4>
+                                                        </div>
+                                                        <div class="border-bottom">
+                                                        </div>
+                                                        <div class="border-bottom">
+                                                        </div>
+                                                        <div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="payslip_gross_salary" class="border-right">
+                                                <h4 class="ps-1 pt-1">Total Earnings:</h4>
+                                                <h3 class="text-end bold pt-1 pe-1">${(payroll_summary_data_list.content[e][5]).toFixed(2)}</h3>
+                                                <h4 class="ps-1 pt-1">Total Additionals:</h4>
+                                                <h3 class="text-end bold pt-1 pe-1">${(payroll_summary_data_list.content[e][8]).toFixed(2)}</h3>
+                                                <h4 class="ps-1 pt-1 border-bottom">Total Deductions:</h4>
+                                                <h3 class="text-end bold pt-1 pe-1 border-bottom">${(payroll_summary_data_list.content[e][23]).toFixed(2)}</h3>
+                                                <h4 class="ps-1 pt-1">Net Pay:</h4>
+                                                <h1 class="text-end bold pe-1">${(payroll_summary_data_list.content[e][24]).toFixed(2)}</h1>
+                                            </div>
+                                            <div class="border-right text-center">
+                                                <br>
+                                                <h4 class="pt-3">__________</h4>
+                                                <h4>Employee Signature</h4>
+                                            </div>
+                                            <div class="border-right text-center">
+                                                <br>
+                                                <h4 class="pt-3">__________</h4>
+                                                <h4>Authorized Signature</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            `
+                        }
+                    }
+                }
+
+                payslip_container.innerHTML = payslip_form_data;
+                download_payslip_button.style.display = "block";
+            }
+        })
+
 
         // employee_form
         const employee_form = document.querySelector("#employee_form");
