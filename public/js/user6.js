@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const ltf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxBLMvyNDsT9_dlVO4Qc31dI4ErcymUHbzKimOpCZHgbJxip2XxCl7Wk3hJyqcdtrxU/exec');
         const wcf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyBFTBuFZ4PkvwmPi_3Pp_v74DCSEK2VpNy6janIGgaAK-P22wazmmShOKn6iwFbrQn/exec');
         const sf_response_promise = fetch('https://script.google.com/macros/s/AKfycby9b2VCfXc0ifkwBXJRi2UVUwgZIj9F4FTOdZa_SYKZdsTwbVtAzAXzNMFeklE35bg1/exec');
-        const prf_response_promise = fetch('https://script.google.com/macros/s/AKfycbw392QlGKtsGGYKKqvoaxyPa8zluNKwE0dGg8esAVGowrzgvSkr1NQw8qHrJh3kq2Mq/exec');
+        const orf_response_promise = fetch('https://script.google.com/macros/s/AKfycbwSliANKKtPArcb7BDb-TlZC7Cnv7Dc6TwqMZi87EYzaBD20HfIy9CshHJzuNRifqwDOg/exec');
         const irf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzTmhNOz5cXeKitSXAriUJ_FEahAQugYEKIRwDuFt9tjhj2AtPKEf2H4yTMmZ1igpUxlQ/exec');
 
         const [
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             ltf_response,
             wcf_response,
             sf_response,
-            prf_response,
+            orf_response,
             irf_response,
         ] = await Promise.all([
             username_response_promise,
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             ltf_response_promise,
             wcf_response_promise,
             sf_response_promise,
-            prf_response_promise,
+            orf_response_promise,
             irf_response_promise,
         ]);
 
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const ltf_data_list  = await ltf_response.json();
         const wcf_data_list  = await wcf_response.json();
         const sf_data_list  = await sf_response.json();
-        const prf_data_list  = await prf_response.json();
+        const orf_data_list  = await orf_response.json();
         const irf_data_list  = await irf_response.json();
 
         // Code that depends on the fetched data
@@ -384,21 +384,19 @@ document.addEventListener('DOMContentLoaded', async function() {
         const today_month = today.getMonth()+1;
         var month_new;
         var code_year_month;
-        var irf_code_year_month;
-        var prf_code_year_month;
         var data_counter;
-    
+        
         // FORM GENERATOR
         if(today_month.toString().length == 1){
             month_new = `0${today_month}`
         }
-    
+        
         code_year_month = `MTF${today_year}${month_new}`;
-    
+        
         var data_content = 1;
         var data_info;
         var data_last_3digit = 0;
-    
+        
         for(x=1; x<mtf_data_list.content.length; x++){
             data_info = mtf_data_list.content[x][1];
             
@@ -406,9 +404,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 data_last_3digit = data_info.slice(9)
             }
         }
-
+        
         data_content = parseInt(data_last_3digit) +1
-    
+        
         if(data_content.toString().length == 1){
             data_counter = `00${data_content}`;
         }
@@ -418,46 +416,127 @@ document.addEventListener('DOMContentLoaded', async function() {
         else if(data_content.toString().length == 3){
             data_counter = `${data_content}`;
         }
-    
+        
         mtf_form_no.value = `${code_year_month}${data_counter}`
         
-
+        
         // multi section
-        const irf_form_no = document.getElementById("irf_form_no"); 
-        const prf_form_no = document.getElementById("prf_form_no"); 
-        
         // purchase_request_form
-        prf_code_year_month = `PRF${today_year}${month_new}`;
+        const order_request_form = document.querySelector("#order_request_form");
+        const add_item_button = order_request_form.querySelector("#add_item_button");
+        const remove_item_button = order_request_form.querySelector("#remove_item_button");
+        const orf_item_container = order_request_form.querySelector("#orf_item_container");
+        var orf_counter = order_request_form.querySelector("#orf_counter");
+        var orf_form_no = [];
 
-        var data_content = 1;
-        var data_info;
-        var data_last_3digit = 0;
-        
-        for(x=1; x<prf_data_list.content.length; x++){
-            data_info = prf_data_list.content[x][1];
-            
-            if(data_info.includes(prf_code_year_month) == true){
-                data_last_3digit = data_info.slice(9)
+        function orf_generator() {
+            var data_content = 0;
+            var data_info;
+            var data_last_3digit = 0;
+            var orf_code_year_month;
+            orf_code_year_month = `ORF${today_year}${month_new}`;
+    
+    
+            for (let x = 1; x < orf_data_list.content.length; x++) {
+                data_info = orf_data_list.content[x][1];
+    
+                if (data_info.includes(orf_code_year_month) == true) {
+                    data_last_3digit = data_info.slice(9);
+                }
+            }
+    
+            data_content = parseInt(data_last_3digit);
+    
+            for (let y = 1; y <= orf_counter.value; y++) {  // Corrected loop condition
+                orf_form_no[y] = document.querySelector(`#orf_form_no${y}`); // Added '#' before ID
+                
+                orf_form_no[y].value = `${orf_code_year_month}${String(parseInt(data_content) + y).padStart(3,"0")}`;
             }
         }
         
-        data_content = parseInt(data_last_3digit) +1
-    
-        if(data_content.toString().length == 1){
-            data_counter = `00${data_content}`;
-        }
-        else if(data_content.toString().length == 2){
-            data_counter = `0${data_content}`;
-        }
-        else if(data_content.toString().length == 3){
-            data_counter = `${data_content}`;
-        }
-    
-        prf_form_no.value = `${prf_code_year_month}${data_counter}`
-
+        orf_generator();
+        
+        add_item_button.addEventListener("click", () => {
+            orf_counter.value = parseInt(orf_counter.value) + 1; // Increment the counter for the next item
+            console.log("🚀 ~ file: user6.js:461 ~ add_item_button.addEventListener ~ orf_counter.value:", orf_counter.value)
+            const itemHTML = `
+            <div id="orf_item">
+                <div>
+                    <div>
+                        <label for="orf_form_no${orf_counter.value}">
+                            <i class="fa-solid fa-list-ol"></i>
+                            ORF #
+                        </label><br>
+                        <div class="form">
+                            <input type="text" id="orf_form_no${orf_counter.value}" name="orf_form_no${orf_counter.value}" autocomplete="off" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="item${orf_counter.value}">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Item ${orf_counter.value}
+                        </label>
+                        <div>
+                            <input type="text" id="item${orf_counter.value}" name="item${orf_counter.value}" autocomplete="off" class="form-control" required placeholder="Item Name">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="quantity${orf_counter.value}">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Quantity
+                        </label>
+                        <div>
+                            <input type="text" id="quantity${orf_counter.value}" name="quantity${orf_counter.value}" autocomplete="off" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <label for="details${orf_counter.value}">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Details
+                        </label>
+                        <div>
+                            <input type="text" id="details${orf_counter.value}" name="details${orf_counter.value}" autocomplete="off" class="form-control" required  placeholder="Brand/Unit/Specifications">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="remarks1">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Remarks
+                        </label>
+                        <div>
+                            <input type="text" id="remarks${orf_counter.value}" name="remarks${orf_counter.value}" autocomplete="off" class="form-control" required placeholder="Where to use">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+            orf_item_container.innerHTML += itemHTML; // Append the new item HTML
+            orf_generator();
+            if(orf_counter.value > 1){
+                remove_item_button.style.display = "block"
+            }
+        });
+        
+        remove_item_button.addEventListener("click", () => {
+            const lastItem = orf_item_container.lastElementChild;
+            if (lastItem) {
+                lastItem.remove();
+                orf_counter.value = parseInt(orf_counter.value) - 1;
+                console.log("🚀 ~ file: user6.js:505 ~ remove_item_button.addEventListener ~ orf_counter.value :", orf_counter.value )
+                orf_generator();
+                if (orf_counter.value <= 1) {
+                    remove_item_button.style.display = "none";
+                }
+            }
+        });
+                
         // incident report form
+        const irf_form_no = document.getElementById("irf_form_no"); 
+        var irf_code_year_month;
         irf_code_year_month = `IRF${today_year}${month_new}`;
-
+        
         var data_content = 1;
         var data_info;
         var data_last_3digit = 0;

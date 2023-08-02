@@ -61,7 +61,7 @@
                 <li>
                     <a href="#">
                         <i class="fa-solid fa-cart-shopping"></i>
-                        Purchase Request Form
+                        Order Request Form
                     </a>
                 </li>
                 <li>
@@ -490,24 +490,74 @@
                     </div>    
                 </form>
             </section>
-            <!-- purchase_request_form -->
-            <section class="marketing" id="purchase_request_form">
-                <h2>PURCHASE REQUEST FORM</h2><br>
+            <!-- order_request_form -->
+            <section class="marketing" id="order_request_form">
+                <h2>ORDER REQUEST FORM</h2>
                 <form action="https://script.google.com/macros/s/AKfycbzVQzky_Rk6DqCLitPuTulVU92vOeew2ABJUyUn4fZImNb-ba-710ADZLm7p4FjYmiB/exec" method="post">
                     <input type="hidden" name="prf_user" id="prf_user">
-                    <label for="prf_form_no">
-                        <i class="fa-solid fa-list-ol"></i>
-                        PRF #
-                    </label><br>
-                    <div class="form">
-                        <input type="text" id="prf_form_no" name="prf_form_no" autocomplete="off" class="form-control" readonly><br>
+                    <input type="hidden" name="orf_counter" id="orf_counter" value="1">
+                    <div id="orf_item_container">
+                        <div id="orf_item">
+                            <div>
+                                <div>
+                                    <label for="orf_form_no1">
+                                        <i class="fa-solid fa-list-ol"></i>
+                                        ORF #
+                                    </label><br>
+                                    <div class="form">
+                                        <input type="text" id="orf_form_no1" name="orf_form_no1" autocomplete="off" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="item1">
+                                        <i class="fa-solid fa-list-ol"></i>
+                                        Item 1
+                                    </label>
+                                    <div>
+                                        <input type="text" id="item1" name="item1" autocomplete="off" class="form-control" required placeholder="Item Name">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="quantity1">
+                                        <i class="fa-solid fa-list-ol"></i>
+                                        Quantity
+                                    </label>
+                                    <div>
+                                        <input type="text" id="quantity1" name="quantity1" autocomplete="off" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div>
+                                    <label for="details1">
+                                        <i class="fa-solid fa-list-ol"></i>
+                                        Details
+                                    </label>
+                                    <div>
+                                        <input type="text" id="details1" name="details1" autocomplete="off" class="form-control" required placeholder="Brand/Unit/Specifications">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="remarks1">
+                                        <i class="fa-solid fa-list-ol"></i>
+                                        Remarks
+                                    </label>
+                                    <div>
+                                        <input type="text" id="remarks1" name="remarks1" autocomplete="off" class="form-control" required placeholder="Where to use">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <label for="item1">
-                        <i class="fa-solid fa-list-ol"></i>
-                        Item 1
-                    </label><br>
-                    <div>
-                        <input type="text" id="item1" name="item1" autocomplete="off" class="form-control" required><br>
+                    <div class="add_item pt-3">
+                        <div class="item_buttons">
+                            <button type="button" id="add_item_button" class="form-control">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                            <button type="button" id="remove_item_button" class="form-control">
+                                <i class="fa-solid fa-minus"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="buttons">
                         <button type="submit" id="submit" class="form-control" >
