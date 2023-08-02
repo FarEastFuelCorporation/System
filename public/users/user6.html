@@ -60,6 +60,12 @@
                 </li>
                 <li>
                     <a href="#">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        Purchase Request Form
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
                         <i class="fa-solid fa-person-falling-burst"></i>
                         Incident Report Form
                     </a>
@@ -484,7 +490,29 @@
                     </div>    
                 </form>
             </section>
-            <!-- settings -->
+            <!-- purchase_request_form -->
+            <section class="marketing" id="purchase_request_form">
+                <h2>PURCHASE REQUEST FORM</h2><br>
+                <form action="https://script.google.com/macros/s/AKfycbzVQzky_Rk6DqCLitPuTulVU92vOeew2ABJUyUn4fZImNb-ba-710ADZLm7p4FjYmiB/exec" method="post">
+                    <input type="hidden" name="prf_user" id="prf_user">
+                    <label for="prf_form_no">
+                        <i class="fa-solid fa-list-ol"></i>
+                        PRF #
+                    </label><br>
+                    <div class="form">
+                        <input type="text" id="prf_form_no" autocomplete="off" name="prf_form_no" class="form-control" readonly><br>
+                    </div>
+                    <div class="buttons">
+                        <button type="submit" id="submit" class="form-control" >
+                            Submit
+                        </button>
+                        <button type="reset" id="reset" class="form-control" >
+                            Clear
+                        </button>
+                    </div> 
+                </form>
+            </section>
+            <!-- incident_report_form -->
             <section class="marketing" id="incident_report_form">
                 <h2>INCIDENT REPORT FORM</h2><br>
                 <form action="https://script.google.com/macros/s/AKfycbzVQzky_Rk6DqCLitPuTulVU92vOeew2ABJUyUn4fZImNb-ba-710ADZLm7p4FjYmiB/exec" method="post">

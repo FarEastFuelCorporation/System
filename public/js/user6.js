@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const ltf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxBLMvyNDsT9_dlVO4Qc31dI4ErcymUHbzKimOpCZHgbJxip2XxCl7Wk3hJyqcdtrxU/exec');
         const wcf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyBFTBuFZ4PkvwmPi_3Pp_v74DCSEK2VpNy6janIGgaAK-P22wazmmShOKn6iwFbrQn/exec');
         const sf_response_promise = fetch('https://script.google.com/macros/s/AKfycby9b2VCfXc0ifkwBXJRi2UVUwgZIj9F4FTOdZa_SYKZdsTwbVtAzAXzNMFeklE35bg1/exec');
+        const prf_response_promise = fetch('https://script.google.com/macros/s/AKfycbw392QlGKtsGGYKKqvoaxyPa8zluNKwE0dGg8esAVGowrzgvSkr1NQw8qHrJh3kq2Mq/exec');
         const irf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzTmhNOz5cXeKitSXAriUJ_FEahAQugYEKIRwDuFt9tjhj2AtPKEf2H4yTMmZ1igpUxlQ/exec');
 
         const [
@@ -17,7 +18,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             ltf_response,
             wcf_response,
             sf_response,
-            irf_response
+            prf_response,
+            irf_response,
         ] = await Promise.all([
             username_response_promise,
             client_list_response_promise,
@@ -26,7 +28,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             ltf_response_promise,
             wcf_response_promise,
             sf_response_promise,
-            irf_response_promise
+            prf_response_promise,
+            irf_response_promise,
         ]);
 
         const username_data  = await username_response.json();
@@ -36,6 +39,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const ltf_data_list  = await ltf_response.json();
         const wcf_data_list  = await wcf_response.json();
         const sf_data_list  = await sf_response.json();
+        const prf_data_list  = await prf_response.json();
         const irf_data_list  = await irf_response.json();
 
         // Code that depends on the fetched data
@@ -43,10 +47,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         const user_sidebar = document.getElementById("user_sidebar");
         const user_sidebar_officer = document.getElementById("user_sidebar_officer");
         const user = document.getElementById("user");
+        const prf_user = document.getElementById("prf_user");
         const irf_user = document.getElementById("irf_user");
 
         user.value = username_data.content[6][3];
         irf_user.value = username_data.content[6][3];
+        prf_user.value = username_data.content[6][3];
         user_sidebar.innerHTML = `<u>${username_data.content[6][3]}</u>`;
         user_sidebar_officer.innerText = username_data.content[6][4];
         
@@ -369,7 +375,6 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         // mtf_data_list
         const mtf_form_no = document.getElementById("mtf_form_no"); 
-        const irf_form_no = document.getElementById("irf_form_no"); 
         const search_mtf_form_no = document.getElementById("search_mtf_form_no");
         const search_mtf_form_no_button = document.getElementById("search_mtf_form_no_button");
         const clear_mtf_form_no_button = document.getElementById("clear_mtf_form_no_button");
@@ -380,6 +385,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var month_new;
         var code_year_month;
         var irf_code_year_month;
+        var prf_code_year_month;
         var data_counter;
     
         // FORM GENERATOR
@@ -414,6 +420,40 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     
         mtf_form_no.value = `${code_year_month}${data_counter}`
+        
+
+        // multi section
+        const irf_form_no = document.getElementById("irf_form_no"); 
+        const prf_form_no = document.getElementById("prf_form_no"); 
+        
+        // purchase_request_form
+        prf_code_year_month = `PRF${today_year}${month_new}`;
+
+        var data_content = 1;
+        var data_info;
+        var data_last_3digit = 0;
+        
+        for(x=1; x<prf_data_list.content.length; x++){
+            data_info = prf_data_list.content[x][1];
+            
+            if(data_info.includes(prf_code_year_month) == true){
+                data_last_3digit = data_info.slice(9)
+            }
+        }
+        
+        data_content = parseInt(data_last_3digit) +1
+    
+        if(data_content.toString().length == 1){
+            data_counter = `00${data_content}`;
+        }
+        else if(data_content.toString().length == 2){
+            data_counter = `0${data_content}`;
+        }
+        else if(data_content.toString().length == 3){
+            data_counter = `${data_content}`;
+        }
+    
+        prf_form_no.value = `${prf_code_year_month}${data_counter}`
 
         // incident report form
         irf_code_year_month = `IRF${today_year}${month_new}`;
