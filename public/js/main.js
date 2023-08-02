@@ -430,6 +430,19 @@ function generateExactTime() {
     return timeString;
   }
     
-    
-    
+  // Get all input elements of type "number"
+const numberInputs = document.querySelectorAll('input[type="number"]');
+
+// Loop through each input and set the "step" attribute
+numberInputs.forEach(input => {
+    input.setAttribute('step', '0.01'); // Set the desired step value
+});
+
+function formatNumber(number) {
+  return number.toLocaleString('en-US', {
+    style: 'decimal',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+}   
   

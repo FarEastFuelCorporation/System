@@ -39,7 +39,7 @@
                 <li>
                     <a href="#">
                         <i class="fa-solid fa-clipboard-user"></i>
-                        Attendance Form
+                        Payroll Transaction
                     </a>
                 </li>
                 <li>
@@ -200,7 +200,7 @@
             </section>
             <!-- attendance_form -->
             <section class="hr" id="attendance_form">
-                <h2>ATTENDANCE FORM</h2><br>
+                <h2>PAYROLL TRANSACTION FORM</h2><br>
                 <form action="https://script.google.com/macros/s/AKfycbyYvzp3MnrYpjspzSvZltbIAA9_aQ9V7e3nobJXxYYIUZUYT19ufYoQgSRqnqt_vy-Jgw/exec" method="post">
                     <input type="hidden" name="user" id="user">
                     <input type="hidden" name="number_of_days" id="number_of_days" value="7">
@@ -286,7 +286,7 @@
                             Year
                             <input type="number" id="year" name="year" class="form-control form" required autocomplete="off"><br>    
                         </label><br>
-                        <label for="week_number">
+                        <label for="week_number" class="ps-3">
                             <i class="fa-solid fa-id-card"></i>
                             Week Number
                             <input type="number" id="week_number" name="week_number" class="form-control form" required autocomplete="off"><br>    
@@ -621,6 +621,7 @@
                                     padding-bottom: 5px;
                                     display: flex;
                                     margin-bottom: 5px;
+                                    height: 27.5px;
                                 }
                         
                                 #payslip_form .payslip .summary .header .header_title
