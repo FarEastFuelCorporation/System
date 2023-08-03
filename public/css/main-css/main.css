@@ -3140,6 +3140,304 @@ input:disabled {
   height: 20px;
 }
 
+/* purchasing dashboard section starts here */
+.purchasing .cards {
+  width: 100%;
+  height: 120px;
+  padding: 10px 0px 0 0px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 20px;
+  background: #f5f5f5;
+}
+
+.purchasing .cards2 {
+  width: 100%;
+  padding: 10px 0px 0 0px;
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  grid-gap: 20px;
+  background: #f5f5f5;
+}
+
+.purchasing .cards3 {
+  width: 100%;
+  height: 120px;
+  padding: 10px 0px 0 0px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+}
+
+.purchasing .cards4 {
+  width: 100%;
+  height: 120px;
+  padding: 10px 0px 0 0px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+}
+
+.purchasing .cards5 {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: 3px solid black;
+  border-radius: 5px;
+  background-color: #ffbf00;
+}
+
+.purchasing .card {
+  padding: 0 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  background: black;
+  border-radius: 10px;
+  box-shadow: 0 7px 25px 0 rgba(0, 0, 0, 0.08);
+  border: 3px solid #ffbf00;
+}
+
+.purchasing .cards .card:hover {
+  background: #ffbf00;
+}
+
+.purchasing .cards .card:hover .number,
+.purchasing .cards .card:hover .card-name,
+.purchasing .cards .card:hover .icon-box i {
+  color: black;
+}
+
+.purchasing .number {
+  font-size: 35px;
+  font-weight: bold;
+  color: #ffbf00;
+  text-align: center;
+}
+
+.purchasing .card-name {
+  color: white;
+  font-weight: 600;
+}
+
+.purchasing .icon-box i {
+  font-size: 45px;
+  color: #ffbf00;
+}
+
+.purchasing .list {
+  width: 100%;
+  font-size: 25px;
+  color: white;
+}
+
+.purchasing table {
+  width: 100%;
+}
+
+.purchasing table tr {
+  border-bottom: 1px solid white;
+}
+
+.purchasing table td,
+.purchasing table th {
+  padding: 0 10px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.purchasing table th {
+  color: #ffbf00;
+}
+
+/* purchasing TRANSACTION FORM section starts here */
+.purchasing form .form {
+  max-width: 250px !important;
+}
+
+.purchasing form .mtf_form {
+  display: flex;
+  gap: 20px;
+}
+
+.purchasing form input,
+.purchasing form select {
+  border: 3px solid orangered !important;
+}
+
+.purchasing form label,
+.purchasing form select,
+.purchasing form input {
+  font-size: 20px !important;
+}
+
+.purchasing form .search_mtf_result {
+  width: 100%;
+  padding: 20px;
+  background-color: white;
+  border: 3px solid orangered;
+  font-size: 20px !important;
+}
+
+.purchasing form .search_input {
+  position: relative;
+  background-color: #fff;
+  width: 100%;
+  border-radius: 5px;
+  box-shadow: 0px 1px 5px 3px rgba(0, 0, 0, 0.12);
+}
+
+.purchasing form .search_input input {
+  height: 55px;
+  width: 100%;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  padding: 0 60px 0 20px;
+  font-size: 20px;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.purchasing form .search_input .icon {
+  height: 55px;
+  width: 55px;
+  line-height: 55px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: center;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.purchasing form .search_input .autocom_box {
+  padding: 0px;
+  max-height: 280px;
+  overflow-y: auto;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.purchasing form .search_input.active .autocom_box {
+  padding: 10px 8px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.purchasing form .search_input .autocom_box li {
+  list-style: none;
+  padding: 8px 12px;
+  width: 100%;
+  cursor: default;
+  border-radius: 3px;
+  display: none;
+}
+
+.purchasing form .search_input.active .autocom_box li {
+  display: block;
+}
+
+.purchasing form .search_input .autocom_box li:hover {
+  background-color: #efefef;
+}
+
+.purchasing form .date_time_weight {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+}
+
+.purchasing form .date_time_weight label {
+  width: 100%;
+}
+
+.purchasing form .date_time_weight input {
+  font-size: 20px !important;
+}
+
+.purchasing form .items {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  -moz-column-gap: 20px;
+       column-gap: 20px;
+  width: 100%;
+}
+
+.purchasing form #mtf_data {
+  display: none;
+}
+
+.purchasing form .add_item {
+  display: flex;
+  width: 100%;
+  position: relative;
+}
+
+.purchasing form .item_buttons {
+  position: absolute;
+  right: 0;
+  display: flex;
+}
+
+.purchasing form #add_item_button {
+  max-width: 60px !important;
+  background-color: orangered;
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+  border-radius: 60px;
+  text-align: center;
+}
+
+.purchasing form #remove_item_button {
+  max-width: 60px !important;
+  background-color: red;
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+  border-radius: 60px;
+  text-align: center;
+  display: none;
+}
+
+.purchasing form .flex {
+  display: flex;
+  gap: 20px;
+}
+
+.purchasing form .flex > div {
+  width: 100%;
+}
+
+.purchasing form .buttons {
+  display: flex;
+  gap: 20px;
+  margin-top: 50px;
+}
+
+.purchasing form #submit,
+.purchasing form button {
+  max-width: 200px !important;
+  background-color: orangered;
+  font-size: 30px;
+  font-weight: bold;
+  color: black;
+}
+
+.purchasing form #reset {
+  max-width: 200px !important;
+  background-color: orangered;
+  font-size: 30px;
+  font-weight: bold;
+  color: black;
+}
+
+.purchasing form #clear_wcf_form_no_button {
+  background-color: orangered;
+}
+
 #order_request_form form #orf_item_container > div {
   -moz-column-gap: 20px;
        column-gap: 20px;
@@ -3149,7 +3447,7 @@ input:disabled {
 
 #order_request_form form #orf_item_container > div > div:first-child {
   display: grid;
-  grid-template-columns: 15% calc(70% - 40px) 15%;
+  grid-template-columns: 15% calc(55% - 60px) 15% 15%;
   -moz-column-gap: 20px;
        column-gap: 20px;
 }

@@ -47,12 +47,16 @@ document.addEventListener('DOMContentLoaded', async function() {
         const user_sidebar = document.getElementById("user_sidebar");
         const user_sidebar_officer = document.getElementById("user_sidebar_officer");
         const user = document.getElementById("user");
-        const prf_user = document.getElementById("prf_user");
+        const orf_user = document.getElementById("orf_user");
+        console.log("🚀 ~ file: user6.js:51 ~ document.addEventListener ~ orf_user:", orf_user)
+        const orf_department = document.getElementById("orf_department");
+        console.log("🚀 ~ file: user6.js:53 ~ document.addEventListener ~ orf_department:", orf_department)
         const irf_user = document.getElementById("irf_user");
 
         user.value = username_data.content[6][3];
+        orf_user.value = username_data.content[6][3];
+        orf_department.value = username_data.content[6][5];
         irf_user.value = username_data.content[6][3];
-        prf_user.value = username_data.content[6][3];
         user_sidebar.innerHTML = `<u>${username_data.content[6][3]}</u>`;
         user_sidebar_officer.innerText = username_data.content[6][4];
         
@@ -425,40 +429,37 @@ document.addEventListener('DOMContentLoaded', async function() {
         const order_request_form = document.querySelector("#order_request_form");
         const add_item_button = order_request_form.querySelector("#add_item_button");
         const remove_item_button = order_request_form.querySelector("#remove_item_button");
-        const orf_item_container = order_request_form.querySelector("#orf_item_container");
         var orf_counter = order_request_form.querySelector("#orf_counter");
         var orf_form_no = [];
-
+        
         function orf_generator() {
             var data_content = 0;
             var data_info;
             var data_last_3digit = 0;
             var orf_code_year_month;
             orf_code_year_month = `ORF${today_year}${month_new}`;
-    
-    
+        
             for (let x = 1; x < orf_data_list.content.length; x++) {
                 data_info = orf_data_list.content[x][1];
-    
+        
                 if (data_info.includes(orf_code_year_month) == true) {
                     data_last_3digit = data_info.slice(9);
                 }
             }
-    
+        
             data_content = parseInt(data_last_3digit);
-    
-            for (let y = 1; y <= orf_counter.value; y++) {  // Corrected loop condition
-                orf_form_no[y] = document.querySelector(`#orf_form_no${y}`); // Added '#' before ID
-                
+        
+            for (let y = 1; y <= orf_counter.value; y++) {
+                orf_form_no[y] = document.querySelector(`#orf_form_no${y}`);
                 orf_form_no[y].value = `${orf_code_year_month}${String(parseInt(data_content) + y).padStart(3,"0")}`;
             }
         }
         
-        orf_generator();
+        orf_generator()
         
         add_item_button.addEventListener("click", () => {
+            const orf_item_container = order_request_form.querySelector("#orf_item_container");
             orf_counter.value = parseInt(orf_counter.value) + 1; // Increment the counter for the next item
-            console.log("🚀 ~ file: user6.js:461 ~ add_item_button.addEventListener ~ orf_counter.value:", orf_counter.value)
             const itemHTML = `
             <div id="orf_item">
                 <div>
@@ -489,6 +490,15 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <input type="text" id="quantity${orf_counter.value}" name="quantity${orf_counter.value}" autocomplete="off" class="form-control" required>
                         </div>
                     </div>
+                    <div>
+                        <label for="unit${orf_counter.value}">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Unit
+                        </label>
+                        <div>
+                            <input type="text" id="unit${orf_counter.value}" name="unit${orf_counter.value}" autocomplete="off" class="form-control" required placeholder="ex. kg/pc/box/set">
+                        </div>
+                    </div>
                 </div>
                 <div>
                     <div>
@@ -512,25 +522,31 @@ document.addEventListener('DOMContentLoaded', async function() {
                 </div>
             </div>
             `;
-            orf_item_container.innerHTML += itemHTML; // Append the new item HTML
+            orf_item_container.insertAdjacentHTML("beforeend", itemHTML);
+
+            // Call the orf_generator function after adding a new item
             orf_generator();
-            if(orf_counter.value > 1){
-                remove_item_button.style.display = "block"
+
+            if (orf_counter.value > 1) {
+                remove_item_button.style.display = "block";
             }
         });
         
         remove_item_button.addEventListener("click", () => {
-            const lastItem = orf_item_container.lastElementChild;
+            const lastItem = order_request_form.querySelector("#orf_item_container").lastElementChild;
             if (lastItem) {
                 lastItem.remove();
                 orf_counter.value = parseInt(orf_counter.value) - 1;
-                console.log("🚀 ~ file: user6.js:505 ~ remove_item_button.addEventListener ~ orf_counter.value :", orf_counter.value )
+
+                // Call the orf_generator function after removing an item
                 orf_generator();
+
                 if (orf_counter.value <= 1) {
                     remove_item_button.style.display = "none";
                 }
             }
         });
+
                 
         // incident report form
         const irf_form_no = document.getElementById("irf_form_no"); 

@@ -364,7 +364,7 @@
                             </label><br>
                             <input class="form-control" autocapitalize="words" autocomplete="off" name="remarks" id="remarks" type="text" placeholder="Type your Remarks"><br>
                             <div class="buttons">
-                                <button type="submit" id="submit" class="form-control" >
+                                <button type="submit" id="submit_btn" class="form-control" >
                                     Submit
                                 </button>
                                 <button type="reset" id="reset" class="form-control" >
@@ -429,7 +429,7 @@
                     </label><br>
                     <input type="text" name="contact_number" id="contact_number" autocomplete="off" class="form-control" required placeholder="Input Client Contact Number..."><br>
                     <div class="buttons">
-                        <button type="submit" id="submit" class="form-control" >
+                        <button type="submit" id="submit_btn" class="form-control" >
                             Submit
                         </button>
                         <button type="reset" id="reset" class="form-control" >
@@ -481,7 +481,7 @@
                     <select name="code" id="code" class="form-control form" required>
                     </select><br>
                     <div class="buttons">
-                        <button type="submit" id="submit" class="form-control" >
+                        <button type="submit" id="submit_btn" class="form-control" >
                             Submit
                         </button>
                         <button type="reset" id="reset" class="form-control" >
@@ -493,11 +493,12 @@
             <!-- order_request_form -->
             <section class="marketing" id="order_request_form">
                 <h2>ORDER REQUEST FORM</h2>
-                <form action="https://script.google.com/macros/s/AKfycbzVQzky_Rk6DqCLitPuTulVU92vOeew2ABJUyUn4fZImNb-ba-710ADZLm7p4FjYmiB/exec" method="post">
-                    <input type="hidden" name="prf_user" id="prf_user">
+                <form action="https://script.google.com/macros/s/AKfycbwlDHcFqbBwNH53w7eOihGnNpYXIOSZhNUFEU8Uh_W8malWfx_uLgTMtMLgYPRe0R8pKA/exec" method="post">
+                    <input type="hidden" name="orf_user" id="orf_user">
+                    <input type="hidden" name="orf_department" id="orf_department">
                     <input type="hidden" name="orf_counter" id="orf_counter" value="1">
                     <div id="orf_item_container">
-                        <div id="orf_item">
+                        <div id="orf_item1">
                             <div>
                                 <div>
                                     <label for="orf_form_no1">
@@ -524,6 +525,15 @@
                                     </label>
                                     <div>
                                         <input type="text" id="quantity1" name="quantity1" autocomplete="off" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="unit1">
+                                        <i class="fa-solid fa-list-ol"></i>
+                                        Unit
+                                    </label>
+                                    <div>
+                                        <input type="text" id="unit1" name="unit1" autocomplete="off" class="form-control" required placeholder="ex. kg/pc/box/set">
                                     </div>
                                 </div>
                             </div>
@@ -560,7 +570,7 @@
                         </div>
                     </div>
                     <div class="buttons">
-                        <button type="submit" id="submit" class="form-control" >
+                        <button type="submit" id="submit_btn" class="form-control" >
                             Submit
                         </button>
                         <button type="reset" id="reset" class="form-control" >
@@ -650,7 +660,7 @@
                         </div>
                     </div><br>
                     <div class="buttons">
-                        <button type="submit" id="submit" class="form-control" >
+                        <button type="submit" id="submit_btn" class="form-control" >
                             Submit
                         </button>
                         <button type="reset" id="reset" class="form-control" >

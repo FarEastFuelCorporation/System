@@ -80,14 +80,14 @@
                 </button>
             </div>
             <!-- dashboard -->
-            <section class="marketing" id="purchasing_dashboard">
+            <section class="purchasing" id="purchasing_dashboard">
                 <h2>DASHBOARD</h2><br>
                 <h2>PURCHASE REQUEST SUMMARY</h2>
                 <div class="cards">
                     <div class="card">
                         <div class="card-content">
-                            <div class="number" id="booked_transactions"></div>
-                            <div class="card-name">Purchase Request</div>
+                            <div class="number" id="ordered_transactions"></div>
+                            <div class="card-name">Order Request</div>
                         </div>
                         <div class="icon-box">
                             <i class="fa-solid fa-cart-shopping"></i>
@@ -104,17 +104,26 @@
                     </div>
                     <div class="card">
                         <div class="card-content">
-                            <div class="number" id="on_hauling"></div>
-                            <div class="card-name">On Hauling</div>
+                            <div class="number" id="requested"></div>
+                            <div class="card-name">Requested</div>
                         </div>
                         <div class="icon-box">
-                            <i class="fa-solid fa-truck"></i>
+                            <i class="fa-solid fa-file-circle-exclamation"></i>
                         </div>
                     </div>
                     <div class="card">
                         <div class="card-content">
-                            <div class="number" id="received"></div>
-                            <div class="card-name">Received</div>
+                            <div class="number" id="approved"></div>
+                            <div class="card-name">Approved</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-file-circle-check"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="purchased"></div>
+                            <div class="card-name">Purchased</div>
                         </div>
                         <div class="icon-box">
                             <i class="fa-solid fa-clipboard-check"></i>
@@ -179,13 +188,13 @@
                     </div>
                 </div><br> -->
                 <h2>PENDING TRANSACTION LIST</h2>
-                <!-- <div class="card">
+                <div class="card">
                     <div class="list">
                         <table>
                             <thead>
                                 <th>#</th>
-                                <th>MTF #</th>
-                                <th>HAULING<br>DATE/TIME</th>
+                                <th>ORF #</th>
+                                <th>ORDER<br>DATE/TIME</th>
                                 <th>CLIENT</th>
                                 <th>WASTE DESCRIPTION</th>
                                 <th>TYPE OF VEHICLE</th>
@@ -219,11 +228,11 @@
                             </tbody>
                         </table>
                         <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
-                    </div> -->
+                    </div>
                 </div><br>
             </section>
             <!-- purchase_order_form -->
-            <section class="marketing" id="purchase_order_form">
+            <section class="purchasing" id="purchase_order_form">
                 <div class="section_container">
                     <h2>PURCHASE ORDER FORM</h2><br>
                     <form id="form_id" action="https://script.google.com/macros/s/AKfycbzbg3NVMbyeBtrymKvU19ySBlNU14vMB2N3pG60_bX3TnkVt-gZSpVYCsFtTvKlJQ0rWw/exec" method="post">
@@ -334,7 +343,7 @@
                             </label><br>
                             <input class="form-control" autocapitalize="words" autocomplete="off" name="remarks" id="remarks" type="text" placeholder="Type your Remarks"><br>
                             <div class="buttons">
-                                <button type="submit" id="submit" class="form-control" >
+                                <button type="submit" id="submit_btn" class="form-control" >
                                     Submit
                                 </button>
                                 <button type="reset" id="reset" class="form-control" >
@@ -346,7 +355,7 @@
                 </div>
             </section>
             <!-- incident_report_form -->
-            <section class="marketing" id="incident_report_form">
+            <section class="purchasing" id="incident_report_form">
                 <h2>INCIDENT REPORT FORM</h2><br>
                 <form action="https://script.google.com/macros/s/AKfycbzVQzky_Rk6DqCLitPuTulVU92vOeew2ABJUyUn4fZImNb-ba-710ADZLm7p4FjYmiB/exec" method="post">
                     <input type="hidden" name="irf_user" id="irf_user">
@@ -426,7 +435,7 @@
                         </div>
                     </div><br>
                     <div class="buttons">
-                        <button type="submit" id="submit" class="form-control" >
+                        <button type="submit" id="submit_btn" class="form-control" >
                             Submit
                         </button>
                         <button type="reset" id="reset" class="form-control" >

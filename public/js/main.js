@@ -445,4 +445,22 @@ function formatNumber(number) {
     maximumFractionDigits: 2,
   });
 }   
-  
+function addConfirmationListener(form) {
+  form.addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the form from submitting immediately
+
+    if (window.confirm('Are you sure you want to submit the data?')) {
+      // If user clicks OK, proceed with form submission
+      form.submit(); // Use the form's submit() method
+    } else {
+      // If user clicks Cancel, do nothing or perform other actions
+      // For example, you can reset form fields or show a message
+    }
+  });
+}
+
+var form_elements = document.querySelectorAll('form');
+
+form_elements.forEach(function(form) {
+  addConfirmationListener(form);
+});
