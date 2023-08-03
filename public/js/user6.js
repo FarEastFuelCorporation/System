@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const ltf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxBLMvyNDsT9_dlVO4Qc31dI4ErcymUHbzKimOpCZHgbJxip2XxCl7Wk3hJyqcdtrxU/exec');
         const wcf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyBFTBuFZ4PkvwmPi_3Pp_v74DCSEK2VpNy6janIGgaAK-P22wazmmShOKn6iwFbrQn/exec');
         const sf_response_promise = fetch('https://script.google.com/macros/s/AKfycby9b2VCfXc0ifkwBXJRi2UVUwgZIj9F4FTOdZa_SYKZdsTwbVtAzAXzNMFeklE35bg1/exec');
-        const orf_response_promise = fetch('https://script.google.com/macros/s/AKfycbwSliANKKtPArcb7BDb-TlZC7Cnv7Dc6TwqMZi87EYzaBD20HfIy9CshHJzuNRifqwDOg/exec');
+        const prf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzz6xxCe2mPrxKs3mw4-URWWsLdrpRxTrhJizkCDfRLiYvw_mDZfTIXdXczpnks9I_a2g/exec');
         const irf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzTmhNOz5cXeKitSXAriUJ_FEahAQugYEKIRwDuFt9tjhj2AtPKEf2H4yTMmZ1igpUxlQ/exec');
 
         const [
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             ltf_response,
             wcf_response,
             sf_response,
-            orf_response,
+            prf_response,
             irf_response,
         ] = await Promise.all([
             username_response_promise,
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             ltf_response_promise,
             wcf_response_promise,
             sf_response_promise,
-            orf_response_promise,
+            prf_response_promise,
             irf_response_promise,
         ]);
 
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const ltf_data_list  = await ltf_response.json();
         const wcf_data_list  = await wcf_response.json();
         const sf_data_list  = await sf_response.json();
-        const orf_data_list  = await orf_response.json();
+        const prf_data_list  = await prf_response.json();
         const irf_data_list  = await irf_response.json();
 
         // Code that depends on the fetched data
@@ -47,15 +47,13 @@ document.addEventListener('DOMContentLoaded', async function() {
         const user_sidebar = document.getElementById("user_sidebar");
         const user_sidebar_officer = document.getElementById("user_sidebar_officer");
         const user = document.getElementById("user");
-        const orf_user = document.getElementById("orf_user");
-        console.log("🚀 ~ file: user6.js:51 ~ document.addEventListener ~ orf_user:", orf_user)
-        const orf_department = document.getElementById("orf_department");
-        console.log("🚀 ~ file: user6.js:53 ~ document.addEventListener ~ orf_department:", orf_department)
+        const prf_user = document.getElementById("prf_user");
+        const prf_department = document.getElementById("prf_department");
         const irf_user = document.getElementById("irf_user");
 
         user.value = username_data.content[6][3];
-        orf_user.value = username_data.content[6][3];
-        orf_department.value = username_data.content[6][5];
+        prf_user.value = username_data.content[6][3];
+        prf_department.value = username_data.content[6][5];
         irf_user.value = username_data.content[6][3];
         user_sidebar.innerHTML = `<u>${username_data.content[6][3]}</u>`;
         user_sidebar_officer.innerText = username_data.content[6][4];
@@ -426,88 +424,88 @@ document.addEventListener('DOMContentLoaded', async function() {
         
         // multi section
         // purchase_request_form
-        const order_request_form = document.querySelector("#order_request_form");
-        const add_item_button = order_request_form.querySelector("#add_item_button");
-        const remove_item_button = order_request_form.querySelector("#remove_item_button");
-        var orf_counter = order_request_form.querySelector("#orf_counter");
-        var orf_form_no = [];
+        const purchase_request_form = document.querySelector("#purchase_request_form");
+        const add_item_button = purchase_request_form.querySelector("#add_item_button");
+        const remove_item_button = purchase_request_form.querySelector("#remove_item_button");
+        var prf_counter = purchase_request_form.querySelector("#prf_counter");
+        var prf_form_no = [];
         
-        function orf_generator() {
+        function prf_generator() {
             var data_content = 0;
             var data_info;
             var data_last_3digit = 0;
-            var orf_code_year_month;
-            orf_code_year_month = `ORF${today_year}${month_new}`;
+            var prf_code_year_month;
+            prf_code_year_month = `PR${today_year}${month_new}`;
         
-            for (let x = 1; x < orf_data_list.content.length; x++) {
-                data_info = orf_data_list.content[x][1];
+            for (let x = 1; x < prf_data_list.content.length; x++) {
+                data_info = prf_data_list.content[x][1];
         
-                if (data_info.includes(orf_code_year_month) == true) {
-                    data_last_3digit = data_info.slice(9);
+                if (data_info.includes(prf_code_year_month) == true) {
+                    data_last_3digit = data_info.slice(8);
                 }
             }
         
             data_content = parseInt(data_last_3digit);
         
-            for (let y = 1; y <= orf_counter.value; y++) {
-                orf_form_no[y] = document.querySelector(`#orf_form_no${y}`);
-                orf_form_no[y].value = `${orf_code_year_month}${String(parseInt(data_content) + y).padStart(3,"0")}`;
+            for (let y = 1; y <= prf_counter.value; y++) {
+                prf_form_no[y] = document.querySelector(`#prf_form_no${y}`);
+                prf_form_no[y].value = `${prf_code_year_month}${String(parseInt(data_content) + y).padStart(3,"0")}`;
             }
         }
         
-        orf_generator()
+        prf_generator()
         
         add_item_button.addEventListener("click", () => {
-            const orf_item_container = order_request_form.querySelector("#orf_item_container");
-            orf_counter.value = parseInt(orf_counter.value) + 1; // Increment the counter for the next item
+            const prf_item_container = purchase_request_form.querySelector("#prf_item_container");
+            prf_counter.value = parseInt(prf_counter.value) + 1; // Increment the counter for the next item
             const itemHTML = `
-            <div id="orf_item">
+            <div id="prf_item">
                 <div>
                     <div>
-                        <label for="orf_form_no${orf_counter.value}">
+                        <label for="prf_form_no${prf_counter.value}">
                             <i class="fa-solid fa-list-ol"></i>
-                            ORF #
+                            PR #
                         </label><br>
                         <div class="form">
-                            <input type="text" id="orf_form_no${orf_counter.value}" name="orf_form_no${orf_counter.value}" autocomplete="off" class="form-control" readonly>
+                            <input type="text" id="prf_form_no${prf_counter.value}" name="prf_form_no${prf_counter.value}" autocomplete="off" class="form-control" readonly>
                         </div>
                     </div>
                     <div>
-                        <label for="item${orf_counter.value}">
+                        <label for="item${prf_counter.value}">
                             <i class="fa-solid fa-list-ol"></i>
-                            Item ${orf_counter.value}
+                            Item ${prf_counter.value}
                         </label>
                         <div>
-                            <input type="text" id="item${orf_counter.value}" name="item${orf_counter.value}" autocomplete="off" class="form-control" required placeholder="Item Name">
+                            <input type="text" id="item${prf_counter.value}" name="item${prf_counter.value}" autocomplete="off" class="form-control" required placeholder="Item Name">
                         </div>
                     </div>
                     <div>
-                        <label for="quantity${orf_counter.value}">
+                        <label for="quantity${prf_counter.value}">
                             <i class="fa-solid fa-list-ol"></i>
                             Quantity
                         </label>
                         <div>
-                            <input type="text" id="quantity${orf_counter.value}" name="quantity${orf_counter.value}" autocomplete="off" class="form-control" required>
+                            <input type="number" id="quantity${prf_counter.value}" name="quantity${prf_counter.value}" autocomplete="off" class="form-control" required>
                         </div>
                     </div>
                     <div>
-                        <label for="unit${orf_counter.value}">
+                        <label for="unit${prf_counter.value}">
                             <i class="fa-solid fa-list-ol"></i>
                             Unit
                         </label>
                         <div>
-                            <input type="text" id="unit${orf_counter.value}" name="unit${orf_counter.value}" autocomplete="off" class="form-control" required placeholder="ex. kg/pc/box/set">
+                            <input type="text" id="unit${prf_counter.value}" name="unit${prf_counter.value}" autocomplete="off" class="form-control" required placeholder="ex. kg/pc/box/set">
                         </div>
                     </div>
                 </div>
                 <div>
                     <div>
-                        <label for="details${orf_counter.value}">
+                        <label for="details${prf_counter.value}">
                             <i class="fa-solid fa-list-ol"></i>
                             Details
                         </label>
                         <div>
-                            <input type="text" id="details${orf_counter.value}" name="details${orf_counter.value}" autocomplete="off" class="form-control" required  placeholder="Brand/Unit/Specifications">
+                            <input type="text" id="details${prf_counter.value}" name="details${prf_counter.value}" autocomplete="off" class="form-control" required  placeholder="Brand/Unit/Specifications">
                         </div>
                     </div>
                     <div>
@@ -516,32 +514,32 @@ document.addEventListener('DOMContentLoaded', async function() {
                             Remarks
                         </label>
                         <div>
-                            <input type="text" id="remarks${orf_counter.value}" name="remarks${orf_counter.value}" autocomplete="off" class="form-control" required placeholder="Where to use">
+                            <input type="text" id="remarks${prf_counter.value}" name="remarks${prf_counter.value}" autocomplete="off" class="form-control" required placeholder="Where to use">
                         </div>
                     </div>
                 </div>
             </div>
             `;
-            orf_item_container.insertAdjacentHTML("beforeend", itemHTML);
+            prf_item_container.insertAdjacentHTML("beforeend", itemHTML);
 
-            // Call the orf_generator function after adding a new item
-            orf_generator();
+            // Call the prf_generator function after adding a new item
+            prf_generator();
 
-            if (orf_counter.value > 1) {
+            if (prf_counter.value > 1) {
                 remove_item_button.style.display = "block";
             }
         });
         
         remove_item_button.addEventListener("click", () => {
-            const lastItem = order_request_form.querySelector("#orf_item_container").lastElementChild;
+            const lastItem = purchase_request_form.querySelector("#prf_item_container").lastElementChild;
             if (lastItem) {
                 lastItem.remove();
-                orf_counter.value = parseInt(orf_counter.value) - 1;
+                prf_counter.value = parseInt(prf_counter.value) - 1;
 
-                // Call the orf_generator function after removing an item
-                orf_generator();
+                // Call the prf_generator function after removing an item
+                prf_generator();
 
-                if (orf_counter.value <= 1) {
+                if (prf_counter.value <= 1) {
                     remove_item_button.style.display = "none";
                 }
             }

@@ -29,10 +29,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         const user = document.getElementById("user");
         const irf_user = document.getElementById("irf_user");
 
-        user.value = username_data.content[14][3];
-        irf_user.value = username_data.content[14][3];
-        user_sidebar.innerHTML = `<u>${username_data.content[14][3]}</u>`;
-        user_sidebar_officer.innerText = username_data.content[14][4];
+        user.value = username_data.content[15][3];
+        irf_user.value = username_data.content[15][3];
+        user_sidebar.innerHTML = `<u>${username_data.content[15][3]}</u>`;
+        user_sidebar_officer.innerText = username_data.content[15][4];
         
 
         // purchasing_dashboard

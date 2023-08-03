@@ -491,22 +491,22 @@
                 </form>
             </section>
             <!-- order_request_form -->
-            <section class="marketing" id="order_request_form">
-                <h2>ORDER REQUEST FORM</h2>
-                <form action="https://script.google.com/macros/s/AKfycbwlDHcFqbBwNH53w7eOihGnNpYXIOSZhNUFEU8Uh_W8malWfx_uLgTMtMLgYPRe0R8pKA/exec" method="post">
-                    <input type="hidden" name="orf_user" id="orf_user">
-                    <input type="hidden" name="orf_department" id="orf_department">
-                    <input type="hidden" name="orf_counter" id="orf_counter" value="1">
-                    <div id="orf_item_container">
-                        <div id="orf_item1">
+            <section class="marketing" id="purchase_request_form">
+                <h2>PURCHASE REQUEST FORM</h2>
+                <form action="https://script.google.com/macros/s/AKfycbyVT34ZZCYh7L9mp_CHGD_WyruDQ5pUwMvZwoEF_uE_IpbcYSNS4-eQr2dQD-3fxniNBA/exec" method="post">
+                    <input type="hidden" name="prf_user" id="prf_user">
+                    <input type="hidden" name="prf_department" id="prf_department">
+                    <input type="hidden" name="prf_counter" id="prf_counter" value="1">
+                    <div id="prf_item_container">
+                        <div id="prf_item1">
                             <div>
                                 <div>
-                                    <label for="orf_form_no1">
+                                    <label for="prf_form_no1">
                                         <i class="fa-solid fa-list-ol"></i>
-                                        ORF #
+                                        PR #
                                     </label><br>
                                     <div class="form">
-                                        <input type="text" id="orf_form_no1" name="orf_form_no1" autocomplete="off" class="form-control" readonly>
+                                        <input type="text" id="prf_form_no1" name="prf_form_no1" autocomplete="off" class="form-control" readonly>
                                     </div>
                                 </div>
                                 <div>
@@ -524,7 +524,7 @@
                                         Quantity
                                     </label>
                                     <div>
-                                        <input type="text" id="quantity1" name="quantity1" autocomplete="off" class="form-control" required>
+                                        <input type="number" id="quantity1" name="quantity1" autocomplete="off" class="form-control" required>
                                     </div>
                                 </div>
                                 <div>

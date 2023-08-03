@@ -549,7 +549,7 @@ h5{
 #employee_list_section,
 #attendance_form,
 #employee_form,
-#order_request_form,
+#purchase_request_form,
 #incident_report_form,
 #directorySection,
 #accountingSection,
@@ -3855,22 +3855,22 @@ input:disabled {
 
 
 // multi section
-// order_request_form
-#order_request_form form #orf_item_container > div 
+// purchase_request_form
+#purchase_request_form form #prf_item_container > div 
 {
     column-gap: 20px;
     padding: 20px 0;
     border-bottom: 1px solid red;
 }
 
-#order_request_form form #orf_item_container > div > div:first-child 
+#purchase_request_form form #prf_item_container > div > div:first-child 
 {
     display: grid;
     grid-template-columns: 15% calc(55% - 60px) 15% 15%;
     column-gap: 20px;
 }
 
-#order_request_form form #orf_item_container > div > div:nth-child(2)
+#purchase_request_form form #prf_item_container > div > div:nth-child(2)
 {
     display: grid;
     grid-template-columns: repeat(2, calc((100% - 20px)/2));
