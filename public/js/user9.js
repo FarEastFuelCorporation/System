@@ -3136,6 +3136,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         const resign_button = employee_form.querySelector("#resign_button");
         const new_employee_form = employee_form.querySelector("#new_employee_form");
         const new_employee_id = new_employee_form.querySelector("#employee_id");
+        const new_gender= new_employee_form.querySelector("#gender");
+        const new_civil_status= new_employee_form.querySelector("#civil_status");
+        const new_spouse_name_container= new_employee_form.querySelector("#spouse_name_container");
+        const new_affix_container= new_employee_form.querySelector("#affix_container");
         const update_record_form = employee_form.querySelector("#update_record_form");
         const update_employee_id = update_record_form.querySelector("#employee_id");
         const update_search_employee_id_button = update_record_form.querySelector("#search_employee_id_button");
@@ -3181,7 +3185,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const update_time_out_schedule = update_record_form.querySelector("#time_out_schedule");
         const update_date_resignation = update_record_form.querySelector("#date_resignation");
         const reason_resignation = update_record_form.querySelector("#reason_resignation");
-        
+        new_spouse_name_container.style.display = "none";
+
         new_employee_button.addEventListener("click", () => {
             if(new_employee_form.style.display == "block"){
                 new_employee_form.style.display = "none";
@@ -3189,6 +3194,22 @@ document.addEventListener('DOMContentLoaded', async function() {
             else{
                 new_employee_form.style.display = "block";
                 update_record_form.style.display = "none";
+            }
+        })
+        new_gender.addEventListener("change", () => {
+            if(new_gender.value == "MALE"){
+                new_spouse_name_container.style.display = "none";
+                new_affix_container.style.display = "block";
+            }
+            else if(new_gender.value == "FEMALE"){
+                if(new_civil_status.value == "SINGLE"){
+                    new_affix_container.style.display = "none";
+                    new_spouse_name_container.style.display = "none";
+                }
+                else{
+                    new_spouse_name_container.style.display = "block";
+                    new_affix_container.style.display = "none";
+                }
             }
         })
 
@@ -3268,13 +3289,13 @@ document.addEventListener('DOMContentLoaded', async function() {
         var last_three_digit = 0;
         
         for (let x = 0; x < employee_data_list.content.length; x++) {
-          var employee_number = String(employee_data_list.content[x][1]); // Convert to a string
-          if (employee_number.slice(0, 2) == lastTwoDigitsOfYear) {
-            let threeDigitValue = parseFloat(employee_number.slice(-3));
-            if (!isNaN(threeDigitValue) && last_three_digit < threeDigitValue) {
-              last_three_digit = threeDigitValue;
+            var employee_number = String(employee_data_list.content[x][1]); // Convert to a string
+            if (employee_number.slice(0, 2) == lastTwoDigitsOfYear) {
+                let threeDigitValue = parseFloat(employee_number.slice(-3));
+                if (!isNaN(threeDigitValue) && last_three_digit < threeDigitValue) {
+                    last_three_digit = threeDigitValue;
+                }
             }
-          }
         }
         last_three_digit += 1;
         new_employee_id.value = `${lastTwoDigitsOfYear}${String(last_three_digit).padStart(3, '0')}`;        
