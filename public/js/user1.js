@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', async function() {
     try {
         const username_response_promise = fetch('https://script.google.com/macros/s/AKfycbwmA97K4sdfq6dhzSsp14JU9KgQrFgSARNZbvSfiU7vuH8oEipt6TmcFo_o-jCI0kiQ/exec');
+        const employee_response_promise = fetch('https://script.google.com/macros/s/AKfycbwns5R6TA8U64ywbb9hwYu4LKurAjTM0Z18NYNZMt0Ft0m-_NUHYbYqblk_5KWugvt7lA/exec');
         const client_list_response_promise = fetch('https://script.google.com/macros/s/AKfycbxXnIsmgK52Ws9H2qAh47qkgZxDltFJaHSFV0e9UQRwaK1g_xwFUKGokL_hk4fq-_mhSg/exec');
         const driver_response_promise = fetch('https://script.google.com/macros/s/AKfycbyJ_ttOt1Ab9HnpWtQJWszInOY1hUBKvERX-dX8iijDTrQWJNUeRdgShrk-jFUoyz1zug/exec');
         const vehicle_response_promise = fetch('https://script.google.com/macros/s/AKfycbw-JCnctX1x1W1ogGbrkhNdIGd9q6bYjy_nvaYeoiaBf7HreB2a1tKJZaJHw2wu4wmpcA/exec');
@@ -10,6 +11,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         const [
             username_response,
+            employee_response,
             client_list_response,
             driver_response,
             vehicle_response,
@@ -18,6 +20,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             wcf_response
         ] = await Promise.all([
             username_response_promise,
+            employee_response_promise,
             client_list_response_promise,
             driver_response_promise,
             vehicle_response_promise,
@@ -27,6 +30,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         ]);
 
         const username_data  = await username_response.json();
+        const employee_data_list  = await employee_response.json();
         const client_list_data  = await client_list_response.json();
         const driver_data  = await driver_response.json();
         const vehicle_data  = await vehicle_response.json();
@@ -128,6 +132,20 @@ document.addEventListener('DOMContentLoaded', async function() {
         for(let i = 0; i < newElements_receiving.length; i++){
             for(let j = 1; j < ltf_data_list.content.length; j++){
                 if(newElements_receiving[i] == ltf_data_list.content[j][1]){
+                    var driver_name = "";
+                    for(let x = 1; x < employee_data_list.content.length; x++){
+                        if(employee_data_list.content[x][31] == "ACTIVE"){
+                            if(employee_data_list.content[x][1] == ltf_data_list.content[j][9]){
+                                var gender = employee_data_list.content[x][7];
+                                if(gender == "MALE"){
+                                    driver_name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} ${employee_data_list.content[x][6]}`
+                                }
+                                else{
+                                    driver_name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} - ${employee_data_list.content[x][5]}`
+                                }
+                            }
+                        }
+                    }
                     data_value +=`
                     <tr>
                         <td>${data_value_counter}</td>
@@ -137,7 +155,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td>${ltf_data_list.content[j][4]}</td>
                         <td>${ltf_data_list.content[j][7]}</td>
                         <td>${ltf_data_list.content[j][8]}</td>
-                        <td>${ltf_data_list.content[j][9]}</td>
+                        <td>${driver_name}</td>
                     </tr>
                     `
                     data_value_counter += 1;

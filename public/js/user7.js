@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', async function() {
     try {
         const username_response_promise = fetch('https://script.google.com/macros/s/AKfycbwmA97K4sdfq6dhzSsp14JU9KgQrFgSARNZbvSfiU7vuH8oEipt6TmcFo_o-jCI0kiQ/exec');
+        const employee_response_promise = fetch('https://script.google.com/macros/s/AKfycbwns5R6TA8U64ywbb9hwYu4LKurAjTM0Z18NYNZMt0Ft0m-_NUHYbYqblk_5KWugvt7lA/exec');
         const driver_response_promise = fetch('https://script.google.com/macros/s/AKfycbyJ_ttOt1Ab9HnpWtQJWszInOY1hUBKvERX-dX8iijDTrQWJNUeRdgShrk-jFUoyz1zug/exec');
         const vehicle_response_promise = fetch('https://script.google.com/macros/s/AKfycbw-JCnctX1x1W1ogGbrkhNdIGd9q6bYjy_nvaYeoiaBf7HreB2a1tKJZaJHw2wu4wmpcA/exec');
         const vehicle_log_response_promise = fetch('https://script.google.com/macros/s/AKfycbwOVO1qi9ac0YojlrZUh-XMYMe_gAeO2bg_wU_lSRdBkLgmJKQuzQuq41lzvSOjKfzA/exec');
@@ -11,6 +12,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         const [
             username_response,
+            employee_response,
             driver_response,
             vehicle_response,
             vehicle_log_response,
@@ -20,6 +22,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             sf_response
         ] = await Promise.all([
             username_response_promise,
+            employee_response_promise,
             driver_response_promise,
             vehicle_response_promise,
             vehicle_log_response_promise,
@@ -30,6 +33,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         ]);
 
         const username_data  = await username_response.json();
+        const employee_data_list  = await employee_response.json();
         const driver_data  = await driver_response.json();
         const vehicle_data  = await vehicle_response.json();
         const vehicle_log_data  = await vehicle_log_response.json();
@@ -213,8 +217,18 @@ document.addEventListener('DOMContentLoaded', async function() {
         const sugg_box2 = search_wrapper2.querySelector(".autocom_box");
         var data_value2 = [];
 
-        for (x = 1; x < driver_data.content.length; x++) {
-            data_value2.push(driver_data.content[x][3]);
+        for(let x = 1; x < employee_data_list.content.length; x++){
+            if(employee_data_list.content[x][31] == "ACTIVE"){
+                var gender = employee_data_list.content[x][7];
+                if(gender == "MALE"){
+                    var full_name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} ${employee_data_list.content[x][6]}`
+                    data_value2.push(full_name);
+                }
+                else{
+                    var full_name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} - ${employee_data_list.content[x][5]}`
+                    data_value2.push(full_name);
+                }
+            }
         }
     
         input_box2.onkeyup = (e) => {
@@ -258,6 +272,105 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             sugg_box2.innerHTML = list_data;
         }
+
+        
+        // truck_helper
+        const plate_driver_truck_helper = document.getElementById("plate_driver_truck_helper");
+        var truck_helper_count = document.getElementById("truck_helper_count");
+        const add_item_button = document.getElementById("add_item_button");
+        const remove_item_button = document.getElementById("remove_item_button");
+        
+        add_item_button.addEventListener("click", () => {
+            truck_helper_count.value = parseInt(truck_helper_count.value) + 1; // Increment the counter for the next item
+
+            var data = `
+            <div class="wrapper">
+                <label for="truck_helper">
+                    <i class="fa-solid fa-id-card"></i>
+                    Truck Helper ${truck_helper_count.value}
+                </label><br>
+                <div class="search_input" id="search_truck_helper">
+                    <input type="text" autocomplete="off" name="truck_helper${truck_helper_count.value}" id="truck_helper${truck_helper_count.value}" class="form-control" required placeholder="Type to Search Truck Helper Name...">
+                    <div class="autocom_box">
+                    </div>
+                    <div class="icon"><i class="fas fa-search"></i></div>
+                </div>
+            </div>
+            `
+            plate_driver_truck_helper.insertAdjacentHTML("beforeend", data);
+            add_event_function();
+            if (truck_helper_count.value > 1) {
+                remove_item_button.style.display = "block";
+            }
+        })
+
+        add_event_function();
+
+        function add_event_function(){
+            const search_wrapper5 = document.querySelectorAll("#search_truck_helper");
+            search_wrapper5.forEach((search_wrapper) => {
+                const input_box5 = search_wrapper.querySelector("input");
+                const sugg_box5 = search_wrapper.querySelector(".autocom_box");
+                var data_value5 = [];
+        
+                for(let x = 1; x < employee_data_list.content.length; x++){
+                    if(employee_data_list.content[x][31] == "ACTIVE"){
+                        var gender = employee_data_list.content[x][7];
+                        if(gender == "MALE"){
+                            var full_name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} ${employee_data_list.content[x][6]}`
+                            data_value5.push(full_name);
+                        }
+                        else{
+                            var full_name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} - ${employee_data_list.content[x][5]}`
+                            data_value5.push(full_name);
+                        }
+                    }
+                }
+            
+                input_box5.onkeyup = (e) => {
+                    let user_data = e.target.value;
+                    let empty_array = [];
+                    if (user_data) {
+                        empty_array = data_value5.filter((data) => {
+                            return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
+                        });
+                        empty_array = empty_array.map((data) => {
+                            return '<li>' + data + '</li>';
+                        });
+                        console.log(empty_array);
+                        search_wrapper.classList.add("active");
+                        show_suggestions5(empty_array);
+                    } else {
+                        search_wrapper.classList.remove("active");
+                    }
+                };
+            
+                sugg_box5.addEventListener("click", (e) => {
+                    if (e.target.tagName === "LI") {
+                        select5(e.target.innerHTML);
+                    }
+                });
+                
+                function select5(element) {
+                    let select_user_data = element;
+                    input_box5.value = select_user_data;
+                    console.log(input_box5.value);
+                    search_wrapper.classList.remove("active");
+                }
+            
+                function show_suggestions5(list) {
+                    let list_data;
+                    if (!list.length) {
+                        user_value = input_box5.value;
+                        list_data = '<li>' + user_value + '</li>';
+                    } else {
+                        list_data = list.join("");
+                    }
+                    sugg_box5.innerHTML = list_data;
+                }
+            })
+        }
+
     
         // vehicle_list_section 
         const total_vehicle_vehicle_list_section = document.querySelector("#total_vehicle");

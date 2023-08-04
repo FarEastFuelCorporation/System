@@ -228,7 +228,7 @@
             <!-- LOGISTICS TRAVEL FORM -->
             <section class="logistic" id="logistics_travel_form">
                 <h2>LOGISTICS TRAVEL FORM</h2><br>
-                <form id="form_id" action="https://script.google.com/macros/s/AKfycbzHaBErOWak2k3TsWlrwSlhhec0xSveNfBFoiTBcmieVYkxoOrWWYBAiqdadhHZfdXp/exec" method="post">
+                <form id="form_id" action="https://script.google.com/macros/s/AKfycbzae9WTZ52z6eYlFatF5JphiHFKaA23UJ3CXa1KteJk6ClgH343abfQ9RJhCKHnglw/exec" method="post">
                     <input type="hidden" name="user" id="user">
                     <input type="hidden" name="mtf_form_no" id="mtf_form_no">
                     <input type="hidden" name="client" id="client">
@@ -295,7 +295,7 @@
 
                     </div>
                     <div id="ltf_data">
-                        <div class="plate_driver_truck_helper">
+                        <div class="plate_driver_truck_helper" id="plate_driver_truck_helper">
                             <div class="wrapper">
                                 <label for="plate_no">
                                     <i class="fa-solid fa-truck"></i>
@@ -319,14 +319,25 @@
                                     </div>
                                     <div class="icon"><i class="fas fa-search"></i></div>
                                 </div>
-                            </div>                         
+                            </div>
+                            <div class="add_item pt-3">
+                                <div class="item_buttons">
+                                    <button type="button" id="add_item_button" class="form-control">
+                                        <i class="fa-solid fa-plus"></i>
+                                    </button>
+                                    <button type="button" id="remove_item_button" class="form-control">
+                                        <i class="fa-solid fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <input type="hidden" name="truck_helper_count" id="truck_helper_count" value="1">                         
                             <div class="wrapper">
                                 <label for="truck_helper">
                                     <i class="fa-solid fa-id-card"></i>
-                                    Truck Helper
+                                    Truck Helper 1
                                 </label><br>
                                 <div class="search_input" id="search_truck_helper">
-                                    <input type="text" autocomplete="off" name="truck_helper" id="truck_helper" class="form-control" required placeholder="Type to Search Truck Helper Name...">
+                                    <input type="text" autocomplete="off" name="truck_helper1" id="truck_helper1" class="form-control" required placeholder="Type to Search Truck Helper Name...">
                                     <div class="autocom_box">
                                     </div>
                                     <div class="icon"><i class="fas fa-search"></i></div>
