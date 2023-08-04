@@ -383,9 +383,11 @@
                         <table>
                             <thead>
                                 <th>#</th>
+                                <th>CLIENT ID</th>
                                 <th>CLIENT</th>
                                 <th>CLIENT CATEGORY</th>
                                 <th>ADDRESS</th>
+                                <th>NATURE OF BUSINESS</th>
                                 <th>CONTACT NUMBER</th>
                             </thead>
                             <tbody id="client_list">
@@ -398,7 +400,12 @@
             </section>
             <section class="marketing" id="new_client_form">
                 <h2>NEW CLIENT FORM</h2><br>
-                <form  action="https://script.google.com/macros/s/AKfycby2agG2WE5gsjaPnSqNKPxwCkI_hD0Q836cB0WSU1NL01Y0gcK8OCWLFm7cO851g0Ok/exec" method="post">
+                <form  action="https://script.google.com/macros/s/AKfycbyghIs0whQZiLVNZwTeAyICg0xWAYvAnuYfUToa2nI73VAcx3YXJQNONS0QuOtCnl8p/exec" method="post">
+                    <label for="client_id">
+                        <i class="fa-solid fa-user"></i>
+                        Client ID
+                        </label><br>
+                    <input type="text" name="client_id" id="client_id" autocomplete="off" class="form-control form" required readonly><br>
                     <label for="client">
                         <i class="fa-solid fa-user"></i>
                         Client
@@ -423,11 +430,16 @@
                         <option value="HW, NHW">HAZARDOUS WASTE AND NON-HAZARDOUS WASTE</option>
                         <option value="RW, HW, NHW">RESIDUAL WASTE, HAZARDOUS WASTE AND NON-HAZARDOUS WASTE</option>
                     </select><br>
+                    <label for="nature_of_business">
+                        <i class="fa-solid fa-table-list"></i>
+                        Nature of Business
+                    </label><br>
+                    <input type="text" name="nature_of_business" id="nature_of_business" autocomplete="off" class="form-control" required placeholder="Input Client's Nature of Business..."><br>
                     <label for="contact_number">
                         <i class="fa-solid fa-square-phone"></i>
                         Contact Number
                     </label><br>
-                    <input type="text" name="contact_number" id="contact_number" autocomplete="off" class="form-control" required placeholder="Input Client Contact Number..."><br>
+                    <input type="text" name="contact_number" id="contact_number" autocomplete="off" class="form-control" required placeholder="Input Client's Contact Number..."><br>
                     <div class="buttons">
                         <button type="submit" id="submit_btn" class="form-control" >
                             Submit
@@ -447,6 +459,7 @@
                         <table>
                             <thead>
                                 <th>#</th>
+                                <th>WASTE ID</th>
                                 <th>TYPE OF WASTE</th>
                                 <th>TREATMENT<br>METHOD</th>
                                 <th>CODE</th>

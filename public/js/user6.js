@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         ]);
 
         const username_data  = await username_response.json();
-        const client_list_data  = await client_list_response.json();
+        const client_data_list  = await client_list_response.json();
         const type_of_waste_data  = await type_of_waste_response.json();
         const mtf_data_list  = await mtf_response.json();
         const ltf_data_list  = await ltf_response.json();
@@ -209,16 +209,53 @@ document.addEventListener('DOMContentLoaded', async function() {
         incident_history_list.innerHTML = incident_history_data_value
 
 
-        // client_list_data
+        // client_data_list
         const search_wrapper = document.getElementById("search_client");
         const input_box = search_wrapper.querySelector("input");
         const sugg_box = search_wrapper.querySelector(".autocom_box");
         const mtf_data = document.getElementById("mtf_data");
         const client_list = document.getElementById("client_list");
+        const client_id = document.getElementById("client_id");
+        const today = new Date();
+        const today_year = today.getFullYear();
+        const today_month = today.getMonth()+1;
+        var code_year_month;
+        var data_counter;
+        
+        // FORM GENERATOR
+        
+        code_year_month = `C${today_year}`;
+        
+        var data_content = 1;
+        var data_info;
+        var data_last_3digit = 0;
+        
+        for(x=1; x<client_data_list.content.length; x++){
+            data_info = client_data_list.content[x][6];
+            
+            if(data_info.includes(code_year_month) == true){
+                data_last_3digit = data_info.slice(6)
+            }
+        }
+        
+        data_content = parseInt(data_last_3digit) +1
+        
+        if(data_content.toString().length == 1){
+            data_counter = `00${data_content}`;
+        }
+        else if(data_content.toString().length == 2){
+            data_counter = `0${data_content}`;
+        }
+        else if(data_content.toString().length == 3){
+            data_counter = `${data_content}`;
+        }
+        
+        client_id.value = `${code_year_month}${data_counter}`
+
         var data_value = [];
 
-        for (x = 1; x < client_list_data.content.length; x++) {
-            data_value.push(client_list_data.content[x][1]);
+        for (x = 1; x < client_data_list.content.length; x++) {
+            data_value.push(client_data_list.content[x][1]);
         }
     
         input_box.onkeyup = (e) => {
@@ -265,21 +302,23 @@ document.addEventListener('DOMContentLoaded', async function() {
             sugg_box.innerHTML = list_data;
         }
 
-        var client_list_data_value = "";
+        var client_data_list_value = "";
         var data_value_counter = 1;
-        for(let x = 1; x < client_list_data.content.length; x++){
-            client_list_data_value += `
+        for(let x = 1; x < client_data_list.content.length; x++){
+            client_data_list_value += `
             <tr>
                 <td>${data_value_counter}</td>
-                <td>${client_list_data.content[x][1]}</td>
-                <td>${client_list_data.content[x][2]}</td>
-                <td>${client_list_data.content[x][3]}</td>
-                <td>${client_list_data.content[x][4]}</td>
+                <td>${client_data_list.content[x][6]}</td>
+                <td>${client_data_list.content[x][1]}</td>
+                <td>${client_data_list.content[x][2]}</td>
+                <td>${client_data_list.content[x][3]}</td>
+                <td>${client_data_list.content[x][4]}</td>
+                <td>${client_data_list.content[x][5]}</td>
             </tr>
             `
             data_value_counter += 1;
         }
-        client_list.innerHTML = client_list_data_value
+        client_list.innerHTML = client_data_list_value;
 
         // type_of_waste_data
         const type_of_waste_list = document.getElementById("type_of_waste_list");
@@ -342,6 +381,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             type_of_waste__list_data_value += `
             <tr>
                 <td>${type_of_waste__list_data_value_counter}</td>
+                <td>${type_of_waste_data.content[x][4]}</td>
                 <td>${type_of_waste_data.content[x][1]}</td>
                 <td>${type_of_waste_data.content[x][2]}</td>
                 <td>${type_of_waste_data.content[x][3]}</td>
@@ -381,9 +421,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         const search_mtf_form_no_button = document.getElementById("search_mtf_form_no_button");
         const clear_mtf_form_no_button = document.getElementById("clear_mtf_form_no_button");
         const search_wcf_result = document.getElementById("search_wcf_result");
-        const today = new Date();
-        const today_year = today.getFullYear();
-        const today_month = today.getMonth()+1;
         var month_new;
         var code_year_month;
         var data_counter;

@@ -564,7 +564,7 @@ h5 {
 #new_client_form,
 #type_of_waste_list_section,
 #type_of_waste_form,
-#logistic_dashboard,
+#logistics_travel_form,
 #vehicle_list_section,
 #new_vehicle_form,
 #vehicle_maintenance_form,
@@ -576,7 +576,7 @@ h5 {
 #employee_list_section,
 #attendance_form,
 #employee_form,
-#marketing_dashboard,
+#purchase_request_form,
 #incident_report_form,
 #settingsSection,
 #helpSection,
@@ -2364,6 +2364,10 @@ section h2 {
   -moz-column-gap: 20px;
        column-gap: 20px;
   width: 100%;
+}
+
+.logistic form #ltf_data {
+  display: none;
 }
 
 .logistic form .add_item {
