@@ -1,25 +1,28 @@
 document.addEventListener('DOMContentLoaded', async function() {
     try {
         const username_response_promise = fetch('https://script.google.com/macros/s/AKfycbwmA97K4sdfq6dhzSsp14JU9KgQrFgSARNZbvSfiU7vuH8oEipt6TmcFo_o-jCI0kiQ/exec');
-        const prf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzz6xxCe2mPrxKs3mw4-URWWsLdrpRxTrhJizkCDfRLiYvw_mDZfTIXdXczpnks9I_a2g/exec');
-        const pof_response_promise = fetch('https://script.google.com/macros/s/AKfycbwv-_d3rYhFtuob6bXhGVBu_YO3KbfpucETRBm4FMOj1SK4GTZVTVi1v4XW9CIV2KHvMQ/exec');
+        const prf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxZctLub-6PuQGykx298syeH7Qm__S37uqQrVFYsHVtv-Qk8M2oSkRIPIMVT_1WexqRZA/exec');
+        const pof_response_promise = fetch('https://script.google.com/macros/s/AKfycbzqVTd17rQV4G2nAWPDBoc2RNftAq92WL5DRsayPw98taWmzUIvhX9ppc27euLXjUe7PA/exec');
         const irf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzTmhNOz5cXeKitSXAriUJ_FEahAQugYEKIRwDuFt9tjhj2AtPKEf2H4yTMmZ1igpUxlQ/exec');
 
         const [
             username_response,
             prf_response,
             pof_response,
+            tbf_response,
             irf_response,
         ] = await Promise.all([
             username_response_promise,
             prf_response_promise,
             pof_response_promise,
+            tbf_response_promise,
             irf_response_promise,
         ]);
 
         const username_data  = await username_response.json();
         const prf_data_list  = await prf_response.json();
         const pof_data_list  = await pof_response.json();
+        const tbf_data_list  = await tbf_response.json();
         const irf_data_list  = await irf_response.json();
 
         // Code that depends on the fetched data
@@ -66,7 +69,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         requested_purchasing.innerText = 0;
         approved_purchasing.innerText = 0;
         purchased_purchasing.innerText = 0;
-
 
         // pending_list
         var data_value = "";

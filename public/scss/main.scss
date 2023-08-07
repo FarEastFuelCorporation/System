@@ -544,7 +544,7 @@ h5{
 #purchasing_dashboard,
 #purchase_order_form,
 #ap_accounting_dashboard,
-#driver_trip_form,
+#trip_forms,
 #safety_dashboard,
 #incident_documentation_form,
 #hr_dashboard,
@@ -583,7 +583,7 @@ h5{
 #vehicle_maintenance_form,
 #incident_documentation_form,
 #purchase_order_form,
-#   ,
+#ap_accounting_dashboard,
 #directorySection,
 #accountingSection,
 #employee_list_section,
@@ -4009,12 +4009,12 @@ input:disabled {
     font-size: 20px !important;
 }
 
-.ap_accounting form .search_mtf_result
+.ap_accounting form .search_ltf_result
 {
     width: 100%;
     padding: 20px;
     background-color: white;
-    border: 3px solid blue;
+    border: 3px solid blue !important;
     font-size: 20px !important;
 }
 
@@ -4136,7 +4136,7 @@ input:disabled {
 .ap_accounting form #add_item_button
 {
     max-width: 60px !important;
-    background-color: blue;
+    background-color: blue !important;
     font-size: 30px;
     font-weight: bold;
     color: white;
@@ -4178,10 +4178,18 @@ input:disabled {
 .ap_accounting form button
 {
     max-width: 200px !important;
-    background-color: blue;
+    background-color: blue !important;
     font-size: 30px;
     font-weight: bold;
     color: white;
+}
+
+.ap_accounting button
+{
+    background-color: blue !important;
+    font-size: 30px;
+    font-weight: bold;
+    color: white !important;
 }
 
 .ap_accounting form #reset
@@ -4190,20 +4198,28 @@ input:disabled {
     background-color: blue;
     font-size: 30px;
     font-weight: bold;
-    color: white;
+    color: white !important;
 }
 
-.ap_accounting form #clear_wcf_form_no_button
+.ap_accounting #budget_form,
+// .ap_accounting #liquidation_form,
+.ap_accounting #budget_form_inputs,
+.ap_accounting #budget_form_buttons
+// .ap_accounting #liquidation_form_inputs,
+// .ap_accounting #liquidation_form_buttons
 {
-    background-color: blue;
-    color: white;
+    display: none;
 }
 
-.ap_accounting form .line1{
+.ap_accounting #cash_advance_list,
+.ap_accounting #liquidation_list
+{
     display: grid;
-    grid-template-columns: 20% calc(80% - 20px);
+    grid-template-columns: 50% 20%;
     column-gap: 20px;
 }
+
+
 
 
 // multi section

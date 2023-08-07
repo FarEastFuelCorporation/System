@@ -31,7 +31,7 @@
                 <li>
                     <a href="#">
                         <i class="fa-solid fa-clipboard-list"></i>
-                        Driver Trip Form
+                        Driver Trip Forms
                     </a>
                 </li>
                 <li>
@@ -130,7 +130,7 @@
                         </div>
                     </div>
                 </div><br> -->
-                <h2>PENDING TRANSACTION LIST</h2>
+                <h2>PENDING TRIP BUDGET LIST</h2>
                 <div class="card">
                     <div class="list">
                         <table>
@@ -144,6 +144,29 @@
                                 <th>REMARKS</th>
                             </thead>
                             <tbody id="pending_list">
+
+                            </tbody>
+                        </table>
+                        <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
+                </div><br>
+                <h2>TRIP BUDGET HISTORY LIST</h2>
+                <div class="card">
+                    <div class="list">
+                        <table>
+                            <thead>
+                                <th>#</th>
+                                <th>TBF #</th>
+                                <th>LTF #</th>
+                                <th>HAULING<br>DATE/TIME</th>
+                                <th>CLIENT</th>
+                                <th>WASTE DESCRIPTION</th>
+                                <th>TYPE OF VEHICLE</th>
+                                <th>RELEASED<br>BUDGET</th>
+                                <th>REMARKS</th>
+                                <th>ACTUAL<br>BUDGET</th>
+                            </thead>
+                            <tbody id="history_list">
 
                             </tbody>
                         </table>
@@ -173,12 +196,22 @@
                     </div>
                 </div><br> -->
             </section>
-            <!-- purchase_order_form -->
-            <section class="ap_accounting" id="driver_trip_form">
+            <!-- trip_forms -->
+            <section class="ap_accounting" id="trip_forms">
                 <div class="section_container">
-                    <h2>DRIVER TRIP FORM</h2><br>
-                    <form id="form_id" action="https://script.google.com/macros/s/AKfycbzbg3NVMbyeBtrymKvU19ySBlNU14vMB2N3pG60_bX3TnkVt-gZSpVYCsFtTvKlJQ0rWw/exec" method="post">
+                    <h2>TRIP FORMS</h2><br>
+                    <label class="d-flex gap-3">
+                        <button type="button" id="budget_form_button" class="form-control fw-bold fs-3 text-white">
+                            TRIP BUDGET FORM
+                        </button>
+                        <button type="button" id="liquidation_form_button" class="form-control fw-bold fs-3">
+                            TRIP LIQUIDATION FORM
+                        </button>
+
+                    </label><br>
+                    <form id="budget_form" action="https://script.google.com/macros/s/AKfycbxZ0rc9gzcroqmvLZ0GSNSbSMizuzNOmdqVw-Ptp_YOQEgbOheiJkoYTECMDohcjcc/exec" method="post">
                         <input type="hidden" name="user" id="user">
+                        <h2>TRIP  BUDGET FORM</h2><br>
                         <div class="ap_form">
                             <div>
                                 <label for="search_ltf_form_no">
@@ -201,51 +234,80 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="line1">
-                            <div class="wrapper">
-                                <label for="date_of_trip">
-                                    <i class="fa-solid fa-user"></i>
-                                    Date of Trip
+                        <div id="search_ltf_result"></div>
+                        <div class="ap_form" id="budget_form_inputs">
+                            <label for="tbf_no">
+                                TBF #
+                                <input type="text" id="tbf_no" name="tbf_no" class="form-control" autocomplete="off" readonly><br>
+                            </label><br>
+                            <label for="budget">
+                                Budget
+                                <input type="number" id="budget" name="budget" class="form-control" autocomplete="off" placeholder="Input Budget"><br>
+                            </label><br>
+                        </div>
+                        <div class="buttons" id="budget_form_buttons">
+                            <button type="submit" id="submit_btn" class="form-control" >
+                                Submit
+                            </button>
+                            <button type="reset" id="reset" class="form-control" >
+                                Clear
+                            </button>
+                        </div>    
+                    </form>
+                    <form id="liquidation_form" action="https://script.google.com/macros/s/AKfycbzbg3NVMbyeBtrymKvU19ySBlNU14vMB2N3pG60_bX3TnkVt-gZSpVYCsFtTvKlJQ0rWw/exec" method="post">
+                        <input type="hidden" name="user" id="user">
+                        <h2>TRIP LIQUIDATION FORM</h2><br>
+                        <div class="ap_form">
+                            <div>
+                                <label for="search_tbf_form_no">
+                                    Search TBF #
                                 </label><br>
-                                <div class="search_input">
-                                    <input type="date" name="date_of_trip" id="date_of_trip" autocomplete="off" class="form-control" required>
+                                <div class="ap_form">
+                                    <div class="form">
+                                        <input type="text" id="search_tbf_form_no" autocomplete="off" name="search_tbf_form_no" class="form-control"><br>
+                                    </div>
+                                    <div>
+                                        <button id="search_tbf_form_no_button" type="button" class="form-control">
+                                            <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
+                                        </button>
+                                    </div>
+                                    <div>
+                                        <button id="clear_ltf_form_no_button" type="button" class="form-control">
+                                            <i class="fa-solid fa-rectangle-xmark" style="color: #ffffff;"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="wrapper">
-                                <label for="company">
-                                    <i class="fa-solid fa-user"></i>
-                                    Company Name
+                        </div>
+                        <div id="search_tbf_result"></div>
+                        <div class="" id="liquidation_form_inputs">
+                            <div class="ap_form">
+                                <label for="tlf_no">
+                                    TLF #
+                                    <input type="text" id="tlf_no" name="tlf_no" class="form-control" autocomplete="off" readonly><br>
                                 </label><br>
-                                <div class="search_input" id="search_company">
-                                    <input type="text" name="company" id="company" autocomplete="off" class="form-control" required placeholder="Type to Search Company Name...">
-                                    <div class="autocom_box"></div>
-                                    <div class="icon"><i class="fas fa-search"></i></div>
-                                </div>
-                            </div>
-                        </div><br>
-                        <div class="line1">
-                            <div class="wrapper">
-                                <label for="date_of_trip">
-                                    <i class="fa-solid fa-user"></i>
-                                    Date of Trip
+                                <label for="budget">
+                                    Released Budget
+                                    <input type="number" id="budget" name="budget" class="form-control" autocomplete="off" readonly><br>
                                 </label><br>
-                                <div class="search_input">
-                                    <input type="date" name="date_of_trip" id="date_of_trip" autocomplete="off" class="form-control" required>
-                                </div>
                             </div>
-                            <div class="wrapper">
-                                <label for="company">
-                                    <i class="fa-solid fa-user"></i>
-                                    Company Name
+                        </div>
+                        <div id="cash_advance_list"></div>
+                        <div id="liquidation_list">
+                            <div>
+                                <label for="budget">
+                                    Particulars
                                 </label><br>
-                                <div class="search_input" id="search_company">
-                                    <input type="text" name="company" id="company" autocomplete="off" class="form-control" required placeholder="Type to Search Company Name...">
-                                    <div class="autocom_box"></div>
-                                    <div class="icon"><i class="fas fa-search"></i></div>
-                                </div>
+                                <input type="text" id="budget" name="budget" class="form-control" autocomplete="off" readonly value="DIESEL/GASOLINE EXPENSE"><br>
                             </div>
-                        </div><br>
-                        <div class="buttons">
+                            <div>
+                                <label for="budget">
+                                    Amount
+                                    <input type="number" id="budget" name="budget" class="form-control" autocomplete="off" required><br>
+                                </label><br>
+                            </div>
+                        </div>
+                        <div class="buttons" id="liquidation_form_buttons">
                             <button type="submit" id="submit_btn" class="form-control" >
                                 Submit
                             </button>
@@ -258,7 +320,7 @@
             </section>
             <!-- incident_report_form -->
             <section class="ap_accounting" id="incident_report_form">
-                <h2>INCIDENT REPORT FORM</h2><br>
+                <h2>TRIP INCIDENT REPORT FORM</h2><br>
                 <form action="https://script.google.com/macros/s/AKfycbzVQzky_Rk6DqCLitPuTulVU92vOeew2ABJUyUn4fZImNb-ba-710ADZLm7p4FjYmiB/exec" method="post">
                     <input type="hidden" name="irf_user" id="irf_user">
                     <label for="irf_form_no">

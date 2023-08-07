@@ -371,6 +371,21 @@ document.addEventListener('DOMContentLoaded', async function() {
             })
         }
 
+        remove_item_button.addEventListener("click", () => {
+            const truckHelpers = plate_driver_truck_helper.querySelectorAll(".wrapper");
+            const lastTruckHelper = truckHelpers[truckHelpers.length - 1];
+            
+            if (truckHelpers.length > 1) {
+                plate_driver_truck_helper.removeChild(lastTruckHelper);
+                truck_helper_count.value = parseInt(truck_helper_count.value) - 1;
+
+                if (truck_helper_count.value === 1) {
+                    remove_item_button.style.display = "none";
+                }
+            }
+        });
+
+
     
         // vehicle_list_section 
         const total_vehicle_vehicle_list_section = document.querySelector("#total_vehicle");
@@ -547,7 +562,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     TYPE OF WASTE: ${mtf_data_list.content[a][3]}<br>
                     HAULING DATE: ${date_decoder(mtf_data_list.content[a][4])}<br>
                     HAULING TIME: ${time_decoder(mtf_data_list.content[a][5])}<br>
-                    WEIGHT: ${mtf_data_list.content[a][6]} kg.<br>
+                    TYPE OF VEHICLE: ${mtf_data_list.content[a][6]}<br>
                     REMARKS: ${mtf_data_list.content[a][7]}<br>
                     SUBMITTED BY: ${mtf_data_list.content[a][9]}<br>
                     `
