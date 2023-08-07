@@ -1,31 +1,23 @@
 document.addEventListener('DOMContentLoaded', async function() {
     try {
         const username_response_promise = fetch('https://script.google.com/macros/s/AKfycbwmA97K4sdfq6dhzSsp14JU9KgQrFgSARNZbvSfiU7vuH8oEipt6TmcFo_o-jCI0kiQ/exec');
-        const prf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzz6xxCe2mPrxKs3mw4-URWWsLdrpRxTrhJizkCDfRLiYvw_mDZfTIXdXczpnks9I_a2g/exec');
-        const pof_response_promise = fetch('https://script.google.com/macros/s/AKfycbwv-_d3rYhFtuob6bXhGVBu_YO3KbfpucETRBm4FMOj1SK4GTZVTVi1v4XW9CIV2KHvMQ/exec');
         const ltf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxBLMvyNDsT9_dlVO4Qc31dI4ErcymUHbzKimOpCZHgbJxip2XxCl7Wk3hJyqcdtrxU/exec');
         const driver_trip_response_promise = fetch('https://script.google.com/macros/s/AKfycby-Jtmqgnn7s0vsVcyOVut4EzzhvBC_jciSpZOIMy4ANidFgKnsLZM0O3t0y4QqV52vuw/exec');
         const irf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzTmhNOz5cXeKitSXAriUJ_FEahAQugYEKIRwDuFt9tjhj2AtPKEf2H4yTMmZ1igpUxlQ/exec');
 
         const [
             username_response,
-            prf_response,
-            pof_response,
             ltf_response,
             driver_trip_response,
             irf_response,
         ] = await Promise.all([
             username_response_promise,
-            prf_response_promise,
-            pof_response_promise,
             ltf_response_promise,
             driver_trip_response_promise,
             irf_response_promise,
         ]);
 
         const username_data  = await username_response.json();
-        const prf_data_list  = await prf_response.json();
-        const pof_data_list  = await pof_response.json();
         const ltf_data_list  = await ltf_response.json();
         const driver_trip_data_list  = await driver_trip_response.json();
         const irf_data_list  = await irf_response.json();
@@ -43,31 +35,31 @@ document.addEventListener('DOMContentLoaded', async function() {
         user_sidebar_officer.innerText = username_data.content[15][4];
         
 
-        // // purchasing_dashboard
-        // const purchasing_dashboard = document.querySelector("#purchasing_dashboard");
-        // const ordered_transactions_purchasing = purchasing_dashboard.querySelector("#ordered_transactions");
-        // const pending_list_container_purchasing = purchasing_dashboard.querySelector("#pending_list");
-        // const pending_purchasing = purchasing_dashboard.querySelector("#pending");
-        // const requested_purchasing = purchasing_dashboard.querySelector("#requested");
-        // const approved_purchasing = purchasing_dashboard.querySelector("#approved");
-        // const purchased_purchasing = purchasing_dashboard.querySelector("#purchased");
-        // let prf_transaction_treatment = []; // Variable containing existing elements
-        // let prf_pr_transaction_treatment = []; // Variable containing existing elements
+        // ap_accounting_dashboard
+        const ap_accounting_dashboard = document.querySelector("#ap_accounting_dashboard");
+        // const ordered_transactions_purchasing = ap_accounting_dashboard.querySelector("#ordered_transactions");
+        const pending_list_container_ap_accounting = ap_accounting_dashboard.querySelector("#pending_list");
+        // const pending_purchasing = ap_accounting_dashboard.querySelector("#pending");
+        // const requested_purchasing = ap_accounting_dashboard.querySelector("#requested");
+        // const approved_purchasing = ap_accounting_dashboard.querySelector("#approved");
+        // const purchased_purchasing = ap_accounting_dashboard.querySelector("#purchased");
+        let ltf_transaction_ap_accounting = []; // Variable containing existing elements
+        let ltf_dtt_transaction_ap_accounting = []; // Variable containing existing elements
         
-        // for (let i = 1; i < prf_data_list.content.length; i++) {
-        //     if (!prf_transaction_treatment.includes(prf_data_list.content[i][1])) {
-        //         prf_transaction_treatment.push(prf_data_list.content[i][1]);
-        //     }
-        // }
+        for (let i = 1; i < ltf_data_list.content.length; i++) {
+            if (!ltf_transaction_ap_accounting.includes(ltf_data_list.content[i][1])) {
+                ltf_transaction_ap_accounting.push(ltf_data_list.content[i][1]);
+            }
+        }
 
-        // for (let i = 1; i < pof_data_list.content.length; i++) {
-        //     if (!prf_pr_transaction_treatment.includes(pof_data_list.content[i][2])) {
-        //         prf_pr_transaction_treatment.push(pof_data_list.content[i][2]);
-        //     }
-        // }
+        for (let i = 1; i < driver_trip_data_list.content.length; i++) {
+            if (!ltf_dtt_transaction_ap_accounting.includes(driver_trip_data_list.content[i][2])) {
+                ltf_dtt_transaction_ap_accounting.push(driver_trip_data_list.content[i][2]);
+            }
+        }
 
-        // // Get elements from sf_transaction not included in sf_tpf_transaction
-        // const pending_list_purchasing = prf_transaction_treatment.filter((element) => !prf_pr_transaction_treatment.includes(element));
+        // Get elements from sf_transaction not included in sf_tpf_transaction
+        const pending_list_ap_accounting = ltf_transaction_ap_accounting.filter((element) => !ltf_dtt_transaction_ap_accounting.includes(element));
 
         // ordered_transactions_purchasing.innerText = prf_transaction_treatment.length;
         // pending_purchasing.innerText = pending_list_purchasing.length;
@@ -75,28 +67,21 @@ document.addEventListener('DOMContentLoaded', async function() {
         // approved_purchasing.innerText = 0;
         // purchased_purchasing.innerText = 0;
 
-
-        // // pending_list
-        // var data_value = "";
-        // var data_value_counter = 1;
-        // for(let x = 1; x < prf_data_list.content.length; x++){
-        //     data_value += `
-        //     <tr>
-        //         <td>${data_value_counter}</td>
-        //         <td>${prf_data_list.content[x][1]}</td>
-        //         <td>${date_decoder(prf_data_list.content[x][0])} /<br> ${time_decoder(prf_data_list.content[x][0])}</td>
-        //         <td>${prf_data_list.content[x][3]}</td>
-        //         <td>${prf_data_list.content[x][4]}</td>
-        //         <td>${prf_data_list.content[x][2]}</td>
-        //         <td>${prf_data_list.content[x][5]}</td>
-        //         <td>${prf_data_list.content[x][6]}</td>
-        //         <td>${prf_data_list.content[x][7]}</td>
-        //         <td>${prf_data_list.content[x][8]}</td>
-        //     </tr>
-        //     `
-        //     data_value_counter += 1;
-        // }
-        // pending_list_container_purchasing.innerHTML = data_value;
+        // pending_list
+        var data_value = "";
+        var data_value_counter = 1;
+        for(let x = 1; x < ltf_data_list.content.length; x++){
+            data_value += `
+            <tr>
+                <td>${data_value_counter}</td>
+                <td>${ltf_data_list.content[x][1]}</td>
+                <td>${date_decoder(prf_data_list.content[x][0])} /<br> ${time_decoder(prf_data_list.content[x][0])}</td>
+                <td>${ltf_data_list.content[x][3]}</td>
+            </tr>
+            `
+            data_value_counter += 1;
+        }
+        pending_list_container_ap_accounting.innerHTML = data_value;
 
         // // incident_history_list
         // var incident_history_data_value = "";
