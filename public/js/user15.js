@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         house_collection_ap_accounting.innerText = formatNumber(house_collection);
 
         const pending_list_container_ap_accounting = ap_accounting_dashboard.querySelector("#pending_list");
-        const history_list_container_ap_accounting = ap_accounting_dashboard.querySelector("#history_list");
+        const history_list_container_ap_accounting = document.querySelector("#history_list");
         
         let ltf_transaction_ap_accounting = []; // Variable containing existing elements
         let ltf_tbf_transaction_ap_accounting = []; // Variable containing existing elements
@@ -615,8 +615,13 @@ document.addEventListener('DOMContentLoaded', async function() {
         // FORM GENERATOR
         // ftf_data_list
         const fund_transfer_form_ap_accounting = document.querySelector("#fund_transfer_form");
-        console.log("🚀 ~ file: user15.js:527 ~ document.addEventListener ~ fund_transfer_form_ap_accounting:", fund_transfer_form_ap_accounting)
         const ftf_form_no_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#ftf_form_no");
+        const fund_source_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_source");
+        const fund_allocation_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_allocation");
+        const fund_source_amount_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_source_amount");
+        const fund_allocation_amount_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_allocation_amount");
+        const history_list_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#history_list");
+        
         var month_new;
         var code_year_month;
         var data_counter;
@@ -629,13 +634,16 @@ document.addEventListener('DOMContentLoaded', async function() {
         var data_content = 1;
         var data_info;
         var data_last_3digit = 0;
-    
+        
         for(x=1; x<ftf_data_list.content.length; x++){
             data_info = ftf_data_list.content[x][1];
+            console.log("🚀 ~ file: user15.js:640 ~ document.addEventListener ~ data_info:", data_info)
+            console.log("🚀 ~ file: user15.js:637 ~ document.addEventListener ~ data_last_3digit:", data_last_3digit)
             
             if(data_info.includes(code_year_month) == true){
                 data_last_3digit = data_info.slice(9)
             }
+            else{}
         }
         
         data_content = parseInt(data_last_3digit) +1
@@ -652,7 +660,72 @@ document.addEventListener('DOMContentLoaded', async function() {
     
         ftf_form_no_ap_accounting.value = `${code_year_month}${data_counter}`
 
-
+        function updateFundSourceAmount(source, source2) {
+            const fundSourceValue = source.value;
+            let fundAmount = 0;
+        
+            switch (fundSourceValue) {
+                case "SOURCE OF FUND":
+                    fundAmount = source_of_fund;
+                    break;
+                case "TRUCKING FUND":
+                    fundAmount = trucking_fund;
+                    break;
+                case "HAULING FUND":
+                    fundAmount = hauling_fund;
+                    break;
+                case "DIESEL FUND":
+                    fundAmount = diesel_fund;
+                    break;
+                case "GASOLINE FUND":
+                    fundAmount = gasoline_fund;
+                    break;
+                case "SCRAP SALES":
+                    fundAmount = scrap_sales;
+                    break;
+                case "MOLD RUNNER SALES":
+                    fundAmount = mold_runner_sales;
+                    break;
+                case "TRUCK SCALE COLLECTION":
+                    fundAmount = truck_scale_collection;
+                    break;
+                case "HOUSE COLLECTION":
+                    fundAmount = house_collection;
+                    break;
+                case "BANK":
+                    source2.style.display = "none";
+                    return;
+            }
+        
+            source2.value = fundAmount.toFixed(2);
+            source2.style.display = "flex";
+        }
+        
+        fund_source_ap_accounting.addEventListener("change", function() {
+            updateFundSourceAmount(fund_source_ap_accounting, fund_source_amount_ap_accounting);
+        });
+        
+        fund_allocation_ap_accounting.addEventListener("change", function() {
+            updateFundSourceAmount(fund_allocation_ap_accounting, fund_allocation_amount_ap_accounting);
+        });      
+        
+        var data = "";
+        var data_value_counter = 0;
+        for(let x = 1; x < ftf_data_list.content.length; x++){
+            data_value_counter += 1;
+            data += `
+            <tr>
+                <td>${data_value_counter}</td>
+                <td>${ftf_data_list.content[x][1]}</td>
+                <td>${date_decoder(ftf_data_list.content[x][0])} / ${time_decoder(ftf_data_list.content[x][0])}</td>
+                <td>${ftf_data_list.content[x][2]}</td>
+                <td>${ftf_data_list.content[x][3]}</td>
+                <td>${formatNumber(ftf_data_list.content[x][4])}</td>
+                <td>${ftf_data_list.content[x][5]}</td>
+            </tr>
+            `
+        }
+        history_list_ap_accounting.innerHTML = data;
 
         // // incident_history_list
         // var incident_history_data_value = "";

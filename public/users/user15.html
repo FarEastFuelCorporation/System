@@ -194,30 +194,6 @@
                         <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
                     </div>
                 </div><br>
-                <h2>TRIP BUDGET HISTORY LIST</h2>
-                <div class="card">
-                    <div class="list">
-                        <table>
-                            <thead>
-                                <th>#</th>
-                                <th>TBF #</th>
-                                <th>PCV #</th>
-                                <th>LTF #</th>
-                                <th>HAULING<br>DATE/TIME</th>
-                                <th>CLIENT</th>
-                                <th>WASTE DESCRIPTION</th>
-                                <th>TYPE OF VEHICLE</th>
-                                <th>RELEASED<br>BUDGET</th>
-                                <th>REMARKS</th>
-                                <th>ACTUAL<br>BUDGET</th>
-                            </thead>
-                            <tbody id="history_list">
-
-                            </tbody>
-                        </table>
-                        <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
-                    </div>
-                </div><br>
                 <!-- <h2>INCIDENT HISTORY LIST</h2>
                 <div class="card">
                     <div class="list">
@@ -253,7 +229,7 @@
                             TRIP LIQUIDATION FORM
                         </button>
                     </label><br>
-                    <form id="budget_form" action="https://script.google.com/macros/s/AKfycbw_BupUQMQ3g7ZUNJiHRfDLNbMgl6mQ1LCI3rtJNKdQL9tAtra87gTMNxoglktbaVj3/exec" method="post">
+                    <form id="budget_form" action="https://script.google.com/macros/s/AKfycbzUv3GEOpX2JEOPKvWdqYUpb31tbI49euEz8O-ERmjjp7NFYwJxHG5NW5-8c8Kt_DsP/exec" method="post">
                         <input type="hidden" name="user" id="user">
                         <h2>TRIP  BUDGET FORM</h2><br>
                         <div class="ap_form">
@@ -301,9 +277,9 @@
                             <button type="reset" id="reset" class="form-control" >
                                 Clear
                             </button>
-                        </div>    
+                        </div><br>
                     </form>
-                    <form id="liquidation_form" action="https://script.google.com/macros/s/AKfycbz6k_8HMyO8R0D4jqgkT80YRW2QwhKpP834hpX0RaRXcbyZ1KkR8j1_0qWiw1U5qRa61g/exec" method="post">
+                    <form id="liquidation_form" action="https://script.google.com/macros/s/AKfycbzqw4Oiu8aZ-nlc7u39hlO008VEKLqcJbQ_Z9pKkSsFY2tURVo33wGt6kLAexKQAsN6sg/exec" method="post">
                         <input type="hidden" name="user" id="user">
                         <input type="hidden" name="ltf_no" id="ltf_no">
                         <h2>TRIP LIQUIDATION FORM</h2><br>
@@ -398,15 +374,41 @@
                             <button type="reset" id="reset" class="form-control" >
                                 Clear
                             </button>
-                        </div>    
+                        </div><br> 
                     </form>
+                    <div id="trip_history_list">
+                        <h2>TRIP BUDGET HISTORY LIST</h2>
+                        <div class="card">
+                            <div class="list">
+                                <table>
+                                    <thead>
+                                        <th>#</th>
+                                        <th>TBF #</th>
+                                        <th>PCV #</th>
+                                        <th>LTF #</th>
+                                        <th>HAULING<br>DATE/TIME</th>
+                                        <th>CLIENT</th>
+                                        <th>WASTE DESCRIPTION</th>
+                                        <th>TYPE OF VEHICLE</th>
+                                        <th>RELEASED<br>BUDGET</th>
+                                        <th>REMARKS</th>
+                                        <th>ACTUAL<br>BUDGET</th>
+                                    </thead>
+                                    <tbody id="history_list">
+        
+                                    </tbody>
+                                </table>
+                                <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                            </div>
+                        </div><br>
+                    </div>
                 </div>
             </section>
             <!-- fund_transfer_form -->
             <section class="ap_accounting" id="fund_transfer_form">
                 <div class="section_container">
                     <h2>FUND TRANSFER FORM</h2><br>
-                    <form action="https://script.google.com/macros/s/AKfycbwN3mstt5pE0IkNXh5SbTUrqJDlDUZA_LKfS-mNksHic2RRM4l50nrQ0exHcLNdsaGz/exec" method="post">
+                    <form id="fund_transfer_form_id" action="https://script.google.com/macros/s/AKfycbwN3mstt5pE0IkNXh5SbTUrqJDlDUZA_LKfS-mNksHic2RRM4l50nrQ0exHcLNdsaGz/exec" method="post">
                         <input type="hidden" name="user" id="user">
                         <div class="ap_form">
                             <div>
@@ -422,10 +424,10 @@
                         </div>
                         <div class="d-flex gap-4">
                             <div style="width: 30%;">
-                                <label for="ftf_form_no">
+                                <label for="fund_source">
                                     Fund Source
                                 </label><br>
-                                <select name="fund_source" id="fund_source" class="form-control">
+                                <select name="fund_source" id="fund_source" class="form-control" required>
                                     <option value="">SELECT FUND SOURCE</option>
                                     <option value="BANK">BANK</option>
                                     <option value="SOURCE OF FUND">SOURCE OF FUND</option>
@@ -440,10 +442,10 @@
                                 </select>
                             </div>
                             <div style="width: 30%;">
-                                <label for="ftf_form_no">
+                                <label for="fund_allocation">
                                     Fund Allocation
                                 </label><br>
-                                <select name="fund_allocation" id="fund_allocation" class="form-control">
+                                <select name="fund_allocation" id="fund_allocation" class="form-control" required>
                                     <option value="">SELECT FUND ALLOCATION</option>
                                     <option value="BANK">BANK</option>
                                     <option value="SOURCE OF FUND">SOURCE OF FUND</option>
@@ -459,9 +461,23 @@
                             </div>
                             <div style="width: 20%;">
                                 <label for="fund_amount">
-                                    Amount
+                                    Fund Amount
                                 </label><br>
-                                <input type="number" id="fund_amount" name="fund_amount" class="form-control"  autocomplete="off" placeholder="Input Fund Amount"><br>
+                                <input type="number" id="fund_amount" name="fund_amount" class="form-control"  autocomplete="off" placeholder="Input Fund Amount" required><br>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-4">
+                            <div style="width: 30%;">
+                                <label for="fund_source_amount">
+                                    Fund Source Amount
+                                </label><br>
+                                <input type="text" id="fund_source_amount" name="fund_source_amount" class="form-control" autocomplete="off" readonly><br>
+                            </div>
+                            <div style="width: 30%;">
+                                <label for="fund_allocation_amount">
+                                    Fund Allocation Amount
+                                </label><br>
+                                <input type="text" id="fund_allocation_amount" name="fund_allocation_amount" class="form-control" autocomplete="off" readonly><br>
                             </div>
                         </div><br>
                         <div class="buttons" id="fund_transfer_form_buttons">
@@ -471,8 +487,30 @@
                             <button type="reset" id="reset" class="form-control" >
                                 Clear
                             </button>
-                        </div>    
+                        </div><br>
                     </form>
+                    <div id="trip_history_list">
+                        <h2>FUND TRANSACTION HISTORY LIST</h2>
+                        <div class="card">
+                            <div class="list">
+                                <table>
+                                    <thead>
+                                        <th>#</th>
+                                        <th>FORM #</th>
+                                        <th>TRANSACTION<br>DATE/TIME</th>
+                                        <th>FUND SOURCE</th>
+                                        <th>FUND ALLOCATION</th>
+                                        <th>FUND AMOUNT</th>
+                                        <th>SUBMITTED BY</th>
+                                    </thead>
+                                    <tbody id="history_list">
+        
+                                    </tbody>
+                                </table>
+                                <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                            </div>
+                        </div><br>
+                    </div>
                 </div>
             </section>
             <!-- incident_report_form -->

@@ -470,7 +470,7 @@ function customValidation() {
   const remaining = parseInt(document.getElementById('batch_weight').value);
 
   if (remaining !== 0) {
-    alert('Remaining budget must be 0 to submit the form.');
+    alert('Batch Weight must be 0 to submit the form.');
     return false;
   }
 
@@ -488,6 +488,23 @@ function customValidation2() {
   return true;
 }
 
+function customValidation3() {
+  const fund_amount = parseFloat(document.getElementById('fund_amount').value);
+  const fund_source_amount = parseFloat(document.getElementById('fund_source_amount').value);
+  const fund_source = parseFloat(document.getElementById('fund_source').value);
+  console.log("🚀 ~ file: main.js:495 ~ customValidation3 ~ fund_source:", fund_source)
+  
+  if(fund_source != "BANK"){
+    if (fund_amount > fund_source_amount) {
+      alert('Invalid Transation! Fund Amount is Greater than Fund Source Amount.');
+      
+      return false;
+    }
+  }
+
+  return true;
+}
+
 var form_elements = document.querySelectorAll('form');
 
 form_elements.forEach(function(form) {
@@ -496,6 +513,9 @@ form_elements.forEach(function(form) {
   } 
   else if (form.id === 'liquidation_form') {
     addConfirmationListener(form, customValidation2);
+  } 
+  else if (form.id === 'fund_transfer_form_id') {
+    addConfirmationListener(form, customValidation3);
   } 
   else {
     addConfirmationListener(form);
