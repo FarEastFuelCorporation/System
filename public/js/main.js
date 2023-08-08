@@ -445,12 +445,18 @@ function formatNumber(number) {
     maximumFractionDigits: 2,
   });
 }   
-function addConfirmationListener(form) {
+
+function addConfirmationListener(form, validateFunction = null) {
   form.addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent the form from submitting immediately
 
     if (window.confirm('Are you sure you want to submit the data?')) {
-      // If user clicks OK, proceed with form submission
+      if (validateFunction) {
+        if (!validateFunction()) {
+          return; // Do not submit if validation fails
+        }
+      }
+
       form.submit(); // Use the form's submit() method
     } else {
       // If user clicks Cancel, do nothing or perform other actions
@@ -459,8 +465,39 @@ function addConfirmationListener(form) {
   });
 }
 
+// Example of a custom validation function for a form
+function customValidation() {
+  const remaining = parseInt(document.getElementById('batch_weight').value);
+
+  if (remaining !== 0) {
+    alert('Remaining budget must be 0 to submit the form.');
+    return false;
+  }
+
+  return true;
+}
+
+function customValidation2() {
+  const remaining = parseInt(document.getElementById('remaining').value);
+
+  if (remaining !== 0) {
+    alert('Remaining budget must be 0 to submit the form.');
+    return false;
+  }
+
+  return true;
+}
+
 var form_elements = document.querySelectorAll('form');
 
 form_elements.forEach(function(form) {
-  addConfirmationListener(form);
+  if (form.id === 'sorting_form_id') {
+    addConfirmationListener(form, customValidation);
+  } 
+  else if (form.id === 'liquidation_form') {
+    addConfirmationListener(form, customValidation2);
+  } 
+  else {
+    addConfirmationListener(form);
+  }
 });

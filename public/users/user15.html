@@ -31,7 +31,13 @@
                 <li>
                     <a href="#">
                         <i class="fa-solid fa-clipboard-list"></i>
-                        Driver Trip Forms
+                        Trip Forms
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-money-bill-transfer"></i>
+                        Fund Transfer Form
                     </a>
                 </li>
                 <li>
@@ -82,54 +88,92 @@
             <!-- dashboard -->
             <section class="ap_accounting" id="ap_accounting_dashboard">
                 <h2>DASHBOARD</h2><br>
-                <!-- <h2>PURCHASE REQUEST SUMMARY</h2>
+                <h2>FUND SUMMARY</h2>
                 <div class="cards">
                     <div class="card">
                         <div class="card-content">
-                            <div class="number" id="ordered_transactions"></div>
-                            <div class="card-name">Purchase Request</div>
+                            <div class="number" id="source_of_fund"></div>
+                            <div class="card-name">Source of Fund</div>
                         </div>
                         <div class="icon-box">
-                            <i class="fa-solid fa-cart-shopping"></i>
+                            <i class="fa-solid fa-sack-dollar"></i>
                         </div>
                     </div>
                     <div class="card">
                         <div class="card-content">
-                            <div class="number" id="pending"></div>
-                            <div class="card-name">Pending</div>
+                            <div class="number" id="trucking_fund"></div>
+                            <div class="card-name">Trucking Fund</div>
                         </div>
                         <div class="icon-box">
-                            <i class="fa-solid fa-clipboard-list"></i>
+                            <i class="fa-solid fa-truck"></i>
                         </div>
                     </div>
                     <div class="card">
                         <div class="card-content">
-                            <div class="number" id="requested"></div>
-                            <div class="card-name">Purchase Order</div>
+                            <div class="number" id="hauling_fund"></div>
+                            <div class="card-name">Hauling Fund</div>
                         </div>
                         <div class="icon-box">
-                            <i class="fa-solid fa-file-circle-exclamation"></i>
+                            <i class="fa-solid fa-truck-ramp-box"></i>
                         </div>
                     </div>
                     <div class="card">
                         <div class="card-content">
-                            <div class="number" id="approved"></div>
-                            <div class="card-name">Approved P.O.</div>
+                            <div class="number" id="diesel_fund"></div>
+                            <div class="card-name">Diesel Fund</div>
                         </div>
                         <div class="icon-box">
-                            <i class="fa-solid fa-file-circle-check"></i>
+                            <i class="fa-solid fa-gas-pump"></i>
                         </div>
                     </div>
                     <div class="card">
                         <div class="card-content">
-                            <div class="number" id="purchased"></div>
-                            <div class="card-name">Purchased</div>
+                            <div class="number" id="gasoline_fund"></div>
+                            <div class="card-name">Gasoline Fund</div>
                         </div>
                         <div class="icon-box">
-                            <i class="fa-solid fa-clipboard-check"></i>
+                            <i class="fa-solid fa-gas-pump"></i>
                         </div>
                     </div>
-                </div><br> -->
+                </div><br>
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="scrap_sales"></div>
+                            <div class="card-name">Scrap Sales</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-money-bill-wave"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="mold_runner_sales"></div>
+                            <div class="card-name">Mold Runner Sales</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-money-bill-wave"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="truck_scale_collection"></div>
+                            <div class="card-name">Truck Scale Collection</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-scale-balanced"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="house_collection"></div>
+                            <div class="card-name">House Collection</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-house-chimney-user"></i>
+                        </div>
+                    </div>
+                </div><br>
                 <h2>PENDING TRIP BUDGET LIST</h2>
                 <div class="card">
                     <div class="list">
@@ -157,6 +201,7 @@
                             <thead>
                                 <th>#</th>
                                 <th>TBF #</th>
+                                <th>PCV #</th>
                                 <th>LTF #</th>
                                 <th>HAULING<br>DATE/TIME</th>
                                 <th>CLIENT</th>
@@ -207,9 +252,8 @@
                         <button type="button" id="liquidation_form_button" class="form-control fw-bold fs-3">
                             TRIP LIQUIDATION FORM
                         </button>
-
                     </label><br>
-                    <form id="budget_form" action="https://script.google.com/macros/s/AKfycbxZ0rc9gzcroqmvLZ0GSNSbSMizuzNOmdqVw-Ptp_YOQEgbOheiJkoYTECMDohcjcc/exec" method="post">
+                    <form id="budget_form" action="https://script.google.com/macros/s/AKfycbw_BupUQMQ3g7ZUNJiHRfDLNbMgl6mQ1LCI3rtJNKdQL9tAtra87gTMNxoglktbaVj3/exec" method="post">
                         <input type="hidden" name="user" id="user">
                         <h2>TRIP  BUDGET FORM</h2><br>
                         <div class="ap_form">
@@ -240,10 +284,15 @@
                                 TBF #
                                 <input type="text" id="tbf_no" name="tbf_no" class="form-control" autocomplete="off" readonly><br>
                             </label><br>
+                            <label for="pcv_no">
+                                PCV #
+                                <input type="number" id="pcv_no" name="pcv_no" class="form-control" autocomplete="off" placeholder="Input PCV #" required><br>
+                            </label><br>
                             <label for="budget">
                                 Budget
-                                <input type="number" id="budget" name="budget" class="form-control" autocomplete="off" placeholder="Input Budget"><br>
+                                <input type="number" id="budget" name="budget" class="form-control" autocomplete="off" placeholder="Input Budget" required><br>
                             </label><br>
+                            <input type="hidden" name="fund_source" id="fund_source" value="TRUCKING FUND">
                         </div>
                         <div class="buttons" id="budget_form_buttons">
                             <button type="submit" id="submit_btn" class="form-control" >
@@ -254,8 +303,9 @@
                             </button>
                         </div>    
                     </form>
-                    <form id="liquidation_form" action="https://script.google.com/macros/s/AKfycbzbg3NVMbyeBtrymKvU19ySBlNU14vMB2N3pG60_bX3TnkVt-gZSpVYCsFtTvKlJQ0rWw/exec" method="post">
+                    <form id="liquidation_form" action="https://script.google.com/macros/s/AKfycbz6k_8HMyO8R0D4jqgkT80YRW2QwhKpP834hpX0RaRXcbyZ1KkR8j1_0qWiw1U5qRa61g/exec" method="post">
                         <input type="hidden" name="user" id="user">
+                        <input type="hidden" name="ltf_no" id="ltf_no">
                         <h2>TRIP LIQUIDATION FORM</h2><br>
                         <div class="ap_form">
                             <div>
@@ -281,30 +331,64 @@
                         </div>
                         <div id="search_tbf_result"></div>
                         <div class="" id="liquidation_form_inputs">
-                            <div class="ap_form">
+                            <div>
                                 <label for="tlf_no">
                                     TLF #
                                     <input type="text" id="tlf_no" name="tlf_no" class="form-control" autocomplete="off" readonly><br>
+                                </label><br>
+                                <label for="pcv_no">
+                                    PCV #
+                                    <input type="text" id="pcv_no" name="pcv_no" class="form-control" autocomplete="off" readonly><br>
                                 </label><br>
                                 <label for="budget">
                                     Released Budget
                                     <input type="number" id="budget" name="budget" class="form-control" autocomplete="off" readonly><br>
                                 </label><br>
+                                <label for="budget">
+                                    Liquidated Budget
+                                    <input type="number" id="liquidated_budget" name="liquidated_budget" class="form-control" autocomplete="off" readonly><br>
+                                </label><br>
+                                <label for="budget">
+                                    Remaining
+                                    <input type="number" id="remaining" name="remaining" class="form-control" autocomplete="off" readonly><br>
+                                </label><br>
                             </div>
                         </div>
-                        <div id="cash_advance_list"></div>
+                        <input type="hidden" id="truck_helper_count" name="truck_helper_count" value="0">
                         <div id="liquidation_list">
-                            <div>
-                                <label for="budget">
+                            <div id="diesel_gasoline_expense_container">
+                                <label for="diesel_gasoline_expense">
                                     Particulars
                                 </label><br>
-                                <input type="text" id="budget" name="budget" class="form-control" autocomplete="off" readonly value="DIESEL/GASOLINE EXPENSE"><br>
+                                <input type="text" id="diesel_gasoline_expense" name="diesel_gasoline_expense" class="form-control" autocomplete="off" readonly value="DIESEL/GASOLINE EXPENSE">
                             </div>
                             <div>
                                 <label for="budget">
                                     Amount
-                                    <input type="number" id="budget" name="budget" class="form-control" autocomplete="off" required><br>
+                                    <input type="number" id="diesel_gasoline_amount" name="diesel_gasoline_amount" class="form-control" autocomplete="off" required value="0">
                                 </label><br>
+                            </div>
+                            <div>
+                                <label for="cash_return">
+                                    Particulars
+                                </label><br>
+                                <input type="text" id="cash_return" name="cash_return" class="form-control" autocomplete="off" readonly value="CASH RETURN">
+                            </div>
+                            <div>
+                                <label for="budget">
+                                    Amount
+                                    <input type="number" id="cash_return_amount" name="cash_return_amount" class="form-control" autocomplete="off" required value="0">
+                                </label><br>
+                            </div>
+                        </div>
+                        <div class="add_item" id="add_particulars">
+                            <div class="item_buttons">
+                                <button type="button" id="add_item_button" class="form-control">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                                <button type="button" id="remove_item_button" class="form-control">
+                                    <i class="fa-solid fa-minus"></i>
+                                </button>
                             </div>
                         </div>
                         <div class="buttons" id="liquidation_form_buttons">
@@ -318,9 +402,82 @@
                     </form>
                 </div>
             </section>
+            <!-- fund_transfer_form -->
+            <section class="ap_accounting" id="fund_transfer_form">
+                <div class="section_container">
+                    <h2>FUND TRANSFER FORM</h2><br>
+                    <form action="https://script.google.com/macros/s/AKfycbwN3mstt5pE0IkNXh5SbTUrqJDlDUZA_LKfS-mNksHic2RRM4l50nrQ0exHcLNdsaGz/exec" method="post">
+                        <input type="hidden" name="user" id="user">
+                        <div class="ap_form">
+                            <div>
+                                <label for="ftf_form_no">
+                                    FTF #
+                                </label><br>
+                                <div class="ap_form">
+                                    <div class="form">
+                                        <input type="text" id="ftf_form_no" name="ftf_form_no" class="form-control"  autocomplete="off" ><br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-4">
+                            <div style="width: 30%;">
+                                <label for="ftf_form_no">
+                                    Fund Source
+                                </label><br>
+                                <select name="fund_source" id="fund_source" class="form-control">
+                                    <option value="">SELECT FUND SOURCE</option>
+                                    <option value="BANK">BANK</option>
+                                    <option value="SOURCE OF FUND">SOURCE OF FUND</option>
+                                    <option value="TRUCKING FUND">TRUCKING FUND</option>
+                                    <option value="HAULING FUND">HAULING FUND</option>
+                                    <option value="DIESEL FUND">DIESEL FUND</option>
+                                    <option value="GASOLINE FUND">GASOLINE FUND</option>
+                                    <option value="SCRAP SALES">SCRAP SALES</option>
+                                    <option value="MOLD RUNNER SALES">MOLD RUNNER SALES</option>
+                                    <option value="TRUCK SCALE COLLECTION">TRUCK SCALE COLLECTION</option>
+                                    <option value="HOUSE COLLECTION">HOUSE COLLECTION</option>
+                                </select>
+                            </div>
+                            <div style="width: 30%;">
+                                <label for="ftf_form_no">
+                                    Fund Allocation
+                                </label><br>
+                                <select name="fund_allocation" id="fund_allocation" class="form-control">
+                                    <option value="">SELECT FUND ALLOCATION</option>
+                                    <option value="BANK">BANK</option>
+                                    <option value="SOURCE OF FUND">SOURCE OF FUND</option>
+                                    <option value="TRUCKING FUND">TRUCKING FUND</option>
+                                    <option value="HAULING FUND">HAULING FUND</option>
+                                    <option value="DIESEL FUND">DIESEL FUND</option>
+                                    <option value="GASOLINE FUND">GASOLINE FUND</option>
+                                    <option value="SCRAP SALES">SCRAP SALES</option>
+                                    <option value="MOLD RUNNER SALES">MOLD RUNNER SALES</option>
+                                    <option value="TRUCK SCALE COLLECTION">TRUCK SCALE COLLECTION</option>
+                                    <option value="HOUSE COLLECTION">HOUSE COLLECTION</option>
+                                </select>
+                            </div>
+                            <div style="width: 20%;">
+                                <label for="fund_amount">
+                                    Amount
+                                </label><br>
+                                <input type="number" id="fund_amount" name="fund_amount" class="form-control"  autocomplete="off" placeholder="Input Fund Amount"><br>
+                            </div>
+                        </div><br>
+                        <div class="buttons" id="fund_transfer_form_buttons">
+                            <button type="submit" id="submit_btn" class="form-control" >
+                                Submit
+                            </button>
+                            <button type="reset" id="reset" class="form-control" >
+                                Clear
+                            </button>
+                        </div>    
+                    </form>
+                </div>
+            </section>
             <!-- incident_report_form -->
             <section class="ap_accounting" id="incident_report_form">
-                <h2>TRIP INCIDENT REPORT FORM</h2><br>
+                <h2>INCIDENT REPORT FORM</h2><br>
                 <form action="https://script.google.com/macros/s/AKfycbzVQzky_Rk6DqCLitPuTulVU92vOeew2ABJUyUn4fZImNb-ba-710ADZLm7p4FjYmiB/exec" method="post">
                     <input type="hidden" name="irf_user" id="irf_user">
                     <label for="irf_form_no">

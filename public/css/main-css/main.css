@@ -533,6 +533,7 @@ h5 {
 #purchase_order_form,
 #ap_accounting_dashboard,
 #trip_forms,
+#fund_transfer_form,
 #safety_dashboard,
 #incident_documentation_form,
 #hr_dashboard,
@@ -570,7 +571,8 @@ h5 {
 #vehicle_maintenance_form,
 #incident_documentation_form,
 #purchase_order_form,
-#ap_accounting_dashboard,
+#trip_forms,
+#fund_transfer_form,
 #directorySection,
 #accountingSection,
 #employee_list_section,
@@ -3746,10 +3748,9 @@ input:disabled {
   color: white !important;
 }
 
-.ap_accounting #budget_form,
-.ap_accounting #budget_form_inputs,
-.ap_accounting #budget_form_buttons {
-  display: none;
+.ap_accounting form #liquidation_form_inputs > div {
+  display: flex;
+  gap: 20px;
 }
 
 .ap_accounting #cash_advance_list,
@@ -3758,6 +3759,17 @@ input:disabled {
   grid-template-columns: 50% 20%;
   -moz-column-gap: 20px;
        column-gap: 20px;
+}
+
+.ap_accounting #budget_form,
+.ap_accounting #liquidation_form,
+.ap_accounting #budget_form_inputs,
+.ap_accounting #budget_form_buttons,
+.ap_accounting #liquidation_form_inputs,
+.ap_accounting #liquidation_list,
+.ap_accounting #add_particulars,
+.ap_accounting #liquidation_form_buttons {
+  display: none;
 }
 
 #purchase_request_form form #prf_item_container > div {

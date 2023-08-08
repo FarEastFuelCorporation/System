@@ -306,23 +306,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         const rem_weight = document.getElementById("rem_weight");
         const itemcounter = document.querySelectorAll(".search_input_type");
         const item_counter = document.getElementById("item_counter");
-        const form_id = document.getElementById("form_id");
         const search_wrapper = [];
         const destruction_process = [];
         const weight = [];
         const input_box = [];
         const sugg_box = [];
 
-        form_id.addEventListener("submit", () => {               
-            if(rem_weight.value == 0){
-                return true;
-            }
-            else if(rem_weight.value != 0){
-                alert("Please Input the Remaining Weight");
-                event.preventDefault();
-                return false;
-            }
-        })
 
         for (let z = 1; z <= itemcounter.length; z++) {
             search_wrapper[z] = document.getElementById(`search_type_of_waste${z}`);
@@ -406,7 +395,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
                 // Calculate and update the remaining weight
                 rem_weight.value = batch_weight.value - total_weight.value;
-                  
+                
             });
 
             item_counter.addEventListener("input", () => {
@@ -506,40 +495,40 @@ document.addEventListener('DOMContentLoaded', async function() {
         remove_item_button.addEventListener("click", remove_new_item);
         
         function add_discrepancy_input() {
-          const is_discrepancy = document.getElementById("is_discrepancy");
-          const sf_discrepancy = document.getElementById(`sf_discrepancy`);
-          const sf_form_no = document.getElementById(`sf_form_no${parseInt(item_counter.value) + 1}`);
-          sf_discrepancy.value = sf_form_no.value;
-          
-          discrepancy.style.display = "grid";
-          add_item_button.style.display = "none";
-          remove_item_button.style.display = "none";
-          is_discrepancy.value = "true";
+            const is_discrepancy = document.getElementById("is_discrepancy");
+            const sf_discrepancy = document.getElementById(`sf_discrepancy`);
+            const sf_form_no = document.getElementById(`sf_form_no${parseInt(item_counter.value) + 1}`);
+            sf_discrepancy.value = sf_form_no.value;
+            
+            discrepancy.style.display = "grid";
+            add_item_button.style.display = "none";
+            remove_item_button.style.display = "none";
+            is_discrepancy.value = "true";
         }
         
         function add_new_item() {
-          const item_counter_int = parseInt(item_counter.value) + 1;
-          item_counter.value = item_counter_int;
+            const item_counter_int = parseInt(item_counter.value) + 1;
+            item_counter.value = item_counter_int;
 
-          
-          if (item_counter_int >= 2 && item_counter_int <= 10) {
-            const additional_item = document.getElementById(`additional_item${item_counter_int}`);
-            const type_of_waste = document.getElementById(`type_of_waste${item_counter_int}`);
-            const weight = document.getElementById(`weight${item_counter_int}`);
-            const destruction_process = document.getElementById(`destruction_process${item_counter_int}`);
-            additional_item.style.display = "grid";
-            type_of_waste.setAttribute("required", "true");
-            weight.setAttribute("required", "true");
-            destruction_process.setAttribute("required", "true");
             
-            if (item_counter_int === 2) {
-              remove_item_button.style.display = "block";
+            if (item_counter_int >= 2 && item_counter_int <= 10) {
+                const additional_item = document.getElementById(`additional_item${item_counter_int}`);
+                const type_of_waste = document.getElementById(`type_of_waste${item_counter_int}`);
+                const weight = document.getElementById(`weight${item_counter_int}`);
+                const destruction_process = document.getElementById(`destruction_process${item_counter_int}`);
+                additional_item.style.display = "grid";
+                type_of_waste.setAttribute("required", "true");
+                weight.setAttribute("required", "true");
+                destruction_process.setAttribute("required", "true");
+                
+                if (item_counter_int === 2) {
+                    remove_item_button.style.display = "block";
+                }
+                
+                if (item_counter_int === 10) {
+                    add_item_button.style.display = "none";
+                }
             }
-            
-            if (item_counter_int === 10) {
-              add_item_button.style.display = "none";
-            }
-          }
         }
         
         function remove_new_item() {
