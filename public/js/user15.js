@@ -217,6 +217,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         // history_list
         var data_value = "";
         var data_value_counter = 1;
+        console.log("🚀 ~ file: user15.js:221 ~ document.addEventListener ~ done_list_ltf_ap_accounting:", done_list_ltf_ap_accounting)
         for(let y = 0; y < done_list_ltf_ap_accounting.length; y++){
             for(let x = 1; x < ltf_data_list.content.length; x++){
                 if(done_list_ltf_ap_accounting[y] == ltf_data_list.content[x][1]){
@@ -270,6 +271,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const trip_forms_ap_accounting = document.querySelector("#trip_forms");
         const budget_form_button_ap_accounting = trip_forms_ap_accounting.querySelector("#budget_form_button");
         const liquidation_form_button_ap_accounting = trip_forms_ap_accounting.querySelector("#liquidation_form_button");
+        const payroll_button_ap_accounting = trip_forms_ap_accounting.querySelector("#payroll_button");
+        const payroll_tab_ap_accounting = trip_forms_ap_accounting.querySelector("#payroll_tab");
 
         const budget_form_ap_accounting = trip_forms_ap_accounting.querySelector("#budget_form");
         const search_ltf_form_no_ap_accounting = budget_form_ap_accounting.querySelector("#search_ltf_form_no");
@@ -295,7 +298,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         const liquidation_list_ap_accounting = liquidation_form_ap_accounting.querySelector("#liquidation_list");
         const diesel_gasoline_expense_container_ap_accounting = liquidation_form_ap_accounting.querySelector("#diesel_gasoline_expense_container");
         const truck_helper_count_ap_accounting = liquidation_form_ap_accounting.querySelector("#truck_helper_count");
-        
+        const cash_return_container_ap_accounting = liquidation_form_ap_accounting.querySelector("#cash_return_container");
+        const add_item_button_ap_accounting = liquidation_form_ap_accounting.querySelector("#add_item_button");
+        const remove_item_button_ap_accounting = liquidation_form_ap_accounting.querySelector("#remove_item_button");
+        const particular_counter_ap_accounting = liquidation_form_ap_accounting.querySelector("#particular_counter");
+
         const today = new Date();
         const today_year = today.getFullYear();
         const today_month = today.getMonth()+1;
@@ -408,6 +415,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     `
                     budget_form_inputs_ap_accounting.style.display = "flex";
                     budget_form_buttons_ap_accounting.style.display = "flex";
+                    budget_form_buttons_ap_accounting.style.display = "flex";
                     available_funds_ap_accounting.value = trucking_fund.toFixed(2);
                 }
             }     
@@ -464,6 +472,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     
         tlf_no_ap_accounting.value = `${code_year_month}${data_counter}`
 
+        var released_budget = "";
         search_tbf_form_no_button_ap_accounting.addEventListener("click", () => {
             var data_value;
             var pcv_no = "";
@@ -497,7 +506,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 `
                                 liquidation_list_ap_accounting.insertAdjacentHTML("afterbegin", cash_advance);
                             }
-                            var released_budget = "";
                             var released_by = "";
                             for(let y = 1; y<tbf_data_list.content.length; y++){
                                 if(ltf_data_list.content[a][1] == tbf_data_list.content[y][3]){
@@ -538,6 +546,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     `
                                     truck_helper_count_ap_accounting.value = parseFloat(truck_helper_count_ap_accounting.value) + 1;
                                     diesel_gasoline_expense_container_ap_accounting.insertAdjacentHTML("beforebegin", cash_advance);
+                                    add_item_button_ap_accounting.style.display = "block";
                                 }
                             };   
                         }
@@ -603,20 +612,116 @@ document.addEventListener('DOMContentLoaded', async function() {
                 </div><br>`
             }
         });
-
-        document.getElementById('liquidation_form').addEventListener('submit', function(event) {
-            const remaining = parseInt(document.getElementById('remaining').value);
+        add_item_button_ap_accounting.addEventListener("click", () => {
+            particular_counter_ap_accounting.value = parseFloat(particular_counter_ap_accounting.value) + 1
+            var data = `
+                <div id="particular_container${particular_counter_ap_accounting.value}">
+                    <label for="particular${particular_counter_ap_accounting.value}">
+                        Particulars
+                    </label><br>
+                    <input type="text" id="particular${particular_counter_ap_accounting.value}" name="particular${particular_counter_ap_accounting.value}" class="form-control" autocomplete="off" value="Input Particulars">
+                </div>
+                <div id="particular_container${particular_counter_ap_accounting.value}">
+                    <label for="particular_amount${particular_counter_ap_accounting.value}">
+                        Amount
+                        <input type="number" id="particular_amount${particular_counter_ap_accounting.value}" name="particular_amount${particular_counter_ap_accounting.value}" class="form-control" autocomplete="off" required value="0">
+                    </label><br>
+                </div>
+            `
+            remove_item_button_ap_accounting.style.display = "block";
+            cash_return_container_ap_accounting.insertAdjacentHTML("beforebegin", data);
         
-            if (remaining !== 0) {
-                alert('Remaining budget must be 0 to submit the form.');
-              event.preventDefault(); // Prevent form submission
+            // Get references to the input elements
+            const inputElements = liquidation_list_ap_accounting.querySelectorAll('input[type="number"]');
+            const totalInput = document.getElementById('liquidated_budget');
+            const remaining = document.getElementById('remaining');
+
+            // Add input event listeners to each input element
+            inputElements.forEach(inputElement => {
+                inputElement.addEventListener('input', calculateTotal);
+            });
+
+            // Function to calculate the total and update the total input element
+            function calculateTotal() {
+                let sum = 0;
+                inputElements.forEach(inputElement => {
+                    sum += parseInt(inputElement.value) || 0;
+                });
+                totalInput.value = sum;
+                remaining.value = parseFloat(released_budget).toFixed(2) - sum;
             }
         });
 
+        remove_item_button_ap_accounting.addEventListener("click", () => {
+            // Find the last added particular container
+            const lastParticularContainers = document.querySelectorAll(`#particular_container${particular_counter_ap_accounting.value}`);
+        
+            console.log("🚀 ~ file: user15.js:657 ~ remove_item_button_ap_accounting.addEventListener ~ lastParticularContainers:", lastParticularContainers)
+            lastParticularContainers.forEach(lastParticularContainer => {
+                // Remove the last particular container if found
+                if (lastParticularContainer) {
+                    lastParticularContainer.remove();
+            
+                    // Decrement the particular counter
+                    particular_counter_ap_accounting.value = parseFloat(particular_counter_ap_accounting.value) - 1;
+            
+                    // Get references to the input elements
+                    const inputElements = liquidation_list_ap_accounting.querySelectorAll('input[type="number"]');
+                    const totalInput = document.getElementById('liquidated_budget');
+                    const remaining = document.getElementById('remaining');
+                    const released_budget = parseFloat(budget_ap_accounting.value); // Assuming you have a budget_ap_accounting element
+            
+                    // Recalculate the total after removal
+                    let sum = 0;
+                    inputElements.forEach(inputElement => {
+                        sum += parseInt(inputElement.value) || 0;
+                    });
+                    totalInput.value = sum;
+                    remaining.value = released_budget - sum;
+            
+                    // Hide the "Remove" button if no particular elements are left
+                    if (particular_counter_ap_accounting.value === 0) {
+                        remove_item_button_ap_accounting.style.display = "none";
+                    }
+                }
+            })
+        });
+        
+        payroll_button_ap_accounting.addEventListener("click", () => {
+            if(payroll_tab_ap_accounting.style.display == "block"){
+                payroll_tab_ap_accounting.style.display = "none"
+            }
+            else{
+                payroll_tab_ap_accounting.style.display = "block"
+            }
+        })
+        // var employee_array = [];
+
+        // for(let y = 1; y < tlf_data_list.content.length; y++){
+
+        //     for(let z = 0; z < tlf_transaction_ap_accounting.length; z++){
+        //         console.log("pass")
+        //         for(let x = 1; x < employee_data_list.content.length; x++){
+        //             if(tlf_transaction_ap_accounting[z] == employee_data_list.content[x][1]){
+        //                 var gender = employee_data_list.content[x][7];
+        //                 if(gender == "MALE"){
+        //                     var full_name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} ${employee_data_list.content[x][6]}`
+        //                     employee_array.push(full_name);
+        //                 }
+        //                 else{
+        //                     var full_name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} - ${employee_data_list.content[x][5]}`
+        //                     employee_array.push(full_name);
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
 
         // FORM GENERATOR
         // ftf_data_list
         const fund_transfer_form_ap_accounting = document.querySelector("#fund_transfer_form");
+        const fund_transfer_form_button_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_transfer_form_button");
+        const fund_transfer_form_id_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_transfer_form_id");
         const ftf_form_no_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#ftf_form_no");
         const fund_source_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_source");
         const fund_allocation_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_allocation");
@@ -625,7 +730,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const fund_source_amount_container_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_source_amount_container");
         const fund_allocation_amount_container_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_allocation_amount_container");
         const history_list_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#history_list");
-        const other_details_container_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#other_details_container");
+        const fund_source_other_details_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_source_other_details_container");
+        const fund_allocation_other_details_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_allocation_other_details_container");
         
         var month_new;
         var code_year_month;
@@ -636,6 +742,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     
         code_year_month = `FTF${today_year}${month_new}`;
     
+        
         var data_content = 1;
         var data_info;
         var data_last_3digit = 0;
@@ -663,45 +770,74 @@ document.addEventListener('DOMContentLoaded', async function() {
     
         ftf_form_no_ap_accounting.value = `${code_year_month}${data_counter}`
 
-        function updateFundSourceAmount(source, source2, source3) {
-            const other_details_container_ap_accounting = document.querySelector("#fund_transfer_form #other_details_container")
+        
+        fund_transfer_form_button_ap_accounting.addEventListener("click", () => {
+            if(fund_transfer_form_id_ap_accounting.style.display == "block"){
+                fund_transfer_form_id_ap_accounting.style.display = "none";
+
+            }
+            else{
+                fund_transfer_form_id_ap_accounting.style.display = "block";
+            }        
+        });
+
+        function updateFundSourceAmount(source, source2, source3, source4) {
             const fundSourceValue = source.value;
             let fundAmount = 0;
         
             switch (fundSourceValue) {
                 case "SOURCE OF FUND":
                     fundAmount = source_of_fund;
+                    source2.style.display = "block";
+                    source4.style.display = "none";
                     break;
                 case "TRUCKING FUND":
                     fundAmount = trucking_fund;
+                    source2.style.display = "block";
+                    source4.style.display = "none";
                     break;
                 case "HAULING FUND":
                     fundAmount = hauling_fund;
+                    source2.style.display = "block";
+                    source4.style.display = "none";
                     break;
                 case "DIESEL FUND":
                     fundAmount = diesel_fund;
+                    source2.style.display = "block";
+                    source4.style.display = "none";
                     break;
                 case "GASOLINE FUND":
                     fundAmount = gasoline_fund;
+                    source2.style.display = "block";
+                    source4.style.display = "none";
                     break;
                 case "SCRAP SALES":
                     fundAmount = scrap_sales;
+                    source2.style.display = "block";
+                    source4.style.display = "none";
                     break;
                 case "MOLD RUNNER SALES":
                     fundAmount = mold_runner_sales;
+                    source2.style.display = "block";
+                    source4.style.display = "none";
                     break;
                 case "TRUCK SCALE COLLECTION":
                     fundAmount = truck_scale_collection;
+                    source2.style.display = "block";
+                    source4.style.display = "none";
                     break;
                 case "HOUSE COLLECTION":
                     fundAmount = house_collection;
+                    source2.style.display = "block";
+                    source4.style.display = "none";
                     break;
                 case "BANK":
                     source2.style.display = "none";
+                    source4.style.display = "none";
                     return;
                 case "OTHERS":
                     source2.style.display = "none";
-                    other_details_container_ap_accounting.style.display = "block";
+                    source4.style.display = "block";
                     return;
             }
         
@@ -710,11 +846,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
         
         fund_source_ap_accounting.addEventListener("change", function() {
-            updateFundSourceAmount(fund_source_ap_accounting, fund_source_amount_container_ap_accounting, fund_source_amount_ap_accounting);
+            updateFundSourceAmount(fund_source_ap_accounting, fund_source_amount_container_ap_accounting, fund_source_amount_ap_accounting, fund_source_other_details_ap_accounting);
         });
         
         fund_allocation_ap_accounting.addEventListener("change", function() {
-            updateFundSourceAmount(fund_allocation_ap_accounting, fund_allocation_amount_container_ap_accounting, fund_allocation_amount_ap_accounting);
+            updateFundSourceAmount(fund_allocation_ap_accounting, fund_allocation_amount_container_ap_accounting, fund_allocation_amount_ap_accounting, fund_allocation_other_details_ap_accounting);
         });      
         
         var data = "";

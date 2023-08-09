@@ -9,20 +9,17 @@ document.addEventListener('DOMContentLoaded', async function() {
             username_response,
             prf_response,
             pof_response,
-            tbf_response,
             irf_response,
         ] = await Promise.all([
             username_response_promise,
             prf_response_promise,
             pof_response_promise,
-            tbf_response_promise,
             irf_response_promise,
         ]);
 
         const username_data  = await username_response.json();
         const prf_data_list  = await prf_response.json();
         const pof_data_list  = await pof_response.json();
-        const tbf_data_list  = await tbf_response.json();
         const irf_data_list  = await irf_response.json();
 
         // Code that depends on the fetched data

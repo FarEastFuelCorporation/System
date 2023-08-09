@@ -37,7 +37,7 @@
                 <li>
                     <a href="#">
                         <i class="fa-solid fa-money-bill-transfer"></i>
-                        Fund Transfer Form
+                        Fund Transfer
                     </a>
                 </li>
                 <li>
@@ -175,10 +175,10 @@
                     </div>
                 </div><br>
                 <h2>PENDING TRIP BUDGET LIST</h2>
-                <div class="card">
+                <div class="card" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
                     <div class="list">
                         <table>
-                            <thead>
+                            <thead style="position: sticky; top: 0; background-color: black;">
                                 <th>#</th>
                                 <th>LTF #</th>
                                 <th>HAULING<br>DATE/TIME</th>
@@ -195,10 +195,10 @@
                     </div>
                 </div><br>
                 <!-- <h2>INCIDENT HISTORY LIST</h2>
-                <div class="card">
+                <div class="card" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
                     <div class="list">
                         <table>
-                            <thead>
+                            <thead style="position: sticky; top: 0; background-color: black;">
                                 <th>#</th>
                                 <th>IRF #</th>
                                 <th>INCIDENT<br>DATE/TIME</th>
@@ -229,7 +229,7 @@
                             TRIP LIQUIDATION FORM
                         </button>
                     </label><br>
-                    <form id="budget_form" action="https://script.google.com/macros/s/AKfycbzUv3GEOpX2JEOPKvWdqYUpb31tbI49euEz8O-ERmjjp7NFYwJxHG5NW5-8c8Kt_DsP/exec" method="post">
+                    <form id="budget_form" action="https://script.google.com/macros/s/AKfycbwHk-HkIshEnD9p1h5x2Ecp2xKOnus1ln1IgTspUPs1LU-ezaIt8q1GFJzWPryPH3OQ/exec" method="post">
                         <input type="hidden" name="user" id="user">
                         <h2>TRIP  BUDGET FORM</h2><br>
                         <div class="ap_form">
@@ -283,7 +283,7 @@
                             </button>
                         </div><br>
                     </form>
-                    <form id="liquidation_form" action="https://script.google.com/macros/s/AKfycbzqw4Oiu8aZ-nlc7u39hlO008VEKLqcJbQ_Z9pKkSsFY2tURVo33wGt6kLAexKQAsN6sg/exec" method="post">
+                    <form id="liquidation_form" action="https://script.google.com/macros/s/AKfycbyUa8CyawHRYbc5cofwxHMokGMmVh8jFV_jG-2_qBfSpquzM8C2rgQQebBDPaU9N9wobg/exec" method="post">
                         <input type="hidden" name="user" id="user">
                         <input type="hidden" name="ltf_no" id="ltf_no">
                         <h2>TRIP LIQUIDATION FORM</h2><br>
@@ -348,7 +348,7 @@
                                     <input type="number" id="diesel_gasoline_amount" name="diesel_gasoline_amount" class="form-control" autocomplete="off" required value="0">
                                 </label><br>
                             </div>
-                            <div>
+                            <div id="cash_return_container">
                                 <label for="cash_return">
                                     Particulars
                                 </label><br>
@@ -371,6 +371,7 @@
                                 </button>
                             </div>
                         </div>
+                        <input type="hidden" id="particular_counter" name="particular_counter" value="0">
                         <div class="buttons" id="liquidation_form_buttons">
                             <button type="submit" id="submit_btn" class="form-control" >
                                 Submit
@@ -382,10 +383,10 @@
                     </form>
                     <div id="trip_history_list">
                         <h2>TRIP BUDGET HISTORY LIST</h2>
-                        <div class="card">
+                        <div class="card" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
                             <div class="list">
                                 <table>
-                                    <thead>
+                                    <thead style="position: sticky; top: 0; background-color: black;">
                                         <th>#</th>
                                         <th>TBF #</th>
                                         <th>PCV #</th>
@@ -407,12 +408,61 @@
                         </div><br>
                     </div>
                 </div>
+                <button id="payroll_button" class="form-control" style="position: absolute; top: 10px; right: 20px; width: 60px;">
+                    <i class="fa-solid fa-receipt"></i>
+                </button>
+                <div id="payroll_tab" style="position: absolute; z-index: 2; width: calc(100% - 40px); height: 80%; top: 70px; background-color: white; padding: 20px; border: 3px solid blue;" >
+                    <h2>PAYROLL</h2><br>
+                    <form action="">
+                        <input type="hidden" name="user" id="user">
+                        <div class="d-flex gap-3">
+                            <div>
+                                <label>
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                    Year
+                                </label>
+                                <input type="number" id="search_year" name="search_year" class="form-control form" required autocomplete="off" placeholder="Input Year">
+                            </div>
+                            <div>
+                                <label>
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                    Week Number
+                                </label>
+                                <input type="number" id="search_week_number" name="search_week_number" class="form-control form" required autocomplete="off" placeholder="Input Week Number"><br>
+                            </div>
+                            <div>
+                                <label>
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                    Pay Date
+                                </label>
+                                <input type="date" id="pay_date" name="pay_date" class="form-control form" required autocomplete="off"><br>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="d-flex gap-3">
+                            <button type="button" class="form-control" id="generate_payslip_button" style="width: 30%; max-width: 30% !important;">
+                                Generate Payslip
+                            </button>
+                            <button class="form-control" id="download_payslip_button" onclick="convertToPDF()" style="width: 30%; max-width: 30% !important;">
+                                Download Payslip
+                            </button>
+                            <!-- <button class="form-control" id="generate_payslip_button" onclick="convertToPDF2()">
+                                Generate Payroll
+                            </button> -->
+                        </div>
+                    </form>
+                </div>
             </section>
             <!-- fund_transfer_form -->
             <section class="ap_accounting" id="fund_transfer_form">
                 <div class="section_container">
-                    <h2>FUND TRANSFER FORM</h2><br>
-                    <form id="fund_transfer_form_id" action="https://script.google.com/macros/s/AKfycbwN3mstt5pE0IkNXh5SbTUrqJDlDUZA_LKfS-mNksHic2RRM4l50nrQ0exHcLNdsaGz/exec" method="post">
+                    <h2>FUND TRANSFER</h2><br>
+                    <label class="d-flex gap-3">
+                        <button type="button" id="fund_transfer_form_button" class="form-control fw-bold fs-3 me-3 text-white" style="width: 50%;">
+                            FUND TRANSFER FORM
+                        </button>
+                    </label><br>
+                    <form id="fund_transfer_form_id" action="https://script.google.com/macros/s/AKfycbw4iMJbcVKqlsMMq5yz3qfKnkr9hPNMEVr33PK_wx-d-OXVr44aytCDPgVqVPX0Hf5P/exec" method="post">
                         <input type="hidden" name="user" id="user">
                         <div class="ap_form">
                             <div>
@@ -444,13 +494,20 @@
                                         <option value="MOLD RUNNER SALES">MOLD RUNNER SALES</option>
                                         <option value="TRUCK SCALE COLLECTION">TRUCK SCALE COLLECTION</option>
                                         <option value="HOUSE COLLECTION">HOUSE COLLECTION</option>
+                                        <option value="OTHERS">OTHERS</option>
                                     </select>
                                 </div>
                                 <div id="fund_source_amount_container">
                                     <label for="fund_source_amount">
                                         Fund Source Amount
                                     </label><br>
-                                    <input type="text" id="fund_source_amount" name="fund_source_amount" class="form-control" autocomplete="off" readonly><br>
+                                    <input type="text" id="fund_source_amount" name="fund_source_amount" class="form-control" autocomplete="off" readonly>
+                                </div>
+                                <div id="fund_source_other_details_container">
+                                    <label for="fund_source_other_details">
+                                        Fund Source Input
+                                    </label><br>
+                                    <input type="text" id="fund_source_other_details" name="fund_source_other_details" class="form-control"  autocomplete="off" placeholder="Input Fund Allocation"><br>
                                 </div>
                             </div>
                             <div style="width: 30%;">
@@ -477,13 +534,13 @@
                                     <label for="fund_allocation_amount">
                                         Fund Allocation Amount
                                     </label><br>
-                                    <input type="text" id="fund_allocation_amount" name="fund_allocation_amount" class="form-control" autocomplete="off" readonly><br>
+                                    <input type="text" id="fund_allocation_amount" name="fund_allocation_amount" class="form-control" autocomplete="off" readonly>
                                 </div>
-                                <div id="other_details_container">
-                                    <label for="other_details">
+                                <div id="fund_allocation_other_details_container">
+                                    <label for="fund_allocation_other_details">
                                         Fund Allocation Input
                                     </label><br>
-                                    <input type="text" id="other_details" name="other_details" class="form-control"  autocomplete="off" placeholder="Input Fund Allocation" required><br>
+                                    <input type="text" id="fund_allocation_other_details" name="fund_allocation_other_details" class="form-control"  autocomplete="off" placeholder="Input Fund Allocation"><br>
                                 </div>
                             </div>
                             <div style="width: 20%;">
@@ -504,20 +561,20 @@
                             </button>
                         </div><br>
                     </form>
-                    <div id="trip_history_list">
+                    <div>
                         <h2>FUND TRANSACTION HISTORY LIST</h2>
-                        <div class="card">
+                        <div class="card" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
                             <div class="list">
                                 <table>
-                                    <thead>
+                                    <thead style="position: sticky; top: 0; background-color: black;">
                                         <th>#</th>
-                                        <th>TBF #/<br>PCV #</th>
+                                        <th>TBF # / TLF #<br>FTF #</th>
                                         <th>TRANSACTION<br>DATE/TIME</th>
                                         <th>FUND SOURCE</th>
                                         <th>FUND ALLOCATION</th>
                                         <th>FUND AMOUNT</th>
-                                        <th>REMARKS</th>
                                         <th>SUBMITTED BY</th>
+                                        <th>REMARKS</th>
                                     </thead>
                                     <tbody id="history_list">
         
