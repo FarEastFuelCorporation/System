@@ -279,6 +279,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const reset_ap_accounting = budget_form_ap_accounting.querySelector("#reset");
         const budget_form_inputs_ap_accounting = budget_form_ap_accounting.querySelector("#budget_form_inputs");
         const budget_form_buttons_ap_accounting = budget_form_ap_accounting.querySelector("#budget_form_buttons");
+        const available_funds_ap_accounting = budget_form_ap_accounting.querySelector("#available_funds");
         
         const liquidation_form_ap_accounting = trip_forms_ap_accounting.querySelector("#liquidation_form");
         const search_tbf_form_no_ap_accounting = liquidation_form_ap_accounting.querySelector("#search_tbf_form_no");
@@ -407,6 +408,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     `
                     budget_form_inputs_ap_accounting.style.display = "flex";
                     budget_form_buttons_ap_accounting.style.display = "flex";
+                    available_funds_ap_accounting.value = trucking_fund.toFixed(2);
                 }
             }     
             if(data_value == undefined){
@@ -620,7 +622,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         const fund_allocation_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_allocation");
         const fund_source_amount_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_source_amount");
         const fund_allocation_amount_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_allocation_amount");
+        const fund_source_amount_container_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_source_amount_container");
+        const fund_allocation_amount_container_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_allocation_amount_container");
         const history_list_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#history_list");
+        const other_details_container_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#other_details_container");
         
         var month_new;
         var code_year_month;
@@ -637,10 +642,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         
         for(x=1; x<ftf_data_list.content.length; x++){
             data_info = ftf_data_list.content[x][1];
-            console.log("🚀 ~ file: user15.js:640 ~ document.addEventListener ~ data_info:", data_info)
-            console.log("🚀 ~ file: user15.js:637 ~ document.addEventListener ~ data_last_3digit:", data_last_3digit)
             
-            if(data_info.includes(code_year_month) == true){
+            if((String(data_info)).includes(code_year_month) == true){
                 data_last_3digit = data_info.slice(9)
             }
             else{}
@@ -660,7 +663,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     
         ftf_form_no_ap_accounting.value = `${code_year_month}${data_counter}`
 
-        function updateFundSourceAmount(source, source2) {
+        function updateFundSourceAmount(source, source2, source3) {
+            const other_details_container_ap_accounting = document.querySelector("#fund_transfer_form #other_details_container")
             const fundSourceValue = source.value;
             let fundAmount = 0;
         
@@ -695,18 +699,22 @@ document.addEventListener('DOMContentLoaded', async function() {
                 case "BANK":
                     source2.style.display = "none";
                     return;
+                case "OTHERS":
+                    source2.style.display = "none";
+                    other_details_container_ap_accounting.style.display = "block";
+                    return;
             }
         
-            source2.value = fundAmount.toFixed(2);
-            source2.style.display = "flex";
+            source3.value = fundAmount.toFixed(2);
+            source3.style.display = "flex";
         }
         
         fund_source_ap_accounting.addEventListener("change", function() {
-            updateFundSourceAmount(fund_source_ap_accounting, fund_source_amount_ap_accounting);
+            updateFundSourceAmount(fund_source_ap_accounting, fund_source_amount_container_ap_accounting, fund_source_amount_ap_accounting);
         });
         
         fund_allocation_ap_accounting.addEventListener("change", function() {
-            updateFundSourceAmount(fund_allocation_ap_accounting, fund_allocation_amount_ap_accounting);
+            updateFundSourceAmount(fund_allocation_ap_accounting, fund_allocation_amount_container_ap_accounting, fund_allocation_amount_ap_accounting);
         });      
         
         var data = "";
@@ -722,6 +730,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <td>${ftf_data_list.content[x][3]}</td>
                 <td>${formatNumber(ftf_data_list.content[x][4])}</td>
                 <td>${ftf_data_list.content[x][5]}</td>
+                <td>${ftf_data_list.content[x][6]}</td>
             </tr>
             `
         }

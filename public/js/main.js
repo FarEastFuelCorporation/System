@@ -492,7 +492,6 @@ function customValidation3() {
   const fund_amount = parseFloat(document.getElementById('fund_amount').value);
   const fund_source_amount = parseFloat(document.getElementById('fund_source_amount').value);
   const fund_source = parseFloat(document.getElementById('fund_source').value);
-  console.log("🚀 ~ file: main.js:495 ~ customValidation3 ~ fund_source:", fund_source)
   
   if(fund_source != "BANK"){
     if (fund_amount > fund_source_amount) {
@@ -500,6 +499,20 @@ function customValidation3() {
       
       return false;
     }
+  }
+
+  return true;
+}
+
+function customValidation4() {
+  const available_funds = parseFloat(document.querySelector('#budget_form #available_funds').value);
+  const budget = parseFloat(document.querySelector('#budget_form #budget').value);
+  console.log("🚀 ~ file: main.js:509 ~ customValidation4 ~ trucking_fund:", trucking_fund)
+  
+  if (budget > available_funds) {
+    alert('Invalid Transation! Insufficient Funds.');
+    
+    return false;
   }
 
   return true;
@@ -516,6 +529,9 @@ form_elements.forEach(function(form) {
   } 
   else if (form.id === 'fund_transfer_form_id') {
     addConfirmationListener(form, customValidation3);
+  } 
+  else if (form.id === 'budget_form') {
+    addConfirmationListener(form, customValidation4);
   } 
   else {
     addConfirmationListener(form);
