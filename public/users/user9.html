@@ -518,57 +518,6 @@
 
                             </div>
                             <style>
-                                #payslip_form
-                                {
-                                    width: 816px;
-                                    height: 1056px;
-                                    border: 3px solid black;
-                                    background-color: white;
-                                }
-                        
-                                #payslip_form .payslip
-                                {
-                                    margin: 20px;
-                                    width: calc(100% - 40px);
-                                    height: 485px;
-                                    border: 3px solid black;
-                                }
-
-                                .truncate_text {
-                                    white-space: nowrap;
-                                    overflow: hidden; 
-                                    text-overflow: ellipsis;
-                                }
-                        
-                                #payslip_form .bold
-                                {
-                                    font-weight: bold;
-                                }
-                        
-                                #payslip_form h1
-                                {
-                                    font-size: 16px;
-                                    margin: 0;
-                                }
-                        
-                                #payslip_form h2
-                                {
-                                    font-size: 12px;
-                                    margin: 0;
-                                }
-                        
-                                #payslip_form h3
-                                {
-                                    font-size: 11px;
-                                    margin: 0;
-                                }
-                        
-                                #payslip_form h4
-                                {
-                                    font-size: 10px;
-                                    margin: 0;
-                                }
-                                                                
                                 .left{
                                     text-align: start !important;
                                 }
@@ -603,60 +552,10 @@
                                     border: 1px solid black !important;
                                 }
                                 
-                        
-                                #payslip_form .payslip img
-                                {
-                                    height: 25px;
-                                }
-                        
-                                #payslip_form .payslip .summary
-                                {
-                                    padding: 5px;
-                                }
-                        
-                                #payslip_form .payslip .summary .header
-                                {
-                                    border-bottom: 1px solid black;
-                                    padding-bottom: 5px;
-                                    display: flex;
-                                    margin-bottom: 5px;
-                                    height: 27.5px;
-                                }
-                        
-                                #payslip_form .payslip .summary .header .header_title
-                                {
-                                    padding-left: 5px;
-                                }
-                        
-                                #payslip_form .payslip .summary .employee_details
-                                {
-                                    padding-bottom: 5px;
-                                    border-bottom: 1px solid black;
-                                }
-                        
-                                #payslip_form .payslip .summary .employee_details .grid1
-                                {
-                                    display: grid;
-                                    grid-template-columns: 30% 30% 30% 10%;
-                                }
-                        
-                                #payslip_form .payslip .summary .employee_details .grid1 .ps-1
-                                {
+                                .truncate_text {
                                     white-space: nowrap;
-                                    overflow: hidden;
+                                    overflow: hidden; 
                                     text-overflow: ellipsis;
-                                }
-                        
-                                #payslip_form .payslip .summary .summary_details_header
-                                {
-                                    border-bottom: 1px solid black;
-                                    text-align: center;
-                                }
-                        
-                                #payslip_form .payslip .summary .summary_details_details
-                                {
-                                    border-bottom: 1px solid black;
-                                    width: 100% !important;
                                 }
                         
                                 .vertical-table 
@@ -697,39 +596,176 @@
                                     border-bottom: 1px solid #ddd;
                                     font-size: 9px !important;
                                 }
+
+                                #payslip_form
+                                {
+                                    width: 816px;
+                                    height: 1056px;
+                                    border: 3px solid black;
+                                    background-color: white;
+                                    color: black !important;
+                                    position: relative;
+                                    font-weight: bold !important;
+                                }
+                        
+                                #payslip_form .payslip
+                                {
+                                    margin: 20px;
+                                    width: calc(100% - 160px);
+                                    height: 485px;
+                                    border: 3px solid black;
+                                }
+
+                                #payslip_form .payslip2
+                                {
+                                    margin: 20px;
+                                    width: calc(100% - 40px);
+                                    height: 485px;
+                                    border: 3px solid black;
+                                }
+                        
+                                #payslip_form .bold
+                                {
+                                    font-weight: bold;
+                                }
+                        
+                                #payslip_form h1
+                                {
+                                    font-size: 16px;
+                                    margin: 0;
+                                }
+                        
+                                #payslip_form h2
+                                {
+                                    font-size: 12px;
+                                    margin: 0;
+                                }
+                        
+                                #payslip_form h3
+                                {
+                                    font-size: 11px;
+                                    margin: 0;
+                                }
+                        
+                                #payslip_form h4
+                                {
+                                    font-size: 10px;
+                                    margin: 0;
+                                }
+                        
+                                #payslip_form .payslip img,
+                                #payslip_form .payslip2 img
+                                {
+                                    height: 25px;
+                                }
+                        
+                                #payslip_form .payslip .summary,
+                                #payslip_form .payslip2 .summary
+                                {
+                                    padding: 5px;
+                                }
+                        
+                                #payslip_form .payslip .summary .header,
+                                #payslip_form .payslip2 .summary .header
+                                {
+                                    border-bottom: 1px solid black;
+                                    padding-bottom: 5px;
+                                    display: flex;
+                                    margin-bottom: 5px;
+                                    height: 27.5px;
+                                }
+                        
+                                #payslip_form .payslip .summary .header .header_title,
+                                #payslip_form .payslip2 .summary .header .header_title
+                                {
+                                    padding-left: 5px;
+                                }
+                        
+                                #payslip_form .payslip .summary .employee_details,
+                                #payslip_form .payslip2 .summary .employee_details
+                                {
+                                    padding-bottom: 5px;
+                                    border-bottom: 1px solid black;
+                                }
+                        
+                                #payslip_form .payslip .summary .employee_details .grid1,
+                                #payslip_form .payslip2 .summary .employee_details .grid1
+                                {
+                                    display: grid;
+                                    grid-template-columns: 35% 25% 30% 10%;
+                                }
+                        
+                                #payslip_form .payslip .summary .employee_details .grid1 .ps-1,
+                                #payslip_form .payslip2 .summary .employee_details .grid1 .ps-1
+                                {
+                                    white-space: nowrap;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                }
+                        
+                                #payslip_form .payslip .summary .summary_details_header,
+                                #payslip_form .payslip2 .summary .summary_details_header
+                                {
+                                    border-bottom: 1px solid black;
+                                    text-align: center;
+                                }
+                        
+                                #payslip_form .payslip .summary .summary_details_details,
+                                #payslip_form .payslip2 .summary .summary_details_details
+                                {
+                                    border-bottom: 1px solid black;
+                                    width: 100% !important;
+                                }
                         
                                 #payslip_form .payslip .summary #footer
+                                {
+                                    display: grid;
+                                    grid-template-columns: 40% 17% 25% 9% 9%;
+                                }
+                                
+                                #payslip_form .payslip2 .summary #footer
                                 {
                                     display: grid;
                                     grid-template-columns: 48.75% 16.25%  20% 7.5% 7.5%;
                                 }
                         
-                                #payslip_form .payslip .summary .deductions_detail
+                                #payslip_form .payslip .summary .deductions_detail                                {
+                                    display: grid;
+                                    grid-template-columns: repeat(2, calc(100%/2));
+                                }
+
+                                #payslip_form .payslip2 .summary .deductions_detail
                                 {
                                     display: grid;
                                     grid-template-columns: repeat(3, calc(100%/3));
                                 }
-                                #payslip_form .payslip .summary .additional_detail
+
+                                #payslip_form .payslip .summary .additional_detail,
+                                #payslip_form .payslip2 .summary .additional_detail
                                 {
                                     display: grid;
                                     grid-template-columns: 100%;
                                 }
                                 
                                 #payslip_form .payslip .summary .deductions_detail > div,
-                                #payslip_form .payslip .summary .additional_detail > div
+                                #payslip_form .payslip .summary .additional_detail > div,
+                                #payslip_form .payslip2 .summary .deductions_detail > div,
+                                #payslip_form .payslip2 .summary .additional_detail > div
                                 {
                                     display: grid;
                                     grid-template-columns: 80% 20%;
                                     height: 12px;
                                 }
                         
-                                #payslip_form .payslip .summary #payslip_gross_salary
+                                #payslip_form .payslip .summary #payslip_gross_salary,
+                                #payslip_form .payslip2 .summary #payslip_gross_salary
                                 {
                                     display: grid;
                                     grid-template-columns: 60% 40%;
                                 }
                         
-                                #payslip_form .payslip .summary #payslip_type_of_day
+                                #payslip_form .payslip .summary #payslip_type_of_day,
+                                #payslip_form .payslip2 .summary #payslip_type_of_day
                                 {
                                     font-size: 7px !important;
                                 }

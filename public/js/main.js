@@ -191,7 +191,7 @@ function pushUniqueElement(arr, element) {
 }
 
 // Set the idle time in milliseconds (e.g., 1 minutes)
-const idleTime = 1 * 60 * 1000; // 1 minute
+const idleTime = 5 * 60 * 1000; // 1 minute
 
 let idleTimer;
 
@@ -537,3 +537,53 @@ form_elements.forEach(function(form) {
     addConfirmationListener(form);
   }
 });
+
+function getWeekNumber(dateString) {
+  const date = new Date(dateString);
+
+  if (isNaN(date)) {
+    throw new Error("Invalid date format");
+  }
+
+  const currentDate = new Date(date);
+  currentDate.setHours(0, 0, 0, 0);
+  currentDate.setDate(currentDate.getDate() + 4 - (currentDate.getDay() || 7));
+  const yearStart = new Date(currentDate.getFullYear(), 0, 1);
+  const weekNumber = Math.ceil(((currentDate - yearStart) / 86400000 + 1) / 7);
+
+  return weekNumber;
+}
+
+function getYearFromDate(dateString) {
+  const date = new Date(dateString);
+
+  if (isNaN(date)) {
+    throw new Error("Invalid date format");
+  }
+
+  const year = date.getFullYear();
+  return year;
+}
+
+function getWeekDates(dateString) {
+  const date = new Date(dateString);
+
+  if (isNaN(date)) {
+    throw new Error("Invalid date format");
+  }
+
+  const currentDate = new Date(date);
+  const dayOfWeek = currentDate.getDay(); // 0 (Sunday) to 6 (Saturday)
+
+  // Calculate the date of the Monday of the same week
+  currentDate.setDate(currentDate.getDate() - dayOfWeek + 1);
+
+  const weekDates = [];
+  for (let i = 0; i < 7; i++) {
+    const newDate = new Date(currentDate);
+    newDate.setDate(currentDate.getDate() + i);
+    weekDates.push(newDate);
+  }
+
+  return weekDates;
+}

@@ -875,6 +875,14 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         }
         days.innerHTML = day_list;
+
+          // Get all input elements of type "number"
+        const numberInputs = document.querySelectorAll('input[type="number"]');
+
+        // Loop through each input and set the "step" attribute
+        numberInputs.forEach(input => {
+            input.setAttribute('step', '0.01'); // Set the desired step value
+        });
         
         for (let x = 1; x <= 7; x++) {
             day[x] = document.getElementById(`day${x}`);
@@ -944,8 +952,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                         regular_hours_pay[x].value = (parseFloat(regular_hours[x].value) * parseFloat(regular_rate_per_hour[x].value));
                         night_hours_pay[x].value = (parseFloat(night_hours[x].value) * parseFloat(night_rate_per_hour[x].value));
                         subtotal[x].value = (parseFloat(regular_hours_pay[x].value) + parseFloat(night_hours_pay[x].value)).toFixed(2);
-                        late_deduction[x].value = (parseFloat(late_mins[x].value) * (parseFloat(subtotal[x].value) / 8 / 60));
-                        under_time_deduction[x].value = (parseFloat(under_time_mins[x].value) * (parseFloat(subtotal[x].value) / 8));
+                        if (half_day_box[x].checked == true) {
+                            late_deduction[x].value = (parseFloat(late_mins[x].value) * (parseFloat(subtotal[x].value) / 4 / 60));
+                            under_time_deduction[x].value = (parseFloat(under_time_mins[x].value) * (parseFloat(subtotal[x].value) / 4));
+                        }
+                        else{
+                            late_deduction[x].value = (parseFloat(late_mins[x].value) * (parseFloat(subtotal[x].value) / 8 / 60));
+                            under_time_deduction[x].value = (parseFloat(under_time_mins[x].value) * (parseFloat(subtotal[x].value) / 8));
+                        }
                         regular_pay[x].value = (parseFloat(subtotal[x].value) - (parseFloat(late_deduction[x].value) + parseFloat(under_time_deduction[x].value)) + (parseFloat(daily_rate.value) * 1.3)).toFixed(2);
                         ot_pay[x].value = (parseFloat(ot_hours[x].value) * parseFloat(ot_rate_per_hour[x].value));
                         ot_night_pay[x].value = (parseFloat(ot_night_hours[x].value) * parseFloat(ot_night_rate_per_hour[x].value));
@@ -956,9 +970,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                         regular_hours_pay[x].value = (parseFloat(regular_hours[x].value) * parseFloat(regular_rate_per_hour[x].value));
                         night_hours_pay[x].value = (parseFloat(night_hours[x].value) * parseFloat(night_rate_per_hour[x].value));
                         subtotal[x].value = (parseFloat(regular_hours_pay[x].value) + parseFloat(night_hours_pay[x].value)).toFixed(2);
-                        late_deduction[x].value = (parseFloat(late_mins[x].value) * (parseFloat(subtotal[x].value) / 8 / 60));
-                        under_time_deduction[x].value = (parseFloat(under_time_mins[x].value) * (parseFloat(subtotal[x].value) / 8));
-                        regular_pay[x].value = (parseFloat(subtotal[x].value) - (parseFloat(late_deduction[x].value) + parseFloat(under_time_deduction[x].value)) + parseFloat(daily_rate.value)).toFixed(2);
+                        if (half_day_box[x].checked == true) {
+                            late_deduction[x].value = (parseFloat(late_mins[x].value) * (parseFloat(subtotal[x].value) / 4 / 60));
+                            under_time_deduction[x].value = (parseFloat(under_time_mins[x].value) * (parseFloat(subtotal[x].value) / 4));
+                        }
+                        else{
+                            late_deduction[x].value = (parseFloat(late_mins[x].value) * (parseFloat(subtotal[x].value) / 8 / 60));
+                            under_time_deduction[x].value = (parseFloat(under_time_mins[x].value) * (parseFloat(subtotal[x].value) / 8));
+                        }                        regular_pay[x].value = (parseFloat(subtotal[x].value) - (parseFloat(late_deduction[x].value) + parseFloat(under_time_deduction[x].value)) + parseFloat(daily_rate.value)).toFixed(2);
                         ot_pay[x].value = (parseFloat(ot_hours[x].value) * parseFloat(ot_rate_per_hour[x].value));
                         ot_night_pay[x].value = (parseFloat(ot_night_hours[x].value) * parseFloat(ot_night_rate_per_hour[x].value));
                         ot_pay_subtotal[x].value = (parseFloat(ot_pay[x].value) + parseFloat(ot_night_pay[x].value)).toFixed(2);
@@ -969,9 +988,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                     regular_hours_pay[x].value = (parseFloat(regular_hours[x].value) * parseFloat(regular_rate_per_hour[x].value));
                     night_hours_pay[x].value = (parseFloat(night_hours[x].value) * parseFloat(night_rate_per_hour[x].value));
                     subtotal[x].value = (parseFloat(regular_hours_pay[x].value) + parseFloat(night_hours_pay[x].value)).toFixed(2);
-                    late_deduction[x].value = (parseFloat(late_mins[x].value) * (parseFloat(subtotal[x].value) / 8 / 60));
-                    under_time_deduction[x].value = (parseFloat(under_time_mins[x].value) * (parseFloat(subtotal[x].value) / 8));
-                    regular_pay[x].value = (parseFloat(subtotal[x].value) - (parseFloat(late_deduction[x].value) + parseFloat(under_time_deduction[x].value))).toFixed(2);
+                    if (half_day_box[x].checked == true) {
+                        late_deduction[x].value = (parseFloat(late_mins[x].value) * (parseFloat(subtotal[x].value) / 4 / 60));
+                        under_time_deduction[x].value = (parseFloat(under_time_mins[x].value) * (parseFloat(subtotal[x].value) / 4));
+                    }
+                    else{
+                        late_deduction[x].value = (parseFloat(late_mins[x].value) * (parseFloat(subtotal[x].value) / 8 / 60));
+                        under_time_deduction[x].value = (parseFloat(under_time_mins[x].value) * (parseFloat(subtotal[x].value) / 8));
+                    }                    regular_pay[x].value = (parseFloat(subtotal[x].value) - (parseFloat(late_deduction[x].value) + parseFloat(under_time_deduction[x].value))).toFixed(2);
                     ot_pay[x].value = (parseFloat(ot_hours[x].value) * parseFloat(ot_rate_per_hour[x].value));
                     ot_night_pay[x].value = (parseFloat(ot_night_hours[x].value) * parseFloat(ot_night_rate_per_hour[x].value));
                     ot_pay_subtotal[x].value = (parseFloat(ot_pay[x].value) + parseFloat(ot_night_pay[x].value)).toFixed(2);
@@ -1394,7 +1418,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 calculateGrossSalary();
                 calculateNetSalary();
             })           
-
 
             daily_rate.addEventListener("keyup", () => {                
                 calculateGrossSalary();
@@ -1915,8 +1938,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             day_break[x].addEventListener("keyup", () => {
                 regular_hours[x].value = parseFloat(regular_hours[x].value) - parseFloat(day_break[x].value);
                 calculateHours();
-                calculateUnderTimeHour();
-                calculateAllowance();
                 calculateGrossSalary();
                 calculateNetSalary();
             });
@@ -1924,8 +1945,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             night_break[x].addEventListener("keyup", () => {
                 night_hours[x].value = parseFloat(night_hours[x].value) - parseFloat(night_break[x].value);
                 calculateHours();
-                calculateUnderTimeHour();
-                calculateAllowance();
                 calculateGrossSalary();
                 calculateNetSalary();
             });
@@ -2122,8 +2141,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     if(payslip_employee_id[x] == payroll_transaction_data_list.content[c][3] &&
                         search_year.value == payroll_transaction_data_list.content[c][1]  && 
                         search_week_number.value == payroll_transaction_data_list.content[c][2]){
-        
-    
+
                         duration.push({[payroll_transaction_data_list.content[c][3]] : payroll_transaction_data_list.content[c][5]});
                         type_of_day.push(payroll_transaction_data_list.content[c][6]);
                         date.push(date_decoder(payroll_transaction_data_list.content[c][8]));
@@ -2252,8 +2270,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                             ${type_of_day.map(item => `<td>${item}</td>`).join('')}
                                                         </tr>
                                                         <tr id="payslip_time_in_time_out">
-                                                            <th>Time IN/Time OUT</th>
-                                                            ${time_in.map((item1, index) => `<td>${item1} || ${time_out[index]}</td>`).join('')}                                
+                                                            <th>Time IN</th>
+                                                            ${time_in.map(item => `<td>${item}</td>`).join('')}
+                                                        </tr>
+                                                        <tr id="payslip_time_in_time_out">
+                                                            <th>Time OUT</th>
+                                                            ${time_out.map(item => `<td>${item}</td>`).join('')}
                                                         </tr>
                                                         <tr class="border-top">
                                                             <th>Work Shifts</th>
@@ -2290,7 +2312,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                             ${under_time_hour.map(item => `<td>${item}</td>`).join('')}
                                                         </tr>
                                                         <tr id="payslip_under_time_deduction">
-                                                            <th>Under Time Deduction</th>
+                                                            <th style="font-size: 8px !important;">Under Time Deduction</th>
                                                             ${under_time_deduction.map(item => `<td>${item}</td>`).join('')}
                                                         </tr>
                                                         <tr class="border-top-bottom" id="payslip_late_undertime">
@@ -2342,33 +2364,23 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                     <div class="border-bottom-right">
                                                         <h4 class="bold ps-1 truncate_text">SSS JUNE 2023</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][9]}</h4>
                                                     </div>
+                                                    <div class="border-bottom">
+                                                        <h4 class="bold ps-1 truncate_text">SSS Loan Payment</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][12]}</h4>
+                                                    </div>
                                                     <div class="border-bottom-right">
                                                         <h4 class="bold ps-1 truncate_text">HDMF JUNE 2023</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][10]}</h4>
                                                     </div>
                                                     <div class="border-bottom">
-                                                        <h4 class="bold ps-1 truncate_text">PHIC JUNE 2023</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][11]}</h4>
-                                                    </div>
-                                                    <div class="border-bottom-right">
-                                                        <h4 class="bold ps-1 truncate_text">SSS Loan Payment</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][12]}</h4>
-                                                    </div>
-                                                    <div class="border-bottom-right">
                                                         <h4 class="bold ps-1 truncate_text">HDMF Loan Payment</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][13]}</h4>
                                                     </div>
+                                                    <div class="border-bottom-right">
+                                                        <h4 class="bold ps-1 truncate_text">PHIC JUNE 2023</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][11]}</h4>
+                                                    </div>
                                                     <div class="border-bottom">
                                                     </div>
                                                     <div class="border-bottom-right">
                                                     </div>
-                                                    <div class="border-bottom-right">
-                                                    </div>
                                                     <div class="border-bottom">
-                                                    </div>
-                                                    <div class="border-bottom-right">
-                                                    </div>
-                                                    <div class="border-bottom-right">
-                                                    </div>
-                                                    <div class="border-bottom">
-                                                    </div>
-                                                    <div class="border-right">
                                                     </div>
                                                     <div class="border-right">
                                                     </div>
@@ -2381,7 +2393,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                         <h3 class="bold">ADDITIONAL</h3>
                                                         <div class="additional_detail border">
                                                             <div class="border-bottom">
-                                                                <h4 class="bold ps-1 truncate_text left">Adjustments</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][6]}</h4>
+                                                                <h4 class="bold ps-1 truncate_text left">Adjustments</h4><h4 class="pe-1">${payroll_summary_data_list.content[e][6]}</h4>
                                                             </div>
                                                             <div class="border-bottom">
                                                             </div>
@@ -2395,9 +2407,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                     </div>
                                                 </div>
                                                 <div id="payslip_gross_salary" class="border-right">
-                                                    <h4 class="ps-1 pt-1">Total Earnings:</h4>
+                                                    <h4 class="ps-1 pt-1">Gross Salary:</h4>
                                                     <h3 class="text-end bold pt-1 pe-1">${(payroll_summary_data_list.content[e][5]).toFixed(2)}</h3>
-                                                    <h4 class="ps-1 pt-1">Total Additionals:</h4>
+                                                    <h4 class="ps-1 pt-1">Total Additional:</h4>
                                                     <h3 class="text-end bold pt-1 pe-1">${(payroll_summary_data_list.content[e][6]).toFixed(2)}</h3>
                                                     <h4 class="ps-1 pt-1 border-bottom">Total Deductions:</h4>
                                                     <h3 class="text-end bold pt-1 pe-1 border-bottom">${(payroll_summary_data_list.content[e][9] + payroll_summary_data_list.content[e][10] + payroll_summary_data_list.content[e][11] + payroll_summary_data_list.content[e][12] + payroll_summary_data_list.content[e][13]).toFixed(2)}</h3>
@@ -2406,19 +2418,83 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                 </div>
                                                 <div class="border-right text-center">
                                                     <br>
-                                                    <h4 class="pt-3">__________</h4>
+                                                    <h4 class="pt-3">_______</h4>
                                                     <h4>Employee Signature</h4>
                                                 </div>
                                                 <div class="border-right text-center">
                                                     <br>
-                                                    <h4 class="pt-3">__________</h4>
+                                                    <h4 class="pt-3">_______</h4>
                                                     <h4>Authorized Signature</h4>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <hr>
-                                    <div class="payslip">
+                                    <div style="position: absolute; border: 1px solid black; top: 20px; right: 120px; height:485px;">
+                                    </div>
+                                    <div style="position: absolute; border: 3px solid black; top: 20px; right: 20px; width: 80px; height:485px; padding: 5px; display: flex; justify-content: end;">
+                                        <div style=" transform: rotate(270deg); width: 485px; height: 80px; position: absolute; right: -205px; top: 200px;">
+                                            <div style="padding:5px; display: grid; grid-template-columns: 65% 35%;">
+                                                <div style="border-right: 1px solid black; padding-right: 5px; height: 70px;">
+                                                    <div style="text-align: center; border-bottom: 1px solid black;">
+                                                        <h2>OTHER DEDUCTIONS</h2>
+                                                    </div>
+                                                    <div style="display: grid; grid-template-columns: repeat(3,calc(100%/3))" class="border">
+                                                        <div class="border" style="display: grid; grid-template-columns: 80% 20%;">
+                                                            <h4 class="bold ps-1 truncate_text" style="text-align: start;">C/A Deduction</h4><h4 class="pe-1">${payroll_summary_data_list.content[e][14]}</h4>
+                                                        </div>
+                                                        <div class="border" style="display: grid; grid-template-columns: 80% 20%;">
+                                                            <h4 class="bold ps-1 truncate_text" style="text-align: start;">Uniform</h4><h4 class="pe-1">${payroll_summary_data_list.content[e][15]}</h4>
+                                                        </div>
+                                                        <div class="border" style="display: grid; grid-template-columns: 80% 20%;">
+                                                            <h4 class="bold ps-1 truncate_text" style="text-align: start;">Housing</h4><h4 class="pe-1">${payroll_summary_data_list.content[e][16]}</h4>
+                                                        </div>
+                                                        <div class="border" style="display: grid; grid-template-columns: 80% 20%;">
+                                                            <h4 class="bold ps-1 truncate_text" style="text-align: start;">St. Peter</h4><h4 class="pe-1">${payroll_summary_data_list.content[e][17]}</h4>
+                                                        </div>
+                                                        <div class="border" style="display: grid; grid-template-columns: 80% 20%;">
+                                                            <h4 class="bold ps-1 truncate_text" style="text-align: start;">Cash Not Return</h4><h4 class="pe-1">${payroll_summary_data_list.content[e][18]}</h4>
+                                                        </div>
+                                                        <div class="border" style="display: grid; grid-template-columns: 80% 20%;">
+                                                            <h4 class="bold ps-1 truncate_text" style="text-align: start;">Hard Hat</h4><h4 class="pe-1">${payroll_summary_data_list.content[e][19]}</h4>
+                                                        </div>
+                                                        <div class="border" style="display: grid; grid-template-columns: 80% 20%;">
+                                                            <h4 class="bold ps-1 truncate_text" style="text-align: start;">Safety Shoes</h4><h4 class="pe-1">${payroll_summary_data_list.content[e][20]}</h4>
+                                                        </div>
+                                                        <div class="border" style="display: grid; grid-template-columns: 80% 20%;">
+                                                            <h4 class="bold ps-1 truncate_text" style="text-align: start;">Over Meals</h4><h4 class="pe-1">${payroll_summary_data_list.content[e][21]}</h4>
+                                                        </div>
+                                                        <div class="border" style="display: grid; grid-template-columns: 80% 20%;">
+                                                            <h4 class="bold ps-1 truncate_text" style="text-align: start;">Bereavement Assistance</h4><h4 class="pe-1">${payroll_summary_data_list.content[e][22]}</h4>
+                                                        </div>
+                                                        <div class="border" style="height: 12px">
+                                                        </div>
+                                                        <div class="border" style="height: 12px">
+                                                        </div>
+                                                        <div class="border" style="height: 12px">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div style="padding-left: 5px; height: 70px;">
+                                                    <div style="text-align: center; border-bottom: 1px solid black;">
+                                                        <h2>SUMMARY</h2>
+                                                    </div>
+                                                    <div class="border">
+                                                        <div class="border" style="display: grid; grid-template-columns: 70% 30%;">
+                                                            <h4 class="bold ps-1 truncate_text" style="text-align: start;">Net Pay:</h4><h3 class="pe-1 bold" style="text-align: end;">${((payroll_summary_data_list.content[e][5] + payroll_summary_data_list.content[e][6]) - (payroll_summary_data_list.content[e][9] + payroll_summary_data_list.content[e][10] + payroll_summary_data_list.content[e][11] + payroll_summary_data_list.content[e][12] + payroll_summary_data_list.content[e][13])).toFixed(2)}</h3>
+                                                        </div>
+                                                        <div class="border" style="display: grid; grid-template-columns: 70% 30%;">
+                                                            <h4 class="bold ps-1 truncate_text" style="text-align: start;">Other Deductions:</h4><h3 class="pe-1 bold" style="text-align: end;">${(payroll_summary_data_list.content[e][14] + payroll_summary_data_list.content[e][15] + payroll_summary_data_list.content[e][16] + payroll_summary_data_list.content[e][17] + payroll_summary_data_list.content[e][18] + payroll_summary_data_list.content[e][19] + payroll_summary_data_list.content[e][20] + payroll_summary_data_list.content[e][21] + payroll_summary_data_list.content[e][22]).toFixed(2)}</h3>
+                                                        </div>
+                                                        <div class="border" style="display: grid; grid-template-columns: 70% 30%;">
+                                                            <h4 class="bold ps-1 truncate_text" style="text-align: start;">Remaining Salary:</h4><h1 class="pe-1 bold" style="text-align: end;">${((payroll_summary_data_list.content[e][5] + payroll_summary_data_list.content[e][6]) - (payroll_summary_data_list.content[e][9] + payroll_summary_data_list.content[e][10] + payroll_summary_data_list.content[e][11] + payroll_summary_data_list.content[e][12] + payroll_summary_data_list.content[e][13]) - (payroll_summary_data_list.content[e][14] + payroll_summary_data_list.content[e][15] + payroll_summary_data_list.content[e][16] + payroll_summary_data_list.content[e][17] + payroll_summary_data_list.content[e][18] + payroll_summary_data_list.content[e][19] + payroll_summary_data_list.content[e][20] + payroll_summary_data_list.content[e][21] + payroll_summary_data_list.content[e][22])).toFixed(2)}</h1>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="border: 1px solid black;"></div>
+                                    <div class="payslip2">
                                         <div class="summary">
                                             <div class="header">
                                                 <img src="../images/logo.png" alt="">
@@ -2480,8 +2556,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                             ${type_of_day.map(item => `<td>${item}</td>`).join('')}
                                                         </tr>
                                                         <tr id="payslip_time_in_time_out">
-                                                            <th>Time IN/Time OUT</th>
-                                                            ${time_in.map((item1, index) => `<td>${item1} || ${time_out[index]}</td>`).join('')}                                
+                                                            <th>Time IN</th>
+                                                            ${time_in.map(item => `<td>${item}</td>`).join('')}
+                                                        </tr>
+                                                        <tr id="payslip_time_in_time_out">
+                                                            <th>Time OUT</th>
+                                                            ${time_out.map(item => `<td>${item}</td>`).join('')}
                                                         </tr>
                                                         <tr class="border-top">
                                                             <th>Work Shifts</th>
@@ -2537,11 +2617,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                         </tr>
                                                         <tr id="payslip_ot_hours">
                                                             <th>Overtime Hours</th>
-                                                            ${ot_hours.map((item1, index) => `<td>${item1} || ${ot_night_hours[index]}</td>`).join('')}                                </tr>
+                                                            ${ot_hours.map((item1, index) => `<td>${item1} || ${ot_night_hours[index]}</td>`).join('')}                                
                                                         </tr>
                                                         <tr id="payslip_ot_hours_rate">
                                                             <th>Overtime Rate/hour</th>
-                                                            ${ot_hours_rate_per_hour.map((item1, index) => `<td>${item1} || ${ot_night_hours_rate_per_hour[index]}</td>`).join('')}                                </tr>
+                                                            ${ot_hours_rate_per_hour.map((item1, index) => `<td>${item1} || ${ot_night_hours_rate_per_hour[index]}</td>`).join('')}                                
                                                         </tr>
                                                         <tr class="bold border-top" id="payslip_ot_subtotal">
                                                             <th>Subtotal</th>
@@ -2583,31 +2663,22 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                             <h4 class="bold ps-1 truncate_text">HDMF Loan Payment</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][13]}</h4>
                                                         </div>
                                                         <div class="border-bottom">
-                                                            <h4 class="bold ps-1 truncate_text">C/A Deduction</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][14]}</h4>
-                                                            </div>
-                                                        <div class="border-bottom-right">
-                                                            <h4 class="bold ps-1 truncate_text">Uniform</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][15]}</h4>
                                                         </div>
                                                         <div class="border-bottom-right">
-                                                            <h4 class="bold ps-1 truncate_text">Housing</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][16]}</h4>
+                                                        </div>
+                                                        <div class="border-bottom-right">
                                                         </div>
                                                         <div class="border-bottom">
-                                                            <h4 class="bold ps-1 truncate_text">St. Peter</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][17]}</h4>
                                                         </div>
                                                         <div class="border-bottom-right">
-                                                            <h4 class="bold ps-1 truncate_text">Cash Not Return</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][18]}</h4>
                                                         </div>
                                                         <div class="border-bottom-right">
-                                                            <h4 class="bold ps-1 truncate_text">Hard Hat</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][19]}</h4>
                                                         </div>
                                                         <div class="border-bottom">
-                                                            <h4 class="bold ps-1 truncate_text">Safety Shoes</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][20]}</h4>
                                                         </div>
                                                         <div class="border-right">
-                                                            <h4 class="bold ps-1 truncate_text">Over Meals</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][21]}</h4>
                                                         </div>
                                                         <div class="border-right">
-                                                            <h4 class="bold ps-1 truncate_text">Bereavement Assistance</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][22]}</h4>
                                                         </div>
                                                         <div>
                                                         </div>
@@ -2621,7 +2692,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                                 <h4 class="bold ps-1 truncate_text left">Adjustments</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][6]}</h4>
                                                             </div>
                                                             <div class="border-bottom">
-                                                                <h4 class="bold ps-1 truncate_text left">Cash Advance</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][7]}</h4>
                                                             </div>
                                                             <div class="border-bottom">
                                                             </div>
@@ -2633,15 +2703,15 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                     </div>
                                                 </div>
                                                 <div id="payslip_gross_salary" class="border-right">
-                                                    <h4 class="ps-1 pt-1">Total Earnings:</h4>
-                                                    <h3 class="text-end bold pt-1 pe-1">${(payroll_summary_data_list.content[e][5]).toFixed(2)}</h3>
-                                                    <h4 class="ps-1 pt-1">Total Additionals:</h4>
-                                                    <h3 class="text-end bold pt-1 pe-1">${(payroll_summary_data_list.content[e][8]).toFixed(2)}</h3>
-                                                    <h4 class="ps-1 pt-1 border-bottom">Total Deductions:</h4>
-                                                    <h3 class="text-end bold pt-1 pe-1 border-bottom">${(payroll_summary_data_list.content[e][23]).toFixed(2)}</h3>
-                                                    <h4 class="ps-1 pt-1">Net Pay:</h4>
-                                                    <h1 class="text-end bold pe-1">${(payroll_summary_data_list.content[e][24]).toFixed(2)}</h1>
-                                                </div>
+                                                <h4 class="ps-1 pt-1">Gross Salary:</h4>
+                                                <h3 class="text-end bold pt-1 pe-1">${(payroll_summary_data_list.content[e][5]).toFixed(2)}</h3>
+                                                <h4 class="ps-1 pt-1">Total Additional:</h4>
+                                                <h3 class="text-end bold pt-1 pe-1">${(payroll_summary_data_list.content[e][6]).toFixed(2)}</h3>
+                                                <h4 class="ps-1 pt-1 border-bottom">Total Deductions:</h4>
+                                                <h3 class="text-end bold pt-1 pe-1 border-bottom">${(payroll_summary_data_list.content[e][9] + payroll_summary_data_list.content[e][10] + payroll_summary_data_list.content[e][11] + payroll_summary_data_list.content[e][12] + payroll_summary_data_list.content[e][13]).toFixed(2)}</h3>
+                                                <h4 class="ps-1 pt-1">Net Pay:</h4>
+                                                <h1 class="text-end bold pe-1">${((payroll_summary_data_list.content[e][5] + payroll_summary_data_list.content[e][6]) - (payroll_summary_data_list.content[e][9] + payroll_summary_data_list.content[e][10] + payroll_summary_data_list.content[e][11] + payroll_summary_data_list.content[e][12] + payroll_summary_data_list.content[e][13])).toFixed(2)}</h1>
+                                            </div>
                                                 <div class="border-right text-center">
                                                     <br>
                                                     <h4 class="pt-3">__________</h4>

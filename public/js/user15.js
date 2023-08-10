@@ -217,7 +217,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         // history_list
         var data_value = "";
         var data_value_counter = 1;
-        console.log("🚀 ~ file: user15.js:221 ~ document.addEventListener ~ done_list_ltf_ap_accounting:", done_list_ltf_ap_accounting)
         for(let y = 0; y < done_list_ltf_ap_accounting.length; y++){
             for(let x = 1; x < ltf_data_list.content.length; x++){
                 if(done_list_ltf_ap_accounting[y] == ltf_data_list.content[x][1]){
@@ -273,6 +272,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         const liquidation_form_button_ap_accounting = trip_forms_ap_accounting.querySelector("#liquidation_form_button");
         const payroll_button_ap_accounting = trip_forms_ap_accounting.querySelector("#payroll_button");
         const payroll_tab_ap_accounting = trip_forms_ap_accounting.querySelector("#payroll_tab");
+        const payslip_container_ap_accounting = trip_forms_ap_accounting.querySelector("#payslip_container");
+        const search_year_ap_accounting = trip_forms_ap_accounting.querySelector("#search_year");
+        const search_week_number_ap_accounting = trip_forms_ap_accounting.querySelector("#search_week_number");
+        const pay_date_ap_accounting = trip_forms_ap_accounting.querySelector("#pay_date");
+        const generate_payslip_button_ap_accounting = trip_forms_ap_accounting.querySelector("#generate_payslip_button");
 
         const budget_form_ap_accounting = trip_forms_ap_accounting.querySelector("#budget_form");
         const search_ltf_form_no_ap_accounting = budget_form_ap_accounting.querySelector("#search_ltf_form_no");
@@ -529,7 +533,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         truck_helper_name_list += `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} - ${employee_data_list.content[x][5]} || `
                                         truck_helper_name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} - ${employee_data_list.content[x][5]}`
                                     }
-                                    console.log(truck_helper_name)
                                     cash_advance += `
                                     <div>
                                         <label for="cash_advance${c + 1}">
@@ -656,7 +659,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             // Find the last added particular container
             const lastParticularContainers = document.querySelectorAll(`#particular_container${particular_counter_ap_accounting.value}`);
         
-            console.log("🚀 ~ file: user15.js:657 ~ remove_item_button_ap_accounting.addEventListener ~ lastParticularContainers:", lastParticularContainers)
             lastParticularContainers.forEach(lastParticularContainer => {
                 // Remove the last particular container if found
                 if (lastParticularContainer) {
@@ -695,27 +697,203 @@ document.addEventListener('DOMContentLoaded', async function() {
                 payroll_tab_ap_accounting.style.display = "block"
             }
         })
-        // var employee_array = [];
+        var employee_array = [];
+        var tlf_transaction_ap_accounting = [];
 
-        // for(let y = 1; y < tlf_data_list.content.length; y++){
+        for(let y = 1; y < tlf_data_list.content.length; y++){
+            if (!tlf_transaction_ap_accounting.includes(tlf_data_list.content[y][5])) {
+                tlf_transaction_ap_accounting.push(tlf_data_list.content[y][5]);
+            }
+        }
+        console.log("🚀 ~ file: user15.js:698 ~ document.addEventListener ~ tlf_transaction_ap_accounting:", tlf_transaction_ap_accounting)
 
-        //     for(let z = 0; z < tlf_transaction_ap_accounting.length; z++){
-        //         console.log("pass")
-        //         for(let x = 1; x < employee_data_list.content.length; x++){
-        //             if(tlf_transaction_ap_accounting[z] == employee_data_list.content[x][1]){
-        //                 var gender = employee_data_list.content[x][7];
-        //                 if(gender == "MALE"){
-        //                     var full_name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} ${employee_data_list.content[x][6]}`
-        //                     employee_array.push(full_name);
-        //                 }
-        //                 else{
-        //                     var full_name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} - ${employee_data_list.content[x][5]}`
-        //                     employee_array.push(full_name);
+
+        for(let z = 0; z < tlf_transaction_ap_accounting.length; z++){
+            for(let x = 1; x < employee_data_list.content.length; x++){
+                if(tlf_transaction_ap_accounting[z] == employee_data_list.content[x][1]){
+                    if (!employee_array.includes(employee_data_list.content[x][1])) {
+                        employee_array.push(employee_data_list.content[x][1]);
+                    }
+                }
+            }
+        }
+        console.log("🚀 ~ file: user15.js:696 ~ document.addEventListener ~ employee_array:", employee_array)
+        
+        var payslip_form_data = "";
+        generate_payslip_button_ap_accounting.addEventListener("click", () => {
+            for(let z = 0; z < employee_array.length; z++){
+                var name = "";
+                var department = "";
+                var designation = "";
+                var employee_id = "";
+                var date = "";
+                var pay_date = "";
+                var tin_id = "";
+                for(let y = 1; y < tlf_data_list.content.length; y++){
+                    if( search_year_ap_accounting.value == getYearFromDate(date_decoder(tlf_data_list.content[y][0])) &&
+                        search_week_number_ap_accounting.value == getWeekNumber(date_decoder(tlf_data_list.content[y][0]))){
+                        date = getWeekDates(getYearFromDate(date_decoder(tlf_data_list.content[y][0])));
+                        pay_date = date_decoder(pay_date_ap_accounting.value);
+                    }
+                }
+                payslip_form_data += `                                
+                <div id="payslip_form">
+                    <div class="payslip">
+                        <div class="summary">
+                            <div class="header">
+                                <img src="../images/logo.png" alt="">
+                                <div class="header_title">
+                                    <h2 class="bold">FAR EAST FUEL CORPORATION</h2>
+                                    <h3>#888 Purok 5, Irabagon St. Brgy. Anyatam, San Ildefonso, Bulacan, 3010</h3>
+                                </div>
+                            </div>
+                            <div class="employee_details">
+                                <div class="grid1">
+                                    <div class="d-flex">
+                                        <h4 class="bold">Name:</h4><h4 class="ps-1 truncate_text">${name}</h4>
+                                    </div>
+                                    <div class="d-flex">
+                                        <h4 class="bold">Department:</h4><h4 class="ps-1 truncate_text">${department}</h4>
+                                    </div>
+                                    <div class="d-flex">
+                                        <h4 class="bold">Designation:</h4><h4 class="ps-1 truncate_text">${designation}</h4>
+                                    </div>
+                                    <div class="d-flex">
+                                        <h4 class="bold">ID No:</h4><h4 class="ps-1 truncate_text">${employee_id}</h4>
+                                    </div>
+                                    <div class="d-flex">
+                                        <h4 class="bold">Pay Period:</h4><h4 class="ps-1 truncate_text">${date[0]} - ${date[6]}</h4>
+                                    </div>
+                                    <div class="d-flex">
+                                        <h4 class="bold">Pay Date:</h4><h4 class="ps-1 truncate_text">${pay_date}</h4>
+                                    </div>
+                                    <div class="d-flex">
+                                        <h4 class="bold">Tin No:</h4><h4 class="ps-1 truncate_text">${tin_id}</h4>
+                                    </div>
+                                    <div class="d-flex">
+                                        <h4 class="bold">Tax Code:</h4><h4 class="ps-1 truncate_text"></h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="summary_details_header">
+                                <h3 class="bold">BREAKDOWN</h3>
+                            </div>
+                            <div class="summary_details_header">
+                                <h3 class="bold">SUMMARY</h3>
+                            </div>
+                            <div id="footer" class="border-bottom">
+                                <div class="px-1 border-left border-right">
+                                <div class="summary_details_header">
+                                    <h3 class="bold">DEDUCTIONS</h3>
+                                </div>
+                                <div class="deductions_detail border">
+                                    <div class="border-bottom-right">
+                                        <h4 class="bold ps-1 truncate_text">SSS JUNE 2023</h4><h4 class="ps-1"></h4>
+                                    </div>
+                                    <div class="border-bottom-right">
+                                        <h4 class="bold ps-1 truncate_text">HDMF JUNE 2023</h4><h4 class="ps-1"></h4>
+                                    </div>
+                                    <div class="border-bottom">
+                                        <h4 class="bold ps-1 truncate_text">PHIC JUNE 2023</h4><h4 class="ps-1"></h4>
+                                    </div>
+                                    <div class="border-bottom-right">
+                                        <h4 class="bold ps-1 truncate_text">SSS Loan Payment</h4><h4 class="ps-1"></h4>
+                                    </div>
+                                    <div class="border-bottom-right">
+                                        <h4 class="bold ps-1 truncate_text">HDMF Loan Payment</h4><h4 class="ps-1"></h4>
+                                    </div>
+                                    <div class="border-bottom">
+                                    </div>
+                                    <div class="border-bottom-right">
+                                    </div>
+                                    <div class="border-bottom-right">
+                                    </div>
+                                    <div class="border-bottom">
+                                    </div>
+                                    <div class="border-bottom-right">
+                                    </div>
+                                    <div class="border-bottom-right">
+                                    </div>
+                                    <div class="border-bottom">
+                                    </div>
+                                    <div class="border-right">
+                                    </div>
+                                    <div class="border-right">
+                                    </div>
+                                    <div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="px-1 border-left border-right">
+                                <div class="summary_details_header">
+                                        <h3 class="bold">ADDITIONAL</h3>
+                                        <div class="additional_detail border">
+                                            <div class="border-bottom">
+                                                <h4 class="bold ps-1 truncate_text left">Adjustments</h4><h4 class="ps-1"></h4>
+                                            </div>
+                                            <div class="border-bottom">
+                                            </div>
+                                            <div class="border-bottom">
+                                            </div>
+                                            <div class="border-bottom">
+                                            </div>
+                                            <div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="payslip_gross_salary" class="border-right">
+                                    <h4 class="ps-1 pt-1">Total Earnings:</h4>
+                                    <h3 class="text-end bold pt-1 pe-1"></h3>
+                                    <h4 class="ps-1 pt-1">Total Additional:</h4>
+                                    <h3 class="text-end bold pt-1 pe-1"></h3>
+                                    <h4 class="ps-1 pt-1 border-bottom">Total Deductions:</h4>
+                                    <h3 class="text-end bold pt-1 pe-1 border-bottom"></h3>
+                                    <h4 class="ps-1 pt-1">Net Pay:</h4>
+                                    <h1 class="text-end bold pe-1"></h1>
+                                </div>
+                                <div class="border-right text-center">
+                                    <br>
+                                    <h4 class="pt-3">__________</h4>
+                                    <h4>Employee Signature</h4>
+                                </div>
+                                <div class="border-right text-center">
+                                    <br>
+                                    <h4 class="pt-3">__________</h4>
+                                    <h4>Authorized Signature</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                `
+            }
+            payslip_container_ap_accounting.innerHTML = payslip_form_data;
+        })
+
+        // var payslip_form_data ="";
+        // for(let d = 0; d < employee_array.length; d++){
+        //     for(let e = 1; e < tlf_data_list.content.length; e++){
+        //         if(employee_array[d] == tlf_data_list.content[e][3] && search_year.value == payroll_summary_data_list.content[e][1] && search_week_number.value == payroll_summary_data_list.content[e][2]){
+        //             var department = "";
+        //             var designation = "";
+        //             var tin_id = "";
+        //             var type_of_employee = "";
+        //             for(let f =1; f < employee_data_list.content.length; f++){
+        //                 if(payslip_employee_id[d] == employee_data_list.content[f][1]){
+        //                     department = employee_data_list.content[f][32];
+        //                     designation = employee_data_list.content[f][33];
+        //                     tin_id = employee_data_list.content[f][20];
+        //                     type_of_employee = employee_data_list.content[f][29];
         //                 }
         //             }
+
         //         }
         //     }
         // }
+
+
 
         // FORM GENERATOR
         // ftf_data_list
