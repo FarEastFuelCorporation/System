@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', async function() {
     try {
         const username_response_promise = fetch('https://script.google.com/macros/s/AKfycbwmA97K4sdfq6dhzSsp14JU9KgQrFgSARNZbvSfiU7vuH8oEipt6TmcFo_o-jCI0kiQ/exec');
+        const client_list_response_promise = fetch('https://script.google.com/macros/s/AKfycbxXnIsmgK52Ws9H2qAh47qkgZxDltFJaHSFV0e9UQRwaK1g_xwFUKGokL_hk4fq-_mhSg/exec');
+        const type_of_waste_response_promise = fetch('https://script.google.com/macros/s/AKfycbw0yC-8_V38Zl1-KGyBwX1JmfTEW1jwyFxgpZ-oNC2lvtoAraUtkLCS27HfNbXi_l4IPg/exec');
         const employee_response_promise = fetch('https://script.google.com/macros/s/AKfycbwns5R6TA8U64ywbb9hwYu4LKurAjTM0Z18NYNZMt0Ft0m-_NUHYbYqblk_5KWugvt7lA/exec');
         const driver_response_promise = fetch('https://script.google.com/macros/s/AKfycbyJ_ttOt1Ab9HnpWtQJWszInOY1hUBKvERX-dX8iijDTrQWJNUeRdgShrk-jFUoyz1zug/exec');
         const vehicle_response_promise = fetch('https://script.google.com/macros/s/AKfycbw-JCnctX1x1W1ogGbrkhNdIGd9q6bYjy_nvaYeoiaBf7HreB2a1tKJZaJHw2wu4wmpcA/exec');
@@ -12,6 +14,8 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         const [
             username_response,
+            client_list_response,
+            type_of_waste_response,
             employee_response,
             driver_response,
             vehicle_response,
@@ -22,6 +26,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             sf_response
         ] = await Promise.all([
             username_response_promise,
+            client_list_response_promise,
+            type_of_waste_response_promise,
             employee_response_promise,
             driver_response_promise,
             vehicle_response_promise,
@@ -33,6 +39,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         ]);
 
         const username_data  = await username_response.json();
+        const client_data_list  = await client_list_response.json();
+        const type_of_waste_data  = await type_of_waste_response.json();
         const employee_data_list  = await employee_response.json();
         const driver_data  = await driver_response.json();
         const vehicle_data  = await vehicle_response.json();
@@ -111,13 +119,25 @@ document.addEventListener('DOMContentLoaded', async function() {
             for(let j = 1; j < mtf_data_list.content.length; j++){
                 if(newElements_logistics[i] == mtf_data_list.content[j][1]){
                     if(mtf_data_list.content[j][8] == "LOGISTICS"){
+                        var client_name = "";
+                        for(let c = 1; c < client_data_list.content.length; c++){
+                            if(mtf_data_list.content[j][2] == client_data_list.content[c][1]){
+                                client_name = client_data_list.content[c][2];
+                            }
+                        }
+                        var waste_name = "";
+                        for(let c = 1; c < type_of_waste_data.content.length; c++){
+                            if(mtf_data_list.content[j][3] == type_of_waste_data.content[c][1]){
+                                waste_name = type_of_waste_data.content[c][2];
+                            }
+                        }
                         data_value +=`
                         <tr>
                         <td>${data_value_counter}</td>
                         <td>${mtf_data_list.content[j][1]}</td>
                         <td>${date_decoder(mtf_data_list.content[j][4])}<br>${time_decoder(mtf_data_list.content[j][5])}</td>
-                        <td>${mtf_data_list.content[j][2]}</td>
-                        <td>${mtf_data_list.content[j][3]}</td>
+                        <td>${client_name}</td>
+                        <td>${waste_name}</td>
                         <td>${mtf_data_list.content[j][6]}</td>
                         <td>${mtf_data_list.content[j][7]}</td>
                         </tr>
@@ -146,13 +166,25 @@ document.addEventListener('DOMContentLoaded', async function() {
                             }
                         }
                     }
+                    var client_name = "";
+                    for(let c = 1; c < client_data_list.content.length; c++){
+                        if(ltf_data_list.content[j][3] == client_data_list.content[c][1]){
+                            client_name = client_data_list.content[c][2];
+                        }
+                    }
+                    var waste_name = "";
+                    for(let c = 1; c < type_of_waste_data.content.length; c++){
+                        if(ltf_data_list.content[j][4] == type_of_waste_data.content[c][1]){
+                            waste_name = type_of_waste_data.content[c][2];
+                        }
+                    }
                     data3_value +=`
                     <tr>
                     <td>${data_value3_counter}</td>
                     <td>${ltf_data_list.content[j][1]}</td>
                     <td>${date_decoder(ltf_data_list.content[j][11])}<br>${time_decoder(ltf_data_list.content[j][12])}</td>
-                    <td>${ltf_data_list.content[j][3]}</td>
-                    <td>${ltf_data_list.content[j][4]}</td>
+                    <td>${client_name}</td>
+                    <td>${waste_name}</td>
                     <td>${ltf_data_list.content[j][8]}</td>
                     <td>${driver_name}</td>
                     <td>ON HAULING</td>
@@ -576,6 +608,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         ltf_form_no.value = `${code_year_month}${data_counter}`
     
         // Search Button
+        console.log("🚀 ~ file: user7.js:613 ~ search_mtf_form_no_button.addEventListener ~ newElements_logistics:", newElements_logistics)
         search_mtf_form_no_button.addEventListener("click", () => {
             for(a=0; a<=newElements_logistics.length; a++){
                 var data_value;

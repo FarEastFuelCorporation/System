@@ -732,10 +732,26 @@ document.addEventListener('DOMContentLoaded', async function() {
                 for(let y = 1; y < tlf_data_list.content.length; y++){
                     if( search_year_ap_accounting.value == getYearFromDate(date_decoder(tlf_data_list.content[y][0])) &&
                         search_week_number_ap_accounting.value == getWeekNumber(date_decoder(tlf_data_list.content[y][0]))){
-                        date = getWeekDates(getYearFromDate(date_decoder(tlf_data_list.content[y][0])));
+                        date = getWeekDates(date_decoder(tlf_data_list.content[y][0]));
                         pay_date = date_decoder(pay_date_ap_accounting.value);
                     }
                 }
+                for(let x = 1; x < employee_data_list.content.length; x++){
+                    if(employee_array[z] == employee_data_list.content[x][1]){
+                        var gender = employee_data_list.content[x][7];
+                        if(gender == "MALE"){
+                            name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} ${employee_data_list.content[x][6]}`
+                        }
+                        else{
+                            name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} - ${employee_data_list.content[x][5]}`
+                        }
+                        department = employee_data_list.content[x][32];
+                        designation = employee_data_list.content[x][33];
+                        employee_id = employee_data_list.content[x][1];
+                        tin_id = employee_data_list.content[x][20];
+                    }
+                }
+                
                 payslip_form_data += `                                
                 <div id="payslip_form">
                     <div class="payslip">
@@ -762,7 +778,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <h4 class="bold">ID No:</h4><h4 class="ps-1 truncate_text">${employee_id}</h4>
                                     </div>
                                     <div class="d-flex">
-                                        <h4 class="bold">Pay Period:</h4><h4 class="ps-1 truncate_text">${date[0]} - ${date[6]}</h4>
+                                        <h4 class="bold">Pay Period:</h4><h4 class="ps-1 truncate_text">${date_decoder(date[0])} - ${date_decoder(date[6])}</h4>
                                     </div>
                                     <div class="d-flex">
                                         <h4 class="bold">Pay Date:</h4><h4 class="ps-1 truncate_text">${pay_date}</h4>
@@ -777,91 +793,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                             </div>
                             <div class="summary_details_header">
                                 <h3 class="bold">BREAKDOWN</h3>
-                            </div>
-                            <div class="summary_details_header">
-                                <h3 class="bold">SUMMARY</h3>
-                            </div>
-                            <div id="footer" class="border-bottom">
-                                <div class="px-1 border-left border-right">
-                                <div class="summary_details_header">
-                                    <h3 class="bold">DEDUCTIONS</h3>
-                                </div>
-                                <div class="deductions_detail border">
-                                    <div class="border-bottom-right">
-                                        <h4 class="bold ps-1 truncate_text">SSS JUNE 2023</h4><h4 class="ps-1"></h4>
-                                    </div>
-                                    <div class="border-bottom-right">
-                                        <h4 class="bold ps-1 truncate_text">HDMF JUNE 2023</h4><h4 class="ps-1"></h4>
-                                    </div>
-                                    <div class="border-bottom">
-                                        <h4 class="bold ps-1 truncate_text">PHIC JUNE 2023</h4><h4 class="ps-1"></h4>
-                                    </div>
-                                    <div class="border-bottom-right">
-                                        <h4 class="bold ps-1 truncate_text">SSS Loan Payment</h4><h4 class="ps-1"></h4>
-                                    </div>
-                                    <div class="border-bottom-right">
-                                        <h4 class="bold ps-1 truncate_text">HDMF Loan Payment</h4><h4 class="ps-1"></h4>
-                                    </div>
-                                    <div class="border-bottom">
-                                    </div>
-                                    <div class="border-bottom-right">
-                                    </div>
-                                    <div class="border-bottom-right">
-                                    </div>
-                                    <div class="border-bottom">
-                                    </div>
-                                    <div class="border-bottom-right">
-                                    </div>
-                                    <div class="border-bottom-right">
-                                    </div>
-                                    <div class="border-bottom">
-                                    </div>
-                                    <div class="border-right">
-                                    </div>
-                                    <div class="border-right">
-                                    </div>
-                                    <div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="px-1 border-left border-right">
-                                <div class="summary_details_header">
-                                        <h3 class="bold">ADDITIONAL</h3>
-                                        <div class="additional_detail border">
-                                            <div class="border-bottom">
-                                                <h4 class="bold ps-1 truncate_text left">Adjustments</h4><h4 class="ps-1"></h4>
-                                            </div>
-                                            <div class="border-bottom">
-                                            </div>
-                                            <div class="border-bottom">
-                                            </div>
-                                            <div class="border-bottom">
-                                            </div>
-                                            <div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="payslip_gross_salary" class="border-right">
-                                    <h4 class="ps-1 pt-1">Total Earnings:</h4>
-                                    <h3 class="text-end bold pt-1 pe-1"></h3>
-                                    <h4 class="ps-1 pt-1">Total Additional:</h4>
-                                    <h3 class="text-end bold pt-1 pe-1"></h3>
-                                    <h4 class="ps-1 pt-1 border-bottom">Total Deductions:</h4>
-                                    <h3 class="text-end bold pt-1 pe-1 border-bottom"></h3>
-                                    <h4 class="ps-1 pt-1">Net Pay:</h4>
-                                    <h1 class="text-end bold pe-1"></h1>
-                                </div>
-                                <div class="border-right text-center">
-                                    <br>
-                                    <h4 class="pt-3">__________</h4>
-                                    <h4>Employee Signature</h4>
-                                </div>
-                                <div class="border-right text-center">
-                                    <br>
-                                    <h4 class="pt-3">__________</h4>
-                                    <h4>Authorized Signature</h4>
-                                </div>
                             </div>
                         </div>
                     </div>

@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const ltf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxBLMvyNDsT9_dlVO4Qc31dI4ErcymUHbzKimOpCZHgbJxip2XxCl7Wk3hJyqcdtrxU/exec');
         const wcf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyBFTBuFZ4PkvwmPi_3Pp_v74DCSEK2VpNy6janIGgaAK-P22wazmmShOKn6iwFbrQn/exec');
         const sf_response_promise = fetch('https://script.google.com/macros/s/AKfycby9b2VCfXc0ifkwBXJRi2UVUwgZIj9F4FTOdZa_SYKZdsTwbVtAzAXzNMFeklE35bg1/exec');
+        const qlf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyFU_skru2tnyEiv8I5HkpRCXbUlQb5vlJUm8Le0nZBCvfZeFkQPd2Naljs5CZY41I17w/exec');
         const prf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxZctLub-6PuQGykx298syeH7Qm__S37uqQrVFYsHVtv-Qk8M2oSkRIPIMVT_1WexqRZA/exec');
         const irf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzTmhNOz5cXeKitSXAriUJ_FEahAQugYEKIRwDuFt9tjhj2AtPKEf2H4yTMmZ1igpUxlQ/exec');
 
@@ -18,6 +19,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             ltf_response,
             wcf_response,
             sf_response,
+            qlf_response,
             prf_response,
             irf_response,
         ] = await Promise.all([
@@ -28,6 +30,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             ltf_response_promise,
             wcf_response_promise,
             sf_response_promise,
+            qlf_response_promise,
             prf_response_promise,
             irf_response_promise,
         ]);
@@ -39,6 +42,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const ltf_data_list  = await ltf_response.json();
         const wcf_data_list  = await wcf_response.json();
         const sf_data_list  = await sf_response.json();
+        const qlf_data_list  = await qlf_response.json();
         const prf_data_list  = await prf_response.json();
         const irf_data_list  = await irf_response.json();
 
@@ -46,12 +50,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         // username_data3
         const user_sidebar = document.getElementById("user_sidebar");
         const user_sidebar_officer = document.getElementById("user_sidebar_officer");
-        const user = document.getElementById("user");
+        const users = document.querySelectorAll("#user");
         const prf_user = document.getElementById("prf_user");
         const prf_department = document.getElementById("prf_department");
         const irf_user = document.getElementById("irf_user");
 
-        user.value = username_data.content[6][3];
+        users.forEach(user => {user.value = username_data.content[6][3]})
         prf_user.value = username_data.content[6][3];
         prf_department.value = username_data.content[6][5];
         irf_user.value = username_data.content[6][3];
@@ -88,38 +92,38 @@ document.addEventListener('DOMContentLoaded', async function() {
         var ltf_wcf_transaction_marketing = []; // Variable containing existing elements
         
         for (let i = 1; i < mtf_data_list.content.length; i++) {
-            if (!mtf_transaction_marketing.includes(mtf_data_list.content[i][1])) {
-                mtf_transaction_marketing.push(mtf_data_list.content[i][1]);
+            if (!mtf_transaction_marketing.includes(mtf_data_list.content[i][0])) {
+                mtf_transaction_marketing.push(mtf_data_list.content[i][0]);
                 mtf_transaction_counter_marketing += 1
             }
             if(mtf_data_list.content[i][8] == "LOGISTICS"){
-                if (!mtf_transaction_logistic_transaction_marketing.includes(mtf_data_list.content[i][1])) {
-                    mtf_transaction_logistic_transaction_marketing.push(mtf_data_list.content[i][1]);
+                if (!mtf_transaction_logistic_transaction_marketing.includes(mtf_data_list.content[i][0])) {
+                    mtf_transaction_logistic_transaction_marketing.push(mtf_data_list.content[i][0]);
                     mtf_transaction_logistic_transaction_counter_marketing += 1
                 }
             }
             if(mtf_data_list.content[i][8] == "RECEIVING"){
-                if (!mtf_transaction_receiving_transaction_marketing.includes(mtf_data_list.content[i][1])) {
-                    mtf_transaction_receiving_transaction_marketing.push(mtf_data_list.content[i][1]);
+                if (!mtf_transaction_receiving_transaction_marketing.includes(mtf_data_list.content[i][0])) {
+                    mtf_transaction_receiving_transaction_marketing.push(mtf_data_list.content[i][0]);
                     mtf_transaction_receiving_transaction_counter_marketing += 1
                 }
             }
         }
 
         for (let i = 1; i < ltf_data_list.content.length; i++) {
-            if (!mtf_ltf_transaction_marketing.includes(ltf_data_list.content[i][2])) {
-                mtf_ltf_transaction_marketing.push(ltf_data_list.content[i][2]);
+            if (!mtf_ltf_transaction_marketing.includes(ltf_data_list.content[i][1])) {
+                mtf_ltf_transaction_marketing.push(ltf_data_list.content[i][1]);
                 mtf_ltf_transaction_counter_marketing += 1
             }
-            if (!ltf_transaction_marketing.includes(ltf_data_list.content[i][1])) {
-                ltf_transaction_marketing.push(ltf_data_list.content[i][1]);
+            if (!ltf_transaction_marketing.includes(ltf_data_list.content[i][0])) {
+                ltf_transaction_marketing.push(ltf_data_list.content[i][0]);
                 ltf_transaction_counter_marketing += 1
             }
         }
 
         for (let i = 1; i < wcf_data_list.content.length; i++) {
-            if (!ltf_wcf_transaction_marketing.includes(wcf_data_list.content[i][2])) {
-                ltf_wcf_transaction_marketing.push(wcf_data_list.content[i][2]);
+            if (!ltf_wcf_transaction_marketing.includes(wcf_data_list.content[i][1])) {
+                ltf_wcf_transaction_marketing.push(wcf_data_list.content[i][1]);
                 ltf_wcf_transaction_counter_marketing += 1
             }
         }
@@ -131,14 +135,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         for(let j = 1; j < mtf_data_list.content.length; j++){
             var status = "PENDING";
             // for logistics
-            if(mtf_data_list.content[j][8] == "LOGISTICS"){
+            if(mtf_data_list.content[j][7] == "LOGISTICS"){
                 for(let k = 1; k < ltf_data_list.content.length; k++){
-                    if(mtf_data_list.content[j][1] == ltf_data_list.content[k][2]){
+                    if(mtf_data_list.content[j][0] == ltf_data_list.content[k][1]){
                         status = "ON HAULING";
                         for_logistics_on_haul_counter_marketing += 1;
                         for_logistics_pending_counter_marketing -= 1;
                         for(let m = 1; m < wcf_data_list.content.length; m++){
-                            if(ltf_data_list.content[k][1] == wcf_data_list.content[m][2]){
+                            if(ltf_data_list.content[k][0] == wcf_data_list.content[m][1]){
                                 status = "RECEIVED";
                                 for_logistics_received_counter_marketing += 1;
                                 for_logistics_on_haul_counter_marketing -= 1;
@@ -148,12 +152,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
                 for_logistics_pending_counter_marketing += 1;
             }
-
             // for receiving
             if(mtf_data_list.content[j][8] == "RECEIVING"){
                 for(let m = 1; m < wcf_data_list.content.length; m++){
-                    if((wcf_data_list.content[m][2]).slice(0,3) == "MTF"){
-                        if(mtf_data_list.content[j][1] == wcf_data_list.content[m][2]){
+                    if((wcf_data_list.content[m][1]).slice(0,3) == "MTF"){
+                        if(mtf_data_list.content[j][0] == wcf_data_list.content[m][1]){
                             status = "RECEIVED";
                             for_receiving_received_counter_marketing += 1;
                             for_receiving_pending_counter_marketing -= 1;
@@ -162,16 +165,27 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
                 for_receiving_pending_counter_marketing += 1;
             }
-
+            var client_name = "";
+            for(let c = 1; c < client_data_list.content.length; c++){
+                if(mtf_data_list.content[j][1] == client_data_list.content[c][0]){
+                    client_name = client_data_list.content[c][1];
+                }
+            }
+            var waste_name = "";
+            for(let c = 1; c < type_of_waste_data.content.length; c++){
+                if(mtf_data_list.content[j][2] == type_of_waste_data.content[c][0]){
+                    waste_name = type_of_waste_data.content[c][1];
+                }
+            }
             data_value +=`
             <tr>
                 <td>${data_value_counter}</td>
-                <td>${mtf_data_list.content[j][1]}</td>
-                <td>${date_decoder(mtf_data_list.content[j][4])} /<br> ${time_decoder(mtf_data_list.content[j][5])}</td>
-                <td>${mtf_data_list.content[j][2]}</td>
-                <td>${mtf_data_list.content[j][3]}</td>
-                <td>${mtf_data_list.content[j][6]}</td>
-                <td>${mtf_data_list.content[j][8]}</td>
+                <td>${mtf_data_list.content[j][0]}</td>
+                <td>${date_decoder(mtf_data_list.content[j][3])} /<br> ${time_decoder(mtf_data_list.content[j][4])}</td>
+                <td>${client_name}</td>
+                <td>${waste_name}</td>
+                <td>${mtf_data_list.content[j][5]}</td>
+                <td>${mtf_data_list.content[j][7]}</td>
                 <td>${status}</td>
             </tr>
             `
@@ -210,9 +224,6 @@ document.addEventListener('DOMContentLoaded', async function() {
 
 
         // client_data_list
-        const search_wrapper = document.getElementById("search_client");
-        const input_box = search_wrapper.querySelector("input");
-        const sugg_box = search_wrapper.querySelector(".autocom_box");
         const mtf_data = document.getElementById("mtf_data");
         const client_list = document.getElementById("client_list");
         const client_id = document.getElementById("client_id");
@@ -231,10 +242,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         var data_last_3digit = 0;
         
         for(x=1; x<client_data_list.content.length; x++){
-            data_info = client_data_list.content[x][6];
+            data_info = client_data_list.content[x][1];
             
             if(data_info.includes(code_year_month) == true){
-                data_last_3digit = data_info.slice(6)
+                data_last_3digit = data_info.slice(1)
             }
         }
         
@@ -257,50 +268,178 @@ document.addEventListener('DOMContentLoaded', async function() {
         for (x = 1; x < client_data_list.content.length; x++) {
             data_value.push(client_data_list.content[x][1]);
         }
-    
-        input_box.onkeyup = (e) => {
-            let user_data = e.target.value;
-            let empty_array = [];
-            if (user_data) {
-                empty_array = data_value.filter((data) => {
-                    return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
-                });
-                empty_array = empty_array.map((data) => {
-                    return '<li>' + data + '</li>';
-                });
-                console.log(empty_array);
-                search_wrapper.classList.add("active");
-                show_suggestions(empty_array);
-            } else {
+
+        const search_wrappers = document.querySelectorAll("#search_client");
+
+        search_wrappers.forEach((search_wrapper) => {
+            const input_box = search_wrapper.querySelector("input");
+            const sugg_box = search_wrapper.querySelector(".autocom_box");
+            input_box.onkeyup = (e) => {
+                let user_data = e.target.value;
+                let empty_array = [];
+                if (user_data) {
+                    empty_array = data_value.filter((data) => {
+                        return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
+                    });
+                    empty_array = empty_array.map((data) => {
+                        return '<li>' + data + '</li>';
+                    });
+                    search_wrapper.classList.add("active");
+                    show_suggestions(empty_array);
+                } else {
+                    search_wrapper.classList.remove("active");
+                }
+            };
+            sugg_box.addEventListener("click", (e) => {
+                if (e.target.tagName === "LI") {
+                    select(e.target.innerHTML);
+                }
+            });
+            function select(element) {
+                let select_user_data = element;
+                input_box.value = select_user_data;
+                console.log(input_box.value);
                 search_wrapper.classList.remove("active");
-            }
-        };
-    
-        sugg_box.addEventListener("click", (e) => {
-            if (e.target.tagName === "LI") {
-                select(e.target.innerHTML);
-            }
-        });
-    
-        function select(element) {
-            let select_user_data = element;
-            input_box.value = select_user_data;
-            console.log(input_box.value);
-            search_wrapper.classList.remove("active");
-            mtf_data.style.display = "block";
+                mtf_data.style.display = "block";
                 
-        }
-    
-        function show_suggestions(list) {
-            let list_data;
-            if (!list.length) {
-                user_value = input_box.value;
-                list_data = '<li>' + user_value + '</li>';
-            } else {
-                list_data = list.join("");
+                // type_of_waste_data
+                const search_wrapper2 = document.getElementById("search_type_of_waste");
+                const input_box2 = search_wrapper2.querySelector("input");
+                const sugg_box2 = search_wrapper2.querySelector(".autocom_box");
+                var data_value2 = [];
+                for(let y = 1; y < client_data_list.content.length; y++){
+                    if(input_box.value == client_data_list.content[y][1]){
+                        var client_id = "";
+                        client_id = client_data_list.content[y][0];
+                        console.log("🚀 ~ file: user6.js:315 ~ select ~ client_id:", client_id)
+                        for (let x = 1; x < qlf_data_list.content.length; x++) {
+                            if(client_id == qlf_data_list.content[x][1]){
+                                data_value2.push(qlf_data_list.content[x][3]);
+                            }
+                        }
+                    }
+                }
+
+                input_box2.onkeyup = (e) => {
+                    let user_data = e.target.value;
+                    let empty_array = [];
+                    if (user_data) {
+                        empty_array = data_value2.filter((data) => {
+                            return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
+                        });
+                        empty_array = empty_array.map((data) => {
+                            return '<li>' + data + '</li>';
+                        });
+                        console.log(empty_array);
+                        search_wrapper2.classList.add("active");
+                        show_suggestions2(empty_array);
+                    } else {
+                        search_wrapper2.classList.remove("active");
+                    }
+                };
+            
+                sugg_box2.addEventListener("click", (e) => {
+                    if (e.target.tagName === "LI") {
+                        select2(e.target.innerHTML);
+                    }
+                });
+            
+                function select2(element) {
+                    let select_user_data = element;
+                    input_box2.value = select_user_data;
+                    console.log(input_box2.value);
+                    search_wrapper2.classList.remove("active");                
+                }
+            
+                function show_suggestions2(list) {
+                    let list_data;
+                    if (!list.length) {
+                        user_value = input_box2.value;
+                        list_data = '<li>' + user_value + '</li>';
+                    } else {
+                        list_data = list.join("");
+                    }
+                    sugg_box2.innerHTML = list_data;
+                }
+
+                    
             }
-            sugg_box.innerHTML = list_data;
+        
+            function show_suggestions(list) {
+                let list_data;
+                if (!list.length) {
+                    user_value = input_box.value;
+                    list_data = '<li>' + user_value + '</li>';
+                } else {
+                    list_data = list.join("");
+                }
+                sugg_box.innerHTML = list_data;
+            }    
+        })
+
+        var data_value3 = [];
+        for (x = 1; x < type_of_waste_data.content.length; x++) {
+            data_value3.push(type_of_waste_data.content[x][1]);
         }
+
+        function typeOfWaste(){
+            const search_wrappers2 = document.querySelectorAll("#search_waste_code");
+
+            search_wrappers2.forEach((search_wrapper) => {
+                const input_box = search_wrapper.querySelector("input");
+                const sugg_box = search_wrapper.querySelector(".autocom_box");
+        
+                input_box.onkeyup = (e) => {
+                    let user_data = e.target.value;
+                    let empty_array = [];
+                    if (user_data) {
+                        empty_array = data_value3.filter((data) => {
+                            return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
+                        });
+                        empty_array = empty_array.map((data) => {
+                            return '<li>' + data + '</li>';
+                        });
+                        console.log(empty_array);
+                        search_wrapper.classList.add("active");
+                        show_suggestions(empty_array);
+                    } else {
+                        search_wrapper.classList.remove("active");
+                    }
+                };
+            
+                sugg_box.addEventListener("click", (e) => {
+                    if (e.target.tagName === "LI") {
+                        select(e.target.innerHTML);
+                    }
+                });
+            
+                function select(element) {
+                    let select_user_data = element;
+                    input_box.value = select_user_data;
+                    console.log(input_box.value);
+                    search_wrapper.classList.remove("active");
+                    mtf_data.style.display = "block";
+                        
+                }
+            
+                function show_suggestions(list) {
+                    let list_data;
+                    if (!list.length) {
+                        user_value = input_box.value;
+                        list_data = '<li>' + user_value + '</li>';
+                    } else {
+                        list_data = list.join("");
+                    }
+                    sugg_box.innerHTML = list_data;
+                }    
+            })    
+        }
+        typeOfWaste();
+
+        const type_of_waste_list = document.getElementById("type_of_waste_list");
+        const treatment_process = document.getElementById("treatment_process");
+        const code = document.getElementById("code");
+
 
         var client_data_list_value = "";
         var data_value_counter = 1;
@@ -308,7 +447,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             client_data_list_value += `
             <tr>
                 <td>${data_value_counter}</td>
-                <td>${client_data_list.content[x][6]}</td>
+                <td>${client_data_list.content[x][0]}</td>
                 <td>${client_data_list.content[x][1]}</td>
                 <td>${client_data_list.content[x][2]}</td>
                 <td>${client_data_list.content[x][3]}</td>
@@ -320,71 +459,17 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
         client_list.innerHTML = client_data_list_value;
 
-        // type_of_waste_data
-        const type_of_waste_list = document.getElementById("type_of_waste_list");
-        const treatment_process = document.getElementById("treatment_process");
-        const code = document.getElementById("code");
-        const search_wrapper2 = document.getElementById("search_type_of_waste");
-        const input_box2 = search_wrapper2.querySelector("input");
-        const sugg_box2 = search_wrapper2.querySelector(".autocom_box");
-        var data_value2 = [];
-
-        for (x = 1; x < type_of_waste_data.content.length; x++) {
-            data_value2.push(type_of_waste_data.content[x][1]);
-        }
-    
-        input_box2.onkeyup = (e) => {
-            let user_data = e.target.value;
-            let empty_array = [];
-            if (user_data) {
-                empty_array = data_value2.filter((data) => {
-                    return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
-                });
-                empty_array = empty_array.map((data) => {
-                    return '<li>' + data + '</li>';
-                });
-                console.log(empty_array);
-                search_wrapper2.classList.add("active");
-                show_suggestions2(empty_array);
-            } else {
-                search_wrapper2.classList.remove("active");
-            }
-        };
-    
-        sugg_box2.addEventListener("click", (e) => {
-            if (e.target.tagName === "LI") {
-                select2(e.target.innerHTML);
-            }
-        });
-    
-        function select2(element) {
-            let select_user_data = element;
-            input_box2.value = select_user_data;
-            console.log(input_box2.value);
-            search_wrapper2.classList.remove("active");                
-        }
-    
-        function show_suggestions2(list) {
-            let list_data;
-            if (!list.length) {
-                user_value = input_box2.value;
-                list_data = '<li>' + user_value + '</li>';
-            } else {
-                list_data = list.join("");
-            }
-            sugg_box2.innerHTML = list_data;
-        }
-
         var type_of_waste__list_data_value = "";
         var type_of_waste__list_data_value_counter = 1;
         for(let x = 1; x < type_of_waste_data.content.length; x++){
             type_of_waste__list_data_value += `
             <tr>
                 <td>${type_of_waste__list_data_value_counter}</td>
-                <td>${type_of_waste_data.content[x][4]}</td>
+                <td>${type_of_waste_data.content[x][0]}</td>
                 <td>${type_of_waste_data.content[x][1]}</td>
                 <td>${type_of_waste_data.content[x][2]}</td>
                 <td>${type_of_waste_data.content[x][3]}</td>
+                <td>${type_of_waste_data.content[x][4]}</td>
             </tr>
             `
             type_of_waste__list_data_value_counter += 1;
@@ -458,7 +543,110 @@ document.addEventListener('DOMContentLoaded', async function() {
         
         mtf_form_no.value = `${code_year_month}${data_counter}`
         
-        
+        // client_list_section
+        const client_list_section = document.querySelector("#client_list_section");
+        const new_client_form_tab_client_list_section = client_list_section.querySelector("#new_client_form_tab");
+        const new_employee_button_client_list_section = client_list_section.querySelector("#new_employee_button");
+        const update_record_button_client_list_section = client_list_section.querySelector("#update_record_button");
+
+        new_employee_button_client_list_section.addEventListener("click", () => {
+            if(new_client_form_tab_client_list_section.style.display == "block"){
+                new_client_form_tab_client_list_section.style.display = "none";
+            }
+            else{
+                new_client_form_tab_client_list_section.style.display = "block";
+                // update_record_form.style.display = "none";
+            }
+        })
+
+        // quotation_form
+        const quotation_form = document.querySelector("#quotation_form");
+        const add_item_button_quotation_form = quotation_form.querySelector("#add_item_button");
+        const remove_item_button_quotation_form = quotation_form.querySelector("#remove_item_button");
+        const list_counter_quotation_form = quotation_form.querySelector("#list_counter");
+        const list_container_quotation_form = quotation_form.querySelector("#list_container");
+
+        add_item_button_quotation_form.addEventListener("click", () => {
+            list_counter_quotation_form.value = parseInt(list_counter_quotation_form.value) + 1;
+            var data = `
+            <div class="list_item" id="list${list_counter_quotation_form.value}" style="display: grid; grid-template-columns: 12.5% 30% 15% 15% 12.5% 15%; gap: 20px; width: calc(100% - 100px);">
+                <div class="wrapper">
+                    <div class="search_input" id="search_waste_code">
+                        <input type="text" name="waste_code${list_counter_quotation_form.value}" id="waste_code${list_counter_quotation_form.value}" autocomplete="off" class="form-control" required placeholder="Search">
+                        <div class="autocom_box">
+                        </div>
+                        <div class="icon"><i class="fas fa-search"></i></div>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <input type="text" name="waste_name${list_counter_quotation_form.value}" id="waste_name${list_counter_quotation_form.value}" autocomplete="off" class="form-control" required placeholder="Type Waste Name..." style="padding-right: 20px !important;">
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <select name="mode${list_counter_quotation_form.value}" id="mode${list_counter_quotation_form.value}" required class="form-control" style="height: 55px;">
+                            <option value="">SELECT</option>
+                            <option value="CHARGE">CHARGE</option>
+                            <option value="FREE OF CHARGE">FREE OF CHARGE</option>
+                            <option value="BUYING">BUYING</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <select name="unit${list_counter_quotation_form.value}" id="unit${list_counter_quotation_form.value}" required class="form-control" style="height: 55px;">
+                            <option value="">SELECT</option>
+                            <option value="KILOGRAMS">KILOGRAMS</option>
+                            <option value="LITERS">LITERS</option>
+                            <option value="DRUM">DRUM</option>
+                            <option value="TRIP">TRIP</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <input type="number" name="unit_price${list_counter_quotation_form.value}" id="unit_price${list_counter_quotation_form.value}" autocomplete="off" class="form-control" required placeholder="Type Price..." style="padding-right: 20px !important;">
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <select name="vat_calculation${list_counter_quotation_form.value}" id="vat_calculation${list_counter_quotation_form.value}" required class="form-control" style="height: 55px;">
+                            <option value="">SELECT</option>
+                            <option value="VAT INCLUSIVE">VAT INCLUSIVE</option>
+                            <option value="VAT EXCLUSIVE">VAT EXCLUSIVE</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            `
+            list_container_quotation_form.insertAdjacentHTML("beforeend", data);
+            remove_item_button_quotation_form.style.display = "block";
+            typeOfWaste();
+            // Get all input elements of type "number"
+            const numberInputs = document.querySelectorAll('input[type="number"]');
+
+            // Loop through each input and set the "step" attribute
+            numberInputs.forEach(input => {
+                input.setAttribute('step', '0.01'); // Set the desired step value
+            });
+        })
+
+        remove_item_button_quotation_form.addEventListener("click", () => {
+            const list = list_container_quotation_form.querySelectorAll(".list_item");
+            const last_list = list[list.length - 1];
+            
+            if (list.length > 1) {
+                list_container_quotation_form.removeChild(last_list);
+                list_counter_quotation_form.value = parseInt(list_counter_quotation_form.value) - 1;
+                
+                if (list_counter_quotation_form.value == 1) {
+                    remove_item_button_quotation_form.style.display = "none";
+                }
+            }
+        });
+
+
         // multi section
         // purchase_request_form
         const purchase_request_form = document.querySelector("#purchase_request_form");

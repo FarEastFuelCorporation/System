@@ -40,9 +40,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const user_sidebar_officer = document.getElementById("user_sidebar_officer");
         const users = document.querySelectorAll("user");
         
-        users.forEach(user => {
-            user.value = username_data.content[9][3];
-        })
+        users.forEach(user => {user.value = username_data.content[9][3]})
         user_sidebar.innerHTML = `<u>${username_data.content[9][3]}</u>`;
         user_sidebar_officer.innerText = username_data.content[9][4];
         
@@ -66,17 +64,17 @@ document.addEventListener('DOMContentLoaded', async function() {
         var subcon_employee_female = 0;
 
         for(let x = 1; x < employee_data_list.content.length; x++){
-            if(employee_data_list.content[x][31] == "ACTIVE"){
-                var gender = employee_data_list.content[x][7];
+            if(employee_data_list.content[x][30] == "ACTIVE"){
+                var gender = employee_data_list.content[x][6];
                 if(gender == "MALE"){
-                    var full_name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} ${employee_data_list.content[x][6]}`
+                    var full_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} ${employee_data_list.content[x][5]}`
                     active_employee_name.push(full_name);
                 }
                 else{
-                    var full_name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} - ${employee_data_list.content[x][5]}`
+                    var full_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} - ${employee_data_list.content[x][4]}`
                     active_employee_name.push(full_name);
                 }
-                if(employee_data_list.content[x][29] == "REGULAR"){
+                if(employee_data_list.content[x][28] == "REGULAR"){
                     if (!regular_employee_name.includes(full_name)) {
                         regular_employee_name.push(full_name);
                         if(gender == "MALE"){
@@ -87,7 +85,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                     }
                 }
-                if(employee_data_list.content[x][29] == "PROJECT BASED"){
+                if(employee_data_list.content[x][28] == "PROJECT BASED"){
                     if (!project_based_employee_name.includes(full_name)) {
                         project_based_employee_name.push(full_name);
                         if(gender == "MALE"){
@@ -98,7 +96,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                     }
                 }
-                if(employee_data_list.content[x][29] == "SUBCON"){
+                if(employee_data_list.content[x][28] == "SUBCON"){
                     if (!subcon_employee_name.includes(full_name)) {
                         subcon_employee_name.push(full_name);
                         if(gender == "MALE"){
@@ -129,27 +127,27 @@ document.addEventListener('DOMContentLoaded', async function() {
         const employee_list = document.querySelector("#employee_list_section #employee_list");
         var employee_record = "";
         for(let b = 1; b < employee_data_list.content.length; b++){
-            if(employee_data_list.content[b][31] == "ACTIVE"){
+            if(employee_data_list.content[b][30] == "ACTIVE"){
                 var full_name_record = "";
                 
-                if(employee_data_list.content[b][7] == "MALE"){
-                    full_name_record = `${employee_data_list.content[b][4]}, ${employee_data_list.content[b][2]} ${employee_data_list.content[b][3]} ${employee_data_list.content[b][6]}`
+                if(employee_data_list.content[b][6] == "MALE"){
+                    full_name_record = `${employee_data_list.content[b][3]}, ${employee_data_list.content[b][1]} ${employee_data_list.content[b][2]} ${employee_data_list.content[b][5]}`
                 }
                 else{
-                    full_name_record = `${employee_data_list.content[b][4]}, ${employee_data_list.content[b][2]} ${employee_data_list.content[b][3]} - ${employee_data_list.content[b][5]}`
+                    full_name_record = `${employee_data_list.content[b][3]}, ${employee_data_list.content[b][1]} ${employee_data_list.content[b][2]} - ${employee_data_list.content[b][4]}`
                 
                 }
-                if(employee_data_list.content[b][31] == "ACTIVE"){
+                if(employee_data_list.content[b][30] == "ACTIVE"){
                     employee_record += `
                     <tr>
-                        <td>${employee_data_list.content[b][1]}</td>
+                        <td>${employee_data_list.content[b][0]}</td>
                         <td>${full_name_record}</td>
+                        <td>${employee_data_list.content[b][31]}</td>
                         <td>${employee_data_list.content[b][32]}</td>
-                        <td>${employee_data_list.content[b][33]}</td>
-                        <td>${employee_data_list.content[b][7]}</td>
-                        <td>${employee_data_list.content[b][29]}</td>
-                        <td>${date_decoder(employee_data_list.content[b][9])}</td>
-                        <td>${employee_data_list.content[b][11]}</td>
+                        <td>${employee_data_list.content[b][6]}</td>
+                        <td>${employee_data_list.content[b][28]}</td>
+                        <td>${date_decoder(employee_data_list.content[b][8])}</td>
+                        <td>${employee_data_list.content[b][10]}</td>
                     </tr>
                     `
                 }
@@ -286,31 +284,32 @@ document.addEventListener('DOMContentLoaded', async function() {
             input_box.value = select_user_data;
             search_wrapper.classList.remove("active");
             for(let z = 1; z < employee_data_list.content.length; z++){
-                if(employee_data_list.content[z][31] == "ACTIVE"){
+                if(employee_data_list.content[z][30] == "ACTIVE"){
                     var full_name;
-                    var gender = employee_data_list.content[z][7];
+                    var gender = employee_data_list.content[z][6];
                     if(gender == "MALE"){
-                        full_name = `${employee_data_list.content[z][4]}, ${employee_data_list.content[z][2]} ${employee_data_list.content[z][3]} ${employee_data_list.content[z][6]}`
+                        console.log("🚀 ~ file: user9.js:290 ~ select ~ gender:", gender)
+                        full_name = `${employee_data_list.content[z][3]}, ${employee_data_list.content[z][1]} ${employee_data_list.content[z][2]} ${employee_data_list.content[z][5]}`
                     }
                     else{
-                        full_name = `${employee_data_list.content[z][4]}, ${employee_data_list.content[z][2]} ${employee_data_list.content[z][3]} - ${employee_data_list.content[z][5]}`
+                        full_name = `${employee_data_list.content[z][3]}, ${employee_data_list.content[z][1]} ${employee_data_list.content[z][2]} - ${employee_data_list.content[z][4]}`
                     }
                     if(select_user_data == full_name){
                         for(x=1; x<=7; x++){
-                            time_in_sched.value = convertTo24HourFormat(time_decoder(employee_data_list.content[z][37]));
-                            time_out_sched.value = convertTo24HourFormat(time_decoder(employee_data_list.content[z][38]));
+                            time_in_sched.value = convertTo24HourFormat(time_decoder(employee_data_list.content[z][36]));
+                            time_out_sched.value = convertTo24HourFormat(time_decoder(employee_data_list.content[z][37]));
                             if(parseInt(time_in_sched.value.slice(0,2)) >= 18){
-                                allowance[x].value = parseFloat(employee_data_list.content[z][36]);
-                            }
-                            else{
                                 allowance[x].value = parseFloat(employee_data_list.content[z][35]);
                             }
-                            id_no.value = employee_data_list.content[z][1];
-                            department.value = employee_data_list.content[z][32];
-                            designation.value = employee_data_list.content[z][33];
-                            daily_rate.value = employee_data_list.content[z][34];
-                            day_allowance.value = employee_data_list.content[z][35];
-                            night_allowance.value = employee_data_list.content[z][36];
+                            else{
+                                allowance[x].value = parseFloat(employee_data_list.content[z][34]);
+                            }
+                            id_no.value = employee_data_list.content[z][0];
+                            department.value = employee_data_list.content[z][31];
+                            designation.value = employee_data_list.content[z][32];
+                            daily_rate.value = employee_data_list.content[z][33];
+                            day_allowance.value = employee_data_list.content[z][34];
+                            night_allowance.value = employee_data_list.content[z][35];
                             const timeInValue = time_in_sched.value;
                             const timeOutValue = time_out_sched.value;
                             const night_hours_start = 22;
@@ -977,7 +976,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                         else{
                             late_deduction[x].value = (parseFloat(late_mins[x].value) * (parseFloat(subtotal[x].value) / 8 / 60));
                             under_time_deduction[x].value = (parseFloat(under_time_mins[x].value) * (parseFloat(subtotal[x].value) / 8));
-                        }                        regular_pay[x].value = (parseFloat(subtotal[x].value) - (parseFloat(late_deduction[x].value) + parseFloat(under_time_deduction[x].value)) + parseFloat(daily_rate.value)).toFixed(2);
+                        }                        
+                        regular_pay[x].value = (parseFloat(subtotal[x].value) - (parseFloat(late_deduction[x].value) + parseFloat(under_time_deduction[x].value)) + parseFloat(daily_rate.value)).toFixed(2);
                         ot_pay[x].value = (parseFloat(ot_hours[x].value) * parseFloat(ot_rate_per_hour[x].value));
                         ot_night_pay[x].value = (parseFloat(ot_night_hours[x].value) * parseFloat(ot_night_rate_per_hour[x].value));
                         ot_pay_subtotal[x].value = (parseFloat(ot_pay[x].value) + parseFloat(ot_night_pay[x].value)).toFixed(2);
@@ -995,7 +995,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                     else{
                         late_deduction[x].value = (parseFloat(late_mins[x].value) * (parseFloat(subtotal[x].value) / 8 / 60));
                         under_time_deduction[x].value = (parseFloat(under_time_mins[x].value) * (parseFloat(subtotal[x].value) / 8));
-                    }                    regular_pay[x].value = (parseFloat(subtotal[x].value) - (parseFloat(late_deduction[x].value) + parseFloat(under_time_deduction[x].value))).toFixed(2);
+                    }                    
+                    regular_pay[x].value = (parseFloat(subtotal[x].value) - (parseFloat(late_deduction[x].value) + parseFloat(under_time_deduction[x].value))).toFixed(2);
                     ot_pay[x].value = (parseFloat(ot_hours[x].value) * parseFloat(ot_rate_per_hour[x].value));
                     ot_night_pay[x].value = (parseFloat(ot_night_hours[x].value) * parseFloat(ot_night_rate_per_hour[x].value));
                     ot_pay_subtotal[x].value = (parseFloat(ot_pay[x].value) + parseFloat(ot_night_pay[x].value)).toFixed(2);
@@ -1998,7 +1999,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         ot_regular_hour_rate[x].innerText = "1.95";    
                         ot_night_hour_rate[x].innerText= "2.145";    
                     }
-                    else if(rest_day_box_input[x].checked == true && regular_holiday_box[x].checked == false && special_holiday_box[x].checked == false){
+                    else if(rest_day_duty_box[x].checked == true && regular_holiday_box[x].checked == false && special_holiday_box[x].checked == false){
                         ot_rate_per_hour[x].value = parseFloat(daily_rate.value)/8 * 1.69;
                         ot_night_rate_per_hour[x].value = parseFloat(daily_rate.value)/8 * 1.859;    
                         ot_regular_hour_rate[x].innerText = "1.69";    
@@ -2198,11 +2199,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                             var tin_id = "";
                             var type_of_employee = "";
                             for(let f =1; f < employee_data_list.content.length; f++){
-                                if(payslip_employee_id[d] == employee_data_list.content[f][1]){
-                                    department = employee_data_list.content[f][32];
-                                    designation = employee_data_list.content[f][33];
-                                    tin_id = employee_data_list.content[f][20];
-                                    type_of_employee = employee_data_list.content[f][29];
+                                if(payslip_employee_id[d] == employee_data_list.content[f][0]){
+                                    department = employee_data_list.content[f][31];
+                                    designation = employee_data_list.content[f][32];
+                                    tin_id = employee_data_list.content[f][19];
+                                    type_of_employee = employee_data_list.content[f][28];
                                 }
                             }
                             if(type_of_employee == "REGULAR"){
@@ -2788,8 +2789,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                             ${type_of_day.map(item => `<td>${item}</td>`).join('')}
                                                         </tr>
                                                         <tr id="payslip_time_in_time_out">
-                                                            <th>Time IN/Time OUT</th>
-                                                            ${time_in.map((item1, index) => `<td>${item1} || ${time_out[index]}</td>`).join('')}                                
+                                                            <th>Time IN</th>
+                                                            ${time_in.map(item => `<td>${item}</td>`).join('')}
+                                                        </tr>
+                                                        <tr id="payslip_time_in_time_out">
+                                                            <th>Time OUT</th>
+                                                            ${time_out.map(item => `<td>${item}</td>`).join('')}
                                                         </tr>
                                                         <tr class="border-top">
                                                             <th>Work Shifts</th>
@@ -2826,7 +2831,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                             ${under_time_hour.map(item => `<td>${item}</td>`).join('')}
                                                         </tr>
                                                         <tr id="payslip_under_time_deduction">
-                                                            <th>Under Time Deduction</th>
+                                                            <th style="font-size: 8px !important;">Under Time Deduction</th>
                                                             ${under_time_deduction.map(item => `<td>${item}</td>`).join('')}
                                                         </tr>
                                                         <tr class="border-top-bottom" id="payslip_late_undertime">
@@ -2878,33 +2883,23 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                     <div class="border-bottom-right">
                                                         <h4 class="bold ps-1 truncate_text">SSS JUNE 2023</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][9]}</h4>
                                                     </div>
+                                                    <div class="border-bottom">
+                                                        <h4 class="bold ps-1 truncate_text">SSS Loan Payment</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][12]}</h4>
+                                                    </div>
                                                     <div class="border-bottom-right">
                                                         <h4 class="bold ps-1 truncate_text">HDMF JUNE 2023</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][10]}</h4>
                                                     </div>
                                                     <div class="border-bottom">
-                                                        <h4 class="bold ps-1 truncate_text">PHIC JUNE 2023</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][11]}</h4>
-                                                    </div>
-                                                    <div class="border-bottom-right">
-                                                        <h4 class="bold ps-1 truncate_text">SSS Loan Payment</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][12]}</h4>
-                                                    </div>
-                                                    <div class="border-bottom-right">
                                                         <h4 class="bold ps-1 truncate_text">HDMF Loan Payment</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][13]}</h4>
                                                     </div>
+                                                    <div class="border-bottom-right">
+                                                        <h4 class="bold ps-1 truncate_text">PHIC JUNE 2023</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][11]}</h4>
+                                                    </div>
                                                     <div class="border-bottom">
                                                     </div>
                                                     <div class="border-bottom-right">
                                                     </div>
-                                                    <div class="border-bottom-right">
-                                                    </div>
                                                     <div class="border-bottom">
-                                                    </div>
-                                                    <div class="border-bottom-right">
-                                                    </div>
-                                                    <div class="border-bottom-right">
-                                                    </div>
-                                                    <div class="border-bottom">
-                                                    </div>
-                                                    <div class="border-right">
                                                     </div>
                                                     <div class="border-right">
                                                     </div>
@@ -2917,7 +2912,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                         <h3 class="bold">ADDITIONAL</h3>
                                                         <div class="additional_detail border">
                                                             <div class="border-bottom">
-                                                                <h4 class="bold ps-1 truncate_text left">Adjustments</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][6]}</h4>
+                                                                <h4 class="bold ps-1 truncate_text left">Adjustments</h4><h4 class="pe-1">${payroll_summary_data_list.content[e][6]}</h4>
                                                             </div>
                                                             <div class="border-bottom">
                                                             </div>
@@ -2931,9 +2926,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                     </div>
                                                 </div>
                                                 <div id="payslip_gross_salary" class="border-right">
-                                                    <h4 class="ps-1 pt-1">Total Earnings:</h4>
+                                                    <h4 class="ps-1 pt-1">Gross Salary:</h4>
                                                     <h3 class="text-end bold pt-1 pe-1">${(payroll_summary_data_list.content[e][5]).toFixed(2)}</h3>
-                                                    <h4 class="ps-1 pt-1">Total Additionals:</h4>
+                                                    <h4 class="ps-1 pt-1">Total Additional:</h4>
                                                     <h3 class="text-end bold pt-1 pe-1">${(payroll_summary_data_list.content[e][6]).toFixed(2)}</h3>
                                                     <h4 class="ps-1 pt-1 border-bottom">Total Deductions:</h4>
                                                     <h3 class="text-end bold pt-1 pe-1 border-bottom">${(payroll_summary_data_list.content[e][9] + payroll_summary_data_list.content[e][10] + payroll_summary_data_list.content[e][11] + payroll_summary_data_list.content[e][12] + payroll_summary_data_list.content[e][13]).toFixed(2)}</h3>
@@ -2942,18 +2937,82 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                 </div>
                                                 <div class="border-right text-center">
                                                     <br>
-                                                    <h4 class="pt-3">__________</h4>
+                                                    <h4 class="pt-3">_______</h4>
                                                     <h4>Employee Signature</h4>
                                                 </div>
                                                 <div class="border-right text-center">
                                                     <br>
-                                                    <h4 class="pt-3">__________</h4>
+                                                    <h4 class="pt-3">_______</h4>
                                                     <h4>Authorized Signature</h4>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <hr>
+                                    <div style="position: absolute; border: 1px solid black; top: 20px; right: 120px; height:485px;">
+                                    </div>
+                                    <div style="position: absolute; border: 3px solid black; top: 20px; right: 20px; width: 80px; height:485px; padding: 5px; display: flex; justify-content: end;">
+                                        <div style=" transform: rotate(270deg); width: 485px; height: 80px; position: absolute; right: -205px; top: 200px;">
+                                            <div style="padding:5px; display: grid; grid-template-columns: 65% 35%;">
+                                                <div style="border-right: 1px solid black; padding-right: 5px; height: 70px;">
+                                                    <div style="text-align: center; border-bottom: 1px solid black;">
+                                                        <h2>OTHER DEDUCTIONS</h2>
+                                                    </div>
+                                                    <div style="display: grid; grid-template-columns: repeat(3,calc(100%/3))" class="border">
+                                                        <div class="border" style="display: grid; grid-template-columns: 80% 20%;">
+                                                            <h4 class="bold ps-1 truncate_text" style="text-align: start;">C/A Deduction</h4><h4 class="pe-1">${payroll_summary_data_list.content[e][14]}</h4>
+                                                        </div>
+                                                        <div class="border" style="display: grid; grid-template-columns: 80% 20%;">
+                                                            <h4 class="bold ps-1 truncate_text" style="text-align: start;">Uniform</h4><h4 class="pe-1">${payroll_summary_data_list.content[e][15]}</h4>
+                                                        </div>
+                                                        <div class="border" style="display: grid; grid-template-columns: 80% 20%;">
+                                                            <h4 class="bold ps-1 truncate_text" style="text-align: start;">Housing</h4><h4 class="pe-1">${payroll_summary_data_list.content[e][16]}</h4>
+                                                        </div>
+                                                        <div class="border" style="display: grid; grid-template-columns: 80% 20%;">
+                                                            <h4 class="bold ps-1 truncate_text" style="text-align: start;">St. Peter</h4><h4 class="pe-1">${payroll_summary_data_list.content[e][17]}</h4>
+                                                        </div>
+                                                        <div class="border" style="display: grid; grid-template-columns: 80% 20%;">
+                                                            <h4 class="bold ps-1 truncate_text" style="text-align: start;">Cash Not Return</h4><h4 class="pe-1">${payroll_summary_data_list.content[e][18]}</h4>
+                                                        </div>
+                                                        <div class="border" style="display: grid; grid-template-columns: 80% 20%;">
+                                                            <h4 class="bold ps-1 truncate_text" style="text-align: start;">Hard Hat</h4><h4 class="pe-1">${payroll_summary_data_list.content[e][19]}</h4>
+                                                        </div>
+                                                        <div class="border" style="display: grid; grid-template-columns: 80% 20%;">
+                                                            <h4 class="bold ps-1 truncate_text" style="text-align: start;">Safety Shoes</h4><h4 class="pe-1">${payroll_summary_data_list.content[e][20]}</h4>
+                                                        </div>
+                                                        <div class="border" style="display: grid; grid-template-columns: 80% 20%;">
+                                                            <h4 class="bold ps-1 truncate_text" style="text-align: start;">Over Meals</h4><h4 class="pe-1">${payroll_summary_data_list.content[e][21]}</h4>
+                                                        </div>
+                                                        <div class="border" style="display: grid; grid-template-columns: 80% 20%;">
+                                                            <h4 class="bold ps-1 truncate_text" style="text-align: start;">Bereavement Assistance</h4><h4 class="pe-1">${payroll_summary_data_list.content[e][22]}</h4>
+                                                        </div>
+                                                        <div class="border" style="height: 12px">
+                                                        </div>
+                                                        <div class="border" style="height: 12px">
+                                                        </div>
+                                                        <div class="border" style="height: 12px">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div style="padding-left: 5px; height: 70px;">
+                                                    <div style="text-align: center; border-bottom: 1px solid black;">
+                                                        <h2>SUMMARY</h2>
+                                                    </div>
+                                                    <div class="border">
+                                                        <div class="border" style="display: grid; grid-template-columns: 70% 30%;">
+                                                            <h4 class="bold ps-1 truncate_text" style="text-align: start;">Net Pay:</h4><h3 class="pe-1 bold" style="text-align: end;">${((payroll_summary_data_list.content[e][5] + payroll_summary_data_list.content[e][6]) - (payroll_summary_data_list.content[e][9] + payroll_summary_data_list.content[e][10] + payroll_summary_data_list.content[e][11] + payroll_summary_data_list.content[e][12] + payroll_summary_data_list.content[e][13])).toFixed(2)}</h3>
+                                                        </div>
+                                                        <div class="border" style="display: grid; grid-template-columns: 70% 30%;">
+                                                            <h4 class="bold ps-1 truncate_text" style="text-align: start;">Other Deductions:</h4><h3 class="pe-1 bold" style="text-align: end;">${(payroll_summary_data_list.content[e][14] + payroll_summary_data_list.content[e][15] + payroll_summary_data_list.content[e][16] + payroll_summary_data_list.content[e][17] + payroll_summary_data_list.content[e][18] + payroll_summary_data_list.content[e][19] + payroll_summary_data_list.content[e][20] + payroll_summary_data_list.content[e][21] + payroll_summary_data_list.content[e][22]).toFixed(2)}</h3>
+                                                        </div>
+                                                        <div class="border" style="display: grid; grid-template-columns: 70% 30%;">
+                                                            <h4 class="bold ps-1 truncate_text" style="text-align: start;">Remaining Salary:</h4><h1 class="pe-1 bold" style="text-align: end;">${((payroll_summary_data_list.content[e][5] + payroll_summary_data_list.content[e][6]) - (payroll_summary_data_list.content[e][9] + payroll_summary_data_list.content[e][10] + payroll_summary_data_list.content[e][11] + payroll_summary_data_list.content[e][12] + payroll_summary_data_list.content[e][13]) - (payroll_summary_data_list.content[e][14] + payroll_summary_data_list.content[e][15] + payroll_summary_data_list.content[e][16] + payroll_summary_data_list.content[e][17] + payroll_summary_data_list.content[e][18] + payroll_summary_data_list.content[e][19] + payroll_summary_data_list.content[e][20] + payroll_summary_data_list.content[e][21] + payroll_summary_data_list.content[e][22])).toFixed(2)}</h1>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="border: 1px solid black;"></div>
                                     <div class="payslip">
                                         <div class="summary">
                                             <div class="header">
@@ -3011,8 +3070,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                             ${type_of_day.map(item => `<td>${item}</td>`).join('')}
                                                         </tr>
                                                         <tr id="payslip_time_in_time_out">
-                                                            <th>Time IN/Time OUT</th>
-                                                            ${time_in.map((item1, index) => `<td>${item1} || ${time_out[index]}</td>`).join('')}                                
+                                                            <th>Time IN</th>
+                                                            ${time_in.map(item => `<td>${item}</td>`).join('')}
+                                                        </tr>
+                                                        <tr id="payslip_time_in_time_out">
+                                                            <th>Time OUT</th>
+                                                            ${time_out.map(item => `<td>${item}</td>`).join('')}
                                                         </tr>
                                                         <tr class="border-top">
                                                             <th>Work Shifts</th>
@@ -3068,11 +3131,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                         </tr>
                                                         <tr id="payslip_ot_hours">
                                                             <th>Overtime Hours</th>
-                                                            ${ot_hours.map((item1, index) => `<td>${item1} || ${ot_night_hours[index]}</td>`).join('')}                                </tr>
+                                                            ${ot_hours.map((item1, index) => `<td>${item1} || ${ot_night_hours[index]}</td>`).join('')}                                
                                                         </tr>
                                                         <tr id="payslip_ot_hours_rate">
                                                             <th>Overtime Rate/hour</th>
-                                                            ${ot_hours_rate_per_hour.map((item1, index) => `<td>${item1} || ${ot_night_hours_rate_per_hour[index]}</td>`).join('')}                                </tr>
+                                                            ${ot_hours_rate_per_hour.map((item1, index) => `<td>${item1} || ${ot_night_hours_rate_per_hour[index]}</td>`).join('')}                                
                                                         </tr>
                                                         <tr class="bold border-top" id="payslip_ot_subtotal">
                                                             <th>Subtotal</th>
@@ -3114,31 +3177,22 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                             <h4 class="bold ps-1 truncate_text">HDMF Loan Payment</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][13]}</h4>
                                                         </div>
                                                         <div class="border-bottom">
-                                                            <h4 class="bold ps-1 truncate_text">C/A Deduction</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][14]}</h4>
-                                                            </div>
-                                                        <div class="border-bottom-right">
-                                                            <h4 class="bold ps-1 truncate_text">Uniform</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][15]}</h4>
                                                         </div>
                                                         <div class="border-bottom-right">
-                                                            <h4 class="bold ps-1 truncate_text">Housing</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][16]}</h4>
+                                                        </div>
+                                                        <div class="border-bottom-right">
                                                         </div>
                                                         <div class="border-bottom">
-                                                            <h4 class="bold ps-1 truncate_text">St. Peter</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][17]}</h4>
                                                         </div>
                                                         <div class="border-bottom-right">
-                                                            <h4 class="bold ps-1 truncate_text">Cash Not Return</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][18]}</h4>
                                                         </div>
                                                         <div class="border-bottom-right">
-                                                            <h4 class="bold ps-1 truncate_text">Hard Hat</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][19]}</h4>
                                                         </div>
                                                         <div class="border-bottom">
-                                                            <h4 class="bold ps-1 truncate_text">Safety Shoes</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][20]}</h4>
                                                         </div>
                                                         <div class="border-right">
-                                                            <h4 class="bold ps-1 truncate_text">Over Meals</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][21]}</h4>
                                                         </div>
                                                         <div class="border-right">
-                                                            <h4 class="bold ps-1 truncate_text">Bereavement Assistance</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][22]}</h4>
                                                         </div>
                                                         <div>
                                                         </div>
@@ -3152,7 +3206,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                                 <h4 class="bold ps-1 truncate_text left">Adjustments</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][6]}</h4>
                                                             </div>
                                                             <div class="border-bottom">
-                                                                <h4 class="bold ps-1 truncate_text left">Cash Advance</h4><h4 class="ps-1">${payroll_summary_data_list.content[e][7]}</h4>
                                                             </div>
                                                             <div class="border-bottom">
                                                             </div>
@@ -3164,15 +3217,15 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                     </div>
                                                 </div>
                                                 <div id="payslip_gross_salary" class="border-right">
-                                                    <h4 class="ps-1 pt-1">Total Earnings:</h4>
-                                                    <h3 class="text-end bold pt-1 pe-1">${(payroll_summary_data_list.content[e][5]).toFixed(2)}</h3>
-                                                    <h4 class="ps-1 pt-1">Total Additionals:</h4>
-                                                    <h3 class="text-end bold pt-1 pe-1">${(payroll_summary_data_list.content[e][8]).toFixed(2)}</h3>
-                                                    <h4 class="ps-1 pt-1 border-bottom">Total Deductions:</h4>
-                                                    <h3 class="text-end bold pt-1 pe-1 border-bottom">${(payroll_summary_data_list.content[e][23]).toFixed(2)}</h3>
-                                                    <h4 class="ps-1 pt-1">Net Pay:</h4>
-                                                    <h1 class="text-end bold pe-1">${(payroll_summary_data_list.content[e][24]).toFixed(2)}</h1>
-                                                </div>
+                                                <h4 class="ps-1 pt-1">Gross Salary:</h4>
+                                                <h3 class="text-end bold pt-1 pe-1">${(payroll_summary_data_list.content[e][5]).toFixed(2)}</h3>
+                                                <h4 class="ps-1 pt-1">Total Additional:</h4>
+                                                <h3 class="text-end bold pt-1 pe-1">${(payroll_summary_data_list.content[e][6]).toFixed(2)}</h3>
+                                                <h4 class="ps-1 pt-1 border-bottom">Total Deductions:</h4>
+                                                <h3 class="text-end bold pt-1 pe-1 border-bottom">${(payroll_summary_data_list.content[e][9] + payroll_summary_data_list.content[e][10] + payroll_summary_data_list.content[e][11] + payroll_summary_data_list.content[e][12] + payroll_summary_data_list.content[e][13]).toFixed(2)}</h3>
+                                                <h4 class="ps-1 pt-1">Net Pay:</h4>
+                                                <h1 class="text-end bold pe-1">${((payroll_summary_data_list.content[e][5] + payroll_summary_data_list.content[e][6]) - (payroll_summary_data_list.content[e][9] + payroll_summary_data_list.content[e][10] + payroll_summary_data_list.content[e][11] + payroll_summary_data_list.content[e][12] + payroll_summary_data_list.content[e][13])).toFixed(2)}</h1>
+                                            </div>
                                                 <div class="border-right text-center">
                                                     <br>
                                                     <h4 class="pt-3">__________</h4>
@@ -3295,46 +3348,46 @@ document.addEventListener('DOMContentLoaded', async function() {
         
         update_search_employee_id_button.addEventListener("click", () => {
             for(let a = 1; a < employee_data_list.content.length; a++)
-            if(update_employee_id.value == employee_data_list.content[a][1]){
-                update_gender.value = employee_data_list.content[a][7];
-                update_civil_status.value = employee_data_list.content[a][8];
-                update_first_name.value = employee_data_list.content[a][2];
-                update_middle_name.value = employee_data_list.content[a][3];
-                update_last_name.value = employee_data_list.content[a][4];
-                update_spouse_name.value = employee_data_list.content[a][5];
-                update_affix.value = employee_data_list.content[a][6];
-                update_birthday.value = formatDateToInputValue(employee_data_list.content[a][9]);
-                update_birth_place.value = employee_data_list.content[a][10];
-                update_mobile_number.value = employee_data_list.content[a][11];
-                update_email_address.value = employee_data_list.content[a][12];
-                update_nationality.value = employee_data_list.content[a][13];
-                update_address.value = employee_data_list.content[a][14];
-                update_other_address.value = employee_data_list.content[a][15];
-                update_mothers_maiden_name.value = employee_data_list.content[a][16];
-                update_educational_attainment.value = employee_data_list.content[a][17];
-                update_course.value = employee_data_list.content[a][18];
-                update_year.value = employee_data_list.content[a][19];
-                update_tin_no.value = employee_data_list.content[a][20];
-                update_sss_no.value = employee_data_list.content[a][21];
-                update_philhealth_no.value = employee_data_list.content[a][22];
-                update_pag_ibig_no.value = employee_data_list.content[a][23];
-                update_drivers_license_no.value = employee_data_list.content[a][24];
-                update_nbi_no.value = employee_data_list.content[a][25];
-                update_police_clearance_no.value = employee_data_list.content[a][26];
-                update_cedula_no.value = employee_data_list.content[a][27];
-                update_date_hire.value = formatDateToInputValue(employee_data_list.content[a][28]);
-                update_employee_type.value = employee_data_list.content[a][29];
-                update_payroll_type.value = employee_data_list.content[a][30];
-                update_employee_status.value = employee_data_list.content[a][31];
-                update_department.value = employee_data_list.content[a][32];
-                update_designation.value = employee_data_list.content[a][33];
-                update_rate.value = employee_data_list.content[a][34];
-                update_day_allowance.value = employee_data_list.content[a][35];
-                update_night_allowance.value = employee_data_list.content[a][36];
-                update_time_in_schedule.value = formatTimeToInputValue(employee_data_list.content[a][37]);
-                update_time_out_schedule.value = formatTimeToInputValue(employee_data_list.content[a][38]);
-                update_date_resignation.value = employee_data_list.content[a][39];
-                reason_resignation.value = formatDateToInputValue(employee_data_list.content[a][40]);        
+            if(update_employee_id.value == employee_data_list.content[a][0]){
+                update_gender.value = employee_data_list.content[a][6];
+                update_civil_status.value = employee_data_list.content[a][7];
+                update_first_name.value = employee_data_list.content[a][1];
+                update_middle_name.value = employee_data_list.content[a][2];
+                update_last_name.value = employee_data_list.content[a][3];
+                update_spouse_name.value = employee_data_list.content[a][4];
+                update_affix.value = employee_data_list.content[a][5];
+                update_birthday.value = formatDateToInputValue(employee_data_list.content[a][8]);
+                update_birth_place.value = employee_data_list.content[a][9];
+                update_mobile_number.value = employee_data_list.content[a][10];
+                update_email_address.value = employee_data_list.content[a][11];
+                update_nationality.value = employee_data_list.content[a][12];
+                update_address.value = employee_data_list.content[a][13];
+                update_other_address.value = employee_data_list.content[a][14];
+                update_mothers_maiden_name.value = employee_data_list.content[a][15];
+                update_educational_attainment.value = employee_data_list.content[a][16];
+                update_course.value = employee_data_list.content[a][17];
+                update_year.value = employee_data_list.content[a][18];
+                update_tin_no.value = employee_data_list.content[a][19];
+                update_sss_no.value = employee_data_list.content[a][20];
+                update_philhealth_no.value = employee_data_list.content[a][21];
+                update_pag_ibig_no.value = employee_data_list.content[a][22];
+                update_drivers_license_no.value = employee_data_list.content[a][23];
+                update_nbi_no.value = employee_data_list.content[a][24];
+                update_police_clearance_no.value = employee_data_list.content[a][25];
+                update_cedula_no.value = employee_data_list.content[a][26];
+                update_date_hire.value = formatDateToInputValue(employee_data_list.content[a][27]);
+                update_employee_type.value = employee_data_list.content[a][28];
+                update_payroll_type.value = employee_data_list.content[a][29];
+                update_employee_status.value = employee_data_list.content[a][30];
+                update_department.value = employee_data_list.content[a][31];
+                update_designation.value = employee_data_list.content[a][32];
+                update_rate.value = employee_data_list.content[a][33];
+                update_day_allowance.value = employee_data_list.content[a][34];
+                update_night_allowance.value = employee_data_list.content[a][35];
+                update_time_in_schedule.value = formatTimeToInputValue(employee_data_list.content[a][36]);
+                update_time_out_schedule.value = formatTimeToInputValue(employee_data_list.content[a][37]);
+                update_date_resignation.value = employee_data_list.content[a][38];
+                reason_resignation.value = formatDateToInputValue(employee_data_list.content[a][39]);        
             }
             update_details.style.display = "block";
             if(update_gender.value == "MALE"){
@@ -3359,7 +3412,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var last_three_digit = 0;
         
         for (let x = 0; x < employee_data_list.content.length; x++) {
-            var employee_number = String(employee_data_list.content[x][1]); // Convert to a string
+            var employee_number = String(employee_data_list.content[x][0]); // Convert to a string
             if (employee_number.slice(0, 2) == lastTwoDigitsOfYear) {
                 let threeDigitValue = parseFloat(employee_number.slice(-3));
                 if (!isNaN(threeDigitValue) && last_three_digit < threeDigitValue) {

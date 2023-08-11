@@ -60,6 +60,12 @@
                 </li>
                 <li>
                     <a href="#">
+                        <i class="fa-solid fa-file-circle-plus"></i>
+                        Quotation Form
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
                         <i class="fa-solid fa-cart-shopping"></i>
                         Purchase Request Form
                     </a>
@@ -256,7 +262,7 @@
             <section class="marketing" id="marketing_transaction_form">
                 <div class="section_container">
                     <h2>MARKETING TRANSACTION FORM</h2><br>
-                    <form id="form_id" action="https://script.google.com/macros/s/AKfycbzbg3NVMbyeBtrymKvU19ySBlNU14vMB2N3pG60_bX3TnkVt-gZSpVYCsFtTvKlJQ0rWw/exec" method="post">
+                    <form id="form_id" action="https://script.google.com/macros/s/AKfycbxAsqWyxyjqpD05WAKFtrK4SDxJRpKXSJwNLWlZrImIW-VFuBTghI7QVHurEB90s9e-AA/exec" method="post">
                         <input type="hidden" name="user" id="user">
                         <div class="mtf_form">
                             <div>
@@ -378,6 +384,16 @@
             <!-- client_list -->
             <section class="marketing" id="client_list_section">
                 <h2>CLIENT LIST</h2>
+                <div>
+                    <label class="d-flex gap-3">
+                        <button type="button" id="new_employee_button" class="form-control fw-bold fs-3 bg-success text-white">
+                            NEW CLIENT FORM
+                        </button>
+                        <button type="button" id="update_record_button" class="form-control fw-bold fs-3">
+                            UPDATE RECORD
+                        </button>
+                    </label><br>
+                </div>
                 <div class="card" style="max-height: 80vh; align-items: start; overflow-y: scroll;">                            
                     <div class="list">
                         <table>
@@ -397,7 +413,11 @@
                         <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
                     </div>
                 </div><br>
+                <div id="new_client_form_tab" style="position: absolute; right: 20px; width: 100%; height: 80%; background-color: white;">
+
+                </div>
             </section>
+            <!-- new client -->
             <section class="marketing" id="new_client_form">
                 <h2>NEW CLIENT FORM</h2><br>
                 <form  action="https://script.google.com/macros/s/AKfycbz5Ohe06O3ESiKxByS_7toqSbOLpTk4TsWdgkFP0xpQ3Gf9w0xD-bTYkCX4m_k2EVq8/exec" method="post">
@@ -450,8 +470,7 @@
                     </div>    
                 </form>
             </section>
-            <!-- new client -->
-                <!-- type_of_waste_list -->
+            <!-- type_of_waste_list -->
             <section class="marketing" id="type_of_waste_list_section">
                 <h2>TYPE OF WASTE LIST</h2>
                 <div class="card" style="max-height: 80vh; align-items: start; overflow-y: scroll;">                            
@@ -460,9 +479,10 @@
                             <thead style="position: sticky; top: 0; background-color: black;">
                                 <th>#</th>
                                 <th>WASTE ID</th>
-                                <th>TYPE OF WASTE</th>
+                                <th>WASTE CODE</th>
+                                <th>WASTE NAME</th>
                                 <th>TREATMENT<br>METHOD</th>
-                                <th>CODE</th>
+                                <th>CATEGORY</th>
                             </thead>
                             <tbody id="type_of_waste_list">
 
@@ -472,7 +492,7 @@
                     </div>
                 </div><br>
             </section>
-                <!-- type_of_waste_form -->
+            <!-- type_of_waste_form -->
             <section class="marketing" id="type_of_waste_form">
                 <h2>NEW TYPE OF WASTE FORM</h2><br>
                 <form  action="https://script.google.com/macros/s/AKfycbw7G_0nccMHrWJ-t213cTFEOnlAcbQ_XrXeazqHG7AsRKSI_5LSzFO5c3cAmTsAyj66/exec" method="post">
@@ -493,6 +513,131 @@
                     </label><br>
                     <select name="code" id="code" class="form-control form" required>
                     </select><br>
+                    <div class="buttons">
+                        <button type="submit" id="submit_btn" class="form-control" >
+                            Submit
+                        </button>
+                        <button type="reset" id="reset" class="form-control" >
+                            Clear
+                        </button>
+                    </div>    
+                </form>
+            </section>
+                <!-- quotation_form -->
+            <section class="marketing" id="quotation_form">
+                <h2>QUOTATION FORM</h2><br>
+                <form  action="https://script.google.com/macros/s/AKfycbwEkmp6G_nPbgIX55Czs9pwQRqJJQBazovwT0bFcgrtkKxuLsZ5imEmX62Q5vWQSgsB4w/exec" method="post">
+                    <input type="hidden" name="user" id="user">
+                    <div style="display: grid; grid-template-columns: 15% 85%; gap: 20px; width: calc(100% - 20px);">
+                        <div class="wrapper">
+                            <label for="quotation_no">
+                                <i class="fa-solid fa-user"></i>
+                                Quotation #
+                            </label><br>
+                            <div class="search_input">
+                                <input type="text" name="quotation_no" id="quotation_no" autocomplete="off" class="form-control" required placeholder="Type Quotation #" style="padding-right: 20px !important;">
+                            </div>
+                        </div>
+                        <div class="wrapper">
+                            <label for="client">
+                                <i class="fa-solid fa-user"></i>
+                                Client
+                            </label><br>
+                            <div class="search_input" id="search_client">
+                                <input type="text" name="client" id="client" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
+                                <div class="autocom_box">
+                                </div>
+                                <div class="icon"><i class="fas fa-search"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="list_container">
+                        <input type="hidden" id="list_counter" name="list_counter" value="1">
+                        <div class="list_item" id="list1"  style="display: grid; grid-template-columns: 12.5% 30% 15% 15% 12.5% 15%; gap: 20px; width: calc(100% - 100px);">
+                            <div class="wrapper">
+                                <label for="waste_code1">
+                                    <i class="fa-solid fa-user"></i>
+                                    Waste Code
+                                </label><br>
+                                <div class="search_input" id="search_waste_code">
+                                    <input type="text" name="waste_code1" id="waste_code1" autocomplete="off" class="form-control" required placeholder="Search">
+                                    <div class="autocom_box">
+                                    </div>
+                                    <div class="icon"><i class="fas fa-search"></i></div>
+                                </div>
+                            </div>
+                            <div class="wrapper">
+                                <label for="waste_name1">
+                                    <i class="fa-solid fa-user"></i>
+                                    Waste Name
+                                </label><br>
+                                <div class="search_input">
+                                    <input type="text" name="waste_name1" id="waste_name1" autocomplete="off" class="form-control" required placeholder="Type Waste Name..." style="padding-right: 20px !important;">
+                                </div>
+                            </div>
+                            <div class="wrapper">
+                                <label for="mode1">
+                                    <i class="fa-solid fa-user"></i>
+                                    Mode
+                                </label><br>
+                                <div class="search_input">
+                                    <select name="mode1" id="mode1" class="form-control" required style="height: 55px;">
+                                        <option value="">SELECT</option>
+                                        <option value="CHARGE">CHARGE</option>
+                                        <option value="FREE OF CHARGE">FREE OF CHARGE</option>
+                                        <option value="BUYING">BUYING</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="wrapper">
+                                <label for="unit1">
+                                    <i class="fa-solid fa-user"></i>
+                                    Unit
+                                </label><br>
+                                <div class="search_input">
+                                    <select name="unit1" id="unit1" class="form-control" required style="height: 55px;">
+                                        <option value="">SELECT</option>
+                                        <option value="KILOGRAMS">KILOGRAMS</option>
+                                        <option value="LITERS">LITERS</option>
+                                        <option value="DRUM">DRUM</option>
+                                        <option value="TRIP">TRIP</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="wrapper">
+                                <label for="unit_price1">
+                                    <i class="fa-solid fa-user"></i>
+                                    Unit Price
+                                </label><br>
+                                <div class="search_input">
+                                    <input type="number" name="unit_price1" id="unit_price1" autocomplete="off" class="form-control" required placeholder="Type Price..." style="padding-right: 20px !important;">
+                                </div>
+                            </div>
+                            <div class="wrapper">
+                                <label for="vat_calculation1">
+                                    <i class="fa-solid fa-user"></i>
+                                    Vat Calculation
+                                </label><br>
+                                <div class="search_input">
+                                    <select name="vat_calculation1" id="vat_calculation1" class="form-control" required style="height: 55px;">
+                                        <option value="">SELECT</option>
+                                        <option value="VAT INCLUSIVE">VAT INCLUSIVE</option>
+                                        <option value="VAT EXCLUSIVE">VAT EXCLUSIVE</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add_item pt-3">
+                        <div class="item_buttons">
+                            <button type="button" id="add_item_button" class="form-control">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                            <button type="button" id="remove_item_button" class="form-control">
+                                <i class="fa-solid fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
                     <div class="buttons">
                         <button type="submit" id="submit_btn" class="form-control" >
                             Submit
