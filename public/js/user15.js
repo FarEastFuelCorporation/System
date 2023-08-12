@@ -72,60 +72,60 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         for (let i = 1; i < ftf_data_list.content.length; i++) {
             // fund_source
-            if (ftf_data_list.content[i][2] == "SOURCE OF FUND") {
-                source_of_fund -= ftf_data_list.content[i][4]
+            if (ftf_data_list.content[i][1] == "SOURCE OF FUND") {
+                source_of_fund -= ftf_data_list.content[i][3]
             }
-            else if (ftf_data_list.content[i][2] == "HAULING FUND") {
-                hauling_fund -= ftf_data_list.content[i][4]
+            else if (ftf_data_list.content[i][1] == "HAULING FUND") {
+                hauling_fund -= ftf_data_list.content[i][3]
             }
-            else if (ftf_data_list.content[i][2] == "TRUCKING FUND") {
-                trucking_fund -= ftf_data_list.content[i][4]
+            else if (ftf_data_list.content[i][1] == "TRUCKING FUND") {
+                trucking_fund -= ftf_data_list.content[i][3]
             }
-            else if (ftf_data_list.content[i][2] == "DIESEL FUND") {
-                diesel_fund -= ftf_data_list.content[i][4]
+            else if (ftf_data_list.content[i][1] == "DIESEL FUND") {
+                diesel_fund -= ftf_data_list.content[i][3]
             }
-            else if (ftf_data_list.content[i][2] == "GASOLINE FUND") {
-                gasoline_fund -= ftf_data_list.content[i][4]
+            else if (ftf_data_list.content[i][1] == "GASOLINE FUND") {
+                gasoline_fund -= ftf_data_list.content[i][3]
             }
-            else if (ftf_data_list.content[i][2] == "SCRAP SALES") {
-                scrap_sales -= ftf_data_list.content[i][4]
+            else if (ftf_data_list.content[i][1] == "SCRAP SALES") {
+                scrap_sales -= ftf_data_list.content[i][3]
             }
-            else if (ftf_data_list.content[i][2] == "MOLD RUNNER SALES") {
-                mold_runner_sales -= ftf_data_list.content[i][4]
+            else if (ftf_data_list.content[i][1] == "MOLD RUNNER SALES") {
+                mold_runner_sales -= ftf_data_list.content[i][3]
             }
-            else if (ftf_data_list.content[i][2] == "TRUCK SCALE COLLECTION") {
-                truck_scale_collection -= ftf_data_list.content[i][4]
+            else if (ftf_data_list.content[i][1] == "TRUCK SCALE COLLECTION") {
+                truck_scale_collection -= ftf_data_list.content[i][3]
             }
-            else if (ftf_data_list.content[i][2] == "HOUSE COLLECTION") {
-                house_collection -= ftf_data_list.content[i][4]
+            else if (ftf_data_list.content[i][1] == "HOUSE COLLECTION") {
+                house_collection -= ftf_data_list.content[i][3]
             }
             // fund_allocation
-            if (ftf_data_list.content[i][3] == "SOURCE OF FUND") {
-                source_of_fund += ftf_data_list.content[i][4]
+            if (ftf_data_list.content[i][2] == "SOURCE OF FUND") {
+                source_of_fund += ftf_data_list.content[i][3]
             }
-            else if (ftf_data_list.content[i][3] == "HAULING FUND") {
-                hauling_fund += ftf_data_list.content[i][4]
+            else if (ftf_data_list.content[i][2] == "HAULING FUND") {
+                hauling_fund += ftf_data_list.content[i][3]
             }
-            else if (ftf_data_list.content[i][3] == "TRUCKING FUND") {
-                trucking_fund += ftf_data_list.content[i][4]
+            else if (ftf_data_list.content[i][2] == "TRUCKING FUND") {
+                trucking_fund += ftf_data_list.content[i][3]
             }
-            else if (ftf_data_list.content[i][3] == "DIESEL FUND") {
-                diesel_fund += ftf_data_list.content[i][4]
+            else if (ftf_data_list.content[i][2] == "DIESEL FUND") {
+                diesel_fund += ftf_data_list.content[i][3]
             }
-            else if (ftf_data_list.content[i][3] == "GASOLINE FUND") {
-                gasoline_fund += ftf_data_list.content[i][4]
+            else if (ftf_data_list.content[i][2] == "GASOLINE FUND") {
+                gasoline_fund += ftf_data_list.content[i][3]
             }
-            else if (ftf_data_list.content[i][3] == "SCRAP SALES") {
-                scrap_sales += ftf_data_list.content[i][4]
+            else if (ftf_data_list.content[i][2] == "SCRAP SALES") {
+                scrap_sales += ftf_data_list.content[i][3]
             }
-            else if (ftf_data_list.content[i][3] == "MOLD RUNNER SALES") {
-                mold_runner_sales += ftf_data_list.content[i][4]
+            else if (ftf_data_list.content[i][2] == "MOLD RUNNER SALES") {
+                mold_runner_sales += ftf_data_list.content[i][3]
             }
-            else if (ftf_data_list.content[i][3] == "TRUCK SCALE COLLECTION") {
-                truck_scale_collection += ftf_data_list.content[i][4]
+            else if (ftf_data_list.content[i][2] == "TRUCK SCALE COLLECTION") {
+                truck_scale_collection += ftf_data_list.content[i][3]
             }
-            else if (ftf_data_list.content[i][3] == "HOUSE COLLECTION") {
-                house_collection += ftf_data_list.content[i][4]
+            else if (ftf_data_list.content[i][2] == "HOUSE COLLECTION") {
+                house_collection += ftf_data_list.content[i][3]
             }
         }
         
@@ -149,32 +149,33 @@ document.addEventListener('DOMContentLoaded', async function() {
         let tbf_tlf_transaction_ap_accounting = []; // Variable containing existing elements
         
         for (let i = 1; i < ltf_data_list.content.length; i++) {
-            if (!ltf_transaction_ap_accounting.includes(ltf_data_list.content[i][1])) {
-                ltf_transaction_ap_accounting.push(ltf_data_list.content[i][1]);
+            if (!ltf_transaction_ap_accounting.includes(ltf_data_list.content[i][0])) {
+                ltf_transaction_ap_accounting.push(ltf_data_list.content[i][0]);
             }
         }
+        console.log("🚀 ~ file: user15.js:154 ~ document.addEventListener ~ ltf_transaction_ap_accounting:", ltf_transaction_ap_accounting)
 
         for (let i = 1; i < tbf_data_list.content.length; i++) {
-            if (!ltf_tbf_transaction_ap_accounting.includes(tbf_data_list.content[i][3])) {
-                ltf_tbf_transaction_ap_accounting.push(tbf_data_list.content[i][3]);
+            if (!ltf_tbf_transaction_ap_accounting.includes(tbf_data_list.content[i][2])) {
+                ltf_tbf_transaction_ap_accounting.push(tbf_data_list.content[i][2]);
             }
         }
 
         for (let i = 1; i < tlf_data_list.content.length; i++) {
-            if (!ltf_tlf_transaction_ap_accounting.includes(tlf_data_list.content[i][4])) {
-                ltf_tlf_transaction_ap_accounting.push(tlf_data_list.content[i][4]);
+            if (!ltf_tlf_transaction_ap_accounting.includes(tlf_data_list.content[i][3])) {
+                ltf_tlf_transaction_ap_accounting.push(tlf_data_list.content[i][3]);
             }
         }
         
         for (let i = 1; i < tbf_data_list.content.length; i++) {
-            if (!tbf_transaction_ap_accounting.includes(tbf_data_list.content[i][1])) {
-                tbf_transaction_ap_accounting.push(tbf_data_list.content[i][1]);
+            if (!tbf_transaction_ap_accounting.includes(tbf_data_list.content[i][0])) {
+                tbf_transaction_ap_accounting.push(tbf_data_list.content[i][0]);
             }
         }
 
         for (let i = 1; i < tlf_data_list.content.length; i++) {
-            if (!tbf_tlf_transaction_ap_accounting.includes(tlf_data_list.content[i][2])) {
-                tbf_tlf_transaction_ap_accounting.push(tlf_data_list.content[i][2]);
+            if (!tbf_tlf_transaction_ap_accounting.includes(tlf_data_list.content[i][1])) {
+                tbf_tlf_transaction_ap_accounting.push(tlf_data_list.content[i][1]);
             }
         }
 
@@ -195,16 +196,16 @@ document.addEventListener('DOMContentLoaded', async function() {
         for(let y = 0; y < pending_list_ltf_ap_accounting.length; y++){
             for(let x = 1; x < ltf_data_list.content.length; x++){
                 if(pending_list_ltf_ap_accounting[y] == ltf_data_list.content[x][1]){
-                    if(ltf_data_list.content[x][7] == "10 WHEELER WING VAN"){
+                    if(ltf_data_list.content[x][6] == "10 WHEELER WING VAN"){
                         data_value += `
                         <tr>
                             <td>${data_value_counter}</td>
-                            <td>${ltf_data_list.content[x][1]}</td>
-                            <td>${date_decoder(ltf_data_list.content[x][5])}<br>${time_decoder(ltf_data_list.content[x][6])}</td>
+                            <td>${ltf_data_list.content[x][0]}</td>
+                            <td>${date_decoder(ltf_data_list.content[x][4])}<br>${time_decoder(ltf_data_list.content[x][5])}</td>
+                            <td>${ltf_data_list.content[x][2]}</td>
                             <td>${ltf_data_list.content[x][3]}</td>
-                            <td>${ltf_data_list.content[x][4]}</td>
-                            <td>${ltf_data_list.content[x][7]}</td>
-                            <td>${ltf_data_list.content[x][13]}</td>
+                            <td>${ltf_data_list.content[x][6]}</td>
+                            <td>${ltf_data_list.content[x][12]}</td>
                         </tr>
                         `
                         data_value_counter += 1;
@@ -219,25 +220,25 @@ document.addEventListener('DOMContentLoaded', async function() {
         var data_value_counter = 1;
         for(let y = 0; y < done_list_ltf_ap_accounting.length; y++){
             for(let x = 1; x < ltf_data_list.content.length; x++){
-                if(done_list_ltf_ap_accounting[y] == ltf_data_list.content[x][1]){
-                    if(ltf_data_list.content[x][7] == "10 WHEELER WING VAN"){
+                if(done_list_ltf_ap_accounting[y] == ltf_data_list.content[x][0]){
+                    if(ltf_data_list.content[x][6] == "10 WHEELER WING VAN"){
                         var tbf_data = "";
                         var pcv_data = "";
                         var tbf_budget = "";
                         var remarks = "PENDING LIQUIDATION";
                         var actual_budget = "PENDING";
                         for(let z = 1; z < tbf_data_list.content.length; z++){
-                            if(done_list_ltf_ap_accounting[y] == tbf_data_list.content[z][3]){
-                                tbf_data = tbf_data_list.content[z][1];
-                                pcv_data = tbf_data_list.content[z][2];
-                                tbf_budget = tbf_data_list.content[z][4];
+                            if(done_list_ltf_ap_accounting[y] == tbf_data_list.content[z][2]){
+                                tbf_data = tbf_data_list.content[z][0];
+                                pcv_data = tbf_data_list.content[z][1];
+                                tbf_budget = tbf_data_list.content[z][3];
                             }
                         }
                         for(let a = 0; a < ltf_tlf_transaction_ap_accounting.length; a++){
                             for(let z = 1; z < tlf_data_list.content.length; z++){
-                                if(ltf_tlf_transaction_ap_accounting[a] == tlf_data_list.content[z][4]){
-                                    if(tlf_data_list.content[z][5] == "CASH RETURN"){
-                                        actual_budget = (tbf_budget - tlf_data_list.content[z][6]).toFixed(2)
+                                if(ltf_tlf_transaction_ap_accounting[a] == tlf_data_list.content[z][3]){
+                                    if(tlf_data_list.content[z][4] == "CASH RETURN"){
+                                        actual_budget = (tbf_budget - tlf_data_list.content[z][5]).toFixed(2)
                                         remarks = "LIQUIDATED"
                                     }
                                 }
@@ -249,11 +250,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${data_value_counter}</td>
                             <td>${tbf_data}</td>
                             <td>${pcv_data}</td>
-                            <td>${ltf_data_list.content[x][1]}</td>
-                            <td>${date_decoder(ltf_data_list.content[x][5])}<br>${time_decoder(ltf_data_list.content[x][6])}</td>
+                            <td>${ltf_data_list.content[x][0]}</td>
+                            <td>${date_decoder(ltf_data_list.content[x][4])}<br>${time_decoder(ltf_data_list.content[x][5])}</td>
+                            <td>${ltf_data_list.content[x][2]}</td>
                             <td>${ltf_data_list.content[x][3]}</td>
-                            <td>${ltf_data_list.content[x][4]}</td>
-                            <td>${ltf_data_list.content[x][7]}</td>
+                            <td>${ltf_data_list.content[x][6]}</td>
                             <td>${parseFloat(tbf_budget).toFixed(2)}</td>
                             <td>${remarks}</td>
                             <td>${actual_budget}</td>
@@ -350,7 +351,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var data_last_3digit = 0;
     
         for(x=1; x<tbf_data_list.content.length; x++){
-            data_info = tbf_data_list.content[x][1];
+            data_info = tbf_data_list.content[x][0];
             
             if(data_info.includes(code_year_month) == true){
                 data_last_3digit = data_info.slice(9)
@@ -377,45 +378,45 @@ document.addEventListener('DOMContentLoaded', async function() {
             var driver_name = "";
             var truck_helper_name = "";
             for(a=0; a<=pending_list_ltf_ap_accounting.length; a++){
-                if(search_ltf_form_no_ap_accounting.value == ltf_data_list.content[a][1]){
+                if(search_ltf_form_no_ap_accounting.value == ltf_data_list.content[a][0]){
                     for(let x = 1; x<employee_data_list.content.length; x++){
-                        if(employee_data_list.content[x][1] == ltf_data_list.content[a][9]){
-                            var gender = employee_data_list.content[x][7];
+                        if(employee_data_list.content[x][0] == ltf_data_list.content[a][8]){
+                            var gender = employee_data_list.content[x][6];
                             if(gender == "MALE"){
-                                driver_name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} ${employee_data_list.content[x][6]}`
+                                driver_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} ${employee_data_list.content[x][5]}`
                             }
                             else{
-                                driver_name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} - ${employee_data_list.content[x][5]}`
+                                driver_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} - ${employee_data_list.content[x][4]}`
                             }
                         }
-                        var values = ltf_data_list.content[a][10];
+                        var values = ltf_data_list.content[a][9];
                         var valueArray = values.split(" || ");
                         valueArray.forEach(element => {
-                            if(employee_data_list.content[x][1] == element){
-                                var gender = employee_data_list.content[x][7];
+                            if(employee_data_list.content[x][0] == element){
+                                var gender = employee_data_list.content[x][6];
                                 if(gender == "MALE"){
-                                    truck_helper_name += `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} ${employee_data_list.content[x][6]} || `
+                                    truck_helper_name += `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} ${employee_data_list.content[x][5]} || `
                                 }
                                 else{
-                                    truck_helper_name += `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} - ${employee_data_list.content[x][5]} || `
+                                    truck_helper_name += `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} - ${employee_data_list.content[x][4]} || `
                                 }
                             }
                         });
                     }
                     data_value = `
-                    LTF #: ${ltf_data_list.content[a][1]}<br>
-                    CLIENT: ${ltf_data_list.content[a][3]}<br>
-                    WASTE DESCRIPTION: ${ltf_data_list.content[a][4]}<br>
-                    HAULING DATE: ${date_decoder(ltf_data_list.content[a][5])}<br>
-                    HAULING TIME: ${time_decoder(ltf_data_list.content[a][6])}<br>
-                    TYPE OF VEHICLE: ${ltf_data_list.content[a][7]}<br>
-                    PLATE #: ${ltf_data_list.content[a][8]}<br>
+                    LTF #: ${ltf_data_list.content[a][0]}<br>
+                    CLIENT: ${ltf_data_list.content[a][2]}<br>
+                    WASTE DESCRIPTION: ${ltf_data_list.content[a][3]}<br>
+                    HAULING DATE: ${date_decoder(ltf_data_list.content[a][4])}<br>
+                    HAULING TIME: ${time_decoder(ltf_data_list.content[a][5])}<br>
+                    TYPE OF VEHICLE: ${ltf_data_list.content[a][6]}<br>
+                    PLATE #: ${ltf_data_list.content[a][7]}<br>
                     DRIVER: ${driver_name}<br>
                     TRUCK HELPER: ${truck_helper_name}<br>
-                    DATE DEPARTURE: ${date_decoder(ltf_data_list.content[a][11])}<br>
-                    TIME DEPARTURE: ${time_decoder(ltf_data_list.content[a][12])}<br>
-                    REMARKS: ${ltf_data_list.content[a][13]}<br>
-                    SUBMITTED BY: ${ltf_data_list.content[a][14]}<br>
+                    DATE DEPARTURE: ${date_decoder(ltf_data_list.content[a][10])}<br>
+                    TIME DEPARTURE: ${time_decoder(ltf_data_list.content[a][111])}<br>
+                    REMARKS: ${ltf_data_list.content[a][12]}<br>
+                    SUBMITTED BY: ${ltf_data_list.content[a][13]}<br>
                     `
                     budget_form_inputs_ap_accounting.style.display = "flex";
                     budget_form_buttons_ap_accounting.style.display = "flex";
@@ -455,7 +456,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var data_last_3digit = 0;
     
         for(x=1; x<tlf_data_list.content.length; x++){
-            data_info = tlf_data_list.content[x][1];
+            data_info = tlf_data_list.content[x][0];
             
             if(data_info.includes(code_year_month) == true){
                 data_last_3digit = data_info.slice(9)
@@ -486,13 +487,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                 if(search_tbf_form_no_ap_accounting.value == pending_list_tbf_ap_accounting[b]){
                     for(a=1; a<ltf_data_list.content.length; a++){
                         for(let x = 1; x<employee_data_list.content.length; x++){
-                            if(employee_data_list.content[x][1] == ltf_data_list.content[a][9]){
-                                var gender = employee_data_list.content[x][7];
+                            if(employee_data_list.content[x][0] == ltf_data_list.content[a][8]){
+                                var gender = employee_data_list.content[x][6];
                                 if(gender == "MALE"){
-                                    driver_name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} ${employee_data_list.content[x][6]}`
+                                    driver_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} ${employee_data_list.content[x][5]}`
                                 }
                                 else{
-                                    driver_name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} - ${employee_data_list.content[x][5]}`
+                                    driver_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} - ${employee_data_list.content[x][4]}`
                                 }
                                 cash_advance += `
                                 <div>
@@ -512,26 +513,26 @@ document.addEventListener('DOMContentLoaded', async function() {
                             }
                             var released_by = "";
                             for(let y = 1; y<tbf_data_list.content.length; y++){
-                                if(ltf_data_list.content[a][1] == tbf_data_list.content[y][3]){
-                                    released_budget = tbf_data_list.content[a][4];
-                                    released_by = tbf_data_list.content[a][5];
-                                    pcv_no = tbf_data_list.content[a][2];
+                                if(ltf_data_list.content[a][0] == tbf_data_list.content[y][2]){
+                                    released_budget = tbf_data_list.content[a][3];
+                                    released_by = tbf_data_list.content[a][4];
+                                    pcv_no = tbf_data_list.content[a][1];
                                 }
                             }
-                            var values = ltf_data_list.content[a][10];
+                            var values = ltf_data_list.content[a][9];
                             var valueArray = values.split(" || ");
                             var cash_advance = "";
                             var truck_helper_name = "";
                             for(let c = 0; c < valueArray.length; c++){
-                                if(employee_data_list.content[x][1] == valueArray[c]){
-                                    var gender = employee_data_list.content[x][7];
+                                if(employee_data_list.content[x][0] == valueArray[c]){
+                                    var gender = employee_data_list.content[x][6];
                                     if(gender == "MALE"){
-                                        truck_helper_name_list += `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} ${employee_data_list.content[x][6]} || `
-                                        truck_helper_name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} ${employee_data_list.content[x][6]}`
+                                        truck_helper_name_list += `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} ${employee_data_list.content[x][5]} || `
+                                        truck_helper_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} ${employee_data_list.content[x][5]}`
                                     }
                                     else{
-                                        truck_helper_name_list += `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} - ${employee_data_list.content[x][5]} || `
-                                        truck_helper_name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} - ${employee_data_list.content[x][5]}`
+                                        truck_helper_name_list += `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} - ${employee_data_list.content[x][4]} || `
+                                        truck_helper_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} - ${employee_data_list.content[x][4]}`
                                     }
                                     cash_advance += `
                                     <div>
@@ -554,19 +555,19 @@ document.addEventListener('DOMContentLoaded', async function() {
                             };   
                         }
                         data_value = `
-                        LTF #: ${ltf_data_list.content[a][1]}<br>
-                        CLIENT: ${ltf_data_list.content[a][3]}<br>
-                        WASTE DESCRIPTION: ${ltf_data_list.content[a][4]}<br>
-                        HAULING DATE: ${date_decoder(ltf_data_list.content[a][5])}<br>
-                        HAULING TIME: ${time_decoder(ltf_data_list.content[a][6])}<br>
-                        TYPE OF VEHICLE: ${ltf_data_list.content[a][7]}<br>
-                        PLATE #: ${ltf_data_list.content[a][8]}<br>
+                        LTF #: ${ltf_data_list.content[a][0]}<br>
+                        CLIENT: ${ltf_data_list.content[a][2]}<br>
+                        WASTE DESCRIPTION: ${ltf_data_list.content[a][3]}<br>
+                        HAULING DATE: ${date_decoder(ltf_data_list.content[a][4])}<br>
+                        HAULING TIME: ${time_decoder(ltf_data_list.content[a][5])}<br>
+                        TYPE OF VEHICLE: ${ltf_data_list.content[a][6]}<br>
+                        PLATE #: ${ltf_data_list.content[a][7]}<br>
                         DRIVER: ${driver_name}<br>
                         TRUCK HELPER: ${truck_helper_name_list}<br>
-                        DATE DEPARTURE: ${date_decoder(ltf_data_list.content[a][11])}<br>
-                        TIME DEPARTURE: ${time_decoder(ltf_data_list.content[a][12])}<br>
-                        REMARKS: ${ltf_data_list.content[a][13]}<br>
-                        SUBMITTED BY: ${ltf_data_list.content[a][14]}<br>
+                        DATE DEPARTURE: ${date_decoder(ltf_data_list.content[a][10])}<br>
+                        TIME DEPARTURE: ${time_decoder(ltf_data_list.content[a][11])}<br>
+                        REMARKS: ${ltf_data_list.content[a][12]}<br>
+                        SUBMITTED BY: ${ltf_data_list.content[a][13]}<br>
                         RELEASED BUDGET: ${parseFloat(released_budget).toFixed(2)}<br>
                         RELEASED BY: ${released_by}<br>
                         `
@@ -591,7 +592,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             remaining.value = parseFloat(released_budget).toFixed(2) - sum;
                         }
 
-                        ltf_no_ap_accounting.value = ltf_data_list.content[a][1];
+                        ltf_no_ap_accounting.value = ltf_data_list.content[a][0];
                         pcv_no_ap_accounting.value = pcv_no;
                         liquidation_form_inputs_ap_accounting.style.display = "flex";
                         liquidation_form_buttons_ap_accounting.style.display = "flex";
@@ -697,27 +698,25 @@ document.addEventListener('DOMContentLoaded', async function() {
                 payroll_tab_ap_accounting.style.display = "block"
             }
         })
+
         var employee_array = [];
         var tlf_transaction_ap_accounting = [];
 
         for(let y = 1; y < tlf_data_list.content.length; y++){
-            if (!tlf_transaction_ap_accounting.includes(tlf_data_list.content[y][5])) {
-                tlf_transaction_ap_accounting.push(tlf_data_list.content[y][5]);
+            if (!tlf_transaction_ap_accounting.includes(tlf_data_list.content[y][4])) {
+                tlf_transaction_ap_accounting.push(tlf_data_list.content[y][4]);
             }
         }
-        console.log("🚀 ~ file: user15.js:698 ~ document.addEventListener ~ tlf_transaction_ap_accounting:", tlf_transaction_ap_accounting)
-
 
         for(let z = 0; z < tlf_transaction_ap_accounting.length; z++){
             for(let x = 1; x < employee_data_list.content.length; x++){
-                if(tlf_transaction_ap_accounting[z] == employee_data_list.content[x][1]){
-                    if (!employee_array.includes(employee_data_list.content[x][1])) {
-                        employee_array.push(employee_data_list.content[x][1]);
+                if(tlf_transaction_ap_accounting[z] == employee_data_list.content[x][0]){
+                    if (!employee_array.includes(employee_data_list.content[x][0])) {
+                        employee_array.push(employee_data_list.content[x][0]);
                     }
                 }
             }
         }
-        console.log("🚀 ~ file: user15.js:696 ~ document.addEventListener ~ employee_array:", employee_array)
         
         var payslip_form_data = "";
         generate_payslip_button_ap_accounting.addEventListener("click", () => {
@@ -730,25 +729,25 @@ document.addEventListener('DOMContentLoaded', async function() {
                 var pay_date = "";
                 var tin_id = "";
                 for(let y = 1; y < tlf_data_list.content.length; y++){
-                    if( search_year_ap_accounting.value == getYearFromDate(date_decoder(tlf_data_list.content[y][0])) &&
-                        search_week_number_ap_accounting.value == getWeekNumber(date_decoder(tlf_data_list.content[y][0]))){
-                        date = getWeekDates(date_decoder(tlf_data_list.content[y][0]));
+                    if( search_year_ap_accounting.value == getYearFromDate(date_decoder(tlf_data_list.content[y][7])) &&
+                        search_week_number_ap_accounting.value == getWeekNumber(date_decoder(tlf_data_list.content[y][7]))){
+                        date = getWeekDates(date_decoder(tlf_data_list.content[y][7]));
                         pay_date = date_decoder(pay_date_ap_accounting.value);
                     }
                 }
                 for(let x = 1; x < employee_data_list.content.length; x++){
-                    if(employee_array[z] == employee_data_list.content[x][1]){
-                        var gender = employee_data_list.content[x][7];
+                    if(employee_array[z] == employee_data_list.content[x][0]){
+                        var gender = employee_data_list.content[x][6];
                         if(gender == "MALE"){
-                            name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} ${employee_data_list.content[x][6]}`
+                            name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} ${employee_data_list.content[x][5]}`
                         }
                         else{
-                            name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} - ${employee_data_list.content[x][5]}`
+                            name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} - ${employee_data_list.content[x][4]}`
                         }
-                        department = employee_data_list.content[x][32];
-                        designation = employee_data_list.content[x][33];
-                        employee_id = employee_data_list.content[x][1];
-                        tin_id = employee_data_list.content[x][20];
+                        department = employee_data_list.content[x][31];
+                        designation = employee_data_list.content[x][32];
+                        employee_id = employee_data_list.content[x][0];
+                        tin_id = employee_data_list.content[x][19];
                     }
                 }
                 
@@ -857,7 +856,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var data_last_3digit = 0;
         
         for(x=1; x<ftf_data_list.content.length; x++){
-            data_info = ftf_data_list.content[x][1];
+            data_info = ftf_data_list.content[x][0];
             
             if((String(data_info)).includes(code_year_month) == true){
                 data_last_3digit = data_info.slice(9)
@@ -969,13 +968,13 @@ document.addEventListener('DOMContentLoaded', async function() {
             data += `
             <tr>
                 <td>${data_value_counter}</td>
+                <td>${ftf_data_list.content[x][0]}</td>
+                <td>${date_decoder(ftf_data_list.content[x][6])} / ${time_decoder(ftf_data_list.content[x][6])}</td>
                 <td>${ftf_data_list.content[x][1]}</td>
-                <td>${date_decoder(ftf_data_list.content[x][0])} / ${time_decoder(ftf_data_list.content[x][0])}</td>
                 <td>${ftf_data_list.content[x][2]}</td>
-                <td>${ftf_data_list.content[x][3]}</td>
-                <td>${formatNumber(ftf_data_list.content[x][4])}</td>
+                <td>${formatNumber(ftf_data_list.content[x][3])}</td>
+                <td>${ftf_data_list.content[x][4]}</td>
                 <td>${ftf_data_list.content[x][5]}</td>
-                <td>${ftf_data_list.content[x][6]}</td>
             </tr>
             `
         }

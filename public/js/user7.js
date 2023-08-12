@@ -78,29 +78,29 @@ document.addEventListener('DOMContentLoaded', async function() {
         var ltf_wcf_transaction_counter_logistics = 0;
         
         for (let i = 1; i < mtf_data_list.content.length; i++) {
-            if(mtf_data_list.content[i][8] == "LOGISTICS"){
-                if (!mtf_transaction_logistics.includes(mtf_data_list.content[i][1])) {
-                    mtf_transaction_logistics.push(mtf_data_list.content[i][1]);
+            if(mtf_data_list.content[i][7] == "LOGISTICS"){
+                if (!mtf_transaction_logistics.includes(mtf_data_list.content[i][0])) {
+                    mtf_transaction_logistics.push(mtf_data_list.content[i][0]);
                     mtf_transaction_counter_logistics += 1
                 }
             }
         }
 
         for (let i = 1; i < ltf_data_list.content.length; i++) {
-            if (!mtf_ltf_transaction_logistics.includes(ltf_data_list.content[i][2])) {
-                mtf_ltf_transaction_logistics.push(ltf_data_list.content[i][2]);
+            if (!mtf_ltf_transaction_logistics.includes(ltf_data_list.content[i][1])) {
+                mtf_ltf_transaction_logistics.push(ltf_data_list.content[i][1]);
                 mtf_ltf_transaction_counter_logistics += 1
             }
-            if (!ltf_transaction_logistics.includes(ltf_data_list.content[i][1])) {
-                ltf_transaction_logistics.push(ltf_data_list.content[i][1]);
+            if (!ltf_transaction_logistics.includes(ltf_data_list.content[i][0])) {
+                ltf_transaction_logistics.push(ltf_data_list.content[i][0]);
                 ltf_transaction_counter_logistics += 1
             }
 
         }
 
         for (let i = 1; i < wcf_data_list.content.length; i++) {
-            if (!ltf_wcf_transaction_logistics.includes(wcf_data_list.content[i][2])) {
-                ltf_wcf_transaction_logistics.push(wcf_data_list.content[i][2]);
+            if (!ltf_wcf_transaction_logistics.includes(wcf_data_list.content[i][1])) {
+                ltf_wcf_transaction_logistics.push(wcf_data_list.content[i][1]);
                 ltf_wcf_transaction_counter_logistics += 1
             }
         }
@@ -117,29 +117,29 @@ document.addEventListener('DOMContentLoaded', async function() {
         var data_value_counter = 1;
         for(let i = 0; i < newElements_logistics.length; i++){
             for(let j = 1; j < mtf_data_list.content.length; j++){
-                if(newElements_logistics[i] == mtf_data_list.content[j][1]){
-                    if(mtf_data_list.content[j][8] == "LOGISTICS"){
+                if(newElements_logistics[i] == mtf_data_list.content[j][0]){
+                    if(mtf_data_list.content[j][7] == "LOGISTICS"){
                         var client_name = "";
                         for(let c = 1; c < client_data_list.content.length; c++){
-                            if(mtf_data_list.content[j][2] == client_data_list.content[c][1]){
-                                client_name = client_data_list.content[c][2];
+                            if(mtf_data_list.content[j][1] == client_data_list.content[c][0]){
+                                client_name = client_data_list.content[c][1];
                             }
                         }
                         var waste_name = "";
                         for(let c = 1; c < type_of_waste_data.content.length; c++){
-                            if(mtf_data_list.content[j][3] == type_of_waste_data.content[c][1]){
-                                waste_name = type_of_waste_data.content[c][2];
+                            if(mtf_data_list.content[j][2] == type_of_waste_data.content[c][0]){
+                                waste_name = type_of_waste_data.content[c][1];
                             }
                         }
                         data_value +=`
                         <tr>
                         <td>${data_value_counter}</td>
-                        <td>${mtf_data_list.content[j][1]}</td>
-                        <td>${date_decoder(mtf_data_list.content[j][4])}<br>${time_decoder(mtf_data_list.content[j][5])}</td>
+                        <td>${mtf_data_list.content[j][0]}</td>
+                        <td>${date_decoder(mtf_data_list.content[j][3])}<br>${time_decoder(mtf_data_list.content[j][4])}</td>
                         <td>${client_name}</td>
                         <td>${waste_name}</td>
+                        <td>${mtf_data_list.content[j][5]}</td>
                         <td>${mtf_data_list.content[j][6]}</td>
-                        <td>${mtf_data_list.content[j][7]}</td>
                         </tr>
                         `
                         data_value_counter += 1;        
@@ -153,39 +153,39 @@ document.addEventListener('DOMContentLoaded', async function() {
         var data_value3_counter = 1;
         for(let j = 1; j < ltf_data_list.content.length; j++){
             for(let k = 0; k <= newElements2_logistics.length; k++){
-                if(ltf_data_list.content[j][1] == newElements2_logistics[k]){
+                if(ltf_data_list.content[j][0] == newElements2_logistics[k]){
                     var driver_name = "";
                     for(let x = 1; x<employee_data_list.content.length; x++){
-                        if(employee_data_list.content[x][1] == ltf_data_list.content[j][9]){
-                            var gender = employee_data_list.content[x][7];
+                        if(employee_data_list.content[x][1] == ltf_data_list.content[j][8]){
+                            var gender = employee_data_list.content[x][6];
                             if(gender == "MALE"){
-                                driver_name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} ${employee_data_list.content[x][6]}`
+                                driver_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} ${employee_data_list.content[x][5]}`
                             }
                             else{
-                                driver_name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} - ${employee_data_list.content[x][5]}`
+                                driver_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} - ${employee_data_list.content[x][4]}`
                             }
                         }
                     }
                     var client_name = "";
                     for(let c = 1; c < client_data_list.content.length; c++){
-                        if(ltf_data_list.content[j][3] == client_data_list.content[c][1]){
-                            client_name = client_data_list.content[c][2];
+                        if(ltf_data_list.content[j][2] == client_data_list.content[c][0]){
+                            client_name = client_data_list.content[c][1];
                         }
                     }
                     var waste_name = "";
                     for(let c = 1; c < type_of_waste_data.content.length; c++){
-                        if(ltf_data_list.content[j][4] == type_of_waste_data.content[c][1]){
-                            waste_name = type_of_waste_data.content[c][2];
+                        if(ltf_data_list.content[j][3] == type_of_waste_data.content[c][0]){
+                            waste_name = type_of_waste_data.content[c][1];
                         }
                     }
                     data3_value +=`
                     <tr>
                     <td>${data_value3_counter}</td>
-                    <td>${ltf_data_list.content[j][1]}</td>
-                    <td>${date_decoder(ltf_data_list.content[j][11])}<br>${time_decoder(ltf_data_list.content[j][12])}</td>
+                    <td>${ltf_data_list.content[j][0]}</td>
+                    <td>${date_decoder(ltf_data_list.content[j][10])}<br>${time_decoder(ltf_data_list.content[j][11])}</td>
                     <td>${client_name}</td>
                     <td>${waste_name}</td>
-                    <td>${ltf_data_list.content[j][8]}</td>
+                    <td>${ltf_data_list.content[j][7]}</td>
                     <td>${driver_name}</td>
                     <td>ON HAULING</td>
                     <td>PENDING</td>
@@ -195,30 +195,30 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
             for(let k = 1; k < wcf_data_list.content.length; k++){
-                if(ltf_data_list.content[j][1] == wcf_data_list.content[k][2]){
+                if(ltf_data_list.content[j][0] == wcf_data_list.content[k][1]){
                     var driver_name = "";
                     for(let x = 1; x<employee_data_list.content.length; x++){
-                        if(employee_data_list.content[x][1] == ltf_data_list.content[j][9]){
-                            var gender = employee_data_list.content[x][7];
+                        if(employee_data_list.content[x][0] == ltf_data_list.content[j][8]){
+                            var gender = employee_data_list.content[x][6];
                             if(gender == "MALE"){
-                                driver_name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} ${employee_data_list.content[x][6]}`
+                                driver_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} ${employee_data_list.content[x][5]}`
                             }
                             else{
-                                driver_name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} - ${employee_data_list.content[x][5]}`
+                                driver_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} - ${employee_data_list.content[x][4]}`
                             }
                         }
                     }
                     data3_value +=`
                     <tr>
                     <td>${data_value3_counter}</td>
-                    <td>${ltf_data_list.content[j][1]}</td>
-                    <td>${date_decoder(ltf_data_list.content[j][11])}<br>${time_decoder(ltf_data_list.content[j][12])}</td>
+                    <td>${ltf_data_list.content[j][0]}</td>
+                    <td>${date_decoder(ltf_data_list.content[j][10])}<br>${time_decoder(ltf_data_list.content[j][11])}</td>
+                    <td>${ltf_data_list.content[j][2]}</td>
                     <td>${ltf_data_list.content[j][3]}</td>
-                    <td>${ltf_data_list.content[j][4]}</td>
-                    <td>${ltf_data_list.content[j][8]}</td>
+                    <td>${ltf_data_list.content[j][7]}</td>
                     <td>${driver_name}</td>
-                    <td>${date_decoder(wcf_data_list.content[j][11])}<br>${time_decoder(wcf_data_list.content[j][12])}</td>
-                    <td>${calculateTravelTime(date_decoder(ltf_data_list.content[j][11]),time_decoder(ltf_data_list.content[j][12]),date_decoder(wcf_data_list.content[j][11]),time_decoder(wcf_data_list.content[j][12]))}</td>
+                    <td>${date_decoder(wcf_data_list.content[j][10])}<br>${time_decoder(wcf_data_list.content[j][11])}</td>
+                    <td>${calculateTravelTime(date_decoder(ltf_data_list.content[j][10]),time_decoder(ltf_data_list.content[j][11]),date_decoder(wcf_data_list.content[j][10]),time_decoder(wcf_data_list.content[j][11]))}</td>
                     </tr>
                     `
                     data_value3_counter += 1;            
@@ -235,8 +235,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         for(let j = 1; j < vehicle_data.content.length; j++){
             var vehicle_status_logistics = `AVAILABLE`;
             for(let k = 1; k < vehicle_log_data.content.length; k++){
-                if(vehicle_data.content[j][0] == vehicle_log_data.content[k][2]){
-                    vehicle_status_logistics = vehicle_log_data.content[k][5];
+                if(vehicle_data.content[j][0] == vehicle_log_data.content[k][1]){
+                    vehicle_status_logistics = vehicle_log_data.content[k][4];
                     if(vehicle_status_logistics == "ON HAUL"){
                         on_hauling_vehicle_counter_logistics += 1
                     }
@@ -274,14 +274,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         var data_value2 = [];
 
         for(let x = 1; x < employee_data_list.content.length; x++){
-            if(employee_data_list.content[x][31] == "ACTIVE"){
-                var gender = employee_data_list.content[x][7];
+            if(employee_data_list.content[x][30] == "ACTIVE"){
+                var gender = employee_data_list.content[x][6];
                 if(gender == "MALE"){
-                    var full_name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} ${employee_data_list.content[x][6]}`
+                    var full_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} ${employee_data_list.content[x][5]}`
                     data_value2.push(full_name);
                 }
                 else{
-                    var full_name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} - ${employee_data_list.content[x][5]}`
+                    var full_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} - ${employee_data_list.content[x][4]}`
                     data_value2.push(full_name);
                 }
             }
@@ -370,14 +370,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                 var data_value5 = [];
         
                 for(let x = 1; x < employee_data_list.content.length; x++){
-                    if(employee_data_list.content[x][31] == "ACTIVE"){
-                        var gender = employee_data_list.content[x][7];
+                    if(employee_data_list.content[x][30] == "ACTIVE"){
+                        var gender = employee_data_list.content[x][6];
                         if(gender == "MALE"){
-                            var full_name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} ${employee_data_list.content[x][6]}`
+                            var full_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} ${employee_data_list.content[x][5]}`
                             data_value5.push(full_name);
                         }
                         else{
-                            var full_name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} - ${employee_data_list.content[x][5]}`
+                            var full_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} - ${employee_data_list.content[x][4]}`
                             data_value5.push(full_name);
                         }
                     }
@@ -586,7 +586,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var data_last_3digit = 0;
     
         for(x=1; x < ltf_data_list.content.length; x++){
-            data_info = ltf_data_list.content[x][1];
+            data_info = ltf_data_list.content[x][0];
             
             if(data_info.includes(code_year_month) == true){
                 data_last_3digit = data_info.slice(9)
@@ -608,27 +608,26 @@ document.addEventListener('DOMContentLoaded', async function() {
         ltf_form_no.value = `${code_year_month}${data_counter}`
     
         // Search Button
-        console.log("🚀 ~ file: user7.js:613 ~ search_mtf_form_no_button.addEventListener ~ newElements_logistics:", newElements_logistics)
         search_mtf_form_no_button.addEventListener("click", () => {
             for(a=0; a<=newElements_logistics.length; a++){
                 var data_value;
-                if(search_mtf_form_no.value == mtf_data_list.content[a][1]){
+                if(search_mtf_form_no.value == mtf_data_list.content[a][0]){
                     data_value =`
-                    MTF #: ${mtf_data_list.content[a][1]}<br>
-                    CLIENT: ${mtf_data_list.content[a][2]}<br>
+                    MTF #: ${mtf_data_list.content[a][0]}<br>
+                    CLIENT: ${mtf_data_list.content[a][1]}<br>
                     TYPE OF WASTE: ${mtf_data_list.content[a][3]}<br>
-                    HAULING DATE: ${date_decoder(mtf_data_list.content[a][4])}<br>
-                    HAULING TIME: ${time_decoder(mtf_data_list.content[a][5])}<br>
-                    TYPE OF VEHICLE: ${mtf_data_list.content[a][6]}<br>
-                    REMARKS: ${mtf_data_list.content[a][7]}<br>
-                    SUBMITTED BY: ${mtf_data_list.content[a][9]}<br>
+                    HAULING DATE: ${date_decoder(mtf_data_list.content[a][3])}<br>
+                    HAULING TIME: ${time_decoder(mtf_data_list.content[a][4])}<br>
+                    TYPE OF VEHICLE: ${mtf_data_list.content[a][5]}<br>
+                    REMARKS: ${mtf_data_list.content[a][6]}<br>
+                    SUBMITTED BY: ${mtf_data_list.content[a][8]}<br>
                     `
-                    mtf_form_no.value = mtf_data_list.content[a][1];
-                    client.value = mtf_data_list.content[a][2];
-                    type_of_waste.value = mtf_data_list.content[a][3];
-                    hauling_date.value = date_decoder(mtf_data_list.content[a][4]);
-                    hauling_time.value = time_decoder(mtf_data_list.content[a][5]);
-                    weight.value = mtf_data_list.content[a][6];
+                    mtf_form_no.value = mtf_data_list.content[a][0];
+                    client.value = mtf_data_list.content[a][1];
+                    type_of_waste.value = mtf_data_list.content[a][2];
+                    hauling_date.value = date_decoder(mtf_data_list.content[a][3]);
+                    hauling_time.value = time_decoder(mtf_data_list.content[a][4]);
+                    weight.value = mtf_data_list.content[a][5];
                     ltf_data.style.display = "block";
                 }        
                 if(data_value == undefined){
@@ -653,22 +652,22 @@ document.addEventListener('DOMContentLoaded', async function() {
                 var data_value;
                 if(search_ltf_form_no.value == ltf_data_list.content[a][1]){
                     data_value =`
-                    LTF #: ${ltf_data_list.content[a][1]}<br>
-                    MTF #: ${ltf_data_list.content[a][2]}<br>
-                    CLIENT: ${ltf_data_list.content[a][3]}<br>
-                    TYPE OF WASTE: ${ltf_data_list.content[a][4]}<br>
-                    HAULING DATE: ${date_decoder(ltf_data_list.content[a][5])}<br>
-                    HAULING TIME: ${time_decoder(ltf_data_list.content[a][6])}<br>
-                    TYPE OF VEHICLE: ${ltf_data_list.content[a][7]}<br>
-                    REMARKS: ${mtf_data_list.content[a][7]}<br>
-                    SUBMITTED BY: ${mtf_data_list.content[a][9]}<br>
+                    LTF #: ${ltf_data_list.content[a][0]}<br>
+                    MTF #: ${ltf_data_list.content[a][1]}<br>
+                    CLIENT: ${ltf_data_list.content[a][2]}<br>
+                    TYPE OF WASTE: ${ltf_data_list.content[a][3]}<br>
+                    HAULING DATE: ${date_decoder(ltf_data_list.content[a][4])}<br>
+                    HAULING TIME: ${time_decoder(ltf_data_list.content[a][5])}<br>
+                    TYPE OF VEHICLE: ${ltf_data_list.content[a][6]}<br>
+                    REMARKS: ${mtf_data_list.content[a][6]}<br>
+                    SUBMITTED BY: ${mtf_data_list.content[a][8]}<br>
                     `
-                    mtf_form_no.value = mtf_data_list.content[a][1];
-                    client.value = mtf_data_list.content[a][2];
-                    type_of_waste.value = mtf_data_list.content[a][3];
-                    hauling_date.value = date_decoder(mtf_data_list.content[a][4]);
-                    hauling_time.value = time_decoder(mtf_data_list.content[a][5]);
-                    weight.value = mtf_data_list.content[a][6];
+                    mtf_form_no.value = mtf_data_list.content[a][0];
+                    client.value = mtf_data_list.content[a][1];
+                    type_of_waste.value = mtf_data_list.content[a][2];
+                    hauling_date.value = date_decoder(mtf_data_list.content[a][3]);
+                    hauling_time.value = time_decoder(mtf_data_list.content[a][4]);
+                    weight.value = mtf_data_list.content[a][5];
                     ltf_data.style.display = "block";
                 }        
                 if(data_value == undefined){
