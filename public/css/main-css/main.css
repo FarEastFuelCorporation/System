@@ -567,7 +567,7 @@ h5 {
 #new_client_form,
 #type_of_waste_list_section,
 #type_of_waste_form,
-#marketing_dashboard,
+#quotation_form,
 #logistics_travel_form,
 #vehicle_list_section,
 #new_vehicle_form,
@@ -2067,7 +2067,7 @@ section h2 {
 
 .marketing form .date_time_weight {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   gap: 20px;
   width: 100%;
 }
@@ -2104,7 +2104,8 @@ section h2 {
   display: flex;
 }
 
-.marketing form #add_item_button {
+.marketing form #add_item_button,
+.marketing form #add_tf_button {
   max-width: 60px !important;
   background-color: orangered;
   font-size: 30px;
@@ -2114,9 +2115,10 @@ section h2 {
   text-align: center;
 }
 
-.marketing form #remove_item_button {
+.marketing form #remove_item_button,
+.marketing form #remove_tf_button {
   max-width: 60px !important;
-  background-color: red;
+  background-color: orangered;
   font-size: 30px;
   font-weight: bold;
   color: white;

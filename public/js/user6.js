@@ -303,66 +303,30 @@ document.addEventListener('DOMContentLoaded', async function() {
                 mtf_data.style.display = "block";
                 
                 // type_of_waste_data
-                const search_wrapper2 = document.getElementById("search_type_of_waste");
-                const input_box2 = search_wrapper2.querySelector("input");
-                const sugg_box2 = search_wrapper2.querySelector(".autocom_box");
-                var data_value2 = [];
-                for(let y = 1; y < client_data_list.content.length; y++){
-                    if(input_box.value == client_data_list.content[y][1]){
+                const type_of_waste = document.getElementById("type_of_waste");
+                const type_of_vehicle = document.getElementById("type_of_vehicle");
+                
+                for (let y = 1; y < client_data_list.content.length; y++) {
+                    if (input_box.value == client_data_list.content[y][1]) {
                         var client_id = "";
                         client_id = client_data_list.content[y][0];
-                        console.log("🚀 ~ file: user6.js:315 ~ select ~ client_id:", client_id)
                         for (let x = 1; x < qlf_data_list.content.length; x++) {
-                            if(client_id == qlf_data_list.content[x][1]){
-                                data_value2.push(qlf_data_list.content[x][3]);
+                            if (client_id == qlf_data_list.content[x][1] && qlf_data_list.content[x][3] !== "TRANSPORTATION FEE") {
+                                var data = `
+                                <option value="${qlf_data_list.content[x][3]}">${qlf_data_list.content[x][3]}</option>
+                                `
+                                type_of_waste.insertAdjacentHTML("beforeend", data)
+                            }
+                            if (client_id == qlf_data_list.content[x][1] && qlf_data_list.content[x][3] == "TRANSPORTATION FEE") {
+                                var data = `
+                                <option value="${qlf_data_list.content[x][2]}">${qlf_data_list.content[x][2]}</option>
+                                `
+                                type_of_vehicle.insertAdjacentHTML("beforeend", data)
                             }
                         }
                     }
-                }
+                }              
 
-                input_box2.onkeyup = (e) => {
-                    let user_data = e.target.value;
-                    let empty_array = [];
-                    if (user_data) {
-                        empty_array = data_value2.filter((data) => {
-                            return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
-                        });
-                        empty_array = empty_array.map((data) => {
-                            return '<li>' + data + '</li>';
-                        });
-                        console.log(empty_array);
-                        search_wrapper2.classList.add("active");
-                        show_suggestions2(empty_array);
-                    } else {
-                        search_wrapper2.classList.remove("active");
-                    }
-                };
-            
-                sugg_box2.addEventListener("click", (e) => {
-                    if (e.target.tagName === "LI") {
-                        select2(e.target.innerHTML);
-                    }
-                });
-            
-                function select2(element) {
-                    let select_user_data = element;
-                    input_box2.value = select_user_data;
-                    console.log(input_box2.value);
-                    search_wrapper2.classList.remove("active");                
-                }
-            
-                function show_suggestions2(list) {
-                    let list_data;
-                    if (!list.length) {
-                        user_value = input_box2.value;
-                        list_data = '<li>' + user_value + '</li>';
-                    } else {
-                        list_data = list.join("");
-                    }
-                    sugg_box2.innerHTML = list_data;
-                }
-
-                    
             }
         
             function show_suggestions(list) {
@@ -435,6 +399,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             })    
         }
         typeOfWaste();
+
+
 
         const type_of_waste_list = document.getElementById("type_of_waste_list");
         const treatment_process = document.getElementById("treatment_process");
@@ -565,11 +531,17 @@ document.addEventListener('DOMContentLoaded', async function() {
         const remove_item_button_quotation_form = quotation_form.querySelector("#remove_item_button");
         const list_counter_quotation_form = quotation_form.querySelector("#list_counter");
         const list_container_quotation_form = quotation_form.querySelector("#list_container");
+        const transportation_fee_container_quotation_form = quotation_form.querySelector("#transportation_fee_container");
+        const tf_button_quotation_form = quotation_form.querySelector("#tf_button");
+        const tf_value_quotation_form = quotation_form.querySelector("#tf_value");
+        const tf_counter_quotation_form = quotation_form.querySelector("#tf_counter");
+        const add_tf_button_quotation_form = quotation_form.querySelector("#add_tf_button");
+        const remove_tf_button_quotation_form = quotation_form.querySelector("#remove_tf_button");
 
         add_item_button_quotation_form.addEventListener("click", () => {
             list_counter_quotation_form.value = parseInt(list_counter_quotation_form.value) + 1;
             var data = `
-            <div class="list_item" id="list${list_counter_quotation_form.value}" style="display: grid; grid-template-columns: 12.5% 30% 15% 15% 12.5% 15%; gap: 20px; width: calc(100% - 100px);">
+            <div class="list_item" id="list${list_counter_quotation_form.value}" style="display: grid; grid-template-columns: 17% 30% 15% 15% 10% 13%; gap: 20px; width: calc(100% - 240px);">
                 <div class="wrapper">
                     <div class="search_input" id="search_waste_code">
                         <input type="text" name="waste_code${list_counter_quotation_form.value}" id="waste_code${list_counter_quotation_form.value}" autocomplete="off" class="form-control" required placeholder="Search">
@@ -646,6 +618,191 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         });
 
+        tf_button_quotation_form.addEventListener("click", () => {
+            if(tf_value_quotation_form.value == "false"){
+                tf_counter_quotation_form.value = 1;
+                var data = `                        
+                <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 15% 10% 13%; gap: 20px; width: calc(100% - 240px);">
+                    <div class="wrapper">
+                        <label for="type_of_vehicle1">
+                        <i class="fa-solid fa-truck"></i>
+                            Type of Vehicle
+                        </label><br>
+                        <select name="type_of_vehicle1" id="type_of_vehicle1" class="form-control" required style=" height: 55px !important;">
+                            <option value="">SELECT</option>
+                            <option value="6 WHEELER CLOSED VAN">6 WHEELER CLOSED VAN</option>
+                            <option value="10 WHEELER WING VAN">10 WHEELER WING VAN</option>
+                            <option value="DUMP TRUCK">DUMP TRUCK</option>
+                            <option value="FX">FX</option>
+                            <option value="BOOM TRUCK">BOOM TRUCK</option>
+                            <option value="CRAINE">CRAINE</option>
+                        </select>
+                    </div>
+                    <div class="wrapper">
+                        <label for="transportation_fee1">
+                        <i class="fa-solid fa-list"></i>
+                            Particulars
+                        </label><br>
+                        <div class="search_input">
+                            <input type="text" name="transportation_fee1" id="transportation_fee1" autocomplete="off" class="form-control" required value="TRANSPORTATION FEE" readonly style="padding-right: 20px !important;">
+                        </div>
+                    </div>
+                    <div class="wrapper">
+                        <label for="mode1">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                            Mode
+                        </label><br>
+                        <div class="search_input">
+                            <select name="mode1" id="mode1" class="form-control" required style="height: 55px;">
+                                <option value="">SELECT</option>
+                                <option value="CHARGE">CHARGE</option>
+                                <option value="FREE OF CHARGE">FREE OF CHARGE</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="wrapper">
+                        <label for="unit1">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                            Unit
+                        </label><br>
+                        <div class="search_input">
+                            <select name="unit1" id="unit1" class="form-control" required style="height: 55px;">
+                                <option value="">SELECT</option>
+                                <option value="TRIP">TRIP</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="wrapper">
+                        <label for="unit_price1">
+                        <i class="fa-solid fa-money-bill-wave"></i>
+                            Unit Price
+                        </label><br>
+                        <div class="search_input">
+                            <input type="number" name="unit_price1" id="unit_price1" autocomplete="off" class="form-control" required placeholder="Type Price..." style="padding-right: 20px !important;">
+                        </div>
+                    </div>
+                    <div class="wrapper">
+                        <label for="vat_calculation1">
+                        <i class="fa-solid fa-calculator"></i>
+                            Vat Calculation
+                        </label><br>
+                        <div class="search_input">
+                            <select name="vat_calculation1" id="vat_calculation1" class="form-control" required style="height: 55px;">
+                                <option value="">SELECT</option>
+                                <option value="VAT INCLUSIVE">VAT INCLUSIVE</option>
+                                <option value="VAT EXCLUSIVE">VAT EXCLUSIVE</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>      
+                `
+                transportation_fee_container_quotation_form.insertAdjacentHTML("beforeend", data);
+                tf_value_quotation_form.value = "true";
+                tf_button_quotation_form.innerHTML = "WITHOUT<br>TRANSPORTATION<br>FEE";
+                add_tf_button_quotation_form.style.display = "block";
+                // Get all input elements of type "number"
+                const numberInputs = document.querySelectorAll('input[type="number"]');
+
+                // Loop through each input and set the "step" attribute
+                numberInputs.forEach(input => {
+                    input.setAttribute('step', '0.01'); // Set the desired step value
+                });
+            }
+            else{
+                tf_counter_quotation_form.value = 0;
+                const transportation_fee_container = document.querySelector("#transportation_fee_container");
+                const tf_items = transportation_fee_container.querySelectorAll(".tf_item");
+                
+                tf_items.forEach(tf_item => {
+                    transportation_fee_container.removeChild(tf_item);
+                })
+                tf_value_quotation_form.value = "false";
+                tf_button_quotation_form.innerHTML = "WITH<br>TRANSPORTATION<br>FEE";
+                add_tf_button_quotation_form.style.display = "none";
+                remove_tf_button_quotation_form.style.display = "none";
+            }
+        })
+        
+        add_tf_button_quotation_form.addEventListener("click", () => {
+            tf_counter_quotation_form.value = parseInt(tf_counter_quotation_form.value) + 1;
+            var data = `                        
+            <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 15% 10% 13%; gap: 20px; width: calc(100% - 240px);">
+                <div class="wrapper">
+                    <select name="type_of_vehicle${tf_counter_quotation_form.value}" id="type_of_vehicle${tf_counter_quotation_form.value}" class="form-control" required style=" height: 55px !important;">
+                        <option value="">SELECT</option>
+                        <option value="6 WHEELER CLOSED VAN">6 WHEELER CLOSED VAN</option>
+                        <option value="10 WHEELER WING VAN">10 WHEELER WING VAN</option>
+                        <option value="DUMP TRUCK">DUMP TRUCK</option>
+                        <option value="FX">FX</option>
+                        <option value="BOOM TRUCK">BOOM TRUCK</option>
+                        <option value="CRAINE">CRAINE</option>
+                    </select>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <input type="text" name="transportation_fee${tf_counter_quotation_form.value}" id="transportation_fee${tf_counter_quotation_form.value}" autocomplete="off" class="form-control" required value="TRANSPORTATION FEE" readonly style="padding-right: 20px !important;">
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <select name="tf_mode${tf_counter_quotation_form.value}" id="tf_mode${tf_counter_quotation_form.value}" class="form-control" required style="height: 55px;">
+                            <option value="">SELECT</option>
+                            <option value="CHARGE">CHARGE</option>
+                            <option value="FREE OF CHARGE">FREE OF CHARGE</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <select name="tf_unit${tf_counter_quotation_form.value}" id="tf_unit${tf_counter_quotation_form.value}" class="form-control" required style="height: 55px;">
+                            <option value="">SELECT</option>
+                            <option value="TRIP">TRIP</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <input type="number" name="tf_unit_price${tf_counter_quotation_form.value}" id="tf_unit_price${tf_counter_quotation_form.value}" autocomplete="off" class="form-control" required placeholder="Type Price..." style="padding-right: 20px !important;">
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <select name="tf_vat_calculation${tf_counter_quotation_form.value}" id="tf_vat_calculation${tf_counter_quotation_form.value}" class="form-control" required style="height: 55px;">
+                            <option value="">SELECT</option>
+                            <option value="VAT INCLUSIVE">VAT INCLUSIVE</option>
+                            <option value="VAT EXCLUSIVE">VAT EXCLUSIVE</option>
+                        </select>
+                    </div>
+                </div>
+            </div>      
+            `
+            transportation_fee_container_quotation_form.insertAdjacentHTML("beforeend", data);
+            tf_value_quotation_form.value = "true";
+            remove_tf_button_quotation_form.style.display = "block";
+            // Get all input elements of type "number"
+            const numberInputs = document.querySelectorAll('input[type="number"]');
+
+            // Loop through each input and set the "step" attribute
+            numberInputs.forEach(input => {
+                input.setAttribute('step', '0.01'); // Set the desired step value
+            });
+        })
+
+        remove_tf_button_quotation_form.addEventListener("click", () => {
+            const transportation_fee_container = document.querySelector("#transportation_fee_container");
+            const tf_item = transportation_fee_container.querySelectorAll(".tf_item");
+
+            const last_tf_item = tf_item[tf_item.length - 1];
+            
+            if (tf_item.length > 1) {
+                transportation_fee_container.removeChild(last_tf_item);
+                tf_counter_quotation_form.value = parseInt(tf_counter_quotation_form.value) - 1;
+                
+                if (tf_counter_quotation_form.value == 1) {
+                    remove_tf_button_quotation_form.style.display = "none";
+                }
+            }
+        });
 
         // multi section
         // purchase_request_form

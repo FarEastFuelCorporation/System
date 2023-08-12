@@ -311,29 +311,36 @@
                             </div>
                         </div><br>
                         <div id="mtf_data">
-                            <div class="wrapper">
-                                <label for="submit_to">
-                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                    Submit To
-                                </label><br>
-                                <select name="submit_to" id="submit_to" class="form-control form" required>
-                                    <option value="">Choose</option>
-                                    <option value="LOGISTICS">LOGISTICS</option>
-                                    <option value="RECEIVING">RECEIVING</option>
-                                </select>
-                            </div><br>
-                            <div class="wrapper">
-                                <label for="type_of_waste">
-                                    <i class="fa-solid fa-trash-can"></i>
-                                    Type of Waste
-                                </label><br>
-                                <div class="search_input search_input_type" id="search_type_of_waste">
-                                    <input type="text" name="type_of_waste" id="type_of_waste" autocomplete="off" class="form-control" required placeholder="Type to Search Type of Waste...">
-                                    <div class="autocom_box"></div>
-                                    <div class="icon"><i class="fas fa-search"></i></div>
-                                </div>
-                            </div><br>
                             <div class="date_time_weight">
+                                <div class="wrapper">
+                                    <label for="submit_to">
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                        Submit To
+                                    </label><br>
+                                    <select name="submit_to" id="submit_to" class="form-control" required>
+                                        <option value="">Choose</option>
+                                        <option value="LOGISTICS">LOGISTICS</option>
+                                        <option value="RECEIVING">RECEIVING</option>
+                                    </select>
+                                </div>
+                                <div class="wrapper">
+                                    <label for="type_of_waste">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                        Type of Waste
+                                    </label><br>
+                                    <select name="type_of_waste" id="type_of_waste" class="form-control">
+                                        <option value="">SELECT TYPE OF WASTE</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="type_of_vehicle">
+                                        <i class="fa-solid fa-truck"></i>
+                                        Type of Vehicle
+                                    </label>
+                                    <select name="type_of_vehicle" id="type_of_vehicle" class="form-control" required>
+                                        <option value="">SELECT TYPE OF VEHICLE</option>
+                                    </select>
+                                </div>
                                 <div>
                                     <label for="hauling_date">
                                         <i class="fa-solid fa-right-to-bracket"></i>
@@ -347,21 +354,6 @@
                                         Hauling Time
                                     </label>
                                     <input type="time" autocomplete="off" name="hauling_time" id="hauling_time" class="form-control" required><br>
-                                </div>
-                                <div>
-                                    <label for="type_of_vehicle">
-                                        <i class="fa-solid fa-truck"></i>
-                                        Type of Vehicle
-                                    </label>
-                                    <select name="type_of_vehicle" id="type_of_vehicle" class="form-control" required>
-                                        <option value="">Select</option>
-                                        <option value="6 WHEELER CLOSED VAN">6 WHEELER CLOSED VAN</option>
-                                        <option value="10 WHEELER WING VAN">10 WHEELER WING VAN</option>
-                                        <option value="DUMP TRUCK">DUMP TRUCK</option>
-                                        <option value="FX">FX</option>
-                                        <option value="BOOM TRUCK">BOOM TRUCK</option>
-                                        <option value="CRAINE">CRAINE</option>
-                                    </select>
                                 </div>
                             </div>
                             <label for="remarks">
@@ -526,16 +518,25 @@
                 <!-- quotation_form -->
             <section class="marketing" id="quotation_form">
                 <h2>QUOTATION FORM</h2><br>
-                <form  action="https://script.google.com/macros/s/AKfycbwEkmp6G_nPbgIX55Czs9pwQRqJJQBazovwT0bFcgrtkKxuLsZ5imEmX62Q5vWQSgsB4w/exec" method="post">
+                <form  action="https://script.google.com/macros/s/AKfycbwWpR-bpLtwEWHT7yn4TPMNtaVvAjAbU9J18_3WFW_4MfxCxl7mtKBOjks0zCAWNtUAKQ/exec" method="post">
                     <input type="hidden" name="user" id="user">
-                    <div style="display: grid; grid-template-columns: 15% 85%; gap: 20px; width: calc(100% - 20px);">
+                    <div style="display: grid; grid-template-columns: 15% 15% 70%; gap: 20px; width: calc(100% - 40px);">
                         <div class="wrapper">
                             <label for="quotation_no">
-                                <i class="fa-solid fa-user"></i>
+                                <i class="fa-solid fa-list-ol"></i>
                                 Quotation #
                             </label><br>
                             <div class="search_input">
                                 <input type="text" name="quotation_no" id="quotation_no" autocomplete="off" class="form-control" required placeholder="Type Quotation #" style="padding-right: 20px !important;">
+                            </div>
+                        </div>
+                        <div class="wrapper">
+                            <label for="terms">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                Terms (Days)
+                            </label><br>
+                            <div class="search_input">
+                                <input type="number" name="terms" id="terms" autocomplete="off" class="form-control" required placeholder="Type Quotation #" style="padding-right: 20px !important;">
                             </div>
                         </div>
                         <div class="wrapper">
@@ -550,13 +551,13 @@
                                 <div class="icon"><i class="fas fa-search"></i></div>
                             </div>
                         </div>
-                    </div>
+                    </div><br>
                     <div id="list_container">
                         <input type="hidden" id="list_counter" name="list_counter" value="1">
-                        <div class="list_item" id="list1"  style="display: grid; grid-template-columns: 12.5% 30% 15% 15% 12.5% 15%; gap: 20px; width: calc(100% - 100px);">
+                        <div class="list_item" id="list1"  style="display: grid; grid-template-columns: 17% 30% 15% 15% 10% 13%; gap: 20px; width: calc(100% - 240px);">
                             <div class="wrapper">
                                 <label for="waste_code1">
-                                    <i class="fa-solid fa-user"></i>
+                                    <i class="fa-solid fa-list"></i>
                                     Waste Code
                                 </label><br>
                                 <div class="search_input" id="search_waste_code">
@@ -568,7 +569,7 @@
                             </div>
                             <div class="wrapper">
                                 <label for="waste_name1">
-                                    <i class="fa-solid fa-user"></i>
+                                    <i class="fa-solid fa-trash-can"></i>
                                     Waste Name
                                 </label><br>
                                 <div class="search_input">
@@ -577,7 +578,7 @@
                             </div>
                             <div class="wrapper">
                                 <label for="mode1">
-                                    <i class="fa-solid fa-user"></i>
+                                    <i class="fa-solid fa-cart-shopping"></i>
                                     Mode
                                 </label><br>
                                 <div class="search_input">
@@ -591,7 +592,7 @@
                             </div>
                             <div class="wrapper">
                                 <label for="unit1">
-                                    <i class="fa-solid fa-user"></i>
+                                    <i class="fa-solid fa-scale-balanced"></i>
                                     Unit
                                 </label><br>
                                 <div class="search_input">
@@ -606,7 +607,7 @@
                             </div>
                             <div class="wrapper">
                                 <label for="unit_price1">
-                                    <i class="fa-solid fa-user"></i>
+                                    <i class="fa-solid fa-money-bill-wave"></i>
                                     Unit Price
                                 </label><br>
                                 <div class="search_input">
@@ -615,7 +616,7 @@
                             </div>
                             <div class="wrapper">
                                 <label for="vat_calculation1">
-                                    <i class="fa-solid fa-user"></i>
+                                    <i class="fa-solid fa-calculator"></i>
                                     Vat Calculation
                                 </label><br>
                                 <div class="search_input">
@@ -628,18 +629,112 @@
                             </div>
                         </div>
                     </div>
-                    <div class="add_item pt-3">
+                    <div class="add_item pt-3" style="top: -75px;">
                         <div class="item_buttons">
-                            <button type="button" id="add_item_button" class="form-control">
-                                <i class="fa-solid fa-plus"></i>
-                            </button>
                             <button type="button" id="remove_item_button" class="form-control">
                                 <i class="fa-solid fa-minus"></i>
                             </button>
+                            <button type="button" id="add_item_button" class="form-control">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="transportation_fee_container" style="position: relative;">
+                        <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 15% 10% 13%; gap: 20px; width: calc(100% - 240px);">
+                            <div class="wrapper">
+                                <label for="type_of_vehicle1">
+                                    <i class="fa-solid fa-truck"></i>
+                                    Type of Vehicle
+                                </label><br>
+                                <select name="type_of_vehicle1" id="type_of_vehicle1" class="form-control" required style=" height: 55px !important;">
+                                    <option value="">SELECT</option>
+                                    <option value="6 WHEELER CLOSED VAN">6 WHEELER CLOSED VAN</option>
+                                    <option value="10 WHEELER WING VAN">10 WHEELER WING VAN</option>
+                                    <option value="DUMP TRUCK">DUMP TRUCK</option>
+                                    <option value="FX">FX</option>
+                                    <option value="BOOM TRUCK">BOOM TRUCK</option>
+                                    <option value="CRAINE">CRAINE</option>
+                                </select>
+                            </div>
+                            <div class="wrapper">
+                                <label for="transportation_fee1">
+                                    <i class="fa-solid fa-list"></i>
+                                    Particulars
+                                </label><br>
+                                <div class="search_input">
+                                    <input type="text" name="transportation_fee1" id="transportation_fee1" autocomplete="off" class="form-control" required value="TRANSPORTATION FEE" readonly style="padding-right: 20px !important;">
+                                </div>
+                            </div>
+                            <div class="wrapper">
+                                <label for="tf_mode1">
+                                    <i class="fa-solid fa-cart-shopping"></i>
+                                    Mode
+                                </label><br>
+                                <div class="search_input">
+                                    <select name="tf_mode1" id="tf_mode1" class="form-control" required style="height: 55px;">
+                                        <option value="">SELECT</option>
+                                        <option value="CHARGE">CHARGE</option>
+                                        <option value="FREE OF CHARGE">FREE OF CHARGE</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="wrapper">
+                                <label for="tf_unit1">
+                                    <i class="fa-solid fa-scale-balanced"></i>
+                                    Unit
+                                </label><br>
+                                <div class="search_input">
+                                    <select name="tf_unit1" id="tf_unit1" class="form-control" required style="height: 55px;">
+                                        <option value="">SELECT</option>
+                                        <option value="TRIP">TRIP</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="wrapper">
+                                <label for="tf_unit_price1">
+                                    <i class="fa-solid fa-money-bill-wave"></i>
+                                    Unit Price
+                                </label><br>
+                                <div class="search_input">
+                                    <input type="number" name="tf_unit_price1" id="tf_unit_price1" autocomplete="off" class="form-control" required placeholder="Type Price..." style="padding-right: 20px !important;">
+                                </div>
+                            </div>
+                            <div class="wrapper">
+                                <label for="tf_vat_calculation1">
+                                    <i class="fa-solid fa-calculator"></i>
+                                    Vat Calculation
+                                </label><br>
+                                <div class="search_input">
+                                    <select name="tf_vat_calculation1" id="tf_vat_calculation1" class="form-control" required style="height: 55px;">
+                                        <option value="">SELECT</option>
+                                        <option value="VAT INCLUSIVE">VAT INCLUSIVE</option>
+                                        <option value="VAT EXCLUSIVE">VAT EXCLUSIVE</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>            
+                        <input type="hidden" id="tf_value" name="tf_value" value="true">
+                        <input type="hidden" id="tf_counter" name="tf_counter" value="1">
+                        <div class="add_item pt-3" style="position: absolute; top: 10px; right: 0px !important; width: 100px;;">
+                            <div class="item_buttons">
+                                <button type="button" id="tf_button" class="" style="padding: 5px; border-radius: 5px; font-size: 12px; color: white !important">
+                                    WITHOUT<br>TRANSPORTATION<br>FEE
+                                </button>
+                            </div>
+                        </div>
+                        <div class="add_item pt-3" style="position: absolute; top: 80px; right: 0px !important; width: 100px;;">
+                            <div class="item_buttons">
+                                <button type="button" id="remove_tf_button" class="form-control">
+                                    <i class="fa-solid fa-minus"></i>
+                                </button>
+                                <button type="button" id="add_tf_button" class="form-control">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <div class="buttons">
-                        <button type="submit" id="submit_btn" class="form-control" >
+                        <button type="submit" id="submit_btn" class="form-control">
                             Submit
                         </button>
                         <button type="reset" id="reset" class="form-control" >
