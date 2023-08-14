@@ -263,7 +263,18 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 }
                             }
                         }
-
+                        var client_name = "";
+                        for(let c = 1; c < client_data_list.content.length; c++){
+                            if(ltf_data_list.content[x][2] == client_data_list.content[c][0]){
+                                client_name = client_data_list.content[c][1];
+                            }
+                        }
+                        var waste_name = "";
+                        for(let c = 1; c < type_of_waste_data.content.length; c++){
+                            if(ltf_data_list.content[x][3] == type_of_waste_data.content[c][0]){
+                                waste_name = type_of_waste_data.content[c][1];
+                            }
+                        }
                         data_value += `
                         <tr>
                             <td>${data_value_counter}</td>
@@ -271,8 +282,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${pcv_data}</td>
                             <td>${ltf_data_list.content[x][0]}</td>
                             <td>${date_decoder(ltf_data_list.content[x][4])}<br>${time_decoder(ltf_data_list.content[x][5])}</td>
-                            <td>${ltf_data_list.content[x][2]}</td>
-                            <td>${ltf_data_list.content[x][3]}</td>
+                            <td>${client_name}</td>
+                            <td>${waste_name}</td>
                             <td>${ltf_data_list.content[x][6]}</td>
                             <td>${parseFloat(tbf_budget).toFixed(2)}</td>
                             <td>${remarks}</td>
