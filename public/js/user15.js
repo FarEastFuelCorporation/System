@@ -433,10 +433,22 @@ document.addEventListener('DOMContentLoaded', async function() {
                             }
                         });
                     }
+                    var client_name = "";
+                    for(let c = 1; c < client_data_list.content.length; c++){
+                        if(ltf_data_list.content[a][2] == client_data_list.content[c][0]){
+                            client_name = client_data_list.content[c][1];
+                        }
+                    }
+                    var waste_name = "";
+                    for(let c = 1; c < type_of_waste_data.content.length; c++){
+                        if(ltf_data_list.content[a][3] == type_of_waste_data.content[c][0]){
+                            waste_name = type_of_waste_data.content[c][1];
+                        }
+                    }
                     data_value = `
                     LTF #: ${ltf_data_list.content[a][0]}<br>
-                    CLIENT: ${ltf_data_list.content[a][2]}<br>
-                    WASTE DESCRIPTION: ${ltf_data_list.content[a][3]}<br>
+                    CLIENT: ${client_name}<br>
+                    WASTE DESCRIPTION: ${waste_name}<br>
                     HAULING DATE: ${date_decoder(ltf_data_list.content[a][4])}<br>
                     HAULING TIME: ${time_decoder(ltf_data_list.content[a][5])}<br>
                     TYPE OF VEHICLE: ${ltf_data_list.content[a][6]}<br>
@@ -444,7 +456,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     DRIVER: ${driver_name}<br>
                     TRUCK HELPER: ${truck_helper_name}<br>
                     DATE DEPARTURE: ${date_decoder(ltf_data_list.content[a][10])}<br>
-                    TIME DEPARTURE: ${time_decoder(ltf_data_list.content[a][111])}<br>
+                    TIME DEPARTURE: ${time_decoder(ltf_data_list.content[a][11])}<br>
                     REMARKS: ${ltf_data_list.content[a][12]}<br>
                     SUBMITTED BY: ${ltf_data_list.content[a][13]}<br>
                     `
@@ -584,10 +596,22 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 }
                             };   
                         }
+                        var client_name = "";
+                        for(let c = 1; c < client_data_list.content.length; c++){
+                            if(ltf_data_list.content[a][2] == client_data_list.content[c][0]){
+                                client_name = client_data_list.content[c][1];
+                            }
+                        }
+                        var waste_name = "";
+                        for(let c = 1; c < type_of_waste_data.content.length; c++){
+                            if(ltf_data_list.content[a][3] == type_of_waste_data.content[c][0]){
+                                waste_name = type_of_waste_data.content[c][1];
+                            }
+                        }
                         data_value = `
                         LTF #: ${ltf_data_list.content[a][0]}<br>
-                        CLIENT: ${ltf_data_list.content[a][2]}<br>
-                        WASTE DESCRIPTION: ${ltf_data_list.content[a][3]}<br>
+                        CLIENT: ${client_name}<br>
+                        WASTE DESCRIPTION: ${waste_name}<br>
                         HAULING DATE: ${date_decoder(ltf_data_list.content[a][4])}<br>
                         HAULING TIME: ${time_decoder(ltf_data_list.content[a][5])}<br>
                         TYPE OF VEHICLE: ${ltf_data_list.content[a][6]}<br>
@@ -1003,8 +1027,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <td>${ftf_data_list.content[x][1]}</td>
                 <td>${ftf_data_list.content[x][2]}</td>
                 <td>${formatNumber(ftf_data_list.content[x][3])}</td>
-                <td>${ftf_data_list.content[x][4]}</td>
                 <td>${ftf_data_list.content[x][5]}</td>
+                <td>${ftf_data_list.content[x][4]}</td>
             </tr>
             `
         }
