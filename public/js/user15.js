@@ -1,7 +1,9 @@
 document.addEventListener('DOMContentLoaded', async function() {
     try {
         const username_response_promise = fetch('https://script.google.com/macros/s/AKfycbwmA97K4sdfq6dhzSsp14JU9KgQrFgSARNZbvSfiU7vuH8oEipt6TmcFo_o-jCI0kiQ/exec');
+        const client_list_response_promise = fetch('https://script.google.com/macros/s/AKfycbxXnIsmgK52Ws9H2qAh47qkgZxDltFJaHSFV0e9UQRwaK1g_xwFUKGokL_hk4fq-_mhSg/exec');
         const employee_response_promise = fetch('https://script.google.com/macros/s/AKfycbwns5R6TA8U64ywbb9hwYu4LKurAjTM0Z18NYNZMt0Ft0m-_NUHYbYqblk_5KWugvt7lA/exec');
+        const type_of_waste_response_promise = fetch('https://script.google.com/macros/s/AKfycbw0yC-8_V38Zl1-KGyBwX1JmfTEW1jwyFxgpZ-oNC2lvtoAraUtkLCS27HfNbXi_l4IPg/exec');
         const ltf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxBLMvyNDsT9_dlVO4Qc31dI4ErcymUHbzKimOpCZHgbJxip2XxCl7Wk3hJyqcdtrxU/exec');
         const tbf_response_promise = fetch('https://script.google.com/macros/s/AKfycbx5g9gBi60zlkrI-GqRf7HxnVyF8ePvh1vg7ukI5ta3Kl6kQl3u54ygzuHK7irm6yt1/exec');
         const tlf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxhS8uhT-WE1BMoyk6colLF4ToDA1WN6fj7Op4Jt2PPIZW_laVvgWzN3cP1gIKMUYI7Hg/exec');
@@ -10,7 +12,9 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         const [
             username_response,
+            client_list_response,
             employee_response,
+            type_of_waste_response,
             ltf_response,
             tbf_response,
             tlf_response,
@@ -18,7 +22,9 @@ document.addEventListener('DOMContentLoaded', async function() {
             irf_response,
         ] = await Promise.all([
             username_response_promise,
+            client_list_response_promise,
             employee_response_promise,
+            type_of_waste_response_promise,
             ltf_response_promise,
             tbf_response_promise,
             tlf_response_promise,
@@ -27,7 +33,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         ]);
 
         const username_data  = await username_response.json();
+        const client_data_list  = await client_list_response.json();
         const employee_data_list  = await employee_response.json();
+        const type_of_waste_data  = await type_of_waste_response.json();
         const ltf_data_list  = await ltf_response.json();
         const tbf_data_list  = await tbf_response.json();
         const tlf_data_list  = await tlf_response.json();
@@ -153,7 +161,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 ltf_transaction_ap_accounting.push(ltf_data_list.content[i][0]);
             }
         }
-        console.log("🚀 ~ file: user15.js:154 ~ document.addEventListener ~ ltf_transaction_ap_accounting:", ltf_transaction_ap_accounting)
 
         for (let i = 1; i < tbf_data_list.content.length; i++) {
             if (!ltf_tbf_transaction_ap_accounting.includes(tbf_data_list.content[i][2])) {
@@ -195,15 +202,27 @@ document.addEventListener('DOMContentLoaded', async function() {
         var data_value_counter = 1;
         for(let y = 0; y < pending_list_ltf_ap_accounting.length; y++){
             for(let x = 1; x < ltf_data_list.content.length; x++){
-                if(pending_list_ltf_ap_accounting[y] == ltf_data_list.content[x][1]){
+                if(pending_list_ltf_ap_accounting[y] == ltf_data_list.content[x][0]){
                     if(ltf_data_list.content[x][6] == "10 WHEELER WING VAN"){
+                        var client_name = "";
+                        for(let c = 1; c < client_data_list.content.length; c++){
+                            if(ltf_data_list.content[x][2] == client_data_list.content[c][0]){
+                                client_name = client_data_list.content[c][1];
+                            }
+                        }
+                        var waste_name = "";
+                        for(let c = 1; c < type_of_waste_data.content.length; c++){
+                            if(ltf_data_list.content[x][3] == type_of_waste_data.content[c][0]){
+                                waste_name = type_of_waste_data.content[c][1];
+                            }
+                        }
                         data_value += `
                         <tr>
                             <td>${data_value_counter}</td>
                             <td>${ltf_data_list.content[x][0]}</td>
                             <td>${date_decoder(ltf_data_list.content[x][4])}<br>${time_decoder(ltf_data_list.content[x][5])}</td>
-                            <td>${ltf_data_list.content[x][2]}</td>
-                            <td>${ltf_data_list.content[x][3]}</td>
+                            <td>${client_name}</td>
+                            <td>${waste_name}</td>
                             <td>${ltf_data_list.content[x][6]}</td>
                             <td>${ltf_data_list.content[x][12]}</td>
                         </tr>
