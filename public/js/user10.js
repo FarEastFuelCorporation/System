@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const username_response_promise = fetch('https://script.google.com/macros/s/AKfycbwmA97K4sdfq6dhzSsp14JU9KgQrFgSARNZbvSfiU7vuH8oEipt6TmcFo_o-jCI0kiQ/exec');
         const vehicle_response_promise = fetch('https://script.google.com/macros/s/AKfycbw-JCnctX1x1W1ogGbrkhNdIGd9q6bYjy_nvaYeoiaBf7HreB2a1tKJZaJHw2wu4wmpcA/exec');
         const vehicle_log_response_promise = fetch('https://script.google.com/macros/s/AKfycbwOVO1qi9ac0YojlrZUh-XMYMe_gAeO2bg_wU_lSRdBkLgmJKQuzQuq41lzvSOjKfzA/exec');
+        const ftf_response_promise = fetch('https://script.google.com/macros/s/AKfycby_KPLGaMLvzccQFKwKCZVrI1mkOzVDh7cySezC_OiZW6YVOR4mC5XkNbwllOe_Ua6TGA/exec');
+        const frf_response_promise = fetch('https://script.google.com/macros/s/AKfycbz1BRgSEEjm-WwwEViGKbtqG_HodoU2O-Bw1DMySKnOytZJVtq3XmfOc4mbVhnc7Rke/exec');
         const mtf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzkzS4OVm3IfNl6KwOfLZq_uO3MnsXfu-oS5Su_1kxhfo1mMoKpYDm8a4RxWqsQh0qv/exec');
         const ltf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxBLMvyNDsT9_dlVO4Qc31dI4ErcymUHbzKimOpCZHgbJxip2XxCl7Wk3hJyqcdtrxU/exec');
         const wcf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyBFTBuFZ4PkvwmPi_3Pp_v74DCSEK2VpNy6janIGgaAK-P22wazmmShOKn6iwFbrQn/exec');
@@ -17,6 +19,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             username_response,
             vehicle_response,
             vehicle_log_response,
+            ftf_response,
+            frf_response,
             mtf_response,
             ltf_response,
             wcf_response,
@@ -30,6 +34,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             username_response_promise,
             vehicle_response_promise,
             vehicle_log_response_promise,
+            ftf_response_promise,
+            frf_response_promise,
             mtf_response_promise,
             ltf_response_promise,
             wcf_response_promise,
@@ -44,6 +50,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const username_data  = await username_response.json();
         const vehicle_data  = await vehicle_response.json();
         const vehicle_log_data  = await vehicle_log_response.json();
+        const ftf_data_list  = await ftf_response.json();
+        const frf_data_list  = await frf_response.json();
         const mtf_data_list  = await mtf_response.json();
         const ltf_data_list  = await ltf_response.json();
         const wcf_data_list  = await wcf_response.json();
@@ -61,6 +69,181 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         user_sidebar.innerHTML = `<u>${username_data.content[10][3]}</u>`;
         user_sidebar_officer.innerText = username_data.content[10][4];
+
+
+        // ap_accounting_dashboard
+        const ap_accounting_dashboard = document.querySelector("#accounting_head_dashboard");
+
+        const source_of_fund_ap_accounting = ap_accounting_dashboard.querySelector("#source_of_fund");
+        const trucking_fund_ap_accounting = ap_accounting_dashboard.querySelector("#trucking_fund");
+        const hauling_fund_ap_accounting = ap_accounting_dashboard.querySelector("#hauling_fund");
+        const diesel_fund_ap_accounting = ap_accounting_dashboard.querySelector("#diesel_fund");
+        const gasoline_fund_ap_accounting = ap_accounting_dashboard.querySelector("#gasoline_fund");
+        const scrap_sales_ap_accounting = ap_accounting_dashboard.querySelector("#scrap_sales");
+        const mold_runner_sales_ap_accounting = ap_accounting_dashboard.querySelector("#mold_runner_sales");
+        const truck_scale_collection_ap_accounting = ap_accounting_dashboard.querySelector("#truck_scale_collection");
+        const house_collection_ap_accounting = ap_accounting_dashboard.querySelector("#house_collection");
+        
+        var source_of_fund = 0;
+        var trucking_fund = 0;
+        var hauling_fund = 0;
+        var diesel_fund = 0;
+        var gasoline_fund = 0;
+        var scrap_sales = 0;
+        var mold_runner_sales = 0;
+        var truck_scale_collection = 0;
+        var house_collection = 0;
+
+        for (let i = 1; i < ftf_data_list.content.length; i++) {
+            // fund_source
+            if (ftf_data_list.content[i][1] == "SOURCE OF FUND") {
+                source_of_fund -= ftf_data_list.content[i][3]
+            }
+            else if (ftf_data_list.content[i][1] == "HAULING FUND") {
+                hauling_fund -= ftf_data_list.content[i][3]
+            }
+            else if (ftf_data_list.content[i][1] == "TRUCKING FUND") {
+                trucking_fund -= ftf_data_list.content[i][3]
+            }
+            else if (ftf_data_list.content[i][1] == "DIESEL FUND") {
+                diesel_fund -= ftf_data_list.content[i][3]
+            }
+            else if (ftf_data_list.content[i][1] == "GASOLINE FUND") {
+                gasoline_fund -= ftf_data_list.content[i][3]
+            }
+            else if (ftf_data_list.content[i][1] == "SCRAP SALES") {
+                scrap_sales -= ftf_data_list.content[i][3]
+            }
+            else if (ftf_data_list.content[i][1] == "MOLD RUNNER SALES") {
+                mold_runner_sales -= ftf_data_list.content[i][3]
+            }
+            else if (ftf_data_list.content[i][1] == "TRUCK SCALE COLLECTION") {
+                truck_scale_collection -= ftf_data_list.content[i][3]
+            }
+            else if (ftf_data_list.content[i][1] == "HOUSE COLLECTION") {
+                house_collection -= ftf_data_list.content[i][3]
+            }
+            // fund_allocation
+            if (ftf_data_list.content[i][2] == "SOURCE OF FUND") {
+                source_of_fund += ftf_data_list.content[i][3]
+            }
+            else if (ftf_data_list.content[i][2] == "HAULING FUND") {
+                hauling_fund += ftf_data_list.content[i][3]
+            }
+            else if (ftf_data_list.content[i][2] == "TRUCKING FUND") {
+                trucking_fund += ftf_data_list.content[i][3]
+            }
+            else if (ftf_data_list.content[i][2] == "DIESEL FUND") {
+                diesel_fund += ftf_data_list.content[i][3]
+            }
+            else if (ftf_data_list.content[i][2] == "GASOLINE FUND") {
+                gasoline_fund += ftf_data_list.content[i][3]
+            }
+            else if (ftf_data_list.content[i][2] == "SCRAP SALES") {
+                scrap_sales += ftf_data_list.content[i][3]
+            }
+            else if (ftf_data_list.content[i][2] == "MOLD RUNNER SALES") {
+                mold_runner_sales += ftf_data_list.content[i][3]
+            }
+            else if (ftf_data_list.content[i][2] == "TRUCK SCALE COLLECTION") {
+                truck_scale_collection += ftf_data_list.content[i][3]
+            }
+            else if (ftf_data_list.content[i][2] == "HOUSE COLLECTION") {
+                house_collection += ftf_data_list.content[i][3]
+            }
+        }
+        
+        source_of_fund_ap_accounting.innerText = formatNumber(source_of_fund);
+        trucking_fund_ap_accounting.innerText = formatNumber(trucking_fund);
+        hauling_fund_ap_accounting.innerText = formatNumber(hauling_fund);
+        diesel_fund_ap_accounting.innerText = formatNumber(diesel_fund);
+        gasoline_fund_ap_accounting.innerText = formatNumber(gasoline_fund);
+        scrap_sales_ap_accounting.innerText = formatNumber(scrap_sales);
+        mold_runner_sales_ap_accounting.innerText = formatNumber(mold_runner_sales);
+        truck_scale_collection_ap_accounting.innerText = formatNumber(truck_scale_collection);
+        house_collection_ap_accounting.innerText = formatNumber(house_collection);
+
+        const pending_list_container_ap_accounting = ap_accounting_dashboard.querySelector("#pending_list");
+        
+        let ltf_transaction_ap_accounting = []; // Variable containing existing elements
+        let ltf_tbf_transaction_ap_accounting = []; // Variable containing existing elements
+        let ltf_tlf_transaction_ap_accounting = []; // Variable containing existing elements
+        let tbf_transaction_ap_accounting = []; // Variable containing existing elements
+        let tbf_tlf_transaction_ap_accounting = []; // Variable containing existing elements
+        
+        for (let i = 1; i < ltf_data_list.content.length; i++) {
+            if (!ltf_transaction_ap_accounting.includes(ltf_data_list.content[i][0])) {
+                ltf_transaction_ap_accounting.push(ltf_data_list.content[i][0]);
+            }
+        }
+
+        // for (let i = 1; i < tbf_data_list.content.length; i++) {
+        //     if (!ltf_tbf_transaction_ap_accounting.includes(tbf_data_list.content[i][2])) {
+        //         ltf_tbf_transaction_ap_accounting.push(tbf_data_list.content[i][2]);
+        //     }
+        // }
+
+        // Get elements from sf_transaction not included in sf_tpf_transaction
+        const pending_list_ltf_ap_accounting = ltf_transaction_ap_accounting.filter((element) => !ltf_tbf_transaction_ap_accounting.includes(element));
+        
+        
+        // frf_data_list
+        const request_history_list_ap_accounting = document.querySelector("#request_history_list");
+
+        // pending_list
+        var data = "";
+        var data_value_counter = 0;
+        for(let x = 1; x < frf_data_list.content.length; x++){
+            data_value_counter += 1;
+            var button = "";
+            var button2 = "";
+            if(frf_data_list.content[x][6] == "" && frf_data_list.content[x][4] !== "DISAPPROVED"){
+                button = `
+                <form action="https://script.google.com/macros/s/AKfycbwLxz-tr9-AqWLart-lcWctEZxCUfVs69otnBBFqrZvZ25O8_k35VUb4bHL1ILmoHEp/exec" method="post">
+                    <input type="hidden" name="frf_no" id="frf_no" value="${frf_data_list.content[x][0]}">
+                    <input type="hidden" name="fund_allocation" id="fund_allocation" value="${frf_data_list.content[x][1]}">
+                    <input type="hidden" name="fund_amount" id="fund_amount" value="${frf_data_list.content[x][2]}">
+                    <input type="hidden" name="purpose" id="purpose" value="${frf_data_list.content[x][3]}">
+                    <input type="hidden" name="submitted_by" id="submitted_by" value="${frf_data_list.content[x][5]}">
+                    <input type="hidden" name="timestamp" id="timestamp" value="${frf_data_list.content[x][7]}">
+                    <button type="submit" style="background-color: black !important; padding:0; border: 1px solid black; color: #ffbf00 !important;">
+                        <i class="fa-solid fa-thumbs-up"></i>
+                    </button>
+                </form>
+                `
+            }
+            if(frf_data_list.content[x][6] == "" && frf_data_list.content[x][4] !== "DISAPPROVED"){
+                button2 = `
+                <form action="https://script.google.com/macros/s/AKfycbwOcSAmS72-z3kkaYvk0--voHrH1yxseTfho8D0A1txaMMdPgebSUCU6o5XPMdGWQzYBw/exec" method="post">
+                    <input type="hidden" name="frf_no" id="frf_no" value="${frf_data_list.content[x][0]}">
+                    <input type="hidden" name="fund_allocation" id="fund_allocation" value="${frf_data_list.content[x][1]}">
+                    <input type="hidden" name="fund_amount" id="fund_amount" value="${frf_data_list.content[x][2]}">
+                    <input type="hidden" name="purpose" id="purpose" value="${frf_data_list.content[x][3]}">
+                    <input type="hidden" name="submitted_by" id="submitted_by" value="${frf_data_list.content[x][5]}">
+                    <input type="hidden" name="timestamp" id="timestamp" value="${frf_data_list.content[x][7]}">
+                    <button type="submit" style="background-color: black !important; padding:0; border: 1px solid black; color: #ffbf00 !important;">
+                        <i class="fa-solid fa-thumbs-down"></i>
+                    </button>
+                </form>
+                `
+            }
+            data += `
+            <tr>
+                <td>${data_value_counter}</td>
+                <td>${frf_data_list.content[x][0]}</td>
+                <td>${date_decoder(frf_data_list.content[x][7])} / ${time_decoder(frf_data_list.content[x][7])}</td>
+                <td>${frf_data_list.content[x][1]}</td>
+                <td>${formatNumber(frf_data_list.content[x][2])}</td>
+                <td>${frf_data_list.content[x][3]}</td>
+                <td>${frf_data_list.content[x][4]}</td>
+                <td>${frf_data_list.content[x][5]}</td>
+                <td>${frf_data_list.content[x][6]}</td>
+                <td>${button}</td>
+                <td>${button2}</td>
+            </tr>
+            `
+        }
+        request_history_list_ap_accounting.innerHTML = data;
 
         // marketing_dashboard
         const booked_transactions_marketing = document.getElementById("booked_transactions");

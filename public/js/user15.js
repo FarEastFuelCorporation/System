@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const tbf_response_promise = fetch('https://script.google.com/macros/s/AKfycbx5g9gBi60zlkrI-GqRf7HxnVyF8ePvh1vg7ukI5ta3Kl6kQl3u54ygzuHK7irm6yt1/exec');
         const tlf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxhS8uhT-WE1BMoyk6colLF4ToDA1WN6fj7Op4Jt2PPIZW_laVvgWzN3cP1gIKMUYI7Hg/exec');
         const ftf_response_promise = fetch('https://script.google.com/macros/s/AKfycby_KPLGaMLvzccQFKwKCZVrI1mkOzVDh7cySezC_OiZW6YVOR4mC5XkNbwllOe_Ua6TGA/exec');
+        const frf_response_promise = fetch('https://script.google.com/macros/s/AKfycbz1BRgSEEjm-WwwEViGKbtqG_HodoU2O-Bw1DMySKnOytZJVtq3XmfOc4mbVhnc7Rke/exec');
         const irf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzTmhNOz5cXeKitSXAriUJ_FEahAQugYEKIRwDuFt9tjhj2AtPKEf2H4yTMmZ1igpUxlQ/exec');
 
         const [
@@ -19,6 +20,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             tbf_response,
             tlf_response,
             ftf_response,
+            frf_response,
             irf_response,
         ] = await Promise.all([
             username_response_promise,
@@ -29,6 +31,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             tbf_response_promise,
             tlf_response_promise,
             ftf_response_promise,
+            frf_response_promise,
             irf_response_promise,
         ]);
 
@@ -40,6 +43,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const tbf_data_list  = await tbf_response.json();
         const tlf_data_list  = await tlf_response.json();
         const ftf_data_list  = await ftf_response.json();
+        const frf_data_list  = await frf_response.json();
         const irf_data_list  = await irf_response.json();
 
         // Code that depends on the fetched data
@@ -878,7 +882,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         // }
 
 
-
         // FORM GENERATOR
         // ftf_data_list
         const fund_transfer_form_ap_accounting = document.querySelector("#fund_transfer_form");
@@ -891,7 +894,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const fund_allocation_amount_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_allocation_amount");
         const fund_source_amount_container_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_source_amount_container");
         const fund_allocation_amount_container_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_allocation_amount_container");
-        const history_list_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#history_list");
+        const transfer_history_list_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#transfer_history_list");
         const fund_source_other_details_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_source_other_details_container");
         const fund_allocation_other_details_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_allocation_other_details_container");
         
@@ -936,10 +939,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         fund_transfer_form_button_ap_accounting.addEventListener("click", () => {
             if(fund_transfer_form_id_ap_accounting.style.display == "block"){
                 fund_transfer_form_id_ap_accounting.style.display = "none";
-
+                fund_request_form_id_ap_accounting.style.display = "none";
             }
             else{
                 fund_transfer_form_id_ap_accounting.style.display = "block";
+                fund_request_form_id_ap_accounting.style.display = "none";
             }        
         });
 
@@ -1013,8 +1017,117 @@ document.addEventListener('DOMContentLoaded', async function() {
         
         fund_allocation_ap_accounting.addEventListener("change", function() {
             updateFundSourceAmount(fund_allocation_ap_accounting, fund_allocation_amount_container_ap_accounting, fund_allocation_amount_ap_accounting, fund_allocation_other_details_ap_accounting);
-        });      
+        });
         
+        // frf_data_list
+        const fund_request_form_button_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_request_form_button");
+        const fund_request_form_id_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_request_form_id");
+        const frf_form_no_ap_accounting = fund_request_form_id_ap_accounting.querySelector("#frf_form_no1");
+        const add_item_button2_ap_accounting = fund_request_form_id_ap_accounting.querySelector("#add_item_button");
+        const remove_item_button2_ap_accounting = fund_request_form_id_ap_accounting.querySelector("#remove_item_button");
+        const request_list_container_ap_accounting = fund_request_form_id_ap_accounting.querySelector("#request_list_container");
+        const request_list_counter_ap_accounting = fund_request_form_id_ap_accounting.querySelector("#request_list_counter");
+        const request_history_list_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#request_history_list");
+
+        var month_new;
+        var code_year_month;
+        var data_counter;
+        if(today_month.toString().length == 1){
+            month_new = `0${today_month}`
+        }
+    
+        code_year_month = `FRF${today_year}${month_new}`;
+    
+        
+        var data_content = 1;
+        var data_info;
+        var data_last_3digit = 0;
+        
+        for(x=1; x<frf_data_list.content.length; x++){
+            data_info = frf_data_list.content[x][0];
+            
+            if((String(data_info)).includes(code_year_month) == true){
+                data_last_3digit = data_info.slice(9)
+            }
+            else{}
+        }
+        
+        data_content = parseInt(data_last_3digit) +1
+    
+        if(data_content.toString().length == 1){
+            data_counter = `00${data_content}`;
+        }
+        else if(data_content.toString().length == 2){
+            data_counter = `0${data_content}`;
+        }
+        else if(data_content.toString().length == 3){
+            data_counter = `${data_content}`;
+        }
+    
+        frf_form_no_ap_accounting.value = `${code_year_month}${data_counter}`
+
+        
+        fund_request_form_button_ap_accounting.addEventListener("click", () => {
+            if(fund_request_form_id_ap_accounting.style.display == "block"){
+                fund_request_form_id_ap_accounting.style.display = "none";
+                fund_transfer_form_id_ap_accounting.style.display = "none";
+            }
+            else{
+                fund_request_form_id_ap_accounting.style.display = "block";
+                fund_transfer_form_id_ap_accounting.style.display = "none";
+            }        
+        });        
+
+        add_item_button2_ap_accounting.addEventListener("click", () => {
+            var data_counter_value = data_counter
+            data_counter_value = String(parseFloat(data_counter_value) + parseFloat(request_list_counter_ap_accounting.value)).padStart(3,"0");
+            request_list_counter_ap_accounting.value = parseFloat(request_list_counter_ap_accounting.value) + 1
+            var data = `
+            <div id="request_list${request_list_counter_ap_accounting.value}" class="d-flex gap-4">
+                <div>
+                    <div class="ap_form">
+                        <div class="form">
+                            <input type="text" id="frf_form_no${request_list_counter_ap_accounting.value}" name="frf_form_no${request_list_counter_ap_accounting.value}" class="form-control"  autocomplete="off" value="${code_year_month}${data_counter_value}">
+                        </div>
+                    </div>
+                </div>
+                <div style="width: 30%;">
+                    <select name="fund_allocation${request_list_counter_ap_accounting.value}" id="fund_allocation${request_list_counter_ap_accounting.value}" class="form-control" required>
+                        <option value="">SELECT FUND ALLOCATION</option>
+                        <option value="SOURCE OF FUND">SOURCE OF FUND</option>
+                        <option value="TRUCKING FUND">TRUCKING FUND</option>
+                        <option value="HAULING FUND">HAULING FUND</option>
+                        <option value="DIESEL FUND">DIESEL FUND</option>
+                        <option value="GASOLINE FUND">GASOLINE FUND</option>
+                        <option value="SCRAP SALES">SCRAP SALES</option>
+                        <option value="MOLD RUNNER SALES">MOLD RUNNER SALES</option>
+                        <option value="TRUCK SCALE COLLECTION">TRUCK SCALE COLLECTION</option>
+                        <option value="HOUSE COLLECTION">HOUSE COLLECTION</option>
+                    </select>
+                </div>
+                <div style="width: 20%;">
+                    <input type="number" id="fund_amount${request_list_counter_ap_accounting.value}" name="fund_amount${request_list_counter_ap_accounting.value}" class="form-control"  autocomplete="off" placeholder="Input Fund Amount" required>
+                </div>
+                <div style="width: 40%;">
+                    <input type="text" id="purpose${request_list_counter_ap_accounting.value}" name="purpose${request_list_counter_ap_accounting.value}" class="form-control" autocomplete="off" required>
+                </div>
+            </div>
+            `
+            remove_item_button2_ap_accounting.style.display = "block";
+            request_list_container_ap_accounting.insertAdjacentHTML("beforeend", data);
+        });
+
+        remove_item_button2_ap_accounting.addEventListener("click", () => {
+            // Find the last added particular container
+            const last_request_list = document.querySelector(`#request_list${request_list_counter_ap_accounting.value}`);
+            
+            last_request_list.remove();
+            request_list_counter_ap_accounting.value = parseFloat(request_list_counter_ap_accounting.value) - 1;
+            if(request_list_counter_ap_accounting.value == 1){
+                remove_item_button2_ap_accounting.style.display = "none";
+            }
+        });
+
         var data = "";
         var data_value_counter = 0;
         for(let x = 1; x < ftf_data_list.content.length; x++){
@@ -1032,7 +1145,27 @@ document.addEventListener('DOMContentLoaded', async function() {
             </tr>
             `
         }
-        history_list_ap_accounting.innerHTML = data;
+        transfer_history_list_ap_accounting.innerHTML = data;
+
+        var data = "";
+        var data_value_counter = 0;
+        for(let x = 1; x < frf_data_list.content.length; x++){
+            data_value_counter += 1;
+            data += `
+            <tr>
+                <td>${data_value_counter}</td>
+                <td>${frf_data_list.content[x][0]}</td>
+                <td>${date_decoder(frf_data_list.content[x][7])} / ${time_decoder(frf_data_list.content[x][7])}</td>
+                <td>${frf_data_list.content[x][1]}</td>
+                <td>${formatNumber(frf_data_list.content[x][2])}</td>
+                <td>${frf_data_list.content[x][3]}</td>
+                <td>${frf_data_list.content[x][4]}</td>
+                <td>${frf_data_list.content[x][5]}</td>
+                <td>${frf_data_list.content[x][6]}</td>
+            </tr>
+            `
+        }
+        request_history_list_ap_accounting.innerHTML = data;
 
         // // incident_history_list
         // var incident_history_data_value = "";

@@ -31,13 +31,13 @@
                 <li>
                     <a href="#">
                         <i class="fa-solid fa-clipboard-list"></i>
-                        Trip Forms
+                        Tripping Transactiom
                     </a>
                 </li>
                 <li>
                     <a href="#">
                         <i class="fa-solid fa-money-bill-transfer"></i>
-                        Fund Transfer
+                        Fund Transaction
                     </a>
                 </li>
                 <li>
@@ -220,7 +220,7 @@
             <!-- trip_forms -->
             <section class="ap_accounting" id="trip_forms">
                 <div class="section_container">
-                    <h2>TRIP FORMS</h2><br>
+                    <h2>TRIPPING TRANSACTION</h2><br>
                     <label class="d-flex gap-3">
                         <button type="button" id="budget_form_button" class="form-control fw-bold fs-3 text-white">
                             TRIP BUDGET FORM
@@ -231,7 +231,7 @@
                     </label><br>
                     <form id="budget_form" action="https://script.google.com/macros/s/AKfycbzNuKSJA0WkYa9nFFKE4j_ysIlrjLnjf0Q5qfeXSxxG5ork4B5P7H0z2P_mUCbNx98B/exec" method="post">
                         <input type="hidden" name="user" id="user">
-                        <h2>TRIP  BUDGET FORM</h2><br>
+                        <h2>TRIP BUDGET FORM</h2><br>
                         <div class="ap_form">
                             <div>
                                 <label for="search_ltf_form_no">
@@ -681,13 +681,17 @@
             <!-- fund_transfer_form -->
             <section class="ap_accounting" id="fund_transfer_form">
                 <div class="section_container">
-                    <h2>FUND TRANSFER</h2><br>
+                    <h2>FUND TRANSACTION</h2><br>
                     <label class="d-flex gap-3">
-                        <button type="button" id="fund_transfer_form_button" class="form-control fw-bold fs-3 me-3 text-white" style="width: 50%;">
+                        <button type="button" id="fund_transfer_form_button" class="form-control fw-bold fs-3 text-white">
                             FUND TRANSFER FORM
+                        </button>
+                        <button type="button" id="fund_request_form_button" class="form-control fw-bold fs-3">
+                            FUND REQUEST FORM
                         </button>
                     </label><br>
                     <form id="fund_transfer_form_id" action="https://script.google.com/macros/s/AKfycbxHfbg0rtgLUrDNdXDvh03a3iofuqtESL8ElAvDab2Jx1Sct0N4LFJOmiCZLBk0zkMg/exec" method="post">
+                        <h2>FUND TRANSFER FORM</h2><br>
                         <input type="hidden" name="user" id="user">
                         <div class="ap_form">
                             <div>
@@ -786,8 +790,77 @@
                             </button>
                         </div><br>
                     </form>
+                    <form id="fund_request_form_id" action="https://script.google.com/macros/s/AKfycbw0y3GStEXT3ZRPRrGGXrkXxFmwQx7GEb-ND-C2CAPCyBjLKPMGO3EHr0JGZn8rLl63wA/exec" method="post">
+                        <h2>FUND REQUEST FORM</h2><br>
+                        <input type="hidden" name="user" id="user">
+                        <div class="ap_form">
+
+                        </div>
+                        <input type="hidden" name="request_list_counter" id="request_list_counter" value="1">
+                        <div id="request_list_container">
+                            <div id="request_list1" class="d-flex gap-4">
+                                <div>
+                                    <label for="frf_form_no1">
+                                        FRF #
+                                    </label><br>
+                                    <div class="ap_form">
+                                        <div class="form">
+                                            <input type="text" id="frf_form_no1" name="frf_form_no1" class="form-control"  autocomplete="off" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="width: 30%;">
+                                    <label for="fund_allocation1">
+                                        Fund Allocation
+                                    </label><br>
+                                    <select name="fund_allocation1" id="fund_allocation1" class="form-control" required>
+                                        <option value="">SELECT FUND ALLOCATION</option>
+                                        <option value="SOURCE OF FUND">SOURCE OF FUND</option>
+                                        <option value="TRUCKING FUND">TRUCKING FUND</option>
+                                        <option value="HAULING FUND">HAULING FUND</option>
+                                        <option value="DIESEL FUND">DIESEL FUND</option>
+                                        <option value="GASOLINE FUND">GASOLINE FUND</option>
+                                        <option value="SCRAP SALES">SCRAP SALES</option>
+                                        <option value="MOLD RUNNER SALES">MOLD RUNNER SALES</option>
+                                        <option value="TRUCK SCALE COLLECTION">TRUCK SCALE COLLECTION</option>
+                                        <option value="HOUSE COLLECTION">HOUSE COLLECTION</option>
+                                    </select>
+                                </div>
+                                <div style="width: 20%;">
+                                    <label for="fund_amount1">
+                                        Fund Allocation Amount
+                                    </label><br>
+                                    <input type="number" id="fund_amount1" name="fund_amount1" class="form-control"  autocomplete="off" placeholder="Input Fund Amount" required>
+                                </div>
+                                <div style="width: 40%;">
+                                    <label for="purpose1">
+                                        Purpose
+                                    </label><br>
+                                    <input type="text" id="purpose1" name="purpose1" class="form-control" autocomplete="off" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="add_item" id="add_particulars">
+                            <div class="item_buttons">
+                                <button type="button" id="remove_item_button" class="form-control">
+                                    <i class="fa-solid fa-minus"></i>
+                                </button>
+                                <button type="button" id="add_item_button" class="form-control">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="buttons" id="fund_transfer_form_buttons">
+                            <button type="submit" id="submit_btn" class="form-control" >
+                                Submit
+                            </button>
+                            <button type="reset" id="reset" class="form-control" >
+                                Clear
+                            </button>
+                        </div><br>
+                    </form>
                     <div>
-                        <h2>FUND TRANSACTION HISTORY LIST</h2>
+                        <h2>FUND TRANSFER HISTORY LIST</h2>
                         <div class="card" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
                             <div class="list">
                                 <table>
@@ -801,7 +874,31 @@
                                         <th>SUBMITTED BY</th>
                                         <th>REMARKS</th>
                                     </thead>
-                                    <tbody id="history_list">
+                                    <tbody id="transfer_history_list">
+        
+                                    </tbody>
+                                </table>
+                                <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                            </div>
+                        </div><br>
+                    </div>
+                    <div>
+                        <h2>FUND REQUEST HISTORY LIST</h2>
+                        <div class="card" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
+                            <div class="list">
+                                <table>
+                                    <thead style="position: sticky; top: 0; background-color: black;">
+                                        <th>#</th>
+                                        <th>FRF #</th>
+                                        <th>TRANSACTION<br>DATE/TIME</th>
+                                        <th>FUND ALLOCATION</th>
+                                        <th>FUND AMOUNT</th>
+                                        <th>PURPOSE</th>
+                                        <th>STATUS</th>
+                                        <th>SUBMITTED BY</th>
+                                        <th>APPROVED BY</th>
+                                    </thead>
+                                    <tbody id="request_history_list">
         
                                     </tbody>
                                 </table>
