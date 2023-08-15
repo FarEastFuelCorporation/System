@@ -171,10 +171,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                     client_name = client_data_list.content[c][1];
                 }
             }
+            var waste_code = "";
             var waste_name = "";
             for(let c = 1; c < type_of_waste_data.content.length; c++){
                 if(mtf_data_list.content[j][2] == type_of_waste_data.content[c][0]){
-                    waste_name = type_of_waste_data.content[c][1];
+                    waste_code = type_of_waste_data.content[c][1];
+                    waste_name = type_of_waste_data.content[c][2];
                 }
             }
             data_value +=`
@@ -183,6 +185,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <td>${mtf_data_list.content[j][0]}</td>
                 <td>${date_decoder(mtf_data_list.content[j][3])} /<br> ${time_decoder(mtf_data_list.content[j][4])}</td>
                 <td>${client_name}</td>
+                <td>${waste_code}</td>
                 <td>${waste_name}</td>
                 <td>${mtf_data_list.content[j][5]}</td>
                 <td>${mtf_data_list.content[j][7]}</td>

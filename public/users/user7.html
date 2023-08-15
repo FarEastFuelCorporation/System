@@ -191,6 +191,7 @@
                                 <th>MTF #</th>
                                 <th>HAULING<br>DATE/TIME</th>
                                 <th>CLIENT</th>
+                                <th>WASTE CODE</th>
                                 <th>WASTE DESCRIPTION</th>
                                 <th>TYPE OF VEHICLE</th>
                                 <th>REMARKS</th>
@@ -211,6 +212,7 @@
                                 <th>LTF #</th>
                                 <th>DEPARTURE<br>DATE/TIME</th>
                                 <th>CLIENT</th>
+                                <th>WASTE CODE</th>
                                 <th>WASTE DESCRIPTION</th>
                                 <th>PLATE #</th>
                                 <th>DRIVER</th>
@@ -228,7 +230,7 @@
             <!-- LOGISTICS TRAVEL FORM -->
             <section class="logistic" id="logistics_travel_form">
                 <h2>LOGISTICS TRAVEL FORM</h2><br>
-                <form id="form_id" action="https://script.google.com/macros/s/AKfycbw3Xxpk7NxOxEQ5ybOoTQgfpj1qgoAG_iQ9OEK_hKlyDSmdJTqIcVswTcYklCgI9TgG/exec" method="post">
+                <form id="form_id" action="https://script.google.com/macros/s/AKfycbxLeTXKgFMkIDVvQZ0g7NYleUgoTUDt5MFTMgZE0yYmy4a4ixVVh4m9wRSkvRzP4BcD/exec" method="post">
                     <input type="hidden" name="user" id="user">
                     <input type="hidden" name="mtf_form_no" id="mtf_form_no">
                     <input type="hidden" name="client" id="client">
@@ -237,6 +239,7 @@
                     <input type="hidden" name="hauling_time" id="hauling_time">
                     <input type="hidden" name="weight" id="weight">
                     <input type="hidden" name="status" id="status" value="ON HAUL">
+                    <input type="hidden" name="timestamp" id="timestamp">
                     <div class="ltf_form">
                         <div>
                             <label for="ltf_form_no">
@@ -322,11 +325,11 @@
                             </div>
                             <div class="add_item pt-3">
                                 <div class="item_buttons">
-                                    <button type="button" id="add_item_button" class="form-control">
-                                        <i class="fa-solid fa-plus"></i>
-                                    </button>
                                     <button type="button" id="remove_item_button" class="form-control">
                                         <i class="fa-solid fa-minus"></i>
+                                    </button>
+                                    <button type="button" id="add_item_button" class="form-control">
+                                        <i class="fa-solid fa-plus"></i>
                                     </button>
                                 </div>
                             </div>

@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             var button3 = "";
             if(frf_data_list.content[x][6] == "" && frf_data_list.content[x][4] !== "DISAPPROVED"){
                 button = `
-                <form action="https://script.google.com/macros/s/AKfycbxv5Lkh055DcVNMmRlzVjq9gBQozoWWdJczffw4UbHuxsaJiJ7-93gRzhzZ5ZXn-Ln4/exec" method="post">
+                <form action="https://script.google.com/macros/s/AKfycbwi5iYRP9xlinY9nS9YBRW7Alex9LdImCWhKBda6VtrIiDmPvH72AUlW-CgEPNwJCg/exec" method="post">
                     <input type="hidden" name="frf_no" id="frf_no" value="${frf_data_list.content[x][0]}">
                     <input type="hidden" name="fund_allocation" id="fund_allocation" value="${frf_data_list.content[x][1]}">
                     <input type="hidden" name="fund_amount" id="fund_amount" value="${frf_data_list.content[x][2]}">
@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             if(frf_data_list.content[x][6] == "" && frf_data_list.content[x][4] !== "DISAPPROVED"){
                 button2 = `
-                <form action="https://script.google.com/macros/s/AKfycbzq-UG0qBDytOpODyfXMWVKEPYyKHKlfBkqTOm2Aje_JiYeSicB4i6aoxE97Zc9MSyTSQ/exec" method="post">
+                <form action="https://script.google.com/macros/s/AKfycbxCslZRsZ7jPalRSArbABHIQmJk3OUx4VqXHjaXJNrlK-45XuId3fwShBhkA0S0XNPt/exec" method="post">
                     <input type="hidden" name="frf_no" id="frf_no" value="${frf_data_list.content[x][0]}">
                     <input type="hidden" name="fund_allocation" id="fund_allocation" value="${frf_data_list.content[x][1]}">
                     <input type="hidden" name="fund_amount" id="fund_amount" value="${frf_data_list.content[x][2]}">

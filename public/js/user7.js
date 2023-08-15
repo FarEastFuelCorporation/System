@@ -125,10 +125,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 client_name = client_data_list.content[c][1];
                             }
                         }
+                        var waste_code = "";
                         var waste_name = "";
                         for(let c = 1; c < type_of_waste_data.content.length; c++){
                             if(mtf_data_list.content[j][2] == type_of_waste_data.content[c][0]){
-                                waste_name = type_of_waste_data.content[c][1];
+                                waste_code = type_of_waste_data.content[c][1];
+                                waste_name = type_of_waste_data.content[c][2];
                             }
                         }
                         data_value +=`
@@ -137,6 +139,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td>${mtf_data_list.content[j][0]}</td>
                         <td>${date_decoder(mtf_data_list.content[j][3])}<br>${time_decoder(mtf_data_list.content[j][4])}</td>
                         <td>${client_name}</td>
+                        <td>${waste_code}</td>
                         <td>${waste_name}</td>
                         <td>${mtf_data_list.content[j][5]}</td>
                         <td>${mtf_data_list.content[j][6]}</td>
@@ -172,10 +175,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                             client_name = client_data_list.content[c][1];
                         }
                     }
+                    var waste_code = "";
                     var waste_name = "";
                     for(let c = 1; c < type_of_waste_data.content.length; c++){
                         if(ltf_data_list.content[j][3] == type_of_waste_data.content[c][0]){
-                            waste_name = type_of_waste_data.content[c][1];
+                            waste_code = type_of_waste_data.content[c][1];
+                            waste_name = type_of_waste_data.content[c][2];
                         }
                     }
                     data3_value +=`
@@ -184,6 +189,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <td>${ltf_data_list.content[j][0]}</td>
                     <td>${date_decoder(ltf_data_list.content[j][10])}<br>${time_decoder(ltf_data_list.content[j][11])}</td>
                     <td>${client_name}</td>
+                    <td>${waste_code}</td>
                     <td>${waste_name}</td>
                     <td>${ltf_data_list.content[j][7]}</td>
                     <td>${driver_name}</td>
@@ -208,13 +214,28 @@ document.addEventListener('DOMContentLoaded', async function() {
                             }
                         }
                     }
+                    var client_name = "";
+                    for(let c = 1; c < client_data_list.content.length; c++){
+                        if(ltf_data_list.content[j][2] == client_data_list.content[c][0]){
+                            client_name = client_data_list.content[c][1];
+                        }
+                    }
+                    var waste_code = "";
+                    var waste_name = "";
+                    for(let c = 1; c < type_of_waste_data.content.length; c++){
+                        if(ltf_data_list.content[j][3] == type_of_waste_data.content[c][0]){
+                            waste_code = type_of_waste_data.content[c][1];
+                            waste_name = type_of_waste_data.content[c][2];
+                        }
+                    }
                     data3_value +=`
                     <tr>
                     <td>${data_value3_counter}</td>
                     <td>${ltf_data_list.content[j][0]}</td>
                     <td>${date_decoder(ltf_data_list.content[j][10])}<br>${time_decoder(ltf_data_list.content[j][11])}</td>
-                    <td>${ltf_data_list.content[j][2]}</td>
-                    <td>${ltf_data_list.content[j][3]}</td>
+                    <td>${client_name}</td>
+                    <td>${waste_code}</td>
+                    <td>${waste_name}</td>
                     <td>${ltf_data_list.content[j][7]}</td>
                     <td>${driver_name}</td>
                     <td>${date_decoder(wcf_data_list.content[j][10])}<br>${time_decoder(wcf_data_list.content[j][11])}</td>
@@ -566,6 +587,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const hauling_date = document.getElementById("hauling_date");
         const hauling_time = document.getElementById("hauling_time");
         const weight = document.getElementById("weight");
+        const timestamp = document.getElementById("timestamp");
         const ltf_data = document.getElementById("ltf_data");
         const today = new Date();
         const today_year = today.getFullYear();
@@ -609,81 +631,125 @@ document.addEventListener('DOMContentLoaded', async function() {
     
         // Search Button
         search_mtf_form_no_button.addEventListener("click", () => {
-            for(a=0; a<=newElements_logistics.length; a++){
-                var data_value;
-                if(search_mtf_form_no.value == mtf_data_list.content[a][0]){
-                    data_value =`
-                    MTF #: ${mtf_data_list.content[a][0]}<br>
-                    CLIENT: ${mtf_data_list.content[a][1]}<br>
-                    TYPE OF WASTE: ${mtf_data_list.content[a][3]}<br>
-                    HAULING DATE: ${date_decoder(mtf_data_list.content[a][3])}<br>
-                    HAULING TIME: ${time_decoder(mtf_data_list.content[a][4])}<br>
-                    TYPE OF VEHICLE: ${mtf_data_list.content[a][5]}<br>
-                    REMARKS: ${mtf_data_list.content[a][6]}<br>
-                    SUBMITTED BY: ${mtf_data_list.content[a][8]}<br>
-                    `
-                    mtf_form_no.value = mtf_data_list.content[a][0];
-                    client.value = mtf_data_list.content[a][1];
-                    type_of_waste.value = mtf_data_list.content[a][2];
-                    hauling_date.value = date_decoder(mtf_data_list.content[a][3]);
-                    hauling_time.value = time_decoder(mtf_data_list.content[a][4]);
-                    weight.value = mtf_data_list.content[a][5];
-                    ltf_data.style.display = "block";
-                }        
-                if(data_value == undefined){
-                    search_mtf_result.innerHTML = `
-                    <div class="search_ltf_result">
-                    <h2>INFORMATION</h2>
-                    No Data Found
-                    </div><br>`            
-                }
-                else{
-                    search_mtf_result.innerHTML = `
-                    <div class="search_ltf_result">
-                    <h2>INFORMATION</h2>
-                    ${data_value}
-                    </div><br>`
-                }
+            for(b=0; b<=newElements_logistics.length; b++){
+                for(a=1; a < mtf_data_list.content.length; a++){
+                    if(newElements_logistics[b] == mtf_data_list.content[a][0]){
+                        var data_value;
+                        if(search_mtf_form_no.value == mtf_data_list.content[a][0]){
+                            var client_name = "";
+                            for(let c = 1; c < client_data_list.content.length; c++){
+                                if(mtf_data_list.content[a][1] == client_data_list.content[c][0]){
+                                    client_name = client_data_list.content[c][1];
+                                }
+                            }
+                            var waste_id = "";
+                            var waste_code = "";
+                            var waste_name = "";
+                            for(let c = 1; c < type_of_waste_data.content.length; c++){
+                                if(mtf_data_list.content[a][2] == type_of_waste_data.content[c][0]){
+                                    waste_id = type_of_waste_data.content[c][0];
+                                    waste_code = type_of_waste_data.content[c][1];
+                                    waste_name = type_of_waste_data.content[c][2];
+                                }
+                            }
+                            data_value =`
+                            MTF #: ${mtf_data_list.content[a][0]}<br>
+                            CLIENT: ${client_name}<br>
+                            WASTE CODE: ${waste_code}<br>
+                            WASTE DESCRIPTION: ${waste_name}<br>
+                            HAULING DATE: ${date_decoder(mtf_data_list.content[a][3])}<br>
+                            HAULING TIME: ${time_decoder(mtf_data_list.content[a][4])}<br>
+                            TYPE OF VEHICLE: ${mtf_data_list.content[a][5]}<br>
+                            REMARKS: ${mtf_data_list.content[a][6]}<br>
+                            SUBMITTED BY: ${mtf_data_list.content[a][8]}<br>
+                            `
+                            mtf_form_no.value = mtf_data_list.content[a][0];
+                            client.value = client_name;
+                            type_of_waste.value = waste_id;
+                            hauling_date.value = date_decoder(mtf_data_list.content[a][3]);
+                            hauling_time.value = time_decoder(mtf_data_list.content[a][4]);
+                            weight.value = mtf_data_list.content[a][5];
+                            ltf_data.style.display = "block";
+                        }        
+                        if(data_value == undefined){
+                            search_mtf_result.innerHTML = `
+                            <div class="search_ltf_result">
+                            <h2>INFORMATION</h2>
+                            No Data Found
+                            </div><br>`            
+                        }
+                        else{
+                            search_mtf_result.innerHTML = `
+                            <div class="search_ltf_result">
+                            <h2>INFORMATION</h2>
+                            ${data_value}
+                            </div><br>`
+                        }
+                    }  
+                }  
             }  
         });
-
+        
         search_ltf_form_no_button.addEventListener("click", () => {
-            for(a=0; a<=newElements2_logistics.length; a++){
-                var data_value;
-                if(search_ltf_form_no.value == ltf_data_list.content[a][1]){
-                    data_value =`
-                    LTF #: ${ltf_data_list.content[a][0]}<br>
-                    MTF #: ${ltf_data_list.content[a][1]}<br>
-                    CLIENT: ${ltf_data_list.content[a][2]}<br>
-                    TYPE OF WASTE: ${ltf_data_list.content[a][3]}<br>
-                    HAULING DATE: ${date_decoder(ltf_data_list.content[a][4])}<br>
-                    HAULING TIME: ${time_decoder(ltf_data_list.content[a][5])}<br>
-                    TYPE OF VEHICLE: ${ltf_data_list.content[a][6]}<br>
-                    REMARKS: ${mtf_data_list.content[a][6]}<br>
-                    SUBMITTED BY: ${mtf_data_list.content[a][8]}<br>
-                    `
-                    mtf_form_no.value = mtf_data_list.content[a][0];
-                    client.value = mtf_data_list.content[a][1];
-                    type_of_waste.value = mtf_data_list.content[a][2];
-                    hauling_date.value = date_decoder(mtf_data_list.content[a][3]);
-                    hauling_time.value = time_decoder(mtf_data_list.content[a][4]);
-                    weight.value = mtf_data_list.content[a][5];
-                    ltf_data.style.display = "block";
-                }        
-                if(data_value == undefined){
-                    search_mtf_result.innerHTML = `
-                    <div class="search_ltf_result">
-                    <h2>INFORMATION</h2>
-                    No Data Found
-                    </div><br>`            
-                }
-                else{
-                    search_mtf_result.innerHTML = `
-                    <div class="search_ltf_result">
-                    <h2>INFORMATION</h2>
-                    ${data_value}
-                    </div><br>`
-                }
+            console.log("pass")
+            for(b=0; b<=newElements2_logistics.length; b++){
+                for(a=1; a < ltf_data_list.content.length; a++){
+                    if(newElements2_logistics[b] == ltf_data_list.content[a][0]){
+                        var data_value;
+                        if(search_ltf_form_no.value == ltf_data_list.content[a][0]){
+                            var client_name = "";
+                            for(let c = 1; c < client_data_list.content.length; c++){
+                                if(ltf_data_list.content[a][2] == client_data_list.content[c][0]){
+                                    client_name = client_data_list.content[c][1];
+                                }
+                            }
+                            var waste_id = "";
+                            var waste_code = "";
+                            var waste_name = "";
+                            for(let c = 1; c < type_of_waste_data.content.length; c++){
+                                if(ltf_data_list.content[a][3] == type_of_waste_data.content[c][0]){
+                                    waste_id = type_of_waste_data.content[c][0];
+                                    waste_code = type_of_waste_data.content[c][1];
+                                    waste_name = type_of_waste_data.content[c][2];
+                                }
+                            }
+                            data_value =`
+                            LTF #: ${ltf_data_list.content[a][0]}<br>
+                            MTF #: ${ltf_data_list.content[a][1]}<br>
+                            CLIENT: ${client_name}<br>
+                            WASTE CODE: ${waste_code}<br>
+                            WASTE DESCRIPTION: ${waste_name}<br>
+                            HAULING DATE: ${date_decoder(ltf_data_list.content[a][4])}<br>
+                            HAULING TIME: ${time_decoder(ltf_data_list.content[a][5])}<br>
+                            TYPE OF VEHICLE: ${ltf_data_list.content[a][6]}<br>
+                            REMARKS: ${ltf_data_list.content[a][12]}<br>
+                            SUBMITTED BY: ${ltf_data_list.content[a][13]}<br>
+                            `
+                            mtf_form_no.value = ltf_data_list.content[a][1];
+                            client.value = client_name;
+                            type_of_waste.value = waste_id;
+                            hauling_date.value = date_decoder(ltf_data_list.content[a][4]);
+                            hauling_time.value = time_decoder(ltf_data_list.content[a][5]);
+                            weight.value = ltf_data_list.content[a][6];
+                            timestamp.value = ltf_data_list.content[a][14];
+                            ltf_data.style.display = "block";
+                        }        
+                        if(data_value == undefined){
+                            search_mtf_result.innerHTML = `
+                            <div class="search_ltf_result">
+                            <h2>INFORMATION</h2>
+                            No Data Found
+                            </div><br>`            
+                        }
+                        else{
+                            search_mtf_result.innerHTML = `
+                            <div class="search_ltf_result">
+                            <h2>INFORMATION</h2>
+                            ${data_value}
+                            </div><br>`
+                        }
+                    }  
+                }  
             }  
         });
     
