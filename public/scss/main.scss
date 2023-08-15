@@ -590,8 +590,8 @@ h5{
 #attendance_form,
 #employee_form,
 #purchase_order_form,
-#trip_forms,
 #ap_accounting_dashboard,
+#fund_transfer_form,
 #purchase_request_form,
 #incident_report_form,
 #settingsSection,
@@ -4227,14 +4227,14 @@ input:disabled {
 .ap_accounting #budget_form_buttons,
 .ap_accounting #liquidation_form_inputs,
 .ap_accounting #liquidation_list,
-// .ap_accounting #add_item_button,
+.ap_accounting #add_item_button,
 .ap_accounting #liquidation_form_buttons,
 .ap_accounting #fund_source_other_details_container,
 .ap_accounting #fund_allocation_other_details_container,
 .ap_accounting #fund_transfer_form_id,
-// .ap_accounting #fund_request_form_id,
-.ap_accounting #amount_tab,
-.ap_accounting #payroll_tab
+.ap_accounting #fund_request_form_id,
+.ap_accounting #amount_tab
+// .ap_accounting #payroll_tab
 {
     display: none;
 }

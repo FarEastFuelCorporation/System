@@ -3308,6 +3308,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const update_time_out_schedule = update_record_form.querySelector("#time_out_schedule");
         const update_date_resignation = update_record_form.querySelector("#date_resignation");
         const reason_resignation = update_record_form.querySelector("#reason_resignation");
+        const timestamp = update_record_form.querySelector("#timestamp");
         new_spouse_name_container.style.display = "none";
 
         new_employee_button.addEventListener("click", () => {
@@ -3388,6 +3389,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 update_time_out_schedule.value = formatTimeToInputValue(employee_data_list.content[a][37]);
                 update_date_resignation.value = employee_data_list.content[a][38];
                 reason_resignation.value = formatDateToInputValue(employee_data_list.content[a][39]);        
+                timestamp.value = formatDateToInputValue(employee_data_list.content[a][40]);        
             }
             update_details.style.display = "block";
             if(update_gender.value == "MALE"){

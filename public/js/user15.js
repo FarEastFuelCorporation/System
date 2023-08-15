@@ -276,7 +276,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         var waste_name = "";
                         for(let c = 1; c < type_of_waste_data.content.length; c++){
                             if(ltf_data_list.content[x][3] == type_of_waste_data.content[c][0]){
-                                waste_name = type_of_waste_data.content[c][1];
+                                waste_name = type_of_waste_data.content[c][2];
                             }
                         }
                         data_value += `
@@ -609,7 +609,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         var waste_name = "";
                         for(let c = 1; c < type_of_waste_data.content.length; c++){
                             if(ltf_data_list.content[a][3] == type_of_waste_data.content[c][0]){
-                                waste_name = type_of_waste_data.content[c][1];
+                                waste_name = type_of_waste_data.content[c][2];
                             }
                         }
                         data_value = `
@@ -757,28 +757,34 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         })
 
-        var employee_array = [];
-        var tlf_transaction_ap_accounting = [];
-
-        for(let y = 1; y < tlf_data_list.content.length; y++){
-            if (!tlf_transaction_ap_accounting.includes(tlf_data_list.content[y][4])) {
-                tlf_transaction_ap_accounting.push(tlf_data_list.content[y][4]);
+        
+        generate_payslip_button_ap_accounting.addEventListener("click", () => {
+            var payslip_form_data = "";
+            var employee_array = [];
+            var tlf_transaction_ap_accounting = [];
+    
+            for(let y = 1; y < tlf_data_list.content.length; y++){
+                for(let y = 1; y < tlf_data_list.content.length; y++){
+                    console.log(getWeekNumber(date_decoder(tlf_data_list.content[y][7])))
+                    if( search_year_ap_accounting.value == getYearFromDate(date_decoder(tlf_data_list.content[y][7])) &&
+                    search_week_number_ap_accounting.value == getWeekNumber(date_decoder(tlf_data_list.content[y][7]))){
+                        if (!tlf_transaction_ap_accounting.includes(tlf_data_list.content[y][4])) {
+                            tlf_transaction_ap_accounting.push(tlf_data_list.content[y][4]);
+                        }
+                    }   
+                }
             }
-        }
-
-        for(let z = 0; z < tlf_transaction_ap_accounting.length; z++){
-            for(let x = 1; x < employee_data_list.content.length; x++){
-                if(tlf_transaction_ap_accounting[z] == employee_data_list.content[x][0]){
-                    if (!employee_array.includes(employee_data_list.content[x][0])) {
-                        employee_array.push(employee_data_list.content[x][0]);
+            for(let z = 0; z < tlf_transaction_ap_accounting.length; z++){
+                for(let x = 1; x < employee_data_list.content.length; x++){
+                    if(tlf_transaction_ap_accounting[z] == employee_data_list.content[x][0]){
+                        if (!employee_array.includes(employee_data_list.content[x][0])) {
+                            employee_array.push(employee_data_list.content[x][0]);
+                        }
                     }
                 }
             }
-        }
-        
-        var payslip_form_data = "";
-        generate_payslip_button_ap_accounting.addEventListener("click", () => {
             for(let z = 0; z < employee_array.length; z++){
+                var ltf_data = [];
                 var name = "";
                 var department = "";
                 var designation = "";
@@ -791,6 +797,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                         search_week_number_ap_accounting.value == getWeekNumber(date_decoder(tlf_data_list.content[y][7]))){
                         date = getWeekDates(date_decoder(tlf_data_list.content[y][7]));
                         pay_date = date_decoder(pay_date_ap_accounting.value);
+                        if (!ltf_data.includes(tlf_data_list.content[x][3])) {
+                            ltf_data.push(tlf_data_list.content[x][3]);
+                        }
                     }
                 }
                 for(let x = 1; x < employee_data_list.content.length; x++){
@@ -808,7 +817,33 @@ document.addEventListener('DOMContentLoaded', async function() {
                         tin_id = employee_data_list.content[x][19];
                     }
                 }
-                
+                var client_id = [];
+                var date_of_haul = [];
+                var plate_no = [];
+                var employee_designation = [];
+                for(let y = 0; y < ltf_data.length; y++){
+                    for(let x = 1; x < ltf_data_list.content.length; x++){
+                        if(ltf_data[y] == ltf_data_list.content[x][0]){
+                            client_id.push(ltf_data_list.content[x][2]);
+                            date_of_haul.push(date_decoder(ltf_data_list.content[x][4]));
+                            plate_no.push(ltf_data_list.content[x][7]);
+                            if(employee_array[z] == ltf_data_list.content[x][8]){
+                                employee_designation.push("DRIVER");
+                            }
+                            else{
+                                employee_designation.push("TRUCK HELPER");
+                            }
+                        }
+                    }
+                }
+                var client_distance = [];
+                for(let y = 0; y < client_id.length; y++){
+                    for(let x = 1; x < client_data_list.content.length; x++){
+                        if(client_id[y] == client_data_list.content[x][0]){
+                            client_distance.push(client_data_list.content[x][6]);
+                        }
+                    }
+                }
                 payslip_form_data += `                                
                 <div id="payslip_form">
                     <div class="payslip">
@@ -851,6 +886,23 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <div class="summary_details_header">
                                 <h3 class="bold">BREAKDOWN</h3>
                             </div>
+                            <div class="summary_details_details">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>DATE OF HAUL</th>
+                                        <th>VEHICLE<br>PLATE #</th>
+                                        <th>CLIENT NAME</th>
+                                        <th>DISTANCE</th>
+                                        <th>RATE</th>
+                                        <th>MEAL<br>ALLOWANCE</th>
+                                        <th>ADDITIONAL<br>RATE</th>
+                                        <th>ADVANCE<br>SALARY</th>
+                                        <th>NET PAY</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                         </div>
                     </div>
                     <hr>
@@ -860,26 +912,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             payslip_container_ap_accounting.innerHTML = payslip_form_data;
         })
 
-        // var payslip_form_data ="";
-        // for(let d = 0; d < employee_array.length; d++){
-        //     for(let e = 1; e < tlf_data_list.content.length; e++){
-        //         if(employee_array[d] == tlf_data_list.content[e][3] && search_year.value == payroll_summary_data_list.content[e][1] && search_week_number.value == payroll_summary_data_list.content[e][2]){
-        //             var department = "";
-        //             var designation = "";
-        //             var tin_id = "";
-        //             var type_of_employee = "";
-        //             for(let f =1; f < employee_data_list.content.length; f++){
-        //                 if(payslip_employee_id[d] == employee_data_list.content[f][1]){
-        //                     department = employee_data_list.content[f][32];
-        //                     designation = employee_data_list.content[f][33];
-        //                     tin_id = employee_data_list.content[f][20];
-        //                     type_of_employee = employee_data_list.content[f][29];
-        //                 }
-        //             }
-
-        //         }
-        //     }
-        // }
 
 
         // FORM GENERATOR
