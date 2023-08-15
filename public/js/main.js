@@ -73,6 +73,47 @@ function time_decoder(timestamp) {
   return timeString;
 }
 
+function time_decoder2(timestamp) {
+  const date = new Date(timestamp);
+
+  // Add the timezone offset to the timestamp
+  date.setUTCHours(date.getUTCHours() + 8);
+  // date.setUTCMinutes(date.getUTCMinutes() + 23);
+
+  // Retrieve the hour and minute components
+  var hours = date.getUTCHours();
+  var minutes = date.getUTCMinutes();
+  var minutes_set = 0;
+
+  if (minutes >= 0 && minutes <= 22) {
+    // Code to be executed if minutes is between 0 and 22
+    if(hours >= 0 && minutes <= 22){
+      hours = parseInt(hours);
+      minutes_set = parseInt(minutes);  
+    } else {
+      hours = parseInt(hours);
+      minutes_set = parseInt(minutes);  
+    }
+  } else {
+    minutes_set = parseInt(minutes);
+  }
+  // Determine AM or PM
+  var period = hours >= 12 ? 'PM' : 'AM';
+
+  // Convert to 12-hour format
+  if(hours == 24){
+    hours = 12;
+    period = "AM";
+  } else{
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+
+  }
+  // Format the time string
+  const timeString = hours.toString().padStart(2, '0') + ':' + minutes_set.toString().padStart(2, '0') + ' ' + period;
+  return timeString;
+}
+
 function convertTo24HourFormat(timeStr) {
   // Split the time string into hour, minute, and AM/PM components
   const [time, amPm] = timeStr.split(' ');

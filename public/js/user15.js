@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <tr>
                             <td>${data_value_counter}</td>
                             <td>${ltf_data_list.content[x][0]}</td>
-                            <td>${date_decoder(ltf_data_list.content[x][4])}<br>${time_decoder(ltf_data_list.content[x][5])}</td>
+                            <td>${date_decoder(ltf_data_list.content[x][4])}<br>${time_decoder2(ltf_data_list.content[x][5])}</td>
                             <td>${client_name}</td>
                             <td>${waste_name}</td>
                             <td>${ltf_data_list.content[x][6]}</td>
@@ -285,7 +285,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${tbf_data}</td>
                             <td>${pcv_data}</td>
                             <td>${ltf_data_list.content[x][0]}</td>
-                            <td>${date_decoder(ltf_data_list.content[x][4])}<br>${time_decoder(ltf_data_list.content[x][5])}</td>
+                            <td>${date_decoder(ltf_data_list.content[x][4])}<br>${time_decoder2(ltf_data_list.content[x][5])}</td>
                             <td>${client_name}</td>
                             <td>${waste_name}</td>
                             <td>${ltf_data_list.content[x][6]}</td>
@@ -454,13 +454,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                     CLIENT: ${client_name}<br>
                     WASTE DESCRIPTION: ${waste_name}<br>
                     HAULING DATE: ${date_decoder(ltf_data_list.content[a][4])}<br>
-                    HAULING TIME: ${time_decoder(ltf_data_list.content[a][5])}<br>
+                    HAULING TIME: ${time_decoder2(ltf_data_list.content[a][5])}<br>
                     TYPE OF VEHICLE: ${ltf_data_list.content[a][6]}<br>
                     PLATE #: ${ltf_data_list.content[a][7]}<br>
                     DRIVER: ${driver_name}<br>
                     TRUCK HELPER: ${truck_helper_name}<br>
                     DATE DEPARTURE: ${date_decoder(ltf_data_list.content[a][10])}<br>
-                    TIME DEPARTURE: ${time_decoder(ltf_data_list.content[a][11])}<br>
+                    TIME DEPARTURE: ${time_decoder2(ltf_data_list.content[a][11])}<br>
                     REMARKS: ${ltf_data_list.content[a][12]}<br>
                     SUBMITTED BY: ${ltf_data_list.content[a][13]}<br>
                     `
@@ -617,13 +617,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                         CLIENT: ${client_name}<br>
                         WASTE DESCRIPTION: ${waste_name}<br>
                         HAULING DATE: ${date_decoder(ltf_data_list.content[a][4])}<br>
-                        HAULING TIME: ${time_decoder(ltf_data_list.content[a][5])}<br>
+                        HAULING TIME: ${time_decoder2(ltf_data_list.content[a][5])}<br>
                         TYPE OF VEHICLE: ${ltf_data_list.content[a][6]}<br>
                         PLATE #: ${ltf_data_list.content[a][7]}<br>
                         DRIVER: ${driver_name}<br>
                         TRUCK HELPER: ${truck_helper_name_list}<br>
                         DATE DEPARTURE: ${date_decoder(ltf_data_list.content[a][10])}<br>
-                        TIME DEPARTURE: ${time_decoder(ltf_data_list.content[a][11])}<br>
+                        TIME DEPARTURE: ${time_decoder2(ltf_data_list.content[a][11])}<br>
                         REMARKS: ${ltf_data_list.content[a][12]}<br>
                         SUBMITTED BY: ${ltf_data_list.content[a][13]}<br>
                         RELEASED BUDGET: ${parseFloat(released_budget).toFixed(2)}<br>
@@ -1136,7 +1136,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             <tr>
                 <td>${data_value_counter}</td>
                 <td>${ftf_data_list.content[x][0]}</td>
-                <td>${date_decoder(ftf_data_list.content[x][6])} / ${time_decoder(ftf_data_list.content[x][6])}</td>
+                <td>${date_decoder(ftf_data_list.content[x][6])} / ${time_decoder2(ftf_data_list.content[x][6])}</td>
                 <td>${ftf_data_list.content[x][1]}</td>
                 <td>${ftf_data_list.content[x][2]}</td>
                 <td>${formatNumber(ftf_data_list.content[x][3])}</td>
@@ -1151,17 +1151,29 @@ document.addEventListener('DOMContentLoaded', async function() {
         var data_value_counter = 0;
         for(let x = 1; x < frf_data_list.content.length; x++){
             data_value_counter += 1;
+            var approved_date = "";
+            var approved_time = "";
+            var duration = "";
+            if(frf_data_list.content[x][9] !== ""){
+                approved_date = date_decoder(frf_data_list.content[x][9]);
+                approved_time = time_decoder2(frf_data_list.content[x][9]);
+                duration = calculateTravelTime(date_decoder(frf_data_list.content[x][8]),time_decoder2(frf_data_list.content[x][8]),date_decoder(frf_data_list.content[x][9]),time_decoder2(frf_data_list.content[x][9]))
+            }
+
             data += `
             <tr>
                 <td>${data_value_counter}</td>
                 <td>${frf_data_list.content[x][0]}</td>
-                <td>${date_decoder(frf_data_list.content[x][7])} / ${time_decoder(frf_data_list.content[x][7])}</td>
+                <td>${date_decoder(frf_data_list.content[x][8])}<br>${time_decoder2(frf_data_list.content[x][8])}</td>
                 <td>${frf_data_list.content[x][1]}</td>
                 <td>${formatNumber(frf_data_list.content[x][2])}</td>
                 <td>${frf_data_list.content[x][3]}</td>
-                <td>${frf_data_list.content[x][4]}</td>
                 <td>${frf_data_list.content[x][5]}</td>
-                <td>${frf_data_list.content[x][6]}</td>
+                <td>${formatNumber(frf_data_list.content[x][6])}</td>
+                <td>${frf_data_list.content[x][7]}</td>
+                <td>${approved_date}<br>${approved_time}</td>
+                <td>${duration}</td>
+                <td>${frf_data_list.content[x][4]}</td>
             </tr>
             `
         }
@@ -1175,13 +1187,13 @@ document.addEventListener('DOMContentLoaded', async function() {
         //     <tr>
         //         <td>${incident_history_data_value_counter}</td>
         //         <td>${irf_data_list.content[x][1]}</td>
-        //         <td>${date_decoder(irf_data_list.content[x][6])} /<br> ${time_decoder(irf_data_list.content[x][7])}</td>
+        //         <td>${date_decoder(irf_data_list.content[x][6])} /<br> ${time_decoder2(irf_data_list.content[x][7])}</td>
         //         <td>${irf_data_list.content[x][3]}</td>
         //         <td>${irf_data_list.content[x][2]}</td>
         //         <td>${irf_data_list.content[x][4]}</td>
         //         <td>${irf_data_list.content[x][8]}</td>
-        //         <td>${date_decoder(irf_data_list.content[x][9])} /<br> ${time_decoder(irf_data_list.content[x][10])}</td>
-        //         <td>${calculateTravelTime(date_decoder(irf_data_list.content[x][6]),time_decoder(irf_data_list.content[x][7]),date_decoder(irf_data_list.content[x][9]),time_decoder(irf_data_list.content[x][10]))}</td>
+        //         <td>${date_decoder(irf_data_list.content[x][9])} /<br> ${time_decoder2(irf_data_list.content[x][10])}</td>
+        //         <td>${calculateTravelTime(date_decoder(irf_data_list.content[x][6]),time_decoder2(irf_data_list.content[x][7]),date_decoder(irf_data_list.content[x][9]),time_decoder2(irf_data_list.content[x][10]))}</td>
         //     </tr>
         //     `
         //     incident_history_data_value_counter += 1;

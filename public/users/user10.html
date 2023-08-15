@@ -176,20 +176,23 @@
                         </div>
                     </div>
                 </div><br>
-                <h2>PENDING FUND REQUEST</h2>
+                <h2>FUND REQUEST HISTORY</h2>
                 <div class="card" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
                     <div class="list">
                         <table>
                             <thead style="position: sticky; top: 0; background-color: black;">
                                 <th>#</th>
                                 <th>FRF #</th>
-                                <th>TRANSACTION<br>DATE/TIME</th>
-                                <th>FUND ALLOCATION</th>
-                                <th>FUND AMOUNT</th>
+                                <th>REQUESTED<br>DATE/TIME</th>
+                                <th>FUND<br>ALLOCATION</th>
+                                <th>REQUESTED<br>AMOUNT</th>
                                 <th>PURPOSE</th>
-                                <th>STATUS</th>
-                                <th>SUBMITTED BY</th>
+                                <th>REQUESTED BY</th>
+                                <th>APPROVED AMOUNT</th>
                                 <th>APPROVED BY</th>
+                                <th>APPROVED<br>DATE/TIME</th>
+                                <th>DURATTON</th>
+                                <th>STATUS</th>
                             </thead>
                             <tbody id="request_history_list">
 
@@ -198,6 +201,49 @@
                         <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
                     </div>
                 </div><br>
+                <form action="https://script.google.com/macros/s/AKfycbzU8cpd70_cg8zE7Z2t0QH6LT5SoQNQ8P7miwpffLc_V3KyGL_7LJtULxrsO-GseCP9/exec" method="post"
+                    id="amount_tab" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2; width: 450px; height: auto; background-color: black; border: 3px solid #ffbf00; border-radius: 10px; padding: 30px;">
+                    <h2 style="color: white !important;">ADJUST FUND AMOUNT</h2>
+                    <label style="color: white !important;">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        FRF #
+                    </label>
+                    <input type="text" class="form-control" name="frf_no" id="frf_no" readonly style="border: 3px solid #ffbf00 !important;">
+                    <label style="color: white !important;">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        FUND ALLOCATION
+                    </label>
+                    <input type="text" class="form-control" name="fund_allocation" id="fund_allocation" readonly style="border: 3px solid #ffbf00 !important;">
+                    <label style="color: white !important;">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        REQUESTED AMOUNT
+                    </label>
+                    <input type="number" class="form-control" name="fund_amount" id="fund_amount" readonly style="border: 3px solid #ffbf00 !important;">
+                    <label style="color: white !important;">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        PURPOSE
+                    </label>
+                    <input type="text" class="form-control" name="purpose" id="purpose" readonly style="border: 3px solid #ffbf00 !important;">
+                    <label style="color: white !important;">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        REQUESTED BY
+                    </label>
+                    <input type="text" class="form-control" name="submitted_by" id="submitted_by" readonly style="border: 3px solid #ffbf00 !important;">
+                    <label style="color: white !important;">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        APPROVED AMOUNT
+                    </label>
+                    <input type="number" class="form-control" name="approved_amount" id="approved_amount" required placeholder="Input Approved Amount" style="border: 3px solid #ffbf00 !important;">
+                    <input type="hidden" name="timestamp" id="timestamp">
+                    <div style="display: flex; justify-content: center;">
+                        <button type="submit" style="background-color: #ffbf00 !important; color: black !important; border-radius: 10px; padding: 0 10px; margin-top: 10px;">
+                            SUBMIT
+                        </button>
+                    </div>
+                    <button type="button" id="close_button" style="position: absolute; top: 5px; right: 5px; background-color: transparent !important; border: 3px solid transparent !important;">
+                        <i class="fa-solid fa-rectangle-xmark" style="color: #ff0000;"></i>
+                    </button>
+                </form>
                 <!-- <h2>INCIDENT HISTORY LIST</h2>
                 <div class="card" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
                     <div class="list">

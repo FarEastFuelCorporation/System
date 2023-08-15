@@ -116,23 +116,32 @@
                 </button>
             </div>
             <!-- dashboard -->
-            <section class="accounting_head" id="accounting_head_dashboard">
+            <section class="marketing" id="marketing_dashboard">
                 <h2>DASHBOARD</h2><br>
-                <h2>FUND SUMMARY</h2>
+                <h2>TRANSACTION SUMMARY</h2>
                 <div class="cards">
                     <div class="card">
                         <div class="card-content">
-                            <div class="number" id="source_of_fund"></div>
-                            <div class="card-name">Source of Fund</div>
+                            <div class="number" id="booked_transactions"></div>
+                            <div class="card-name">Booked Transactions</div>
                         </div>
                         <div class="icon-box">
-                            <i class="fa-solid fa-sack-dollar"></i>
+                            <i class="fa-solid fa-book-bookmark"></i>
                         </div>
                     </div>
                     <div class="card">
                         <div class="card-content">
-                            <div class="number" id="trucking_fund"></div>
-                            <div class="card-name">Trucking Fund</div>
+                            <div class="number" id="pending"></div>
+                            <div class="card-name">Pending</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-clipboard-list"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="on_hauling"></div>
+                            <div class="card-name">On Hauling</div>
                         </div>
                         <div class="icon-box">
                             <i class="fa-solid fa-truck"></i>
@@ -140,82 +149,84 @@
                     </div>
                     <div class="card">
                         <div class="card-content">
-                            <div class="number" id="hauling_fund"></div>
-                            <div class="card-name">Hauling Fund</div>
+                            <div class="number" id="received"></div>
+                            <div class="card-name">Received</div>
                         </div>
                         <div class="icon-box">
-                            <i class="fa-solid fa-truck-ramp-box"></i>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-content">
-                            <div class="number" id="diesel_fund"></div>
-                            <div class="card-name">Diesel Fund</div>
-                        </div>
-                        <div class="icon-box">
-                            <i class="fa-solid fa-gas-pump"></i>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-content">
-                            <div class="number" id="gasoline_fund"></div>
-                            <div class="card-name">Gasoline Fund</div>
-                        </div>
-                        <div class="icon-box">
-                            <i class="fa-solid fa-gas-pump"></i>
+                            <i class="fa-solid fa-clipboard-check"></i>
                         </div>
                     </div>
                 </div><br>
-                <div class="cards">
-                    <div class="card">
-                        <div class="card-content">
-                            <div class="number" id="scrap_sales"></div>
-                            <div class="card-name">Scrap Sales</div>
-                        </div>
-                        <div class="icon-box">
-                            <i class="fa-solid fa-money-bill-wave"></i>
+                <div class="cards2">
+                    <div class="cards5">
+                        <h2 class="m-0">TO LOGISTICS</h2>
+                        <div class="cards3">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="number" id="for_logistics_pending"></div>
+                                    <div class="card-name">Pending</div>
+                                </div>
+                                <div class="icon-box">
+                                    <i class="fa-solid fa-clipboard-list"></i>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="number" id="for_logistics_on_haul"></div>
+                                    <div class="card-name">On Hauling</div>
+                                </div>
+                                <div class="icon-box">
+                                    <i class="fa-solid fa-truck"></i>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="number" id="for_logistics_received"></div>
+                                    <div class="card-name">Received</div>
+                                </div>
+                                <div class="icon-box">
+                                    <i class="fa-solid fa-clipboard-check"></i>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-content">
-                            <div class="number" id="mold_runner_sales"></div>
-                            <div class="card-name">Mold Runner Sales</div>
-                        </div>
-                        <div class="icon-box">
-                            <i class="fa-solid fa-money-bill-wave"></i>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-content">
-                            <div class="number" id="truck_scale_collection"></div>
-                            <div class="card-name">Truck Scale Collection</div>
-                        </div>
-                        <div class="icon-box">
-                            <i class="fa-solid fa-scale-balanced"></i>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-content">
-                            <div class="number" id="house_collection"></div>
-                            <div class="card-name">House Collection</div>
-                        </div>
-                        <div class="icon-box">
-                            <i class="fa-solid fa-house-chimney-user"></i>
+                    <div class="cards5">
+                        <h2 class="m-0">TO RECEIVING</h2>
+                        <div class="cards4">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="number" id="for_receiving_pending"></div>
+                                    <div class="card-name">Pending</div>
+                                </div>
+                                <div class="icon-box">
+                                    <i class="fa-solid fa-clipboard-list"></i>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="number" id="for_receiving_received"></div>
+                                    <div class="card-name">Received</div>
+                                </div>
+                                <div class="icon-box">
+                                    <i class="fa-solid fa-clipboard-check"></i>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div><br>
-                <h2>PENDING TRIP BUDGET LIST</h2>
+                <h2>BOOKED TRANSACTION LIST</h2>
                 <div class="card" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
                     <div class="list">
                         <table>
                             <thead style="position: sticky; top: 0; background-color: black;">
                                 <th>#</th>
-                                <th>LTF #</th>
+                                <th>MTF #</th>
                                 <th>HAULING<br>DATE/TIME</th>
                                 <th>CLIENT</th>
                                 <th>WASTE DESCRIPTION</th>
                                 <th>TYPE OF VEHICLE</th>
-                                <th>REMARKS</th>
+                                <th>TO</th>
+                                <th>STATUS</th>
                             </thead>
                             <tbody id="pending_list">
 
@@ -224,7 +235,7 @@
                         <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
                     </div>
                 </div><br>
-                <!-- <h2>INCIDENT HISTORY LIST</h2>
+                <h2>INCIDENT HISTORY LIST</h2>
                 <div class="card" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
                     <div class="list">
                         <table>
@@ -245,7 +256,7 @@
                         </table>
                         <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
                     </div>
-                </div><br> -->
+                </div><br>
             </section>
             <!-- MARKETING TRANSACTION FORM -->
             <section class="marketing" id="marketing_transaction_form">

@@ -197,15 +197,16 @@ document.addEventListener('DOMContentLoaded', async function() {
             data_value_counter += 1;
             var button = "";
             var button2 = "";
+            var button3 = "";
             if(frf_data_list.content[x][6] == "" && frf_data_list.content[x][4] !== "DISAPPROVED"){
                 button = `
-                <form action="https://script.google.com/macros/s/AKfycbwLxz-tr9-AqWLart-lcWctEZxCUfVs69otnBBFqrZvZ25O8_k35VUb4bHL1ILmoHEp/exec" method="post">
+                <form action="https://script.google.com/macros/s/AKfycbxv5Lkh055DcVNMmRlzVjq9gBQozoWWdJczffw4UbHuxsaJiJ7-93gRzhzZ5ZXn-Ln4/exec" method="post">
                     <input type="hidden" name="frf_no" id="frf_no" value="${frf_data_list.content[x][0]}">
                     <input type="hidden" name="fund_allocation" id="fund_allocation" value="${frf_data_list.content[x][1]}">
                     <input type="hidden" name="fund_amount" id="fund_amount" value="${frf_data_list.content[x][2]}">
                     <input type="hidden" name="purpose" id="purpose" value="${frf_data_list.content[x][3]}">
                     <input type="hidden" name="submitted_by" id="submitted_by" value="${frf_data_list.content[x][5]}">
-                    <input type="hidden" name="timestamp" id="timestamp" value="${frf_data_list.content[x][7]}">
+                    <input type="hidden" name="timestamp" id="timestamp" value="${frf_data_list.content[x][8]}">
                     <button type="submit" style="background-color: black !important; padding:0; border: 1px solid black; color: #ffbf00 !important;">
                         <i class="fa-solid fa-thumbs-up"></i>
                     </button>
@@ -214,36 +215,93 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             if(frf_data_list.content[x][6] == "" && frf_data_list.content[x][4] !== "DISAPPROVED"){
                 button2 = `
-                <form action="https://script.google.com/macros/s/AKfycbwOcSAmS72-z3kkaYvk0--voHrH1yxseTfho8D0A1txaMMdPgebSUCU6o5XPMdGWQzYBw/exec" method="post">
+                <form action="https://script.google.com/macros/s/AKfycbzq-UG0qBDytOpODyfXMWVKEPYyKHKlfBkqTOm2Aje_JiYeSicB4i6aoxE97Zc9MSyTSQ/exec" method="post">
                     <input type="hidden" name="frf_no" id="frf_no" value="${frf_data_list.content[x][0]}">
                     <input type="hidden" name="fund_allocation" id="fund_allocation" value="${frf_data_list.content[x][1]}">
                     <input type="hidden" name="fund_amount" id="fund_amount" value="${frf_data_list.content[x][2]}">
                     <input type="hidden" name="purpose" id="purpose" value="${frf_data_list.content[x][3]}">
                     <input type="hidden" name="submitted_by" id="submitted_by" value="${frf_data_list.content[x][5]}">
-                    <input type="hidden" name="timestamp" id="timestamp" value="${frf_data_list.content[x][7]}">
+                    <input type="hidden" name="timestamp" id="timestamp" value="${frf_data_list.content[x][8]}">
                     <button type="submit" style="background-color: black !important; padding:0; border: 1px solid black; color: #ffbf00 !important;">
                         <i class="fa-solid fa-thumbs-down"></i>
                     </button>
                 </form>
                 `
             }
+            if(frf_data_list.content[x][6] == "" && frf_data_list.content[x][4] !== "DISAPPROVED"){
+                button3 = `
+                <button type="button" id="amount_tab_button" style="background-color: black !important; padding:0; border: 1px solid black; color: #ffbf00 !important;">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    <input type="hidden" name="frf_no" id="frf_no" value="${frf_data_list.content[x][0]}">
+                </button>
+                `
+            }
+            var approved_date = "";
+            var approved_time = "";
+            var duration = "";
+            if(frf_data_list.content[x][9] !== ""){
+                approved_date = date_decoder(frf_data_list.content[x][9]);
+                approved_time = time_decoder2(frf_data_list.content[x][9]);
+                duration = calculateTravelTime(date_decoder(frf_data_list.content[x][8]),time_decoder2(frf_data_list.content[x][8]),date_decoder(frf_data_list.content[x][9]),time_decoder2(frf_data_list.content[x][9]))
+            }
+
             data += `
             <tr>
                 <td>${data_value_counter}</td>
                 <td>${frf_data_list.content[x][0]}</td>
-                <td>${date_decoder(frf_data_list.content[x][7])} / ${time_decoder(frf_data_list.content[x][7])}</td>
+                <td>${date_decoder(frf_data_list.content[x][8])}<br>${time_decoder2(frf_data_list.content[x][8])}</td>
                 <td>${frf_data_list.content[x][1]}</td>
                 <td>${formatNumber(frf_data_list.content[x][2])}</td>
                 <td>${frf_data_list.content[x][3]}</td>
-                <td>${frf_data_list.content[x][4]}</td>
                 <td>${frf_data_list.content[x][5]}</td>
-                <td>${frf_data_list.content[x][6]}</td>
+                <td>${formatNumber(frf_data_list.content[x][6])}</td>
+                <td>${frf_data_list.content[x][7]}</td>
+                <td>${approved_date}<br>${approved_time}</td>
+                <td>${duration}</td>
+                <td>${frf_data_list.content[x][4]}</td>
                 <td>${button}</td>
-                <td>${button2}</td>
+                <td class="px-0">${button2}</td>
+                <td>${button3}</td>
             </tr>
             `
         }
         request_history_list_ap_accounting.innerHTML = data;
+
+        const amount_tab_buttons = document.querySelectorAll("#amount_tab_button");
+        const amount_tab = document.getElementById("amount_tab");
+        const frf_no =  amount_tab.querySelector("#frf_no");
+        const fund_allocation =  amount_tab.querySelector("#fund_allocation");
+        const fund_amount =  amount_tab.querySelector("#fund_amount");
+        const purpose =  amount_tab.querySelector("#purpose");
+        const submitted_by =  amount_tab.querySelector("#submitted_by");
+        const timestamp =  amount_tab.querySelector("#timestamp");
+        const close_button =  amount_tab.querySelector("#close_button");
+
+        amount_tab_buttons.forEach(amount_tab_button => {
+            amount_tab_button.addEventListener("click", () => {
+                if(amount_tab.style.display == "block"){
+                    amount_tab.style.display = "none";
+                }
+                else{
+                    amount_tab.style.display = "block";
+                }
+                const input_value = amount_tab_button.querySelector("input");
+                for(let x = 1; x < frf_data_list.content.length; x++){
+                    if(input_value.value == frf_data_list.content[x][0]){
+                        frf_no.value = frf_data_list.content[x][0]
+                        fund_allocation.value = frf_data_list.content[x][1]
+                        console.log("🚀 ~ file: user10.js:283 ~ amount_tab_button.addEventListener ~ fund_allocation.value:", fund_allocation.value)
+                        fund_amount.value = frf_data_list.content[x][2]
+                        purpose.value = frf_data_list.content[x][3]
+                        submitted_by.value = frf_data_list.content[x][5]
+                        timestamp.value = frf_data_list.content[x][8]
+                    }
+                }
+            })
+            close_button.addEventListener("click", () => {
+                amount_tab.style.display = "none";
+            })
+        })
 
         // marketing_dashboard
         const booked_transactions_marketing = document.getElementById("booked_transactions");
@@ -354,7 +412,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             <tr>
                 <td>${data_value_counter}</td>
                 <td>${mtf_data_list.content[j][1]}</td>
-                <td>${date_decoder(mtf_data_list.content[j][4])} /<br> ${time_decoder(mtf_data_list.content[j][5])}</td>
+                <td>${date_decoder(mtf_data_list.content[j][4])} /<br> ${time_decoder2(mtf_data_list.content[j][5])}</td>
                 <td>${mtf_data_list.content[j][2]}</td>
                 <td>${mtf_data_list.content[j][3]}</td>
                 <td>${mtf_data_list.content[j][6]}</td>
@@ -466,13 +524,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <tr>
                         <td>${incident_history_data_value_counter}</td>
                         <td>${irf_data_list.content[x][1]}</td>
-                        <td>${date_decoder(irf_data_list.content[x][6])} /<br> ${time_decoder(irf_data_list.content[x][7])}</td>
+                        <td>${date_decoder(irf_data_list.content[x][6])} /<br> ${time_decoder2(irf_data_list.content[x][7])}</td>
                         <td>${irf_data_list.content[x][3]}</td>
                         <td>${irf_data_list.content[x][2]}</td>
                         <td>${irf_data_list.content[x][4]}</td>
                         <td>${irf_data_list.content[x][8]}</td>
-                        <td>${date_decoder(irf_data_list.content[x][9])} /<br> ${time_decoder(irf_data_list.content[x][10])}</td>
-                        <td>${calculateTravelTime(date_decoder(irf_data_list.content[x][6]),time_decoder(irf_data_list.content[x][7]),date_decoder(irf_data_list.content[x][9]),time_decoder(irf_data_list.content[x][10]))}</td>
+                        <td>${date_decoder(irf_data_list.content[x][9])} /<br> ${time_decoder2(irf_data_list.content[x][10])}</td>
+                        <td>${calculateTravelTime(date_decoder(irf_data_list.content[x][6]),time_decoder2(irf_data_list.content[x][7]),date_decoder(irf_data_list.content[x][9]),time_decoder2(irf_data_list.content[x][10]))}</td>
                     </tr>
                     `
                     incident_history_data_value_counter += 1;    
@@ -490,13 +548,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <tr>
                         <td>${incident_history_data_value_counter}</td>
                         <td>${irf_data_list.content[x][1]}</td>
-                        <td>${date_decoder(irf_data_list.content[x][6])} /<br> ${time_decoder(irf_data_list.content[x][7])}</td>
+                        <td>${date_decoder(irf_data_list.content[x][6])} /<br> ${time_decoder2(irf_data_list.content[x][7])}</td>
                         <td>${irf_data_list.content[x][3]}</td>
                         <td>${irf_data_list.content[x][2]}</td>
                         <td>${irf_data_list.content[x][4]}</td>
                         <td>${irf_data_list.content[x][8]}</td>
-                        <td>${date_decoder(irf_data_list.content[x][9])} /<br> ${time_decoder(irf_data_list.content[x][10])}</td>
-                        <td>${calculateTravelTime(date_decoder(irf_data_list.content[x][6]),time_decoder(irf_data_list.content[x][7]),date_decoder(irf_data_list.content[x][9]),time_decoder(irf_data_list.content[x][10]))}</td>
+                        <td>${date_decoder(irf_data_list.content[x][9])} /<br> ${time_decoder2(irf_data_list.content[x][10])}</td>
+                        <td>${calculateTravelTime(date_decoder(irf_data_list.content[x][6]),time_decoder2(irf_data_list.content[x][7]),date_decoder(irf_data_list.content[x][9]),time_decoder2(irf_data_list.content[x][10]))}</td>
                     </tr>
                     `
                     incident_history_data_value_counter += 1;                 
