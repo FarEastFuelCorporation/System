@@ -2250,7 +2250,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                 <h3 class="bold">BREAKDOWN</h3>
                                             </div>
                                             <div class="summary_details_details">
-                                                <div class="vertical-table">
+                                                <div class="table">
                                                     <table>
                                                         <tr class="bold">
                                                             <th>Day</th>

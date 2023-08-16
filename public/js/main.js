@@ -628,3 +628,26 @@ function getWeekDates(dateString) {
 
   return weekDates;
 }
+
+function getWeekDates2(dateString) {
+  const date = new Date(dateString);
+
+  if (isNaN(date)) {
+    throw new Error("Invalid date format");
+  }
+
+  const currentDate = new Date(date);
+  const dayOfWeek = currentDate.getDay(); // 0 (Sunday) to 6 (Saturday)
+
+  // Calculate the date of the Saturday of the same week
+  currentDate.setDate(currentDate.getDate() - dayOfWeek -1);
+
+  const weekDates = [];
+  for (let i = 0; i < 7; i++) {
+    const newDate = new Date(currentDate);
+    newDate.setDate(currentDate.getDate() + i);
+    weekDates.push(newDate);
+  }
+
+  return weekDates;
+}

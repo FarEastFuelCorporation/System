@@ -229,7 +229,7 @@
                             TRIP LIQUIDATION FORM
                         </button>
                     </label><br>
-                    <form id="budget_form" action="https://script.google.com/macros/s/AKfycbzNuKSJA0WkYa9nFFKE4j_ysIlrjLnjf0Q5qfeXSxxG5ork4B5P7H0z2P_mUCbNx98B/exec" method="post">
+                    <form id="budget_form" action="https://script.google.com/macros/s/AKfycbxoheJCrpI1hbtVeVAq02wEaX-rIiaUXBNXzatz-dy0mv8HtR6OxufxtXl2FYljG5ep/exec" method="post">
                         <input type="hidden" name="user" id="user">
                         <h2>TRIP BUDGET FORM</h2><br>
                         <div class="ap_form">
@@ -477,6 +477,13 @@
                                     overflow: hidden; 
                                     text-overflow: ellipsis;
                                 }
+
+                                .truncate_text2 {
+                                    display: block !important;
+                                    white-space: break-spaces !important;
+                                    overflow: hidden !important; 
+                                    text-overflow: ellipsis !important;
+                                }
                         
                                 #payslip_form .bold
                                 {
@@ -540,6 +547,49 @@
                                 .border{
                                     border: 1px solid black !important;
                                 }
+
+                                .vertical-table 
+                                {
+                                    display: flex;
+                                    width: 100% !important;
+                                }
+                        
+                                .vertical-table table 
+                                {
+                                    border-collapse: collapse;
+                                    width: 100% !important;
+                                }
+                        
+                                .vertical-table table tr
+                                {
+                                    display: grid !important;
+                                    grid-template-columns: 15% 9% 35% 5% 5% 7% 7% 7% 10% !important;
+                                    text-align: center;
+                                    width: 100% !important;
+                                    border-bottom: 1px solid black;
+                                }
+                        
+                                .vertical-table th,
+                                .vertical-table td 
+                                {
+                                    padding: 0 4px !important;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                }
+                        
+                                .vertical-table th 
+                                {
+                                    text-align: center;
+                                    color: black !important;
+                                    font-size: 9px !important;
+                                }
+                        
+                                .vertical-table td
+                                {
+                                    border-bottom: 1px solid #ddd;
+                                    font-size: 12px !important;
+                                }
                                                         
                                 #payslip_form .payslip img
                                 {
@@ -596,12 +646,12 @@
                                     width: 100% !important;
                                 }
 
-                                #payslip_form .payslip .summary .summary_details_details table tr th,
+                                /* #payslip_form .payslip .summary .summary_details_details table tr th,
                                 #payslip_form .payslip .summary .summary_details_details table tr td
                                 {
                                     font-size: 11px !important;
                                     color: black !important;
-                                }
+                                } */
 
                                 /* #payslip_form .payslip .summary .summary_details_details table tr
                                 {

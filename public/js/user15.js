@@ -250,6 +250,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         var tbf_budget = "";
                         var remarks = "PENDING LIQUIDATION";
                         var actual_budget = "PENDING";
+                        
                         for(let z = 1; z < tbf_data_list.content.length; z++){
                             if(done_list_ltf_ap_accounting[y] == tbf_data_list.content[z][2]){
                                 tbf_data = tbf_data_list.content[z][0];
@@ -259,7 +260,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                         for(let a = 0; a < ltf_tlf_transaction_ap_accounting.length; a++){
                             for(let z = 1; z < tlf_data_list.content.length; z++){
-                                if(ltf_tlf_transaction_ap_accounting[a] == tlf_data_list.content[z][3]){
+                                if(done_list_ltf_ap_accounting[y] == tlf_data_list.content[z][3]){
                                     if(tlf_data_list.content[z][4] == "CASH RETURN"){
                                         actual_budget = (tbf_budget - tlf_data_list.content[z][5]).toFixed(2)
                                         remarks = "LIQUIDATED"
@@ -406,68 +407,75 @@ document.addEventListener('DOMContentLoaded', async function() {
     
         tbf_no_ap_accounting.value = `${code_year_month}${data_counter}`
 
-
         search_ltf_form_no_button_ap_accounting.addEventListener("click", () => {
             var data_value;
             var driver_name = "";
             var truck_helper_name = "";
-            for(a=0; a<=pending_list_ltf_ap_accounting.length; a++){
-                if(search_ltf_form_no_ap_accounting.value == ltf_data_list.content[a][0]){
-                    for(let x = 1; x<employee_data_list.content.length; x++){
-                        if(employee_data_list.content[x][0] == ltf_data_list.content[a][8]){
-                            var gender = employee_data_list.content[x][6];
-                            if(gender == "MALE"){
-                                driver_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} ${employee_data_list.content[x][5]}`
-                            }
-                            else{
-                                driver_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} - ${employee_data_list.content[x][4]}`
-                            }
-                        }
-                        var values = ltf_data_list.content[a][9];
-                        var valueArray = values.split(" || ");
-                        valueArray.forEach(element => {
-                            if(employee_data_list.content[x][0] == element){
-                                var gender = employee_data_list.content[x][6];
-                                if(gender == "MALE"){
-                                    truck_helper_name += `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} ${employee_data_list.content[x][5]} || `
+            for(b=0; b < pending_list_ltf_ap_accounting.length; b++){
+                if(search_ltf_form_no_ap_accounting.value == pending_list_ltf_ap_accounting[b]){
+                    for(a=0; a < ltf_data_list.content.length; a++){
+                        if(search_ltf_form_no_ap_accounting.value == ltf_data_list.content[a][0]){
+                            console.log(pending_list_ltf_ap_accounting)
+                            console.log(search_ltf_form_no_ap_accounting.value)
+                            console.log(search_ltf_form_no_ap_accounting.value)
+                            console.log("pass")
+                            for(let x = 1; x<employee_data_list.content.length; x++){
+                                if(employee_data_list.content[x][0] == ltf_data_list.content[a][8]){
+                                    var gender = employee_data_list.content[x][6];
+                                    if(gender == "MALE"){
+                                        driver_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} ${employee_data_list.content[x][5]}`
+                                    }
+                                    else{
+                                        driver_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} - ${employee_data_list.content[x][4]}`
+                                    }
                                 }
-                                else{
-                                    truck_helper_name += `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} - ${employee_data_list.content[x][4]} || `
+                                var values = ltf_data_list.content[a][9];
+                                var valueArray = values.split(" || ");
+                                valueArray.forEach(element => {
+                                    if(employee_data_list.content[x][0] == element){
+                                        var gender = employee_data_list.content[x][6];
+                                        if(gender == "MALE"){
+                                            truck_helper_name += `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} ${employee_data_list.content[x][5]} || `
+                                        }
+                                        else{
+                                            truck_helper_name += `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} - ${employee_data_list.content[x][4]} || `
+                                        }
+                                    }
+                                });
+                            }
+                            var client_name = "";
+                            for(let c = 1; c < client_data_list.content.length; c++){
+                                if(ltf_data_list.content[a][2] == client_data_list.content[c][0]){
+                                    client_name = client_data_list.content[c][1];
                                 }
                             }
-                        });
-                    }
-                    var client_name = "";
-                    for(let c = 1; c < client_data_list.content.length; c++){
-                        if(ltf_data_list.content[a][2] == client_data_list.content[c][0]){
-                            client_name = client_data_list.content[c][1];
+                            var waste_name = "";
+                            for(let c = 1; c < type_of_waste_data.content.length; c++){
+                                if(ltf_data_list.content[a][3] == type_of_waste_data.content[c][0]){
+                                    waste_name = type_of_waste_data.content[c][2];
+                                }
+                            }
+                            data_value = `
+                            LTF #: ${ltf_data_list.content[a][0]}<br>
+                            CLIENT: ${client_name}<br>
+                            WASTE DESCRIPTION: ${waste_name}<br>
+                            HAULING DATE: ${date_decoder(ltf_data_list.content[a][4])}<br>
+                            HAULING TIME: ${time_decoder(ltf_data_list.content[a][5])}<br>
+                            TYPE OF VEHICLE: ${ltf_data_list.content[a][6]}<br>
+                            PLATE #: ${ltf_data_list.content[a][7]}<br>
+                            DRIVER: ${driver_name}<br>
+                            TRUCK HELPER: ${truck_helper_name}<br>
+                            DATE DEPARTURE: ${date_decoder(ltf_data_list.content[a][10])}<br>
+                            TIME DEPARTURE: ${time_decoder(ltf_data_list.content[a][11])}<br>
+                            REMARKS: ${ltf_data_list.content[a][12]}<br>
+                            SUBMITTED BY: ${ltf_data_list.content[a][13]}<br>
+                            `
+                            budget_form_inputs_ap_accounting.style.display = "flex";
+                            budget_form_buttons_ap_accounting.style.display = "flex";
+                            budget_form_buttons_ap_accounting.style.display = "flex";
+                            available_funds_ap_accounting.value = trucking_fund.toFixed(2);
                         }
                     }
-                    var waste_name = "";
-                    for(let c = 1; c < type_of_waste_data.content.length; c++){
-                        if(ltf_data_list.content[a][3] == type_of_waste_data.content[c][0]){
-                            waste_name = type_of_waste_data.content[c][2];
-                        }
-                    }
-                    data_value = `
-                    LTF #: ${ltf_data_list.content[a][0]}<br>
-                    CLIENT: ${client_name}<br>
-                    WASTE DESCRIPTION: ${waste_name}<br>
-                    HAULING DATE: ${date_decoder(ltf_data_list.content[a][4])}<br>
-                    HAULING TIME: ${time_decoder(ltf_data_list.content[a][5])}<br>
-                    TYPE OF VEHICLE: ${ltf_data_list.content[a][6]}<br>
-                    PLATE #: ${ltf_data_list.content[a][7]}<br>
-                    DRIVER: ${driver_name}<br>
-                    TRUCK HELPER: ${truck_helper_name}<br>
-                    DATE DEPARTURE: ${date_decoder(ltf_data_list.content[a][10])}<br>
-                    TIME DEPARTURE: ${time_decoder(ltf_data_list.content[a][11])}<br>
-                    REMARKS: ${ltf_data_list.content[a][12]}<br>
-                    SUBMITTED BY: ${ltf_data_list.content[a][13]}<br>
-                    `
-                    budget_form_inputs_ap_accounting.style.display = "flex";
-                    budget_form_buttons_ap_accounting.style.display = "flex";
-                    budget_form_buttons_ap_accounting.style.display = "flex";
-                    available_funds_ap_accounting.value = trucking_fund.toFixed(2);
                 }
             }     
             if(data_value == undefined){
@@ -525,11 +533,11 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         var released_budget = "";
         search_tbf_form_no_button_ap_accounting.addEventListener("click", () => {
-            var data_value;
-            var pcv_no = "";
-            var driver_name = "";
-            var truck_helper_name_list = "";
             for(b=0; b<pending_list_tbf_ap_accounting.length; b++){
+                var data_value;
+                var pcv_no = "";
+                var driver_name = "";
+                var truck_helper_name_list = "";
                 if(search_tbf_form_no_ap_accounting.value == pending_list_tbf_ap_accounting[b]){
                     for(a=1; a<ltf_data_list.content.length; a++){
                         for(let x = 1; x<employee_data_list.content.length; x++){
@@ -713,7 +721,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 remaining.value = parseFloat(released_budget).toFixed(2) - sum;
             }
         });
-
+        
         remove_item_button_ap_accounting.addEventListener("click", () => {
             // Find the last added particular container
             const lastParticularContainers = document.querySelectorAll(`#particular_container${particular_counter_ap_accounting.value}`);
@@ -756,22 +764,22 @@ document.addEventListener('DOMContentLoaded', async function() {
                 payroll_tab_ap_accounting.style.display = "block"
             }
         })
-
         
         generate_payslip_button_ap_accounting.addEventListener("click", () => {
             var payslip_form_data = "";
             var employee_array = [];
             var tlf_transaction_ap_accounting = [];
     
-            for(let y = 1; y < tlf_data_list.content.length; y++){
+            for(let x = 1; x < ltf_data_list.content.length; x++){
                 for(let y = 1; y < tlf_data_list.content.length; y++){
-                    console.log(getWeekNumber(date_decoder(tlf_data_list.content[y][7])))
-                    if( search_year_ap_accounting.value == getYearFromDate(date_decoder(tlf_data_list.content[y][7])) &&
-                    search_week_number_ap_accounting.value == getWeekNumber(date_decoder(tlf_data_list.content[y][7]))){
-                        if (!tlf_transaction_ap_accounting.includes(tlf_data_list.content[y][4])) {
-                            tlf_transaction_ap_accounting.push(tlf_data_list.content[y][4]);
-                        }
-                    }   
+                    if(tlf_data_list.content[y][3] == ltf_data_list.content[x][0]){
+                        if( search_year_ap_accounting.value == getYearFromDate(date_decoder(ltf_data_list.content[x][4])) &&
+                        search_week_number_ap_accounting.value == getWeekNumber(date_decoder(ltf_data_list.content[x][4]))){
+                            if (!tlf_transaction_ap_accounting.includes(tlf_data_list.content[y][4])) {
+                                tlf_transaction_ap_accounting.push(tlf_data_list.content[y][4]);
+                            }
+                        }   
+                    }
                 }
             }
             for(let z = 0; z < tlf_transaction_ap_accounting.length; z++){
@@ -783,8 +791,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                 }
             }
+            console.log("🚀 ~ file: user15.js:764 ~ generate_payslip_button_ap_accounting.addEventListener ~ employee_array:", employee_array)
+
             for(let z = 0; z < employee_array.length; z++){
                 var ltf_data = [];
+                var cash_advance = [];
                 var name = "";
                 var department = "";
                 var designation = "";
@@ -792,13 +803,17 @@ document.addEventListener('DOMContentLoaded', async function() {
                 var date = "";
                 var pay_date = "";
                 var tin_id = "";
-                for(let y = 1; y < tlf_data_list.content.length; y++){
-                    if( search_year_ap_accounting.value == getYearFromDate(date_decoder(tlf_data_list.content[y][7])) &&
-                        search_week_number_ap_accounting.value == getWeekNumber(date_decoder(tlf_data_list.content[y][7]))){
-                        date = getWeekDates(date_decoder(tlf_data_list.content[y][7]));
-                        pay_date = date_decoder(pay_date_ap_accounting.value);
-                        if (!ltf_data.includes(tlf_data_list.content[x][3])) {
-                            ltf_data.push(tlf_data_list.content[x][3]);
+                for(let x = 1; x < ltf_data_list.content.length; x++){
+                    for(let y = 1; y < tlf_data_list.content.length; y++){
+                        if(tlf_data_list.content[y][3] == ltf_data_list.content[x][0]){
+                            if( search_year_ap_accounting.value == getYearFromDate(date_decoder(ltf_data_list.content[x][4])) &&
+                                search_week_number_ap_accounting.value == getWeekNumber(date_decoder(ltf_data_list.content[x][4]))){
+                                date = getWeekDates2(date_decoder(tlf_data_list.content[y][7]));
+                                pay_date = date_decoder(pay_date_ap_accounting.value);
+                                if (!ltf_data.includes(tlf_data_list.content[y][3])) {
+                                    ltf_data.push(tlf_data_list.content[y][3]);
+                                }
+                            }
                         }
                     }
                 }
@@ -818,9 +833,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                 }
                 var client_id = [];
+                var client_name = [];
                 var date_of_haul = [];
                 var plate_no = [];
                 var employee_designation = [];
+                var employee_rate = "";
                 for(let y = 0; y < ltf_data.length; y++){
                     for(let x = 1; x < ltf_data_list.content.length; x++){
                         if(ltf_data[y] == ltf_data_list.content[x][0]){
@@ -829,9 +846,22 @@ document.addEventListener('DOMContentLoaded', async function() {
                             plate_no.push(ltf_data_list.content[x][7]);
                             if(employee_array[z] == ltf_data_list.content[x][8]){
                                 employee_designation.push("DRIVER");
+                                employee_rate = 800;
                             }
                             else{
                                 employee_designation.push("TRUCK HELPER");
+                                employee_rate = 480;
+                            }
+                        }
+                    }
+                }
+                console.log(employee_designation)
+                for(let x = 1; x < tlf_data_list.content.length; x++){
+                    for(let y = 0; y < ltf_data.length; y++){
+                        if(tlf_data_list.content[x][4] == employee_array[z]){
+                            cash_advance.push(0);
+                            if(tlf_data_list.content[x][3] == ltf_data[y]){
+                                cash_advance[y] = tlf_data_list.content[x][5];
                             }
                         }
                     }
@@ -841,9 +871,39 @@ document.addEventListener('DOMContentLoaded', async function() {
                     for(let x = 1; x < client_data_list.content.length; x++){
                         if(client_id[y] == client_data_list.content[x][0]){
                             client_distance.push(client_data_list.content[x][6]);
+                            client_name.push(client_data_list.content[x][1]);
                         }
                     }
                 }
+                var additional_rate = [];
+                for(let x = 0; x < client_distance.length; x++){
+                    if(parseFloat(client_distance[x]) > 50){
+                        var percentage = (parseFloat(client_distance[x]) - 50) * 10;
+                        if(employee_designation[0] == "DRIVER"){
+                            additional_rate.push(percentage * .6);
+                        }
+                        else{
+                            additional_rate.push(percentage * .4);
+                        }
+                    }
+                    else{
+                        if(employee_designation[0] == "DRIVER"){
+                            additional_rate.push(0);
+                        }
+                        else{
+                            additional_rate.push(0);
+                        }
+                    }
+                }
+                var net_pay = [];
+                for(let x = 0; x < additional_rate.length; x++){
+                    net_pay.push(parseFloat(employee_rate) + 200 + parseFloat(additional_rate[x]) - parseFloat(cash_advance[x]))
+                }
+                var total_net_pay = 0;
+                for(let x = 0; x < net_pay.length; x++){
+                    total_net_pay += parseFloat(net_pay[x])
+                }
+                
                 payslip_form_data += `                                
                 <div id="payslip_form">
                     <div class="payslip">
@@ -887,22 +947,40 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 <h3 class="bold">BREAKDOWN</h3>
                             </div>
                             <div class="summary_details_details">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>DATE OF HAUL</th>
-                                        <th>VEHICLE<br>PLATE #</th>
-                                        <th>CLIENT NAME</th>
-                                        <th>DISTANCE</th>
-                                        <th>RATE</th>
-                                        <th>MEAL<br>ALLOWANCE</th>
-                                        <th>ADDITIONAL<br>RATE</th>
-                                        <th>ADVANCE<br>SALARY</th>
-                                        <th>NET PAY</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
+                                <div class="vertical-table">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <th>DATE OF HAUL</th>
+                                                <th>PLATE #</th>
+                                                <th>CLIENT NAME</th>
+                                                <th>DIST.</th>
+                                                <th>RATE</th>
+                                                <th>MEAL<br>ALLOW.</th>
+                                                <th>ADD.<br>RATE</th>
+                                                <th>CASH<br>ADVANCE</th>
+                                                <th>NET PAY</th>
+                                            </tr>
+                                            ${date_of_haul.map((item1, index) => `
+                                            <tr>
+                                                <td>${item1}</td>
+                                                <td>${plate_no[index]}</td>
+                                                <td class="truncate_text2">${client_name[index]}</td>
+                                                <td>${client_distance[index]}</td>
+                                                <td>${formatNumber(employee_rate)}</td>
+                                                <td>${formatNumber(200)}</td>
+                                                <td>${formatNumber(additional_rate[index])}</td>
+                                                <td>${formatNumber(cash_advance[index])}</td>
+                                                <td>${formatNumber(net_pay[index])}</td>
+                                            </tr>`).join('')}
+                                            <tr class="bold">
+                                                <td style="grid-column-start: 1; grid-column-end: 9">TOTAL</td>
+                                                <td>${formatNumber(total_net_pay)}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <hr>

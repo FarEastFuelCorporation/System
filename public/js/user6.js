@@ -491,7 +491,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var data_last_3digit = 0;
         
         for(x=1; x<mtf_data_list.content.length; x++){
-            data_info = mtf_data_list.content[x][1];
+            data_info = mtf_data_list.content[x][0];
             
             if(data_info.includes(code_year_month) == true){
                 data_last_3digit = data_info.slice(9)
