@@ -533,11 +533,11 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         var released_budget = "";
         search_tbf_form_no_button_ap_accounting.addEventListener("click", () => {
+            var data_value;
+            var pcv_no = "";
+            var driver_name = "";
+            var truck_helper_name_list = "";
             for(b=0; b<pending_list_tbf_ap_accounting.length; b++){
-                var data_value;
-                var pcv_no = "";
-                var driver_name = "";
-                var truck_helper_name_list = "";
                 if(search_tbf_form_no_ap_accounting.value == pending_list_tbf_ap_accounting[b]){
                     for(a=1; a<ltf_data_list.content.length; a++){
                         for(let x = 1; x<employee_data_list.content.length; x++){
