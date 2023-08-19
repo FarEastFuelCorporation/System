@@ -1698,6 +1698,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     night_hour_rate[x].innerText = "1.43";
                     ot_regular_hour_rate[x].innerText = "1.69";
                     ot_night_hour_rate[x].innerText = "1.859";
+                    allowance[x].value = 0;
                     if (with_ot_box[x].checked == true) {
                         ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.69);
                         ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.859);
@@ -1788,6 +1789,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         leave_box_input[x].classList.remove('disabled');
                     }
                 }
+                calculateAllowance();
                 calculateGrossSalary();
                 calculateNetSalary();
             });
