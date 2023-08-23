@@ -541,29 +541,37 @@ document.addEventListener('DOMContentLoaded', async function() {
                 if(search_tbf_form_no_ap_accounting.value == pending_list_tbf_ap_accounting[b]){
                     for(a=1; a<ltf_data_list.content.length; a++){
                         for(let x = 1; x<employee_data_list.content.length; x++){
-                            if(employee_data_list.content[x][0] == ltf_data_list.content[a][8]){
-                                var gender = employee_data_list.content[x][6];
-                                if(gender == "MALE"){
-                                    driver_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} ${employee_data_list.content[x][5]}`
+                            for(let c = 1; c < tbf_data_list.content.length; c++){
+                                if(search_tbf_form_no_ap_accounting.value == tbf_data_list.content[c][0]){
+                                    if(ltf_data_list.content[a][0] == tbf_data_list.content[c][2]){
+                                        var cash_advance = "";
+                                        if(employee_data_list.content[x][0] == ltf_data_list.content[a][8]){
+                                            var gender = employee_data_list.content[x][6];
+                                            if(gender == "MALE"){
+                                                driver_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} ${employee_data_list.content[x][5]}`
+                                            }
+                                            else{
+                                                driver_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} - ${employee_data_list.content[x][4]}`
+                                            }
+                                            cash_advance += `
+                                            <div>
+                                                <label for="cash_advance">
+                                                    Advance Salary Driver
+                                                </label>
+                                                <input type="text" id="cash_advance" name="cash_advance" class="form-control" autocomplete="off" readonly value='${driver_name}'>
+                                            </div>
+                                            <div>
+                                                <label for="cash_advance_amount">
+                                                    Amount
+                                                    <input type="number" id="cash_advance_amount" name="cash_advance_amount" class="form-control" autocomplete="off" required value="0">
+                                                </label>
+                                            </div>
+                                            `
+                                            liquidation_list_ap_accounting.insertAdjacentHTML("afterbegin", cash_advance);
+                                            console.log("driver${c + 1}")
+                                        }
+                                    }
                                 }
-                                else{
-                                    driver_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} - ${employee_data_list.content[x][4]}`
-                                }
-                                cash_advance += `
-                                <div>
-                                    <label for="cash_advance">
-                                        Advance Salary Driver
-                                    </label>
-                                    <input type="text" id="cash_advance" name="cash_advance" class="form-control" autocomplete="off" readonly value='${driver_name}'>
-                                </div>
-                                <div>
-                                    <label for="cash_advance_amount">
-                                        Amount
-                                        <input type="number" id="cash_advance_amount" name="cash_advance_amount" class="form-control" autocomplete="off" required value="0">
-                                    </label>
-                                </div>
-                                `
-                                liquidation_list_ap_accounting.insertAdjacentHTML("afterbegin", cash_advance);
                             }
                             var released_by = "";
                             for(let y = 1; y<tbf_data_list.content.length; y++){
@@ -573,10 +581,18 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     pcv_no = tbf_data_list.content[a][1];
                                 }
                             }
-                            var values = ltf_data_list.content[a][9];
-                            var valueArray = values.split(" || ");
+                            var values = "";
+                            var valueArray = "";
                             var cash_advance = "";
                             var truck_helper_name = "";
+                            for(let c = 1; c < tbf_data_list.content.length; c++){
+                                if(search_tbf_form_no_ap_accounting.value == tbf_data_list.content[c][0]){
+                                    if(ltf_data_list.content[a][0] == tbf_data_list.content[c][2]){
+                                        var values = ltf_data_list.content[a][9];
+                                        var valueArray = values.split(" || ");
+                                    }
+                                }
+                            }
                             for(let c = 0; c < valueArray.length; c++){
                                 if(employee_data_list.content[x][0] == valueArray[c]){
                                     var gender = employee_data_list.content[x][6];
@@ -605,6 +621,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     truck_helper_count_ap_accounting.value = parseFloat(truck_helper_count_ap_accounting.value) + 1;
                                     diesel_gasoline_expense_container_ap_accounting.insertAdjacentHTML("beforebegin", cash_advance);
                                     add_item_button_ap_accounting.style.display = "block";
+                                    console.log("th${c + 1}")
                                 }
                             };   
                         }
@@ -725,14 +742,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         remove_item_button_ap_accounting.addEventListener("click", () => {
             // Find the last added particular container
             const lastParticularContainers = document.querySelectorAll(`#particular_container${particular_counter_ap_accounting.value}`);
+            // Decrement the particular counter
+            particular_counter_ap_accounting.value = parseFloat(particular_counter_ap_accounting.value) - 1;
         
             lastParticularContainers.forEach(lastParticularContainer => {
                 // Remove the last particular container if found
                 if (lastParticularContainer) {
                     lastParticularContainer.remove();
             
-                    // Decrement the particular counter
-                    particular_counter_ap_accounting.value = parseFloat(particular_counter_ap_accounting.value) - 1;
             
                     // Get references to the input elements
                     const inputElements = liquidation_list_ap_accounting.querySelectorAll('input[type="number"]');
@@ -748,12 +765,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                     totalInput.value = sum;
                     remaining.value = released_budget - sum;
             
-                    // Hide the "Remove" button if no particular elements are left
-                    if (particular_counter_ap_accounting.value === 0) {
-                        remove_item_button_ap_accounting.style.display = "none";
-                    }
                 }
             })
+            // Hide the "Remove" button if no particular elements are left
+            if (particular_counter_ap_accounting.value == 0) {
+                remove_item_button_ap_accounting.style.display = "none";
+            }
         });
         
         payroll_button_ap_accounting.addEventListener("click", () => {

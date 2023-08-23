@@ -64,28 +64,28 @@ document.addEventListener('DOMContentLoaded', async function() {
         var mtf_wcf_transaction_receiving = []; // Variable containing existing elements
         
         for (let i = 1; i < mtf_data_list.content.length; i++) {
-            if(mtf_data_list.content[i][8] ==  "RECEIVING"){
-                if (!mtf_transaction_receiving.includes(mtf_data_list.content[i][1])) {
-                    mtf_transaction_receiving.push(mtf_data_list.content[i][1]);
+            if(mtf_data_list.content[i][7] ==  "RECEIVING"){
+                if (!mtf_transaction_receiving.includes(mtf_data_list.content[i][0])) {
+                    mtf_transaction_receiving.push(mtf_data_list.content[i][0]);
                     mtf_transaction_counter_receiving += 1
                 }
             }
         }
 
         for (let i = 1; i < ltf_data_list.content.length; i++) {
-            if (!ltf_transaction_receiving.includes(ltf_data_list.content[i][1])) {
-                ltf_transaction_receiving.push(ltf_data_list.content[i][1]);
+            if (!ltf_transaction_receiving.includes(ltf_data_list.content[i][0])) {
+                ltf_transaction_receiving.push(ltf_data_list.content[i][0]);
                 ltf_transaction_counter_receiving += 1
             }
         }
         
         for (let i = 1; i < wcf_data_list.content.length; i++) {
-            if (!ltf_wcf_transaction_receiving.includes(wcf_data_list.content[i][2])) {
-                ltf_wcf_transaction_receiving.push(wcf_data_list.content[i][2]);
+            if (!ltf_wcf_transaction_receiving.includes(wcf_data_list.content[i][1])) {
+                ltf_wcf_transaction_receiving.push(wcf_data_list.content[i][1]);
                 ltf_wcf_transaction_counter_receiving += 1
             }
-            if (!mtf_wcf_transaction_receiving.includes(wcf_data_list.content[i][2])) {
-                mtf_wcf_transaction_receiving.push(wcf_data_list.content[i][2]);
+            if (!mtf_wcf_transaction_receiving.includes(wcf_data_list.content[i][1])) {
+                mtf_wcf_transaction_receiving.push(wcf_data_list.content[i][1]);
                 mtf_wcf_transaction_counter_receiving += 1
             }
         }
@@ -112,13 +112,13 @@ document.addEventListener('DOMContentLoaded', async function() {
         for(y=1; y<wcf_data_list.content.length; y++){
     
             if(wcf_data_list.content[y][4] === "RW"){
-                rw += parseInt(wcf_data_list.content[y][17]);
+                rw += parseInt(wcf_data_list.content[y][16]);
             }
             else if(wcf_data_list.content[y][4] === "HW"){
-                hw += parseInt(wcf_data_list.content[y][17]);
+                hw += parseInt(wcf_data_list.content[y][16]);
             }
             else if(wcf_data_list.content[y][4] === "NHW"){
-                nhw += parseInt(wcf_data_list.content[y][17]);
+                nhw += parseInt(wcf_data_list.content[y][16]);
             }
         }
     
@@ -131,17 +131,17 @@ document.addEventListener('DOMContentLoaded', async function() {
         var data_value_counter = 1;
         for(let i = 0; i < newElements_receiving.length; i++){
             for(let j = 1; j < ltf_data_list.content.length; j++){
-                if(newElements_receiving[i] == ltf_data_list.content[j][1]){
+                if(newElements_receiving[i] == ltf_data_list.content[j][0]){
                     var driver_name = "";
                     for(let x = 1; x < employee_data_list.content.length; x++){
                         if(employee_data_list.content[x][31] == "ACTIVE"){
-                            if(employee_data_list.content[x][1] == ltf_data_list.content[j][9]){
-                                var gender = employee_data_list.content[x][7];
+                            if(employee_data_list.content[x][1] == ltf_data_list.content[j][8]){
+                                var gender = employee_data_list.content[x][6];
                                 if(gender == "MALE"){
-                                    driver_name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} ${employee_data_list.content[x][6]}`
+                                    driver_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} ${employee_data_list.content[x][5]}`
                                 }
                                 else{
-                                    driver_name = `${employee_data_list.content[x][4]}, ${employee_data_list.content[x][2]} ${employee_data_list.content[x][3]} - ${employee_data_list.content[x][5]}`
+                                    driver_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} - ${employee_data_list.content[x][4]}`
                                 }
                             }
                         }
@@ -149,12 +149,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                     data_value +=`
                     <tr>
                         <td>${data_value_counter}</td>
-                        <td>${ltf_data_list.content[j][1]}</td>
-                        <td>${date_decoder(ltf_data_list.content[j][5])} /<br> ${time_decoder(ltf_data_list.content[j][6])}</td>
+                        <td>${ltf_data_list.content[j][0]}</td>
+                        <td>${date_decoder(ltf_data_list.content[j][4])} /<br> ${time_decoder(ltf_data_list.content[j][5])}</td>
+                        <td>${ltf_data_list.content[j][2]}</td>
                         <td>${ltf_data_list.content[j][3]}</td>
-                        <td>${ltf_data_list.content[j][4]}</td>
+                        <td>${ltf_data_list.content[j][6]}</td>
                         <td>${ltf_data_list.content[j][7]}</td>
-                        <td>${ltf_data_list.content[j][8]}</td>
                         <td>${driver_name}</td>
                     </tr>
                     `
@@ -164,14 +164,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
         for(let i = 0; i < newElements2_receiving.length; i++){
             for(let j = 1; j < mtf_data_list.content.length; j++){
-                if(newElements2_receiving[i] == mtf_data_list.content[j][1]){
+                if(newElements2_receiving[i] == mtf_data_list.content[j][0]){
                     data_value +=`
                     <tr>
                         <td>${data_value_counter}</td>
+                        <td>${mtf_data_list.content[j][0]}</td>
+                        <td>${date_decoder(mtf_data_list.content[j][3])} /<br> ${time_decoder(mtf_data_list.content[j][4])}</td>
                         <td>${mtf_data_list.content[j][1]}</td>
-                        <td>${date_decoder(mtf_data_list.content[j][4])} /<br> ${time_decoder(mtf_data_list.content[j][5])}</td>
                         <td>${mtf_data_list.content[j][2]}</td>
-                        <td>${mtf_data_list.content[j][3]}</td>
                         <td>PROVIDED BY CLIENT</td>
                         <td>PROVIDED BY CLIENT</td>
                         <td>PROVIDED BY CLIENT</td>
@@ -187,29 +187,29 @@ document.addEventListener('DOMContentLoaded', async function() {
         var data_value_counter = 1;
         for(let i = 0; i < newElements3_receiving.length; i++){
             for(let j = 1; j < wcf_data_list.content.length; j++){
-                if(newElements3_receiving[i] == wcf_data_list.content[j][2]){
+                if(newElements3_receiving[i] == wcf_data_list.content[j][1]){
                     for(let k = 1; k < ltf_data_list.content.length; k++){
                         var hauling_date_info;
                         var hauling_time_info;
-                        if(wcf_data_list.content[j][2] == ltf_data_list.content[k][1]){
-                            hauling_date_info =  date_decoder(ltf_data_list.content[k][5]);
-                            hauling_time_info =  time_decoder(ltf_data_list.content[k][6]);
+                        if(wcf_data_list.content[j][1] == ltf_data_list.content[k][0]){
+                            hauling_date_info =  date_decoder(ltf_data_list.content[k][4]);
+                            hauling_time_info =  time_decoder(ltf_data_list.content[k][5]);
                             break
                         }
                     }
                     data_value +=`
                     <tr>
                         <td>${data_value_counter}</td>
-                        <td>${wcf_data_list.content[j][1]}</td>
+                        <td>${wcf_data_list.content[j][0]}</td>
                         <td>${hauling_date_info} /<br> ${hauling_time_info}</td>
+                        <td>${wcf_data_list.content[j][2]}</td>
                         <td>${wcf_data_list.content[j][3]}</td>
-                        <td>${wcf_data_list.content[j][4]}</td>
-                        <td>${wcf_data_list.content[j][17]}</td>
+                        <td>${wcf_data_list.content[j][16]}</td>
+                        <td>${wcf_data_list.content[j][8]}</td>
                         <td>${wcf_data_list.content[j][9]}</td>
-                        <td>${wcf_data_list.content[j][10]}</td>
-                        <td>${date_decoder(wcf_data_list.content[j][11])} /<br> ${time_decoder(wcf_data_list.content[j][12])}</td>
-                        <td>${date_decoder(wcf_data_list.content[j][13])} /<br> ${time_decoder(wcf_data_list.content[j][14])}</td>
-                        <td>${calculateTravelTime(date_decoder(wcf_data_list.content[j][11]),time_decoder(wcf_data_list.content[j][12]),date_decoder(wcf_data_list.content[j][13]),time_decoder(wcf_data_list.content[j][14]))}</td>
+                        <td>${date_decoder(wcf_data_list.content[j][10])} /<br> ${time_decoder(wcf_data_list.content[j][11])}</td>
+                        <td>${date_decoder(wcf_data_list.content[j][12])} /<br> ${time_decoder(wcf_data_list.content[j][13])}</td>
+                        <td>${calculateTravelTime(date_decoder(wcf_data_list.content[j][10]),time_decoder(wcf_data_list.content[j][11]),date_decoder(wcf_data_list.content[j][12]),time_decoder(wcf_data_list.content[j][13]))}</td>
                         </tr>
                         `
                         data_value_counter += 1;
@@ -218,29 +218,29 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             for(let i = 0; i < newElements4_receiving.length; i++){
             for(let j = 1; j < wcf_data_list.content.length; j++){
-                if(newElements4_receiving[i] == wcf_data_list.content[j][2]){
+                if(newElements4_receiving[i] == wcf_data_list.content[j][1]){
                     for(let k = 1; k < mtf_data_list.content.length; k++){
                         var hauling_date_info;
                         var hauling_time_info;
-                        if(wcf_data_list.content[j][2] == mtf_data_list.content[k][1]){
-                            hauling_date_info =  date_decoder(mtf_data_list.content[k][4]);
-                            hauling_time_info =  time_decoder(mtf_data_list.content[k][5]);
+                        if(wcf_data_list.content[j][1] == mtf_data_list.content[k][0]){
+                            hauling_date_info =  date_decoder(mtf_data_list.content[k][3]);
+                            hauling_time_info =  time_decoder(mtf_data_list.content[k][4]);
                             break
                         }
                     }
                     data_value +=`
                     <tr>
                     <td>${data_value_counter}</td>
-                        <td>${wcf_data_list.content[j][1]}</td>
+                        <td>${wcf_data_list.content[j][0]}</td>
                         <td>${hauling_date_info} /<br> ${hauling_time_info}</td>
+                        <td>${wcf_data_list.content[j][2]}</td>
                         <td>${wcf_data_list.content[j][3]}</td>
-                        <td>${wcf_data_list.content[j][4]}</td>
-                        <td>${wcf_data_list.content[j][17]}</td>
+                        <td>${wcf_data_list.content[j][16]}</td>
+                        <td>${wcf_data_list.content[j][8]}</td>
                         <td>${wcf_data_list.content[j][9]}</td>
-                        <td>${wcf_data_list.content[j][10]}</td>
-                        <td>${date_decoder(wcf_data_list.content[j][11])} /<br> ${time_decoder(wcf_data_list.content[j][12])}</td>
-                        <td>${date_decoder(wcf_data_list.content[j][13])} /<br> ${time_decoder(wcf_data_list.content[j][14])}</td>
-                        <td>${calculateTravelTime(date_decoder(wcf_data_list.content[j][11]),time_decoder(wcf_data_list.content[j][12]),date_decoder(wcf_data_list.content[j][13]),time_decoder(wcf_data_list.content[j][14]))}</td>
+                        <td>${date_decoder(wcf_data_list.content[j][10])} /<br> ${time_decoder(wcf_data_list.content[j][11])}</td>
+                        <td>${date_decoder(wcf_data_list.content[j][12])} /<br> ${time_decoder(wcf_data_list.content[j][13])}</td>
+                        <td>${calculateTravelTime(date_decoder(wcf_data_list.content[j][10]),time_decoder(wcf_data_list.content[j][11]),date_decoder(wcf_data_list.content[j][12]),time_decoder(wcf_data_list.content[j][13]))}</td>
                         </tr>
                         `
                     data_value_counter += 1;
@@ -266,58 +266,58 @@ document.addEventListener('DOMContentLoaded', async function() {
         search_ltf_form_no_button.addEventListener("click", () => {
             var data_value;
             for(a=0; a<=newElements_receiving.length; a++){
-                if(search_ltf_form_no.value == ltf_data_list.content[a][1]){
+                if(search_ltf_form_no.value == ltf_data_list.content[a][0]){
                     data_value = `
-                    LTF #: ${ltf_data_list.content[a][1]}<br>
-                    CLIENT: ${ltf_data_list.content[a][3]}<br>
-                    WASTE DESCRIPTION: ${ltf_data_list.content[a][4]}<br>
-                    HAULING DATE: ${date_decoder(ltf_data_list.content[a][5])}<br>
-                    HAULING TIME: ${time_decoder(ltf_data_list.content[a][6])}<br>
-                    BATCH WEIGHT: ${ltf_data_list.content[a][7]} kg.<br>
-                    PLATE #: ${ltf_data_list.content[a][8]}<br>
-                    DRIVER: ${ltf_data_list.content[a][9]}<br>
-                    TRUCK HELPER: ${ltf_data_list.content[a][10]}<br>
-                    DATE DEPARTURE: ${date_decoder(ltf_data_list.content[a][11])}<br>
-                    TIME DEPARTURE: ${time_decoder(ltf_data_list.content[a][12])}<br>
-                    REMARKS: ${ltf_data_list.content[a][13]}<br>
-                    SUBMITTED BY: ${ltf_data_list.content[a][14]}<br>
+                    LTF #: ${ltf_data_list.content[a][0]}<br>
+                    CLIENT: ${ltf_data_list.content[a][2]}<br>
+                    WASTE DESCRIPTION: ${ltf_data_list.content[a][3]}<br>
+                    HAULING DATE: ${date_decoder(ltf_data_list.content[a][4])}<br>
+                    HAULING TIME: ${time_decoder(ltf_data_list.content[a][5])}<br>
+                    BATCH WEIGHT: ${ltf_data_list.content[a][6]} kg.<br>
+                    PLATE #: ${ltf_data_list.content[a][7]}<br>
+                    DRIVER: ${ltf_data_list.content[a][8]}<br>
+                    TRUCK HELPER: ${ltf_data_list.content[a][9]}<br>
+                    DATE DEPARTURE: ${date_decoder(ltf_data_list.content[a][10])}<br>
+                    TIME DEPARTURE: ${time_decoder(ltf_data_list.content[a][11])}<br>
+                    REMARKS: ${ltf_data_list.content[a][12]}<br>
+                    SUBMITTED BY: ${ltf_data_list.content[a][13]}<br>
                     `
-                    ltf_form_no.value = ltf_data_list.content[a][1];
+                    ltf_form_no.value = ltf_data_list.content[a][0];
                     client.value = ltf_data_list.content[a][3];
-                    waste_description.value = ltf_data_list.content[a][4];
-                    plate_no.value = ltf_data_list.content[a][8];
-                    driver.value = ltf_data_list.content[a][9];
-                    hauling_date.value = date_decoder(ltf_data_list.content[a][5]);
+                    waste_description.value = ltf_data_list.content[a][3];
+                    plate_no.value = ltf_data_list.content[a][7];
+                    driver.value = ltf_data_list.content[a][8];
+                    hauling_date.value = date_decoder(ltf_data_list.content[a][4]);
                     wcf_data2.style.display = "block";
                     wcf_data.style.display = "block";
                     console.log(hauling_date)
                 }
             }
             for(a=1; a<mtf_data_list.content.length; a++){
-                if(search_ltf_form_no.value == mtf_data_list.content[a][1]){
+                if(search_ltf_form_no.value == mtf_data_list.content[a][0]){
                     data_value = `
-                    MTF #: ${mtf_data_list.content[a][1]}<br>
-                    CLIENT: ${mtf_data_list.content[a][2]}<br>
+                    MTF #: ${mtf_data_list.content[a][0]}<br>
+                    CLIENT: ${mtf_data_list.content[a][1]}<br>
                     WASTE DESCRIPTION: ${mtf_data_list.content[a][3]}<br>
-                    HAULING DATE: ${date_decoder(mtf_data_list.content[a][4])}<br>
-                    HAULING TIME: ${time_decoder(mtf_data_list.content[a][5])}<br>
-                    BATCH WEIGHT: ${mtf_data_list.content[a][6]} kg.<br>
+                    HAULING DATE: ${date_decoder(mtf_data_list.content[a][3])}<br>
+                    HAULING TIME: ${time_decoder(mtf_data_list.content[a][4])}<br>
+                    BATCH WEIGHT: ${mtf_data_list.content[a][5]} kg.<br>
                     PLATE #: PROVIDED BY CLIENT <br>
                     DRIVER:  PROVIDED BY CLIENT <br>
                     TRUCK HELPER:  PROVIDED BY CLIENT <br>
-                    REMARKS: ${mtf_data_list.content[a][7]}<br>
-                    SUBMITTED BY: ${mtf_data_list.content[a][9]}<br>
+                    REMARKS: ${mtf_data_list.content[a][6]}<br>
+                    SUBMITTED BY: ${mtf_data_list.content[a][8]}<br>
                     `
-                    ltf_form_no.value = mtf_data_list.content[a][1];
-                    client.value = mtf_data_list.content[a][2];
-                    waste_description.value = mtf_data_list.content[a][3];
-                    hauling_date.value = date_decoder(mtf_data_list.content[a][4]);
+                    ltf_form_no.value = mtf_data_list.content[a][0];
+                    client.value = mtf_data_list.content[a][1];
+                    waste_description.value = mtf_data_list.content[a][2];
+                    hauling_date.value = date_decoder(mtf_data_list.content[a][3]);
                     wcf_data2.style.display = "block";
                     wcf_data.style.display = "block";
                 }
             }        
             for(x=1; x<client_list_data.content.length; x++){
-                if(client.value === client_list_data.content[x][1]){
+                if(client.value === client_list_data.content[x][0]){
                     if(client_list_data.content[x][2] === "RW, HW, NHW"){
                         category.innerHTML = `
                         <label for="type_of_waste">
@@ -437,7 +437,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var data_value2 = [];
 
         for (x = 1; x < driver_data.content.length; x++) {
-            data_value2.push(driver_data.content[x][3]);
+            data_value2.push(driver_data.content[x][2]);
         }
     
         input_box2.onkeyup = (e) => {
@@ -560,7 +560,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var data_last_3digit = 0;
     
         for(x=1; x<wcf_data_list.content.length; x++){
-            data_info = wcf_data_list.content[x][1];
+            data_info = wcf_data_list.content[x][0];
             
             if(data_info.includes(code_year_month) == true){
                 data_last_3digit = data_info.slice(9)
@@ -586,26 +586,26 @@ document.addEventListener('DOMContentLoaded', async function() {
         
             for(a=1; a<wcf_data_list.content.length; a++){
                 var data_value;
-                if(search_wcf_form_no.value == wcf_data_list.content[a][1]){
+                if(search_wcf_form_no.value == wcf_data_list.content[a][0]){
     
                     data_value =`
-                    WCF #: ${wcf_data_list.content[a][1]}<br>
-                    CLIENT: ${wcf_data_list.content[a][2]}<br>
-                    TYPE OF WASTE: ${wcf_data_list.content[a][3]}<br>
-                    TYPE OF DOCUMENT: ${wcf_data_list.content[a][4]}<br>
-                    DOCUMENT #: ${wcf_data_list.content[a][5]}<br>
-                    PERMIT TO TRAVEL #: ${wcf_data_list.content[a][6]}<br>
-                    PLATE NO: ${wcf_data_list.content[a][7]}<br>
-                    DRIVER: ${wcf_data_list.content[a][8]}<br>
-                    DATE IN: ${date_decoder(wcf_data_list.content[a][9])}<br>
-                    TIME IN: ${time_decoder(wcf_data_list.content[a][10])}<br>
-                    DATE OUT: ${date_decoder(wcf_data_list.content[a][11])}<br>
-                    TIME OUT: ${time_decoder(wcf_data_list.content[a][12])}<br>
-                    ITEM: ${wcf_data_list.content[a][13]}<br>
-                    GROSS WEIGHT: ${wcf_data_list.content[a][14]} kg.<br>
-                    TARE WEIGHT: ${wcf_data_list.content[a][15]} kg.<br>
-                    NET WEIGHT: ${wcf_data_list.content[a][16]} kg.<br>
-                    SUBMITTED BY: ${wcf_data_list.content[a][17]}<br>
+                    WCF #: ${wcf_data_list.content[a][0]}<br>
+                    CLIENT: ${wcf_data_list.content[a][1]}<br>
+                    TYPE OF WASTE: ${wcf_data_list.content[a][2]}<br>
+                    TYPE OF DOCUMENT: ${wcf_data_list.content[a][3]}<br>
+                    DOCUMENT #: ${wcf_data_list.content[a][4]}<br>
+                    PERMIT TO TRAVEL #: ${wcf_data_list.content[a][5]}<br>
+                    PLATE NO: ${wcf_data_list.content[a][6]}<br>
+                    DRIVER: ${wcf_data_list.content[a][7]}<br>
+                    DATE IN: ${date_decoder(wcf_data_list.content[a][8])}<br>
+                    TIME IN: ${time_decoder(wcf_data_list.content[a][9])}<br>
+                    DATE OUT: ${date_decoder(wcf_data_list.content[a][10])}<br>
+                    TIME OUT: ${time_decoder(wcf_data_list.content[a][11])}<br>
+                    ITEM: ${wcf_data_list.content[a][12]}<br>
+                    GROSS WEIGHT: ${wcf_data_list.content[a][13]} kg.<br>
+                    TARE WEIGHT: ${wcf_data_list.content[a][14]} kg.<br>
+                    NET WEIGHT: ${wcf_data_list.content[a][15]} kg.<br>
+                    SUBMITTED BY: ${wcf_data_list.content[a][16]}<br>
                     `
     
                 }        
