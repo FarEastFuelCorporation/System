@@ -2067,7 +2067,7 @@ section h2 {
 
 .marketing form .date_time_weight {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 0.5fr 0.5fr 0.5fr 1fr 2.5fr;
   gap: 20px;
   width: 100%;
 }
@@ -2088,7 +2088,10 @@ section h2 {
   width: 100%;
 }
 
-.marketing form #mtf_data {
+.marketing form #mtf_data,
+.marketing #new_client_form_tab,
+.marketing #update_client_form_tab,
+.marketing #update_client_form_tab_container {
   display: none;
 }
 

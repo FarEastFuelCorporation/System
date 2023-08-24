@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const username_response_promise = fetch('https://script.google.com/macros/s/AKfycbwmA97K4sdfq6dhzSsp14JU9KgQrFgSARNZbvSfiU7vuH8oEipt6TmcFo_o-jCI0kiQ/exec');
         const employee_response_promise = fetch('https://script.google.com/macros/s/AKfycbwns5R6TA8U64ywbb9hwYu4LKurAjTM0Z18NYNZMt0Ft0m-_NUHYbYqblk_5KWugvt7lA/exec');
         const client_list_response_promise = fetch('https://script.google.com/macros/s/AKfycbxXnIsmgK52Ws9H2qAh47qkgZxDltFJaHSFV0e9UQRwaK1g_xwFUKGokL_hk4fq-_mhSg/exec');
+        const type_of_waste_response_promise = fetch('https://script.google.com/macros/s/AKfycbw0yC-8_V38Zl1-KGyBwX1JmfTEW1jwyFxgpZ-oNC2lvtoAraUtkLCS27HfNbXi_l4IPg/exec');
         const driver_response_promise = fetch('https://script.google.com/macros/s/AKfycbyJ_ttOt1Ab9HnpWtQJWszInOY1hUBKvERX-dX8iijDTrQWJNUeRdgShrk-jFUoyz1zug/exec');
         const vehicle_response_promise = fetch('https://script.google.com/macros/s/AKfycbw-JCnctX1x1W1ogGbrkhNdIGd9q6bYjy_nvaYeoiaBf7HreB2a1tKJZaJHw2wu4wmpcA/exec');
         const mtf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzkzS4OVm3IfNl6KwOfLZq_uO3MnsXfu-oS5Su_1kxhfo1mMoKpYDm8a4RxWqsQh0qv/exec');
@@ -13,6 +14,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             username_response,
             employee_response,
             client_list_response,
+            type_of_waste_response,
             driver_response,
             vehicle_response,
             mtf_response,
@@ -22,6 +24,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             username_response_promise,
             employee_response_promise,
             client_list_response_promise,
+            type_of_waste_response_promise,
             driver_response_promise,
             vehicle_response_promise,
             mtf_response_promise,
@@ -31,7 +34,8 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         const username_data  = await username_response.json();
         const employee_data_list  = await employee_response.json();
-        const client_list_data  = await client_list_response.json();
+        const client_data_list  = await client_list_response.json();
+        const type_of_waste_data  = await type_of_waste_response.json();
         const driver_data  = await driver_response.json();
         const vehicle_data  = await vehicle_response.json();
         const mtf_data_list  = await mtf_response.json();
@@ -134,16 +138,31 @@ document.addEventListener('DOMContentLoaded', async function() {
                 if(newElements_receiving[i] == ltf_data_list.content[j][0]){
                     var driver_name = "";
                     for(let x = 1; x < employee_data_list.content.length; x++){
-                        if(employee_data_list.content[x][31] == "ACTIVE"){
-                            if(employee_data_list.content[x][1] == ltf_data_list.content[j][8]){
-                                var gender = employee_data_list.content[x][6];
-                                if(gender == "MALE"){
-                                    driver_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} ${employee_data_list.content[x][5]}`
-                                }
-                                else{
-                                    driver_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} - ${employee_data_list.content[x][4]}`
-                                }
+                        if(employee_data_list.content[x][0] == ltf_data_list.content[j][8]){
+                            var gender = employee_data_list.content[x][6];
+                            if(gender == "MALE"){
+                                driver_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} ${employee_data_list.content[x][5]}`
                             }
+                            else{
+                                driver_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} - ${employee_data_list.content[x][4]}`
+                            }
+                            break
+                        }
+                    }
+                    var client_name = "";
+                    for(let c = 1; c < client_data_list.content.length; c++){
+                        if(ltf_data_list.content[j][2] == client_data_list.content[c][0]){
+                            client_name = client_data_list.content[c][1];
+                            break
+                        }
+                    }
+                    var waste_code = "";
+                    var waste_name = "";
+                    for(let c = 1; c < type_of_waste_data.content.length; c++){
+                        if(ltf_data_list.content[j][3] == type_of_waste_data.content[c][0]){
+                            waste_code = type_of_waste_data.content[c][1];
+                            waste_name = type_of_waste_data.content[c][2];
+                            break
                         }
                     }
                     data_value +=`
@@ -151,8 +170,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td>${data_value_counter}</td>
                         <td>${ltf_data_list.content[j][0]}</td>
                         <td>${date_decoder(ltf_data_list.content[j][4])} /<br> ${time_decoder(ltf_data_list.content[j][5])}</td>
-                        <td>${ltf_data_list.content[j][2]}</td>
-                        <td>${ltf_data_list.content[j][3]}</td>
+                        <td>${client_name}</td>
+                        <td>${waste_code}</td>
+                        <td>${waste_name}</td>
                         <td>${ltf_data_list.content[j][6]}</td>
                         <td>${ltf_data_list.content[j][7]}</td>
                         <td>${driver_name}</td>
@@ -165,13 +185,30 @@ document.addEventListener('DOMContentLoaded', async function() {
         for(let i = 0; i < newElements2_receiving.length; i++){
             for(let j = 1; j < mtf_data_list.content.length; j++){
                 if(newElements2_receiving[i] == mtf_data_list.content[j][0]){
+                    var client_name = "";
+                    for(let c = 1; c < client_data_list.content.length; c++){
+                        if(mtf_data_list.content[j][1] == client_data_list.content[c][0]){
+                            client_name = client_data_list.content[c][1];
+                            break
+                        }
+                    }
+                    var waste_code = "";
+                    var waste_name = "";
+                    for(let c = 1; c < type_of_waste_data.content.length; c++){
+                        if(mtf_data_list.content[j][2] == type_of_waste_data.content[c][0]){
+                            waste_code = type_of_waste_data.content[c][1];
+                            waste_name = type_of_waste_data.content[c][2];
+                            break
+                        }
+                    }
                     data_value +=`
                     <tr>
                         <td>${data_value_counter}</td>
                         <td>${mtf_data_list.content[j][0]}</td>
                         <td>${date_decoder(mtf_data_list.content[j][3])} /<br> ${time_decoder(mtf_data_list.content[j][4])}</td>
-                        <td>${mtf_data_list.content[j][1]}</td>
-                        <td>${mtf_data_list.content[j][2]}</td>
+                        <td>${client_name}</td>
+                        <td>${waste_code}</td>
+                        <td>${waste_name}</td>
                         <td>PROVIDED BY CLIENT</td>
                         <td>PROVIDED BY CLIENT</td>
                         <td>PROVIDED BY CLIENT</td>
@@ -267,16 +304,61 @@ document.addEventListener('DOMContentLoaded', async function() {
             var data_value;
             for(a=0; a<=newElements_receiving.length; a++){
                 if(search_ltf_form_no.value == ltf_data_list.content[a][0]){
+                    var driver_name = "";
+                    for(let x = 1; x < employee_data_list.content.length; x++){
+                        if(employee_data_list.content[x][0] == ltf_data_list.content[a][8]){
+                            var gender = employee_data_list.content[x][6];
+                            if(gender == "MALE"){
+                                driver_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} ${employee_data_list.content[x][5]}`
+                            }
+                            else{
+                                driver_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} - ${employee_data_list.content[x][4]}`
+                            }
+                            break
+                        }
+                    }
+                    var truck_helpers = "";
+                    const idArray = (ltf_data_list.content[a][9]).split("||").map(number => {
+                        for (let x = 1; x < employee_data_list.content.length; x++) {
+                            if (employee_data_list.content[x][0] == number.trim()) {
+                                var gender = employee_data_list.content[x][6];
+                                if (gender == "MALE") {
+                                    truck_helpers += `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} ${employee_data_list.content[x][5]} ||`;
+                                } else {
+                                    truck_helpers += `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} - ${employee_data_list.content[x][4]} ||`;
+                                }
+                                break
+                            }
+                        }
+                        return number.trim(); // This line may be modified depending on your needs
+                    });
+                    var client_name = "";
+                    for(let c = 1; c < client_data_list.content.length; c++){
+                        if(ltf_data_list.content[a][2] == client_data_list.content[c][0]){
+                            client_name = client_data_list.content[c][1];
+                            break
+                        }
+                    }
+                    var waste_code = "";
+                    var waste_name = "";
+                    for(let c = 1; c < type_of_waste_data.content.length; c++){
+                        if(ltf_data_list.content[a][3] == type_of_waste_data.content[c][0]){
+                            waste_code = type_of_waste_data.content[c][1];
+                            waste_name = type_of_waste_data.content[c][2];
+                            break
+                        }
+                    }
                     data_value = `
                     LTF #: ${ltf_data_list.content[a][0]}<br>
-                    CLIENT: ${ltf_data_list.content[a][2]}<br>
-                    WASTE DESCRIPTION: ${ltf_data_list.content[a][3]}<br>
+                    CLIENT: ${client_name}<br>
+                    WASTE CODE: ${waste_code}<br>
+                    WASTE DESCRIPTION: ${waste_name}<br>
                     HAULING DATE: ${date_decoder(ltf_data_list.content[a][4])}<br>
                     HAULING TIME: ${time_decoder(ltf_data_list.content[a][5])}<br>
                     BATCH WEIGHT: ${ltf_data_list.content[a][6]} kg.<br>
                     PLATE #: ${ltf_data_list.content[a][7]}<br>
-                    DRIVER: ${ltf_data_list.content[a][8]}<br>
-                    TRUCK HELPER: ${ltf_data_list.content[a][9]}<br>
+                    DRIVER: ${driver_name}<br>
+                    TRUCK HELPER: ${truck_helpers}<br>
                     DATE DEPARTURE: ${date_decoder(ltf_data_list.content[a][10])}<br>
                     TIME DEPARTURE: ${time_decoder(ltf_data_list.content[a][11])}<br>
                     REMARKS: ${ltf_data_list.content[a][12]}<br>
@@ -286,19 +368,35 @@ document.addEventListener('DOMContentLoaded', async function() {
                     client.value = ltf_data_list.content[a][3];
                     waste_description.value = ltf_data_list.content[a][3];
                     plate_no.value = ltf_data_list.content[a][7];
-                    driver.value = ltf_data_list.content[a][8];
+                    driver.value = driver_name;
                     hauling_date.value = date_decoder(ltf_data_list.content[a][4]);
                     wcf_data2.style.display = "block";
                     wcf_data.style.display = "block";
-                    console.log(hauling_date)
                 }
             }
             for(a=1; a<mtf_data_list.content.length; a++){
                 if(search_ltf_form_no.value == mtf_data_list.content[a][0]){
+                    var client_name = "";
+                    for(let c = 1; c < client_data_list.content.length; c++){
+                        if(mtf_data_list.content[a][1] == client_data_list.content[c][0]){
+                            client_name = client_data_list.content[c][1];
+                            break
+                        }
+                    }
+                    var waste_code = "";
+                    var waste_name = "";
+                    for(let c = 1; c < type_of_waste_data.content.length; c++){
+                        if(mtf_data_list.content[a][2] == type_of_waste_data.content[c][0]){
+                            waste_code = type_of_waste_data.content[c][1];
+                            waste_name = type_of_waste_data.content[c][2];
+                            break
+                        }
+                    }
                     data_value = `
                     MTF #: ${mtf_data_list.content[a][0]}<br>
-                    CLIENT: ${mtf_data_list.content[a][1]}<br>
-                    WASTE DESCRIPTION: ${mtf_data_list.content[a][3]}<br>
+                    CLIENT: ${client_name}<br>
+                    WASTE CODE: ${waste_code}<br>
+                    WASTE DESCRIPTION: ${waste_name}<br>
                     HAULING DATE: ${date_decoder(mtf_data_list.content[a][3])}<br>
                     HAULING TIME: ${time_decoder(mtf_data_list.content[a][4])}<br>
                     BATCH WEIGHT: ${mtf_data_list.content[a][5]} kg.<br>
@@ -316,9 +414,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                     wcf_data.style.display = "block";
                 }
             }        
-            for(x=1; x<client_list_data.content.length; x++){
-                if(client.value === client_list_data.content[x][0]){
-                    if(client_list_data.content[x][2] === "RW, HW, NHW"){
+            for(x=1; x<client_data_list.content.length; x++){
+                if(client.value === client_data_list.content[x][0]){
+                    if(client_data_list.content[x][2] === "RW, HW, NHW"){
                         category.innerHTML = `
                         <label for="type_of_waste">
                             <i class="fa-solid fa-list"></i>
@@ -332,7 +430,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </select><br>
                         `
                     }
-                    else if(client_list_data.content[x][2] === "RW"){
+                    else if(client_data_list.content[x][2] === "RW"){
                         category.innerHTML = `
                         <label for="type_of_waste">
                             <i class="fa-solid fa-list"></i>
@@ -344,7 +442,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </select><br>
                         `
                     }
-                    else if(client_list_data.content[x][2] === "HW"){
+                    else if(client_data_list.content[x][2] === "HW"){
                         category.innerHTML = `
                         <label for="type_of_waste">
                             <i class="fa-solid fa-list"></i>
@@ -356,7 +454,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </select><br>
                         `
                     }
-                    else if(client_list_data.content[x][2] === "NHW"){
+                    else if(client_data_list.content[x][2] === "NHW"){
                         category.innerHTML = `
                         <label for="type_of_waste">
                             <i class="fa-solid fa-list"></i>
@@ -368,7 +466,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </select><br>
                         `
                     }
-                    else if(client_list_data.content[x][2] === "RW, HW"){
+                    else if(client_data_list.content[x][2] === "RW, HW"){
                         category.innerHTML = `
                         <label for="type_of_waste">
                             <i class="fa-solid fa-list"></i>
@@ -381,7 +479,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </select><br>
                         `
                     }
-                    if(client_list_data.content[x][2] === "RW, NHW"){
+                    if(client_data_list.content[x][2] === "RW, NHW"){
                         category.innerHTML = `
                         <label for="type_of_waste">
                             <i class="fa-solid fa-list"></i>
@@ -394,7 +492,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </select><br>
                         `
                     }
-                    if(client_list_data.content[x][2] === "HW, NHW"){
+                    if(client_data_list.content[x][2] === "HW, NHW"){
                         category.innerHTML = `
                         <label for="type_of_waste">
                             <i class="fa-solid fa-list"></i>

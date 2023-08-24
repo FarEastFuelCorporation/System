@@ -42,12 +42,6 @@
                 </li>
                 <li>
                     <a href="#">
-                        <i class="fa-solid fa-user-plus"></i>
-                        New Client Form
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
                         <i class="fa-solid fa-table-list"></i>
                         Type of Waste List
                     </a>
@@ -263,7 +257,7 @@
             <section class="marketing" id="marketing_transaction_form">
                 <div class="section_container">
                     <h2>MARKETING TRANSACTION FORM</h2><br>
-                    <form id="form_id" action="https://script.google.com/macros/s/AKfycbwdC-fqvzmSVEAwHj79SXCBtw6JfGNyabeKdD4FrnrWMox4Ruzqb9cMM1IVxe7ozj45/exec" method="post">
+                    <form id="form_id" action="https://script.google.com/macros/s/AKfycbz-gzyZY637qO5LrU2NvEJgfvUYW12WPu2aCdkMIAf1V4QboPyyHiBFWXtaTrVBBOyJnQ/exec" method="post">
                         <input type="hidden" name="user" id="user">
                         <div class="mtf_form">
                             <div>
@@ -273,26 +267,6 @@
                                 </label><br>
                                 <div class="form">
                                     <input type="text" id="mtf_form_no" autocomplete="off" name="mtf_form_no" class="form-control" readonly><br>
-                                </div>
-                            </div>
-                            <div>
-                                <label for="search_mtf_form_no">
-                                    Search MTF #
-                                </label><br>
-                                <div class="mtf_form">
-                                    <div class="form">
-                                        <input type="text" id="search_mtf_form_no" autocomplete="off" name="search_mtf_form_no" class="form-control"><br>
-                                    </div>
-                                    <div>
-                                        <button id="search_mtf_form_no_button" type="button" class="form-control">
-                                            <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
-                                        </button>
-                                    </div>
-                                    <div>
-                                        <button id="clear_mtf_form_no_button" type="button" class="form-control">
-                                            <i class="fa-solid fa-rectangle-xmark" style="color: #ffffff;"></i>
-                                        </button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -313,35 +287,6 @@
                         </div><br>
                         <div id="mtf_data">
                             <div class="date_time_weight">
-                                <div class="wrapper">
-                                    <label for="submit_to">
-                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                        Submit To
-                                    </label><br>
-                                    <select name="submit_to" id="submit_to" class="form-control" required>
-                                        <option value="">Choose</option>
-                                        <option value="LOGISTICS">LOGISTICS</option>
-                                        <option value="RECEIVING">RECEIVING</option>
-                                    </select>
-                                </div>
-                                <div class="wrapper">
-                                    <label for="type_of_waste">
-                                        <i class="fa-solid fa-trash-can"></i>
-                                        Type of Waste
-                                    </label><br>
-                                    <select name="type_of_waste" id="type_of_waste" class="form-control">
-                                        <option value="">SELECT TYPE OF WASTE</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label for="type_of_vehicle">
-                                        <i class="fa-solid fa-truck"></i>
-                                        Type of Vehicle
-                                    </label>
-                                    <select name="type_of_vehicle" id="type_of_vehicle" class="form-control" required>
-                                        <option value="">SELECT TYPE OF VEHICLE</option>
-                                    </select>
-                                </div>
                                 <div>
                                     <label for="hauling_date">
                                         <i class="fa-solid fa-right-to-bracket"></i>
@@ -356,7 +301,50 @@
                                     </label>
                                     <input type="time" autocomplete="off" name="hauling_time" id="hauling_time" class="form-control" required><br>
                                 </div>
+                                <div class="wrapper">
+                                    <label for="submit_to">
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                        Submit To
+                                    </label><br>
+                                    <select name="submit_to" id="submit_to" class="form-control" required>
+                                        <option value="">SELECT</option>
+                                        <option value="LOGISTICS">LOGISTICS</option>
+                                        <option value="RECEIVING">RECEIVING</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="type_of_vehicle">
+                                        <i class="fa-solid fa-truck"></i>
+                                        Type of Vehicle
+                                    </label>
+                                    <select name="type_of_vehicle" id="type_of_vehicle" class="form-control" required>
+                                        <option value="">SELECT</option>
+                                    </select>
+                                </div>
+                                <div class="wrapper">
+                                    <label for="type_of_waste">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                        Type of Waste
+                                    </label><br>
+                                    <select name="type_of_waste" id="type_of_waste" class="form-control">
+                                        <option value="">SELECT</option>
+                                    </select>
+                                </div>
                             </div>
+                            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 20px;">
+                                <div class="wrapper">
+                                    <label for="submit_to">
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                        Waste Category
+                                    </label><br>
+                                    <select name="waste_category" id="waste_category" class="form-control" required>
+                                        <option value="">SELECT</option>
+                                        <option value="HAZARDOUS WASTE">HAZARDOUS WASTE</option>
+                                        <option value="NON-HAZARDOUS WASTE">NON-HAZARDOUS WASTE</option>
+                                    </select>
+                                </div>
+                                <div id="document_container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;"></div>
+                            </div><br>
                             <label for="remarks">
                                 <i class="fa-brands fa-rocketchat"></i>
                                 Remarks
@@ -387,14 +375,13 @@
                         </button>
                     </label><br>
                 </div>
-                <div class="card" style="max-height: 80vh; align-items: start; overflow-y: scroll;">                            
+                <div class="card" style="max-height: 75vh; align-items: start; overflow-y: scroll;">                            
                     <div class="list">
                         <table>
                             <thead style="position: sticky; top: 0; background-color: black;">
                                 <th>#</th>
                                 <th>CLIENT ID</th>
                                 <th>CLIENT</th>
-                                <th>CLIENT CATEGORY</th>
                                 <th>ADDRESS</th>
                                 <th>NATURE OF BUSINESS</th>
                                 <th>CONTACT NUMBER</th>
@@ -406,62 +393,94 @@
                         <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
                     </div>
                 </div><br>
-                <div id="new_client_form_tab" style="position: absolute; right: 20px; width: 100%; height: 80%; background-color: white;">
-
+                <div id="new_client_form_tab" style="position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid orangered; border-radius: 10px; background-color: white;">
+                    <h2>NEW CLIENT FORM</h2><br>
+                    <form  action="https://script.google.com/macros/s/AKfycbze0PEH9EChdZS2Wu9iufIXRiJb9Oy2ZhNIKz79JW8d3LxeXyh78tlVG1c5oNDZiBU3/exec" method="post">
+                        <label for="client_id">
+                            <i class="fa-solid fa-user"></i>
+                            Client ID
+                            </label><br>
+                        <input type="text" name="client_id" id="client_id" autocomplete="off" class="form-control form" required readonly><br>
+                        <label for="client">
+                            <i class="fa-solid fa-user"></i>
+                            Client
+                            </label><br>
+                        <input type="text" name="client_name" id="client_name" autocomplete="off" class="form-control" required placeholder="Input Client Name..."><br>
+                        <label for="address">
+                            <i class="fa-solid fa-house-user"></i>
+                            Address
+                        </label><br>
+                        <input type="text" name="address" id="address" autocomplete="off" class="form-control" required placeholder="Input Client Address..."><br>
+                        <label for="nature_of_business">
+                            <i class="fa-solid fa-table-list"></i>
+                            Nature of Business
+                        </label><br>
+                        <input type="text" name="nature_of_business" id="nature_of_business" autocomplete="off" class="form-control" required placeholder="Input Client's Nature of Business..."><br>
+                        <label for="contact_number">
+                            <i class="fa-solid fa-square-phone"></i>
+                            Contact Number
+                        </label><br>
+                        <input type="text" name="contact_number" id="contact_number" autocomplete="off" class="form-control" required placeholder="Input Client's Contact Number..."><br>
+                        <div class="buttons">
+                            <button type="submit" id="submit_btn" class="form-control" >
+                                Submit
+                            </button>
+                            <button type="reset" id="reset" class="form-control" >
+                                Clear
+                            </button>
+                        </div>    
+                    </form>
                 </div>
-            </section>
-            <!-- new client -->
-            <section class="marketing" id="new_client_form">
-                <h2>NEW CLIENT FORM</h2><br>
-                <form  action="https://script.google.com/macros/s/AKfycbz5Ohe06O3ESiKxByS_7toqSbOLpTk4TsWdgkFP0xpQ3Gf9w0xD-bTYkCX4m_k2EVq8/exec" method="post">
-                    <label for="client_id">
-                        <i class="fa-solid fa-user"></i>
-                        Client ID
-                        </label><br>
-                    <input type="text" name="client_id" id="client_id" autocomplete="off" class="form-control form" required readonly><br>
-                    <label for="client">
-                        <i class="fa-solid fa-user"></i>
-                        Client
-                        </label><br>
-                    <input type="text" name="client_name" id="client_name" autocomplete="off" class="form-control" required placeholder="Input Client Name..."><br>
-                    <label for="address">
-                        <i class="fa-solid fa-house-user"></i>
-                        Address
-                    </label><br>
-                    <input type="text" name="address" id="address" autocomplete="off" class="form-control" required placeholder="Input Client Address..."><br>
-                    <label for="waste_category">
-                        <i class="fa-solid fa-table-list"></i>
-                        Waste Category
-                    </label><br>
-                    <select name="waste_category" id="waste_category" class="form-control">
-                        <option value="">Select Waste Category</option>
-                        <option value="RW">RESIDUAL WASTE ONLY</option>
-                        <option value="HW">HAZARDOUS WASTE ONLY</option>
-                        <option value="NHW">NON-HAZARDOUS WASTE ONLY</option>
-                        <option value="RW, HW">RESIDUAL WASTE AND HAZARDOUS WASTE</option>
-                        <option value="RW, NHW">RESIDUAL WASTE AND NON-HAZARDOUS WASTE</option>
-                        <option value="HW, NHW">HAZARDOUS WASTE AND NON-HAZARDOUS WASTE</option>
-                        <option value="RW, HW, NHW">RESIDUAL WASTE, HAZARDOUS WASTE AND NON-HAZARDOUS WASTE</option>
-                    </select><br>
-                    <label for="nature_of_business">
-                        <i class="fa-solid fa-table-list"></i>
-                        Nature of Business
-                    </label><br>
-                    <input type="text" name="nature_of_business" id="nature_of_business" autocomplete="off" class="form-control" required placeholder="Input Client's Nature of Business..."><br>
-                    <label for="contact_number">
-                        <i class="fa-solid fa-square-phone"></i>
-                        Contact Number
-                    </label><br>
-                    <input type="text" name="contact_number" id="contact_number" autocomplete="off" class="form-control" required placeholder="Input Client's Contact Number..."><br>
-                    <div class="buttons">
-                        <button type="submit" id="submit_btn" class="form-control" >
-                            Submit
-                        </button>
-                        <button type="reset" id="reset" class="form-control" >
-                            Clear
-                        </button>
-                    </div>    
-                </form>
+                <div id="update_client_form_tab" style="position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid orangered; border-radius: 10px; background-color: white;">
+                    <h2>UPDATE CLIENT FORM</h2><br>
+                    <form  action="https://script.google.com/macros/s/AKfycbze0PEH9EChdZS2Wu9iufIXRiJb9Oy2ZhNIKz79JW8d3LxeXyh78tlVG1c5oNDZiBU3/exec" method="post">
+                        <div style="display: flex; gap: 20px;">
+                            <div>
+                                <label for="client_id">
+                                    <i class="fa-solid fa-user"></i>
+                                    Search Client ID
+                                    </label><br>
+                                <input type="text" name="client_id" id="client_id" autocomplete="off" class="form-control form" required>
+                            </div>
+                            <div style="display: flex; align-items: end;">
+                                <button id="search_client_id_button" type="button" class="form-control" style="width: 60px; height: 60px;">
+                                    <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
+                                </button>
+                            </div>
+                        </div><br>
+                        <div id="update_client_form_tab_container">
+                            <label for="client">
+                                <i class="fa-solid fa-user"></i>
+                                Client
+                                </label><br>
+                            <input type="text" name="client_name" id="client_name" autocomplete="off" class="form-control" required placeholder="Input Client Name..."><br>
+                            <label for="address">
+                                <i class="fa-solid fa-house-user"></i>
+                                Address
+                            </label><br>
+                            <input type="text" name="address" id="address" autocomplete="off" class="form-control" required placeholder="Input Client Address..."><br>
+                            <label for="nature_of_business">
+                                <i class="fa-solid fa-table-list"></i>
+                                Nature of Business
+                            </label><br>
+                            <input type="text" name="nature_of_business" id="nature_of_business" autocomplete="off" class="form-control" required placeholder="Input Client's Nature of Business..."><br>
+                            <label for="contact_number">
+                                <i class="fa-solid fa-square-phone"></i>
+                                Contact Number
+                            </label><br>
+                            <input type="text" name="contact_number" id="contact_number" autocomplete="off" class="form-control" required placeholder="Input Client's Contact Number..."><br>
+                            <input type="hidden" name="timestamp" id="timestamp">
+                            <div class="buttons">
+                                <button type="submit" id="submit_btn" class="form-control" >
+                                    Submit
+                                </button>
+                                <button type="reset" id="reset" class="form-control" >
+                                    Clear
+                                </button>
+                            </div>    
+                        </div>
+                    </form>
+                </div>
             </section>
             <!-- type_of_waste_list -->
             <section class="marketing" id="type_of_waste_list_section">
@@ -612,7 +631,7 @@
                                     Unit Price
                                 </label><br>
                                 <div class="search_input">
-                                    <input type="number" name="unit_price1" id="unit_price1" autocomplete="off" class="form-control" required placeholder="Type Price..." style="padding-right: 20px !important;">
+                                    <input type="number" name="unit_price1" id="unit_price1" autocomplete="off" class="form-control" required value="0" style="padding-right: 20px !important;">
                                 </div>
                             </div>
                             <div class="wrapper">
@@ -654,7 +673,7 @@
                                     <option value="DUMP TRUCK">DUMP TRUCK</option>
                                     <option value="FX">FX</option>
                                     <option value="BOOM TRUCK">BOOM TRUCK</option>
-                                    <option value="CRAINE">CRAINE</option>
+                                    <option value="CRAINE">CRANE</option>
                                 </select>
                             </div>
                             <div class="wrapper">
@@ -697,7 +716,7 @@
                                     Unit Price
                                 </label><br>
                                 <div class="search_input">
-                                    <input type="number" name="tf_unit_price1" id="tf_unit_price1" autocomplete="off" class="form-control" required placeholder="Type Price..." style="padding-right: 20px !important;">
+                                    <input type="number" name="tf_unit_price1" id="tf_unit_price1" autocomplete="off" class="form-control" required value="0" style="padding-right: 20px !important;">
                                 </div>
                             </div>
                             <div class="wrapper">

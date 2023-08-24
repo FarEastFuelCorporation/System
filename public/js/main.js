@@ -170,52 +170,8 @@ function convertToMonthName(number) {
       return "Invalid month number";
     }
 }
-      
+
 // General Code
-function GetClientCategory(){
-  const ClientCategoryValue = document.getElementById("type_of_waste").value;
-  const sub_category_list = document.getElementById("sub_category");
-
-  if(ClientCategoryValue === "HW"){
-      const sub_category = `
-      <label for="supporting_document">
-          <i class="fa-solid fa-file-invoice"></i>
-          <input type="hidden" name="supporting_document" value="Manifest Form #">
-          Manifest Form #
-      </label>
-      <input class="form-control" autocomplete="off" name="supporting_document_input" type="text" placeholder="Enter Document #"><br>        
-      <label for="ptt_form_no">
-          <i class="fa-solid fa-file-invoice"></i>
-          Permit to Transport Form #
-      </label>
-      <input class="form-control" autocomplete="off" name="ptt_form_no" required type="text" placeholder="Enter Document #"><br>        
-      `
-      sub_category_list.innerHTML = sub_category
-  }
-  else if(ClientCategoryValue === "RW" || ClientCategoryValue === "NHW"){
-      const sub_category = `
-      <label for="supporting_document">
-        <i class="fa-solid fa-file-invoice"></i>
-        Type of Document
-      </label>
-      <select class="form-control" name="supporting_document" id="supporting_document" required>
-          <option value="">Select Type of Document</option>
-          <option value="Sales Invoice #">Sales Invoice #</option>
-          <option value="Sales Order #">Sales Order #</option>
-          <option value="Delivery Receipt #">Delivery Receipt #</option>
-          <option value="Scrap Withdrawal Form #">Scrap Withdrawal Form #</option>
-      </select>
-      <input class="form-control" autocomplete="off" name="supporting_document_input" required type="text" placeholder="Enter Document #"><br>        
-      `
-      sub_category_list.innerHTML = sub_category
-  }
-  else{
-      const sub_category = ``
-      sub_category_list.innerHTML = sub_category
-
-  }
-}
-
 // Weight Calculator
 var gross_weight = document.getElementById("gross_weight");
 var tare_weight = document.getElementById("tare_weight");
@@ -650,4 +606,13 @@ function getWeekDates2(dateString) {
   }
 
   return weekDates;
+}
+
+function findTextInArray(textArray, targetText) {
+  for (let q = 0; q < textArray.content[0].length; q++) {
+    if (textArray.content[0][q] == targetText) {
+      return q; // Found the target text, return its index
+    }
+  }
+  return -1; // Target text not found in the array
 }

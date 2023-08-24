@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const username_response_promise = fetch('https://script.google.com/macros/s/AKfycbwmA97K4sdfq6dhzSsp14JU9KgQrFgSARNZbvSfiU7vuH8oEipt6TmcFo_o-jCI0kiQ/exec');
         const client_list_response_promise = fetch('https://script.google.com/macros/s/AKfycbxXnIsmgK52Ws9H2qAh47qkgZxDltFJaHSFV0e9UQRwaK1g_xwFUKGokL_hk4fq-_mhSg/exec');
         const type_of_waste_response_promise = fetch('https://script.google.com/macros/s/AKfycbw0yC-8_V38Zl1-KGyBwX1JmfTEW1jwyFxgpZ-oNC2lvtoAraUtkLCS27HfNbXi_l4IPg/exec');
+        const treatment_process_response_promise = fetch('https://script.google.com/macros/s/AKfycbzlzR7zmvdHSz4JpeXtEzPE4OQckTIVaE6PBw5IYwlqmmeIprQxEKkp4d2Jb1kBcgndzA/exec');
         const mtf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzkzS4OVm3IfNl6KwOfLZq_uO3MnsXfu-oS5Su_1kxhfo1mMoKpYDm8a4RxWqsQh0qv/exec');
         const ltf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxBLMvyNDsT9_dlVO4Qc31dI4ErcymUHbzKimOpCZHgbJxip2XxCl7Wk3hJyqcdtrxU/exec');
         const wcf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyBFTBuFZ4PkvwmPi_3Pp_v74DCSEK2VpNy6janIGgaAK-P22wazmmShOKn6iwFbrQn/exec');
@@ -15,6 +16,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             username_response,
             client_list_response,
             type_of_waste_response,
+            treatment_process_response,
             mtf_response,
             ltf_response,
             wcf_response,
@@ -26,6 +28,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             username_response_promise,
             client_list_response_promise,
             type_of_waste_response_promise,
+            treatment_process_response_promise,
             mtf_response_promise,
             ltf_response_promise,
             wcf_response_promise,
@@ -37,7 +40,8 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         const username_data  = await username_response.json();
         const client_data_list  = await client_list_response.json();
-        const type_of_waste_data  = await type_of_waste_response.json();
+        const type_of_waste_data_list  = await type_of_waste_response.json();
+        const treatment_process_data_list  = await treatment_process_response.json();
         const mtf_data_list  = await mtf_response.json();
         const ltf_data_list  = await ltf_response.json();
         const wcf_data_list  = await wcf_response.json();
@@ -73,12 +77,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         const for_logistics_received_marketing = document.getElementById("for_logistics_received");
         const for_receiving_pending_marketing = document.getElementById("for_receiving_pending");
         const for_receiving_received_marketing = document.getElementById("for_receiving_received");
-        var mtf_transaction_counter_marketing = 0;
-        var mtf_ltf_transaction_counter_marketing = 0;
-        var mtf_transaction_logistic_transaction_counter_marketing = 0;
-        var mtf_transaction_receiving_transaction_counter_marketing = 0;
-        var ltf_transaction_counter_marketing = 0;
-        var ltf_wcf_transaction_counter_marketing = 0;
         var for_logistics_pending_counter_marketing = 0;
         var for_logistics_on_haul_counter_marketing = 0;
         var for_logistics_received_counter_marketing = 0;
@@ -92,57 +90,50 @@ document.addEventListener('DOMContentLoaded', async function() {
         var ltf_wcf_transaction_marketing = []; // Variable containing existing elements
         
         for (let i = 1; i < mtf_data_list.content.length; i++) {
-            if (!mtf_transaction_marketing.includes(mtf_data_list.content[i][0])) {
-                mtf_transaction_marketing.push(mtf_data_list.content[i][0]);
-                mtf_transaction_counter_marketing += 1
+            if (!mtf_transaction_marketing.includes(mtf_data_list.content[i][findTextInArray(mtf_data_list, "MTF #")])) {
+                mtf_transaction_marketing.push(mtf_data_list.content[i][findTextInArray(mtf_data_list, "MTF #")]);
             }
-            if(mtf_data_list.content[i][8] == "LOGISTICS"){
-                if (!mtf_transaction_logistic_transaction_marketing.includes(mtf_data_list.content[i][0])) {
-                    mtf_transaction_logistic_transaction_marketing.push(mtf_data_list.content[i][0]);
-                    mtf_transaction_logistic_transaction_counter_marketing += 1
+            if(mtf_data_list.content[i][findTextInArray(mtf_data_list, "SUBMIT TO")] == "LOGISTICS"){
+                if (!mtf_transaction_logistic_transaction_marketing.includes(mtf_data_list.content[i][findTextInArray(mtf_data_list, "MTF #")])) {
+                    mtf_transaction_logistic_transaction_marketing.push(mtf_data_list.content[i][findTextInArray(mtf_data_list, "MTF #")]);
                 }
             }
-            if(mtf_data_list.content[i][8] == "RECEIVING"){
-                if (!mtf_transaction_receiving_transaction_marketing.includes(mtf_data_list.content[i][0])) {
-                    mtf_transaction_receiving_transaction_marketing.push(mtf_data_list.content[i][0]);
-                    mtf_transaction_receiving_transaction_counter_marketing += 1
+            if(mtf_data_list.content[i][findTextInArray(mtf_data_list, "SUBMIT TO")] == "RECEIVING"){
+                if (!mtf_transaction_receiving_transaction_marketing.includes(mtf_data_list.content[i][findTextInArray(mtf_data_list, "MTF #")])) {
+                    mtf_transaction_receiving_transaction_marketing.push(mtf_data_list.content[i][findTextInArray(mtf_data_list, "MTF #")]);
                 }
             }
         }
-
         for (let i = 1; i < ltf_data_list.content.length; i++) {
-            if (!mtf_ltf_transaction_marketing.includes(ltf_data_list.content[i][1])) {
-                mtf_ltf_transaction_marketing.push(ltf_data_list.content[i][1]);
-                mtf_ltf_transaction_counter_marketing += 1
+            if (!mtf_ltf_transaction_marketing.includes(ltf_data_list.content[i][findTextInArray(ltf_data_list, "MTF #")])) {
+                mtf_ltf_transaction_marketing.push(ltf_data_list.content[i][findTextInArray(ltf_data_list, "MTF #")]);
             }
-            if (!ltf_transaction_marketing.includes(ltf_data_list.content[i][0])) {
-                ltf_transaction_marketing.push(ltf_data_list.content[i][0]);
-                ltf_transaction_counter_marketing += 1
+            if (!ltf_transaction_marketing.includes(ltf_data_list.content[i][findTextInArray(ltf_data_list, "LTF #")])) {
+                ltf_transaction_marketing.push(ltf_data_list.content[i][findTextInArray(ltf_data_list, "LTF #")]);
             }
         }
 
         for (let i = 1; i < wcf_data_list.content.length; i++) {
-            if (!ltf_wcf_transaction_marketing.includes(wcf_data_list.content[i][1])) {
-                ltf_wcf_transaction_marketing.push(wcf_data_list.content[i][1]);
-                ltf_wcf_transaction_counter_marketing += 1
+            if (!ltf_wcf_transaction_marketing.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "LTF #")])) {
+                ltf_wcf_transaction_marketing.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "LTF #")]);
             }
         }
 
-        booked_transactions_marketing.innerText = mtf_transaction_counter_marketing
+        booked_transactions_marketing.innerText = mtf_transaction_marketing.length;
 
         var data_value = "";
         var data_value_counter = 1;
         for(let j = 1; j < mtf_data_list.content.length; j++){
             var status = "PENDING";
             // for logistics
-            if(mtf_data_list.content[j][7] == "LOGISTICS"){
+            if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")] == "LOGISTICS"){
                 for(let k = 1; k < ltf_data_list.content.length; k++){
-                    if(mtf_data_list.content[j][0] == ltf_data_list.content[k][1]){
+                    if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")] == ltf_data_list.content[k][findTextInArray(ltf_data_list, "MTF #")]){
                         status = "ON HAULING";
                         for_logistics_on_haul_counter_marketing += 1;
                         for_logistics_pending_counter_marketing -= 1;
                         for(let m = 1; m < wcf_data_list.content.length; m++){
-                            if(ltf_data_list.content[k][0] == wcf_data_list.content[m][1]){
+                            if(ltf_data_list.content[k][findTextInArray(ltf_data_list, "LTF #")] == wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF #")]){
                                 status = "RECEIVED";
                                 for_logistics_received_counter_marketing += 1;
                                 for_logistics_on_haul_counter_marketing -= 1;
@@ -153,10 +144,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                 for_logistics_pending_counter_marketing += 1;
             }
             // for receiving
-            if(mtf_data_list.content[j][8] == "RECEIVING"){
+            else if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")] == "RECEIVING"){
                 for(let m = 1; m < wcf_data_list.content.length; m++){
-                    if((wcf_data_list.content[m][1]).slice(0,3) == "MTF"){
-                        if(mtf_data_list.content[j][0] == wcf_data_list.content[m][1]){
+                    if((wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).slice(0,3) == "MTF"){
+                        if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF  #")] == wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
                             status = "RECEIVED";
                             for_receiving_received_counter_marketing += 1;
                             for_receiving_pending_counter_marketing -= 1;
@@ -167,28 +158,28 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             var client_name = "";
             for(let c = 1; c < client_data_list.content.length; c++){
-                if(mtf_data_list.content[j][1] == client_data_list.content[c][0]){
-                    client_name = client_data_list.content[c][1];
+                if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")] == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")]){
+                    client_name = client_data_list.content[c][findTextInArray(client_data_list, "CLIENT NAME")];
                 }
             }
             var waste_code = "";
             var waste_name = "";
-            for(let c = 1; c < type_of_waste_data.content.length; c++){
-                if(mtf_data_list.content[j][2] == type_of_waste_data.content[c][0]){
-                    waste_code = type_of_waste_data.content[c][1];
-                    waste_name = type_of_waste_data.content[c][2];
+            for(let c = 1; c < type_of_waste_data_list.content.length; c++){
+                if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")] == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
+                    waste_code = type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")];
+                    waste_name = type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE NAME")];
                 }
             }
             data_value +=`
             <tr>
                 <td>${data_value_counter}</td>
-                <td>${mtf_data_list.content[j][0]}</td>
-                <td>${date_decoder(mtf_data_list.content[j][3])} /<br> ${time_decoder(mtf_data_list.content[j][4])}</td>
+                <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")]}</td>
+                <td>${date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])} /<br> ${time_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING TIME")])}</td>
                 <td>${client_name}</td>
                 <td>${waste_code}</td>
                 <td>${waste_name}</td>
-                <td>${mtf_data_list.content[j][5]}</td>
-                <td>${mtf_data_list.content[j][7]}</td>
+                <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")]}</td>
+                <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")]}</td>
                 <td>${status}</td>
             </tr>
             `
@@ -203,7 +194,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         on_hauling_marketing.innerText = for_logistics_on_haul_counter_marketing;
         pending_marketing.innerText = for_logistics_pending_counter_marketing + for_receiving_pending_counter_marketing;
         received_marketing.innerText = for_logistics_received_counter_marketing + for_receiving_received_counter_marketing;
-
+        
         // incident_history_list
         var incident_history_data_value = "";
         var incident_history_data_value_counter = 1;
@@ -211,20 +202,19 @@ document.addEventListener('DOMContentLoaded', async function() {
             incident_history_data_value += `
             <tr>
                 <td>${incident_history_data_value_counter}</td>
-                <td>${irf_data_list.content[x][1]}</td>
-                <td>${date_decoder(irf_data_list.content[x][6])} /<br> ${time_decoder(irf_data_list.content[x][7])}</td>
-                <td>${irf_data_list.content[x][3]}</td>
-                <td>${irf_data_list.content[x][2]}</td>
-                <td>${irf_data_list.content[x][4]}</td>
-                <td>${irf_data_list.content[x][8]}</td>
-                <td>${date_decoder(irf_data_list.content[x][9])} /<br> ${time_decoder(irf_data_list.content[x][10])}</td>
-                <td>${calculateTravelTime(date_decoder(irf_data_list.content[x][6]),time_decoder(irf_data_list.content[x][7]),date_decoder(irf_data_list.content[x][9]),time_decoder(irf_data_list.content[x][10]))}</td>
+                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "PERSON INVOLVE")]}</td>
+                <td>${date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "DATE OF INCIDENT")])} /<br> ${time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "TIME OF INCIDENT")])}</td>
+                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "DESIGNATION")]}</td>
+                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "DEPARTMENT")]}</td>
+                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "LOCATION")]}</td>
+                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "DETAILS")]}</td>
+                <td>${date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "DATE OF REPORT")])} /<br> ${time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "TIME OF REPORT")])}</td>
+                <td>${calculateTravelTime(date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "DATE OF INCIDENT")]),time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "TIME OF INCIDENT")]),date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "DATE OF REPORT")]),time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "TIMEOF REPORT")]))}</td>
             </tr>
             `
             incident_history_data_value_counter += 1;
         }
         incident_history_list.innerHTML = incident_history_data_value
-
 
         // client_data_list
         const mtf_data = document.getElementById("mtf_data");
@@ -245,10 +235,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         var data_last_3digit = 0;
         
         for(x=1; x<client_data_list.content.length; x++){
-            data_info = client_data_list.content[x][1];
+            data_info = client_data_list.content[x][findTextInArray(client_data_list, "CLIENT ID")];
             
             if(data_info.includes(code_year_month) == true){
-                data_last_3digit = data_info.slice(1)
+                data_last_3digit = data_info.slice(5)
             }
         }
         
@@ -301,28 +291,27 @@ document.addEventListener('DOMContentLoaded', async function() {
             function select(element) {
                 let select_user_data = element;
                 input_box.value = select_user_data;
-                console.log(input_box.value);
                 search_wrapper.classList.remove("active");
                 mtf_data.style.display = "block";
                 
-                // type_of_waste_data
+                // type_of_waste_data_list
                 const type_of_waste = document.getElementById("type_of_waste");
                 const type_of_vehicle = document.getElementById("type_of_vehicle");
                 
                 for (let y = 1; y < client_data_list.content.length; y++) {
                     if (input_box.value == client_data_list.content[y][1]) {
                         var client_id = "";
-                        client_id = client_data_list.content[y][0];
+                        client_id = client_data_list.content[y][findTextInArray(client_data_list, "CLIENT ID")];
                         for (let x = 1; x < qlf_data_list.content.length; x++) {
-                            if (client_id == qlf_data_list.content[x][1] && qlf_data_list.content[x][3] !== "TRANSPORTATION FEE") {
+                            if (client_id == qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")] && qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")] !== "TRANSPORTATION FEE") {
                                 var data = `
-                                <option value="${qlf_data_list.content[x][3]}">${qlf_data_list.content[x][3]}</option>
+                                <option value="${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")]}">${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")]}</option>
                                 `
                                 type_of_waste.insertAdjacentHTML("beforeend", data)
                             }
-                            if (client_id == qlf_data_list.content[x][1] && qlf_data_list.content[x][3] == "TRANSPORTATION FEE") {
+                            if (client_id == qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")] && qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")] == "TRANSPORTATION FEE") {
                                 var data = `
-                                <option value="${qlf_data_list.content[x][2]}">${qlf_data_list.content[x][2]}</option>
+                                <option value="${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID")]}">${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID")]}</option>
                                 `
                                 type_of_vehicle.insertAdjacentHTML("beforeend", data)
                             }
@@ -345,8 +334,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         })
 
         var data_value3 = [];
-        for (x = 1; x < type_of_waste_data.content.length; x++) {
-            data_value3.push(type_of_waste_data.content[x][1]);
+        for (x = 1; x < type_of_waste_data_list.content.length; x++) {
+            data_value3.push(type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "WASTE CODE")]);
         }
 
         function typeOfWaste(){
@@ -366,7 +355,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                         empty_array = empty_array.map((data) => {
                             return '<li>' + data + '</li>';
                         });
-                        console.log(empty_array);
                         search_wrapper.classList.add("active");
                         show_suggestions(empty_array);
                     } else {
@@ -383,7 +371,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 function select(element) {
                     let select_user_data = element;
                     input_box.value = select_user_data;
-                    console.log(input_box.value);
                     search_wrapper.classList.remove("active");
                     mtf_data.style.display = "block";
                         
@@ -403,12 +390,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
         typeOfWaste();
 
-
-
         const type_of_waste_list = document.getElementById("type_of_waste_list");
         const treatment_process = document.getElementById("treatment_process");
         const code = document.getElementById("code");
-
 
         var client_data_list_value = "";
         var data_value_counter = 1;
@@ -416,12 +400,11 @@ document.addEventListener('DOMContentLoaded', async function() {
             client_data_list_value += `
             <tr>
                 <td>${data_value_counter}</td>
-                <td>${client_data_list.content[x][0]}</td>
-                <td>${client_data_list.content[x][1]}</td>
-                <td>${client_data_list.content[x][2]}</td>
-                <td>${client_data_list.content[x][3]}</td>
-                <td>${client_data_list.content[x][4]}</td>
-                <td>${client_data_list.content[x][5]}</td>
+                <td>${client_data_list.content[x][findTextInArray(client_data_list, "CLIENT ID")]}</td>
+                <td>${client_data_list.content[x][findTextInArray(client_data_list, "CLIENT NAME")]}</td>
+                <td>${client_data_list.content[x][findTextInArray(client_data_list, "ADDRESS")]}</td>
+                <td>${client_data_list.content[x][findTextInArray(client_data_list, "NATURE OF BUSINESS")]}</td>
+                <td>${client_data_list.content[x][findTextInArray(client_data_list, "CONTACT NUMBER")]}</td>
             </tr>
             `
             data_value_counter += 1;
@@ -430,15 +413,15 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         var type_of_waste__list_data_value = "";
         var type_of_waste__list_data_value_counter = 1;
-        for(let x = 1; x < type_of_waste_data.content.length; x++){
+        for(let x = 1; x < type_of_waste_data_list.content.length; x++){
             type_of_waste__list_data_value += `
             <tr>
                 <td>${type_of_waste__list_data_value_counter}</td>
-                <td>${type_of_waste_data.content[x][0]}</td>
-                <td>${type_of_waste_data.content[x][1]}</td>
-                <td>${type_of_waste_data.content[x][2]}</td>
-                <td>${type_of_waste_data.content[x][3]}</td>
-                <td>${type_of_waste_data.content[x][4]}</td>
+                <td>${type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "WASTE ID")]}</td>
+                <td>${type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "WASTE CODE")]}</td>
+                <td>${type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "WASTE NAME")]}</td>
+                <td>${type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "TREATMENT PROCESS")]}</td>
+                <td>${type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "CATEGORY")]}</td>
             </tr>
             `
             type_of_waste__list_data_value_counter += 1;
@@ -446,28 +429,24 @@ document.addEventListener('DOMContentLoaded', async function() {
         type_of_waste_list.innerHTML = type_of_waste__list_data_value
 
         var treatment_process_list = [];
-        var code_list = [];
-        for (let i = 1; i < type_of_waste_data.content.length; i++) {
-            if (!treatment_process_list.includes(type_of_waste_data.content[i][2])) {
-                treatment_process_list.push(type_of_waste_data.content[i][2]);
+        var code_list = ["B", "D", "E", "B, D"];
+        for (let i = 1; i < treatment_process_data_list.content.length; i++) {
+            if (!treatment_process_list.includes(treatment_process_data_list.content[i][findTextInArray(treatment_process_data_list, "TREATMENT PROCESS")])) {
+                treatment_process_list.push(treatment_process_data_list.content[i][findTextInArray(treatment_process_data_list, "TREATMENT PROCESS")]);
             }
-            if (!code_list.includes(type_of_waste_data.content[i][3])) {
-                code_list.push(type_of_waste_data.content[i][3]);
-            }
-        }
+        }       
 
-        var select_value = `<option value="">Select Treatment Process</option>`;
+        var select_value = `<option value="">SELECT</option>`;
         for(let i = 0; i < treatment_process_list.length; i++){
             select_value += `<option value="${treatment_process_list[i]}">${treatment_process_list[i]}</option>`
         }
         treatment_process.innerHTML = select_value;
 
-        var select_value = `<option value="">Select Code</option>`;
+        var select_value = `<option value="">SELECT</option>`;
         for(let i = 0; i < code_list.length; i++){
             select_value += `<option value="${code_list[i]}">${code_list[i]}</option>`
         }
         code.innerHTML = select_value;
-
 
         // mtf_data_list
         const mtf_form_no = document.getElementById("mtf_form_no"); 
@@ -491,7 +470,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var data_last_3digit = 0;
         
         for(x=1; x<mtf_data_list.content.length; x++){
-            data_info = mtf_data_list.content[x][0];
+            data_info = mtf_data_list.content[x][findTextInArray(mtf_data_list, "MTF #")];
             
             if(data_info.includes(code_year_month) == true){
                 data_last_3digit = data_info.slice(9)
@@ -511,12 +490,89 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
         
         mtf_form_no.value = `${code_year_month}${data_counter}`
+
+        const marketing_transaction_form = document.querySelector("#marketing_transaction_form");
+        const waste_category = marketing_transaction_form.querySelector("#waste_category");
+        const document_container = marketing_transaction_form.querySelector("#document_container");
         
+        waste_category.addEventListener("change", () => {
+            if(waste_category.value == "HAZARDOUS WASTE"){
+                while (document_container.firstChild) {
+                    document_container.removeChild(document_container.firstChild);
+                }
+                var data =                     
+                `<div id="pull_out_form_container" style="display: none">
+                    <label for="pull_out_form">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Pull Out Form #
+                    </label>
+                    <input type="text" autocomplete="off" name="pull_out_form" id="pull_out_form" class="form-control" required value="N/A">
+                </div>
+                <div id="ptt_container">
+                    <label for="ptt">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        PTT #
+                    </label>
+                    <input type="text" autocomplete="off" name="ptt" id="ptt" class="form-control" required>
+                </div>
+                <div id="manifest_container">
+                    <label for="manifest">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Manifest #
+                    </label>
+                    <input type="text" autocomplete="off" name="manifest" id="manifest" class="form-control" required>
+                </div>`
+                document_container.insertAdjacentHTML("afterbegin", data)
+            }
+            else if(waste_category.value == "NON-HAZARDOUS WASTE"){
+                while (document_container.firstChild) {
+                    document_container.removeChild(document_container.firstChild);
+                }
+                var data2 = 
+                `<div id="pull_out_form_container">
+                    <label for="pull_out_form">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Pull Out Form #
+                    </label>
+                    <input type="text" autocomplete="off" name="pull_out_form" id="pull_out_form" class="form-control" required>
+                </div>
+                <div id="ptt_container" style="display: none">
+                    <label for="ptt">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        PTT #
+                    </label>
+                    <input type="text" autocomplete="off" name="ptt" id="ptt" class="form-control" required value="N/A">
+                </div>
+                <div id="manifest_container" style="display: none">
+                    <label for="manifest">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Manifest #
+                    </label>
+                    <input type="text" autocomplete="off" name="manifest" id="manifest" class="form-control" required value="N/A">
+                </div>`
+                document_container.insertAdjacentHTML("afterbegin", data2)
+            }
+            else{
+                while (document_container.firstChild) {
+                    document_container.removeChild(document_container.firstChild);
+                }
+            }
+        })
+
         // client_list_section
         const client_list_section = document.querySelector("#client_list_section");
         const new_client_form_tab_client_list_section = client_list_section.querySelector("#new_client_form_tab");
         const new_employee_button_client_list_section = client_list_section.querySelector("#new_employee_button");
         const update_record_button_client_list_section = client_list_section.querySelector("#update_record_button");
+        const update_client_form_tab_client_list_section = client_list_section.querySelector("#update_client_form_tab");
+        const search_client_id_button_update_client_form = update_client_form_tab_client_list_section.querySelector("#search_client_id_button");
+        const search_client_id_update_client_form = update_client_form_tab_client_list_section.querySelector("#client_id");
+        const client_name_update_client_form = update_client_form_tab_client_list_section.querySelector("#client_name");
+        const address_update_client_form = update_client_form_tab_client_list_section.querySelector("#address");
+        const nature_of_business_update_client_form = update_client_form_tab_client_list_section.querySelector("#nature_of_business");
+        const contact_number_update_client_form = update_client_form_tab_client_list_section.querySelector("#contact_number");
+        const timestamp_update_client_form = update_client_form_tab_client_list_section.querySelector("#timestamp");
+        const update_client_form_tab_container_client_form = update_client_form_tab_client_list_section.querySelector("#update_client_form_tab_container");
 
         new_employee_button_client_list_section.addEventListener("click", () => {
             if(new_client_form_tab_client_list_section.style.display == "block"){
@@ -524,9 +580,31 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             else{
                 new_client_form_tab_client_list_section.style.display = "block";
-                // update_record_form.style.display = "none";
+                update_client_form_tab_client_list_section.style.display = "none";
             }
         })
+        update_record_button_client_list_section.addEventListener("click", () => {
+            if(update_client_form_tab_client_list_section.style.display == "block"){
+                update_client_form_tab_client_list_section.style.display = "none";
+            }
+            else{
+                update_client_form_tab_client_list_section.style.display = "block";
+                new_client_form_tab_client_list_section.style.display = "none";
+            }
+        })
+        search_client_id_button_update_client_form.addEventListener("click", () => {
+            for(let x = 1; x < client_data_list.content.length; x++){
+                if(search_client_id_update_client_form.value == client_data_list.content[x][findTextInArray(client_data_list, "CLIENT ID")]){
+                    client_name_update_client_form.value = client_data_list.content[x][findTextInArray(client_data_list, "CLIENT NAME")];
+                    address_update_client_form.value = client_data_list.content[x][findTextInArray(client_data_list, "ADDRESS")];
+                    nature_of_business_update_client_form.value = client_data_list.content[x][findTextInArray(client_data_list, "NATURE OF BUSINESS")];
+                    contact_number_update_client_form.value = client_data_list.content[x][findTextInArray(client_data_list, "CONTACT NUMBER")];
+                    timestamp_update_client_form.value = client_data_list.content[x][findTextInArray(client_data_list, "CREATED AT")];
+                    update_client_form_tab_container_client_form.style.display = "block"
+                }
+            }
+        })
+
 
         // quotation_form
         const quotation_form = document.querySelector("#quotation_form");
@@ -581,7 +659,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 </div>
                 <div class="wrapper">
                     <div class="search_input">
-                        <input type="number" name="unit_price${list_counter_quotation_form.value}" id="unit_price${list_counter_quotation_form.value}" autocomplete="off" class="form-control" required placeholder="Type Price..." style="padding-right: 20px !important;">
+                        <input type="number" name="unit_price${list_counter_quotation_form.value}" id="unit_price${list_counter_quotation_form.value}" autocomplete="off" class="form-control" required value="0" style="padding-right: 20px !important;">
                     </div>
                 </div>
                 <div class="wrapper">
@@ -681,7 +759,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             Unit Price
                         </label><br>
                         <div class="search_input">
-                            <input type="number" name="unit_price1" id="unit_price1" autocomplete="off" class="form-control" required placeholder="Type Price..." style="padding-right: 20px !important;">
+                            <input type="number" name="unit_price1" id="unit_price1" autocomplete="off" class="form-control" required value="0" style="padding-right: 20px !important;">
                         </div>
                     </div>
                     <div class="wrapper">
@@ -765,7 +843,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 </div>
                 <div class="wrapper">
                     <div class="search_input">
-                        <input type="number" name="tf_unit_price${tf_counter_quotation_form.value}" id="tf_unit_price${tf_counter_quotation_form.value}" autocomplete="off" class="form-control" required placeholder="Type Price..." style="padding-right: 20px !important;">
+                        <input type="number" name="tf_unit_price${tf_counter_quotation_form.value}" id="tf_unit_price${tf_counter_quotation_form.value}" autocomplete="off" class="form-control" required value="0" style="padding-right: 20px !important;">
                     </div>
                 </div>
                 <div class="wrapper">
@@ -929,7 +1007,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         });
-
                 
         // incident report form
         const irf_form_no = document.getElementById("irf_form_no"); 
@@ -941,7 +1018,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var data_last_3digit = 0;
     
         for(x=1; x<irf_data_list.content.length; x++){
-            data_info = irf_data_list.content[x][1];
+            data_info = irf_data_list.content[x][findTextInArray(irf_data_list, "IRF #")];
             
             if(data_info.includes(irf_code_year_month) == true){
                 data_last_3digit = data_info.slice(9)
@@ -962,46 +1039,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     
         irf_form_no.value = `${irf_code_year_month}${data_counter}`
 
-    
-        // Search Button
-        search_mtf_form_no_button.addEventListener("click", () => {
-        
-            for(a=1; a<mtf_data_list.content.length; a++){
-                var data_value;
-                if(search_mtf_form_no.value == mtf_data_list.content[a][1]){
-                    data_value =`
-                    MTF #: ${mtf_data_list.content[a][1]}<br>
-                    CLIENT: ${mtf_data_list.content[a][2]}<br>
-                    TYPE OF WASTE: ${mtf_data_list.content[a][3]}<br>
-                    HAULING DATE: ${date_decoder(mtf_data_list.content[a][4])}<br>
-                    HAULING TIME: ${time_decoder(mtf_data_list.content[a][5])}<br>
-                    WEIGHT: ${mtf_data_list.content[a][6]} kg.<br>
-                    REMARKS: ${mtf_data_list.content[a][7]}<br>
-                    `
-                }        
-                if(data_value == undefined){
-                    search_wcf_result.innerHTML = `
-                    <div class="search_wcf_result">
-                    <h2>INFORMATION</h2>
-                    No Data Found
-                    </div><br>`            
-                }
-                else{
-                    search_wcf_result.innerHTML = `
-                    <div class="search_wcf_result">
-                    <h2>INFORMATION</h2>
-                    ${data_value}
-                    </div><br>`
-                }
-            }   
-        });
-    
-        // Clear Button
-        clear_mtf_form_no_button.addEventListener("click", () => {
-            search_wcf_result.innerHTML = ``;
-            search_mtf_form_no.value = ``;
-        })
-    
     } catch (error) {
         console.error('Error fetching data:', error);
     }
