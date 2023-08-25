@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const client_list_response_promise = fetch('https://script.google.com/macros/s/AKfycbxXnIsmgK52Ws9H2qAh47qkgZxDltFJaHSFV0e9UQRwaK1g_xwFUKGokL_hk4fq-_mhSg/exec');
         const type_of_waste_response_promise = fetch('https://script.google.com/macros/s/AKfycbw0yC-8_V38Zl1-KGyBwX1JmfTEW1jwyFxgpZ-oNC2lvtoAraUtkLCS27HfNbXi_l4IPg/exec');
         const treatment_process_response_promise = fetch('https://script.google.com/macros/s/AKfycbzlzR7zmvdHSz4JpeXtEzPE4OQckTIVaE6PBw5IYwlqmmeIprQxEKkp4d2Jb1kBcgndzA/exec');
+        const vehicle_response_promise = fetch('https://script.google.com/macros/s/AKfycbw-JCnctX1x1W1ogGbrkhNdIGd9q6bYjy_nvaYeoiaBf7HreB2a1tKJZaJHw2wu4wmpcA/exec');
         const mtf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzkzS4OVm3IfNl6KwOfLZq_uO3MnsXfu-oS5Su_1kxhfo1mMoKpYDm8a4RxWqsQh0qv/exec');
         const ltf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxBLMvyNDsT9_dlVO4Qc31dI4ErcymUHbzKimOpCZHgbJxip2XxCl7Wk3hJyqcdtrxU/exec');
         const wcf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyBFTBuFZ4PkvwmPi_3Pp_v74DCSEK2VpNy6janIGgaAK-P22wazmmShOKn6iwFbrQn/exec');
@@ -17,6 +18,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             client_list_response,
             type_of_waste_response,
             treatment_process_response,
+            vehicle_response,
             mtf_response,
             ltf_response,
             wcf_response,
@@ -29,6 +31,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             client_list_response_promise,
             type_of_waste_response_promise,
             treatment_process_response_promise,
+            vehicle_response_promise,
             mtf_response_promise,
             ltf_response_promise,
             wcf_response_promise,
@@ -38,10 +41,11 @@ document.addEventListener('DOMContentLoaded', async function() {
             irf_response_promise,
         ]);
 
-        const username_data  = await username_response.json();
+        const username_data_list  = await username_response.json();
         const client_data_list  = await client_list_response.json();
         const type_of_waste_data_list  = await type_of_waste_response.json();
         const treatment_process_data_list  = await treatment_process_response.json();
+        const vehicle_data_list  = await vehicle_response.json();
         const mtf_data_list  = await mtf_response.json();
         const ltf_data_list  = await ltf_response.json();
         const wcf_data_list  = await wcf_response.json();
@@ -51,7 +55,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const irf_data_list  = await irf_response.json();
 
         // Code that depends on the fetched data
-        // username_data3
+        // username_data_list3
         const user_sidebar = document.getElementById("user_sidebar");
         const user_sidebar_officer = document.getElementById("user_sidebar_officer");
         const users = document.querySelectorAll("#user");
@@ -59,12 +63,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         const prf_department = document.getElementById("prf_department");
         const irf_user = document.getElementById("irf_user");
 
-        users.forEach(user => {user.value = username_data.content[6][3]})
-        prf_user.value = username_data.content[6][3];
-        prf_department.value = username_data.content[6][5];
-        irf_user.value = username_data.content[6][3];
-        user_sidebar.innerHTML = `<u>${username_data.content[6][3]}</u>`;
-        user_sidebar_officer.innerText = username_data.content[6][4];
+        users.forEach(user => {user.value = username_data_list.content[6][findTextInArray(username_data_list, "NAME")]})
+        prf_user.value = username_data_list.content[6][findTextInArray(username_data_list, "NAME")];
+        prf_department.value = username_data_list.content[6][findTextInArray(username_data_list, "DEPARTMENT")];
+        irf_user.value = username_data_list.content[6][findTextInArray(username_data_list, "NAME")];
+        user_sidebar.innerHTML = `<u>${username_data_list.content[6][findTextInArray(username_data_list, "NAME")]}</u>`;
+        user_sidebar_officer.innerText = username_data_list.content[6][findTextInArray(username_data_list, "SECTIONS")];
         
         // marketing_dashboard
         const booked_transactions_marketing = document.getElementById("booked_transactions");
@@ -391,7 +395,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         typeOfWaste();
 
         const type_of_waste_list = document.getElementById("type_of_waste_list");
-        const treatment_process = document.getElementById("treatment_process");
         const code = document.getElementById("code");
 
         var client_data_list_value = "";
@@ -429,31 +432,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         type_of_waste_list.innerHTML = type_of_waste__list_data_value
 
         var treatment_process_list = [];
-        var code_list = ["B", "D", "E", "B, D"];
         for (let i = 1; i < treatment_process_data_list.content.length; i++) {
             if (!treatment_process_list.includes(treatment_process_data_list.content[i][findTextInArray(treatment_process_data_list, "TREATMENT PROCESS")])) {
                 treatment_process_list.push(treatment_process_data_list.content[i][findTextInArray(treatment_process_data_list, "TREATMENT PROCESS")]);
             }
         }       
 
-        var select_value = `<option value="">SELECT</option>`;
-        for(let i = 0; i < treatment_process_list.length; i++){
-            select_value += `<option value="${treatment_process_list[i]}">${treatment_process_list[i]}</option>`
-        }
-        treatment_process.innerHTML = select_value;
-
-        var select_value = `<option value="">SELECT</option>`;
-        for(let i = 0; i < code_list.length; i++){
-            select_value += `<option value="${code_list[i]}">${code_list[i]}</option>`
-        }
-        code.innerHTML = select_value;
-
         // mtf_data_list
-        const mtf_form_no = document.getElementById("mtf_form_no"); 
-        const search_mtf_form_no = document.getElementById("search_mtf_form_no");
-        const search_mtf_form_no_button = document.getElementById("search_mtf_form_no_button");
-        const clear_mtf_form_no_button = document.getElementById("clear_mtf_form_no_button");
-        const search_wcf_result = document.getElementById("search_wcf_result");
+        const mtf_form_no = document.getElementById("mtf_form_no");
         var month_new;
         var code_year_month;
         var data_counter;
@@ -605,19 +591,123 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         })
 
-
         // quotation_form
         const quotation_form = document.querySelector("#quotation_form");
-        const add_item_button_quotation_form = quotation_form.querySelector("#add_item_button");
-        const remove_item_button_quotation_form = quotation_form.querySelector("#remove_item_button");
-        const list_counter_quotation_form = quotation_form.querySelector("#list_counter");
-        const list_container_quotation_form = quotation_form.querySelector("#list_container");
-        const transportation_fee_container_quotation_form = quotation_form.querySelector("#transportation_fee_container");
-        const tf_button_quotation_form = quotation_form.querySelector("#tf_button");
-        const tf_value_quotation_form = quotation_form.querySelector("#tf_value");
-        const tf_counter_quotation_form = quotation_form.querySelector("#tf_counter");
-        const add_tf_button_quotation_form = quotation_form.querySelector("#add_tf_button");
-        const remove_tf_button_quotation_form = quotation_form.querySelector("#remove_tf_button");
+        const qlf_list_quotation_form = quotation_form.querySelector("#qlf_list");
+        const new_quotation_button_quotation_form = quotation_form.querySelector("#new_quotation_button");
+        const update_quotation_button_quotation_form = quotation_form.querySelector("#update_quotation_button");
+        const new_quotation_form_tab = quotation_form.querySelector("#new_quotation_form_tab");
+        const update_quotation_form_tab = quotation_form.querySelector("#update_quotation_form_tab");
+        const add_item_button_quotation_form = new_quotation_form_tab.querySelector("#add_item_button");
+        const remove_item_button_quotation_form = new_quotation_form_tab.querySelector("#remove_item_button");
+        const list_counter_quotation_form = new_quotation_form_tab.querySelector("#list_counter");
+        const list_container_quotation_form = new_quotation_form_tab.querySelector("#list_container");
+        const transportation_fee_container_quotation_form = new_quotation_form_tab.querySelector("#transportation_fee_container");
+        const tf_button_quotation_form = new_quotation_form_tab.querySelector("#tf_button");
+        const tf_value_quotation_form = new_quotation_form_tab.querySelector("#tf_value");
+        const tf_counter_quotation_form = new_quotation_form_tab.querySelector("#tf_counter");
+        const add_tf_button_quotation_form = new_quotation_form_tab.querySelector("#add_tf_button");
+        const remove_tf_button_quotation_form = new_quotation_form_tab.querySelector("#remove_tf_button");
+        const search_quotation_no_button_quotation_form = update_quotation_form_tab.querySelector("#search_quotation_no_button");
+        const search_quotation_no_button_container_quotation_form = update_quotation_form_tab.querySelector("#search_quotation_no_button_container");
+        const display_input_quotation_form = update_quotation_form_tab.querySelectorAll(".display_input");
+        const list_container_quotation_form2 = update_quotation_form_tab.querySelector("#list_container");
+        const transportation_fee_container = update_quotation_form_tab.querySelector("#transportation_fee_container");
+        const button_container_quotation_form = update_quotation_form_tab.querySelector("#button_container");
+        const add_item_button_quotation_form2 = update_quotation_form_tab.querySelector("#add_item_button");
+        const remove_item_button_quotation_form2 = update_quotation_form_tab.querySelector("#remove_item_button");
+        const list_counter_quotation_form2 = update_quotation_form_tab.querySelector("#list_counter");
+        const transportation_fee_container_quotation_form2 = update_quotation_form_tab.querySelector("#transportation_fee_container");
+        const tf_button_quotation_form2 = update_quotation_form_tab.querySelector("#tf_button");
+        const tf_value_quotation_form2 = update_quotation_form_tab.querySelector("#tf_value");
+        const tf_counter_quotation_form2 = update_quotation_form_tab.querySelector("#tf_counter");
+        const add_tf_button_quotation_form2 = update_quotation_form_tab.querySelector("#add_tf_button");
+        const remove_tf_button_quotation_form2 = update_quotation_form_tab.querySelector("#remove_tf_button");
+        const quotation_no_quotation_form2 = update_quotation_form_tab.querySelector("#quotation_no");
+        const validity_quotation_form2 = update_quotation_form_tab.querySelector("#validity");
+        const terms_quotation_form2 = update_quotation_form_tab.querySelector("#terms");
+        const client_quotation_form2 = update_quotation_form_tab.querySelector("#client");
+        const waste_code1_quotation_form2 = update_quotation_form_tab.querySelector("#waste_code1");
+        const waste_name1_quotation_form2 = update_quotation_form_tab.querySelector("#waste_name1");
+        const mode1_quotation_form2 = update_quotation_form_tab.querySelector("#mode1");
+        const unit1_quotation_form2 = update_quotation_form_tab.querySelector("#unit1");
+        const unit_price1_quotation_form2 = update_quotation_form_tab.querySelector("#unit_price1");
+        const vat_calculation1_quotation_form2 = update_quotation_form_tab.querySelector("#vat_calculation1");
+
+
+        function typeOfVehicleOption(){
+            var type_of_vehicle = [];
+            var type_of_vehicle_selection = "";
+            const  type_of_vehicle_containers = document.querySelectorAll("#type_of_vehicle_container select")
+            for(let x = 1; x < vehicle_data_list.content.length; x++){
+                if (!type_of_vehicle.includes(vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")])) {
+                    type_of_vehicle.push(vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")]);
+                    type_of_vehicle_selection += `<option value="${vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")]}">${vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")]}</option>`
+                }
+            }
+            type_of_vehicle_containers.forEach(select => {
+                select.insertAdjacentHTML("beforeend", type_of_vehicle_selection)
+            })
+        }
+        typeOfVehicleOption();
+
+        new_quotation_button_quotation_form.addEventListener("click", () => {
+            if(new_quotation_form_tab.style.display == "block"){
+                new_quotation_form_tab.style.display = "none";
+            }
+            else{
+                new_quotation_form_tab.style.display = "block";
+                update_quotation_form_tab.style.display = "none";
+            }
+        })
+        update_quotation_button_quotation_form.addEventListener("click", () => {
+            if(update_quotation_form_tab.style.display == "block"){
+                update_quotation_form_tab.style.display = "none";
+            }
+            else{
+                update_quotation_form_tab.style.display = "block";
+                new_quotation_form_tab.style.display = "none";
+            }
+        })
+        
+        var qlf_data_value = "";
+        var qlf_data_value_counter = 1;
+        for(let x = 1; x < qlf_data_list.content.length; x++){
+            var client_name = "";
+            for(let c = 1; c < client_data_list.content.length; c++){
+                if(qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")] == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")]){
+                    client_name = client_data_list.content[c][findTextInArray(client_data_list, "CLIENT NAME")];
+                }
+            }
+            var waste_code = "";
+            var waste_name = "";
+            for(let c = 1; c < type_of_waste_data_list.content.length; c++){
+                if(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID")] == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
+                    waste_code = type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")];
+                    waste_name = type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE NAME")];
+                }
+                if(waste_code == ""){
+                    waste_code = qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID")];
+                }
+            }
+            qlf_data_value += `
+            <tr>
+                <td>${qlf_data_value_counter}</td>
+                <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "QUOTATION CODE")]}</td>
+                <td>${client_name}</td>
+                <td>${waste_code}</td>
+                <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")]}</td>
+                <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "MODE")]}</td>
+                <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")]}</td>
+                <td>${formatNumber(qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT PRICE")])}</td>
+                <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "VAT CALCULATION")]}</td>
+                <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "TERMS DAYS")]}</td>
+                <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "SUBMITTED BY")]}</td>
+            </tr>
+            `
+            qlf_data_value_counter += 1;
+        }
+        qlf_list_quotation_form.innerHTML = qlf_data_value;
 
         add_item_button_quotation_form.addEventListener("click", () => {
             list_counter_quotation_form.value = parseInt(list_counter_quotation_form.value) + 1;
@@ -678,12 +768,12 @@ document.addEventListener('DOMContentLoaded', async function() {
             typeOfWaste();
             // Get all input elements of type "number"
             const numberInputs = document.querySelectorAll('input[type="number"]');
-
+    
             // Loop through each input and set the "step" attribute
             numberInputs.forEach(input => {
                 input.setAttribute('step', '0.01'); // Set the desired step value
-            });
-        })
+            })
+        });
 
         remove_item_button_quotation_form.addEventListener("click", () => {
             const list = list_container_quotation_form.querySelectorAll(".list_item");
@@ -703,7 +793,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             if(tf_value_quotation_form.value == "false"){
                 tf_counter_quotation_form.value = 1;
                 var data = `                        
-                <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 15% 10% 13%; gap: 20px; width: calc(100% - 240px);">
+                <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 15% 10% 13%; gap: 20px; width: calc(100% - 240px); margin-top: 30px;">
+                    <h4 style="position: absolute; top: -30px;">TRANSPORTATION FEE</h4>
                     <div class="wrapper">
                         <label for="type_of_vehicle1">
                         <i class="fa-solid fa-truck"></i>
@@ -711,21 +802,15 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </label><br>
                         <select name="type_of_vehicle1" id="type_of_vehicle1" class="form-control" required style=" height: 55px !important;">
                             <option value="">SELECT</option>
-                            <option value="6 WHEELER CLOSED VAN">6 WHEELER CLOSED VAN</option>
-                            <option value="10 WHEELER WING VAN">10 WHEELER WING VAN</option>
-                            <option value="DUMP TRUCK">DUMP TRUCK</option>
-                            <option value="FX">FX</option>
-                            <option value="BOOM TRUCK">BOOM TRUCK</option>
-                            <option value="CRAINE">CRAINE</option>
                         </select>
                     </div>
                     <div class="wrapper">
                         <label for="transportation_fee1">
                         <i class="fa-solid fa-list"></i>
-                            Particulars
+                        Area of Hauling
                         </label><br>
                         <div class="search_input">
-                            <input type="text" name="transportation_fee1" id="transportation_fee1" autocomplete="off" class="form-control" required value="TRANSPORTATION FEE" readonly style="padding-right: 20px !important;">
+                        <input type="text" name="transportation_fee1" id="transportation_fee1" autocomplete="off" class="form-control" required style="padding-right: 20px !important;" placeholder="Type Area of Hauling...">
                         </div>
                     </div>
                     <div class="wrapper">
@@ -783,6 +868,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 add_tf_button_quotation_form.style.display = "block";
                 // Get all input elements of type "number"
                 const numberInputs = document.querySelectorAll('input[type="number"]');
+                typeOfVehicleOption();
 
                 // Loop through each input and set the "step" attribute
                 numberInputs.forEach(input => {
@@ -791,7 +877,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             else{
                 tf_counter_quotation_form.value = 0;
-                const transportation_fee_container = document.querySelector("#transportation_fee_container");
+                const transportation_fee_container = new_quotation_form_tab.querySelector("#transportation_fee_container");
                 const tf_items = transportation_fee_container.querySelectorAll(".tf_item");
                 
                 tf_items.forEach(tf_item => {
@@ -811,17 +897,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <div class="wrapper">
                     <select name="type_of_vehicle${tf_counter_quotation_form.value}" id="type_of_vehicle${tf_counter_quotation_form.value}" class="form-control" required style=" height: 55px !important;">
                         <option value="">SELECT</option>
-                        <option value="6 WHEELER CLOSED VAN">6 WHEELER CLOSED VAN</option>
-                        <option value="10 WHEELER WING VAN">10 WHEELER WING VAN</option>
-                        <option value="DUMP TRUCK">DUMP TRUCK</option>
-                        <option value="FX">FX</option>
-                        <option value="BOOM TRUCK">BOOM TRUCK</option>
-                        <option value="CRAINE">CRAINE</option>
                     </select>
                 </div>
                 <div class="wrapper">
                     <div class="search_input">
-                        <input type="text" name="transportation_fee${tf_counter_quotation_form.value}" id="transportation_fee${tf_counter_quotation_form.value}" autocomplete="off" class="form-control" required value="TRANSPORTATION FEE" readonly style="padding-right: 20px !important;">
+                        <input type="text" name="transportation_fee${tf_counter_quotation_form.value}" id="transportation_fee${tf_counter_quotation_form.value}" autocomplete="off" class="form-control" required style="padding-right: 20px !important;" placeholder="Type Area of Hauling...">
                     </div>
                 </div>
                 <div class="wrapper">
@@ -862,6 +942,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             remove_tf_button_quotation_form.style.display = "block";
             // Get all input elements of type "number"
             const numberInputs = document.querySelectorAll('input[type="number"]');
+            typeOfVehicleOption();
 
             // Loop through each input and set the "step" attribute
             numberInputs.forEach(input => {
@@ -870,7 +951,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         })
 
         remove_tf_button_quotation_form.addEventListener("click", () => {
-            const transportation_fee_container = document.querySelector("#transportation_fee_container");
+            const transportation_fee_container = new_quotation_form_tab.querySelector("#transportation_fee_container");
             const tf_item = transportation_fee_container.querySelectorAll(".tf_item");
 
             const last_tf_item = tf_item[tf_item.length - 1];
@@ -881,6 +962,491 @@ document.addEventListener('DOMContentLoaded', async function() {
                 
                 if (tf_counter_quotation_form.value == 1) {
                     remove_tf_button_quotation_form.style.display = "none";
+                }
+            }
+        });
+
+        var vehicle_list = [];
+        for(let y = 1; y < vehicle_data_list.content.length; y++){
+            if (!vehicle_list.includes(vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")])) {
+                vehicle_list.push(vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")]);
+            }
+        }
+        search_quotation_no_button_quotation_form.addEventListener("click", () => {
+            search_quotation_no_button_container_quotation_form.style.display = "none";
+            display_input_quotation_form.forEach(input => {input.style.display = "block"});
+            list_container_quotation_form2.style.display = "block";
+            transportation_fee_container.style.display = "block";
+            button_container_quotation_form.style.display = "flex";
+            for(let x = 1; x < qlf_data_list.content.length; x++){
+                for(let y = 1; y < type_of_waste_data_list.content.length; y++){
+                    if(quotation_no_quotation_form2.value == qlf_data_list.content[x][findTextInArray(qlf_data_list, "QUOTATION CODE")] &&
+                    qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")] == type_of_waste_data_list.content[y][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
+                        console.log("pass")
+                        if(x == 1){
+                            var client_name = "";
+                            for(let c = 1; c < client_data_list.content.length; c++){
+                                if(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")] == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")]){
+                                    client_name = client_data_list.content[c][findTextInArray(client_data_list, "CLIENT NAME")];
+                                }
+                            }
+                            var waste_code = "";
+                            var waste_name = "";
+                            for(let c = 1; c < type_of_waste_data_list.content.length; c++){
+                                if(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")] == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
+                                    waste_code = type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")];
+                                    waste_name = type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE NAME")];
+                                }
+                            }
+                            validity_quotation_form2.value = date_decoder2(qlf_data_list.content[x][findTextInArray(qlf_data_list, "VALIDITY")]);
+                            terms_quotation_form2.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "TERMS DAYS")];
+                            client_quotation_form2.value = client_name;
+                            waste_code1_quotation_form2.value = waste_code;
+                            waste_name1_quotation_form2.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")];
+                            mode1_quotation_form2.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "MODE")];
+                            unit1_quotation_form2.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")];
+                            unit_price1_quotation_form2.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT PRICE")];
+                            vat_calculation1_quotation_form2.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "VAT CALCULATION")];
+                        }
+                        else if (x > 1){
+                            addQuotationList();
+                            var waste_code = "";
+                            var waste_name = "";
+                            for(let c = 1; c < type_of_waste_data_list.content.length; c++){
+                                if(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")] == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
+                                    waste_code = type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")];
+                                    waste_name = type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE NAME")];
+                                }
+                            }
+                            var waste_code1_quotation_form = update_quotation_form_tab.querySelector(`#waste_code${x}`);
+                            var waste_name1_quotation_form = update_quotation_form_tab.querySelector(`#waste_name${x}`);
+                            var mode1_quotation_form = update_quotation_form_tab.querySelector(`#mode${x}`);
+                            var unit1_quotation_form = update_quotation_form_tab.querySelector(`#unit${x}`);
+                            var unit_price1_quotation_form = update_quotation_form_tab.querySelector(`#unit_price${x}`);
+                            var vat_calculation1_quotation_form = update_quotation_form_tab.querySelector(`#vat_calculation${x}`);
+                                                
+                            waste_code1_quotation_form.value = waste_code;
+                            waste_name1_quotation_form.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")];
+                            mode1_quotation_form.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "MODE")];
+                            unit1_quotation_form.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")];
+                            unit_price1_quotation_form.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT PRICE")];
+                            vat_calculation1_quotation_form.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "VAT CALCULATION")];
+                        }
+                    }
+
+                }
+                for(let y = 1; y < vehicle_list.length; y++){
+                    if(quotation_no_quotation_form2.value == qlf_data_list.content[x][findTextInArray(qlf_data_list, "QUOTATION CODE")] &&
+                    qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")] == vehicle_list[y]){
+                        addTransportationFeeList();
+                        var waste_code1_quotation_form = update_quotation_form_tab.querySelector(`#waste_code${x}`);
+                        var waste_name1_quotation_form = update_quotation_form_tab.querySelector(`#waste_name${x}`);
+                        var mode1_quotation_form = update_quotation_form_tab.querySelector(`#mode${x}`);
+                        var unit1_quotation_form = update_quotation_form_tab.querySelector(`#unit${x}`);
+                        var unit_price1_quotation_form = update_quotation_form_tab.querySelector(`#unit_price${x}`);
+                        var vat_calculation1_quotation_form = update_quotation_form_tab.querySelector(`#vat_calculation${x}`);
+                                            
+                        waste_code1_quotation_form.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")];
+                        waste_name1_quotation_form.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")];
+                        mode1_quotation_form.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "MODE")];
+                        unit1_quotation_form.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")];
+                        unit_price1_quotation_form.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT PRICE")];
+                        vat_calculation1_quotation_form.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "VAT CALCULATION")];
+                    }
+                }
+            }
+        })
+
+        function addQuotationList() {
+            list_counter_quotation_form2.value = parseInt(list_counter_quotation_form2.value) + 1;
+            var data = `
+            <div class="list_item" id="list${list_counter_quotation_form2.value}" style="display: grid; grid-template-columns: 17% 30% 15% 15% 10% 13%; gap: 20px; width: calc(100% - 240px);">
+                <div class="wrapper">
+                    <div class="search_input" id="search_waste_code">
+                        <input type="text" name="waste_code${list_counter_quotation_form2.value}" id="waste_code${list_counter_quotation_form2.value}" autocomplete="off" class="form-control" required placeholder="Search">
+                        <div class="autocom_box">
+                        </div>
+                        <div class="icon"><i class="fas fa-search"></i></div>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <input type="text" name="waste_name${list_counter_quotation_form2.value}" id="waste_name${list_counter_quotation_form2.value}" autocomplete="off" class="form-control" required placeholder="Type Waste Name..." style="padding-right: 20px !important;">
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <select name="mode${list_counter_quotation_form2.value}" id="mode${list_counter_quotation_form2.value}" required class="form-control" style="height: 55px;">
+                            <option value="">SELECT</option>
+                            <option value="CHARGE">CHARGE</option>
+                            <option value="FREE OF CHARGE">FREE OF CHARGE</option>
+                            <option value="BUYING">BUYING</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <select name="unit${list_counter_quotation_form2.value}" id="unit${list_counter_quotation_form2.value}" required class="form-control" style="height: 55px;">
+                            <option value="">SELECT</option>
+                            <option value="Kg">KILOGRAMS</option>
+                            <option value="L">LITERS</option>
+                            <option value="DRUM">DRUM</option>
+                            <option value="TRIP">TRIP</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <input type="number" name="unit_price${list_counter_quotation_form2.value}" id="unit_price${list_counter_quotation_form2.value}" autocomplete="off" class="form-control" required value="0" style="padding-right: 20px !important;">
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <select name="vat_calculation${list_counter_quotation_form2.value}" id="vat_calculation${list_counter_quotation_form2.value}" required class="form-control" style="height: 55px;">
+                            <option value="">SELECT</option>
+                            <option value="VAT INCLUSIVE">VAT INCLUSIVE</option>
+                            <option value="VAT EXCLUSIVE">VAT EXCLUSIVE</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            `
+            list_container_quotation_form2.insertAdjacentHTML("beforeend", data);
+            if(list_counter_quotation_form2.value > 1){
+                remove_item_button_quotation_form2.style.display = "block";
+            }
+            else{
+                remove_item_button_quotation_form2.style.display = "none";
+            }
+            typeOfWaste();
+            // Get all input elements of type "number"
+            const numberInputs = document.querySelectorAll('input[type="number"]');
+    
+            // Loop through each input and set the "step" attribute
+            numberInputs.forEach(input => {
+                input.setAttribute('step', '0.01'); // Set the desired step value
+            })
+        } 
+
+        function addTransportationFeeList() {
+            tf_counter_quotation_form2.value = parseInt(tf_counter_quotation_form2.value) + 1;
+            var data = `                        
+            <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 15% 10% 13%; gap: 20px; width: calc(100% - 240px); margin-top: 30px;">
+                <h4 style="position: absolute; top: -30px;">TRANSPORTATION FEE</h4>
+                <div class="wrapper">
+                    <select name="type_of_vehicle${tf_counter_quotation_form2.value}" id="type_of_vehicle${tf_counter_quotation_form2.value}" class="form-control" required style=" height: 55px !important;">
+                        <option value="">SELECT</option>
+                    </select>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <input type="text" name="transportation_fee${tf_counter_quotation_form2.value}" id="transportation_fee${tf_counter_quotation_form2.value}" autocomplete="off" class="form-control" required style="padding-right: 20px !important;" placeholder="Type Area of Hauling...">
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <select name="tf_mode${tf_counter_quotation_form2.value}" id="tf_mode${tf_counter_quotation_form2.value}" class="form-control" required style="height: 55px;">
+                            <option value="">SELECT</option>
+                            <option value="CHARGE">CHARGE</option>
+                            <option value="FREE OF CHARGE">FREE OF CHARGE</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <select name="tf_unit${tf_counter_quotation_form2.value}" id="tf_unit${tf_counter_quotation_form2.value}" class="form-control" required style="height: 55px;">
+                            <option value="">SELECT</option>
+                            <option value="TRIP">TRIP</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <input type="number" name="tf_unit_price${tf_counter_quotation_form2.value}" id="tf_unit_price${tf_counter_quotation_form2.value}" autocomplete="off" class="form-control" required value="0" style="padding-right: 20px !important;">
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <select name="tf_vat_calculation${tf_counter_quotation_form2.value}" id="tf_vat_calculation${tf_counter_quotation_form2.value}" class="form-control" required style="height: 55px;">
+                            <option value="">SELECT</option>
+                            <option value="VAT INCLUSIVE">VAT INCLUSIVE</option>
+                            <option value="VAT EXCLUSIVE">VAT EXCLUSIVE</option>
+                        </select>
+                    </div>
+                </div>
+            </div>      
+            `
+            transportation_fee_container_quotation_form2.insertAdjacentHTML("beforeend", data);
+            tf_value_quotation_form2.value = "true";
+            remove_tf_button_quotation_form2.style.display = "block";
+            // Get all input elements of type "number"
+            const numberInputs = document.querySelectorAll('input[type="number"]');
+            typeOfVehicleOption();
+
+            // Loop through each input and set the "step" attribute
+            numberInputs.forEach(input => {
+                input.setAttribute('step', '0.01'); // Set the desired step value
+            });
+        }
+
+        add_item_button_quotation_form2.addEventListener("click", () => {
+            list_counter_quotation_form2.value = parseInt(list_counter_quotation_form2.value) + 1;
+            var data = `
+            <div class="list_item" id="list${list_counter_quotation_form2.value}" style="display: grid; grid-template-columns: 17% 30% 15% 15% 10% 13%; gap: 20px; width: calc(100% - 240px);">
+                <div class="wrapper">
+                    <div class="search_input" id="search_waste_code">
+                        <input type="text" name="waste_code${list_counter_quotation_form2.value}" id="waste_code${list_counter_quotation_form2.value}" autocomplete="off" class="form-control" required placeholder="Search">
+                        <div class="autocom_box">
+                        </div>
+                        <div class="icon"><i class="fas fa-search"></i></div>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <input type="text" name="waste_name${list_counter_quotation_form2.value}" id="waste_name${list_counter_quotation_form2.value}" autocomplete="off" class="form-control" required placeholder="Type Waste Name..." style="padding-right: 20px !important;">
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <select name="mode${list_counter_quotation_form2.value}" id="mode${list_counter_quotation_form2.value}" required class="form-control" style="height: 55px;">
+                            <option value="">SELECT</option>
+                            <option value="CHARGE">CHARGE</option>
+                            <option value="FREE OF CHARGE">FREE OF CHARGE</option>
+                            <option value="BUYING">BUYING</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <select name="unit${list_counter_quotation_form2.value}" id="unit${list_counter_quotation_form2.value}" required class="form-control" style="height: 55px;">
+                            <option value="">SELECT</option>
+                            <option value="KILOGRAMS">KILOGRAMS</option>
+                            <option value="LITERS">LITERS</option>
+                            <option value="DRUM">DRUM</option>
+                            <option value="TRIP">TRIP</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <input type="number" name="unit_price${list_counter_quotation_form2.value}" id="unit_price${list_counter_quotation_form2.value}" autocomplete="off" class="form-control" required value="0" style="padding-right: 20px !important;">
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <select name="vat_calculation${list_counter_quotation_form2.value}" id="vat_calculation${list_counter_quotation_form2.value}" required class="form-control" style="height: 55px;">
+                            <option value="">SELECT</option>
+                            <option value="VAT INCLUSIVE">VAT INCLUSIVE</option>
+                            <option value="VAT EXCLUSIVE">VAT EXCLUSIVE</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            `
+            list_container_quotation_form2.insertAdjacentHTML("beforeend", data);
+            if(list_counter_quotation_form2.value > 1){
+                remove_item_button_quotation_form2.style.display = "block";
+            }
+            else{
+                remove_item_button_quotation_form2.style.display = "none";
+            }
+            typeOfWaste();
+            // Get all input elements of type "number"
+            const numberInputs = document.querySelectorAll('input[type="number"]');
+    
+            // Loop through each input and set the "step" attribute
+            numberInputs.forEach(input => {
+                input.setAttribute('step', '0.01'); // Set the desired step value
+            })
+        });
+
+        remove_item_button_quotation_form2.addEventListener("click", () => {
+            const list = list_container_quotation_form2.querySelectorAll(".list_item");
+            const last_list = list[list.length - 1];
+            
+            if (list.length > 1) {
+                list_container_quotation_form2.removeChild(last_list);
+                list_counter_quotation_form2.value = parseInt(list_counter_quotation_form2.value) - 1;
+                
+                if (list_counter_quotation_form2.value == 1) {
+                    remove_item_button_quotation_form2.style.display = "none";
+                }
+            }
+        });
+
+        tf_button_quotation_form2.addEventListener("click", () => {
+            if(tf_value_quotation_form2.value == "false"){
+                tf_counter_quotation_form2.value = 1;
+                var data = `                        
+                <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 15% 10% 13%; gap: 20px; width: calc(100% - 240px); margin-top: 30px;">
+                    <h4 style="position: absolute; top: -30px;">TRANSPORTATION FEE</h4>
+                    <div class="wrapper">
+                        <label for="type_of_vehicle1">
+                        <i class="fa-solid fa-truck"></i>
+                            Type of Vehicle
+                        </label><br>
+                        <select name="type_of_vehicle1" id="type_of_vehicle1" class="form-control" required style=" height: 55px !important;">
+                            <option value="">SELECT</option>
+                        </select>
+                    </div>
+                    <div class="wrapper">
+                        <label for="transportation_fee1">
+                        <i class="fa-solid fa-list"></i>
+                        Area of Hauling
+                        </label><br>
+                        <div class="search_input">
+                        <input type="text" name="transportation_fee1" id="transportation_fee1" autocomplete="off" class="form-control" required style="padding-right: 20px !important;" placeholder="Type Area of Hauling...">
+                        </div>
+                    </div>
+                    <div class="wrapper">
+                        <label for="mode1">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                            Mode
+                        </label><br>
+                        <div class="search_input">
+                            <select name="mode1" id="mode1" class="form-control" required style="height: 55px;">
+                                <option value="">SELECT</option>
+                                <option value="CHARGE">CHARGE</option>
+                                <option value="FREE OF CHARGE">FREE OF CHARGE</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="wrapper">
+                        <label for="unit1">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                            Unit
+                        </label><br>
+                        <div class="search_input">
+                            <select name="unit1" id="unit1" class="form-control" required style="height: 55px;">
+                                <option value="">SELECT</option>
+                                <option value="TRIP">TRIP</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="wrapper">
+                        <label for="unit_price1">
+                        <i class="fa-solid fa-money-bill-wave"></i>
+                            Unit Price
+                        </label><br>
+                        <div class="search_input">
+                            <input type="number" name="unit_price1" id="unit_price1" autocomplete="off" class="form-control" required value="0" style="padding-right: 20px !important;">
+                        </div>
+                    </div>
+                    <div class="wrapper">
+                        <label for="vat_calculation1">
+                        <i class="fa-solid fa-calculator"></i>
+                            Vat Calculation
+                        </label><br>
+                        <div class="search_input">
+                            <select name="vat_calculation1" id="vat_calculation1" class="form-control" required style="height: 55px;">
+                                <option value="">SELECT</option>
+                                <option value="VAT INCLUSIVE">VAT INCLUSIVE</option>
+                                <option value="VAT EXCLUSIVE">VAT EXCLUSIVE</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>      
+                `
+                transportation_fee_container_quotation_form2.insertAdjacentHTML("beforeend", data);
+                tf_value_quotation_form2.value = "true";
+                tf_button_quotation_form2.innerHTML = "WITHOUT<br>TRANSPORTATION<br>FEE";
+                add_tf_button_quotation_form2.style.display = "block";
+                // Get all input elements of type "number"
+                const numberInputs = document.querySelectorAll('input[type="number"]');
+                typeOfVehicleOption();
+
+                // Loop through each input and set the "step" attribute
+                numberInputs.forEach(input => {
+                    input.setAttribute('step', '0.01'); // Set the desired step value
+                });
+            }
+            else{
+                tf_counter_quotation_form2.value = 0;
+                const transportation_fee_container = update_quotation_form_tab.querySelector("#transportation_fee_container");
+                const tf_items = transportation_fee_container.querySelectorAll(".tf_item");
+                
+                tf_items.forEach(tf_item => {
+                    transportation_fee_container.removeChild(tf_item);
+                })
+                tf_value_quotation_form2.value = "false";
+                tf_button_quotation_form2.innerHTML = "WITH<br>TRANSPORTATION<br>FEE";
+                add_tf_button_quotation_form2.style.display = "none";
+                remove_tf_button_quotation_form2.style.display = "none";
+            }
+        })
+        
+        add_tf_button_quotation_form2.addEventListener("click", () => {
+            tf_counter_quotation_form2.value = parseInt(tf_counter_quotation_form2.value) + 1;
+            var data = `                        
+            <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 15% 10% 13%; gap: 20px; width: calc(100% - 240px);">
+                <div class="wrapper">
+                    <select name="type_of_vehicle${tf_counter_quotation_form2.value}" id="type_of_vehicle${tf_counter_quotation_form2.value}" class="form-control" required style=" height: 55px !important;">
+                        <option value="">SELECT</option>
+                    </select>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <input type="text" name="transportation_fee${tf_counter_quotation_form2.value}" id="transportation_fee${tf_counter_quotation_form2.value}" autocomplete="off" class="form-control" required style="padding-right: 20px !important;" placeholder="Type Area of Hauling...">
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <select name="tf_mode${tf_counter_quotation_form2.value}" id="tf_mode${tf_counter_quotation_form2.value}" class="form-control" required style="height: 55px;">
+                            <option value="">SELECT</option>
+                            <option value="CHARGE">CHARGE</option>
+                            <option value="FREE OF CHARGE">FREE OF CHARGE</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <select name="tf_unit${tf_counter_quotation_form2.value}" id="tf_unit${tf_counter_quotation_form2.value}" class="form-control" required style="height: 55px;">
+                            <option value="">SELECT</option>
+                            <option value="TRIP">TRIP</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <input type="number" name="tf_unit_price${tf_counter_quotation_form2.value}" id="tf_unit_price${tf_counter_quotation_form2.value}" autocomplete="off" class="form-control" required value="0" style="padding-right: 20px !important;">
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <select name="tf_vat_calculation${tf_counter_quotation_form2.value}" id="tf_vat_calculation${tf_counter_quotation_form2.value}" class="form-control" required style="height: 55px;">
+                            <option value="">SELECT</option>
+                            <option value="VAT INCLUSIVE">VAT INCLUSIVE</option>
+                            <option value="VAT EXCLUSIVE">VAT EXCLUSIVE</option>
+                        </select>
+                    </div>
+                </div>
+            </div>      
+            `
+            transportation_fee_container_quotation_form2.insertAdjacentHTML("beforeend", data);
+            tf_value_quotation_form2.value = "true";
+            remove_tf_button_quotation_form2.style.display = "block";
+            // Get all input elements of type "number"
+            const numberInputs = document.querySelectorAll('input[type="number"]');
+            typeOfVehicleOption();
+
+            // Loop through each input and set the "step" attribute
+            numberInputs.forEach(input => {
+                input.setAttribute('step', '0.01'); // Set the desired step value
+            });
+        })
+
+        remove_tf_button_quotation_form2.addEventListener("click", () => {
+            const transportation_fee_container = update_quotation_form_tab.querySelector("#transportation_fee_container");
+            const tf_item = transportation_fee_container.querySelectorAll(".tf_item");
+
+            const last_tf_item = tf_item[tf_item.length - 1];
+            
+            if (tf_item.length > 1) {
+                transportation_fee_container.removeChild(last_tf_item);
+                tf_counter_quotation_form2.value = parseInt(tf_counter_quotation_form2.value) - 1;
+                
+                if (tf_counter_quotation_form2.value == 1) {
+                    remove_tf_button_quotation_form2.style.display = "none";
                 }
             }
         });

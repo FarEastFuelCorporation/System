@@ -32,6 +32,29 @@ function date_decoder(utcTime) {
     return utcPlus8Time;
 }
 
+function date_decoder2(utcTime) {
+  var utcDate = new Date(utcTime);
+  var options = {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  };
+  var formattedDate = utcDate.toLocaleString('en-US', options);
+  
+  // Extract the parts and format them as yyyy-MM-dd
+  var parts = formattedDate.split('/');
+  if (parts.length === 3) {
+      var year = parts[2];
+      var month = parts[0].padStart(2, '0');
+      var day = parts[1].padStart(2, '0');
+      return year + '-' + month + '-' + day;
+  }
+
+  // If the date format is not as expected, return the original formatted date.
+  return formattedDate;
+}
+
+
 function time_decoder(timestamp) {
   const date = new Date(timestamp);
 
@@ -611,6 +634,14 @@ function getWeekDates2(dateString) {
 function findTextInArray(textArray, targetText) {
   for (let q = 0; q < textArray.content[0].length; q++) {
     if (textArray.content[0][q] == targetText) {
+      return q; // Found the target text, return its index
+    }
+  }
+  return -1; // Target text not found in the array
+}
+function findTextInArray2(textArray, targetText) {
+  for (let q = 0; q < textArray[0].length; q++) {
+    if (textArray[0][q] == targetText) {
       return q; // Found the target text, return its index
     }
   }
