@@ -640,8 +640,8 @@ function findTextInArray(textArray, targetText) {
   return -1; // Target text not found in the array
 }
 function findTextInArray2(textArray, targetText) {
-  for (let q = 0; q < textArray[0].length; q++) {
-    if (textArray[0][q] == targetText) {
+  for (let q = 0; q < textArray.length; q++) {
+    if (textArray[q] == targetText) {
       return q; // Found the target text, return its index
     }
   }

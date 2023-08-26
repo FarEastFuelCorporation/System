@@ -554,6 +554,7 @@
                             <thead style="position: sticky; top: 0; background-color: black;">
                                 <th>#</th>
                                 <th>QUOTATION<br>CODE</th>
+                                <th>VALIDITY</th>
                                 <th>CLIENT</th>
                                 <th>WASTE CODE/<br>TYPE OF VEHICLE</th>
                                 <th>WASTE NAME/<br>AREA</th>
@@ -571,9 +572,9 @@
                         <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
                     </div>
                 </div><br>
-                <div id="new_quotation_form_tab" style="position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid orangered; border-radius: 10px; background-color: white; overflow: scroll;">
+                <div id="new_quotation_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid orangered; border-radius: 10px; background-color: white; overflow: scroll;">
                     <h2>NEW QUOTATION FORM</h2><br>
-                    <form  action="https://script.google.com/macros/s/AKfycbz6DVIDp3R-gm8_9yNZNJVcCJ51lhVhTv1IAkI3liZZUs1neSHQyd8tMZrSvroCzwaGpA/exec" method="post">
+                    <form  action="https://script.google.com/macros/s/AKfycbxGEksq1CxxLsjp2-v7FZieghygklICRDbEdziNdTMjZG1CsZ1z2G0Ixc3zXdou-5LxPg/exec" method="post">
                         <input type="hidden" name="user" id="user">
                         <div style="display: grid; grid-template-columns: 15% 20% 15% 50%; gap: 20px; width: calc(100% - 60px);">
                             <div class="wrapper">
@@ -619,7 +620,7 @@
                         <div id="list_container">
                             <h4>QUOTATION DETAILS</h4>
                             <input type="hidden" id="list_counter" name="list_counter" value="1">
-                            <div class="list_item" id="list1"  style="display: grid; grid-template-columns: 17% 30% 15% 15% 10% 13%; gap: 20px; width: calc(100% - 240px);">
+                            <div class="list_item" id="list1"  style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; width: calc(100% - 240px);">
                                 <div class="wrapper">
                                     <label for="waste_code1">
                                         <i class="fa-solid fa-list"></i>
@@ -705,7 +706,7 @@
                             </div>
                         </div>
                         <div id="transportation_fee_container" style="position: relative;">
-                            <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 15% 10% 13%; gap: 20px; width: calc(100% - 240px); margin-top: 30px;">
+                            <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; width: calc(100% - 240px); margin-top: 30px;">
                                 <h4 style="position: absolute; top: -30px;">TRANSPORTATION FEE</h4>
                                 <div class="wrapper" id="type_of_vehicle_container">
                                     <label for="type_of_vehicle1">
@@ -775,7 +776,7 @@
                             </div>            
                             <input type="hidden" id="tf_value" name="tf_value" value="true">
                             <input type="hidden" id="tf_counter" name="tf_counter" value="1">
-                            <div class="add_item pt-3" style="position: absolute; top: 10px; right: 0px !important; width: 100px;;">
+                            <div class="add_item pt-3" style="position: absolute; top: 10px; right: 0px !important; width: 100px;">
                                 <div class="item_buttons">
                                     <button type="button" id="tf_button" class="" style="padding: 5px; border-radius: 5px; font-size: 12px; color: white !important">
                                         WITHOUT<br>TRANSPORTATION<br>FEE
@@ -803,9 +804,9 @@
                         </div>    
                     </form>
                 </div>
-                <div id="update_quotation_form_tab" style="position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid orangered; border-radius: 10px; background-color: white; overflow: scroll;">
+                <div id="update_quotation_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid orangered; border-radius: 10px; background-color: white; overflow: scroll;">
                     <h2>UPDATE QUOTATION FORM</h2><br>
-                    <form action="https://script.google.com/macros/s/AKfycbz6DVIDp3R-gm8_9yNZNJVcCJ51lhVhTv1IAkI3liZZUs1neSHQyd8tMZrSvroCzwaGpA/exec" method="post">
+                    <form action="https://script.google.com/macros/s/AKfycbxGEksq1CxxLsjp2-v7FZieghygklICRDbEdziNdTMjZG1CsZ1z2G0Ixc3zXdou-5LxPg/exec" method="post">
                         <input type="hidden" name="user" id="user">
                         <div style="display: grid; grid-template-columns: 15% 20% 15% 50%; gap: 20px; width: calc(100% - 60px);">
                             <div class="wrapper">
@@ -856,7 +857,8 @@
                         <div id="list_container" style="display: none;">
                             <h4>QUOTATION DETAILS</h4>
                             <input type="hidden" id="list_counter" name="list_counter" value="1">
-                            <div class="list_item" id="list1" style="display: grid; grid-template-columns: 17% 30% 15% 15% 10% 13%; gap: 20px; width: calc(100% - 240px);">
+                            <input type="hidden" id="timestamp" name="timestamp">
+                            <div class="list_item" id="list1" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; width: calc(100% - 240px);">
                                 <div class="wrapper">
                                     <label for="waste_code1">
                                         <i class="fa-solid fa-list"></i>
@@ -944,7 +946,7 @@
                         <div id="transportation_fee_container" style="position: relative; display: none; margin-top: 45px;">   
                             <input type="hidden" id="tf_value" name="tf_value" value="true">
                             <input type="hidden" id="tf_counter" name="tf_counter" value="0">
-                            <div class="add_item pt-3" style="position: absolute; top: 10px; right: 0px !important; width: 100px;;">
+                            <div class="add_item pt-3" style="position: absolute; top: 10px; right: 0px !important; width: 100px; margin-top: -30px;">
                                 <div class="item_buttons">
                                     <button type="button" id="tf_button" class="" style="padding: 5px; border-radius: 5px; font-size: 12px; color: white !important">
                                         WITHOUT<br>TRANSPORTATION<br>FEE
@@ -976,7 +978,7 @@
             <!-- order_request_form -->
             <section class="marketing" id="purchase_request_form">
                 <h2>PURCHASE REQUEST FORM</h2>
-                <form action="https://script.google.com/macros/s/AKfycbyVT34ZZCYh7L9mp_CHGD_WyruDQ5pUwMvZwoEF_uE_IpbcYSNS4-eQr2dQD-3fxniNBA/exec" method="post">
+                <form action="https://script.google.com/macros/s/AKfycbw4wpqb5yFlzKY6ortaVZppEAgYqm5G_otQl5I-3fGzPjiEAVKVOEv93mAFLeUbneTlAA/exec" method="post">
                     <input type="hidden" name="prf_user" id="prf_user">
                     <input type="hidden" name="prf_department" id="prf_department">
                     <input type="hidden" name="prf_counter" id="prf_counter" value="1">
@@ -1044,11 +1046,11 @@
                     </div>
                     <div class="add_item pt-3">
                         <div class="item_buttons">
-                            <button type="button" id="add_item_button" class="form-control">
-                                <i class="fa-solid fa-plus"></i>
-                            </button>
                             <button type="button" id="remove_item_button" class="form-control">
                                 <i class="fa-solid fa-minus"></i>
+                            </button>
+                            <button type="button" id="add_item_button" class="form-control">
+                                <i class="fa-solid fa-plus"></i>
                             </button>
                         </div>
                     </div>
@@ -1065,7 +1067,7 @@
             <!-- incident_report_form -->
             <section class="marketing" id="incident_report_form">
                 <h2>INCIDENT REPORT FORM</h2><br>
-                <form action="https://script.google.com/macros/s/AKfycbzVQzky_Rk6DqCLitPuTulVU92vOeew2ABJUyUn4fZImNb-ba-710ADZLm7p4FjYmiB/exec" method="post">
+                <form action="https://script.google.com/macros/s/AKfycbwbmOpZHts2cI57D2xY0evH1Omhxn36Znp2UeFJzy0aJfruqZPRPMgbOvucr2rYt55g/exec" method="post">
                     <input type="hidden" name="irf_user" id="irf_user">
                     <label for="irf_form_no">
                         <i class="fa-solid fa-list-ol"></i>
@@ -1074,27 +1076,47 @@
                     <div class="form">
                         <input type="text" id="irf_form_no" autocomplete="off" name="irf_form_no" class="form-control" readonly><br>
                     </div>
-                    <label for="irf_client">
-                        <i class="fa-solid fa-user"></i>
-                        Person Involved
-                    </label><br>
-                    <input type="text" id="irf_client" autocomplete="off" name="irf_client" class="form-control" required placeholder="Input Person Involved..."><br>
-                    <div class="flex">
-                        <div>
-                            <label for="irf_department">
-                                <i class="fa-solid fa-building-user"></i>
-                                Department
-                            </label><br>
-                            <input type="text" id="irf_department" autocomplete="off" name="irf_department" class="form-control" required placeholder="Input Department..."><br>        
-                        </div>
-                        <div>
-                            <label for="irf_designation">
-                                <i class="fa-solid fa-id-card"></i>
-                                Designation
-                            </label><br>
-                            <input type="text" id="irf_designation" autocomplete="off" name="irf_designation" class="form-control" required placeholder="Input Designation..."><br>        
+                    <div class="add_item pt-3" style="position: absolute; top: 120px; right: 20px !important; width: 100px;;">
+                        <div class="item_buttons">
+                            <button type="button" id="remove_tf_button" class="form-control">
+                                <i class="fa-solid fa-minus"></i>
+                            </button>
+                            <button type="button" id="add_tf_button" class="form-control">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
                         </div>
                     </div>
+                    <input type="hidden" id="irf_counter" name="irf_counter" value="1">
+                    <div id="person_involved_containers">
+                        <div id="person_involved_container" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+                            <div class="wrapper">
+                                <label for="irf_client">
+                                    <i class="fa-solid fa-user"></i>
+                                    Person Involved
+                                </label><br>
+                                <div class="search_input" id="search_irf_client">
+                                    <input type="text" name="irf_client1" id="irf_client1" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
+                                    <div class="autocom_box">
+                                    </div>
+                                    <div class="icon"><i class="fas fa-search"></i></div>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="irf_department">
+                                    <i class="fa-solid fa-building-user"></i>
+                                    Department
+                                </label><br>
+                                <input type="text" id="irf_department1" autocomplete="off" name="irf_department1" class="form-control" required readonly placeholder="Input Department..." style="height: 55px !important;">    
+                            </div>
+                            <div>
+                                <label for="irf_designation">
+                                    <i class="fa-solid fa-id-card"></i>
+                                    Designation
+                                </label><br>
+                                <input type="text" id="irf_designation1" autocomplete="off" name="irf_designation1" class="form-control" required readonly placeholder="Input Designation..." style="height: 55px !important;">   
+                            </div>
+                        </div>
+                    </div><br>
                     <label for="irf_location">
                         <i class="fa-solid fa-map-location-dot"></i>
                         Location

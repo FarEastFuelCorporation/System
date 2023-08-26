@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const client_list_response_promise = fetch('https://script.google.com/macros/s/AKfycbxXnIsmgK52Ws9H2qAh47qkgZxDltFJaHSFV0e9UQRwaK1g_xwFUKGokL_hk4fq-_mhSg/exec');
         const type_of_waste_response_promise = fetch('https://script.google.com/macros/s/AKfycbw0yC-8_V38Zl1-KGyBwX1JmfTEW1jwyFxgpZ-oNC2lvtoAraUtkLCS27HfNbXi_l4IPg/exec');
         const treatment_process_response_promise = fetch('https://script.google.com/macros/s/AKfycbzlzR7zmvdHSz4JpeXtEzPE4OQckTIVaE6PBw5IYwlqmmeIprQxEKkp4d2Jb1kBcgndzA/exec');
+        const employee_response_promise = fetch('https://script.google.com/macros/s/AKfycbwns5R6TA8U64ywbb9hwYu4LKurAjTM0Z18NYNZMt0Ft0m-_NUHYbYqblk_5KWugvt7lA/exec');
         const vehicle_response_promise = fetch('https://script.google.com/macros/s/AKfycbw-JCnctX1x1W1ogGbrkhNdIGd9q6bYjy_nvaYeoiaBf7HreB2a1tKJZaJHw2wu4wmpcA/exec');
         const mtf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzkzS4OVm3IfNl6KwOfLZq_uO3MnsXfu-oS5Su_1kxhfo1mMoKpYDm8a4RxWqsQh0qv/exec');
         const ltf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxBLMvyNDsT9_dlVO4Qc31dI4ErcymUHbzKimOpCZHgbJxip2XxCl7Wk3hJyqcdtrxU/exec');
@@ -18,6 +19,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             client_list_response,
             type_of_waste_response,
             treatment_process_response,
+            employee_response,
             vehicle_response,
             mtf_response,
             ltf_response,
@@ -31,6 +33,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             client_list_response_promise,
             type_of_waste_response_promise,
             treatment_process_response_promise,
+            employee_response_promise,
             vehicle_response_promise,
             mtf_response_promise,
             ltf_response_promise,
@@ -45,6 +48,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const client_data_list  = await client_list_response.json();
         const type_of_waste_data_list  = await type_of_waste_response.json();
         const treatment_process_data_list  = await treatment_process_response.json();
+        const employee_data_list  = await employee_response.json();
         const vehicle_data_list  = await vehicle_response.json();
         const mtf_data_list  = await mtf_response.json();
         const ltf_data_list  = await ltf_response.json();
@@ -337,9 +341,9 @@ document.addEventListener('DOMContentLoaded', async function() {
             }    
         })
 
-        var data_value3 = [];
+        var employee_name = [];
         for (x = 1; x < type_of_waste_data_list.content.length; x++) {
-            data_value3.push(type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "WASTE CODE")]);
+            employee_name.push(type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "WASTE CODE")]);
         }
 
         function typeOfWaste(){
@@ -353,7 +357,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     let user_data = e.target.value;
                     let empty_array = [];
                     if (user_data) {
-                        empty_array = data_value3.filter((data) => {
+                        empty_array = employee_name.filter((data) => {
                             return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
                         });
                         empty_array = empty_array.map((data) => {
@@ -625,6 +629,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const remove_tf_button_quotation_form2 = update_quotation_form_tab.querySelector("#remove_tf_button");
         const quotation_no_quotation_form2 = update_quotation_form_tab.querySelector("#quotation_no");
         const validity_quotation_form2 = update_quotation_form_tab.querySelector("#validity");
+        const timestamp_quotation_form2 = update_quotation_form_tab.querySelector("#timestamp");
         const terms_quotation_form2 = update_quotation_form_tab.querySelector("#terms");
         const client_quotation_form2 = update_quotation_form_tab.querySelector("#client");
         const waste_code1_quotation_form2 = update_quotation_form_tab.querySelector("#waste_code1");
@@ -638,18 +643,29 @@ document.addEventListener('DOMContentLoaded', async function() {
         function typeOfVehicleOption(){
             var type_of_vehicle = [];
             var type_of_vehicle_selection = "";
-            const  type_of_vehicle_containers = document.querySelectorAll("#type_of_vehicle_container select")
+            const  type_of_vehicle_containers = new_quotation_form_tab.querySelectorAll("#type_of_vehicle_container select")
             for(let x = 1; x < vehicle_data_list.content.length; x++){
                 if (!type_of_vehicle.includes(vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")])) {
                     type_of_vehicle.push(vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")]);
                     type_of_vehicle_selection += `<option value="${vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")]}">${vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")]}</option>`
                 }
             }
-            type_of_vehicle_containers.forEach(select => {
-                select.insertAdjacentHTML("beforeend", type_of_vehicle_selection)
-            })
+            type_of_vehicle_containers[tf_counter_quotation_form.value -1].insertAdjacentHTML("beforeend", type_of_vehicle_selection)
         }
         typeOfVehicleOption();
+
+        function typeOfVehicleOption2(){
+            var type_of_vehicle = [];
+            var type_of_vehicle_selection = "";
+            const  type_of_vehicle_containers = update_quotation_form_tab.querySelectorAll("#type_of_vehicle_container select")
+            for(let x = 1; x < vehicle_data_list.content.length; x++){
+                if (!type_of_vehicle.includes(vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")])) {
+                    type_of_vehicle.push(vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")]);
+                    type_of_vehicle_selection += `<option value="${vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")]}">${vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")]}</option>`
+                }
+            }
+            type_of_vehicle_containers[tf_counter_quotation_form2.value -1].insertAdjacentHTML("beforeend", type_of_vehicle_selection)
+        }
 
         new_quotation_button_quotation_form.addEventListener("click", () => {
             if(new_quotation_form_tab.style.display == "block"){
@@ -694,6 +710,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             <tr>
                 <td>${qlf_data_value_counter}</td>
                 <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "QUOTATION CODE")]}</td>
+                <td>${date_decoder(qlf_data_list.content[x][findTextInArray(qlf_data_list, "VALIDITY")])}</td>
                 <td>${client_name}</td>
                 <td>${waste_code}</td>
                 <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")]}</td>
@@ -712,7 +729,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         add_item_button_quotation_form.addEventListener("click", () => {
             list_counter_quotation_form.value = parseInt(list_counter_quotation_form.value) + 1;
             var data = `
-            <div class="list_item" id="list${list_counter_quotation_form.value}" style="display: grid; grid-template-columns: 17% 30% 15% 15% 10% 13%; gap: 20px; width: calc(100% - 240px);">
+            <div class="list_item" id="list${list_counter_quotation_form.value}" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; width: calc(100% - 240px);">
                 <div class="wrapper">
                     <div class="search_input" id="search_waste_code">
                         <input type="text" name="waste_code${list_counter_quotation_form.value}" id="waste_code${list_counter_quotation_form.value}" autocomplete="off" class="form-control" required placeholder="Search">
@@ -740,8 +757,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <div class="search_input">
                         <select name="unit${list_counter_quotation_form.value}" id="unit${list_counter_quotation_form.value}" required class="form-control" style="height: 55px;">
                             <option value="">SELECT</option>
-                            <option value="KILOGRAMS">KILOGRAMS</option>
-                            <option value="LITERS">LITERS</option>
+                            <option value="Kg">KILOGRAMS</option>
+                            <option value="L">LITERS</option>
                             <option value="DRUM">DRUM</option>
                             <option value="TRIP">TRIP</option>
                         </select>
@@ -793,7 +810,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             if(tf_value_quotation_form.value == "false"){
                 tf_counter_quotation_form.value = 1;
                 var data = `                        
-                <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 15% 10% 13%; gap: 20px; width: calc(100% - 240px); margin-top: 30px;">
+                <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; width: calc(100% - 240px); margin-top: 30px;">
                     <h4 style="position: absolute; top: -30px;">TRANSPORTATION FEE</h4>
                     <div class="wrapper">
                         <label for="type_of_vehicle1">
@@ -893,8 +910,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         add_tf_button_quotation_form.addEventListener("click", () => {
             tf_counter_quotation_form.value = parseInt(tf_counter_quotation_form.value) + 1;
             var data = `                        
-            <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 15% 10% 13%; gap: 20px; width: calc(100% - 240px);">
-                <div class="wrapper">
+            <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; width: calc(100% - 240px);">
+                <div class="wrapper" id="type_of_vehicle_container">
                     <select name="type_of_vehicle${tf_counter_quotation_form.value}" id="type_of_vehicle${tf_counter_quotation_form.value}" class="form-control" required style=" height: 55px !important;">
                         <option value="">SELECT</option>
                     </select>
@@ -972,21 +989,22 @@ document.addEventListener('DOMContentLoaded', async function() {
                 vehicle_list.push(vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")]);
             }
         }
+
         search_quotation_no_button_quotation_form.addEventListener("click", () => {
             search_quotation_no_button_container_quotation_form.style.display = "none";
             display_input_quotation_form.forEach(input => {input.style.display = "block"});
             list_container_quotation_form2.style.display = "block";
             transportation_fee_container.style.display = "block";
             button_container_quotation_form.style.display = "flex";
+            var counter = 1;
             for(let x = 1; x < qlf_data_list.content.length; x++){
                 for(let y = 1; y < type_of_waste_data_list.content.length; y++){
                     if(quotation_no_quotation_form2.value == qlf_data_list.content[x][findTextInArray(qlf_data_list, "QUOTATION CODE")] &&
                     qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")] == type_of_waste_data_list.content[y][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
-                        console.log("pass")
                         if(x == 1){
                             var client_name = "";
                             for(let c = 1; c < client_data_list.content.length; c++){
-                                if(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")] == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")]){
+                                if(qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")] == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")]){
                                     client_name = client_data_list.content[c][findTextInArray(client_data_list, "CLIENT NAME")];
                                 }
                             }
@@ -998,6 +1016,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     waste_name = type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE NAME")];
                                 }
                             }
+                            timestamp_quotation_form2.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "CREATED AT")];
                             validity_quotation_form2.value = date_decoder2(qlf_data_list.content[x][findTextInArray(qlf_data_list, "VALIDITY")]);
                             terms_quotation_form2.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "TERMS DAYS")];
                             client_quotation_form2.value = client_name;
@@ -1033,18 +1052,17 @@ document.addEventListener('DOMContentLoaded', async function() {
                             vat_calculation1_quotation_form.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "VAT CALCULATION")];
                         }
                     }
-
                 }
                 for(let y = 1; y < vehicle_list.length; y++){
                     if(quotation_no_quotation_form2.value == qlf_data_list.content[x][findTextInArray(qlf_data_list, "QUOTATION CODE")] &&
                     qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")] == vehicle_list[y]){
                         addTransportationFeeList();
-                        var waste_code1_quotation_form = update_quotation_form_tab.querySelector(`#waste_code${x}`);
-                        var waste_name1_quotation_form = update_quotation_form_tab.querySelector(`#waste_name${x}`);
-                        var mode1_quotation_form = update_quotation_form_tab.querySelector(`#mode${x}`);
-                        var unit1_quotation_form = update_quotation_form_tab.querySelector(`#unit${x}`);
-                        var unit_price1_quotation_form = update_quotation_form_tab.querySelector(`#unit_price${x}`);
-                        var vat_calculation1_quotation_form = update_quotation_form_tab.querySelector(`#vat_calculation${x}`);
+                        var waste_code1_quotation_form = update_quotation_form_tab.querySelector(`#type_of_vehicle${counter}`);
+                        var waste_name1_quotation_form = update_quotation_form_tab.querySelector(`#transportation_fee${counter}`);
+                        var mode1_quotation_form = update_quotation_form_tab.querySelector(`#tf_mode${counter}`);
+                        var unit1_quotation_form = update_quotation_form_tab.querySelector(`#tf_unit${counter}`);
+                        var unit_price1_quotation_form = update_quotation_form_tab.querySelector(`#tf_unit_price${counter}`);
+                        var vat_calculation1_quotation_form = update_quotation_form_tab.querySelector(`#tf_vat_calculation${counter}`);
                                             
                         waste_code1_quotation_form.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")];
                         waste_name1_quotation_form.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")];
@@ -1052,6 +1070,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         unit1_quotation_form.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")];
                         unit_price1_quotation_form.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT PRICE")];
                         vat_calculation1_quotation_form.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "VAT CALCULATION")];
+                        counter += 1;
                     }
                 }
             }
@@ -1060,7 +1079,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         function addQuotationList() {
             list_counter_quotation_form2.value = parseInt(list_counter_quotation_form2.value) + 1;
             var data = `
-            <div class="list_item" id="list${list_counter_quotation_form2.value}" style="display: grid; grid-template-columns: 17% 30% 15% 15% 10% 13%; gap: 20px; width: calc(100% - 240px);">
+            <div class="list_item" id="list${list_counter_quotation_form2.value}" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; width: calc(100% - 240px);">
                 <div class="wrapper">
                     <div class="search_input" id="search_waste_code">
                         <input type="text" name="waste_code${list_counter_quotation_form2.value}" id="waste_code${list_counter_quotation_form2.value}" autocomplete="off" class="form-control" required placeholder="Search">
@@ -1131,9 +1150,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         function addTransportationFeeList() {
             tf_counter_quotation_form2.value = parseInt(tf_counter_quotation_form2.value) + 1;
             var data = `                        
-            <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 15% 10% 13%; gap: 20px; width: calc(100% - 240px); margin-top: 30px;">
-                <h4 style="position: absolute; top: -30px;">TRANSPORTATION FEE</h4>
-                <div class="wrapper">
+            <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; width: calc(100% - 240px);">
+                <div class="wrapper" id="type_of_vehicle_container">
                     <select name="type_of_vehicle${tf_counter_quotation_form2.value}" id="type_of_vehicle${tf_counter_quotation_form2.value}" class="form-control" required style=" height: 55px !important;">
                         <option value="">SELECT</option>
                     </select>
@@ -1181,7 +1199,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             remove_tf_button_quotation_form2.style.display = "block";
             // Get all input elements of type "number"
             const numberInputs = document.querySelectorAll('input[type="number"]');
-            typeOfVehicleOption();
+            typeOfVehicleOption2();
 
             // Loop through each input and set the "step" attribute
             numberInputs.forEach(input => {
@@ -1192,7 +1210,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         add_item_button_quotation_form2.addEventListener("click", () => {
             list_counter_quotation_form2.value = parseInt(list_counter_quotation_form2.value) + 1;
             var data = `
-            <div class="list_item" id="list${list_counter_quotation_form2.value}" style="display: grid; grid-template-columns: 17% 30% 15% 15% 10% 13%; gap: 20px; width: calc(100% - 240px);">
+            <div class="list_item" id="list${list_counter_quotation_form2.value}" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; width: calc(100% - 240px);">
                 <div class="wrapper">
                     <div class="search_input" id="search_waste_code">
                         <input type="text" name="waste_code${list_counter_quotation_form2.value}" id="waste_code${list_counter_quotation_form2.value}" autocomplete="off" class="form-control" required placeholder="Search">
@@ -1220,8 +1238,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <div class="search_input">
                         <select name="unit${list_counter_quotation_form2.value}" id="unit${list_counter_quotation_form2.value}" required class="form-control" style="height: 55px;">
                             <option value="">SELECT</option>
-                            <option value="KILOGRAMS">KILOGRAMS</option>
-                            <option value="LITERS">LITERS</option>
+                            <option value="Kg">KILOGRAMS</option>
+                            <option value="L">LITERS</option>
                             <option value="DRUM">DRUM</option>
                             <option value="TRIP">TRIP</option>
                         </select>
@@ -1278,7 +1296,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             if(tf_value_quotation_form2.value == "false"){
                 tf_counter_quotation_form2.value = 1;
                 var data = `                        
-                <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 15% 10% 13%; gap: 20px; width: calc(100% - 240px); margin-top: 30px;">
+                <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; width: calc(100% - 240px); margin-top: 30px;">
                     <h4 style="position: absolute; top: -30px;">TRANSPORTATION FEE</h4>
                     <div class="wrapper">
                         <label for="type_of_vehicle1">
@@ -1353,7 +1371,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 add_tf_button_quotation_form2.style.display = "block";
                 // Get all input elements of type "number"
                 const numberInputs = document.querySelectorAll('input[type="number"]');
-                typeOfVehicleOption();
+                typeOfVehicleOption2();
 
                 // Loop through each input and set the "step" attribute
                 numberInputs.forEach(input => {
@@ -1378,8 +1396,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         add_tf_button_quotation_form2.addEventListener("click", () => {
             tf_counter_quotation_form2.value = parseInt(tf_counter_quotation_form2.value) + 1;
             var data = `                        
-            <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 15% 10% 13%; gap: 20px; width: calc(100% - 240px);">
-                <div class="wrapper">
+            <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; width: calc(100% - 240px);">
+                <div class="wrapper" id="type_of_vehicle_container">
                     <select name="type_of_vehicle${tf_counter_quotation_form2.value}" id="type_of_vehicle${tf_counter_quotation_form2.value}" class="form-control" required style=" height: 55px !important;">
                         <option value="">SELECT</option>
                     </select>
@@ -1427,7 +1445,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             remove_tf_button_quotation_form2.style.display = "block";
             // Get all input elements of type "number"
             const numberInputs = document.querySelectorAll('input[type="number"]');
-            typeOfVehicleOption();
+            typeOfVehicleOption2();
 
             // Loop through each input and set the "step" attribute
             numberInputs.forEach(input => {
@@ -1467,7 +1485,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             prf_code_year_month = `PR${today_year}${month_new}`;
         
             for (let x = 1; x < prf_data_list.content.length; x++) {
-                data_info = prf_data_list.content[x][1];
+                data_info = prf_data_list.content[x][findTextInArray(prf_data_list, "PR #")];
         
                 if (data_info.includes(prf_code_year_month) == true) {
                     data_last_3digit = data_info.slice(8);
@@ -1605,6 +1623,119 @@ document.addEventListener('DOMContentLoaded', async function() {
     
         irf_form_no.value = `${irf_code_year_month}${data_counter}`
 
+        const incident_report_form = document.querySelector("#incident_report_form");
+        const person_involved_containers = incident_report_form.querySelector("#person_involved_containers");
+        const person_involved_container = person_involved_containers.querySelectorAll("#person_involved_container");
+        const irf_counter_incident_report_form = incident_report_form.querySelector("#irf_counter");
+        const add_tf_button_incident_report_form = incident_report_form.querySelector("#add_tf_button");
+        const remove_tf_button_incident_report_form = incident_report_form.querySelector("#add_tf_button");
+        var employee_name = [];
+        var employee_department = [];
+        var employee_designation = [];
+        for(let x = 1; x < employee_data_list.content.length; x++){
+            if(employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE STATUS")] == "ACTIVE"){
+                var gender = employee_data_list.content[x][findTextInArray(employee_data_list, "GENDER")];
+                if(gender == "MALE"){
+                    var full_name = `${employee_data_list.content[x][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[x][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[x][findTextInArray(employee_data_list, "MIDDLE NAME")]} ${employee_data_list.content[x][findTextInArray(employee_data_list, "AFFIX")]}`
+                    employee_name.push(full_name);
+                    employee_department.push(employee_data_list.content[x][findTextInArray(employee_data_list, "DEPARTMENT")]);
+                    employee_designation.push(employee_data_list.content[x][findTextInArray(employee_data_list, "DESIGNATION")]);
+                }
+                else{
+                    var full_name = `${employee_data_list.content[x][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[x][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[x][findTextInArray(employee_data_list, "MIDDLE NAME")]} - ${employee_data_list.content[x][findTextInArray(employee_data_list, "SPOUSE NAME")]}`
+                    employee_name.push(full_name);
+                    employee_department.push(employee_data_list.content[x][findTextInArray(employee_data_list, "DEPARTMENT")]);
+                    employee_designation.push(employee_data_list.content[x][findTextInArray(employee_data_list, "DESIGNATION")]);
+                }
+            }
+        }
+        console.log(person_involved_containers)
+        function addPersonInvolved(){
+            person_involved_container.forEach(person_involved_container => {
+                var search_wrapper2 = person_involved_container.querySelector(`#search_irf_client${irf_counter_incident_report_form.value}`);
+                var irf_department = person_involved_container.querySelector(`#irf_department${irf_counter_incident_report_form.value}`);
+                var irf_designation = person_involved_container.querySelector(`#irf_designation${irf_counter_incident_report_form.value}`);
+                var irf_client = search_wrapper2.querySelector(`#irf_client${irf_counter_incident_report_form.value}`);
+                var sugg_box2 = search_wrapper2.querySelector(".autocom_box");
+                irf_client.onkeyup = (e) => {
+                    let user_data = e.target.value;
+                    let empty_array = [];
+                    if (user_data) {
+                        empty_array = employee_name.filter((data) => {
+                            return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
+                        });
+                        empty_array = empty_array.map((data) => {
+                            return '<li>' + data + '</li>';
+                        });
+                        console.log(empty_array);
+                        search_wrapper2.classList.add("active");
+                        show_suggestions2(empty_array);
+                    } else {
+                        search_wrapper2.classList.remove("active");
+                    }
+                };
+                sugg_box2.addEventListener("click", (e) => {
+                    if (e.target.tagName === "LI") {
+                        select2(e.target.innerHTML);
+                    }
+                });
+                function select2(element) {
+                    let select_user_data = element;
+                    search_wrapper2.classList.remove("active");
+                    irf_client.value = select_user_data;
+                    irf_department.value = employee_department[findTextInArray2(employee_name, select_user_data)];
+                    irf_designation.value = employee_designation[findTextInArray2(employee_name, select_user_data)];
+                }
+                function show_suggestions2(list) {
+                    let list_data;
+                    if (!list.length) {
+                        user_value = irf_client.value;
+                        list_data = '<li>' + user_value + '</li>';
+                    } else {
+                        list_data = list.join("");
+                    }
+                    sugg_box2.innerHTML = list_data;
+                }
+            })
+        }
+        addPersonInvolved();
+        add_tf_button_incident_report_form.addEventListener("click", () => {
+            irf_counter_incident_report_form.value = parseInt(irf_counter_incident_report_form.value) + 1;
+            var data = `
+            <div id="person_involved_container" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+                <div class="wrapper">
+                    <label for="irf_client">
+                        <i class="fa-solid fa-user"></i>
+                        Person Involved
+                    </label><br>
+                    <div class="search_input" id="search_irf_client${irf_counter_incident_report_form.value}>
+                        <input type="text" name="irf_client${irf_counter_incident_report_form.value}" id="irf_client${irf_counter_incident_report_form.value}" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
+                        <div class="autocom_box">
+                        </div>
+                        <div class="icon"><i class="fas fa-search"></i></div>
+                    </div>
+                </div>
+                <div>
+                    <label for="irf_department">
+                        <i class="fa-solid fa-building-user"></i>
+                        Department
+                    </label><br>
+                    <input type="text" id="irf_department${irf_counter_incident_report_form.value}" autocomplete="off" name="irf_department${irf_counter_incident_report_form.value}" class="form-control" required readonly placeholder="Input Department..." style="height: 55px !important;">    
+                </div>
+                <div>
+                    <label for="irf_designation">
+                        <i class="fa-solid fa-id-card"></i>
+                        Designation
+                    </label><br>
+                    <input type="text" id="irf_designation${irf_counter_incident_report_form.value}" autocomplete="off" name="irf_designation${irf_counter_incident_report_form.value}" class="form-control" required readonly placeholder="Input Designation..." style="height: 55px !important;">   
+                </div>
+            </div>
+            `
+            person_involved_containers.insertAdjacentHTML("beforeend", data);
+            remove_tf_button_incident_report_form.style.display = "block";
+            addPersonInvolved();
+        })
+        
     } catch (error) {
         console.error('Error fetching data:', error);
     }
