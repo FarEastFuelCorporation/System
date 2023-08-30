@@ -40,19 +40,6 @@
                         Vehicle List
                     </a>
                 </li>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa-solid fa-truck-arrow-right"></i>
-                        New Vehicle Form
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa-solid fa-screwdriver-wrench"></i>
-                        Vehicle Maintenance Form
-                    </a>
-                </li>
                 <li>
                     <a href="#">
                         <i class="fas fa-cog"></i>
@@ -182,7 +169,7 @@
                         </div>
                     </div>
                 </div><br>
-                <h2>PENDING TRANSACTION LIST</h2>
+                <h2>PENDING TRANSACTIONS</h2>
                 <div class="card" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
                     <div class="list">
                         <table>
@@ -203,7 +190,7 @@
                         <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
                     </div>
                 </div><br>
-                <h2>TRAVEL HISTORY LIST</h2>
+                <h2>TRAVEL HISTORY</h2>
                 <div class="card" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
                     <div class="list">
                         <table>
@@ -381,7 +368,90 @@
             </section>
             <!-- vehicle_list_section -->
             <section class="logistic" id="vehicle_list_section">
-                <h2>VEHICLE LIST</h2>
+                <h2>VEHICLES</h2>
+                <div>
+                    <label class="d-flex gap-3">
+                        <button type="button" id="new_vehicle_button" class="form-control fw-bold fs-3 bg-success text-white">
+                            NEW VEHICLE FORM
+                        </button>
+                        <button type="button" id="vehicle_maintenance_button" class="form-control fw-bold fs-3">
+                            VEHICLE MAINTENANCE FORM
+                        </button>
+                    </label><br>
+                </div>
+                <div id="new_vehicle_tab" style="display: none; position: absolute; z-index: 2; width: calc(100% - 40px); padding: 20px; background-color: white; border: 3px solid yellowgreen; border-radius: 10px;">
+                    <h2>NEW VEHICLE FORM</h2><br>
+                    <form action="https://script.google.com/macros/s/AKfycbwtUd1A6MGvhh6axwd9DEiutRi0nePAv2sk5YFe49kH41KxWpy3JL3yFGvGbd7MLGMF/exec" method="post">
+                        <label for="plate_no">
+                            <i class="fa-regular fa-rectangle-list"></i>
+                            Plate #f
+                        </label><br>
+                        <input type="text" autocomplete="off" name="plate_no" id="plate_no" class="form-control form" required placeholder="Input Plate #..."><br>
+                        <label for="vehicle">
+                            <i class="fa-solid fa-truck"></i>
+                            Vehicle
+                        </label><br>
+                        <input type="text" autocomplete="off" name="vehicle" id="vehicle" class="form-control" required placeholder="Input Vehicle..."><br>
+                        <div class="data">
+                            <div>
+                                <label for="capacity">
+                                    <i class="fa-regular fa-rectangle-list"></i>
+                                    Net Capacity (MT)
+                                </label><br>
+                                <input type="number" autocomplete="off" name="capacity" id="capacity" class="form-control" required placeholder="Input Net Capacity (MT)..."><br>    
+                            </div>
+                            <div>
+                                <label for="type_of_vehicle">
+                                    <i class="fa-regular fa-rectangle-list"></i>
+                                    Type of Vehicle
+                                </label><br>
+                                <input type="text" autocomplete="off" name="type_of_vehicle" id="type_of_vehicle" class="form-control" required placeholder="Input Type of Vehicle..."><br>    
+                            </div>
+                            <div>
+                                <label for="ownership_type">
+                                    <i class="fa-regular fa-rectangle-list"></i>
+                                    Ownership Type
+                                </label><br>
+                                <select name="ownership_type" id="ownership_type" class="form-control">
+                                    <option value="">Select</option>
+                                    <option value="LEASED">LEASED</option>
+                                    <option value="OWNED">OWNED</option>
+                                </select>
+                            </div>
+                        </div><br>
+                        <div class="buttons">
+                            <button type="submit" id="submit_btn" class="form-control" >
+                                Submit
+                            </button>
+                            <button type="reset" id="reset" class="form-control" >
+                                Clear
+                            </button>
+                        </div>  
+                    </form>
+                </div>
+                <div id="vehicle_maintenance_tab" style="display: none; position: absolute; z-index: 2; width: calc(100% - 40px); padding: 20px; background-color: white; border: 3px solid yellowgreen; border-radius: 10px;">
+                    <h2>VEHICLE MAINTENANCE FORM</h2><br>
+                    <form action="https://script.google.com/macros/s/AKfycbwtUd1A6MGvhh6axwd9DEiutRi0nePAv2sk5YFe49kH41KxWpy3JL3yFGvGbd7MLGMF/exec" method="post">
+                        <label for="plate_no">
+                            <i class="fa-regular fa-rectangle-list"></i>
+                            Plate #
+                        </label><br>
+                        <div class="search_input" id="maintenance_plate_no">
+                            <input type="text" autocomplete="off" name="plate_no" id="plate_no" class="form-control" required placeholder="Type to Search Plate #...">
+                            <div class="autocom_box">
+                            </div>
+                            <div class="icon"><i class="fas fa-search"></i></div>
+                        </div>        
+                        <div class="buttons">
+                            <button type="submit" id="submit_btn" class="form-control" >
+                                Submit
+                            </button>
+                            <button type="reset" id="reset" class="form-control" >
+                                Clear
+                            </button>
+                        </div>  
+                    </form>
+                </div>
                 <div class="card" style="max-height: 80vh; align-items: start; overflow-y: scroll;">                            
                     <div class="list">
                         <table>
@@ -404,78 +474,11 @@
             </section>
             <!-- new_vehicle_form -->
             <section class="logistic" id="new_vehicle_form">
-                <h2>NEW VEHICLE FORM</h2><br>
-                <form action="https://script.google.com/macros/s/AKfycbwtUd1A6MGvhh6axwd9DEiutRi0nePAv2sk5YFe49kH41KxWpy3JL3yFGvGbd7MLGMF/exec" method="post">
-                    <label for="plate_no">
-                        <i class="fa-regular fa-rectangle-list"></i>
-                        Plate #f
-                    </label><br>
-                    <input type="text" autocomplete="off" name="plate_no" id="plate_no" class="form-control form" required placeholder="Input Plate #..."><br>
-                    <label for="vehicle">
-                        <i class="fa-solid fa-truck"></i>
-                        Vehicle
-                    </label><br>
-                    <input type="text" autocomplete="off" name="vehicle" id="vehicle" class="form-control" required placeholder="Input Vehicle..."><br>
-                    <div class="data">
-                        <div>
-                            <label for="capacity">
-                                <i class="fa-regular fa-rectangle-list"></i>
-                                Net Capacity (MT)
-                            </label><br>
-                            <input type="number" autocomplete="off" name="capacity" id="capacity" class="form-control" required placeholder="Input Net Capacity (MT)..."><br>    
-                        </div>
-                        <div>
-                            <label for="type_of_vehicle">
-                                <i class="fa-regular fa-rectangle-list"></i>
-                                Type of Vehicle
-                            </label><br>
-                            <input type="text" autocomplete="off" name="type_of_vehicle" id="type_of_vehicle" class="form-control" required placeholder="Input Type of Vehicle..."><br>    
-                        </div>
-                        <div>
-                            <label for="ownership_type">
-                                <i class="fa-regular fa-rectangle-list"></i>
-                                Ownership Type
-                            </label><br>
-                            <select name="ownership_type" id="ownership_type" class="form-control">
-                                <option value="">Select</option>
-                                <option value="LEASED">LEASED</option>
-                                <option value="OWNED">OWNED</option>
-                            </select>
-                        </div>
-                    </div><br>
-                    <div class="buttons">
-                        <button type="submit" id="submit_btn" class="form-control" >
-                            Submit
-                        </button>
-                        <button type="reset" id="reset" class="form-control" >
-                            Clear
-                        </button>
-                    </div>  
-                </form>
+
             </section>
             <!-- vehicle_maintenance_form -->
             <section class="logistic" id="vehicle_maintenance_form">
-                <h2>VEHICLE MAINTENANCE FORM</h2><br>
-                <form action="https://script.google.com/macros/s/AKfycbwtUd1A6MGvhh6axwd9DEiutRi0nePAv2sk5YFe49kH41KxWpy3JL3yFGvGbd7MLGMF/exec" method="post">
-                    <label for="plate_no">
-                        <i class="fa-regular fa-rectangle-list"></i>
-                        Plate #
-                    </label><br>
-                    <div class="search_input" id="maintenance_plate_no">
-                        <input type="text" autocomplete="off" name="plate_no" id="plate_no" class="form-control" required placeholder="Type to Search Plate #...">
-                        <div class="autocom_box">
-                        </div>
-                        <div class="icon"><i class="fas fa-search"></i></div>
-                    </div>        
-                    <div class="buttons">
-                        <button type="submit" id="submit_btn" class="form-control" >
-                            Submit
-                        </button>
-                        <button type="reset" id="reset" class="form-control" >
-                            Clear
-                        </button>
-                    </div>  
-                </form>
+
             </section>
             <!-- settings -->
             <section id="settingsSection">

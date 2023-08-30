@@ -66,13 +66,13 @@ function time_decoder(timestamp) {
   var hours = date.getUTCHours();
   var minutes = date.getUTCMinutes();
   var minutes_set = 0;
-
   if (minutes >= 0 && minutes <= 22) {
     // Code to be executed if minutes is between 0 and 22
-    if(hours >= 0 && minutes <= 22){
+    if(hours >= 0 && minutes <= 22 && hours != 12){
       hours = parseInt(hours) + 24 - 1;
-      minutes_set = parseInt(minutes) + 60 - 23;  
-    } else {
+      minutes_set = parseInt(minutes) + 60 - 23;
+    } 
+    else {
       hours = parseInt(hours) - 1;
       minutes_set = parseInt(minutes) + 60 - 23;  
     }

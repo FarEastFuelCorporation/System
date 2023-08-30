@@ -88,15 +88,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
 
         for (let i = 1; i < wcf_data_list.content.length; i++) {
-            if (!ltf_wcf_transaction_logistics.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "LTF #")])) {
-                ltf_wcf_transaction_logistics.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "LTF #")]);
+            if (!ltf_wcf_transaction_logistics.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "LTF/ MTF  #")])) {
+                ltf_wcf_transaction_logistics.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "LTF/ MTF  #")]);
             }
         }
 
         const newElements_logistics = mtf_transaction_logistics.filter((element) => !mtf_ltf_transaction_logistics.includes(element));
         const newElements2_logistics = ltf_transaction_logistics.filter((element) => !ltf_wcf_transaction_logistics.includes(element));
         const newElements3_logistics = ltf_transaction_logistics.filter((element) => ltf_wcf_transaction_logistics.includes(element));
-
         on_hauling_transactions_logistics.innerText = newElements2_logistics.length;
         hauled_transactions_logistics.innerText = newElements3_logistics.length;
         booked_transactions_logistics.innerText = mtf_transaction_logistics.length;
@@ -227,7 +226,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <td>${ltf_data_list.content[j][findTextInArray(ltf_data_list, "PLATE #")]}</td>
                     <td>${driver_name}</td>
                     <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")])}<br>${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}</td>
-                    <td>${calculateTravelTime(date_decoder(ltf_data_list.content[j][findTextInArray(ltf_data_list, "DEPARTURE DATE")]),time_decoder(ltf_data_list.content[j][findTextInArray(ltf_data_list, "DEPARTURE TIME")]),date_decoder(wcf_data_list.content[j][findTextInArray(ltf_data_list, "ARRIVAL DATE")]),time_decoder(wcf_data_list.content[j][findTextInArray(ltf_data_list, "ARRIVAL TIME")]))}</td>
+                    <td>${calculateTravelTime(date_decoder(ltf_data_list.content[j][findTextInArray(ltf_data_list, "DEPARTURE DATE")]),time_decoder(ltf_data_list.content[j][findTextInArray(ltf_data_list, "DEPARTURE TIME")]),date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")]),time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")]))}</td>
                     </tr>
                     `
                     data_value3_counter += 1;            
@@ -304,7 +303,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 empty_array = empty_array.map((data) => {
                     return '<li>' + data + '</li>';
                 });
-                console.log(empty_array);
                 search_wrapper2.classList.add("active");
                 show_suggestions2(empty_array);
             } else {
@@ -319,7 +317,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         function select2(element) {
             let select_user_data = element;
             input_box2.value = select_user_data;
-            console.log(input_box2.value);
             search_wrapper2.classList.remove("active");
         }
         function show_suggestions2(list) {
@@ -393,7 +390,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                         empty_array = empty_array.map((data) => {
                             return '<li>' + data + '</li>';
                         });
-                        console.log(empty_array);
                         search_wrapper.classList.add("active");
                         show_suggestions5(empty_array);
                     } else {
@@ -408,7 +404,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 function select5(element) {
                     let select_user_data = element;
                     input_box5.value = select_user_data;
-                    console.log(input_box5.value);
                     search_wrapper.classList.remove("active");
                 }
                 function show_suggestions5(list) {
@@ -444,7 +439,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         const for_maintenance_vehicle_vehicle_list_section = document.querySelector("#for_maintenance_vehicle");        
         var data_value3 = [];
         var total_vehicle_counter_vehicle_list_section = 0;
-
         for (x = 1; x < vehicle_data_list.content.length; x++) {
             data_value3.push(vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "PLATE #")]);
             total_vehicle_counter_vehicle_list_section += 1;
@@ -459,7 +453,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         }
-    
         total_vehicle_vehicle_list_section.innerHTML = total_vehicle_counter_vehicle_list_section;
         available_vehicle_vehicle_list_section.innerHTML = total_vehicle_counter_vehicle_list_section - (for_maintenance_vehicle_counter_logistics + under_maintenance_vehicle_counter_logistics + on_hauling_vehicle_counter_logistics) ;
         on_hauling_vehicle_vehicle_list_section.innerHTML = on_hauling_vehicle_counter_logistics;
@@ -479,7 +472,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 empty_array = empty_array.map((data) => {
                     return '<li>' + data + '</li>';
                 });
-                console.log(empty_array);
                 search_wrapper3.classList.add("active");
                 show_suggestions3(empty_array);
             } else {
@@ -525,7 +517,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 empty_array = empty_array.map((data) => {
                     return '<li>' + data + '</li>';
                 });
-                console.log(empty_array);
                 search_wrapper4.classList.add("active");
                 show_suggestions4(empty_array);
             } else {
@@ -674,7 +665,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         });
         
         search_ltf_form_no_button.addEventListener("click", () => {
-            console.log("pass")
             for(b=0; b<=newElements2_logistics.length; b++){
                 for(a=1; a < ltf_data_list.content.length; a++){
                     if(newElements2_logistics[b] == ltf_data_list.content[a][findTextInArray(ltf_data_list, "LTF #")]){
@@ -740,6 +730,33 @@ document.addEventListener('DOMContentLoaded', async function() {
         clear_mtf_form_no_button.addEventListener("click", () => {
             search_mtf_result.innerHTML = ``;
             search_mtf_form_no.value = ``;
+        })
+
+        const vehicle_list_section = document.querySelector("#vehicle_list_section"); 
+        const new_vehicle_tab = vehicle_list_section.querySelector("#new_vehicle_tab");
+        const vehicle_maintenance_tab = vehicle_list_section.querySelector("#vehicle_maintenance_tab");
+        const new_vehicle_button = vehicle_list_section.querySelector("#new_vehicle_button");
+        const vehicle_maintenance_button = vehicle_list_section.querySelector("#vehicle_maintenance_button");
+
+        new_vehicle_button.addEventListener("click", () => {
+            if(new_vehicle_tab.style.display == "block"){
+                new_vehicle_tab.style.display = "none";
+                vehicle_maintenance_tab.style.display = "none";
+            }
+            else{
+                new_vehicle_tab.style.display = "block";
+                vehicle_maintenance_tab.style.display = "none";
+            }
+        })
+        vehicle_maintenance_button.addEventListener("click", () => {
+            if(vehicle_maintenance_tab.style.display == "block"){
+                vehicle_maintenance_tab.style.display = "none";
+                new_vehicle_tab.style.display = "none";
+            }
+            else{
+                vehicle_maintenance_tab.style.display = "block";
+                new_vehicle_tab.style.display = "none";
+            }
         })
     
     } catch (error) {

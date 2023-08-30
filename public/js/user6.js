@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const sf_response_promise = fetch('https://script.google.com/macros/s/AKfycby9b2VCfXc0ifkwBXJRi2UVUwgZIj9F4FTOdZa_SYKZdsTwbVtAzAXzNMFeklE35bg1/exec');
         const qlf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyFU_skru2tnyEiv8I5HkpRCXbUlQb5vlJUm8Le0nZBCvfZeFkQPd2Naljs5CZY41I17w/exec');
         const prf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxZctLub-6PuQGykx298syeH7Qm__S37uqQrVFYsHVtv-Qk8M2oSkRIPIMVT_1WexqRZA/exec');
+        const pof_response_promise = fetch('https://script.google.com/macros/s/AKfycby9i2KfOZ_uF7-JUPX8qpXg7Jewmw6oU3EfUTpXiwnRRB91_qIW3xAVNy5SZBN1YhVzzg/exec');
         const irf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzTmhNOz5cXeKitSXAriUJ_FEahAQugYEKIRwDuFt9tjhj2AtPKEf2H4yTMmZ1igpUxlQ/exec');
 
         const [
@@ -27,6 +28,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             sf_response,
             qlf_response,
             prf_response,
+            pof_response,
             irf_response,
         ] = await Promise.all([
             username_response_promise,
@@ -41,6 +43,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             sf_response_promise,
             qlf_response_promise,
             prf_response_promise,
+            pof_response_promise,
             irf_response_promise,
         ]);
 
@@ -56,6 +59,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const sf_data_list  = await sf_response.json();
         const qlf_data_list  = await qlf_response.json();
         const prf_data_list  = await prf_response.json();
+        const pof_data_list  = await pof_response.json();
         const irf_data_list  = await irf_response.json();
 
         // Code that depends on the fetched data
@@ -141,7 +145,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         for_logistics_on_haul_counter_marketing += 1;
                         for_logistics_pending_counter_marketing -= 1;
                         for(let m = 1; m < wcf_data_list.content.length; m++){
-                            if(ltf_data_list.content[k][findTextInArray(ltf_data_list, "LTF #")] == wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF #")]){
+                            if(ltf_data_list.content[k][findTextInArray(ltf_data_list, "LTF #")] == wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
                                 status = "RECEIVED";
                                 for_logistics_received_counter_marketing += 1;
                                 for_logistics_on_haul_counter_marketing -= 1;
@@ -155,7 +159,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             else if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")] == "RECEIVING"){
                 for(let m = 1; m < wcf_data_list.content.length; m++){
                     if((wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).slice(0,3) == "MTF"){
-                        if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF  #")] == wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
+                        if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")] == wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
                             status = "RECEIVED";
                             for_receiving_received_counter_marketing += 1;
                             for_receiving_pending_counter_marketing -= 1;
@@ -202,27 +206,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         on_hauling_marketing.innerText = for_logistics_on_haul_counter_marketing;
         pending_marketing.innerText = for_logistics_pending_counter_marketing + for_receiving_pending_counter_marketing;
         received_marketing.innerText = for_logistics_received_counter_marketing + for_receiving_received_counter_marketing;
-        
-        // incident_history_list
-        var incident_history_data_value = "";
-        var incident_history_data_value_counter = 1;
-        for(let x = 1; x < irf_data_list.content.length; x++){
-            incident_history_data_value += `
-            <tr>
-                <td>${incident_history_data_value_counter}</td>
-                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "PERSON INVOLVE")]}</td>
-                <td>${date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "DATE OF INCIDENT")])} /<br> ${time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "TIME OF INCIDENT")])}</td>
-                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "DESIGNATION")]}</td>
-                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "DEPARTMENT")]}</td>
-                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "LOCATION")]}</td>
-                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "DETAILS")]}</td>
-                <td>${date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "DATE OF REPORT")])} /<br> ${time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "TIME OF REPORT")])}</td>
-                <td>${calculateTravelTime(date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "DATE OF INCIDENT")]),time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "TIME OF INCIDENT")]),date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "DATE OF REPORT")]),time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "TIMEOF REPORT")]))}</td>
-            </tr>
-            `
-            incident_history_data_value_counter += 1;
-        }
-        incident_history_list.innerHTML = incident_history_data_value
 
         // client_data_list
         const mtf_data = document.getElementById("mtf_data");
@@ -1474,6 +1457,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         const purchase_request_form = document.querySelector("#purchase_request_form");
         const add_item_button = purchase_request_form.querySelector("#add_item_button");
         const remove_item_button = purchase_request_form.querySelector("#remove_item_button");
+        const purchase_request_form_button = purchase_request_form.querySelector("#purchase_request_form_button");
+        const purchase_request_list = purchase_request_form.querySelector("#purchase_request_list");
+        const form_tab = purchase_request_form.querySelector("#form_tab");
         var prf_counter = purchase_request_form.querySelector("#prf_counter");
         var prf_form_no = [];
         
@@ -1591,6 +1577,45 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         });
+
+        var purchase_request_data_value = "";
+        var purchase_request_data_value_counter = 1;
+        for(let x = 1; x < prf_data_list.content.length; x++){
+            var status = "PENDING";
+            var duration = "PENDING";
+            for(let y = 1; y < pof_data_list.content.length; y++){
+                if(prf_data_list.content[x][findTextInArray(prf_data_list, "PR #")] == (pof_data_list.content[y][findTextInArray(pof_data_list, "PR #")])){
+                    status = "REQUESTED"
+                }
+            }
+            purchase_request_data_value += `
+            <tr>
+                <td>${purchase_request_data_value_counter}</td>
+                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "PR #")]}</td>
+                <td>${date_decoder(prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")])}/<br>${time_decoder(prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")])}</td>
+                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "ITEM")]}</td>
+                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")]}</td>
+                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "UNIT")]}</td>
+                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "DETAILS")]}</td>
+                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")]}</td>
+                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")]}</td>
+                <td>${status}</td>
+                <td>${duration}</td>
+            </tr>
+            `
+            purchase_request_data_value_counter += 1;
+        }
+        purchase_request_list.innerHTML = purchase_request_data_value;
+
+
+        purchase_request_form_button.addEventListener("click", () => {
+            if(form_tab.style.display == "block"){
+                form_tab.style.display = "none";
+            }
+            else{
+                form_tab.style.display = "block";
+            }
+        })
                 
         // incident report form
         const irf_form_no = document.getElementById("irf_form_no"); 
@@ -1625,10 +1650,11 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         const incident_report_form = document.querySelector("#incident_report_form");
         const person_involved_containers = incident_report_form.querySelector("#person_involved_containers");
-        const person_involved_container = person_involved_containers.querySelectorAll("#person_involved_container");
         const irf_counter_incident_report_form = incident_report_form.querySelector("#irf_counter");
         const add_tf_button_incident_report_form = incident_report_form.querySelector("#add_tf_button");
         const remove_tf_button_incident_report_form = incident_report_form.querySelector("#add_tf_button");
+        const form_tab_incident_report_form = incident_report_form.querySelector("#form_tab");
+        const incident_report_form_button_incident_report_form = incident_report_form.querySelector("#incident_report_form_button");
         var employee_name = [];
         var employee_department = [];
         var employee_designation = [];
@@ -1649,66 +1675,66 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         }
-        console.log(person_involved_containers)
         function addPersonInvolved(){
-            person_involved_container.forEach(person_involved_container => {
-                var search_wrapper2 = person_involved_container.querySelector(`#search_irf_client${irf_counter_incident_report_form.value}`);
-                var irf_department = person_involved_container.querySelector(`#irf_department${irf_counter_incident_report_form.value}`);
-                var irf_designation = person_involved_container.querySelector(`#irf_designation${irf_counter_incident_report_form.value}`);
-                var irf_client = search_wrapper2.querySelector(`#irf_client${irf_counter_incident_report_form.value}`);
-                var sugg_box2 = search_wrapper2.querySelector(".autocom_box");
-                irf_client.onkeyup = (e) => {
-                    let user_data = e.target.value;
-                    let empty_array = [];
-                    if (user_data) {
-                        empty_array = employee_name.filter((data) => {
-                            return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
-                        });
-                        empty_array = empty_array.map((data) => {
-                            return '<li>' + data + '</li>';
-                        });
-                        console.log(empty_array);
-                        search_wrapper2.classList.add("active");
-                        show_suggestions2(empty_array);
-                    } else {
-                        search_wrapper2.classList.remove("active");
-                    }
-                };
-                sugg_box2.addEventListener("click", (e) => {
-                    if (e.target.tagName === "LI") {
-                        select2(e.target.innerHTML);
-                    }
-                });
-                function select2(element) {
-                    let select_user_data = element;
+            const person_involved_container = person_involved_containers.querySelector(`#person_involved_container${irf_counter_incident_report_form.value}`);
+            var search_wrapper2 = person_involved_container.querySelector(`#search_irf_client${irf_counter_incident_report_form.value}`);
+            var irf_department = person_involved_container.querySelector(`#irf_department${irf_counter_incident_report_form.value}`);
+            var irf_designation = person_involved_container.querySelector(`#irf_designation${irf_counter_incident_report_form.value}`);
+            var irf_client = search_wrapper2.querySelector(`#irf_client${irf_counter_incident_report_form.value}`);
+            var sugg_box2 = search_wrapper2.querySelector(".autocom_box");
+            irf_client.onkeyup = (e) => {
+                let user_data = e.target.value;
+                let empty_array = [];
+                if (user_data) {
+                    empty_array = employee_name.filter((data) => {
+                        return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
+                    });
+                    empty_array = empty_array.map((data) => {
+                        return '<li>' + data + '</li>';
+                    });
+                    search_wrapper2.classList.add("active");
+                    show_suggestions2(empty_array);
+                } else {
                     search_wrapper2.classList.remove("active");
-                    irf_client.value = select_user_data;
-                    irf_department.value = employee_department[findTextInArray2(employee_name, select_user_data)];
-                    irf_designation.value = employee_designation[findTextInArray2(employee_name, select_user_data)];
                 }
-                function show_suggestions2(list) {
-                    let list_data;
-                    if (!list.length) {
-                        user_value = irf_client.value;
-                        list_data = '<li>' + user_value + '</li>';
-                    } else {
-                        list_data = list.join("");
-                    }
-                    sugg_box2.innerHTML = list_data;
+            };
+            sugg_box2.addEventListener("click", (e) => {
+                if (e.target.tagName === "LI") {
+                    select2(e.target.innerHTML);
                 }
-            })
+            });
+            function select2(element) {
+                let select_user_data = element;
+                search_wrapper2.classList.remove("active");
+                irf_client.value = select_user_data;
+                irf_department.value = employee_department[findTextInArray2(employee_name, select_user_data)];
+                employee_department.splice(findTextInArray2(employee_name, select_user_data), 1);
+                irf_designation.value = employee_designation[findTextInArray2(employee_name, select_user_data)];
+                employee_designation.splice(findTextInArray2(employee_name, select_user_data), 1);
+                employee_name = employee_name.filter(item => item !== select_user_data);
+            }
+            function show_suggestions2(list) {
+                let list_data;
+                if (!list.length) {
+                    user_value = irf_client.value;
+                    list_data = '<li>' + user_value + '</li>';
+                } else {
+                    list_data = list.join("");
+                }
+                sugg_box2.innerHTML = list_data;
+            }
         }
         addPersonInvolved();
         add_tf_button_incident_report_form.addEventListener("click", () => {
             irf_counter_incident_report_form.value = parseInt(irf_counter_incident_report_form.value) + 1;
             var data = `
-            <div id="person_involved_container" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+            <div id="person_involved_container${irf_counter_incident_report_form.value}" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
                 <div class="wrapper">
-                    <label for="irf_client">
+                    <label for="irf_client${irf_counter_incident_report_form.value}">
                         <i class="fa-solid fa-user"></i>
                         Person Involved
                     </label><br>
-                    <div class="search_input" id="search_irf_client${irf_counter_incident_report_form.value}>
+                    <div class="search_input" id="search_irf_client${irf_counter_incident_report_form.value}">
                         <input type="text" name="irf_client${irf_counter_incident_report_form.value}" id="irf_client${irf_counter_incident_report_form.value}" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
                         <div class="autocom_box">
                         </div>
@@ -1716,14 +1742,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                     </div>
                 </div>
                 <div>
-                    <label for="irf_department">
+                    <label for="irf_department${irf_counter_incident_report_form.value}">
                         <i class="fa-solid fa-building-user"></i>
                         Department
                     </label><br>
                     <input type="text" id="irf_department${irf_counter_incident_report_form.value}" autocomplete="off" name="irf_department${irf_counter_incident_report_form.value}" class="form-control" required readonly placeholder="Input Department..." style="height: 55px !important;">    
                 </div>
                 <div>
-                    <label for="irf_designation">
+                    <label for="irf_designation${irf_counter_incident_report_form.value}">
                         <i class="fa-solid fa-id-card"></i>
                         Designation
                     </label><br>
@@ -1734,6 +1760,55 @@ document.addEventListener('DOMContentLoaded', async function() {
             person_involved_containers.insertAdjacentHTML("beforeend", data);
             remove_tf_button_incident_report_form.style.display = "block";
             addPersonInvolved();
+        })
+        // incident_history_list
+        var incident_history_data_value = "";
+        var incident_history_data_value_counter = 1;
+
+        for(let x = 1; x < irf_data_list.content.length; x++){
+            const resultArray = (irf_data_list.content[x][findTextInArray(irf_data_list, "PERSON INVOLVE")]).split(" || ");
+            var data_value2 = [];
+            for(let z = 0; z < resultArray.length; z++){
+                for(let y = 1; y < employee_data_list.content.length; y++){
+                    if(employee_data_list.content[y][findTextInArray(employee_data_list, "EMPLOYEE ID")] == resultArray[z]){
+                        var gender = employee_data_list.content[y][findTextInArray(employee_data_list, "GENDER")];
+                        if(gender == "MALE"){
+                            var full_name = `${employee_data_list.content[y][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[y][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[y][findTextInArray(employee_data_list, "MIDDLE NAME")]} ${employee_data_list.content[y][findTextInArray(employee_data_list, "AFFIX")]}`
+                            data_value2.push(full_name);
+                        }
+                        else{
+                            var full_name = `${employee_data_list.content[y][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[y][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[y][findTextInArray(employee_data_list, "MIDDLE NAME")]} - ${employee_data_list.content[y][findTextInArray(employee_data_list, "SPOUSE NAME")]}`
+                            data_value2.push(full_name);
+                        }
+                    }
+                }
+            }
+            const concatenatedString = data_value2.join(" || ")
+            incident_history_data_value += `
+            <tr>
+                <td>${incident_history_data_value_counter}</td>
+                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "IRF #")]}</td>
+                <td>${date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "DATE OF INCIDENT")])} /<br> ${time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "TIME OF INCIDENT")])}</td>
+                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "DEPARTMENT")]}</td>
+                <td>${concatenatedString}</td>
+                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "DESIGNATION")]}</td>
+                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "LOCATION")]}</td>
+                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "INCIDENT DETAILS")]}</td>
+                <td>${date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "DATE OF REPORT")])} /<br> ${time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "TIME OF REPORT")])}</td>
+                <td>${calculateTravelTime(date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "DATE OF INCIDENT")]),time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "TIME OF INCIDENT")]),date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "DATE OF REPORT")]),time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "TIME OF REPORT")]))}</td>
+            </tr>
+            `
+            incident_history_data_value_counter += 1;
+        }
+        incident_history_list.innerHTML = incident_history_data_value
+
+        incident_report_form_button_incident_report_form.addEventListener("click", () => {
+            if(form_tab_incident_report_form.style.display == "block"){
+                form_tab_incident_report_form.style.display = "none";
+            }
+            else{
+                form_tab_incident_report_form.style.display = "block";
+            }
         })
         
     } catch (error) {
