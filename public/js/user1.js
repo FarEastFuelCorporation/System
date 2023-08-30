@@ -449,24 +449,23 @@ document.addEventListener('DOMContentLoaded', async function() {
                             waste_description.value = mtf_data_list.content[z][findTextInArray(mtf_data_list, "WASTE ID")];
                             hauling_date.value = date_decoder(mtf_data_list.content[z][findTextInArray(mtf_data_list, "HAULING DATE")]);
                             wcf_data.style.display = "block";
-
                         }
                     }
-                    if(data_value == undefined){
-                        search_ltf_result.innerHTML = `
-                        <div class="search_ltf_result">
-                        <h2>INFORMATION</h2>
-                        No Data Found
-                        </div><br>`            
-                    }
-                    else{
-                        search_ltf_result.innerHTML = `
-                        <div class="search_ltf_result">
-                        <h2>INFORMATION</h2>
-                        ${data_value}
-                        </div><br>`
-                    }
                 }
+            }
+            if(data_value == undefined){
+                search_ltf_result.innerHTML = `
+                <div class="search_ltf_result">
+                <h2>INFORMATION</h2>
+                No Data Found
+                </div><br>`            
+            }
+            else{
+                search_ltf_result.innerHTML = `
+                <div class="search_ltf_result">
+                <h2>INFORMATION</h2>
+                ${data_value}
+                </div><br>`
             }
         })
 
