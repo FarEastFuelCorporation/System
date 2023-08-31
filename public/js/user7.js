@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         const username_data_list  = await username_response.json();
         const client_data_list  = await client_list_response.json();
-        const type_of_waste_data  = await type_of_waste_response.json();
+        const type_of_waste_data_list  = await type_of_waste_response.json();
         const employee_data_list  = await employee_response.json();
         const vehicle_data_list  = await vehicle_response.json();
         const vehicle_log_data_list  = await vehicle_log_response.json();
@@ -114,10 +114,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                         var waste_code = "";
                         var waste_name = "";
-                        for(let c = 1; c < type_of_waste_data.content.length; c++){
-                            if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")] == type_of_waste_data.content[c][findTextInArray(type_of_waste_data, "WASTE ID")]){
-                                waste_code = type_of_waste_data.content[c][findTextInArray(type_of_waste_data, "WASTE CODE")];
-                                waste_name = type_of_waste_data.content[c][findTextInArray(type_of_waste_data, "WASTE NAME")];
+                        for(let c = 1; c < type_of_waste_data_list.content.length; c++){
+                            if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")] == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
+                                waste_code = type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")];
+                                waste_name = type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE NAME")];
                             }
                         }
                         data_value +=`
@@ -164,10 +164,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     var waste_code = "";
                     var waste_name = "";
-                    for(let c = 1; c < type_of_waste_data.content.length; c++){
-                        if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")] == type_of_waste_data.content[c][findTextInArray(type_of_waste_data, "WASTE ID")]){
-                            waste_code = type_of_waste_data.content[c][findTextInArray(type_of_waste_data, "WASTE CODE")];
-                            waste_name = type_of_waste_data.content[c][findTextInArray(type_of_waste_data, "WASTE NAME")];
+                    for(let c = 1; c < type_of_waste_data_list.content.length; c++){
+                        if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")] == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
+                            waste_code = type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")];
+                            waste_name = type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE NAME")];
                         }
                     }
                     data3_value +=`
@@ -209,10 +209,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     var waste_code = "";
                     var waste_name = "";
-                    for(let c = 1; c < type_of_waste_data.content.length; c++){
-                        if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")] == type_of_waste_data.content[c][findTextInArray(type_of_waste_data, "WASTE ID")]){
-                            waste_code = type_of_waste_data.content[c][findTextInArray(type_of_waste_data, "WASTE CODE")];
-                            waste_name = type_of_waste_data.content[c][findTextInArray(type_of_waste_data, "WASTE NAME")];
+                    for(let c = 1; c < type_of_waste_data_list.content.length; c++){
+                        if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")] == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
+                            waste_code = type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")];
+                            waste_name = type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE NAME")];
                         }
                     }
                     data3_value +=`
@@ -619,11 +619,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                             var waste_id = "";
                             var waste_code = "";
                             var waste_name = "";
-                            for(let c = 1; c < type_of_waste_data.content.length; c++){
-                                if(mtf_data_list.content[a][findTextInArray(mtf_data_list, "WASTE ID")] == type_of_waste_data.content[c][findTextInArray(type_of_waste_data, "WASTE ID")]){
-                                    waste_id = type_of_waste_data.content[c][findTextInArray(type_of_waste_data, "WASTE ID")];
-                                    waste_code = type_of_waste_data.content[c][findTextInArray(type_of_waste_data, "WASTE CODE")];
-                                    waste_name = type_of_waste_data.content[c][findTextInArray(type_of_waste_data, "WASTE NAME")];
+                            for(let c = 1; c < type_of_waste_data_list.content.length; c++){
+                                if(mtf_data_list.content[a][findTextInArray(mtf_data_list, "WASTE ID")] == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
+                                    waste_id = type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")];
+                                    waste_code = type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")];
+                                    waste_name = type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE NAME")];
                                 }
                             }
                             data_value =`
@@ -679,11 +679,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                             var waste_id = "";
                             var waste_code = "";
                             var waste_name = "";
-                            for(let c = 1; c < type_of_waste_data.content.length; c++){
-                                if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")] == type_of_waste_data.content[c][findTextInArray(type_of_waste_data, "WASTE ID")]){
-                                    waste_id = type_of_waste_data.content[c][findTextInArray(type_of_waste_data, "WASTE ID")];
-                                    waste_code = type_of_waste_data.content[c][findTextInArray(type_of_waste_data, "WASTE CODE")];
-                                    waste_name = type_of_waste_data.content[c][findTextInArray(type_of_waste_data, "WASTE NAME")];
+                            for(let c = 1; c < type_of_waste_data_list.content.length; c++){
+                                if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")] == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
+                                    waste_id = type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")];
+                                    waste_code = type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")];
+                                    waste_name = type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE NAME")];
                                 }
                             }
                             data_value =`

@@ -147,8 +147,9 @@
                                     <th>COD #</th>
                                     <th>DATE OF CERTIFICATION</th>
                                     <th>CLIENT</th>
+                                    <th>WASTE CODE</th>
                                     <th>WASTE DESCRIPTION</th>
-                                    <th>BATCH WEIGHT</th>
+                                    <th>WEIGHT</th>
                                 </thead>
                                 <tbody id="unsorted_list">
 
@@ -181,7 +182,7 @@
                                 <input type="text" id="bpf_form_no" autocomplete="off" name="bpf_form_no" class="form-control" readonly><br>
                             </div>
                         </div>
-                        <div>
+                        <!-- <div>
                             <label for="search_bpf_form_no">
                                 Search BPF #
                             </label><br>
@@ -200,7 +201,7 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div id="search_tpf_result">
 
@@ -214,30 +215,20 @@
                                 <div class="form">
                                     <input type="text" id="search_cod_form_no" autocomplete="off" name="search_cod_form_no" class="form-control"><br>
                                 </div>
-                                <div>
-                                    <button id="search_cod_form_no_button" type="button" class="form-control">
-                                        <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
-                                    </button>
-                                </div>
-                                <div>
-                                    <button id="clear_cod_form_no_button" type="button" class="form-control">
-                                        <i class="fa-solid fa-rectangle-xmark" style="color: #ffffff;"></i>
-                                    </button>
-                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="buttons">
-                        <button type="button" id="generate_button" class="form-control form">
-                            Generate COD
+                        <button type="button" id="generate_button" class="form-control form" style="max-width: max-content !important;">
+                            Generate Billing Statement
                         </button>
-                        <button type="button" onclick="convertToPDFandDownload()" id="convertToPDFandDownload_button" class="form-control form">
+                        <button type="button" onclick="convertToPDFandDownload()" id="convertToPDFandDownload_button" class="form-control form" style="display: none; max-width: content !important;">
                             Download and Submit
                         </button>
-                        <button type="button" onclick="convertToPDF()" id="convertToPDF_button" class="form-control form">
+                        <button type="button" onclick="convertToPDF()" id="convertToPDF_button" class="form-control form" style="display: none; max-width: content !important;">
                             Download
                         </button>
-                        <button type="submit" id="submit_button" class="form-control form">
+                        <button type="submit" id="submit_button" class="form-control form" style="display: none; max-width: none !important;">
                             Submit
                         </button>
                     </div><br>
@@ -252,9 +243,9 @@
                                 </div>
                                 <div class="billing_number">
                                     <h4 class="italic">Billing Number</h4>
-                                    <h4 class="bold">B23-07-542</h4>
+                                    <h4 id="bpf_form_no_container" class="bold"></h4>
                                     <h4 class="italic">Statement Date</h4>
-                                    <h4 class="bold">18-Jul-23</h4>
+                                    <h4 id="date_made_container" class="bold"></h4>
                                 </div>
                                 <div class="customer_summary">
                                     <div class="customer">
@@ -262,11 +253,10 @@
                                             <h3 class="bold">CUSTOMER</h3>
                                         </div>
                                         <div class="customer_detail">
-                                            <h3 class="bold">SODEXO ON-SITE SERVICE PHILIPPINES INC.</h3>
-                                            <h4>11th flr Lepanto Condominium</h4>
-                                            <h4>8747 Paseo de Roxas, Makati City</h4>
-                                            <h4>008-648-866-000</h4>
-                                            <h4>Facilities Management and Food Services</h4>
+                                            <h3 id="client_name_container" class="bold"></h3>
+                                            <h4 id="address_container"></h4>
+                                            <h4 id="tin_id_container"></h4>
+                                            <h4 id="nature_of_business_container"></h4>
                                             <h4>Tel.</h4>
                                             <h4>Fax.</h4>
                                             <h4>Email.</h4>
@@ -278,32 +268,32 @@
                                         </div>
                                         <div class="account_summary_detail">
                                             <div class="payable grid2">
-                                                <h2 class="bold">Total Amount Payable</h2>
-                                                <h2 class="amount bold">52,344.22</h2>
+                                                <h3 class="bold">Total Amount Payable</h3>
+                                                <h3 id="total_amount_payable_container" class="amount bold">0.00</h3>
                                             </div>
                                             <div class="grid2">
                                                 <h3>Total Non-Vatable Sale</h3>
-                                                <h3 class="amount"></h3>
+                                                <h3 id="non_vatable_container" class="amount"></h3>
                                             </div>
                                             <div class="grid2">
                                                 <h3>Total Vatable Sale</h3>
-                                                <h3 class="amount">46,736.00</h3>
+                                                <h3 id="vatable_container" class="amount">0.00</h3>
                                             </div>
                                             <div class="grid2">
                                                 <h3>VAT (12%)</h3>
-                                                <h3 class="amount">5,608.32</h3>
+                                                <h3 id="vat_container" class="amount">0.00</h3>
                                             </div><br>
                                             <div class="payable grid2">
                                                 <h3><b>LESS:</b><b class="none">______</b>Credits</h3>
-                                                <h3 class="amount bold">-</h3>
+                                                <h3 id="credits_container" class="amount bold">0.00</h3>
                                             </div><br>
                                             <div class="payable grid2">
-                                                <h3 class="bold">Total Amount Due</h3>
-                                                <h3 class="amount bold">52,344.32</h3>
+                                                <h1 class="bold">Total Amount Due</h1>
+                                                <h1 id="total_amount_due_container" class="amount bold">0.00</h1>
                                             </div><br>
-                                            <div class="grid2">
+                                            <div class="grid3">
                                                 <h3><b>DUE DATE:</b></h3>
-                                                <h3 class="amount bold"></h3>
+                                                <h3 id="due_date_container" class="amount bold"></h3>
                                             </div>
                                         </div>
                                     </div>
@@ -326,261 +316,7 @@
                                                 <th>Vat</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>23-Jun-23</td>
-                                                <td></td>
-                                                <td>4648</td>
-                                                <td>Wrapper<br>Floor Gum<br>Barbage<br>Transportation Charge</td>
-                                                <td>2,640.00<br>650.00<br>1,230.00<br>1.00</td>
-                                                <td>kgs<br>kgs<br>kgs<br>trip</td>
-                                                <td>6.80<br>6.80<br>6.80<br>16,000.00</td>
-                                                <td>17,952.00<br>4,420.00<br>8,364.00<br>16,000.00</td>
-                                                <td>VAT-Ex<br>VAT-Ex<br>VAT-Ex<br>VAT-Ex</td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
+                                        <tbody id="table_data">
                                         </tbody>
                                     </table>
                                 </div>
@@ -588,8 +324,8 @@
                                     <div class="total_amount_label">
                                         Total Amount
                                     </div>
-                                    <div class="total_amount_amount">
-                                        46,736.00
+                                    <div id="total_amount_container" class="total_amount_amount">
+                                        0.00
                                     </div>
                                 </div>
                                 <div class="notes">
@@ -657,6 +393,12 @@
                                 position: relative;
                             }
 
+                            #what_to_print h1
+                            {
+                                font-size: 18px;
+                                margin: 0;
+                            }
+
                             #what_to_print h2
                             {
                                 font-size: 16px;
@@ -707,6 +449,12 @@
                                 grid-template-columns: 2fr 1fr;
                             }
 
+                            #what_to_print .grid3
+                            {
+                                display: grid;
+                                grid-template-columns: 1fr 1fr;
+                            }
+
                             #what_to_print .client_copy
                             {
                                 position: absolute;
@@ -727,7 +475,7 @@
                                 position: absolute;
                                 top: 0;
                                 right: 0;
-                                width: 80px;
+                                width: 100px;
                                 text-align: center;
                             }
 
@@ -818,6 +566,7 @@
                             {
                                 width: 100%;
                                 height: 425px;
+                                position: relative;
                             }
 
                             #what_to_print .account_details_detail tbody
@@ -830,7 +579,7 @@
                             {
                                 width: 100%;
                                 display: grid;
-                                grid-template-columns: 1.5fr 1fr 1fr 5fr 1.5fr 1fr 2fr 2.5fr 1.5fr;
+                                grid-template-columns: 1.5fr 1fr 1fr 5fr 1.5fr 1fr 2fr 2fr 2fr !important;
                             }
 
                             #what_to_print .account_details_detail th,
@@ -860,10 +609,10 @@
                                 width: 100%;
                                 height: 25px;
                                 display: grid;
-                                grid-template-columns: 13fr 2.5fr 1.5fr;
+                                grid-template-columns: 13fr 2fr 2fr;
                                 border: 2px solid black ;
                                 overflow: hidden;
-                                font-size: 12px;
+                                font-size: 14px;
                             }
 
                             #what_to_print .total_amount_label
@@ -872,7 +621,7 @@
                                 justify-content: center;
                                 align-items: center;
                                 font-weight: bold;
-                                font-size: 12px;
+                                font-size: 14px;
                             }
 
                             #what_to_print .total_amount_amount
@@ -881,6 +630,8 @@
                                 justify-content: end;
                                 align-items: center;
                                 font-weight: bold;
+                                font-size: 14px;
+                                padding-right: 5px;
                             }
                                 
                             #what_to_print .notes
@@ -927,20 +678,20 @@
                     </div><br>
                     <div class="what_to_print" id="what_to_print2">
                         <div class="si_header">
-                            <div>
-                                SODEXO ON-SITE SERVICE PHILIPPINES INC.
+                            <div id="si_client_name_container">
+                                
                             </div>
-                            <div>
-                                11th flr Lepanto Condominium, 8747 Paseo de Roxas, Makati City
+                            <div id="si_address_container">
+                                
                             </div>
-                            <div class="si_tin">
-                                008-648-866-000 / Facilities Management and Food Services
+                            <div id="si_tin_nature_of_business_container" class="si_tin">
+                                
                             </div>
                         </div>
                         <div class="si_number">
                         </div>
-                        <div class="si_date">
-                            July 20, 2023
+                        <div id="si_date_container" class="si_date">
+                            
                         </div>
                         <div class="si_dr_po">
                         </div>
@@ -958,154 +709,37 @@
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td class="amount">2,640.00</td>
-                                    <td>kgs</td>
-                                    <td>23-Jun-23</td>
-                                    <td>WRAPPER</td>
-                                    <td class="amount">6.80</td>
-                                    <td class="amount">20,106.24</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td class="amount">650.00</td>
-                                    <td>kgs</td>
-                                    <td>23-Jun-23</td>
-                                    <td>FLOOR GUM</td>
-                                    <td class="amount">6.80</td>
-                                    <td class="amount">4,950.40</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td class="amount">1,230.00</td>
-                                    <td>kgs</td>
-                                    <td>23-Jun-23</td>
-                                    <td>GARBAGE</td>
-                                    <td class="amount">6.80</td>
-                                    <td class="amount">9,367.48</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td class="amount">1.00</td>
-                                    <td>trip</td>
-                                    <td>23-Jun-23</td>
-                                    <td>TRANSPORTATION CHARGE</td>
-                                    <td class="amount">16,000.00</td>
-                                    <td class="amount">17,920.00</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td class="amount">1.00</td>
-                                    <td>trip</td>
-                                    <td>23-Jun-23</td>
-                                    <td>TRANSPORTATION CHARGE</td>
-                                    <td class="amount">16,000.00</td>
-                                    <td class="amount">17,920.00</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td class="amount">1.00</td>
-                                    <td>trip</td>
-                                    <td>23-Jun-23</td>
-                                    <td>TRANSPORTATION CHARGE</td>
-                                    <td class="amount">16,000.00</td>
-                                    <td class="amount">17,920.00</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td class="amount">1.00</td>
-                                    <td>trip</td>
-                                    <td>23-Jun-23</td>
-                                    <td>TRANSPORTATION CHARGE</td>
-                                    <td class="amount">16,000.00</td>
-                                    <td class="amount">17,920.00</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td class="amount">1.00</td>
-                                    <td>trip</td>
-                                    <td>23-Jun-23</td>
-                                    <td>TRANSPORTATION CHARGE</td>
-                                    <td class="amount">16,000.00</td>
-                                    <td class="amount">17,920.00</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td class="amount">1.00</td>
-                                    <td>trip</td>
-                                    <td>23-Jun-23</td>
-                                    <td>TRANSPORTATION CHARGE</td>
-                                    <td class="amount">16,000.00</td>
-                                    <td class="amount">17,920.00</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td class="amount">1.00</td>
-                                    <td>trip</td>
-                                    <td>23-Jun-23</td>
-                                    <td>TRANSPORTATION CHARGE</td>
-                                    <td class="amount">16,000.00</td>
-                                    <td class="amount">17,920.00</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td class="amount">1.00</td>
-                                    <td>trip</td>
-                                    <td>23-Jun-23</td>
-                                    <td>TRANSPORTATION CHARGE</td>
-                                    <td class="amount">16,000.00</td>
-                                    <td class="amount">17,920.00</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td class="amount">1.00</td>
-                                    <td>trip</td>
-                                    <td>23-Jun-23</td>
-                                    <td>TRANSPORTATION CHARGE</td>
-                                    <td class="amount">16,000.00</td>
-                                    <td class="amount">17,920.00</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td class="amount">1.00</td>
-                                    <td>trip</td>
-                                    <td>23-Jun-23</td>
-                                    <td>TRANSPORTATION CHARGE</td>
-                                    <td class="amount">16,000.00</td>
-                                    <td class="amount">17,920.00</td>
-                                </tr>
+                            <tbody id="si_table_data">
                             </tbody>
                         </table>
                         <div class="add-ins">
                             <div>
                                 <div class="amount">VAT Exclusive</div>
-                                <div class="amount bold">46,736.00</div>
+                                <div id="si_vat_ex_container" class="amount bold">0.00</div>
                             </div>
                             <div>
                                 <div class="amount">VAT 12%</div>
-                                <div class="amount bold">5,608.32</div>
+                                <div id="si_vat_container" class="amount bold">0.00</div>
                             </div>
                             <div>
                                 <div class="amount">Credits</div>
-                                <div class="amount bold">5,608.32</div>
+                                <div id="si_credits_container" class="amount bold">0.00</div>
                             </div>
                             <div class="total_amount">
                                 <div></div>
-                                <div class="amount bold">52,344.32</div>
+                                <div id="si_total_amount_container" class="amount bold">0.00</div>
                             </div>
                         </div>
-                        <div class="terms">
-                            30 Days Term
+                        <div id="si_terms_container" class="terms">
+                            0 Day Term
                         </div>
                         <div class="assignatory">
                             <div class="assignatory_name">
                                 Frank Florence Flores
                             </div>
                         </div>
-                        <div class="total_sales amount bold">
-                            52,344.32
+                        <div id="si_total_sales_container" class="total_sales amount bold">
+                            0.00
                         </div>
                         <style>
                             

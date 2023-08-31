@@ -54,6 +54,31 @@ function date_decoder2(utcTime) {
   return formattedDate;
 }
 
+function date_decoder3(utcTime) {
+  var utcDate = new Date(utcTime);
+  var day = utcDate.getDate();
+  var month = utcDate.toLocaleString('default', { month: 'short' });
+  var year = utcDate.getFullYear().toString().slice(-2);
+
+  var formattedDate = `${day}-${month}-${year}`;
+
+  return formattedDate;
+}
+
+function date_decoder4(utcTime, plusDays) {
+  var utcDate = new Date(utcTime);
+  utcDate.setDate(utcDate.getDate() + plusDays);
+
+  var options = {
+      year: 'numeric',
+      month: 'long',
+      day: '2-digit',
+  };
+  
+  var formattedDate = utcDate.toLocaleString('en-US', options);
+
+  return formattedDate;
+}
 
 function time_decoder(timestamp) {
   const date = new Date(timestamp);
@@ -465,6 +490,13 @@ function formatNumber(number) {
     maximumFractionDigits: 2,
   });
 }   
+function formatNumber2(number) {
+  return number.toLocaleString('en-US', {
+    style: 'decimal',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  });
+}   
 
 function addConfirmationListener(form, validateFunction = null) {
   form.addEventListener('submit', function(event) {
@@ -487,7 +519,7 @@ function addConfirmationListener(form, validateFunction = null) {
 
 // Example of a custom validation function for a form
 function customValidation() {
-  const remaining = parseInt(document.getElementById('batch_weight').value);
+  const remaining = parseInt(document.getElementById('rem_weight').value);
 
   if (remaining !== 0) {
     alert('Batch Weight must be 0 to submit the form.');

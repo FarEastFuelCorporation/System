@@ -115,7 +115,7 @@
                         </div>
                     </div>
                 </div><br>
-                <h2>PENDING TRANSACTION LIST</h2>
+                <h2>PENDING TRANSACTIONS</h2>
                 <div class="card" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
                     <div class="list">
                         <table>
@@ -124,6 +124,7 @@
                                 <th>WCF #</th>
                                 <th>RECEIVING<br>DATE/TIME</th>
                                 <th>CLIENT</th>
+                                <th>WASTE CODE</th>
                                 <th>WASTE DESCRIPTION</th>
                                 <th>BATCH WEIGHT</th>
                             </thead>
@@ -134,7 +135,7 @@
                         <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
                     </div>
                 </div><br>
-                <h2>SORTING HISTORY LIST</h2>
+                <h2>SORTING HISTORY</h2>
                 <div class="card" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
                     <div class="list">
                         <table>
@@ -156,7 +157,7 @@
                         <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
                     </div>
                 </div><br>
-                <h2>SORTED ITEMS LIST</h2>
+                <h2>SORTED ITEMS</h2>
                 <div class="card" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
                     <div class="list">
                         <table>
@@ -181,10 +182,10 @@
             <!-- Sorting -->
             <section id="sorting_form">
                 <h2>SORTING FORM</h2><br>
-                <form id="sorting_form_id" action="https://script.google.com/macros/s/AKfycbzyMWe0pX5NTkkl4i_Lt4bUswZXbM05nbvChdGxiM9HzBJ_zl19OO5Tmf7lzT8GyrYu/exec" method="post">
+                <form id="sorting_form_id" action="https://script.google.com/macros/s/AKfycbweoLuqNO9ghWQJM2pECzuW52EruO5N8zwqHYH6ch0Av5VT1v46RWL6uv-iAKCAMRa7/exec" method="post">
                     <input type="hidden" name="user" id="user">
                     <input type="hidden" name="hauling_date" id="hauling_date">
-                    <div class="sf_form">
+                    <!-- <div class="sf_form">
                         <div>
                             <label for="search_form_no">
                                 <i class="fa-solid fa-list-ol"></i>
@@ -201,7 +202,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="sf_form">
                         <div>
                             <label for="search_sf_wcf_form_no">
@@ -254,6 +255,7 @@
                             </label><br>
                             <div class="search_input search_input_type" id="search_type_of_waste1">
                                 <input type="text" name="type_of_waste1" id="type_of_waste1" autocomplete="off" class="form-control" required placeholder="Type to Search Type of Waste...">
+                                <input type="hidden" name="waste_id1" id="waste_id1">
                                 <div class="autocom_box"></div>
                                 <div class="icon"><i class="fas fa-search"></i></div>
                             </div>
@@ -297,6 +299,7 @@
                             </label><br>
                             <div class="search_input search_input_type" id="search_type_of_waste2">
                                 <input type="text" name="type_of_waste2" id="type_of_waste2" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
+                                <input type="hidden" name="waste_id2" id="waste_id2">
                                 <div class="autocom_box"></div>
                                 <div class="icon"><i class="fas fa-search"></i></div>
                             </div>
@@ -339,6 +342,7 @@
                             </label><br>
                             <div class="search_input search_input_type" id="search_type_of_waste3">
                                 <input type="text" name="type_of_waste3" id="type_of_waste3" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
+                                <input type="hidden" name="waste_id3" id="waste_id3">
                                 <div class="autocom_box"></div>
                                 <div class="icon"><i class="fas fa-search"></i></div>
                             </div>
@@ -381,6 +385,7 @@
                             </label><br>
                             <div class="search_input search_input_type" id="search_type_of_waste4">
                                 <input type="text" name="type_of_waste4" id="type_of_waste4" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
+                                <input type="hidden" name="waste_id4" id="waste_id4">
                                 <div class="autocom_box"></div>
                                 <div class="icon"><i class="fas fa-search"></i></div>
                             </div>
@@ -423,6 +428,7 @@
                             </label><br>
                             <div class="search_input search_input_type" id="search_type_of_waste5">
                                 <input type="text" name="type_of_waste5" id="type_of_waste5" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
+                                <input type="hidden" name="waste_id5" id="waste_id5">
                                 <div class="autocom_box"></div>
                                 <div class="icon"><i class="fas fa-search"></i></div>
                             </div>
@@ -465,6 +471,7 @@
                             </label><br>
                             <div class="search_input search_input_type" id="search_type_of_waste6">
                                 <input type="text" name="type_of_waste6" id="type_of_waste6" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
+                                <input type="hidden" name="waste_id6" id="waste_id6">
                                 <div class="autocom_box"></div>
                                 <div class="icon"><i class="fas fa-search"></i></div>
                             </div>
@@ -507,6 +514,7 @@
                             </label><br>
                             <div class="search_input search_input_type" id="search_type_of_waste7">
                                 <input type="text" name="type_of_waste7" id="type_of_waste7" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
+                                <input type="hidden" name="waste_id7" id="waste_id7">
                                 <div class="autocom_box"></div>
                                 <div class="icon"><i class="fas fa-search"></i></div>
                             </div>
@@ -549,6 +557,7 @@
                             </label><br>
                             <div class="search_input search_input_type" id="search_type_of_waste8">
                                 <input type="text" name="type_of_waste8" id="type_of_waste8" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
+                                <input type="hidden" name="waste_id8" id="waste_id8">
                                 <div class="autocom_box"></div>
                                 <div class="icon"><i class="fas fa-search"></i></div>
                             </div>
@@ -591,6 +600,7 @@
                             </label><br>
                             <div class="search_input search_input_type" id="search_type_of_waste9">
                                 <input type="text" name="type_of_waste9" id="type_of_waste9" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
+                                <input type="hidden" name="waste_id9" id="waste_id9">
                                 <div class="autocom_box"></div>
                                 <div class="icon"><i class="fas fa-search"></i></div>
                             </div>
@@ -633,6 +643,7 @@
                             </label><br>
                             <div class="search_input search_input_type" id="search_type_of_waste10">
                                 <input type="text" name="type_of_waste10" id="type_of_waste10" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
+                                <input type="hidden" name="waste_id10" id="waste_id10">
                                 <div class="autocom_box"></div>
                                 <div class="icon"><i class="fas fa-search"></i></div>
                             </div>
@@ -739,6 +750,7 @@
                                 </label><br>
                                 <div class="search_input search_input_type" id="search_type_of_waste11">
                                     <input type="text" name="type_of_waste11" id="type_of_waste11" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
+                                    <input type="hidden" name="waste_id11" id="waste_id11">
                                     <div class="autocom_box"></div>
                                     <div class="icon"><i class="fas fa-search"></i></div>
                                 </div>

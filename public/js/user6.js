@@ -324,9 +324,9 @@ document.addEventListener('DOMContentLoaded', async function() {
             }    
         })
 
-        var employee_name = [];
+        var waste_name_list = [];
         for (x = 1; x < type_of_waste_data_list.content.length; x++) {
-            employee_name.push(type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "WASTE CODE")]);
+            waste_name_list.push(type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "WASTE CODE")]);
         }
 
         function typeOfWaste(){
@@ -340,7 +340,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     let user_data = e.target.value;
                     let empty_array = [];
                     if (user_data) {
-                        empty_array = employee_name.filter((data) => {
+                        empty_array = waste_name_list.filter((data) => {
                             return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
                         });
                         empty_array = empty_array.map((data) => {
