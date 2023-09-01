@@ -5,19 +5,22 @@ document.addEventListener('DOMContentLoaded', async function() {
         const type_of_waste_response_promise = fetch('https://script.google.com/macros/s/AKfycbw0yC-8_V38Zl1-KGyBwX1JmfTEW1jwyFxgpZ-oNC2lvtoAraUtkLCS27HfNbXi_l4IPg/exec');
         const tpf_response_promise = fetch('https://script.google.com/macros/s/AKfycbwbKss2XtW5lylCrUe8IC-ZA4ffA5CM5tY6kqIja9t80NXJw2nB8RBOJFWbXQz0hWMadw/exec');
         const cod_response_promise = fetch('https://script.google.com/macros/s/AKfycbzgiOuXizUVviCsLVfihqYN9HJ3pyNr7ElHoCl3JGkbtQnChnm2U42yQuLd4UMH0ci5/exec');
+        const qlf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyFU_skru2tnyEiv8I5HkpRCXbUlQb5vlJUm8Le0nZBCvfZeFkQPd2Naljs5CZY41I17w/exec');
 
         const [
             username_response,
             client_list_response,
             type_of_waste_response,
             tpf_response,
-            cod_response
+            cod_response,
+            qlf_response,
         ] = await Promise.all([
             username_response_promise,
             client_list_response_promise,
             type_of_waste_response_promise,
             tpf_response_promise,
-            cod_response_promise
+            cod_response_promise,
+            qlf_response_promise,
         ]);
 
         const username_data_list  = await username_response.json();
@@ -25,6 +28,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const type_of_waste_data_list  = await type_of_waste_response.json();
         const tpf_data_list  = await tpf_response.json();
         const cod_data_list  = await cod_response.json();
+        const qlf_data_list  = await qlf_response.json();
 
         // Code that depends on the fetched data
         // username_data_list
@@ -87,32 +91,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                     else if(date_accomplished.getDate() > target_date.getDate()){
                         status = "DELAYED";
                     }
-                    var client_name = "";
-                    for(let c = 1; c < client_data_list.content.length; c++){
-                        if(tpf_data_list.content[j][findTextInArray(tpf_data_list, "CLIENT ID")] == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")]){
-                            client_name = client_data_list.content[c][findTextInArray(client_data_list, "CLIENT NAME")];
-                            break
-                        }
-                    }
-                    var waste_code = "";
-                    var waste_name = "";
-                    for(let c = 1; c < type_of_waste_data_list.content.length; c++){
-                        if(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")] == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
-                            waste_code = (type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")]).substring(0, 4);
-                            waste_name = type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE NAME")];
-                            break
-                        }
-                        else{
-                            waste_name = tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")];
-                        }
-                    }
                     data_value +=`
                     <tr>
                         <td>${data_value_counter}</td>
                         <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")]}</td>
                         <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")])} /<br> ${time_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION TIME")])}</td>
-                        <td>${client_name}</td>
-                        <td>${waste_name}</td>
+                        <td>${findClientName(tpf_data_list.content[j][findTextInArray(tpf_data_list, "CLIENT ID")])}</td>
+                        <td>${findWasteCode(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
+                        <td>${findWasteName(tpf_data_list.content[j][findTextInArray(tpf_data_list, "CLIENT ID")], tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
                         <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "WEIGHT")]} kg.</td>
                         <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                         <td>${status}</td>
@@ -153,33 +139,15 @@ document.addEventListener('DOMContentLoaded', async function() {
                             finished_time = time_decoder(cod_data_list.content[k][findTextInArray(cod_data_list, "TIME ACCOMPLISHED")]);
                         }
                     }
-                    var client_name = "";
-                    for(let c = 1; c < client_data_list.content.length; c++){
-                        if(tpf_data_list.content[j][findTextInArray(tpf_data_list, "CLIENT ID")] == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")]){
-                            client_name = client_data_list.content[c][findTextInArray(client_data_list, "CLIENT NAME")];
-                            break
-                        }
-                    }
-                    var waste_code = "";
-                    var waste_name = "";
-                    for(let c = 1; c < type_of_waste_data_list.content.length; c++){
-                        if(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")] == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
-                            waste_code = (type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")]).substring(0, 4);
-                            waste_name = type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE NAME")];
-                            break
-                        }
-                        else{
-                            waste_name = tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")];
-                        }
-                    }
                     data_value +=`
                     <tr>
                         <td>${data_value_counter}</td>
                         <td>${cod_no}</td>
                         <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")]}</td>
                         <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")])} /<br> ${time_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION TIME")])}</td>
-                        <td>${client_name}</td>
-                        <td>${waste_name}</td>
+                        <td>${findClientName(tpf_data_list.content[j][findTextInArray(tpf_data_list, "CLIENT ID")])}</td>
+                        <td>${findWasteCode(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
+                        <td>${findWasteName(tpf_data_list.content[j][findTextInArray(tpf_data_list, "CLIENT ID")], tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
                         <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "WEIGHT")]} kg.</td>
                         <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                         <td>${status}</td>
@@ -298,26 +266,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 for (let x = 1; x < tpf_data_list.content.length; x++) {
                     var year = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getFullYear();
                     var month = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getMonth() + 1;
-                    var client_name = "";
-                    for(let c = 1; c < client_data_list.content.length; c++){
-                        if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")]){
-                            client_name = client_data_list.content[c][findTextInArray(client_data_list, "CLIENT NAME")];
-                            break
-                        }
-                    }
-                    var waste_code = "";
-                    var waste_name = "";
-                    for(let c = 1; c < type_of_waste_data_list.content.length; c++){
-                        if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")] == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
-                            waste_code = (type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")]).substring(0, 4);
-                            waste_name = type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE NAME")];
-                            break
-                        }
-                        else{
-                            waste_name = tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")];
-                        }
-                    }
-                    if (input_box.value == client_name) {
+                    if (input_box.value == findClientName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")])) {
                         const waste_description = document.getElementById("waste_description");
                         const year_covered = document.getElementById("year_covered");
                         const month_covered = document.getElementById("month_covered");
@@ -327,15 +276,15 @@ document.addEventListener('DOMContentLoaded', async function() {
                         var certification_month = convertToMonthName(month);
                         for(let a = 0; a <= pending_certification.length; a++){
                             if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TPF #")] == pending_certification[a]){
-                                if (waste_description.value == waste_name &&
+                                if (waste_description.value == findWasteName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")], tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")]) &&
                                     year_covered.value == year &&
                                     month_covered.value == month) {
                                     table_data_counter += 1;
                                     table_data_value +=
                                     `<tr>
                                     <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
-                                    <td>${waste_name}</td>
-                                    <td>${waste_code}</td>
+                                    <td>${findWasteName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")], tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
+                                    <td>${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
                                     <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WEIGHT")]} Kgs.</td>
                                     <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                     <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
@@ -347,7 +296,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")]}" name="wcf_no_input${table_data_counter}" id="wcf_no_input${table_data_counter}">
                                     <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")]}" name="client_input${table_data_counter}" id="client_input${table_data_counter}">
                                     <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")]}" name="waste_description_input${table_data_counter}" id="waste_description_input${table_data_counter}">
-                                    <input type="hidden" value="${waste_code}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
+                                    <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
                                     <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WEIGHT")]}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
                                     <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                     <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
@@ -355,7 +304,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     var certification_day_ordinal = convertToOrdinal(certification_day);
                                     var certification_month = convertToMonthName(month);
                                     certification.innerText = `${certification_day_ordinal} of ${certification_month} ${year}`;
-                                    table_company.innerHTML = client_name;
+                                    table_company.innerHTML = findClientName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")]);
                                     table_data_input_value.innerHTML = table_data_input;
                                     for (let y = 1; y < client_data_list.content.length; y++) {
                                         if (input_box.value == client_data_list.content[y][findTextInArray(client_data_list, "CLIENT NAME")]) {
@@ -377,26 +326,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 for (let x = 1; x < tpf_data_list.content.length; x++) {
                     var year = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getFullYear();
                     var month = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getMonth() + 1;
-                    var client_name = "";
-                    for(let c = 1; c < client_data_list.content.length; c++){
-                        if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")]){
-                            client_name = client_data_list.content[c][findTextInArray(client_data_list, "CLIENT NAME")];
-                            break
-                        }
-                    }
-                    var waste_code = "";
-                    var waste_name = "";
-                    for(let c = 1; c < type_of_waste_data_list.content.length; c++){
-                        if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")] == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
-                            waste_code = (type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")]).substring(0, 4);
-                            waste_name = type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE NAME")];
-                            break
-                        }
-                        else{
-                            waste_name = tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")];
-                        }
-                    }
-                    if (input_box.value === client_name) {
+                    if (input_box.value === findClientName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")])) {
                         const waste_description = document.getElementById("waste_description");
                         const year_covered = document.getElementById("year_covered");
                         const month_covered = document.getElementById("month_covered");
@@ -413,8 +343,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     table_data_value +=
                                     `<tr>
                                     <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
-                                    <td>${waste_name}</td>
-                                    <td>${waste_code}</td>
+                                    <td>${findWasteName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")], tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
+                                    <td>${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
                                     <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WEIGHT")]} Kgs.</td>
                                     <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                     <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
@@ -426,13 +356,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")]}" name="wcf_no_input${table_data_counter}" id="wcf_no_input${table_data_counter}">
                                     <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")]}" name="client_input${table_data_counter}" id="client_input${table_data_counter}">
                                     <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")]}" name="waste_description_input${table_data_counter}" id="waste_description_input${table_data_counter}">
-                                    <input type="hidden" value="${waste_code}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
+                                    <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
                                     <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WEIGHT")]}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
                                     <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                     <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
                                         `
                                     certification.innerText = `${certification_day_ordinal} of ${certification_month} ${year}`;
-                                    table_company.innerHTML = client_name;
+                                    table_company.innerHTML = findClientName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")]);
                                     table_data_input_value.innerHTML = table_data_input;
                                     for (let y = 1; y < client_data_list.content.length; y++) {
                                         if (input_box.value == client_data_list.content[y][findTextInArray(client_data_list, "CLIENT NAME")]) {
@@ -593,32 +523,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                         var certification_day = new Date(certification_date).getDate();
                         var certification_day_ordinal = convertToOrdinal(certification_day);
                         var certification_month = convertToMonthName(month);
-                        var client_name = "";
-                        for(let c = 1; c < client_data_list.content.length; c++){
-                            if(tpf_data_list.content[y][findTextInArray(tpf_data_list, "CLIENT ID")] == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")]){
-                                client_name = client_data_list.content[c][findTextInArray(client_data_list, "CLIENT NAME")];
-                                break
-                            }
-                        }
-                        var waste_code = "";
-                        var waste_name = "";
-                        for(let c = 1; c < type_of_waste_data_list.content.length; c++){
-                            if(tpf_data_list.content[y][findTextInArray(tpf_data_list, "WASTE ID")] == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
-                                waste_code = (type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")]).substring(0, 4);
-                                waste_name = type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE NAME")];
-                                break
-                            }
-                            else{
-                                waste_name = tpf_data_list.content[y][findTextInArray(tpf_data_list, "WASTE ID")];
-                            }
-                        }
                         if(cod_data_list.content[x][findTextInArray(cod_data_list, "TPF #")] == tpf_data_list.content[y][findTextInArray(tpf_data_list, "TPF #")]){
                             table_data_counter += 1;
                             table_data_value +=
                                 `<tr>
                                 <td>${date_decoder(tpf_data_list.content[y][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
-                                <td>${waste_name}</td>
-                                <td>${waste_code}</td>
+                                <td>${findWasteName(tpf_data_list.content[y][findTextInArray(tpf_data_list, "CLIENT ID")], pf_data_list.content[y][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
+                                <td>${findWasteCode(pf_data_list.content[y][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
                                 <td>${tpf_data_list.content[y][findTextInArray(tpf_data_list, "WEIGHT")]} Kgs.</td>
                                 <td>${tpf_data_list.content[y][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                 <td>${date_decoder(tpf_data_list.content[y][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
@@ -627,7 +538,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             var certification_day_ordinal = convertToOrdinal(certification_day);
                             var certification_month = convertToMonthName(month);
                             certification.innerText = `${certification_day_ordinal} of ${certification_month} ${year}`;
-                            table_company.innerHTML = client_name;
+                            table_company.innerHTML = findClientName(tpf_data_list.content[y][findTextInArray(tpf_data_list, "CLIENT ID")]);
                             for (let z = 1; z < client_data_list.content.length; z++) {
                                 if (cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")] == client_data_list.content[z][findTextInArray(client_data_list, "CLIENT ID")]) {
                                     table_company_address.innerHTML = client_data_list.content[z][findTextInArray(client_data_list, "ADDRESS")];
@@ -642,6 +553,59 @@ document.addEventListener('DOMContentLoaded', async function() {
             convertToPDF_button.style.display = "block";    
         }
 
+        function findEmployeeName(employee_id){
+            var employee_name = "";
+            for(let c = 1; c < employee_data_list.content.length; c++){
+                if(employee_id == employee_data_list.content[c][findTextInArray(employee_data_list, "EMPLOYEE ID")]){
+                    var gender = employee_data_list.content[c][findTextInArray(employee_data_list, "GENDER")];
+                    if(gender == "MALE"){
+                        employee_name = `${employee_data_list.content[c][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[c][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[c][findTextInArray(employee_data_list, "MIDDLE NAME")]} ${employee_data_list.content[c][findTextInArray(employee_data_list, "AFFIX")]}`
+                    }
+                    else{
+                        employee_name = `${employee_data_list.content[c][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[c][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[c][findTextInArray(employee_data_list, "MIDDLE NAME")]} - ${employee_data_list.content[c][findTextInArray(employee_data_list, "SPOUSE NAME")]}`
+                    }
+                    break
+                }
+                else{
+                    employee_name = employee_id == employee_data_list.content[c][findTextInArray(employee_data_list, "EMPLOYEE ID")]
+                }
+            }
+            return employee_name
+        }
+        function findClientName(client_id){
+            var client_name = "";
+            for(let c = 1; c < client_data_list.content.length; c++){
+                if(client_id == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")]){
+                    client_name = client_data_list.content[c][findTextInArray(client_data_list, "CLIENT NAME")];
+                    break
+                }
+            }
+            return client_name
+        }
+        function findWasteCode(waste_id){
+            var waste_code = "";
+            for(let c = 1; c < type_of_waste_data_list.content.length; c++){
+                if(waste_id == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
+                    waste_code = (type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")]).substring(0, 4);
+                    break
+                }
+                else{
+                    waste_code = waste_id;
+                }
+            }
+            return waste_code
+        }
+        function findWasteName(client_id, waste_id){
+            var waste_name = "";
+            for(let c = 1; c < qlf_data_list.content.length; c++){
+                if(client_id == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")]&& 
+                    waste_id == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
+                    waste_name = (qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE NAME")]);
+                    break
+                }
+            }
+            return waste_name
+        }
 
     } catch (error) {
         console.error('Error fetching data:', error);

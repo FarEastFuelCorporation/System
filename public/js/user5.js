@@ -169,6 +169,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const billing_process_form = document.querySelector("#billing_process_form");
         const search_cod_form_no = billing_process_form.querySelector("#search_cod_form_no");
         const generate_button = billing_process_form.querySelector("#generate_button");
+        const convertToPDFandDownload_button = billing_process_form.querySelector("#convertToPDFandDownload_button");
+        const convertToPDF_button = billing_process_form.querySelector("#convertToPDF_button");
         const bpf_form_no_container = billing_process_form.querySelector("#bpf_form_no_container");
         const date_made_container = billing_process_form.querySelector("#date_made_container");
         const client_name_container = billing_process_form.querySelector("#client_name_container");
@@ -204,7 +206,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 cod_transaction.push(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]);
             }
         }
-
         generate_button.addEventListener("click", () => {
             var non_vatable = 0;
             var vatable = 0;
@@ -278,7 +279,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
                 var data = "";
                 var data3 = "";
-                if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]){
+                if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #" && vat_calculation == "CHARGE")]){
                     bpf_form_no_container.innerText = bpf_form_no.value;
                     date_made_container.innerText = date_decoder(new Date());
                     client_name_container.innerText = client_name;
@@ -354,7 +355,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     table_data.insertAdjacentHTML("beforeend", data2);
                     var si_unit_price = 0;
                     var si_amount = 0;
-                    if(vat_calculation == "VAT EXCLUSIVE"){
+                    if(transportation_calculation == "VAT EXCLUSIVE"){
                         vatable += parseFloat(transportation_fee);
                         si_unit_price = parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12);
                         si_amount = (1 * (parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12)));
@@ -366,6 +367,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         si_amount = (1 * (parseFloat(transportation_fee)));
                         si_total_amount += (1 * (parseFloat(transportation_fee)));
                     }
+                    console.log(transportation_calculation)
                     data4 = `
                     <tr>
                         <td>${data3_counter}</td>
@@ -405,7 +407,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             total_amount_payable_container.innerText = formatNumber(non_vatable + vatable + (parseFloat(vatable))*.12);
             credits_container.innerText = formatNumber(credits);
             total_amount_due_container.innerText = formatNumber((non_vatable + vatable + (parseFloat(vatable))*.12) - parseFloat(credits));
-            due_date_container.innerText = date_decoder4(new Date (), term);
+            due_date_container.innerHTML = `${term} days<br>from the date received`;
             total_amount_container.innerText = formatNumber((non_vatable + vatable + (parseFloat(vatable))*.12) - parseFloat(credits));
             si_vat_ex_container.innerText = formatNumber((parseFloat(si_total_amount))/1.12);
             si_vat_container.innerText = formatNumber((parseFloat(si_total_amount)) - ((parseFloat(si_total_amount))/1.12));
@@ -413,6 +415,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             si_total_amount_container.innerText = formatNumber(si_total_amount);
             si_total_sales_container.innerText = formatNumber(si_total_amount);
             si_terms_container.innerText = `${term} Days Term`;
+            convertToPDFandDownload_button.style.display = "block";
+            convertToPDF_button.style.display = "block";
         })
 
     

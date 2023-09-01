@@ -33,7 +33,7 @@
                 <li>
                     <a href="#">
                         <i class="fa-solid fa-clipboard-list"></i>
-                        Billing Form
+                        Billing
                     </a>
                 </li>
                 <li>
@@ -222,10 +222,10 @@
                         <button type="button" id="generate_button" class="form-control form" style="max-width: max-content !important;">
                             Generate Billing Statement
                         </button>
-                        <button type="button" onclick="convertToPDFandDownload()" id="convertToPDFandDownload_button" class="form-control form" style="display: none; max-width: content !important;">
+                        <button type="button" onclick="convertToPDFandDownload()" id="convertToPDFandDownload_button" class="form-control form" style="display: none; max-width: fit-content !important;">
                             Download and Submit
                         </button>
-                        <button type="button" onclick="convertToPDF()" id="convertToPDF_button" class="form-control form" style="display: none; max-width: content !important;">
+                        <button type="button" onclick="executeMultipleFunctions()" id="convertToPDF_button" class="form-control form" style="display: none; max-width: content !important;">
                             Download
                         </button>
                         <button type="submit" id="submit_button" class="form-control form" style="display: none; max-width: none !important;">
@@ -391,6 +391,7 @@
                             #what_to_print .pdf_container
                             {
                                 position: relative;
+                                height: 889px;
                             }
 
                             #what_to_print h1
@@ -475,7 +476,7 @@
                                 position: absolute;
                                 top: 0;
                                 right: 0;
-                                width: 100px;
+                                width: 120px;
                                 text-align: center;
                             }
 
@@ -644,9 +645,7 @@
                                 
                             #what_to_print .footer
                             {
-                                position: absolute;
-                                top: 800px;
-                                width: 100%;
+                                margin-top: 750px;
                                 display: grid;
                                 grid-template-columns: 1fr 1fr 1fr .4fr;
                                 border: 1px solid black ;
@@ -952,7 +951,7 @@
             const cod_form_no = document.getElementById('cod_form_no').value;
             const opt = {
                 filename: `${cod_form_no}`,
-                image: { type: 'jpeg', quality: 0.98 },
+                image: { type: 'jpeg', quality: 1 },
                 html2canvas: { scale: 2 },
                 jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
             };
@@ -988,21 +987,24 @@
             });
         }
 
+        function executeMultipleFunctions() {
+            convertToPDF();
+            convertToPDF2();
+        }
+
         function convertToPDF() {
-            const element = document.getElementById('what_to_print2');
+            const element = document.getElementById('what_to_print');
             const bpf_form_no = document.getElementById('bpf_form_no').value;
             const opt = {
-                filename: `${bpf_form_no}`,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { scale: 5 },
                 jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
             };
 
             const marginTop = 32.5; // Top margin in mm
-            const marginBottom = 10; // Bottom margin in mm
             const pageHeight = 236.9; // Adjust the value based on your available space for each page
 
-            const totalPages = Math.ceil(element.clientHeight / pageHeight);
+            const totalPages = 1;
 
             let promises = [];
 
@@ -1022,12 +1024,49 @@
             Promise.all(promises)
                 .then(() => {
                 element.style.transform = 'none';
-                html2pdf().set(opt).from(element).save().then(() => {
+                html2pdf().set(opt).from(element).save(`${bpf_form_no}_Billing_Statement.pdf`).then(() => {
                     // Call the submit button click event immediately after the PDF is downloaded
                 });
             });
         }
-      
+        function convertToPDF2() {
+            const element = document.getElementById('what_to_print2');
+            const bpf_form_no = document.getElementById('bpf_form_no').value;
+            const opt = {
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { scale: 5 },
+                jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
+            };
+
+            const marginTop = 32.5; // Top margin in mm
+            const pageHeight = 236.9; // Adjust the value based on your available space for each page
+
+            const totalPages = 1;
+
+            let promises = [];
+
+            for (let i = 0; i < totalPages; i++) {
+                const promise = html2pdf()
+                .set(opt)
+                .from(element)
+                .toContainer()
+                .then(() => {
+                    const newPosition = -pageHeight * (i + 1) - marginTop;
+                    element.style.transform = `translate(0, ${newPosition}px)`;
+                });
+
+                promises.push(promise);
+            }
+
+            Promise.all(promises)
+                .then(() => {
+                element.style.transform = 'none';
+                html2pdf().set(opt).from(element).save(`${bpf_form_no}_Service_Invoice.pdf`).then(() => {
+                    // Call the submit button click event immediately after the PDF is downloaded
+                });
+            });
+        }
+    
     </script>
 </body>
 </html>

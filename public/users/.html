@@ -1,8 +1,71 @@
-<th>VEHICLE<br>PLATE #</th>
-<th>CLIENT NAME</th>
-<th>DISTANCE</th>
-<th>RATE</th>
-<th>MEAL<br>ALLOWANCE</th>
-<th>ADDITIONAL<br>RATE</th>
-<th>ADVANCE<br>SALARY</th>
-<th>NET PAY</th>
+<script>
+    function convertToPDF() {
+    const element1 = document.getElementById('what_to_print');
+    const element2 = document.getElementById('what_to_print2');
+    const bpf_form_no = document.getElementById('bpf_form_no').value;
+
+    const opt = {
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
+    };
+
+    const marginTop = 32.5; // Top margin in mm
+    const marginBottom = 10; // Bottom margin in mm
+    const pageHeight = 236.9; // Adjust the value based on your available space for each page
+
+    const totalPages1 = Math.ceil(element1.clientHeight / pageHeight);
+    const totalPages2 = Math.ceil(element2.clientHeight / pageHeight);
+
+    const promises = [];
+
+    for (let i = 0; i < totalPages1; i++) {
+        const promise = html2pdf()
+            .set(opt)
+            .from(element1)
+            .toContainer()
+            .then(() => {
+                const newPosition = -pageHeight * (i + 1) - marginTop;
+                element1.style.transform = `translate(0, ${newPosition}px)`;
+            });
+
+        promises.push(promise);
+    }
+
+    // Reset transformation for element1
+    promises.push(() => {
+        element1.style.transform = 'none';
+    });
+
+    for (let i = 0; i < totalPages2; i++) {
+        const promise = html2pdf()
+            .set(opt)
+            .from(element2)
+            .toContainer()
+            .then(() => {
+                const newPosition = -pageHeight * (i + 1) - marginTop;
+                element2.style.transform = `translate(0, ${newPosition}px)`;
+            });
+
+        promises.push(promise);
+    }
+
+    // Reset transformation for element2
+    promises.push(() => {
+        element2.style.transform = 'none';
+    });
+
+    Promise.all(promises)
+        .then(() => {
+            // Generate and save PDF for element1
+            html2pdf().set(opt).from(element1).save(`${bpf_form_no}_Billing_Statement.pdf`).then(() => {
+                // Call the submit button click event immediately after the first PDF is downloaded
+            });
+
+            // Generate and save PDF for element2
+            html2pdf().set(opt).from(element2).save(`${bpf_form_no}_Sales_Invoice.pdf`).then(() => {
+                // Call the submit button click event immediately after the second PDF is downloaded
+            });
+        });
+}
+</script>

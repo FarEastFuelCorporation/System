@@ -5,19 +5,22 @@ document.addEventListener('DOMContentLoaded', async function() {
         const type_of_waste_response_promise = fetch('https://script.google.com/macros/s/AKfycbw0yC-8_V38Zl1-KGyBwX1JmfTEW1jwyFxgpZ-oNC2lvtoAraUtkLCS27HfNbXi_l4IPg/exec');
         const sf_response_promise = fetch('https://script.google.com/macros/s/AKfycby9b2VCfXc0ifkwBXJRi2UVUwgZIj9F4FTOdZa_SYKZdsTwbVtAzAXzNMFeklE35bg1/exec');
         const tpf_response_promise = fetch('https://script.google.com/macros/s/AKfycbwbKss2XtW5lylCrUe8IC-ZA4ffA5CM5tY6kqIja9t80NXJw2nB8RBOJFWbXQz0hWMadw/exec');
+        const qlf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyFU_skru2tnyEiv8I5HkpRCXbUlQb5vlJUm8Le0nZBCvfZeFkQPd2Naljs5CZY41I17w/exec');
 
         const [
             username_response,
             client_list_response,
             type_of_waste_response,
             sf_response,
-            tpf_response
+            tpf_response,
+            qlf_response,
         ] = await Promise.all([
             username_response_promise,
             client_list_response_promise,
             type_of_waste_response_promise,
             sf_response_promise,
-            tpf_response_promise
+            tpf_response_promise,
+            qlf_response_promise,
         ]);
 
         const username_data_list  = await username_response.json();
@@ -25,6 +28,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const type_of_waste_data_list  = await type_of_waste_response.json();
         const sf_data_list  = await sf_response.json();
         const tpf_data_list  = await tpf_response.json();
+        const qlf_data_list  = await qlf_response.json();
     
         // Code that depends on the fetched data
         // username_data_list
@@ -87,32 +91,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         for(let i = 0; i < pending_treatment.length; i++){
             for(let j = 1; j < sf_data_list.content.length; j++){
                 if(pending_treatment[i] == sf_data_list.content[j][findTextInArray(sf_data_list, "SF #")]){
-                    var client_name = "";
-                    for(let c = 1; c < client_data_list.content.length; c++){
-                        if(sf_data_list.content[j][findTextInArray(sf_data_list, "CLIENT ID")] == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")]){
-                            client_name = client_data_list.content[c][findTextInArray(client_data_list, "CLIENT NAME")];
-                            break
-                        }
-                    }
-                    var waste_code = "";
-                    var waste_name = "";
-                    for(let c = 1; c < type_of_waste_data_list.content.length; c++){
-                        if(sf_data_list.content[j][findTextInArray(sf_data_list, "WASTE ID")] == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
-                            waste_code = (type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")]).substring(0, 4);
-                            waste_name = type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE NAME")];
-                            break
-                        }
-                        else{
-                            waste_name = sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE ID")];
-                        }
-                    }
                     data_value +=`
                     <tr>
                         <td>${data_value_counter}</td>
                         <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "SF #")]}</td>
                         <td>${date_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "COMPLETION DATE")])} /<br> ${time_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "COMPLETION TIME")])}</td>
-                        <td>${client_name}</td>
-                        <td>${waste_name}</td>
+                        <td>${findClientName(sf_data_list.content[j][findTextInArray(sf_data_list, "CLIENT ID")])}</td>
+                        <td>${findWasteCode(sf_data_list.content[j][findTextInArray(sf_data_list, "WASTE ID")])}</td>
+                        <td>${findWasteName(sf_data_list.content[j][findTextInArray(sf_data_list, "CLIENT ID")], sf_data_list.content[j][findTextInArray(sf_data_list, "WASTE ID")])}</td>
                         <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")]}</td>
                         <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "WEIGHT")]}</td>
                     </tr>
@@ -140,32 +126,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                             break
                         }
                     }
-                    var client_name = "";
-                    for(let c = 1; c < client_data_list.content.length; c++){
-                        if(sf_data_list.content[j][findTextInArray(sf_data_list, "CLIENT ID")] == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")]){
-                            client_name = client_data_list.content[c][findTextInArray(client_data_list, "CLIENT NAME")];
-                            break
-                        }
-                    }
-                    var waste_code = "";
-                    var waste_name = "";
-                    for(let c = 1; c < type_of_waste_data_list.content.length; c++){
-                        if(sf_data_list.content[j][findTextInArray(sf_data_list, "WASTE ID")] == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
-                            waste_code = (type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")]).substring(0, 4);
-                            waste_name = type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE NAME")];
-                            break
-                        }
-                        else{
-                            waste_name = sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE ID")];
-                        }
-                    }
                     data_value +=`
                     <tr>
                     <td>${data_value_counter}</td>
                     <td>${tpf_no}</td>
                     <td>${date_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "COMPLETION DATE")])} /<br> ${time_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "COMPLETION TIME")])}</td>
-                    <td>${client_name}</td>
-                    <td>${waste_name}</td>
+                    <td>${findClientName(sf_data_list.content[j][findTextInArray(sf_data_list, "CLIENT ID")])}</td>
+                    <td>${findWasteCode(sf_data_list.content[j][findTextInArray(sf_data_list, "WASTE ID")])}</td>
+                    <td>${findWasteName(sf_data_list.content[j][findTextInArray(sf_data_list, "CLIENT ID")], sf_data_list.content[j][findTextInArray(sf_data_list, "WASTE ID")])}</td>
                     <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")]}</td>
                     <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "WEIGHT")]} Kg.</td>
                     <td>${sorted_date} /<br> ${sorted_time}</td>
@@ -235,30 +203,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                 for(let b=0; b<=pending_treatment.length; b++){
                     if(search_sf_form_no.value == sf_data_list.content[a][findTextInArray(sf_data_list, "SF #")]){
                         if(search_sf_form_no.value == pending_treatment[b]){
-                            var client_name = "";
-                            for(let c = 1; c < client_data_list.content.length; c++){
-                                if(sf_data_list.content[a][findTextInArray(sf_data_list, "CLIENT ID")] == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")]){
-                                    client_name = client_data_list.content[c][findTextInArray(client_data_list, "CLIENT NAME")];
-                                    break
-                                }
-                            }
-                            var waste_code = "";
-                            var waste_name = "";
-                            for(let c = 1; c < type_of_waste_data_list.content.length; c++){
-                                if(sf_data_list.content[a][findTextInArray(sf_data_list, "WASTE ID")] == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
-                                    waste_code = (type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")]).substring(0, 4);
-                                    waste_name = type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE NAME")];
-                                    break
-                                }
-                                else{
-                                    waste_name = sf_data_list.content[a][findTextInArray(sf_data_list, "WASTE ID")];
-                                }
-                            }
                             data_value = `
                             SF #: ${sf_data_list.content[a][findTextInArray(sf_data_list, "SF #")]}<br>
                             WCF #: ${sf_data_list.content[a][findTextInArray(sf_data_list, "WCF #")]}<br>
-                            CLIENT: ${client_name}<br>
-                            WASTE DESCRIPTION: ${waste_name}<br>
+                            CLIENT: ${findClientName(sf_data_list.content[a][findTextInArray(sf_data_list, "CLIENT ID")])}<br>
+                            WASTE CODE: ${findWasteCode(sf_data_list.content[a][findTextInArray(sf_data_list, "WASTE ID")])}<br>
+                            WASTE DESCRIPTION: ${findWasteName(sf_data_list.content[a][findTextInArray(sf_data_list, "CLIENT ID")], sf_data_list.content[a][findTextInArray(sf_data_list, "WASTE ID")])}<br>
                             DESTRUCTION PROCESS: ${sf_data_list.content[a][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")]}<br>
                             WEIGHT: ${sf_data_list.content[a][findTextInArray(sf_data_list, "WEIGHT")]} kg.<br>
                             HAULING DATE: ${date_decoder(sf_data_list.content[a][findTextInArray(sf_data_list, "HAULING DATE")])}<br>
@@ -301,7 +251,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             wcf_form_no.value = sf_data_list.content[a][findTextInArray(sf_data_list, "WCF #")];
                             client.value = sf_data_list.content[a][findTextInArray(sf_data_list, "CLIENT ID")];
                             waste_description.value = sf_data_list.content[a][findTextInArray(sf_data_list, "WASTE ID")];
-                            waste_code_input.value = waste_code;
+                            waste_code_input.value = findWasteCode(sf_data_list.content[a][findTextInArray(sf_data_list, "WASTE ID")]);
                             weight.value = sf_data_list.content[a][findTextInArray(sf_data_list, "WEIGHT")];
                             destruction_process.value = sf_data_list.content[a][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")];
                             hauling_date.value = date_decoder(sf_data_list.content[a][findTextInArray(sf_data_list, "HAULING DATE")]);
@@ -388,7 +338,61 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             item_counter_int -= 1;
             item_counter.value = item_counter_int;
-        }        
+        }
+        
+        function findEmployeeName(employee_id){
+            var employee_name = "";
+            for(let c = 1; c < employee_data_list.content.length; c++){
+                if(employee_id == employee_data_list.content[c][findTextInArray(employee_data_list, "EMPLOYEE ID")]){
+                    var gender = employee_data_list.content[c][findTextInArray(employee_data_list, "GENDER")];
+                    if(gender == "MALE"){
+                        employee_name = `${employee_data_list.content[c][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[c][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[c][findTextInArray(employee_data_list, "MIDDLE NAME")]} ${employee_data_list.content[c][findTextInArray(employee_data_list, "AFFIX")]}`
+                    }
+                    else{
+                        employee_name = `${employee_data_list.content[c][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[c][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[c][findTextInArray(employee_data_list, "MIDDLE NAME")]} - ${employee_data_list.content[c][findTextInArray(employee_data_list, "SPOUSE NAME")]}`
+                    }
+                    break
+                }
+                else{
+                    employee_name = employee_id == employee_data_list.content[c][findTextInArray(employee_data_list, "EMPLOYEE ID")]
+                }
+            }
+            return employee_name
+        }
+        function findClientName(client_id){
+            var client_name = "";
+            for(let c = 1; c < client_data_list.content.length; c++){
+                if(client_id == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")]){
+                    client_name = client_data_list.content[c][findTextInArray(client_data_list, "CLIENT NAME")];
+                    break
+                }
+            }
+            return client_name
+        }
+        function findWasteCode(waste_id){
+            var waste_code = "";
+            for(let c = 1; c < type_of_waste_data_list.content.length; c++){
+                if(waste_id == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
+                    waste_code = (type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")]).substring(0, 4);
+                    break
+                }
+                else{
+                    waste_code = waste_id;
+                }
+            }
+            return waste_code
+        }
+        function findWasteName(client_id, waste_id){
+            var waste_name = "";
+            for(let c = 1; c < qlf_data_list.content.length; c++){
+                if(client_id == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")]&& 
+                    waste_id == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
+                    waste_name = (qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE NAME")]);
+                    break
+                }
+            }
+            return waste_name
+        }
 
     } catch (error) {
         console.error('Error fetching data:', error);
