@@ -3211,7 +3211,6 @@ section h2
 
 .hr form #input_container
 {
-    display: grid;
     grid-template-columns: 250px calc(100% - 250px);
     position: relative;
     width: 100%;
@@ -3250,7 +3249,7 @@ section h2
     justify-content: end;
 }
 
-.hr form #input_container
+.hr form #input_container,
 .hr form .hide
 {    
     display: none;
