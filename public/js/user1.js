@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 });
                             }
                             else{
-                                truck_helpers_array.push(findEmployeeName(ltf_data_list.content[z][findTextInArray(ltf_data_list, "TRUCK HELPER")]))
+                                truck_helpers_array.push(number.trim())
                             }
                             data_value = `
                             LTF #: ${ltf_data_list.content[z][findTextInArray(ltf_data_list, "LTF #")]}<br>

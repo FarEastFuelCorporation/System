@@ -679,3 +679,177 @@ function findTextInArray2(textArray, targetText) {
   }
   return -1; // Target text not found in the array
 }
+
+function getNumberOfDays(month, year, cutoffPeriod) {
+  // Create an array to map month names to month numbers
+  const monthArray = [
+    "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
+    "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"
+  ];
+
+  // Ensure that the month parameter is a string before converting to uppercase
+  if (typeof month === "string") {
+    month = month.toUpperCase();
+  } else {
+    return "Invalid month"; // Return an error message for invalid input
+  }
+
+  // Convert the month name to a month number (case-insensitive)
+  const monthNumber = monthArray.findIndex(m => m.toUpperCase() === month);
+
+  // Check if the month name is valid
+  if (monthNumber === -1) {
+    return "Invalid month";
+  }
+
+  // Create a Date object using the month number and year
+  const date = new Date(year, monthNumber);
+
+  // Determine the start and end dates based on the cutoff period
+  let startDate, endDate;
+  if (cutoffPeriod === "1ST CUT OFF") {
+    startDate = new Date(year, monthNumber, 11);
+    endDate = new Date(year, monthNumber, 25);
+  } else if (cutoffPeriod === "2ND CUT OFF") {
+    const nextMonth = monthNumber === 11 ? 0 : monthNumber + 1;
+    const nextYear = monthNumber === 11 ? year + 1 : year;
+    startDate = new Date(nextYear, nextMonth, 26);
+    endDate = new Date(nextYear, nextMonth, 10);
+  } else {
+    return "Invalid cutoffPeriod"; // Return an error message for invalid input
+  }
+
+  // Calculate the number of days between startDate and endDate
+  const oneDay = 24 * 60 * 60 * 1000; // One day in milliseconds
+  const daysDifference = Math.round((endDate - startDate) / oneDay);
+
+  return daysDifference + 1; // Include both the start and end days
+}
+
+function getDayNamesForCutoffPeriod(month, year, cutoffPeriod) {
+  const monthArray = [
+    "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
+    "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"
+  ];
+
+  if (typeof month === "string") {
+    month = month.toUpperCase();
+  } else {
+    return ["Invalid month"]; // Return an array with an error message for invalid input
+  }
+
+  const monthNumber = monthArray.findIndex(m => m.toUpperCase() === month);
+
+  if (monthNumber === -1) {
+    return ["Invalid month"];
+  }
+
+  let startDate, endDate;
+
+  if (cutoffPeriod === "1ST CUT OFF") {
+    startDate = new Date(year, monthNumber, 11);
+    endDate = new Date(year, monthNumber, 25);
+  } else if (cutoffPeriod === "2ND CUT OFF") {
+    const nextMonth = monthNumber === 11 ? 0 : monthNumber + 1;
+    const nextYear = monthNumber === 11 ? year + 1 : year;
+    startDate = new Date(nextYear, monthNumber, 26);
+    endDate = new Date(nextYear, nextMonth, 10);
+  } else {
+    return ["Invalid cutoffPeriod"];
+  }
+
+  const dayNames = [];
+
+  let currentDate = startDate;
+
+  while (currentDate <= endDate) {
+    const options = { weekday: "long" };
+    const dayName = new Intl.DateTimeFormat("en-US", options).format(currentDate);
+    dayNames.push(dayName);
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  return dayNames;
+}
+
+function getDatesForCutoffPeriod(month, year, cutoffPeriod) {
+  const monthArray = [
+    "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
+    "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"
+  ];
+
+  if (typeof month === "string") {
+    month = month.toUpperCase();
+  } else {
+    return ["Invalid month"]; // Return an array with an error message for invalid input
+  }
+
+  const monthNumber = monthArray.findIndex(m => m.toUpperCase() === month);
+
+  if (monthNumber === -1) {
+    return ["Invalid month"];
+  }
+
+  let startDate, endDate;
+
+  if (cutoffPeriod === "1ST CUT OFF") {
+    startDate = new Date(year, monthNumber, 11);
+    endDate = new Date(year, monthNumber, 25);
+  } else if (cutoffPeriod === "2ND CUT OFF") {
+    const nextMonth = monthNumber === 11 ? 0 : monthNumber + 1;
+    const nextYear = monthNumber === 11 ? year + 1 : year;
+    startDate = new Date(nextYear, monthNumber, 26);
+    endDate = new Date(nextYear, nextMonth, 10);
+  } else {
+    return ["Invalid cutoffPeriod"];
+  }
+
+  const formattedDates = [];
+
+  let currentDate = new Date(startDate);
+
+  while (currentDate <= endDate) {
+    formattedDates.push(formatDate(currentDate));
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  return formattedDates;
+}
+
+function formatDate(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function getDatesInWeek(year, weekNumber) {
+  // Check if the input year and week number are valid
+  if (typeof parseInt(year) !== "number" || typeof parseInt(weekNumber) !== "number" || weekNumber < 1 || weekNumber > 53) {
+    return ["Invalid input"];
+  }
+
+  // Create a date object for January 1st of the specified year
+  const januaryFirst = new Date(year, 0, 1);
+
+  // Calculate the day of the week for January 1st (0 for Sunday, 1 for Monday, etc.)
+  const januaryFirstDay = januaryFirst.getDay();
+
+  // Calculate the date for the first day of the specified week
+  let firstDayOfWeek = new Date(year, 0, 1 + (weekNumber - 1) * 7 - januaryFirstDay);
+
+  // Adjust to make Monday the first day
+  firstDayOfWeek.setDate(firstDayOfWeek.getDate() + (firstDayOfWeek.getDay() === 0 ? 1 : -1));
+
+  // Create an array to store the formatted dates in the week
+  const formattedDatesInWeek = [];
+
+  // Calculate the dates for each day in the week and format them
+  for (let i = 0; i < 7; i++) {
+    const currentDate = new Date(firstDayOfWeek);
+    currentDate.setDate(firstDayOfWeek.getDate() + i);
+    formattedDatesInWeek.push(formatDate(currentDate));
+  }
+
+  return formattedDatesInWeek;
+}

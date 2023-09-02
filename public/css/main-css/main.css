@@ -358,7 +358,7 @@ h5 {
   height: 60px;
   padding: 0 20px;
   align-items: center;
-  z-index: 1;
+  z-index: 3;
 }
 
 .logo {
@@ -570,7 +570,7 @@ h5 {
 #vehicle_maintenance_form,
 #incident_documentation_form,
 #employee_list_section,
-#attendance_form,
+#hr_dashboard,
 #employee_form,
 #purchase_order_form,
 #ap_accounting_dashboard,
@@ -2874,26 +2874,34 @@ section h2 {
   gap: 20px;
 }
 
-.hr form .hrf_form_grid3 {
+.hr form #input_container {
   display: grid;
+  grid-template-columns: 250px calc(100% - 250px);
+  position: relative;
   width: 100%;
-  grid-template-columns: 28% 12% 12% 12% 12% 12% 12%;
 }
 
-.hr form .hrf_form_grid3 .first_day {
-  display: grid !important;
-  width: 100%;
-  grid-template-columns: 57% 43%;
-}
-
-.hr form .hrf_form_grid3 .first_day div {
+.hr form #input_container1 .label {
+  font-weight: bold;
+  text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.hr form .hrf_form_grid3 .first_day .label {
-  font-weight: bold;
+.hr form .hrf_form_grid3 {
+  display: flex;
+  overflow-x: scroll;
+  position: relative;
+}
+
+.hr form .hrf_form_grid3 > div {
+  width: 200px !important;
+}
+
+.hr form .hrf_form_grid3 input {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 .hr form .net_salary {
@@ -2901,8 +2909,7 @@ section h2 {
   justify-content: end;
 }
 
-.hr form .hrf_form_grid3,
-.hr form .hide {
+.hr form #input_container .hr form .hide {
   display: none;
 }
 
@@ -2984,7 +2991,6 @@ input:disabled {
   font-size: 20px;
 }
 
-.hr #new_employee_form,
 .hr #update_record_form,
 .hr #update_record_form #details {
   display: none;
@@ -3022,13 +3028,13 @@ input:disabled {
 
 .hr .line6 {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 3fr 3fr;
+  grid-template-columns: 1fr 1.5fr 1fr 1fr 3fr 3fr;
   gap: 20px;
 }
 
 .hr .line7 {
   display: grid;
-  grid-template-columns: 2fr 2fr 2fr 2fr 2fr;
+  grid-template-columns: 1fr 2fr 2fr 2fr 2fr 2fr;
   gap: 20px;
 }
 

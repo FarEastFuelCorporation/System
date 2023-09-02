@@ -678,6 +678,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     break
                 }
+                else{
+                    employee_name = employee_id == employee_data_list.content[c][findTextInArray(employee_data_list, "EMPLOYEE ID")]
+                }
             }
             return employee_name
         }
@@ -692,12 +695,10 @@ document.addEventListener('DOMContentLoaded', async function() {
             return client_name
         }
         function findWasteCode(waste_id){
-            console.log(waste_id)
             var waste_code = "";
             for(let c = 1; c < type_of_waste_data_list.content.length; c++){
                 if(waste_id == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
                     waste_code = (type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")]).substring(0, 4);
-                    console.log(waste_code)
                     break
                 }
                 else{

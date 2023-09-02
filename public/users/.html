@@ -1,71 +1,276 @@
-<script>
-    function convertToPDF() {
-    const element1 = document.getElementById('what_to_print');
-    const element2 = document.getElementById('what_to_print2');
-    const bpf_form_no = document.getElementById('bpf_form_no').value;
 
-    const opt = {
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
-    };
-
-    const marginTop = 32.5; // Top margin in mm
-    const marginBottom = 10; // Bottom margin in mm
-    const pageHeight = 236.9; // Adjust the value based on your available space for each page
-
-    const totalPages1 = Math.ceil(element1.clientHeight / pageHeight);
-    const totalPages2 = Math.ceil(element2.clientHeight / pageHeight);
-
-    const promises = [];
-
-    for (let i = 0; i < totalPages1; i++) {
-        const promise = html2pdf()
-            .set(opt)
-            .from(element1)
-            .toContainer()
-            .then(() => {
-                const newPosition = -pageHeight * (i + 1) - marginTop;
-                element1.style.transform = `translate(0, ${newPosition}px)`;
-            });
-
-        promises.push(promise);
-    }
-
-    // Reset transformation for element1
-    promises.push(() => {
-        element1.style.transform = 'none';
-    });
-
-    for (let i = 0; i < totalPages2; i++) {
-        const promise = html2pdf()
-            .set(opt)
-            .from(element2)
-            .toContainer()
-            .then(() => {
-                const newPosition = -pageHeight * (i + 1) - marginTop;
-                element2.style.transform = `translate(0, ${newPosition}px)`;
-            });
-
-        promises.push(promise);
-    }
-
-    // Reset transformation for element2
-    promises.push(() => {
-        element2.style.transform = 'none';
-    });
-
-    Promise.all(promises)
-        .then(() => {
-            // Generate and save PDF for element1
-            html2pdf().set(opt).from(element1).save(`${bpf_form_no}_Billing_Statement.pdf`).then(() => {
-                // Call the submit button click event immediately after the first PDF is downloaded
-            });
-
-            // Generate and save PDF for element2
-            html2pdf().set(opt).from(element2).save(`${bpf_form_no}_Sales_Invoice.pdf`).then(() => {
-                // Call the submit button click event immediately after the second PDF is downloaded
-            });
-        });
+    <div class="day px-3" id="day${x}">
+        <div class="first_day">
+            <div class="label text-center">ABSENT / REST DAY /<br>SICK LEAVE / LEAVE</div>
+            <div class="d-flex justify-content-between">
+                <div id="absent_box_input${x}" class="d-flex flex-column">
+                    <div class="fs-5 d-flex justify-content-center"><b>A</b></div>
+                    <label for="absent_box${x}" class="custom-checkbox">
+                        <input type="checkbox" id="absent_box${x}" name="absent_box${x}" value="YES">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <div id="rest_day_box_input${x}" class="d-flex flex-column">
+                    <div class="fs-5 d-flex justify-content-center"><b>RD</b></div>
+                    <label for="rest_day_box${x}" class="custom-checkbox">
+                        <input type="checkbox" id="rest_day_box${x}" name="rest_day_box${x}" value="YES">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <div id="sick_leave_box_input${x}" class="d-flex flex-column">
+                    <div class="fs-5 d-flex justify-content-center"><b>SL</b></div>
+                    <label class="custom-checkbox">
+                        <input type="checkbox" id="sick_leave_box${x}" name="sick_leave_box${x}">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <div id="vacation_leave_box_input${x}" class="d-flex flex-column">
+                    <div class="fs-5 d-flex justify-content-center"><b>VL</b></div>
+                    <label class="custom-checkbox">
+                        <input type="checkbox" id="vacation_leave_box${x}" name="vacation_leave_box${x}">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <div id="leave_box_input${x}" class="d-flex flex-column">
+                    <div class="fs-5 d-flex justify-content-center"><b>L</b></div>
+                    <label class="custom-checkbox">
+                        <input type="checkbox" id="leave_box${x}" name="leave_box${x}">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="first_day">
+            <div class="label text-center">HALF DAY / REST DAY DUTY<br>REGULAR HOLIDAY/<br>SPECIAL HOLIDAY</div>
+            <div class="d-flex justify-content-between">
+                <div id="half_day_box_input${x}" class="d-flex flex-column">
+                <div class="fs-5 d-flex justify-content-center"><b>HD</b></div>
+                    <label for="half_day_box${x}" class="custom-checkbox">
+                    <input type="checkbox" id="half_day_box${x}" name="half_day_box${x}" value="YES">
+                    <span class="checkmark"></span>
+                    </label>
+                </div>
+                <div id="rest_day_duty_box_input${x}" class="d-flex flex-column">
+                    <div class="fs-5 d-flex justify-content-center"><b>RDD</b></div>
+                    <label class="custom-checkbox">
+                        <input type="checkbox" id="rest_day_duty_box${x}" name="rest_day_duty_box${x}" value="YES">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <div id="regular_holiday_box_input${x}" class="d-flex flex-column">
+                    <div class="fs-5 d-flex justify-content-center"><b>RH</b></div>
+                    <label class="custom-checkbox">
+                        <input type="checkbox" id="regular_holiday_box${x}" name="regular_holiday_box${x}" value="YES">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <div id="special_holiday_box_input${x}" class="d-flex flex-column">
+                    <div class="fs-5 d-flex justify-content-center"><b>SH</b></div>
+                    <label class="custom-checkbox">
+                        <input type="checkbox" id="special_holiday_box${x}" name="special_holiday_box${x}" value="YES">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="first_day">
+                <div class="label fs-3">DAY</div>
+                <div class="day_input${x}">
+                    <div for="time_in${x}" class="text-center fs-3">
+                        <b>${day_name[x]}</b><br>
+                    </div>
+                </div>
+            </div>
+            <div class="first_day">
+                <div class="label fs-3">DATE</div>
+                <div class="day_input${x}">
+                    <input type="date" class="form-control" id="date_input${x}" name="date_input${x}" readonly>                         
+                </div>
+            </div>
+            <div class="first_day">
+                <div class="label">TIME IN</div>
+                <div class="day_input${x}">
+                    <input type="time" class="form-control" id="time_in${x}" name="time_in${x}">
+                </div>
+            </div>
+            <div class="first_day">
+                <div class="label">TIME OUT</div>
+                <div class="day_input${x}">
+                    <input type="time" class="form-control" id="time_out${x}" name="time_out${x}">
+                </div>
+            </div>
+            <div class="first_day">
+                <div></div>
+                <div class="day_input${x}">
+                    <div class="d-flex" style="justify-content: space-around;">
+                        <div class="d-flex flex-column">
+                            <div>Ordinary</div>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <div>/</div>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <div>Night D.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="first_day">
+                <div class="label">BREAK (hours)</div>
+                <div class="day_input${x}">
+                    <div class="d-flex" style="justify-content: space-around;">
+                        <input type="number" class="form-control" au id="day_break${x}" name="day_break${x}" required autocomplete="off" value="0">
+                        <input type="number" class="form-control" id="night_break${x}" name="night_break${x}" required autocomplete="off" value="0">
+                    </div>
+                </div>
+            </div>
+            <div class="first_day">
+                <div class="label">HOURS</div>
+                <div class="day_input${x}">
+                    <div class="d-flex">
+                        <input type="number" class="form-control text-center" readonly id="regular_hours${x}" name="regular_hours${x}" value="0">
+                        <input type="number" class="form-control text-center" readonly id="night_hours${x}" name="night_hours${x}" value="0">
+                    </div>
+                </div>
+            </div>
+            <div class="first_day">
+                <div class="label">RATE</div>
+                <div class="day_input${x}">
+                    <div class="d-flex" style="justify-content: space-around;">
+                        <div id="regular_hour_rate${x}" name="regular_hour_rate${x}">1.00</div>
+                        <div id="night_hour_rate${x}" name="night_hour_rate${x}">1.10</div>
+                    </div>
+                </div>
+            </div>
+            <div class="first_day">
+                <div class="label">RATE/hour</div>
+                <div class="day_input${x}">
+                    <div class="d-flex">
+                        <input type="number" class="form-control text-center" readonly id="regular_rate_per_hour${x}" name="regular_rate_per_hour${x}" value="0">
+                        <input type="number" class="form-control text-center" readonly id="night_rate_per_hour${x}" name="night_rate_per_hour${x}" value="0">
+                    </div>
+                </div>
+            </div>
+            <div class="first_day">
+                <div class="label">HOURS X RATE</div>
+                <div class="day_input${x}">
+                    <div class="d-flex">
+                        <input type="number" class="form-control text-center" readonly id="regular_hours_pay${x}" name="regular_hours_pay${x}" value="0">
+                        <input type="number" class="form-control text-center" readonly id="night_hours_pay${x}" name="night_hours_pay${x}" value="0">
+                    </div>
+                </div>
+            </div>
+            <div class="first_day">
+                <div class="label">SUBTOTAL</div>
+                <div class="day_input${x}">
+                    <input type="number" class="form-control text-center" readonly id="subtotal${x}" name="subtotal${x}" value="0">
+                </div>
+            </div>
+            <div class="first_day">
+                <div class="label">LATE (mins)</div>
+                <div class="day_input${x}">
+                    <input type="number" class="form-control text-center" id="late_mins${x}" name="late_mins${x}" value="0">                        
+                </div>
+            </div>
+            <div class="first_day">
+                <div class="label">UNDERTIME (hours)</div>
+                <div class="day_input${x}">
+                    <input type="number" class="form-control text-center" id="under_time_mins${x}" name="under_time_mins${x}" value="0">
+                </div>
+            </div>
+            <div class="first_day">
+                <div class="label">LATE DEDUCTION</div>
+                <div class="day_input${x}">
+                    <input type="number" class="form-control text-center" readonly id="late_deduction${x}" name="late_deduction${x}" value="0">
+                </div>
+            </div>
+            <div class="first_day">
+                <div class="label">UNDERTIME DEDUCTION</div>
+                <div class="day_input${x}">
+                    <input type="number" class="form-control text-center" readonly id="under_time_deduction${x}" name="under_time_deduction${x}" value="0">
+                </div>
+            </div>
+            <div class="first_day">
+                <div class="label">8 HOUR PAY</div>
+                <div class="day_input${x}">
+                    <input type="number" class="form-control text-center" readonly id="regular_pay${x}" name="regular_pay${x}" value="0">
+                </div>
+            </div>
+            <div class="first_day">
+                <div class="label">WITH OT SLIP</div>
+                <div id="with_ot_box_input${x}">
+                    <label for="with_ot_box${x}" class="custom-checkbox">
+                        <input type="checkbox" id="with_ot_box${x}" name="with_ot_box${x}">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+            <div>
+                <div class="first_day">
+                    <div class="label">OT BREAK</div>
+                    <div class="ot_input${x} disabled">
+                        <div class="d-flex" style="justify-content: space-around;">
+                            <input type="number" class="form-control" id="ot_day_break${x}" name="ot_day_break${x}" required autocomplete="off" value="0">
+                            <input type="number" class="form-control" id="ot_night_break${x}" name="ot_night_break${x}" required autocomplete="off" value="0">
+                        </div>
+                    </div>
+                </div>
+                <div class="first_day">
+                    <div class="label">OT HOURS</div>
+                    <div class="ot_input${x} disabled">
+                        <div class="d-flex">
+                            <input type="number" class="form-control text-center" readonly id="ot_hours${x}" name="ot_hours${x}" value="0">
+                            <input type="number" class="form-control text-center" readonly id="ot_night_hours${x}" name="ot_night_hours${x}" value="0">
+                        </div>
+                    </div>
+                </div>
+                <div class="first_day">
+                    <div class="label">OT RATE</div>
+                    <div class="ot_input${x} disabled">                                
+                        <div class="d-flex" style="justify-content: space-around !important; width: 100% !important">
+                            <div id="ot_regular_hour_rate${x}" name="ot_regular_hour_rate${x}">1.25</div>
+                            <div id="ot_night_hour_rate${x}" name="ot_night_hour_rate${x}">1.375</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="first_day">
+                    <div class="label">OT RATE/hour</div>
+                    <div class="ot_input${x} disabled">
+                        <div class="d-flex">
+                            <input type="number" class="form-control text-center" readonly id="ot_rate_per_hour${x}" name="ot_rate_per_hour${x}" value="0">
+                            <input type="number" class="form-control text-center" readonly id="ot_night_rate_per_hour${x}" name="ot_night_rate_per_hour${x}" value="0">
+                        </div>
+                    </div>
+                </div>
+                <div class="first_day">
+                    <div class="label">OT HOURS X RATE</div>
+                    <div class="ot_input${x} disabled">
+                        <div class="d-flex">
+                            <input type="number" class="form-control text-center" readonly id="ot_pay${x}" name="ot_pay${x}" value="0">
+                            <input type="number" class="form-control text-center" readonly id="ot_night_pay${x}" name="ot_night_pay${x}" value="0">
+                        </div>
+                    </div>
+                </div>
+                <div class="first_day">
+                    <div class="label">OT PAY</div>
+                    <div class="ot_input${x} disabled">
+                        <input type="number" class="form-control text-center" readonly id="ot_pay_subtotal${x}" name="ot_pay_subtotal${x}" value="0">
+                    </div>
+                </div>
+            </div>
+            <div class="first_day">
+                <div class="label">ALLOWANCE</div>
+                <div class="day_input${x}">
+                    <input type="number" class="form-control text-center" readonly id="allowance${x}" name="allowance${x}" value="0">
+                </div>
+            </div>
+            <div class="first_day">
+                <div class="label">SALARY / DAY</div>
+                <div id="salary_day_input${x}">
+                    <input type="number" class="form-control text-center" readonly id="salary_day${x}" name="salary_day${x}" value="0">
+                </div>                           
+            </div>
+        </div>
+    </div>  
 }
-</script>

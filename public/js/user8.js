@@ -1,36 +1,40 @@
 document.addEventListener('DOMContentLoaded', async function() {
     try {
         const username_response_promise = fetch('https://script.google.com/macros/s/AKfycbwmA97K4sdfq6dhzSsp14JU9KgQrFgSARNZbvSfiU7vuH8oEipt6TmcFo_o-jCI0kiQ/exec');
+        const employee_response_promise = fetch('https://script.google.com/macros/s/AKfycbwns5R6TA8U64ywbb9hwYu4LKurAjTM0Z18NYNZMt0Ft0m-_NUHYbYqblk_5KWugvt7lA/exec');
         const idf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyXPvq606vmfSlFG3nVjYuJLN8Jnv4BFGbhEmDp6e4wLL1kUQVa4kIi2dGGRKuSklT2bg/exec');
         const sf_response_promise = fetch('https://script.google.com/macros/s/AKfycby9b2VCfXc0ifkwBXJRi2UVUwgZIj9F4FTOdZa_SYKZdsTwbVtAzAXzNMFeklE35bg1/exec');
         const irf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzTmhNOz5cXeKitSXAriUJ_FEahAQugYEKIRwDuFt9tjhj2AtPKEf2H4yTMmZ1igpUxlQ/exec');
 
         const [
             username_response,
+            employee_response,
             idf_response,
             sf_response,
             irf_response
         ] = await Promise.all([
             username_response_promise,
+            employee_response_promise,
             idf_response_promise,
             sf_response_promise,
             irf_response_promise
         ]);
 
-        const username_data  = await username_response.json();
+        const username_data_list  = await username_response.json();
+        const employee_data_list  = await employee_response.json();
         const idf_data_list  = await idf_response.json();
         const sf_data_list  = await sf_response.json();
         const irf_data_list  = await irf_response.json();
 
         // Code that depends on the fetched data
-        // username_data3
+        // username_data_list3
         const user_sidebar = document.getElementById("user_sidebar");
         const user_sidebar_officer = document.getElementById("user_sidebar_officer");
         const user = document.getElementById("user");
         
-        user.value = username_data.content[8][3];
-        user_sidebar.innerHTML = `<u>${username_data.content[8][3]}</u>`;
-        user_sidebar_officer.innerText = username_data.content[8][4];
+        user.value = username_data_list.content[8][findTextInArray(username_data_list, "NAME")];
+        user_sidebar.innerHTML = `<u>${username_data_list.content[8][findTextInArray(username_data_list, "NAME")]}</u>`;
+        user_sidebar_officer.innerText = username_data_list.content[8][findTextInArray(username_data_list, "SECTIONS")];
         
         // incident_history_list
         const incident_report_safety = document.querySelector("#safety_dashboard #incident_report");
@@ -44,15 +48,15 @@ document.addEventListener('DOMContentLoaded', async function() {
         var irf_idf_transaction_counter_safety = 0;
 
         for (let i = 1; i < irf_data_list.content.length; i++) {
-            if (!irf_transaction_safety.includes(irf_data_list.content[i][1])) {
-                irf_transaction_safety.push(irf_data_list.content[i][1]);
+            if (!irf_transaction_safety.includes(irf_data_list.content[i][findTextInArray(irf_data_list, "IRF #")])) {
+                irf_transaction_safety.push(irf_data_list.content[i][findTextInArray(irf_data_list, "IRF #")]);
                 irf_transaction_counter_safety += 1
             }
         }
 
         for (let i = 1; i < idf_data_list.content.length; i++) {
-            if (!irf_idf_transaction_safety.includes(idf_data_list.content[i][2])) {
-                irf_idf_transaction_safety.push(idf_data_list.content[i][2]);
+            if (!irf_idf_transaction_safety.includes(idf_data_list.content[i][findTextInArray(idf_data_list, "IRF #")])) {
+                irf_idf_transaction_safety.push(idf_data_list.content[i][findTextInArray(idf_data_list, "IRF #")]);
                 irf_idf_transaction_counter_safety += 1
             }
         }
@@ -63,23 +67,31 @@ document.addEventListener('DOMContentLoaded', async function() {
         incident_report_safety.innerText = pending_safety.length + finished_safety.length;
         pending_counter_safety.innerText = pending_safety.length;
         documented_safety.innerText = finished_safety.length;
-
         var incident_history_data_value = "";
         var incident_history_data_value_counter = 1;
         for(let x = 1; x < irf_data_list.content.length; x++){
-            for(let y = 0; y < pending_counter_safety.length; y++){
-                if(irf_data_list.content[x][1] == pending_counter_safety[y]){
+            for(let y = 0; y < pending_safety.length; y++){
+                if(irf_data_list.content[x][findTextInArray(irf_data_list, "IRF #")] == pending_safety[y]){
+                    var employee_names = [];
+                    if(((irf_data_list.content[x][findTextInArray(irf_data_list, "PERSON INVOLVE")]).toString()).includes("||")){
+                        (irf_data_list.content[x][findTextInArray(irf_data_list, "PERSON INVOLVE")]).split("||").map(number => {
+                            employee_names.push(findEmployeeName(number.trim()))
+                        });
+                    }
+                    else{
+                        employee_names.push(number.trim())
+                    }
                     incident_history_data_value += `
                     <tr>
                         <td>${incident_history_data_value_counter}</td>
-                        <td>${irf_data_list.content[x][1]}</td>
-                        <td>${date_decoder(irf_data_list.content[x][6])} /<br> ${time_decoder(irf_data_list.content[x][7])}</td>
-                        <td>${irf_data_list.content[x][3]}</td>
-                        <td>${irf_data_list.content[x][2]}</td>
-                        <td>${irf_data_list.content[x][4]}</td>
-                        <td>${irf_data_list.content[x][8]}</td>
-                        <td>${date_decoder(irf_data_list.content[x][9])} /<br> ${time_decoder(irf_data_list.content[x][10])}</td>
-                        <td>${calculateTravelTime(date_decoder(irf_data_list.content[x][6]),time_decoder(irf_data_list.content[x][7]),date_decoder(irf_data_list.content[x][9]),time_decoder(irf_data_list.content[x][10]))}</td>
+                        <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "IRF #")]}</td>
+                        <td>${date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "INCIDENT DATE")])} /<br> ${time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "INCIDENT TIME")])}</td>
+                        <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "DEPARTMENT")]}</td>
+                        <td>${employee_names.join(" || ")}</td>
+                        <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "DESIGNATION")]}</td>
+                        <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "INCIDENT DETAILS")]}</td>
+                        <td>${date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "REPORT DATE")])} /<br> ${time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "REPORT TIME")])}</td>
+                        <td>${calculateTravelTime(date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "INCIDENT DATE")]),time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "INCIDENT TIME")]),date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "REPORT DATE")]),time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "REPORT TIME")]))}</td>
                     </tr>
                     `
                     incident_history_data_value_counter += 1;    
@@ -92,18 +104,27 @@ document.addEventListener('DOMContentLoaded', async function() {
         var incident_history_data_value_counter = 1;
         for(let x = 1; x < irf_data_list.content.length; x++){
             for(let y = 0; y < finished_safety.length; y++){
-                if(irf_data_list.content[x][1] == pending_counter_safety[y]){
+                if(irf_data_list.content[x][findTextInArray(irf_data_list, "IRF #")] == pending_counter_safety[y]){
+                    var employee_names = [];
+                    if(((irf_data_list.content[x][findTextInArray(irf_data_list, "PERSON INVOLVE")]).toString()).includes("||")){
+                        (irf_data_list.content[x][findTextInArray(irf_data_list, "PERSON INVOLVE")]).split("||").map(number => {
+                            employee_names.push(findEmployeeName(number.trim()))
+                        });
+                    }
+                    else{
+                        employee_names.push(number.trim())
+                    }
                     incident_history_data_value += `
                     <tr>
                         <td>${incident_history_data_value_counter}</td>
-                        <td>${irf_data_list.content[x][1]}</td>
-                        <td>${date_decoder(irf_data_list.content[x][6])} /<br> ${time_decoder(irf_data_list.content[x][7])}</td>
-                        <td>${irf_data_list.content[x][3]}</td>
-                        <td>${irf_data_list.content[x][2]}</td>
-                        <td>${irf_data_list.content[x][4]}</td>
-                        <td>${irf_data_list.content[x][8]}</td>
-                        <td>${date_decoder(irf_data_list.content[x][9])} /<br> ${time_decoder(irf_data_list.content[x][10])}</td>
-                        <td>${calculateTravelTime(date_decoder(irf_data_list.content[x][6]),time_decoder(irf_data_list.content[x][7]),date_decoder(irf_data_list.content[x][9]),time_decoder(irf_data_list.content[x][10]))}</td>
+                        <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "IRF #")]}</td>
+                        <td>${date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "INCIDENT DATE")])} /<br> ${time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "INCIDENT TIME")])}</td>
+                        <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "DEPARTMENT")]}</td>
+                        <td>${employee_names.join(" || ")}</td>
+                        <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "DESIGNATION")]}</td>
+                        <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "INCIDENT DETAILS")]}</td>
+                        <td>${date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "REPORT DATE")])} /<br> ${time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "REPORT TIME")])}</td>
+                        <td>${calculateTravelTime(date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "INCIDENT DATE")]),time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "INCIDENT TIME")]),date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "REPORT DATE")]),time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "REPORT TIME")]))}</td>
                     </tr>
                     `
                     incident_history_data_value_counter += 1;                 
@@ -135,7 +156,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var data_last_3digit = 0;
     
         for(x=1; x<idf_data_list.content.length; x++){
-            if((idf_data_list.content[x][1]).slice(0,4) == "UARF"){
+            if((idf_data_list.content[x][findTextInArray(idf_data_list, "IDF #")]).slice(0,4) == "UARF"){
                 uarf_data = idf_data_list.content[x][1];
             }
             
@@ -165,7 +186,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var data_last_3digit = 0;
     
         for(x=1; x<idf_data_list.content.length; x++){
-            if((idf_data_list.content[x][1]).slice(0,4) == "NMRF"){
+            if((idf_data_list.content[x][findTextInArray(idf_data_list, "IDF #")]).slice(0,4) == "NMRF"){
                 uarf_data = idf_data_list.content[x][1];
             }
             
@@ -195,7 +216,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var data_last_3digit = 0;
     
         for(x=1; x<idf_data_list.content.length; x++){
-            if((idf_data_list.content[x][1]).slice(0,4) == "AIRF"){
+            if((idf_data_list.content[x][findTextInArray(idf_data_list, "IDF #")]).slice(0,4) == "AIRF"){
                 uarf_data = idf_data_list.content[x][1];
             }
             
@@ -256,21 +277,30 @@ document.addEventListener('DOMContentLoaded', async function() {
         search_irf_form_no_button.addEventListener("click", () => {
             var data_value;
             for(let a = 1; a < irf_data_list.content.length; a++){
-                for(let b = 0; b<=pending.length; b++){
-                    if(search_irf_form_no.value == irf_data_list.content[a][1]){
-                        if(search_irf_form_no.value == pending[b]){
+                for(let b = 0; b<=pending_safety.length; b++){
+                    if(search_irf_form_no.value == irf_data_list.content[a][findTextInArray(irf_data_list, "IRF #")]){
+                        if(search_irf_form_no.value == pending_safety[b]){
+                            var employee_names = [];
+                            if(((irf_data_list.content[x][findTextInArray(irf_data_list, "PERSON INVOLVE")]).toString()).includes("||")){
+                                (irf_data_list.content[x][findTextInArray(irf_data_list, "PERSON INVOLVE")]).split("||").map(number => {
+                                    employee_names.push(findEmployeeName(number.trim()))
+                                });
+                            }
+                            else{
+                                employee_names.push(number.trim())
+                            }
                             data_value = `
-                            <b>IRF #: </b>${irf_data_list.content[a][1]}<br>
-                            <b>INCIDENT DATE: </b>${date_decoder(irf_data_list.content[a][6])}<br>
-                            <b>INCIDENT TIME: </b>${time_decoder(irf_data_list.content[a][7])}<br><br>
-                            <b>PERSON INVOLVED: </b>${irf_data_list.content[a][2]}<br>
-                            <b>DEPARTMENT: </b>${irf_data_list.content[a][3]}<br>
-                            <b>DESIGNATION: </b>${irf_data_list.content[a][4]}<br>
-                            <b>LOCATION: </b>${irf_data_list.content[a][5]}<br><br>
-                            <b>DETAILS: </b>${irf_data_list.content[a][8]}<br><br>
-                            <b>REPORT DATE: </b>${date_decoder(irf_data_list.content[a][9])}<br>
-                            <b>REPORT TIME: </b>${time_decoder(irf_data_list.content[a][10])}<br>
-                            <b>SUBMITTED BY: </b>${irf_data_list.content[a][11]}<br>
+                            <b>IRF #: </b>${irf_data_list.content[a][findTextInArray(irf_data_list, "IRF #")]}<br>
+                            <b>INCIDENT DATE: </b>${date_decoder(irf_data_list.content[a][findTextInArray(irf_data_list, "INCIDENT DATE")])}<br>
+                            <b>INCIDENT TIME: </b>${time_decoder(irf_data_list.content[a][findTextInArray(irf_data_list, "INCIDENT TIME")])}<br><br>
+                            <b>PERSON INVOLVED: </b>${employee_names.join(" || ")}<br>
+                            <b>DEPARTMENT: </b>${irf_data_list.content[a][findTextInArray(irf_data_list, "DEPARTMENT")]}<br>
+                            <b>DESIGNATION: </b>${irf_data_list.content[a][findTextInArray(irf_data_list, "DESIGNATION")]}<br>
+                            <b>LOCATION: </b>${irf_data_list.content[a][findTextInArray(irf_data_list, "LOCATION")]}<br><br>
+                            <b>DETAILS: </b>${irf_data_list.content[a][findTextInArray(irf_data_list, "INCIDENT DETAILS")]}<br><br>
+                            <b>REPORT DATE: </b>${date_decoder(irf_data_list.content[a][findTextInArray(irf_data_list, "REPORT DATE")])}<br>
+                            <b>REPORT TIME: </b>${time_decoder(irf_data_list.content[a][findTextInArray(irf_data_list, "REPORT TIME")])}<br>
+                            <b>SUBMITTED BY: </b>${irf_data_list.content[a][findTextInArray(irf_data_list, "SUBMITTED BY")]}<br>
                             `
                             // wcf_form_no.value = sf_data_list.content[a][2];
                             // client.value = sf_data_list.content[a][3];
@@ -300,7 +330,62 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <h2>INFORMATION</h2>
                 ${data_value}
                 </div><br>`
-            }        })
+            }        
+        })
+
+        function findEmployeeName(employee_id){
+            var employee_name = "";
+            for(let c = 1; c < employee_data_list.content.length; c++){
+                if(employee_id == employee_data_list.content[c][findTextInArray(employee_data_list, "EMPLOYEE ID")]){
+                    var gender = employee_data_list.content[c][findTextInArray(employee_data_list, "GENDER")];
+                    if(gender == "MALE"){
+                        employee_name = `${employee_data_list.content[c][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[c][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[c][findTextInArray(employee_data_list, "MIDDLE NAME")]} ${employee_data_list.content[c][findTextInArray(employee_data_list, "AFFIX")]}`
+                    }
+                    else{
+                        employee_name = `${employee_data_list.content[c][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[c][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[c][findTextInArray(employee_data_list, "MIDDLE NAME")]} - ${employee_data_list.content[c][findTextInArray(employee_data_list, "SPOUSE NAME")]}`
+                    }
+                    break
+                }
+                else{
+                    employee_name = employee_id == employee_data_list.content[c][findTextInArray(employee_data_list, "EMPLOYEE ID")]
+                }
+            }
+            return employee_name
+        }
+        function findClientName(client_id){
+            var client_name = "";
+            for(let c = 1; c < client_data_list.content.length; c++){
+                if(client_id == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")]){
+                    client_name = client_data_list.content[c][findTextInArray(client_data_list, "CLIENT NAME")];
+                    break
+                }
+            }
+            return client_name
+        }
+        function findWasteCode(waste_id){
+            var waste_code = "";
+            for(let c = 1; c < type_of_waste_data_list.content.length; c++){
+                if(waste_id == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
+                    waste_code = (type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")]).substring(0, 4);
+                    break
+                }
+                else{
+                    waste_code = waste_id;
+                }
+            }
+            return waste_code
+        }
+        function findWasteName(client_id, waste_id){
+            var waste_name = "";
+            for(let c = 1; c < qlf_data_list.content.length; c++){
+                if(client_id == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")]&& 
+                    waste_id == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
+                    waste_name = (qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE NAME")]);
+                    break
+                }
+            }
+            return waste_name
+        }
 
     } catch (error) {
         console.error('Error fetching data:', error);
