@@ -373,6 +373,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 insertInputs();
                 days.style.display = "flex";
                 hide.style.display = "grid";
+                input_container.style.display = "grid";
             }
 
         })
