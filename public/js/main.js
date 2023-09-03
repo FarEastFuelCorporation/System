@@ -713,7 +713,7 @@ function getNumberOfDays(month, year, cutoffPeriod) {
   } else if (cutoffPeriod === "2ND CUT OFF") {
     const nextMonth = monthNumber === 11 ? 0 : monthNumber + 1;
     const nextYear = monthNumber === 11 ? year + 1 : year;
-    startDate = new Date(nextYear, nextMonth, 26);
+    startDate = new Date(nextYear, monthNumber, 26);
     endDate = new Date(nextYear, nextMonth, 10);
   } else {
     return "Invalid cutoffPeriod"; // Return an error message for invalid input
@@ -723,6 +723,7 @@ function getNumberOfDays(month, year, cutoffPeriod) {
   const oneDay = 24 * 60 * 60 * 1000; // One day in milliseconds
   const daysDifference = Math.round((endDate - startDate) / oneDay);
 
+  console.log(daysDifference + 1)
   return daysDifference + 1; // Include both the start and end days
 }
 

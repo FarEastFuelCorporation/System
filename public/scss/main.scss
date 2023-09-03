@@ -3211,7 +3211,7 @@ section h2
 
 .hr form #input_container
 {
-    grid-template-columns: 250px calc(100% - 250px);
+    grid-template-columns: 200px calc(100% - 200px);
     position: relative;
     width: 100%;
 }
@@ -3234,7 +3234,7 @@ section h2
 
 .hr form .hrf_form_grid3 > div
 {
-    width: 200px !important;
+    width: 175px !important;
 }
 
 .hr form .hrf_form_grid3 input
@@ -3278,14 +3278,14 @@ input:disabled {
 .hr form .custom-checkbox{
     display: flex;
     justify-content: center;
-    padding: 10px 5px;
+    padding: 3px 3px;
 }
 
 /* Style the custom checkbox */
 .hr form .custom-checkbox .checkmark {
     display: inline-block;
-    width: 24px; /* Customize the size here */
-    height: 24px; /* Customize the size here */
+    width: 20px; /* Customize the size here */
+    height: 20px; /* Customize the size here */
     background-color: #ccc;
     border: 2px solid #555;
     border-radius: 4px;
@@ -3420,7 +3420,7 @@ input:disabled {
     border-radius: 10px;
     overflow: scroll;
     min-height: 80%;
-    display: none;
+    // display: none;
 }
 
 .hr #generate_payslip_button,

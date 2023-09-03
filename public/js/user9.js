@@ -140,16 +140,15 @@ document.addEventListener('DOMContentLoaded', async function() {
 
 
         // attendance form
-        const employee_name = document.querySelector("#attendance_form #employee_name");
-        const days = document.querySelector("#attendance_form #days");
-        const daily_rate = document.querySelector("#attendance_form #daily_rate");
-        const time_in_sched = document.querySelector("#attendance_form #time_in_sched");
-        const time_out_sched = document.querySelector("#attendance_form #time_out_sched");
-        const payroll_type = document.querySelector("#attendance_form #payroll_type");
-        const cut_off = document.querySelector("#attendance_form #cut_off");
-        const generate_button = document.querySelector("#attendance_form #generate_button");
-        const year = document.querySelector("#attendance_form #year");
-        const week_number = document.querySelector("#attendance_form #week_number");
+        const attendance_form = document.querySelector("#attendance_form");
+        const form_tab = attendance_form.querySelector("#form_tab");
+        const employee_name = form_tab.querySelector("#employee_name");
+        const days = form_tab.querySelector("#days");
+        const daily_rate = form_tab.querySelector("#daily_rate");
+        const time_in_sched = form_tab.querySelector("#time_in_sched");
+        const time_out_sched = form_tab.querySelector("#time_out_sched");
+        const payroll_type = form_tab.querySelector("#payroll_type");
+        const generate_button = form_tab.querySelector("#generate_button");
         var payroll_length = 0;
         var day_list = "";
         const date_input = [];
@@ -212,38 +211,38 @@ document.addEventListener('DOMContentLoaded', async function() {
         const allowance = [];
         const salary_day_input = [];
         const salary_day = [];
-        const gross_salary = document.querySelector("#attendance_form #gross_salary");
-        const adjustment = document.querySelector("#attendance_form #adjustment");
-        const cash_advance = document.querySelector("#attendance_form #cash_advance");
-        const total_additional = document.querySelector("#attendance_form #total_additional");
-        const sss_deduction = document.querySelector("#attendance_form #sss_deduction");
-        const pag_ibig_deduction = document.querySelector("#attendance_form #pag_ibig_deduction");
-        const sss_loan = document.querySelector("#attendance_form #sss_loan");
-        const pag_ibig_loan = document.querySelector("#attendance_form #pag_ibig_loan");
-        const philhealth_deduction = document.querySelector("#attendance_form #philhealth_deduction");
-        const ca_deduction = document.querySelector("#attendance_form #ca_deduction");
-        const uniform = document.querySelector("#attendance_form #uniform");
-        const housing = document.querySelector("#attendance_form #housing");
-        const st_peter = document.querySelector("#attendance_form #st_peter");
-        const cash_not_return = document.querySelector("#attendance_form #cash_not_return");
-        const hard_hat = document.querySelector("#attendance_form #hard_hat");
-        const bereavement_assistance = document.querySelector("#attendance_form #bereavement_assistance");
-        const over_meals = document.querySelector("#attendance_form #over_meals");
-        const safety_shoes = document.querySelector("#attendance_form #safety_shoes");
-        const total_deductions = document.querySelector("#attendance_form #total_deductions");
-        const net_salary = document.querySelector("#attendance_form #net_salary");
+        const gross_salary = form_tab.querySelector("#gross_salary");
+        const adjustment = form_tab.querySelector("#adjustment");
+        const cash_advance = form_tab.querySelector("#cash_advance");
+        const total_additional = form_tab.querySelector("#total_additional");
+        const sss_deduction = form_tab.querySelector("#sss_deduction");
+        const pag_ibig_deduction = form_tab.querySelector("#pag_ibig_deduction");
+        const sss_loan = form_tab.querySelector("#sss_loan");
+        const pag_ibig_loan = form_tab.querySelector("#pag_ibig_loan");
+        const philhealth_deduction = form_tab.querySelector("#philhealth_deduction");
+        const ca_deduction = form_tab.querySelector("#ca_deduction");
+        const uniform = form_tab.querySelector("#uniform");
+        const housing = form_tab.querySelector("#housing");
+        const st_peter = form_tab.querySelector("#st_peter");
+        const cash_not_return = form_tab.querySelector("#cash_not_return");
+        const hard_hat = form_tab.querySelector("#hard_hat");
+        const bereavement_assistance = form_tab.querySelector("#bereavement_assistance");
+        const over_meals = form_tab.querySelector("#over_meals");
+        const safety_shoes = form_tab.querySelector("#safety_shoes");
+        const total_deductions = form_tab.querySelector("#total_deductions");
+        const net_salary = form_tab.querySelector("#net_salary");
 
         // client_list_data
-        const id_no = document.querySelector("#attendance_form #id_no");
-        const department = document.querySelector("#attendance_form #department");
-        const designation = document.querySelector("#attendance_form #designation");
-        const day_allowance = document.querySelector("#attendance_form #day_allowance");
-        const night_allowance = document.querySelector("#attendance_form #night_allowance");
-        const hide = document.querySelector("#attendance_form .hide");
-        const input_container = document.querySelector("#attendance_form #input_container");
-        const search_wrapper = document.querySelector("#attendance_form #search_employee_name");
-        const input_box = search_wrapper.querySelector("#attendance_form input");
-        const sugg_box = search_wrapper.querySelector("#attendance_form .autocom_box");
+        const id_no = form_tab.querySelector("#id_no");
+        const department = form_tab.querySelector("#department");
+        const designation = form_tab.querySelector("#designation");
+        const day_allowance = form_tab.querySelector("#day_allowance");
+        const night_allowance = form_tab.querySelector("#night_allowance");
+        const hide = form_tab.querySelector(".hide");
+        const input_container = form_tab.querySelector("#input_container");
+        const search_wrapper = form_tab.querySelector("#search_employee_name");
+        const input_box = search_wrapper.querySelector("input");
+        const sugg_box = search_wrapper.querySelector(".autocom_box");
         var data_value = active_employee_name;
 
         input_box.onkeyup = (e) => {
@@ -348,28 +347,27 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         generate_button.addEventListener("click", () => {
             if(payroll_type.value == "WEEKLY"){
-                const year = document.querySelector("#attendance_form #year");
-                const week_number = document.querySelector("#attendance_form #week_number");
+                const year = form_tab.querySelector("#year");
+                const week_number = form_tab.querySelector("#week_number");
+                const number_of_days = form_tab.querySelector("#number_of_days");
                 payroll_length = 7;
                 day_name = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
                 day_dates = getDatesInWeek(year.value, week_number.value);
-                console.log(payroll_length)
-                console.log(day_name)
-                console.log(day_dates)
+                number_of_days.value = payroll_length;
                 insertInputs();
                 days.style.display = "flex";
                 hide.style.display = "grid";
                 input_container.style.display = "grid";
             }
             else if(payroll_type.value == "SEMI-MONTHLY"){
-                const year = document.querySelector("#attendance_form #year");
-                const month = document.querySelector("#attendance_form #month");
-                const cut_off_period = document.querySelector("#attendance_form #cut_off_period");
+                const year = form_tab.querySelector("#year");
+                const month = form_tab.querySelector("#month");
+                const cut_off_period = form_tab.querySelector("#cut_off_period");
+                const number_of_days = form_tab.querySelector("#number_of_days");
                 payroll_length = getNumberOfDays(month.value, year.value, cut_off_period.value);
                 day_name = getDayNamesForCutoffPeriod(month.value, year.value, cut_off_period.value);
                 day_dates = getDatesForCutoffPeriod(month.value, year.value, cut_off_period.value);
-                console.log(day_name)
-                console.log(day_dates)
+                number_of_days.value = payroll_length;
                 insertInputs();
                 days.style.display = "flex";
                 hide.style.display = "grid";
@@ -381,68 +379,68 @@ document.addEventListener('DOMContentLoaded', async function() {
         function insertInputs(){
             for(let x = 1; x <= payroll_length; x++){
                 day_list += `                   
-                <div class="day px-3" id="day${x}">
-                    <div class="d-flex justify-content-between">
+                <div class="day px-1" id="day${x}">
+                    <div class="d-flex justify-content-around">
                         <div id="absent_box_input${x}" class="d-flex flex-column">
-                            <div class="fs-5 d-flex justify-content-center"><b>A</b></div>
+                            <div class="d-flex justify-content-center" style=" font-size: 12px !important;"><b>A</b></div>
                             <label for="absent_box${x}" class="custom-checkbox">
                                 <input type="checkbox" id="absent_box${x}" name="absent_box${x}" value="YES">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div id="rest_day_box_input${x}" class="d-flex flex-column">
-                            <div class="fs-5 d-flex justify-content-center"><b>RD</b></div>
+                            <div class="d-flex justify-content-center" style=" font-size: 12px !important;"><b>RD</b></div>
                             <label for="rest_day_box${x}" class="custom-checkbox">
                                 <input type="checkbox" id="rest_day_box${x}" name="rest_day_box${x}" value="YES">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div id="sick_leave_box_input${x}" class="d-flex flex-column">
-                            <div class="fs-5 d-flex justify-content-center"><b>SL</b></div>
+                            <div class="d-flex justify-content-center" style=" font-size: 12px !important;"><b>SL</b></div>
                             <label class="custom-checkbox">
                                 <input type="checkbox" id="sick_leave_box${x}" name="sick_leave_box${x}">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div id="vacation_leave_box_input${x}" class="d-flex flex-column">
-                            <div class="fs-5 d-flex justify-content-center"><b>VL</b></div>
+                            <div class="d-flex justify-content-center" style=" font-size: 12px !important;"><b>VL</b></div>
                             <label class="custom-checkbox">
                                 <input type="checkbox" id="vacation_leave_box${x}" name="vacation_leave_box${x}">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div id="leave_box_input${x}" class="d-flex flex-column">
-                            <div class="fs-5 d-flex justify-content-center"><b>L</b></div>
+                            <div class="d-flex justify-content-center" style=" font-size: 12px !important;"><b>L</b></div>
                             <label class="custom-checkbox">
                                 <input type="checkbox" id="leave_box${x}" name="leave_box${x}">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-around">
                         <div id="half_day_box_input${x}" class="d-flex flex-column">
-                        <div class="fs-5 d-flex justify-content-center"><b>HD</b></div>
+                        <div class="d-flex justify-content-center" style=" font-size: 12px !important;"><b>HD</b></div>
                             <label for="half_day_box${x}" class="custom-checkbox">
                             <input type="checkbox" id="half_day_box${x}" name="half_day_box${x}" value="YES">
                             <span class="checkmark"></span>
                             </label>
                         </div>
                         <div id="rest_day_duty_box_input${x}" class="d-flex flex-column">
-                            <div class="fs-5 d-flex justify-content-center"><b>RDD</b></div>
+                            <div class="d-flex justify-content-center" style=" font-size: 12px !important;"><b>RDD</b></div>
                             <label class="custom-checkbox">
                                 <input type="checkbox" id="rest_day_duty_box${x}" name="rest_day_duty_box${x}" value="YES">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div id="regular_holiday_box_input${x}" class="d-flex flex-column">
-                            <div class="fs-5 d-flex justify-content-center"><b>RH</b></div>
+                            <div class="d-flex justify-content-center" style=" font-size: 12px !important;"><b>RH</b></div>
                             <label class="custom-checkbox">
                                 <input type="checkbox" id="regular_holiday_box${x}" name="regular_holiday_box${x}" value="YES">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div id="special_holiday_box_input${x}" class="d-flex flex-column">
-                            <div class="fs-5 d-flex justify-content-center"><b>SH</b></div>
+                            <div class="d-flex justify-content-center" style=" font-size: 12px !important;"><b>SH</b></div>
                             <label class="custom-checkbox">
                                 <input type="checkbox" id="special_holiday_box${x}" name="special_holiday_box${x}" value="YES">
                                 <span class="checkmark"></span>
@@ -536,7 +534,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             days.insertAdjacentHTML("beforeend", day_list)
     
               // Get all input elements of type "number"
-            const numberInputs = document.querySelectorAll('input[type="number"]');
+            const numberInputs = form_tab.querySelectorAll('input[type="number"]');
     
             // Loop through each input and set the "step" attribute
             numberInputs.forEach(input => {
@@ -1074,7 +1072,80 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                     }
                 }
-                                        
+                
+                function calculateSpecialHoliday(){
+                    if (special_holiday_box[x].checked == true) {
+                        special_holiday_box[x].value = "YES";
+                        rest_day_box_input[x].classList.add('disabled');
+                        sick_leave_box_input[x].classList.add('disabled');
+                        vacation_leave_box_input[x].classList.add('disabled');
+                        leave_box_input[x].classList.add('disabled');
+                        regular_holiday_box_input[x].classList.add('disabled');
+                        regular_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.3);
+                        night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.43);
+                        regular_hour_rate[x].innerText = "1.30";
+                        night_hour_rate[x].innerText = "1.43";
+                        ot_regular_hour_rate[x].innerText = "1.69";
+                        ot_night_hour_rate[x].innerText = "1.859";
+                        if (with_ot_box[x].checked == true) {
+                            ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.69);
+                            ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.859);
+                        }
+                        if (rest_day_duty_box[x].checked == true) {
+                            regular_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.5);
+                            night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.65);
+                            regular_hour_rate[x].innerText = "1.5";
+                            night_hour_rate[x].innerText = "1.65";
+                            ot_regular_hour_rate[x].innerText = "1.95";
+                            ot_night_hour_rate[x].innerText = "2.145";
+                            if (with_ot_box[x].checked == true) {
+                                ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.95);
+                                ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 2.145);
+                            }
+                        }
+                    } 
+                    else {
+                        special_holiday_box[x].value = "NO";
+                        regular_holiday_box_input[x].classList.remove('disabled');
+                        regular_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1);
+                        night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.1);
+                        regular_hour_rate[x].innerText = "1.00";
+                        night_hour_rate[x].innerText = "1.10";
+                        ot_regular_hour_rate[x].innerText = "1.25";
+                        ot_night_hour_rate[x].innerText = "1.375";
+                        if (with_ot_box[x].checked == true) {
+                            ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.25);
+                            ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.375);
+                        }
+                        if (rest_day_duty_box[x].checked == true) {
+                            regular_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.3);
+                            night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.43);
+                            regular_hour_rate[x].innerText = "1.30";
+                            night_hour_rate[x].innerText = "1.43";
+                            ot_regular_hour_rate[x].innerText = "1.69";
+                            ot_night_hour_rate[x].innerText = "1.859";
+                            if (with_ot_box[x].checked == true) {
+                                ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.69);
+                                ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.859);
+                            }
+                            else{
+                                ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.69);
+                                ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.859);
+                            }
+                        }
+                        if(half_day_box[x].checked == true || rest_day_duty_box[x].checked == true ){
+                        }
+                        else{
+                            rest_day_box_input[x].classList.remove('disabled');
+                            sick_leave_box_input[x].classList.remove('disabled');
+                            vacation_leave_box_input[x].classList.remove('disabled');
+                            leave_box_input[x].classList.remove('disabled');
+                        }
+                    }
+                    calculateGrossSalary();
+                    calculateNetSalary();
+                }
+
                 time_out_sched.addEventListener("change", () => {
                     calculateGrossSalary();
                     calculateNetSalary();
@@ -1095,7 +1166,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                         leave_box_input[x].classList.add('disabled');
                         half_day_box_input[x].classList.add('disabled');
                         rest_day_duty_box_input[x].classList.add('disabled');
-                        special_holiday_box_input[x].classList.add('disabled');
                         const day_input_number_elements = day[x].querySelectorAll("input[type='number']");
                         const day_input_time_elements = day[x].querySelectorAll("input[type='time']");
                         day_input_number_elements.forEach((inputElement) => {
@@ -1104,7 +1174,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         day_input_time_elements.forEach((inputElement) => {
                             inputElement.value = "";
                         });
-                        if (regular_holiday_box[x].checked == true) {
+                        if (regular_holiday_box[x].checked == true || special_holiday_box[x].checked == true && payroll_type.value == "SEMI-MONTHLY") {
                             salary_day[x].value = parseFloat(daily_rate.value)
                         }
                         else{
@@ -1122,13 +1192,15 @@ document.addEventListener('DOMContentLoaded', async function() {
                         leave_box_input[x].classList.remove('disabled');
                         half_day_box_input[x].classList.remove('disabled');
                         rest_day_duty_box_input[x].classList.remove('disabled');
-                        special_holiday_box_input[x].classList.remove('disabled');
                         calculateHours();
                         calculateRatePerHour();
                         calculateOtRatePerHour();
                         calculateAllowance();
                         calculateGrossSalary();
                         calculateNetSalary();
+                        if (special_holiday_box[x].checked == true) {
+                            calculateSpecialHoliday();
+                        }
                     }
                 });
                 
@@ -1497,78 +1569,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 });
                 
                 special_holiday_box[x].addEventListener("click", () => {
-                    if (special_holiday_box[x].checked == true) {
-                        special_holiday_box[x].value = "YES";
-                        absent_box_input[x].classList.add('disabled');
-                        rest_day_box_input[x].classList.add('disabled');
-                        sick_leave_box_input[x].classList.add('disabled');
-                        vacation_leave_box_input[x].classList.add('disabled');
-                        leave_box_input[x].classList.add('disabled');
-                        regular_holiday_box_input[x].classList.add('disabled');
-                        regular_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.3);
-                        night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.43);
-                        regular_hour_rate[x].innerText = "1.30";
-                        night_hour_rate[x].innerText = "1.43";
-                        ot_regular_hour_rate[x].innerText = "1.69";
-                        ot_night_hour_rate[x].innerText = "1.859";
-                        if (with_ot_box[x].checked == true) {
-                            ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.69);
-                            ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.859);
-                        }
-                        if (rest_day_duty_box[x].checked == true) {
-                            regular_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.5);
-                            night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.65);
-                            regular_hour_rate[x].innerText = "1.5";
-                            night_hour_rate[x].innerText = "1.65";
-                            ot_regular_hour_rate[x].innerText = "1.95";
-                            ot_night_hour_rate[x].innerText = "2.145";
-                            if (with_ot_box[x].checked == true) {
-                                ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.95);
-                                ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 2.145);
-                            }
-                        }
-                    } 
-                    else {
-                        special_holiday_box[x].value = "NO";
-                        regular_holiday_box_input[x].classList.remove('disabled');
-                        regular_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1);
-                        night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.1);
-                        regular_hour_rate[x].innerText = "1.00";
-                        night_hour_rate[x].innerText = "1.10";
-                        ot_regular_hour_rate[x].innerText = "1.25";
-                        ot_night_hour_rate[x].innerText = "1.375";
-                        if (with_ot_box[x].checked == true) {
-                            ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.25);
-                            ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.375);
-                        }
-                        if (rest_day_duty_box[x].checked == true) {
-                            regular_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.3);
-                            night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.43);
-                            regular_hour_rate[x].innerText = "1.30";
-                            night_hour_rate[x].innerText = "1.43";
-                            ot_regular_hour_rate[x].innerText = "1.69";
-                            ot_night_hour_rate[x].innerText = "1.859";
-                            if (with_ot_box[x].checked == true) {
-                                ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.69);
-                                ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.859);
-                            }
-                            else{
-                                ot_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.69);
-                                ot_night_rate_per_hour[x].value = (parseFloat(daily_rate.value)/8 * 1.859);
-                            }
-                        }
-                        if(half_day_box[x].checked == true || rest_day_duty_box[x].checked == true ){
-                        }
-                        else{
-                            absent_box_input[x].classList.remove('disabled');
-                            rest_day_box_input[x].classList.remove('disabled');
-                            sick_leave_box_input[x].classList.remove('disabled');
-                            vacation_leave_box_input[x].classList.remove('disabled');
-                            leave_box_input[x].classList.remove('disabled');
-                        }
-                    }
-                    calculateGrossSalary();
-                    calculateNetSalary();
+                    calculateSpecialHoliday();
                 });
                 
                 time_in_input[x].addEventListener("change", () => {
@@ -1832,10 +1833,100 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         }
-        
 
-        const payroll_button = document.querySelector("#attendance_form #payroll_button");
-        const payroll_tab = document.querySelector("#attendance_form #payroll_tab");
+        const payroll_button = attendance_form.querySelector("#payroll_button");
+        const payroll_tab = attendance_form.querySelector("#payroll_tab");
+        const payroll_type2 = payroll_tab.querySelector("#payroll_type");
+        const payroll_details = payroll_tab.querySelector("#payroll_details");
+
+        payroll_type2.addEventListener("change", () => {
+            if(payroll_type2.value == "WEEKLY"){
+                while (payroll_details.firstChild) {
+                    payroll_details.removeChild(payroll_details.firstChild);
+                }
+                var data_value = 
+                `
+                <div style="width: 200px !important;">
+                    <label>
+                        <i class="fa-solid fa-calendar-days"></i>
+                        Year
+                    </label>
+                    <input type="number" id="search_year" name="search_year" class="form-control form" required autocomplete="off" placeholder="Input Year">
+                </div>
+                <div style="width: 200px !important;">
+                    <label>
+                        <i class="fa-solid fa-calendar-days"></i>
+                        Week Number
+                    </label>
+                    <input type="number" id="search_week_number" name="search_week_number" class="form-control form" required autocomplete="off" placeholder="Input Week Number"><br>
+                </div>
+                <div style="width: 200px !important;">
+                    <label>
+                        <i class="fa-solid fa-calendar-days"></i>
+                        Pay Date
+                    </label>
+                    <input type="date" id="pay_date" name="pay_date" class="form-control form" required autocomplete="off"><br>
+                </div>
+                `
+                payroll_details.insertAdjacentHTML("afterbegin", data_value)
+            }
+            else if(payroll_type2.value == "SEMI-MONTHLY"){
+                while (payroll_details.firstChild) {
+                    payroll_details.removeChild(payroll_details.firstChild);
+                }
+                var data_value = 
+                `
+                <div style="width: 200px !important;">
+                    <label>
+                        <i class="fa-solid fa-calendar-days"></i>
+                        Year
+                    </label>
+                    <input type="number" id="search_year" name="search_year" class="form-control form" required autocomplete="off" placeholder="Input Year">
+                </div>
+                <label for="month">
+                <i class="fa-solid fa-calendar-days"></i>
+                Month
+                <select name="search_month" id="search_month" class="form-control">
+                    <option value="SELECT">SELECT</option>
+                    <option value="JANUARY">JANUARY</option>
+                    <option value="FEBRUARY">FEBRUARY</option>
+                    <option value="MARCH">MARCH</option>
+                    <option value="APRIL">APRIL</option>
+                    <option value="MAY">MAY</option>
+                    <option value="JUNE">JUNE</option>
+                    <option value="JULY">JULY</option>
+                    <option value="AUGUST">AUGUST</option>
+                    <option value="SEPTEMBER">SEPTEMBER</option>
+                    <option value="OCTOBER">OCTOBER</option>
+                    <option value="NOVEMBER">NOVEMBER</option>
+                    <option value="DECEMBER">DECEMBER</option>
+                </select>
+            </label>
+            <label for="cut_off_period">
+                <i class="fa-solid fa-calendar-days"></i>
+                Cut Off Period
+                <select name="search_cut_off_period" id="search_cut_off_period" class="form-control">
+                    <option value="SELECT">SELECT</option>
+                    <option value="1ST CUT OFF">1ST CUT OFF</option>
+                    <option value="2ND CUT OFF">2ND CUT OFF</option>
+                </select>
+            </label>
+                <div style="width: 200px !important;">
+                    <label>
+                        <i class="fa-solid fa-calendar-days"></i>
+                        Pay Date
+                    </label>
+                    <input type="date" id="pay_date" name="pay_date" class="form-control form" required autocomplete="off"><br>
+                </div>
+                `
+                payroll_details.insertAdjacentHTML("afterbegin", data_value)
+            }
+            else{
+                while (payroll_details.firstChild) {
+                    payroll_details.removeChild(payroll_details.firstChild);
+                }
+            }
+        })
 
         payroll_button.addEventListener("click", () => {
             if(payroll_tab.style.display == "block"){
@@ -1846,17 +1937,100 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         })
 
+        const payslip_container = payroll_tab.querySelector("#payslip_container")
+        const generate_payslip_button = payroll_tab.querySelector("#generate_payslip_button")
+        const download_payslip_button = payroll_tab.querySelector("#download_payslip_button")
+        const search_year = payroll_tab.querySelector("#search_year")
+        const search_week_number = payroll_tab.querySelector("#search_week_number")
+        const pay_date = payroll_tab.querySelector("#pay_date")
 
-        const payslip_container = document.querySelector("#payslip_container")
-        const generate_payslip_button = document.querySelector("#generate_payslip_button")
-        const download_payslip_button = document.querySelector("#download_payslip_button")
-        const search_year = document.querySelector("#search_year")
-        const search_week_number = document.querySelector("#search_week_number")
-        const pay_date = document.querySelector("#pay_date")
+
+
+        // var payslip_employee_id = [];
+        // for(let c = 1; c < payroll_transaction_data_list.content.length; c++){
+        //     if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "YEAR")] == search_year.value && payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "WEEK NUMBER")] == search_week_number.value){
+        //         if (!payslip_employee_id.includes(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "EMPLOYEE ID")])) {
+        //             payslip_employee_id.push(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "EMPLOYEE ID")]);
+        //         }
+        //     }
+        // }
 
         generate_payslip_button.addEventListener("click", () => {
-            payslip_container.innerHTML = payslip_form_data;
-            download_payslip_button.style.display = "block";
+            // download_payslip_button.style.display = "block";
+            // var payslip_form_data ="";
+            // for(let d = 0; d < payslip_employee_id.length; d++){
+            //     for(let e = 1; e < payroll_summary_data_list.content.length; e++){
+            //         if(payslip_employee_id[d] == payroll_summary_data_list.content[e][findTextInArray(payroll_transaction_data_list, "EMPLOYEE ID")] && search_year.value == payroll_summary_data_list.content[e][findTextInArray(payroll_transaction_data_list, "YEAR")] && search_week_number.value == payroll_summary_data_list.content[e][findTextInArray(payroll_transaction_data_list, "WEEK NUMBER / MONTH-CUT OFF")]){
+            //             var department = "";
+            //             var designation = "";
+            //             var tin_id = "";
+            //             var type_of_employee = "";
+            //             for(let f =1; f < employee_data_list.content.length; f++){
+            //                 if(payslip_employee_id[d] == employee_data_list.content[f][findTextInArray(employee_data_list, "EMPLOYEE ID")]){
+            //                     department = employee_data_list.content[f][findTextInArray(employee_data_list, "DEPARTMENT")];
+            //                     designation = employee_data_list.content[f][findTextInArray(employee_data_list, "DESIGNATION")];
+            //                     tin_id = employee_data_list.content[f][findTextInArray(employee_data_list, "TIN NO.")];
+            //                     type_of_employee = employee_data_list.content[f][findTextInArray(employee_data_list, "EMPLOYEE TYPE")];
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
+            var data = 
+            `
+            <div id="payslip_form">
+                <div class="payslip">
+                    <div class="summary">
+                        <div class="header">
+                            <img src="../images/logo.png" alt="">
+                            <div class="header_title">
+                                <h2 class="bold">FAR EAST FUEL CORPORATION</h2>
+                                <h3>#888 Purok 5, Irabagon St. Brgy. Anyatam, San Ildefonso, Bulacan, 3010</h3>
+                            </div>
+                        </div>
+                        <div class="employee_details">
+                            <div class="grid1">
+                                <div class="d-flex">
+                                    <h4 class="bold">Name:</h4><h4 class="ps-1 truncate_text"></h4>
+                                </div>
+                                <div class="d-flex">
+                                    <h4 class="bold">ID No:</h4><h4 class="ps-1 truncate_text"></h4>
+                                </div>
+                                <div class="d-flex">
+                                    <h4 class="bold">Department:</h4><h4 class="ps-1 truncate_text"></h4>
+                                </div>
+                                <div class="d-flex">
+                                    <h4 class="bold">Tin No:</h4><h4 class="ps-1 truncate_text"></h4>
+                                </div>
+                                <div class="d-flex">
+                                    <h4 class="bold">Designation:</h4><h4 class="ps-1 truncate_text"></h4>
+                                </div>
+                                <div class="d-flex">
+                                    <h4 class="bold">Tax Code:</h4><h4 class="ps-1 truncate_text"></h4>
+                                </div>
+                                <div class="d-flex">
+                                    <h4 class="bold">Pay Period:</h4><h4 class="ps-1 truncate_text"></h4>
+                                </div>
+                                <div class="d-flex">
+                                    <h4 class="bold">Pay Date:</h4><h4 class="ps-1 truncate_text"></h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="summary_details_header">
+                        <div class="border-right">
+                            <h3 class="bold">EARNINGS</h3>
+                            <h3 class="bold ">AMOUNT</h3>
+                        </div>
+                        <div>
+                            <h3 class="bold">DEDUCTIONS</h3>
+                            <h3 class="bold">AMOUNT</h3>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `
+            payslip_container.insertAdjacentHTML("afterbegin", data)
         })
 
 

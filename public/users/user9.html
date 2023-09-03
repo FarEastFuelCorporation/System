@@ -201,9 +201,9 @@
             <!-- attendance_form -->
             <section class="hr" id="attendance_form">
                 <h2>PAYROLL TRANSACTION FORM</h2><br>
-                <form action="https://script.google.com/macros/s/AKfycbyYvzp3MnrYpjspzSvZltbIAA9_aQ9V7e3nobJXxYYIUZUYT19ufYoQgSRqnqt_vy-Jgw/exec" method="post">
+                <form id="form_tab" action="https://script.google.com/macros/s/AKfycbyGx6jxg81GWHGH8qj6b50QGJeGThBPrR7cpBYU8u5ertGifDF2UuuTQ1fVJTL5IUfy4g/exec" method="post">
                     <input type="hidden" name="user" id="user">
-                    <input type="hidden" name="number_of_days" id="number_of_days" value="7">
+                    <input type="hidden" name="number_of_days" id="number_of_days">
                     <div class="hrf_form_grid">
                         <div class="wrapper">
                             <label for="employee_name">
@@ -296,11 +296,11 @@
                                 <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
                             </button>
                         </div>
-                    </div>
+                    </div><br>
                     <div id="input_container">
-                        <div id="input_container1">
-                            <div class="label" style="height: 75px;">ABSENT / REST DAY /<br>SICK LEAVE / LEAVE</div>
-                            <div class="label" style="height: 75px;">HALF DAY / REST DAY DUTY<br>REGULAR HOLIDAY/<br>SPECIAL HOLIDAY</div>
+                        <div id="input_container1" style="font-size: 14px;">
+                            <div class="label" style="height: 44px; font-size: 10px !important;">ABSENT / REST DAY /<br>SICK LEAVE / LEAVE</div>
+                            <div class="label" style="height: 44px; font-size: 10px !important;">HALF DAY / REST DAY DUTY<br>REGULAR HOLIDAY/<br>SPECIAL HOLIDAY/<br>SPECIAL HOLIDAY ABSENT</div>
                             <div class="label">DAY</div>
                             <div class="label" style="height: 36px;">DATE</div>
                             <div class="label" style="height: 36px;">TIME IN</div>
@@ -514,27 +514,19 @@
                     <h2>PRINT PAYROLL</h2><br>
                     <form action="">
                         <input type="hidden" name="user" id="user">
-                        <div class="d-flex">
-                            <div>
+                        <div class="d-flex gap-4">
+                            <div style="width: 200px !important;">
                                 <label>
                                     <i class="fa-solid fa-calendar-days"></i>
-                                    Year
+                                    Payroll Type
                                 </label>
-                                <input type="number" id="search_year" name="search_year" class="form-control form" required autocomplete="off" placeholder="Input Year">
+                                <select name="payroll_type" id="payroll_type" class="form-control">
+                                    <option value="">Choose</option>
+                                    <option value="WEEKLY">WEEKLY</option>
+                                    <option value="SEMI-MONTHLY">SEMI-MONTHLY</option>
+                                </select>  
                             </div>
-                            <div>
-                                <label>
-                                    <i class="fa-solid fa-calendar-days"></i>
-                                    Week Number
-                                </label>
-                                <input type="number" id="search_week_number" name="search_week_number" class="form-control form" required autocomplete="off" placeholder="Input Week Number"><br>
-                            </div>
-                            <div>
-                                <label>
-                                    <i class="fa-solid fa-calendar-days"></i>
-                                    Pay Date
-                                </label>
-                                <input type="date" id="pay_date" name="pay_date" class="form-control form" required autocomplete="off"><br>
+                            <div id="payroll_details" class="d-flex gap-4">
                             </div>
                         </div>
                         <br>
@@ -646,7 +638,7 @@
                                 #payslip_form .payslip
                                 {
                                     margin: 20px;
-                                    width: calc(100% - 160px);
+                                    width: 368px;
                                     height: 485px;
                                     border: 3px solid black;
                                 }
@@ -727,7 +719,7 @@
                                 #payslip_form .payslip2 .summary .employee_details .grid1
                                 {
                                     display: grid;
-                                    grid-template-columns: 35% 25% 30% 10%;
+                                    grid-template-columns: 60% 40%;
                                 }
                         
                                 #payslip_form .payslip .summary .employee_details .grid1 .ps-1,
@@ -741,8 +733,20 @@
                                 #payslip_form .payslip .summary .summary_details_header,
                                 #payslip_form .payslip2 .summary .summary_details_header
                                 {
+                                    display: grid;
+                                    grid-template-columns: 50% 50%;
+                                    justify-content: space-around;
                                     border-bottom: 1px solid black;
+                                    border-right: 1px solid black;
+                                    border-left: 1px solid black;
                                     text-align: center;
+                                }
+
+                                #payslip_form .payslip .summary .summary_details_header > div,
+                                #payslip_form .payslip2 .summary .summary_details_header > div
+                                {
+                                    display: grid;
+                                    grid-template-columns: 50% 50%;
                                 }
                         
                                 #payslip_form .payslip .summary .summary_details_details,
