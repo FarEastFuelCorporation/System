@@ -1944,18 +1944,17 @@ document.addEventListener('DOMContentLoaded', async function() {
         const search_week_number = payroll_tab.querySelector("#search_week_number")
         const pay_date = payroll_tab.querySelector("#pay_date")
 
-
-
-        // var payslip_employee_id = [];
-        // for(let c = 1; c < payroll_transaction_data_list.content.length; c++){
-        //     if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "YEAR")] == search_year.value && payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "WEEK NUMBER")] == search_week_number.value){
-        //         if (!payslip_employee_id.includes(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "EMPLOYEE ID")])) {
-        //             payslip_employee_id.push(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "EMPLOYEE ID")]);
-        //         }
-        //     }
-        // }
-
+        
         generate_payslip_button.addEventListener("click", () => {
+            var payslip_employee_id = [];
+            for(let c = 1; c < payroll_transaction_data_list.content.length; c++){
+                if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "YEAR")] == search_year.value && payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "WEEK NUMBER")] == search_week_number.value){
+                    if (!payslip_employee_id.includes(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "EMPLOYEE ID")])) {
+                        payslip_employee_id.push(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "EMPLOYEE ID")]);
+                    }
+                }
+            }
+            console.log(payslip_employee_id)
             // download_payslip_button.style.display = "block";
             // var payslip_form_data ="";
             // for(let d = 0; d < payslip_employee_id.length; d++){

@@ -952,7 +952,7 @@
             const opt = {
                 filename: `${cod_form_no}`,
                 image: { type: 'jpeg', quality: 1 },
-                html2canvas: { scale: 2 },
+                html2canvas: { scale: 10 },
                 jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
             };
 
@@ -997,8 +997,8 @@
             const bpf_form_no = document.getElementById('bpf_form_no').value;
             const opt = {
                 image: { type: 'jpeg', quality: 1 },
-                html2canvas: { scale: 5 },
-                jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
+                html2canvas: { scale: 10 },
+                jsPDF: { unit: 'mm', format: 'letter', orientation: 'landscape' }
             };
 
             const marginTop = 32.5; // Top margin in mm
