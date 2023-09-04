@@ -598,7 +598,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     var gender = employee_data_list.content[x][6];
                                     if(gender == "MALE"){
                                         truck_helper_name_list += `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} ${employee_data_list.content[x][5]} || `
-                                        truck_helper_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} ${employee_data_list.content[x][5]}`
+                                    truck_helper_name = `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} ${employee_data_list.content[x][5]}`
                                     }
                                     else{
                                         truck_helper_name_list += `${employee_data_list.content[x][3]}, ${employee_data_list.content[x][1]} ${employee_data_list.content[x][2]} - ${employee_data_list.content[x][4]} || `

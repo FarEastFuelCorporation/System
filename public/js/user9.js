@@ -1978,57 +1978,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             // }
             var data = 
             `
-            <div id="payslip_form">
-                <div class="payslip">
-                    <div class="summary">
-                        <div class="header">
-                            <img src="../images/logo.png" alt="">
-                            <div class="header_title">
-                                <h2 class="bold">FAR EAST FUEL CORPORATION</h2>
-                                <h3>#888 Purok 5, Irabagon St. Brgy. Anyatam, San Ildefonso, Bulacan, 3010</h3>
-                            </div>
-                        </div>
-                        <div class="employee_details">
-                            <div class="grid1">
-                                <div class="d-flex">
-                                    <h4 class="bold">Name:</h4><h4 class="ps-1 truncate_text"></h4>
-                                </div>
-                                <div class="d-flex">
-                                    <h4 class="bold">ID No:</h4><h4 class="ps-1 truncate_text"></h4>
-                                </div>
-                                <div class="d-flex">
-                                    <h4 class="bold">Department:</h4><h4 class="ps-1 truncate_text"></h4>
-                                </div>
-                                <div class="d-flex">
-                                    <h4 class="bold">Tin No:</h4><h4 class="ps-1 truncate_text"></h4>
-                                </div>
-                                <div class="d-flex">
-                                    <h4 class="bold">Designation:</h4><h4 class="ps-1 truncate_text"></h4>
-                                </div>
-                                <div class="d-flex">
-                                    <h4 class="bold">Tax Code:</h4><h4 class="ps-1 truncate_text"></h4>
-                                </div>
-                                <div class="d-flex">
-                                    <h4 class="bold">Pay Period:</h4><h4 class="ps-1 truncate_text"></h4>
-                                </div>
-                                <div class="d-flex">
-                                    <h4 class="bold">Pay Date:</h4><h4 class="ps-1 truncate_text"></h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="summary_details_header">
-                        <div class="border-right">
-                            <h3 class="bold">EARNINGS</h3>
-                            <h3 class="bold ">AMOUNT</h3>
-                        </div>
-                        <div>
-                            <h3 class="bold">DEDUCTIONS</h3>
-                            <h3 class="bold">AMOUNT</h3>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             `
             payslip_container.insertAdjacentHTML("afterbegin", data)
         })
