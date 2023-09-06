@@ -2044,30 +2044,46 @@ document.addEventListener('DOMContentLoaded', async function() {
                             }
                             else if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")] == "SH"){
                                 sh_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
+                                sh_day_hrs_pay += parseFloat(sh_day_hrs) * ((parseFloat(daily_rate)) * 0.30) / 8;
                                 sh_ot_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
+                                sh_ot_day_hrs_pay += parseFloat(sh_ot_day_hrs) * ((parseFloat(daily_rate)) * 0.69) / 8;
                                 sh_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
+                                sh_night_hrs_pay += parseFloat(sh_night_hrs) * ((parseFloat(daily_rate)) * 0.43) / 8;
                                 sh_ot_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
+                                sh_ot_night_hrs_pay += parseFloat(sh_ot_night_hrs) * ((parseFloat(daily_rate)) * 0.859) / 8;
                                 console.log("3")
                             }
                             else if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")] == "RH"){
                                 rh_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
+                                rh_day_hrs_pay += parseFloat(rh_day_hrs) * ((parseFloat(daily_rate))) / 8;
                                 rh_ot_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
+                                rh_ot_day_hrs_pay += parseFloat(rh_ot_day_hrs) * ((parseFloat(daily_rate)) * 2.60) / 8;
                                 rh_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
+                                rh_night_hrs_pay += parseFloat(rh_night_hrs) * ((parseFloat(daily_rate)) * 2.20) / 8;
                                 rh_ot_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
+                                rh_ot_night_hrs_pay += parseFloat(rh_ot_night_hrs) * ((parseFloat(daily_rate)) * 2.86) / 8;
                                 console.log("4")
                             }
                             else if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")] == "SH & RDD"){
                                 sh_rdd_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
+                                sh_rdd_day_hrs_pay += parseFloat(sh_rdd_day_hrs) * ((parseFloat(daily_rate)) * 1.50) / 8;
                                 sh_rdd_ot_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
+                                sh_rdd_ot_day_hrs_pay += parseFloat(sh_rdd_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.95 ) / 8;
                                 sh_rdd_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
+                                sh_rdd_night_hrs_pay += parseFloat(sh_rdd_night_hrs) * ((parseFloat(daily_rate)) * 1.65) / 8;
                                 sh_rdd_ot_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
+                                sh_rdd_ot_night_hrs_pay += parseFloat(sh_rdd_ot_night_hrs) * ((parseFloat(daily_rate)) * 2.145) / 8;
                                 console.log("5")
                             }
                             else if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")] == "RH & RDD"){
                                 rh_rdd_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
+                                rh_rdd_day_hrs_pay += parseFloat(rh_rdd_day_hrs) * ((parseFloat(daily_rate)) * 2.60) / 8;
                                 rh_rdd_ot_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
+                                rh_rdd_ot_day_hrs_pay += parseFloat(rh_rdd_ot_day_hrs) * ((parseFloat(daily_rate)) * 3.38) / 8;
                                 rh_rdd_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
+                                rh_rdd_night_hrs_pay += parseFloat(rh_rdd_night_hrs) * ((parseFloat(daily_rate)) * 2.86) / 8;
                                 rh_rdd_ot_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
+                                rh_rdd_ot_night_hrs_pay += parseFloat(rh_rdd_ot_night_hrs) * ((parseFloat(daily_rate)) * 3.718) / 8;
                                 console.log("6")
                             }
                         }
@@ -2164,40 +2180,40 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <h4 style="text-align: right;">${formatNumber(rdd_ot_night_hrs_pay)}</h4>
                                     <h4>Special Holiday</h4>
                                     <h4 style="text-align: center;">${sh_day_hrs}</h4>
-                                    <h4 style="text-align: right;">${formatNumber(parseFloat(sh_day_hrs) * ((parseFloat(daily_rate))*0.30)/8)}</h4>
+                                    <h4 style="text-align: right;">${formatNumber(sh_day_hrs_pay)}</h4>
                                     <h4 style="text-align: center;">${sh_ot_day_hrs}</h4>
-                                    <h4 style="text-align: right;">${formatNumber(parseFloat(sh_ot_day_hrs) * ((parseFloat(daily_rate))*0.69)/8)}</h4>
+                                    <h4 style="text-align: right;">${formatNumber(sh_ot_day_hrs_pay)}</h4>
                                     <h4 style="text-align: center;">${sh_night_hrs}</h4>
-                                    <h4 style="text-align: right;">${formatNumber(parseFloat(sh_night_hrs) * ((parseFloat(daily_rate))*0.43)/8)}</h4>
+                                    <h4 style="text-align: right;">${formatNumber(sh_night_hrs_pay)}</h4>
                                     <h4 style="text-align: center;">${sh_ot_night_hrs}</h4>
-                                    <h4 style="text-align: right;">${formatNumber(parseFloat(sh_ot_night_hrs) * ((parseFloat(daily_rate))*0.859)/8)}</h4>
+                                    <h4 style="text-align: right;">${formatNumber(sh_ot_night_hrs_pay)}</h4>
                                     <h4>Legal Holiday</h4>
                                     <h4 style="text-align: center;">${rh_day_hrs}</h4>
-                                    <h4 style="text-align: right;">${formatNumber(parseFloat(rh_day_hrs) * ((parseFloat(daily_rate)))/8)}</h4>
+                                    <h4 style="text-align: right;">${formatNumber(rh_day_hrs_pay)}</h4>
                                     <h4 style="text-align: center;">${rh_ot_day_hrs}</h4>
-                                    <h4 style="text-align: right;">${formatNumber(parseFloat(rh_ot_day_hrs) * ((parseFloat(daily_rate))*2.60)/8)}</h4>
+                                    <h4 style="text-align: right;">${formatNumber(rh_ot_day_hrs_pay)}</h4>
                                     <h4 style="text-align: center;">${rh_night_hrs}</h4>
-                                    <h4 style="text-align: right;">${formatNumber(parseFloat(rh_night_hrs) * ((parseFloat(daily_rate))*2.20)/8)}</h4>
+                                    <h4 style="text-align: right;">${formatNumber(rh_night_hrs_pay)}</h4>
                                     <h4 style="text-align: center;">${rh_ot_night_hrs}</h4>
-                                    <h4 style="text-align: right;">${formatNumber(parseFloat(rh_ot_night_hrs) * ((parseFloat(daily_rate))*2.86)/8)}</h4>
+                                    <h4 style="text-align: right;">${formatNumber(rh_ot_night_hrs_pay)}</h4>
                                     <h4>RDD + Spec. Hol.</h4>
                                     <h4 style="text-align: center;">${sh_rdd_day_hrs}</h4>
-                                    <h4 style="text-align: right;">${formatNumber(parseFloat(sh_rdd_day_hrs) * ((parseFloat(daily_rate))*1.50)/8)}</h4>
+                                    <h4 style="text-align: right;">${formatNumber(rh_day_hrs_pay)}</h4>
                                     <h4 style="text-align: center;">${sh_rdd_ot_day_hrs}</h4>
-                                    <h4 style="text-align: right;">${formatNumber(parseFloat(sh_rdd_ot_day_hrs) * ((parseFloat(daily_rate))*1.95)/8)}</h4>
+                                    <h4 style="text-align: right;">${formatNumber(sh_rdd_ot_day_hrs_pay)}</h4>
                                     <h4 style="text-align: center;">${sh_rdd_night_hrs}</h4>
-                                    <h4 style="text-align: right;">${formatNumber(parseFloat(sh_rdd_night_hrs) * ((parseFloat(daily_rate))*1.65)/8)}</h4>
+                                    <h4 style="text-align: right;">${formatNumber(sh_rdd_night_hrs_pay)}</h4>
                                     <h4 style="text-align: center;">${sh_rdd_ot_night_hrs}</h4>
-                                    <h4 style="text-align: right;">${formatNumber(parseFloat(sh_rdd_ot_night_hrs) * ((parseFloat(daily_rate))*2.145)/8)}</h4>
+                                    <h4 style="text-align: right;">${formatNumber(sh_rdd_ot_night_hrs_pay)}</h4>
                                     <h4>RDD + Leg. Hol.</h4>
                                     <h4 style="text-align: center;">${rh_rdd_day_hrs}</h4>
-                                    <h4 style="text-align: right;">${formatNumber(parseFloat(rh_rdd_day_hrs) * ((parseFloat(daily_rate))*2.60)/8)}</h4>
+                                    <h4 style="text-align: right;">${formatNumber(rh_rdd_day_hrs_pay)}</h4>
                                     <h4 style="text-align: center;">${rh_rdd_ot_day_hrs}</h4>
-                                    <h4 style="text-align: right;">${formatNumber(parseFloat(rh_rdd_ot_day_hrs) * ((parseFloat(daily_rate))*3.38)/8)}</h4>
+                                    <h4 style="text-align: right;">${formatNumber(rh_rdd_ot_day_hrs_pay)}</h4>
                                     <h4 style="text-align: center;">${rh_rdd_night_hrs}</h4>
-                                    <h4 style="text-align: right;">${formatNumber(parseFloat(rh_rdd_night_hrs) * ((parseFloat(daily_rate))*2.86)/8)}</h4>
+                                    <h4 style="text-align: right;">${formatNumber(rh_rdd_night_hrs_pay)}</h4>
                                     <h4 style="text-align: center;">${rh_rdd_ot_night_hrs}</h4>
-                                    <h4 style="text-align: right;">${formatNumber(parseFloat(rh_rdd_ot_night_hrs) * ((parseFloat(daily_rate))*3.718)/8)}</h4>
+                                    <h4 style="text-align: right;">${formatNumber(rh_rdd_ot_night_hrs_pay)}</h4>
                                     <h4>Allowance</h4>
                                     <h4 style="text-align: center;"></h4>
                                     <h4 style="text-align: right;">${formatNumber(parseFloat(allowance))}</h4>
