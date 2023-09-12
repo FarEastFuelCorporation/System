@@ -30,11 +30,13 @@ document.addEventListener('DOMContentLoaded', async function() {
         // username_data_list3
         const user_sidebar = document.getElementById("user_sidebar");
         const user_sidebar_officer = document.getElementById("user_sidebar_officer");
+        const user_sidebar_department = document.getElementById("user_sidebar_department");
         const user = document.getElementById("user");
         
         user.value = username_data_list.content[8][findTextInArray(username_data_list, "NAME")];
         user_sidebar.innerHTML = `<u>${username_data_list.content[8][findTextInArray(username_data_list, "NAME")]}</u>`;
         user_sidebar_officer.innerText = username_data_list.content[8][findTextInArray(username_data_list, "SECTIONS")];
+        user_sidebar_department.innerText = username_data_list.content[6][findTextInArray(username_data_list, "DEPARTMENT")];
         
         // incident_history_list
         const incident_report_safety = document.querySelector("#safety_dashboard #incident_report");
