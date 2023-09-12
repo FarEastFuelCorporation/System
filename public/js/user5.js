@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         user.value = username_data_list.content[5][findTextInArray(username_data_list, "NAME")];
         user_sidebar.innerHTML = `<u>${username_data_list.content[5][findTextInArray(username_data_list, "NAME")]}</u>`;
         user_sidebar_officer.innerText = username_data_list.content[5][findTextInArray(username_data_list, "SECTIONS")];
-        user_sidebar_department.innerText = username_data_list.content[6][findTextInArray(username_data_list, "DEPARTMENT")];
+        user_sidebar_department.innerText = username_data_list.content[5][findTextInArray(username_data_list, "DEPARTMENT")];
     
         // billing_dashboard
         const certified_counter_billing = document.querySelector("#billing_dashboard #certified_counter");
