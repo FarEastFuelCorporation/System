@@ -43,3 +43,12 @@ document.addEventListener('DOMContentLoaded', async function() {
       console.error('Error fetching data:', error);
   }
 });
+
+function findTextInArray(textArray, targetText) {
+  for (let q = 0; q < textArray.content[0].length; q++) {
+    if (textArray.content[0][q] == targetText) {
+      return q; // Found the target text, return its index
+    }
+  }
+  return -1; // Target text not found in the array
+}
