@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         let user = null;
         for (let x = 1; x < username_data_list.content.length; x++) {
           if (username === username_data_list.content[x][findTextInArray(username_data_list, "USERNAME")] && password === username_data_list.content[x][findTextInArray(username_data_list, "PASSWORD")]) {
-            user = data.content[x][findTextInArray(username_data_list, "ACCOUNT")];
+            user = username_data_list.content[x][findTextInArray(username_data_list, "ACCOUNT")];
             break;
           }
         }
