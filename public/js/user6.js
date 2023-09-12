@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         // username_data_list3
         const user_sidebar = document.getElementById("user_sidebar");
         const user_sidebar_officer = document.getElementById("user_sidebar_officer");
+        const user_sidebar_department = document.getElementById("user_sidebar_department");
         const users = document.querySelectorAll("#user");
         const prf_user = document.getElementById("prf_user");
         const prf_department = document.getElementById("prf_department");
@@ -77,6 +78,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         irf_user.value = username_data_list.content[6][findTextInArray(username_data_list, "NAME")];
         user_sidebar.innerHTML = `<u>${username_data_list.content[6][findTextInArray(username_data_list, "NAME")]}</u>`;
         user_sidebar_officer.innerText = username_data_list.content[6][findTextInArray(username_data_list, "SECTIONS")];
+        user_sidebar_department.innerText = username_data_list.content[6][findTextInArray(username_data_list, "DEPARTMENT")];
         
         // marketing_dashboard
         const booked_transactions_marketing = document.getElementById("booked_transactions");
