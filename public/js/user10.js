@@ -103,6 +103,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const house_collection_ap_accounting = ap_accounting_dashboard.querySelector("#house_collection");
         const representation_fund_ap_accounting = ap_accounting_dashboard.querySelector("#representation_fund");
         const request_history_list_ap_accounting = ap_accounting_dashboard.querySelector("#request_history_list");
+        const transfer_history_list_ap_accounting = ap_accounting_dashboard.querySelector("#transfer_history_list");
         
         var source_of_fund = 0;
         var trucking_fund = 0;
@@ -303,6 +304,25 @@ document.addEventListener('DOMContentLoaded', async function() {
                 amount_tab.style.display = "none";
             })
         })
+
+        var data = "";
+        var data_value_counter = 0;
+        for(let x = 1; x < ftf_data_list.content.length; x++){
+            data_value_counter += 1;
+            data += `
+            <tr>
+                <td>${data_value_counter}</td>
+                <td>${ftf_data_list.content[x][0]}</td>
+                <td>${date_decoder(ftf_data_list.content[x][6])} / ${time_decoder2(ftf_data_list.content[x][6])}</td>
+                <td>${ftf_data_list.content[x][1]}</td>
+                <td>${ftf_data_list.content[x][2]}</td>
+                <td>${formatNumber(ftf_data_list.content[x][3])}</td>
+                <td>${ftf_data_list.content[x][5]}</td>
+                <td>${ftf_data_list.content[x][4]}</td>
+            </tr>
+            `
+        }
+        transfer_history_list_ap_accounting.innerHTML = data;
 
         // marketing_dashboard
         const booked_transactions_marketing = document.getElementById("booked_transactions");
