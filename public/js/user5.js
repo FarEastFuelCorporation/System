@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const qlf_data_list  = await qlf_response.json();
 
         // Code that depends on the fetched data
-        // clusername_data_list
+        // username_data_list
         const user_sidebar = document.getElementById("user_sidebar");
         const user_sidebar_officer = document.getElementById("user_sidebar_officer");
         const user_sidebar_department = document.getElementById("user_sidebar_department");

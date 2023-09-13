@@ -1576,9 +1576,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         })
                 
         // incident report form
+        // const today = new Date();
+        // const today_year = today.getFullYear();
+        // const today_month = today.getMonth()+1;
         const irf_form_no = document.getElementById("irf_form_no"); 
         var irf_code_year_month;
-        irf_code_year_month = `IRF${today_year}${month_new}`;
+        irf_code_year_month = `IRF${today_year}${today_month}`;
         
         var data_content = 1;
         var data_info;
@@ -1613,6 +1616,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const remove_tf_button_incident_report_form = incident_report_form.querySelector("#add_tf_button");
         const form_tab_incident_report_form = incident_report_form.querySelector("#form_tab");
         const incident_report_form_button_incident_report_form = incident_report_form.querySelector("#incident_report_form_button");
+        const incident_history_list_incident_report_form = incident_report_form.querySelector("#incident_history_list");
         var employee_name = [];
         var employee_department = [];
         var employee_designation = [];
@@ -1758,7 +1762,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             `
             incident_history_data_value_counter += 1;
         }
-        incident_history_list.innerHTML = incident_history_data_value
+        incident_history_list_incident_report_form.innerHTML = incident_history_data_value
 
         incident_report_form_button_incident_report_form.addEventListener("click", () => {
             if(form_tab_incident_report_form.style.display == "block"){
@@ -1767,8 +1771,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             else{
                 form_tab_incident_report_form.style.display = "block";
             }
-        })
-        
+        })        
 
         function findEmployeeName(employee_id){
             var employee_name = "";

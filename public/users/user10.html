@@ -49,6 +49,18 @@
                 </li>
                 <li>
                     <a href="#">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        Purchase Requests
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-person-falling-burst"></i>
+                        Incident Reports
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
                         <i class="fas fa-cog"></i>
                         Settings
                     </a>
@@ -484,11 +496,217 @@
                         </div>
                     </div>
                 </div>
-            </section>   
-            <!-- safety_dashboard -->
-            <section class="marketing" id="incident_report_form">
+            </section>  
+            <!-- safety_dashboard --> 
+            <section class="safety" id="safety_dashboard">
+                <h2>DASHBOARD</h2><br>
+                <h2>INCIDENT REPORT SUMMARY</h2>
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="incident_report"></div>
+                            <div class="card-name">Incident Report</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-person-falling-burst"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="pending_counter"></div>
+                            <div class="card-name">Pending</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-clipboard-list"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="documented"></div>
+                            <div class="card-name">Documented</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-clipboard-check"></i>
+                        </div>
+                    </div>
+                </div><br>
                 <h2>INCIDENT REPORTS</h2>
+                <div class="card" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
+                    <div class="list">
+                        <table>
+                            <thead style="position: sticky; top: 0; background-color: black;">
+                                <th>#</th>
+                                <th>IRF #</th>
+                                <th>INCIDENT<br>DATE/TIME</th>
+                                <th>DEPARTMENT</th>
+                                <th>PERSON<br>INVOLVE</th>
+                                <th>DESIGNATION</th>
+                                <th>INCIDENT DETAILS</th>
+                                <th>REPORT<br>DATE/TIME</th>
+                                <th>DURATION<br>REPORT</th>
+                            </thead>
+                            <tbody id="pending_list">
+
+                            </tbody>
+                        </table>
+                        <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
+                </div><br>
+                <h2>INCIDENT HISTORY LIST</h2>
+                <div class="card" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
+                    <div class="list">
+                        <table>
+                            <thead style="position: sticky; top: 0; background-color: black;">
+                                <th>#</th>
+                                <th>IRF #</th>
+                                <th>INCIDENT<br>DATE/TIME</th>
+                                <th>DEPARTMENT</th>
+                                <th>PERSON<br>INVOLVE</th>
+                                <th>DESIGNATION</th>
+                                <th>INCIDENT DETAILS</th>
+                                <th>REPORT<br>DATE/TIME</th>
+                                <th>DURATION<br>REPORT</th>
+                            </thead>
+                            <tbody id="incident_history_list">
+
+                            </tbody>
+                        </table>
+                        <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
+                </div><br>
+            </section>
+            <!-- purchase_request_form -->
+            <section class="marketing" id="purchase_request_form">
+                <h2>PURCHASE REQUESTS</h2>
+                <div>
+                    <label class="d-flex gap-3">
+                        <button type="button" id="purchase_request_form_button" class="form-control fw-bold fs-3 bg-success text-white" style="width: 50%;">
+                            PURCHASE REQUEST FORM
+                        </button>
+                    </label><br>
+                </div>
                 <div id="form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid orangered; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
+                    <form action="https://script.google.com/macros/s/AKfycbw4wpqb5yFlzKY6ortaVZppEAgYqm5G_otQl5I-3fGzPjiEAVKVOEv93mAFLeUbneTlAA/exec" method="post">
+                        <input type="hidden" name="prf_user" id="prf_user">
+                        <input type="hidden" name="prf_department" id="prf_department">
+                        <input type="hidden" name="prf_counter" id="prf_counter" value="1">
+                        <div id="prf_item_container">
+                            <div id="prf_item1">
+                                <div>
+                                    <div>
+                                        <label for="prf_form_no1">
+                                            <i class="fa-solid fa-list-ol"></i>
+                                            PR #
+                                        </label><br>
+                                        <div class="form">
+                                            <input type="text" id="prf_form_no1" name="prf_form_no1" autocomplete="off" class="form-control" readonly>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label for="item1">
+                                            <i class="fa-solid fa-list-ol"></i>
+                                            Item 1
+                                        </label>
+                                        <div>
+                                            <input type="text" id="item1" name="item1" autocomplete="off" class="form-control" required placeholder="Item Name">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label for="quantity1">
+                                            <i class="fa-solid fa-list-ol"></i>
+                                            Quantity
+                                        </label>
+                                        <div>
+                                            <input type="number" id="quantity1" name="quantity1" autocomplete="off" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label for="unit1">
+                                            <i class="fa-solid fa-list-ol"></i>
+                                            Unit
+                                        </label>
+                                        <div>
+                                            <input type="text" id="unit1" name="unit1" autocomplete="off" class="form-control" required placeholder="ex. kg/pc/box/set">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div>
+                                        <label for="details1">
+                                            <i class="fa-solid fa-list-ol"></i>
+                                            Details
+                                        </label>
+                                        <div>
+                                            <input type="text" id="details1" name="details1" autocomplete="off" class="form-control" required placeholder="Brand/Unit/Specifications">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label for="remarks1">
+                                            <i class="fa-solid fa-list-ol"></i>
+                                            Remarks
+                                        </label>
+                                        <div>
+                                            <input type="text" id="remarks1" name="remarks1" autocomplete="off" class="form-control" required placeholder="Where to use">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="add_item pt-3">
+                            <div class="item_buttons">
+                                <button type="button" id="remove_item_button" class="form-control">
+                                    <i class="fa-solid fa-minus"></i>
+                                </button>
+                                <button type="button" id="add_item_button" class="form-control">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="buttons">
+                            <button type="submit" id="submit_btn" class="form-control" >
+                                Submit
+                            </button>
+                            <button type="reset" id="reset" class="form-control" >
+                                Clear
+                            </button>
+                        </div> 
+                    </form>
+                </div>
+                <div class="card" style="max-height: 70vh; align-items: start; overflow-y: scroll;">                            
+                    <div class="list">
+                        <table>
+                            <thead style="position: sticky; top: 0; background-color: black;">
+                                <th>#</th>
+                                <th>PR #</th>
+                                <th>REQUEST<br>DATE/TIME</th>
+                                <th>ITEM</th>
+                                <th>QTY</th>
+                                <th>UNIT</th>
+                                <th>DETAILS</th>
+                                <th>REMARKS</th>
+                                <th>SUBMITTED<br>BY</th>
+                                <th>STATUS</th>
+                                <th>DURATION<br>REPORT</th>
+                            </thead>
+                            <tbody id="purchase_request_list">
+
+                            </tbody>
+                        </table>
+                        <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
+                </div><br>
+            </section>
+            <!-- incident_report_form -->
+            <section class="ap_accounting" id="incident_report_form">
+                <h2>INCIDENT REPORTS</h2>
+                <div>
+                    <label class="d-flex gap-3">
+                        <button type="button" id="incident_report_form_button" class="form-control fw-bold fs-3 bg-success text-white" style="width: 50%;">
+                            INCIDENT REPORT FORM
+                        </button>
+                    </label><br>
+                </div>
+                <div id="form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid blue; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
                     <form action="https://script.google.com/macros/s/AKfycbxfVbhyxvKN9GuDW4Oz1VbrT9xQUInBBPI9yxurCxcvHnzY2jdy0YqentxjO0eyvoLe/exec" method="post">
                         <input type="hidden" name="irf_user" id="irf_user">
                         <label for="irf_form_no">

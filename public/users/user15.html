@@ -204,28 +204,6 @@
                         <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
                     </div>
                 </div><br>
-                <!-- <h2>INCIDENT HISTORY LIST</h2>
-                <div class="card" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
-                    <div class="list">
-                        <table>
-                            <thead style="position: sticky; top: 0; background-color: black;">
-                                <th>#</th>
-                                <th>IRF #</th>
-                                <th>INCIDENT<br>DATE/TIME</th>
-                                <th>DEPARTMENT</th>
-                                <th>PERSON<br>INVOLVE</th>
-                                <th>DESIGNATION</th>
-                                <th>INCIDENT DETAILS</th>
-                                <th>REPORT<br>DATE/TIME</th>
-                                <th>DURATION<br>REPORT</th>
-                            </thead>
-                            <tbody id="incident_history_list">
-
-                            </tbody>
-                        </table>
-                        <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
-                    </div>
-                </div><br> -->
             </section>
             <!-- trip_forms -->
             <section class="ap_accounting" id="trip_forms">
@@ -945,93 +923,144 @@
             </section>
             <!-- incident_report_form -->
             <section class="ap_accounting" id="incident_report_form">
-                <h2>INCIDENT REPORT FORM</h2><br>
-                <form action="https://script.google.com/macros/s/AKfycbzVQzky_Rk6DqCLitPuTulVU92vOeew2ABJUyUn4fZImNb-ba-710ADZLm7p4FjYmiB/exec" method="post">
-                    <input type="hidden" name="irf_user" id="irf_user">
-                    <label for="irf_form_no">
-                        <i class="fa-solid fa-list-ol"></i>
-                        IRF #
-                    </label><br>
-                    <div class="form">
-                        <input type="text" id="irf_form_no" autocomplete="off" name="irf_form_no" class="form-control" readonly><br>
-                    </div>
-                    <label for="irf_client">
-                        <i class="fa-solid fa-user"></i>
-                        Person Involved
-                    </label><br>
-                    <input type="text" id="irf_client" autocomplete="off" name="irf_client" class="form-control" required placeholder="Input Person Involved..."><br>
-                    <div class="flex">
-                        <div>
-                            <label for="irf_department">
-                                <i class="fa-solid fa-building-user"></i>
-                                Department
-                            </label><br>
-                            <input type="text" id="irf_department" autocomplete="off" name="irf_department" class="form-control" required placeholder="Input Department..."><br>        
-                        </div>
-                        <div>
-                            <label for="irf_designation">
-                                <i class="fa-solid fa-id-card"></i>
-                                Designation
-                            </label><br>
-                            <input type="text" id="irf_designation" autocomplete="off" name="irf_designation" class="form-control" required placeholder="Input Designation..."><br>        
-                        </div>
-                    </div>
-                    <label for="irf_location">
-                        <i class="fa-solid fa-map-location-dot"></i>
-                        Location
-                    </label><br>
-                    <input type="text" id="irf_location" autocomplete="off" name="irf_location" class="form-control" required placeholder="Input Location..."><br>
-                    <div class="flex">
-                        <div>
-                            <label for="irf_date">
-                                <i class="fa-regular fa-calendar-days"></i>
-                                Date of Incident
-                            </label>
-                            <input type="date" autocomplete="off" name="irf_date" id="irf_date" class="form-control" required>
-                        </div>
-                        <div>
-                            <label for="irf_time">
-                                <i class="fa-regular fa-clock"></i>
-                                Time of Incident
-                            </label>
-                            <input type="time" autocomplete="off" name="irf_time" id="irf_time" class="form-control" required><br>
-                        </div>
-                    </div>
-                    <label for="irf_details">
-                        <i class="fa-solid fa-rectangle-list"></i>
-                        Incident Details
-                    </label><br>
-                    <input type="text" id="irf_details" autocomplete="off" name="irf_details" class="form-control" required placeholder="Input Incident Details..."><br>
-                    <label for="irf_action_taken">
-                        <i class="fa-solid fa-rectangle-list"></i>
-                        Action Taken
-                    </label><br>
-                    <input type="text" id="irf_action_taken" autocomplete="off" name="irf_action_taken" class="form-control" required placeholder="Input Action Taken..."><br>
-                    <div class="flex">
-                        <div>
-                            <label for="irf_report_date">
-                                <i class="fa-regular fa-calendar-days"></i>
-                                Date of Report
-                            </label>
-                            <input type="date" autocomplete="off" name="irf_report_date" id="irf_report_date" class="form-control" required>
-                        </div>
-                        <div>
-                            <label for="irf_report_time">
-                                <i class="fa-regular fa-clock"></i>
-                                Time of Report
-                            </label>
-                            <input type="time" autocomplete="off" name="irf_report_time" id="irf_report_time" class="form-control" required><br>
-                        </div>
-                    </div><br>
-                    <div class="buttons">
-                        <button type="submit" id="submit_btn" class="form-control" >
-                            Submit
+                <h2>INCIDENT REPORTS</h2>
+                <div>
+                    <label class="d-flex gap-3">
+                        <button type="button" id="incident_report_form_button" class="form-control fw-bold fs-3 bg-success text-white" style="width: 50%;">
+                            INCIDENT REPORT FORM
                         </button>
-                        <button type="reset" id="reset" class="form-control" >
-                            Clear
-                        </button>
-                    </div> 
-                </form>
+                    </label><br>
+                </div>
+                <div id="form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid blue; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
+                    <form action="https://script.google.com/macros/s/AKfycbxfVbhyxvKN9GuDW4Oz1VbrT9xQUInBBPI9yxurCxcvHnzY2jdy0YqentxjO0eyvoLe/exec" method="post">
+                        <input type="hidden" name="irf_user" id="irf_user">
+                        <label for="irf_form_no">
+                            <i class="fa-solid fa-list-ol"></i>
+                            IRF #
+                        </label><br>
+                        <div class="form">
+                            <input type="text" id="irf_form_no" autocomplete="off" name="irf_form_no" class="form-control" readonly><br>
+                        </div>
+                        <div class="add_item pt-3" style="position: absolute; top: 70px; right: 20px !important; width: 100px;;">
+                            <div class="item_buttons">
+                                <button type="button" id="remove_tf_button" class="form-control">
+                                    <i class="fa-solid fa-minus"></i>
+                                </button>
+                                <button type="button" id="add_tf_button" class="form-control">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <input type="hidden" id="irf_counter" name="irf_counter" value="1">
+                        <div id="person_involved_containers">
+                            <div id="person_involved_container1" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+                                <div class="wrapper">
+                                    <label for="irf_client1">
+                                        <i class="fa-solid fa-user"></i>
+                                        Person Involved
+                                    </label><br>
+                                    <div class="search_input" id="search_irf_client1">
+                                        <input type="text" name="irf_client1" id="irf_client1" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
+                                        <div class="autocom_box">
+                                        </div>
+                                        <div class="icon"><i class="fas fa-search"></i></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="irf_department1">
+                                        <i class="fa-solid fa-building-user"></i>
+                                        Department
+                                    </label><br>
+                                    <input type="text" id="irf_department1" autocomplete="off" name="irf_department1" class="form-control" required readonly placeholder="Input Department..." style="height: 55px !important;">    
+                                </div>
+                                <div>
+                                    <label for="irf_designation1">
+                                        <i class="fa-solid fa-id-card"></i>
+                                        Designation
+                                    </label><br>
+                                    <input type="text" id="irf_designation1" autocomplete="off" name="irf_designation1" class="form-control" required readonly placeholder="Input Designation..." style="height: 55px !important;">   
+                                </div>
+                            </div>
+                        </div><br>
+                        <label for="irf_location">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                            Location
+                        </label><br>
+                        <input type="text" id="irf_location" autocomplete="off" name="irf_location" class="form-control" required placeholder="Input Location..."><br>
+                        <div class="flex">
+                            <div>
+                                <label for="irf_date">
+                                    <i class="fa-regular fa-calendar-days"></i>
+                                    Date of Incident
+                                </label>
+                                <input type="date" autocomplete="off" name="irf_date" id="irf_date" class="form-control" required>
+                            </div>
+                            <div>
+                                <label for="irf_time">
+                                    <i class="fa-regular fa-clock"></i>
+                                    Time of Incident
+                                </label>
+                                <input type="time" autocomplete="off" name="irf_time" id="irf_time" class="form-control" required><br>
+                            </div>
+                        </div>
+                        <label for="irf_details">
+                            <i class="fa-solid fa-rectangle-list"></i>
+                            Incident Details
+                        </label><br>
+                        <input type="text" id="irf_details" autocomplete="off" name="irf_details" class="form-control" required placeholder="Input Incident Details..."><br>
+                        <label for="irf_action_taken">
+                            <i class="fa-solid fa-rectangle-list"></i>
+                            Action Taken
+                        </label><br>
+                        <input type="text" id="irf_action_taken" autocomplete="off" name="irf_action_taken" class="form-control" required placeholder="Input Action Taken..."><br>
+                        <div class="flex">
+                            <div>
+                                <label for="irf_report_date">
+                                    <i class="fa-regular fa-calendar-days"></i>
+                                    Date of Report
+                                </label>
+                                <input type="date" autocomplete="off" name="irf_report_date" id="irf_report_date" class="form-control" required>
+                            </div>
+                            <div>
+                                <label for="irf_report_time">
+                                    <i class="fa-regular fa-clock"></i>
+                                    Time of Report
+                                </label>
+                                <input type="time" autocomplete="off" name="irf_report_time" id="irf_report_time" class="form-control" required><br>
+                            </div>
+                        </div><br>
+                        <div class="buttons">
+                            <button type="submit" id="submit_btn" class="form-control" >
+                                Submit
+                            </button>
+                            <button type="reset" id="reset" class="form-control" >
+                                Clear
+                            </button>
+                        </div> 
+                    </form>
+                </div>
+                <div class="card" style="max-height: 70vh; align-items: start; overflow-y: scroll;">                            
+                    <div class="list">
+                        <table>
+                            <thead style="position: sticky; top: 0; background-color: black;">
+                                <th>#</th>
+                                <th>IRF #</th>
+                                <th>INCIDENT<br>DATE/TIME</th>
+                                <th>DEPARTMENT</th>
+                                <th>PERSON<br>INVOLVE</th>
+                                <th>DESIGNATION</th>
+                                <th>LOCATION</th>
+                                <th>INCIDENT DETAILS</th>
+                                <th>REPORT<br>DATE/TIME</th>
+                                <th>DURATION<br>REPORT</th>
+                            </thead>
+                            <tbody id="incident_history_list">
+
+                            </tbody>
+                        </table>
+                        <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
+                </div><br>
             </section>
             <!-- settings -->
             <section id="settingsSection">
