@@ -102,6 +102,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const truck_scale_collection_ap_accounting = ap_accounting_dashboard.querySelector("#truck_scale_collection");
         const house_collection_ap_accounting = ap_accounting_dashboard.querySelector("#house_collection");
         const representation_fund_ap_accounting = ap_accounting_dashboard.querySelector("#representation_fund");
+        const request_history_list_ap_accounting = ap_accounting_dashboard.querySelector("#request_history_list");
         
         var source_of_fund = 0;
         var trucking_fund = 0;
@@ -189,34 +190,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         truck_scale_collection_ap_accounting.innerText = formatNumber(truck_scale_collection);
         house_collection_ap_accounting.innerText = formatNumber(house_collection);
         representation_fund_ap_accounting.innerText = formatNumber(representation_fund);
-
-        const pending_list_container_ap_accounting = ap_accounting_dashboard.querySelector("#pending_list");
         
-        let ltf_transaction_ap_accounting = []; // Variable containing existing elements
-        let ltf_tbf_transaction_ap_accounting = []; // Variable containing existing elements
-        let ltf_tlf_transaction_ap_accounting = []; // Variable containing existing elements
-        let tbf_transaction_ap_accounting = []; // Variable containing existing elements
-        let tbf_tlf_transaction_ap_accounting = []; // Variable containing existing elements
-        
-        for (let i = 1; i < ltf_data_list.content.length; i++) {
-            if (!ltf_transaction_ap_accounting.includes(ltf_data_list.content[i][0])) {
-                ltf_transaction_ap_accounting.push(ltf_data_list.content[i][0]);
-            }
-        }
-
-        // for (let i = 1; i < tbf_data_list.content.length; i++) {
-        //     if (!ltf_tbf_transaction_ap_accounting.includes(tbf_data_list.content[i][2])) {
-        //         ltf_tbf_transaction_ap_accounting.push(tbf_data_list.content[i][2]);
-        //     }
-        // }
-
-        // Get elements from sf_transaction not included in sf_tpf_transaction
-        const pending_list_ltf_ap_accounting = ltf_transaction_ap_accounting.filter((element) => !ltf_tbf_transaction_ap_accounting.includes(element));
-        
-        
-        // frf_data_list
-        const request_history_list_ap_accounting = document.querySelector("#request_history_list");
-
         // pending_list
         var data = "";
         var data_value_counter = 0;
@@ -225,67 +199,67 @@ document.addEventListener('DOMContentLoaded', async function() {
             var button = "";
             var button2 = "";
             var button3 = "";
-            if(frf_data_list.content[x][6] == "" && frf_data_list.content[x][4] !== "DISAPPROVED"){
+            if(frf_data_list.content[x][findTextInArray(frf_data_list, "APPROVED AMOUNT")] == "" && frf_data_list.content[x][findTextInArray(frf_data_list, "STATUS")] !== "DISAPPROVED"){
                 button = `
                 <form action="https://script.google.com/macros/s/AKfycbwi5iYRP9xlinY9nS9YBRW7Alex9LdImCWhKBda6VtrIiDmPvH72AUlW-CgEPNwJCg/exec" method="post">
-                    <input type="hidden" name="frf_no" id="frf_no" value="${frf_data_list.content[x][0]}">
-                    <input type="hidden" name="fund_allocation" id="fund_allocation" value="${frf_data_list.content[x][1]}">
-                    <input type="hidden" name="fund_amount" id="fund_amount" value="${frf_data_list.content[x][2]}">
-                    <input type="hidden" name="purpose" id="purpose" value="${frf_data_list.content[x][3]}">
-                    <input type="hidden" name="submitted_by" id="submitted_by" value="${frf_data_list.content[x][5]}">
-                    <input type="hidden" name="timestamp" id="timestamp" value="${frf_data_list.content[x][8]}">
+                    <input type="hidden" name="frf_no" id="frf_no" value="${frf_data_list.content[x][findTextInArray(frf_data_list, "FRF #")]}">
+                    <input type="hidden" name="fund_allocation" id="fund_allocation" value="${frf_data_list.content[x][findTextInArray(frf_data_list, "FUND ALLOCATION")]}">
+                    <input type="hidden" name="fund_amount" id="fund_amount" value="${frf_data_list.content[x][findTextInArray(frf_data_list, "REQUESTED AMOUNT")]}">
+                    <input type="hidden" name="purpose" id="purpose" value="${frf_data_list.content[x][findTextInArray(frf_data_list, "PURPOSE")]}">
+                    <input type="hidden" name="submitted_by" id="submitted_by" value="${frf_data_list.content[x][findTextInArray(frf_data_list, "STATUS")]}">
+                    <input type="hidden" name="timestamp" id="timestamp" value="${frf_data_list.content[x][findTextInArray(frf_data_list, "CREATED AT")]}">
                     <button type="submit" style="background-color: black !important; padding:0; border: 1px solid black; color: #ffbf00 !important;">
                         <i class="fa-solid fa-thumbs-up"></i>
                     </button>
                 </form>
                 `
             }
-            if(frf_data_list.content[x][6] == "" && frf_data_list.content[x][4] !== "DISAPPROVED"){
+            if(frf_data_list.content[x][findTextInArray(frf_data_list, "APPROVED AMOUNT")] == "" && frf_data_list.content[x][findTextInArray(frf_data_list, "STATUS")] !== "DISAPPROVED"){
                 button2 = `
                 <form action="https://script.google.com/macros/s/AKfycbzq-UG0qBDytOpODyfXMWVKEPYyKHKlfBkqTOm2Aje_JiYeSicB4i6aoxE97Zc9MSyTSQ/exec" method="post">
-                    <input type="hidden" name="frf_no" id="frf_no" value="${frf_data_list.content[x][0]}">
-                    <input type="hidden" name="fund_allocation" id="fund_allocation" value="${frf_data_list.content[x][1]}">
-                    <input type="hidden" name="fund_amount" id="fund_amount" value="${frf_data_list.content[x][2]}">
-                    <input type="hidden" name="purpose" id="purpose" value="${frf_data_list.content[x][3]}">
-                    <input type="hidden" name="submitted_by" id="submitted_by" value="${frf_data_list.content[x][5]}">
-                    <input type="hidden" name="timestamp" id="timestamp" value="${frf_data_list.content[x][8]}">
-                    <button type="submit" style="background-color: black !important; padding:0; border: 1px solid black; color: #ffbf00 !important;">
+                <input type="hidden" name="frf_no" id="frf_no" value="${frf_data_list.content[x][findTextInArray(frf_data_list, "FRF #")]}">
+                <input type="hidden" name="fund_allocation" id="fund_allocation" value="${frf_data_list.content[x][findTextInArray(frf_data_list, "FUND ALLOCATION")]}">
+                <input type="hidden" name="fund_amount" id="fund_amount" value="${frf_data_list.content[x][findTextInArray(frf_data_list, "REQUESTED AMOUNT")]}">
+                <input type="hidden" name="purpose" id="purpose" value="${frf_data_list.content[x][findTextInArray(frf_data_list, "PURPOSE")]}">
+                <input type="hidden" name="submitted_by" id="submitted_by" value="${frf_data_list.content[x][findTextInArray(frf_data_list, "STATUS")]}">
+                <input type="hidden" name="timestamp" id="timestamp" value="${frf_data_list.content[x][findTextInArray(frf_data_list, "CREATED AT")]}">
+                <button type="submit" style="background-color: black !important; padding:0; border: 1px solid black; color: #ffbf00 !important;">
                         <i class="fa-solid fa-thumbs-down"></i>
                     </button>
                 </form>
                 `
             }
-            if(frf_data_list.content[x][6] == "" && frf_data_list.content[x][4] !== "DISAPPROVED"){
+            if(frf_data_list.content[x][findTextInArray(frf_data_list, "APPROVED AMOUNT")] == "" && frf_data_list.content[x][findTextInArray(frf_data_list, "STATUS")] !== "DISAPPROVED"){
                 button3 = `
                 <button type="button" id="amount_tab_button" style="background-color: black !important; padding:0; border: 1px solid black; color: #ffbf00 !important;">
                     <i class="fa-solid fa-pen-to-square"></i>
-                    <input type="hidden" name="frf_no" id="frf_no" value="${frf_data_list.content[x][0]}">
+                    <input type="hidden" name="frf_no" id="frf_no" value="${frf_data_list.content[x][findTextInArray(frf_data_list, "FRF #")]}">
                 </button>
                 `
             }
             var approved_date = "";
             var approved_time = "";
             var duration = "";
-            if(frf_data_list.content[x][9] !== ""){
-                approved_date = date_decoder(frf_data_list.content[x][9]);
-                approved_time = time_decoder2(frf_data_list.content[x][9]);
-                duration = calculateTravelTime(date_decoder(frf_data_list.content[x][8]),time_decoder2(frf_data_list.content[x][8]),date_decoder(frf_data_list.content[x][9]),time_decoder2(frf_data_list.content[x][9]))
+            if(frf_data_list.content[x][findTextInArray(frf_data_list, "UPDATED AT")] !== ""){
+                approved_date = date_decoder(frf_data_list.content[x][findTextInArray(frf_data_list, "UPDATED AT")]);
+                approved_time = time_decoder2(frf_data_list.content[x][findTextInArray(frf_data_list, "UPDATED AT")]);
+                duration = calculateTravelTime(date_decoder(frf_data_list.content[x][findTextInArray(frf_data_list, "CREATED AT")]),time_decoder2(frf_data_list.content[x][findTextInArray(frf_data_list, "CREATED AT")]),date_decoder(frf_data_list.content[x][findTextInArray(frf_data_list, "UPDATED AT")]),time_decoder2(frf_data_list.content[x][findTextInArray(frf_data_list, "UPDATED AT")]))
             }
 
             data += `
             <tr>
                 <td>${data_value_counter}</td>
-                <td>${frf_data_list.content[x][0]}</td>
-                <td>${date_decoder(frf_data_list.content[x][8])}<br>${time_decoder2(frf_data_list.content[x][8])}</td>
-                <td>${frf_data_list.content[x][1]}</td>
-                <td>${formatNumber(frf_data_list.content[x][2])}</td>
-                <td>${frf_data_list.content[x][3]}</td>
-                <td>${frf_data_list.content[x][5]}</td>
-                <td>${formatNumber(frf_data_list.content[x][6])}</td>
-                <td>${frf_data_list.content[x][7]}</td>
+                <td>${frf_data_list.content[x][findTextInArray(frf_data_list, "FRF #")]}</td>
+                <td>${date_decoder(frf_data_list.content[x][findTextInArray(frf_data_list, "CREATED AT")])}<br>${time_decoder2(frf_data_list.content[x][findTextInArray(frf_data_list, "CREATED AT")])}</td>
+                <td>${frf_data_list.content[x][findTextInArray(frf_data_list, "FUND ALLOCATION")]}</td>
+                <td>${formatNumber(frf_data_list.content[x][findTextInArray(frf_data_list, "REQUESTED AMOUNT")])}</td>
+                <td>${frf_data_list.content[x][findTextInArray(frf_data_list, "PURPOSE")]}</td>
+                <td>${frf_data_list.content[x][findTextInArray(frf_data_list, "SUBMITTED BY")]}</td>
+                <td>${formatNumber(frf_data_list.content[x][findTextInArray(frf_data_list, "APPROVED AMOUNT")])}</td>
+                <td>${frf_data_list.content[x][findTextInArray(frf_data_list, "APPROVED BY")]}</td>
                 <td>${approved_date}<br>${approved_time}</td>
                 <td>${duration}</td>
-                <td>${frf_data_list.content[x][4]}</td>
+                <td>${frf_data_list.content[x][findTextInArray(frf_data_list, "STATUS")]}</td>
                 <td>${button}</td>
                 <td class="px-0">${button2}</td>
                 <td>${button3}</td>
