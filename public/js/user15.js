@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             irf_response_promise,
         ]);
 
-        const username_data  = await username_response.json();
+        const username_data_list  = await username_response.json();
         const client_data_list  = await client_list_response.json();
         const employee_data_list  = await employee_response.json();
         const type_of_waste_data  = await type_of_waste_response.json();
@@ -50,14 +50,15 @@ document.addEventListener('DOMContentLoaded', async function() {
         // username_data3
         const user_sidebar = document.getElementById("user_sidebar");
         const user_sidebar_officer = document.getElementById("user_sidebar_officer");
+        const user_sidebar_department = document.getElementById("user_sidebar_department");
         const users = document.querySelectorAll("#user");
         const irf_user = document.getElementById("irf_user");
 
-        users.forEach(user => {user.value = username_data.content[15][3]})
-        irf_user.value = username_data.content[15][3];
-        user_sidebar.innerHTML = `<u>${username_data.content[15][3]}</u>`;
-        user_sidebar_officer.innerText = username_data.content[15][4];
-        
+        users.forEach(user => {user.value = username_data_list.content[15][findTextInArray(username_data_list, "NAME")]})
+        irf_user.value = username_data_list.content[15][findTextInArray(username_data_list, "NAME")];
+        user_sidebar.innerHTML = `<u>${username_data_list.content[15][findTextInArray(username_data_list, "NAME")]}</u>`;
+        user_sidebar_officer.innerText = username_data_list.content[15][findTextInArray(username_data_list, "SECTIONS")];
+        user_sidebar_department.innerText = username_data_list.content[15][findTextInArray(username_data_list, "DEPARTMENT")];
 
         // ap_accounting_dashboard
         const ap_accounting_dashboard = document.querySelector("#ap_accounting_dashboard");
@@ -71,6 +72,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const mold_runner_sales_ap_accounting = ap_accounting_dashboard.querySelector("#mold_runner_sales");
         const truck_scale_collection_ap_accounting = ap_accounting_dashboard.querySelector("#truck_scale_collection");
         const house_collection_ap_accounting = ap_accounting_dashboard.querySelector("#house_collection");
+        const representation_fund_ap_accounting = ap_accounting_dashboard.querySelector("#representation_fund");
         
         var source_of_fund = 0;
         var trucking_fund = 0;
@@ -81,63 +83,70 @@ document.addEventListener('DOMContentLoaded', async function() {
         var mold_runner_sales = 0;
         var truck_scale_collection = 0;
         var house_collection = 0;
+        var representation_fund = 0;
 
         for (let i = 1; i < ftf_data_list.content.length; i++) {
             // fund_source
-            if (ftf_data_list.content[i][1] == "SOURCE OF FUND") {
-                source_of_fund -= ftf_data_list.content[i][3]
+            if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "SOURCE OF FUND") {
+                source_of_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][1] == "HAULING FUND") {
-                hauling_fund -= ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "HAULING FUND") {
+                hauling_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][1] == "TRUCKING FUND") {
-                trucking_fund -= ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "TRUCKING FUND") {
+                trucking_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][1] == "DIESEL FUND") {
-                diesel_fund -= ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "DIESEL FUND") {
+                diesel_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][1] == "GASOLINE FUND") {
-                gasoline_fund -= ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "GASOLINE FUND") {
+                gasoline_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][1] == "SCRAP SALES") {
-                scrap_sales -= ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "SCRAP SALES") {
+                scrap_sales -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][1] == "MOLD RUNNER SALES") {
-                mold_runner_sales -= ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "MOLD RUNNER SALES") {
+                mold_runner_sales -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][1] == "TRUCK SCALE COLLECTION") {
-                truck_scale_collection -= ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "TRUCK SCALE COLLECTION") {
+                truck_scale_collection -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][1] == "HOUSE COLLECTION") {
-                house_collection -= ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "HOUSE COLLECTION") {
+                house_collection -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+            }
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "REPRESENTATION FUND") {
+                representation_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
             // fund_allocation
-            if (ftf_data_list.content[i][2] == "SOURCE OF FUND") {
-                source_of_fund += ftf_data_list.content[i][3]
+            if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "SOURCE OF FUND") {
+                source_of_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][2] == "HAULING FUND") {
-                hauling_fund += ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "HAULING FUND") {
+                hauling_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][2] == "TRUCKING FUND") {
-                trucking_fund += ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "TRUCKING FUND") {
+                trucking_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][2] == "DIESEL FUND") {
-                diesel_fund += ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "DIESEL FUND") {
+                diesel_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][2] == "GASOLINE FUND") {
-                gasoline_fund += ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "GASOLINE FUND") {
+                gasoline_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][2] == "SCRAP SALES") {
-                scrap_sales += ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "SCRAP SALES") {
+                scrap_sales += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][2] == "MOLD RUNNER SALES") {
-                mold_runner_sales += ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "MOLD RUNNER SALES") {
+                mold_runner_sales += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][2] == "TRUCK SCALE COLLECTION") {
-                truck_scale_collection += ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "TRUCK SCALE COLLECTION") {
+                truck_scale_collection += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][2] == "HOUSE COLLECTION") {
-                house_collection += ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "HOUSE COLLECTION") {
+                house_collection += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+            }
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "REPRESENTATION FUND") {
+                representation_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
         }
         
@@ -150,6 +159,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         mold_runner_sales_ap_accounting.innerText = formatNumber(mold_runner_sales);
         truck_scale_collection_ap_accounting.innerText = formatNumber(truck_scale_collection);
         house_collection_ap_accounting.innerText = formatNumber(house_collection);
+        representation_fund_ap_accounting.innerText = formatNumber(representation_fund);
 
         const pending_list_container_ap_accounting = ap_accounting_dashboard.querySelector("#pending_list");
         const history_list_container_ap_accounting = document.querySelector("#history_list");

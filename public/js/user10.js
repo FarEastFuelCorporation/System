@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', async function() {
     try {
         const username_response_promise = fetch('https://script.google.com/macros/s/AKfycbwmA97K4sdfq6dhzSsp14JU9KgQrFgSARNZbvSfiU7vuH8oEipt6TmcFo_o-jCI0kiQ/exec');
+        const client_list_response_promise = fetch('https://script.google.com/macros/s/AKfycbxXnIsmgK52Ws9H2qAh47qkgZxDltFJaHSFV0e9UQRwaK1g_xwFUKGokL_hk4fq-_mhSg/exec');
+        const type_of_waste_response_promise = fetch('https://script.google.com/macros/s/AKfycbw0yC-8_V38Zl1-KGyBwX1JmfTEW1jwyFxgpZ-oNC2lvtoAraUtkLCS27HfNbXi_l4IPg/exec');
         const vehicle_response_promise = fetch('https://script.google.com/macros/s/AKfycbw-JCnctX1x1W1ogGbrkhNdIGd9q6bYjy_nvaYeoiaBf7HreB2a1tKJZaJHw2wu4wmpcA/exec');
         const vehicle_log_response_promise = fetch('https://script.google.com/macros/s/AKfycbwOVO1qi9ac0YojlrZUh-XMYMe_gAeO2bg_wU_lSRdBkLgmJKQuzQuq41lzvSOjKfzA/exec');
         const ftf_response_promise = fetch('https://script.google.com/macros/s/AKfycby_KPLGaMLvzccQFKwKCZVrI1mkOzVDh7cySezC_OiZW6YVOR4mC5XkNbwllOe_Ua6TGA/exec');
@@ -14,9 +16,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         const bpf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyux0GBj9tk6quRz46IkXa0VemEDAi-v2iEHx7C_6OFi416ERkv_BFtKqBmbw-bxaaiFQ/exec');
         const irf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzTmhNOz5cXeKitSXAriUJ_FEahAQugYEKIRwDuFt9tjhj2AtPKEf2H4yTMmZ1igpUxlQ/exec');
         const idf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyXPvq606vmfSlFG3nVjYuJLN8Jnv4BFGbhEmDp6e4wLL1kUQVa4kIi2dGGRKuSklT2bg/exec');
+        const qlf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyFU_skru2tnyEiv8I5HkpRCXbUlQb5vlJUm8Le0nZBCvfZeFkQPd2Naljs5CZY41I17w/exec');
 
         const [
             username_response,
+            client_list_response,
+            type_of_waste_response,
             vehicle_response,
             vehicle_log_response,
             ftf_response,
@@ -30,8 +35,11 @@ document.addEventListener('DOMContentLoaded', async function() {
             bpf_response,
             irf_response,
             idf_response,
+            qlf_response,
         ] = await Promise.all([
             username_response_promise,
+            type_of_waste_response_promise,
+            client_list_response_promise,
             vehicle_response_promise,
             vehicle_log_response_promise,
             ftf_response_promise,
@@ -45,9 +53,12 @@ document.addEventListener('DOMContentLoaded', async function() {
             bpf_response_promise,
             irf_response_promise,
             idf_response_promise,
+            qlf_response_promise,
         ]);
 
-        const username_data  = await username_response.json();
+        const username_data_list  = await username_response.json();
+        const client_data_list  = await client_list_response.json();
+        const type_of_waste_data_list  = await type_of_waste_response.json();
         const vehicle_data  = await vehicle_response.json();
         const vehicle_log_data  = await vehicle_log_response.json();
         const ftf_data_list  = await ftf_response.json();
@@ -61,14 +72,21 @@ document.addEventListener('DOMContentLoaded', async function() {
         const bpf_data_list  = await bpf_response.json();
         const irf_data_list  = await irf_response.json();
         const idf_data_list  = await idf_response.json();
+        const qlf_data_list  = await qlf_response.json();
 
         // Code that depends on the fetched data
         // username_data
         const user_sidebar = document.getElementById("user_sidebar");
         const user_sidebar_officer = document.getElementById("user_sidebar_officer");
+        const user_sidebar_department = document.getElementById("user_sidebar_department");
+        // const users = document.querySelectorAll("#user");
+        const irf_user = document.getElementById("irf_user");
 
-        user_sidebar.innerHTML = `<u>${username_data.content[10][3]}</u>`;
-        user_sidebar_officer.innerText = username_data.content[10][4];
+        // users.forEach(user => {user.value = username_data_list.content[10][findTextInArray(username_data_list, "NAME")]})
+        irf_user.value = username_data_list.content[10][findTextInArray(username_data_list, "NAME")];
+        user_sidebar.innerHTML = `<u>${username_data_list.content[10][findTextInArray(username_data_list, "NAME")]}</u>`;
+        user_sidebar_officer.innerText = username_data_list.content[10][findTextInArray(username_data_list, "SECTIONS")];
+        user_sidebar_department.innerText = username_data_list.content[10][findTextInArray(username_data_list, "DEPARTMENT")];
 
 
         // ap_accounting_dashboard
@@ -83,6 +101,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const mold_runner_sales_ap_accounting = ap_accounting_dashboard.querySelector("#mold_runner_sales");
         const truck_scale_collection_ap_accounting = ap_accounting_dashboard.querySelector("#truck_scale_collection");
         const house_collection_ap_accounting = ap_accounting_dashboard.querySelector("#house_collection");
+        const representation_fund_ap_accounting = ap_accounting_dashboard.querySelector("#representation_fund");
         
         var source_of_fund = 0;
         var trucking_fund = 0;
@@ -93,63 +112,70 @@ document.addEventListener('DOMContentLoaded', async function() {
         var mold_runner_sales = 0;
         var truck_scale_collection = 0;
         var house_collection = 0;
+        var representation_fund = 0;
 
         for (let i = 1; i < ftf_data_list.content.length; i++) {
             // fund_source
-            if (ftf_data_list.content[i][1] == "SOURCE OF FUND") {
-                source_of_fund -= ftf_data_list.content[i][3]
+            if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "SOURCE OF FUND") {
+                source_of_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][1] == "HAULING FUND") {
-                hauling_fund -= ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "HAULING FUND") {
+                hauling_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][1] == "TRUCKING FUND") {
-                trucking_fund -= ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "TRUCKING FUND") {
+                trucking_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][1] == "DIESEL FUND") {
-                diesel_fund -= ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "DIESEL FUND") {
+                diesel_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][1] == "GASOLINE FUND") {
-                gasoline_fund -= ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "GASOLINE FUND") {
+                gasoline_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][1] == "SCRAP SALES") {
-                scrap_sales -= ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "SCRAP SALES") {
+                scrap_sales -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][1] == "MOLD RUNNER SALES") {
-                mold_runner_sales -= ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "MOLD RUNNER SALES") {
+                mold_runner_sales -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][1] == "TRUCK SCALE COLLECTION") {
-                truck_scale_collection -= ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "TRUCK SCALE COLLECTION") {
+                truck_scale_collection -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][1] == "HOUSE COLLECTION") {
-                house_collection -= ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "HOUSE COLLECTION") {
+                house_collection -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+            }
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "REPRESENTATION FUND") {
+                representation_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
             // fund_allocation
-            if (ftf_data_list.content[i][2] == "SOURCE OF FUND") {
-                source_of_fund += ftf_data_list.content[i][3]
+            if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "SOURCE OF FUND") {
+                source_of_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][2] == "HAULING FUND") {
-                hauling_fund += ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "HAULING FUND") {
+                hauling_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][2] == "TRUCKING FUND") {
-                trucking_fund += ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "TRUCKING FUND") {
+                trucking_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][2] == "DIESEL FUND") {
-                diesel_fund += ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "DIESEL FUND") {
+                diesel_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][2] == "GASOLINE FUND") {
-                gasoline_fund += ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "GASOLINE FUND") {
+                gasoline_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][2] == "SCRAP SALES") {
-                scrap_sales += ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "SCRAP SALES") {
+                scrap_sales += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][2] == "MOLD RUNNER SALES") {
-                mold_runner_sales += ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "MOLD RUNNER SALES") {
+                mold_runner_sales += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][2] == "TRUCK SCALE COLLECTION") {
-                truck_scale_collection += ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "TRUCK SCALE COLLECTION") {
+                truck_scale_collection += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
-            else if (ftf_data_list.content[i][2] == "HOUSE COLLECTION") {
-                house_collection += ftf_data_list.content[i][3]
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "HOUSE COLLECTION") {
+                house_collection += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+            }
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "REPRESENTATION FUND") {
+                representation_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
         }
         
@@ -162,6 +188,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         mold_runner_sales_ap_accounting.innerText = formatNumber(mold_runner_sales);
         truck_scale_collection_ap_accounting.innerText = formatNumber(truck_scale_collection);
         house_collection_ap_accounting.innerText = formatNumber(house_collection);
+        representation_fund_ap_accounting.innerText = formatNumber(representation_fund);
 
         const pending_list_container_ap_accounting = ap_accounting_dashboard.querySelector("#pending_list");
         
@@ -314,12 +341,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         const for_logistics_received_marketing = document.getElementById("for_logistics_received");
         const for_receiving_pending_marketing = document.getElementById("for_receiving_pending");
         const for_receiving_received_marketing = document.getElementById("for_receiving_received");
-        var mtf_transaction_counter_marketing = 0;
-        var mtf_ltf_transaction_counter_marketing = 0;
-        var mtf_transaction_logistic_transaction_counter_marketing = 0;
-        var mtf_transaction_receiving_transaction_counter_marketing = 0;
-        var ltf_transaction_counter_marketing = 0;
-        var ltf_wcf_transaction_counter_marketing = 0;
         var for_logistics_pending_counter_marketing = 0;
         var for_logistics_on_haul_counter_marketing = 0;
         var for_logistics_received_counter_marketing = 0;
@@ -333,57 +354,50 @@ document.addEventListener('DOMContentLoaded', async function() {
         var ltf_wcf_transaction_marketing = []; // Variable containing existing elements
         
         for (let i = 1; i < mtf_data_list.content.length; i++) {
-            if (!mtf_transaction_marketing.includes(mtf_data_list.content[i][1])) {
-                mtf_transaction_marketing.push(mtf_data_list.content[i][1]);
-                mtf_transaction_counter_marketing += 1
+            if (!mtf_transaction_marketing.includes(mtf_data_list.content[i][findTextInArray(mtf_data_list, "MTF #")])) {
+                mtf_transaction_marketing.push(mtf_data_list.content[i][findTextInArray(mtf_data_list, "MTF #")]);
             }
-            if(mtf_data_list.content[i][8] == "LOGISTICS"){
-                if (!mtf_transaction_logistic_transaction_marketing.includes(mtf_data_list.content[i][1])) {
-                    mtf_transaction_logistic_transaction_marketing.push(mtf_data_list.content[i][1]);
-                    mtf_transaction_logistic_transaction_counter_marketing += 1
+            if(mtf_data_list.content[i][findTextInArray(mtf_data_list, "SUBMIT TO")] == "LOGISTICS"){
+                if (!mtf_transaction_logistic_transaction_marketing.includes(mtf_data_list.content[i][findTextInArray(mtf_data_list, "MTF #")])) {
+                    mtf_transaction_logistic_transaction_marketing.push(mtf_data_list.content[i][findTextInArray(mtf_data_list, "MTF #")]);
                 }
             }
-            if(mtf_data_list.content[i][8] == "RECEIVING"){
-                if (!mtf_transaction_receiving_transaction_marketing.includes(mtf_data_list.content[i][1])) {
-                    mtf_transaction_receiving_transaction_marketing.push(mtf_data_list.content[i][1]);
-                    mtf_transaction_receiving_transaction_counter_marketing += 1
+            if(mtf_data_list.content[i][findTextInArray(mtf_data_list, "SUBMIT TO")] == "RECEIVING"){
+                if (!mtf_transaction_receiving_transaction_marketing.includes(mtf_data_list.content[i][findTextInArray(mtf_data_list, "MTF #")])) {
+                    mtf_transaction_receiving_transaction_marketing.push(mtf_data_list.content[i][findTextInArray(mtf_data_list, "MTF #")]);
                 }
             }
         }
-
         for (let i = 1; i < ltf_data_list.content.length; i++) {
-            if (!mtf_ltf_transaction_marketing.includes(ltf_data_list.content[i][2])) {
-                mtf_ltf_transaction_marketing.push(ltf_data_list.content[i][2]);
-                mtf_ltf_transaction_counter_marketing += 1
+            if (!mtf_ltf_transaction_marketing.includes(ltf_data_list.content[i][findTextInArray(ltf_data_list, "MTF #")])) {
+                mtf_ltf_transaction_marketing.push(ltf_data_list.content[i][findTextInArray(ltf_data_list, "MTF #")]);
             }
-            if (!ltf_transaction_marketing.includes(ltf_data_list.content[i][1])) {
-                ltf_transaction_marketing.push(ltf_data_list.content[i][1]);
-                ltf_transaction_counter_marketing += 1
+            if (!ltf_transaction_marketing.includes(ltf_data_list.content[i][findTextInArray(ltf_data_list, "LTF #")])) {
+                ltf_transaction_marketing.push(ltf_data_list.content[i][findTextInArray(ltf_data_list, "LTF #")]);
             }
         }
 
         for (let i = 1; i < wcf_data_list.content.length; i++) {
-            if (!ltf_wcf_transaction_marketing.includes(wcf_data_list.content[i][2])) {
-                ltf_wcf_transaction_marketing.push(wcf_data_list.content[i][2]);
-                ltf_wcf_transaction_counter_marketing += 1
+            if (!ltf_wcf_transaction_marketing.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "LTF #")])) {
+                ltf_wcf_transaction_marketing.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "LTF #")]);
             }
         }
 
-        booked_transactions_marketing.innerText = mtf_transaction_counter_marketing
+        booked_transactions_marketing.innerText = mtf_transaction_marketing.length;
 
         var data_value = "";
         var data_value_counter = 1;
         for(let j = 1; j < mtf_data_list.content.length; j++){
             var status = "PENDING";
             // for logistics
-            if(mtf_data_list.content[j][8] == "LOGISTICS"){
+            if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")] == "LOGISTICS"){
                 for(let k = 1; k < ltf_data_list.content.length; k++){
-                    if(mtf_data_list.content[j][1] == ltf_data_list.content[k][2]){
+                    if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")] == ltf_data_list.content[k][findTextInArray(ltf_data_list, "MTF #")]){
                         status = "ON HAULING";
                         for_logistics_on_haul_counter_marketing += 1;
                         for_logistics_pending_counter_marketing -= 1;
                         for(let m = 1; m < wcf_data_list.content.length; m++){
-                            if(ltf_data_list.content[k][1] == wcf_data_list.content[m][2]){
+                            if(ltf_data_list.content[k][findTextInArray(ltf_data_list, "LTF #")] == wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
                                 status = "RECEIVED";
                                 for_logistics_received_counter_marketing += 1;
                                 for_logistics_on_haul_counter_marketing -= 1;
@@ -393,12 +407,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
                 for_logistics_pending_counter_marketing += 1;
             }
-
             // for receiving
-            if(mtf_data_list.content[j][8] == "RECEIVING"){
+            else if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")] == "RECEIVING"){
                 for(let m = 1; m < wcf_data_list.content.length; m++){
-                    if((wcf_data_list.content[m][2]).slice(0,3) == "MTF"){
-                        if(mtf_data_list.content[j][1] == wcf_data_list.content[m][2]){
+                    if((wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).slice(0,3) == "MTF"){
+                        if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")] == wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
                             status = "RECEIVED";
                             for_receiving_received_counter_marketing += 1;
                             for_receiving_pending_counter_marketing -= 1;
@@ -407,22 +420,23 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
                 for_receiving_pending_counter_marketing += 1;
             }
-
             data_value +=`
             <tr>
                 <td>${data_value_counter}</td>
-                <td>${mtf_data_list.content[j][1]}</td>
-                <td>${date_decoder(mtf_data_list.content[j][4])} /<br> ${time_decoder2(mtf_data_list.content[j][5])}</td>
-                <td>${mtf_data_list.content[j][2]}</td>
-                <td>${mtf_data_list.content[j][3]}</td>
-                <td>${mtf_data_list.content[j][6]}</td>
-                <td>${mtf_data_list.content[j][8]}</td>
+                <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")]}</td>
+                <td>${date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])} /<br> ${time_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING TIME")])}</td>
+                <td>${findClientName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")])}</td>
+                <td>${findWasteCode(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")])}</td>
+                <td>${findWasteName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")], (mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")]))}</td>
+                <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")]}</td>
+                <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")]}</td>
                 <td>${status}</td>
             </tr>
             `
             data_value_counter += 1;
         }
-        pending_list_marketing.innerHTML = data_value;    
+        pending_list_marketing.innerHTML = data_value;
+
         for_logistics_pending_marketing.innerText = for_logistics_pending_counter_marketing;
         for_logistics_on_haul_marketing.innerText = for_logistics_on_haul_counter_marketing;
         for_logistics_received_marketing.innerText = for_logistics_received_counter_marketing;
@@ -443,15 +457,15 @@ document.addEventListener('DOMContentLoaded', async function() {
         let sf_tpf_transaction_billing = []; // Variable containing existing elements
 
         for (let i = 1; i < cod_data_list.content.length; i++) {
-            if (!sf_transaction_billing.includes(cod_data_list.content[i][1])) {
-                sf_transaction_billing.push(cod_data_list.content[i][1]);
+            if (!sf_transaction_billing.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")])) {
+                sf_transaction_billing.push(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]);
                 sf_transaction_counter_billing += 1
             }
         }
 
         for (let i = 1; i < bpf_data_list.content.length; i++) {
-            if (!sf_tpf_transaction_billing.includes(bpf_data_list.content[i][2])) {
-                sf_tpf_transaction_billing.push(bpf_data_list.content[i][2]);
+            if (!sf_tpf_transaction_billing.includes(bpf_data_list.content[i][findTextInArray(bpf_data_list, "COD #")])) {
+                sf_tpf_transaction_billing.push(bpf_data_list.content[i][findTextInArray(bpf_data_list, "COD #")]);
                 sf_tpf_transaction_counter_billing += 1
             }
         }
@@ -466,15 +480,16 @@ document.addEventListener('DOMContentLoaded', async function() {
         var data_value_counter = 1;
         for(let i = 0; i < newElements_billing.length; i++){
             for(let j = 1; j < cod_data_list.content.length; j++){
-                if(newElements_billing[i] == cod_data_list.content[j][1]){
+                if(newElements_billing[i] == cod_data_list.content[j][findTextInArray(cod_data_list, "COD #")]){
                     data_value +=`
                     <tr>
                         <td>${data_value_counter}</td>
-                        <td>${cod_data_list.content[j][1]}</td>
-                        <td>${date_decoder(cod_data_list.content[j][10])}</td>
-                        <td>${cod_data_list.content[j][5]}</td>
-                        <td>${cod_data_list.content[j][6]}</td>
-                        <td>${cod_data_list.content[j][8]}</td>
+                        <td>${cod_data_list.content[j][findTextInArray(cod_data_list, "COD #")]}</td>
+                        <td>${date_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "DATE OF CERTIFICATION")])}</td>
+                        <td>${findClientName(cod_data_list.content[j][findTextInArray(cod_data_list, "CLIENT ID")])}</td>
+                        <td>${findWasteCode(cod_data_list.content[j][findTextInArray(cod_data_list, "WASTE ID")])}</td>
+                        <td>${findWasteName(cod_data_list.content[j][findTextInArray(cod_data_list, "CLIENT ID")], cod_data_list.content[j][findTextInArray(cod_data_list, "WASTE ID")])}</td>
+                        <td>${cod_data_list.content[j][findTextInArray(cod_data_list, "WEIGHT")]}</td>
                     </tr>
                     `
                     data_value_counter += 1;
@@ -484,86 +499,112 @@ document.addEventListener('DOMContentLoaded', async function() {
         unsorted_list_billing.innerHTML = data_value;            
 
         // incident_history_list
-        const incident_report_safety = document.querySelector("#safety_dashboard #incident_report");
-        const pending_counter_safety = document.querySelector("#safety_dashboard #pending_counter");
-        const documented_safety = document.querySelector("#safety_dashboard #documented");
-        const pending_list_safety = document.querySelector("#safety_dashboard #pending_list");
-        const incident_history_list_safety = document.querySelector("#safety_dashboard #incident_history_list");
-        var irf_transaction_safety = [];
-        var irf_idf_transaction_safety = [];
-        var irf_transaction_counter_safety = 0;
-        var irf_idf_transaction_counter_safety = 0;
-
-        for (let i = 1; i < irf_data_list.content.length; i++) {
-            if (!irf_transaction_safety.includes(irf_data_list.content[i][1])) {
-                irf_transaction_safety.push(irf_data_list.content[i][1]);
-                irf_transaction_counter_safety += 1
-            }
-        }
-
-        for (let i = 1; i < idf_data_list.content.length; i++) {
-            if (!irf_idf_transaction_safety.includes(idf_data_list.content[i][2])) {
-                irf_idf_transaction_safety.push(idf_data_list.content[i][2]);
-                irf_idf_transaction_counter_safety += 1
-            }
-        }
-
-        const pending_safety = irf_transaction_safety.filter((element) => !irf_idf_transaction_safety.includes(element));
-        const finished_safety = irf_transaction_safety.filter((element) => irf_idf_transaction_safety.includes(element));
-
-        incident_report_safety.innerText = pending_safety.length + finished_safety.length;
-        pending_counter_safety.innerText = pending_safety.length;
-        documented_safety.innerText = finished_safety.length;
-
         var incident_history_data_value = "";
         var incident_history_data_value_counter = 1;
+
         for(let x = 1; x < irf_data_list.content.length; x++){
-            for(let y = 0; y < pending_counter_safety.length; y++){
-                if(irf_data_list.content[x][1] == pending_counter_safety[y]){
-                    incident_history_data_value += `
-                    <tr>
-                        <td>${incident_history_data_value_counter}</td>
-                        <td>${irf_data_list.content[x][1]}</td>
-                        <td>${date_decoder(irf_data_list.content[x][6])} /<br> ${time_decoder2(irf_data_list.content[x][7])}</td>
-                        <td>${irf_data_list.content[x][3]}</td>
-                        <td>${irf_data_list.content[x][2]}</td>
-                        <td>${irf_data_list.content[x][4]}</td>
-                        <td>${irf_data_list.content[x][8]}</td>
-                        <td>${date_decoder(irf_data_list.content[x][9])} /<br> ${time_decoder2(irf_data_list.content[x][10])}</td>
-                        <td>${calculateTravelTime(date_decoder(irf_data_list.content[x][6]),time_decoder2(irf_data_list.content[x][7]),date_decoder(irf_data_list.content[x][9]),time_decoder2(irf_data_list.content[x][10]))}</td>
-                    </tr>
-                    `
-                    incident_history_data_value_counter += 1;    
+            const resultArray = (irf_data_list.content[x][findTextInArray(irf_data_list, "PERSON INVOLVE")]).split(" || ");
+            var data_value2 = [];
+            for(let z = 0; z < resultArray.length; z++){
+                for(let y = 1; y < employee_data_list.content.length; y++){
+                    if(employee_data_list.content[y][findTextInArray(employee_data_list, "EMPLOYEE ID")] == resultArray[z]){
+                        var gender = employee_data_list.content[y][findTextInArray(employee_data_list, "GENDER")];
+                        if(gender == "MALE"){
+                            var full_name = `${employee_data_list.content[y][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[y][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[y][findTextInArray(employee_data_list, "MIDDLE NAME")]} ${employee_data_list.content[y][findTextInArray(employee_data_list, "AFFIX")]}`
+                            data_value2.push(full_name);
+                        }
+                        else{
+                            var full_name = `${employee_data_list.content[y][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[y][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[y][findTextInArray(employee_data_list, "MIDDLE NAME")]} - ${employee_data_list.content[y][findTextInArray(employee_data_list, "SPOUSE NAME")]}`
+                            data_value2.push(full_name);
+                        }
+                    }
                 }
             }
+            const concatenatedString = data_value2.join(" || ")
+            incident_history_data_value += `
+            <tr>
+                <td>${incident_history_data_value_counter}</td>
+                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "IRF #")]}</td>
+                <td>${date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "DATE OF INCIDENT")])} /<br> ${time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "TIME OF INCIDENT")])}</td>
+                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "DEPARTMENT")]}</td>
+                <td>${concatenatedString}</td>
+                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "DESIGNATION")]}</td>
+                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "LOCATION")]}</td>
+                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "INCIDENT DETAILS")]}</td>
+                <td>${date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "DATE OF REPORT")])} /<br> ${time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "TIME OF REPORT")])}</td>
+                <td>${calculateTravelTime(date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "DATE OF INCIDENT")]),time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "TIME OF INCIDENT")]),date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "DATE OF REPORT")]),time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "TIME OF REPORT")]))}</td>
+            </tr>
+            `
+            incident_history_data_value_counter += 1;
         }
-        pending_list_safety.innerHTML = incident_history_data_value
+        incident_history_list.innerHTML = incident_history_data_value
 
-        var incident_history_data_value = "";
-        var incident_history_data_value_counter = 1;
-        for(let x = 1; x < irf_data_list.content.length; x++){
-            for(let y = 0; y < finished_safety.length; y++){
-                if(irf_data_list.content[x][1] == pending_counter_safety[y]){
-                    incident_history_data_value += `
-                    <tr>
-                        <td>${incident_history_data_value_counter}</td>
-                        <td>${irf_data_list.content[x][1]}</td>
-                        <td>${date_decoder(irf_data_list.content[x][6])} /<br> ${time_decoder2(irf_data_list.content[x][7])}</td>
-                        <td>${irf_data_list.content[x][3]}</td>
-                        <td>${irf_data_list.content[x][2]}</td>
-                        <td>${irf_data_list.content[x][4]}</td>
-                        <td>${irf_data_list.content[x][8]}</td>
-                        <td>${date_decoder(irf_data_list.content[x][9])} /<br> ${time_decoder2(irf_data_list.content[x][10])}</td>
-                        <td>${calculateTravelTime(date_decoder(irf_data_list.content[x][6]),time_decoder2(irf_data_list.content[x][7]),date_decoder(irf_data_list.content[x][9]),time_decoder2(irf_data_list.content[x][10]))}</td>
-                    </tr>
-                    `
-                    incident_history_data_value_counter += 1;                 
+        function findEmployeeName(employee_id){
+            var employee_name = "";
+            for(let c = 1; c < employee_data_list.content.length; c++){
+                if(employee_id == employee_data_list.content[c][findTextInArray(employee_data_list, "EMPLOYEE ID")]){
+                    var gender = employee_data_list.content[c][findTextInArray(employee_data_list, "GENDER")];
+                    if(gender == "MALE"){
+                        employee_name = `${employee_data_list.content[c][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[c][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[c][findTextInArray(employee_data_list, "MIDDLE NAME")]} ${employee_data_list.content[c][findTextInArray(employee_data_list, "AFFIX")]}`
+                    }
+                    else{
+                        employee_name = `${employee_data_list.content[c][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[c][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[c][findTextInArray(employee_data_list, "MIDDLE NAME")]} - ${employee_data_list.content[c][findTextInArray(employee_data_list, "SPOUSE NAME")]}`
+                    }
+                    break
+                }
+                else{
+                    employee_name = employee_id == employee_data_list.content[c][findTextInArray(employee_data_list, "EMPLOYEE ID")]
                 }
             }
+            return employee_name
         }
-        incident_history_list_safety.innerHTML = incident_history_data_value
-
-
+        function findClientName(client_id){
+            var client_name = "";
+            for(let c = 1; c < client_data_list.content.length; c++){
+                if(client_id == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")]){
+                    client_name = client_data_list.content[c][findTextInArray(client_data_list, "CLIENT NAME")];
+                    break
+                }
+            }
+            return client_name
+        }
+        function findWasteCode(waste_id){
+            var waste_code = "";
+            for(let c = 1; c < type_of_waste_data_list.content.length; c++){
+                if(waste_id == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
+                    waste_code = (type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")]).substring(0, 4);
+                    break
+                }
+                else{
+                    waste_code = waste_id;
+                }
+            }
+            return waste_code
+        }
+        function findWasteCode2(waste_id){
+            var waste_code = "";
+            for(let c = 1; c < type_of_waste_data_list.content.length; c++){
+                if(waste_id == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
+                    waste_code = (type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")]);
+                    break
+                }
+                else{
+                    waste_code = waste_id;
+                }
+            }
+            return waste_code
+        }
+        function findWasteName(client_id, waste_id){
+            var waste_name = "";
+            for(let c = 1; c < qlf_data_list.content.length; c++){
+                if(client_id == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")]&& 
+                    waste_id == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
+                    waste_name = (qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE NAME")]);
+                    break
+                }
+            }
+            return waste_name
+        }
 
     } catch (error) {
         console.error('Error fetching data:', error);
