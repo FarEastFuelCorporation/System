@@ -44,9 +44,9 @@ document.addEventListener('DOMContentLoaded', async function() {
             qlf_response,
         ] = await Promise.all([
             username_response_promise,
+            client_list_response_promise,
             type_of_waste_response_promise,
             employee_response_promise,
-            client_list_response_promise,
             vehicle_response_promise,
             vehicle_log_response_promise,
             ftf_response_promise,
