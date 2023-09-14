@@ -245,13 +245,15 @@ document.addEventListener('DOMContentLoaded', async function() {
                     for(let z = 1; z < ltf_data_list.content.length; z++){
                         if(search_ltf_form_no.value == ltf_data_list.content[z][findTextInArray(ltf_data_list, "LTF #")]){
                             var truck_helpers_array = [];
+                            var number;
                             if(((ltf_data_list.content[z][findTextInArray(ltf_data_list, "TRUCK HELPER")]).toString()).includes("||")){
                                 (ltf_data_list.content[z][findTextInArray(ltf_data_list, "TRUCK HELPER")]).split("||").map(number => {
                                     truck_helpers_array.push(findEmployeeName(number.trim()))
+                                    console.log(findEmployeeName(number.trim()))
                                 });
                             }
                             else{
-                                truck_helpers_array.push(number.trim())
+                                truck_helpers_array.push(findEmployeeName(ltf_data_list.content[z][findTextInArray(ltf_data_list, "TRUCK HELPER")]))
                             }
                             data_value = `
                             LTF #: ${ltf_data_list.content[z][findTextInArray(ltf_data_list, "LTF #")]}<br>

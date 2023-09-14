@@ -241,7 +241,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         for (x = 1; x < client_data_list.content.length; x++) {
             data_value.push(client_data_list.content[x][1]);
         }
-
         const search_wrappers = document.querySelectorAll("#search_client");
 
         search_wrappers.forEach((search_wrapper) => {
@@ -259,13 +258,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                     });
                     search_wrapper.classList.add("active");
                     show_suggestions(empty_array);
+                    console.log(empty_array)
                 } else {
                     search_wrapper.classList.remove("active");
                 }
             };
             sugg_box.addEventListener("click", (e) => {
                 if (e.target.tagName === "LI") {
-                    select(e.target.innerHTML);
+                    select(e.target.innerText);
                 }
             });
             function select(element) {

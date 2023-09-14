@@ -77,9 +77,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         var sf_transaction_sorting = []; // Variable containing existing elements
         
         for (let i = 1; i < wcf_data_list.content.length; i++) {
-            if (!wcf_transaction_sorting.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")])) {
-                wcf_transaction_sorting.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]);
-                wcf_transaction_counter_sorting += 1
+            if(wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO" == "SORTING")]){
+                if (!wcf_transaction_sorting.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")])) {
+                    wcf_transaction_sorting.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]);
+                    wcf_transaction_counter_sorting += 1
+                }
             }
         }
 
@@ -99,7 +101,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         // Get elements from wcf_transaction not included in wcf_sf_transaction
         const pending_sorting = wcf_transaction_sorting.filter((element) => !wcf_sf_transaction_sorting.includes(element));
         const done_sorting_sorting = wcf_transaction_sorting.filter((element) => wcf_sf_transaction_sorting.includes(element));
-        
         total_sorting.innerText = wcf_transaction_counter_sorting;
         unsorted_sorting.innerText = wcf_transaction_counter_sorting - wcf_sf_transaction_counter_sorting;
         sorted_sorting.innerText = wcf_sf_transaction_counter_sorting;
