@@ -1048,7 +1048,22 @@ document.addEventListener('DOMContentLoaded', async function() {
         const transfer_history_list_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#transfer_history_list");
         const fund_source_other_details_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_source_other_details_container");
         const fund_allocation_other_details_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_allocation_other_details_container");
-        
+        const filter_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#filter");
+        const filter_tab_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#filter_tab");
+
+        filter_ap_accounting.addEventListener("click", () => {
+            if(filter_tab_ap_accounting.style.display == "block"){
+                filter_tab_ap_accounting.style.display = "none"
+            }
+            else{
+                filter_tab_ap_accounting.style.display = "block"
+            }
+        })
+
+        filter_tab_ap_accounting.addEventListener("click", () => {
+            
+        })
+
         var month_new;
         var code_year_month;
         var data_counter;
