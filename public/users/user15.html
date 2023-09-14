@@ -136,6 +136,15 @@
                             <i class="fa-solid fa-gas-pump"></i>
                         </div>
                     </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="sir_ruels_fund"></div>
+                            <div class="card-name">Sir Ruel's Fund</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-gas-pump"></i>
+                        </div>
+                    </div>
                 </div><br>
                 <div class="cards">
                     <div class="card">
@@ -185,7 +194,7 @@
                     </div>
                 </div><br>
                 <h2>PENDING TRIP BUDGET LIST</h2>
-                <div class="card" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
+                <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
                     <div class="list">
                         <table>
                             <thead style="position: sticky; top: 0; background-color: black;">
@@ -201,7 +210,7 @@
 
                             </tbody>
                         </table>
-                        <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                        <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
                     </div>
                 </div><br>
             </section>
@@ -210,10 +219,10 @@
                 <div class="section_container">
                     <h2>TRIPPING TRANSACTION</h2><br>
                     <label class="d-flex gap-3">
-                        <button type="button" id="budget_form_button" class="form-control fw-bold fs-3 text-white">
+                        <button type="button" id="budget_form_button" class="form-control fw-bold fs-3 bg-success text-white">
                             TRIP BUDGET FORM
                         </button>
-                        <button type="button" id="liquidation_form_button" class="form-control fw-bold fs-3">
+                        <button type="button" id="liquidation_form_button" class="form-control fw-bold fs-3 bg-danger text-white">
                             TRIP LIQUIDATION FORM
                         </button>
                     </label><br>
@@ -372,7 +381,7 @@
                     </form>
                     <div id="trip_history_list">
                         <h2>TRIP BUDGET HISTORY LIST</h2>
-                        <div class="card" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
+                        <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
                             <div class="list">
                                 <table>
                                     <thead style="position: sticky; top: 0; background-color: black;">
@@ -392,7 +401,7 @@
         
                                     </tbody>
                                 </table>
-                                <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                                <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
                             </div>
                         </div><br>
                     </div>
@@ -694,10 +703,10 @@
                 <div class="section_container">
                     <h2>FUND TRANSACTION</h2><br>
                     <label class="d-flex gap-3">
-                        <button type="button" id="fund_transfer_form_button" class="form-control fw-bold fs-3 text-white">
+                        <button type="button" id="fund_transfer_form_button" class="form-control fw-bold fs-3 bg-success text-white">
                             FUND TRANSFER FORM
                         </button>
-                        <button type="button" id="fund_request_form_button" class="form-control fw-bold fs-3">
+                        <button type="button" id="fund_request_form_button" class="form-control fw-bold fs-3 bg-danger text-white">
                             FUND REQUEST FORM
                         </button>
                     </label><br>
@@ -729,10 +738,12 @@
                                         <option value="HAULING FUND">HAULING FUND</option>
                                         <option value="DIESEL FUND">DIESEL FUND</option>
                                         <option value="GASOLINE FUND">GASOLINE FUND</option>
+                                        <option value="SIR RUEL'S FUND">SIR RUEL'S FUND</option>
                                         <option value="SCRAP SALES">SCRAP SALES</option>
                                         <option value="MOLD RUNNER SALES">MOLD RUNNER SALES</option>
                                         <option value="TRUCK SCALE COLLECTION">TRUCK SCALE COLLECTION</option>
                                         <option value="HOUSE COLLECTION">HOUSE COLLECTION</option>
+                                        <option value="REPRESENTATION FUND">REPRESENTATION FUND</option>
                                         <option value="OTHERS">OTHERS</option>
                                     </select>
                                 </div>
@@ -762,10 +773,12 @@
                                         <option value="HAULING FUND">HAULING FUND</option>
                                         <option value="DIESEL FUND">DIESEL FUND</option>
                                         <option value="GASOLINE FUND">GASOLINE FUND</option>
+                                        <option value="SIR RUEL'S FUND">SIR RUEL'S FUND</option>
                                         <option value="SCRAP SALES">SCRAP SALES</option>
                                         <option value="MOLD RUNNER SALES">MOLD RUNNER SALES</option>
                                         <option value="TRUCK SCALE COLLECTION">TRUCK SCALE COLLECTION</option>
                                         <option value="HOUSE COLLECTION">HOUSE COLLECTION</option>
+                                        <option value="REPRESENTATION FUND">REPRESENTATION FUND</option>
                                         <option value="OTHERS">OTHERS</option>
                                     </select>
                                 </div>
@@ -871,7 +884,7 @@
                     </form>
                     <div>
                         <h2>FUND TRANSFER HISTORY LIST</h2>
-                        <div class="card" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
+                        <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
                             <div class="list">
                                 <table>
                                     <thead style="position: sticky; top: 0; background-color: black;">
@@ -888,13 +901,13 @@
         
                                     </tbody>
                                 </table>
-                                <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                                <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
                             </div>
                         </div><br>
                     </div>
                     <div>
                         <h2>FUND REQUEST HISTORY</h2>
-                        <div class="card" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
+                        <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
                             <div class="list">
                                 <table>
                                     <thead style="position: sticky; top: 0; background-color: black;">
@@ -915,7 +928,7 @@
         
                                     </tbody>
                                 </table>
-                                <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                                <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
                             </div>
                         </div><br>
                     </div>
@@ -1039,7 +1052,7 @@
                         </div> 
                     </form>
                 </div>
-                <div class="card" style="max-height: 70vh; align-items: start; overflow-y: scroll;">                            
+                <div class="table" style="max-height: 70vh; align-items: start; overflow-y: scroll;">                            
                     <div class="list">
                         <table>
                             <thead style="position: sticky; top: 0; background-color: black;">
@@ -1058,7 +1071,7 @@
 
                             </tbody>
                         </table>
-                        <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                        <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
                     </div>
                 </div><br>
             </section>

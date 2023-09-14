@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const hauling_fund_ap_accounting = ap_accounting_dashboard.querySelector("#hauling_fund");
         const diesel_fund_ap_accounting = ap_accounting_dashboard.querySelector("#diesel_fund");
         const gasoline_fund_ap_accounting = ap_accounting_dashboard.querySelector("#gasoline_fund");
+        const sir_ruels_fund_ap_accounting = ap_accounting_dashboard.querySelector("#sir_ruels_fund");
         const scrap_sales_ap_accounting = ap_accounting_dashboard.querySelector("#scrap_sales");
         const mold_runner_sales_ap_accounting = ap_accounting_dashboard.querySelector("#mold_runner_sales");
         const truck_scale_collection_ap_accounting = ap_accounting_dashboard.querySelector("#truck_scale_collection");
@@ -79,6 +80,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var hauling_fund = 0;
         var diesel_fund = 0;
         var gasoline_fund = 0;
+        var sir_ruels_fund = 0;
         var scrap_sales = 0;
         var mold_runner_sales = 0;
         var truck_scale_collection = 0;
@@ -100,6 +102,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 diesel_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
             else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "GASOLINE FUND") {
+                gasoline_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+            }
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "SIR RUEL'S FUND") {
                 gasoline_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
             else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "SCRAP SALES") {
@@ -133,6 +138,9 @@ document.addEventListener('DOMContentLoaded', async function() {
             else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "GASOLINE FUND") {
                 gasoline_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
+            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "SIR RUEL'S FUND") {
+                gasoline_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+            }
             else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "SCRAP SALES") {
                 scrap_sales += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
             }
@@ -155,6 +163,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         hauling_fund_ap_accounting.innerText = formatNumber(hauling_fund);
         diesel_fund_ap_accounting.innerText = formatNumber(diesel_fund);
         gasoline_fund_ap_accounting.innerText = formatNumber(gasoline_fund);
+        sir_ruels_fund_ap_accounting.innerText = formatNumber(sir_ruels_fund);
         scrap_sales_ap_accounting.innerText = formatNumber(scrap_sales);
         mold_runner_sales_ap_accounting.innerText = formatNumber(mold_runner_sales);
         truck_scale_collection_ap_accounting.innerText = formatNumber(truck_scale_collection);
@@ -440,7 +449,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     }
                                 }
                                 var values = ltf_data_list.content[a][9];
-                                var valueArray = values.split(" || ");
+                                var valueArray;
+                                if ((values.toString()).includes(" || ")) {
+                                    valueArray = values.split(" || ");
+                                } else {
+                                    valueArray = [values];
+                                }
                                 valueArray.forEach(element => {
                                     if(employee_data_list.content[x][0] == element){
                                         var gender = employee_data_list.content[x][6];

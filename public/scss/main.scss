@@ -25,7 +25,6 @@ ul li{
     justify-content: center;
 }
 
-ul li a:hover, a:hover,
 ul li h3,
 ul li h4,
 ul li h6{
@@ -110,7 +109,7 @@ nav{
 }
 
 .banner, .logo h2 {
-    color: variables.$accent1;
+    color: variables.$accent2;
     font-weight: bolder;
     font-size: 30px ;
     margin-top: 10px;
@@ -122,129 +121,12 @@ nav{
     font-size: 30px !important;
 }
 
-// home
-.container-index{
-    background-color: #1d1d1f;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    position: relative;
-}
-
-.container-index img{
-    height: calc(100vh);
-}
-
-.home-text{
-    position: absolute;
-    top: 30%;
-    right: 10%;
-    width: 450px;
-    height: 300px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    color: variables.$white;
-}
-
-.home-text h1{
-    font-size: 50px !important;
-    color: variables.$secondary !important;
-} 
-
-// about
-
-#about .home-text{
-    position: absolute;
-    top: 25%;
-    left: 5%;
-    width: 450px;
-    height: 300px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    color: variables.$white !important;
-    padding-right: 20px;
-}
-
-#about .home-text h2{
-    font-size: 25px;
-}
-
-
-.contact-btn button{
-    color: variables.$primary_color;
-    font-size: 20px;
-    margin: 0 20px;
-    border: 3px solid variables.$primary_color;
-}
-
-h5{
-    color: variables.$black !important;
-}
-
-// menu
-.menu_container{
-    padding: 60px 20px 20px 20px;
-}
-
-.menu_container .menu_cards{
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 30px;
-}
-
-.menu_header > h2{
-    font-size: 30px;
-    font-weight: bold;
-    text-decoration: underline;
-    text-align: center;
-    margin-top: 20px;
-}
-
-.menu_card{
-    width: 400px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    border-radius: 10px;
-    position: relative;
-}
-
-.menu_cards h2{
-    font-size: 25px;
-    font-weight: bold;
-    text-align: center;
-}
-
-.details{
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 150px;
-    height: 150px;
-    border-radius: 100px;
-    top: 300px;
-    left: 270px;
-    border: 3px solid variables.$black;
-    background-color: variables.$primary_color;
-}
-
-.details div{
-    font-size: 30px;
-    font-weight: bold;
-    color: variables.$white;
-}
-
 /* login page */
 .index_container{
     height: 100vh;
     width: 100%;
-    background: #ffbf00;
+    background: variables.$lightgray;
+    font-weight: bolder;;
 }
 
 .index_login-box {
@@ -254,7 +136,8 @@ h5{
     width: 320px;
     padding: 40px;
     transform: translate(-50%, -50%);
-    background: black;
+    background: variables.$gray;
+    font-weight: bolder;;
     box-sizing: border-box;
     box-shadow: 0 15px 25px rgba(0,0,0,.6);
     border-radius: 10px;
@@ -307,10 +190,10 @@ h5{
 
 .index_login-box .user-box input:focus ~ label,
 .index_login-box .user-box input:valid ~ label {
-  top: -20px;
-  left: 0;
-  color: #ffbf00;
-  font-size: 12px;
+    top: -20px;
+    left: 0;
+    color: #ffbf00;
+    font-size: 12px;
 }
 
 .index_login-box .buttons{
@@ -319,7 +202,7 @@ h5{
     gap: 20px;
     width: 100%;
 }
-  
+
 .index_login-box .button {
     position: relative;
     display: inline-block;
@@ -332,7 +215,7 @@ h5{
     transition: .5s;
     margin-top: 40px;
     letter-spacing: 4px;
-    background: black;
+    background: variables.$darkgray;
     font-weight: bold;
     border-radius: 10px;
     border: 3px solid #ffbf00;
@@ -340,7 +223,8 @@ h5{
 
 .index_login-box .button:hover {
     background: #ffbf00;
-    color: black;
+    color: variables.$gray;
+    font-weight: bolder;;
     border: 3px solid black;
     border-radius: 5px;
     box-shadow: 0 0 5px #ffbf00,
@@ -353,7 +237,7 @@ h5{
 .topbar
 {
     position: fixed;
-    background: variables.$black;
+    background: variables.$darkgray;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.08);
     width: 100%;
     height: 60px;
@@ -379,82 +263,13 @@ h5{
     border: 1px solid variables.$accent1;
 }
 
-// system_log
-.system_log
-{
-    background-color: #ffbf00;
-    width: 100%;
-    height: 100vh;
-    padding-top: 60px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-}
-
-.system_log .employee_picture
-{
-    width: calc(100vh - 10%);
-    height: calc(100vh - 10%);
-    padding: 5%;
-}
-
-.system_log .employee_picture div
-{
-    width: 100%;
-    height: 100%;
-    border: 5px solid black;
-    border-radius: 100%;
-    overflow: hidden;
-}
-
-.system_log .employee_picture div img
-{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.system_log .employee_details
-{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.system_log .employee_details #exactDate
-{
-    font-size: 100px;
-    font-weight: bold;
-    text-align: center;
-}
-
-.system_log .employee_details #exactTime
-{
-    font-size: 125px;
-    font-weight: bold;
-}
-
-.system_log .employee_details .employee_name
-{
-    margin-top: 10%;
-    font-size: 75px;
-    font-weight: bold;
-}
-
-.system_log .employee_details .employee_department
-{
-    font-size: 50px;
-    font-style: italic;
-}
-
 /* sidebar starts here */
 .sidebar{
     position: fixed;
     top: 60px;
     width: 260px;
     height: calc(100% - 60px);
-    background-color: variables.$accent1;
+    background-color: variables.$lightgray;
 }
 .sidebar ul{
     margin-top: 20px;
@@ -494,26 +309,33 @@ h5{
     list-style: none;   
 }
 
-.sidebar ul li:hover{
-    background: variables.$black;
+
+.sidebar ul li:hover
+{
+    background: variables.$sidebar_hover;
+}
+
+.sidebar ul li a:hover
+{
+    color: variables.$white !important;
 }
 
 .sidebar ul li:hover a{
-    color: variables.$black;
+    color: variables.$sidebar_hover;
 }
 
 .sidebar ul .hover{
-    background: variables.$black;
+    background: variables.$sidebar_active;
 }
 
 .sidebar ul .hover a{
-    color: variables.$accent1;
+    color: variables.$white;
 }
 
 .sidebar ul li a{
     width: 100%;
     text-decoration: none;
-    color: variables.$black;
+    color: variables.$darkgray;
     height: 60px;
     font-size: 18px;
     font-weight: bold;
@@ -525,6 +347,112 @@ h5{
     min-width: 60px;
     font-size: 24px;
     text-align: center;
+}
+
+.table
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    background: variables.$lightgray;
+    font-weight: bolder;;
+    border-radius: 10px;
+    box-shadow: 0 7px 25px 0 rgba(0, 0, 0, 0.08);
+    border: 3px solid variables.$table_header_background !important;
+}
+
+.table thead
+{
+    background-color: variables.$table_header_background !important;
+}
+
+.table thead th
+{
+    color: variables.$white !important;
+}
+
+.table td
+{
+    color: variables.$black;;
+}
+
+.text_end
+{
+    background-color: variables.$table_footer_background !important;
+    font-size: 16px !important;
+}
+
+.list
+{
+    width: 100%;
+    font-size: 25px;
+    color: white;
+}
+
+.table  table
+{
+    width: 100%;
+}
+
+.table  table tr
+{
+    border-bottom: 1px solid white;
+}
+
+.table  table td,
+.table  table th
+{
+    padding: 0 10px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.table  table th
+{
+    color: #ffbf00;
+}
+
+.card{
+    padding: 0 10px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-around !important;
+    background: variables.$card_background !important;
+    font-weight: bolder !important;
+    border-radius: 10px !important;
+    box-shadow: 0 7px 25px 0 rgba(0, 0, 0, 0.08) !important;
+    border: 3px solid variables.$table_footer_background !important;
+}
+
+.card:hover{
+    background-color: variables.$table_footer_background !important;
+    border: 3px solid variables.$table_header_background !important;
+}
+
+.card:hover .number, 
+.card:hover .card-name,
+.card:hover .icon-box i
+{
+    color: variables.$white !important;
+}
+
+.card .number{
+    font-size: 35px;
+    font-weight: bold;
+    color: variables.$accent2;
+    text-align: center;
+}
+
+.card .card-name{
+    color: white;
+    font-weight: 600;    
+}
+
+.card .icon-box i{
+    font-size: 45px;
+    color: variables.$accent2;
 }
 
 /* main starts here */
@@ -591,7 +519,7 @@ h5{
 #vehicle_maintenance_form,
 #incident_documentation_form,
 #employee_list_section,
-#hr_dashboard,
+#attendance_form,
 #employee_form,
 #purchase_order_form,
 #trip_forms,
@@ -707,75 +635,6 @@ section h2
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 20px;
     background: #f5f5f5;
-}
-
-#dashboard_section .card{
-    padding: 0 10px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    background: black;
-    border-radius: 10px;
-    box-shadow: 0 7px 25px 0 rgba(0, 0, 0, 0.08);
-    border: 3px solid #ffbf00;
-}
-
-#dashboard_section .cards .card:hover{
-    background: #ffbf00;
-}
-
-#dashboard_section .cards .card:hover .number, 
-#dashboard_section .cards .card:hover .card-name,
-#dashboard_section .cards .card:hover .icon-box i{
-    color: black;
-}
-
-#dashboard_section .number{
-    font-size: 35px;
-    font-weight: bold;
-    color: #ffbf00;
-    text-align: center;
-}
-
-#dashboard_section .card-name{
-    color: white;
-    font-weight: 600;    
-}
-
-#dashboard_section .icon-box i{
-    font-size: 45px;
-    color: #ffbf00;
-}
-
-#dashboard_section .list
-{
-    width: 100%;
-    font-size: 25px;
-    color: white;
-}
-
-#dashboard_section table
-{
-    width: 100%;
-}
-
-#dashboard_section table tr
-{
-    border-bottom: 1px solid white;
-}
-
-#dashboard_section table td,
-#dashboard_section table th
-{
-    padding: 0 10px;
-    text-align: center;
-    font-size: 16px;
-}
-
-#dashboard_section table th
-{
-    color: #ffbf00;
 }
 
 /* WASTE COLLECTION FORM section starts here */
@@ -995,80 +854,6 @@ section h2
     grid-gap: 20px;
     background: #f5f5f5;
 }
-
-#sorting_dashboard_section .card{
-    padding: 0 10px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    background: black;
-    border-radius: 10px;
-    box-shadow: 0 7px 25px 0 rgba(0, 0, 0, 0.08);
-    border: 3px solid #ffbf00;
-}
-
-#sorting_dashboard_section .cards .card:hover{
-    background: #ffbf00;
-}
-
-#sorting_dashboard_section .cards .card:hover .number, 
-#sorting_dashboard_section .cards .card:hover .card-name,
-#sorting_dashboard_section .cards .card:hover .icon-box i
-{
-    color: black;
-}
-
-#sorting_dashboard_section .number
-{
-    font-size: 35px;
-    font-weight: bold;
-    color: #ffbf00;
-    text-align: center;
-}
-
-#sorting_dashboard_section .card-name
-{
-    color: white;
-    font-weight: 600;    
-}
-
-#sorting_dashboard_section .icon-box i
-{
-    font-size: 45px;
-    color: #ffbf00;
-}
-
-#sorting_dashboard_section .list
-{
-    width: 100%;
-    font-size: 25px;
-    color: white;
-}
-
-#sorting_dashboard_section table
-{
-    width: 100%;
-}
-
-#sorting_dashboard_section table tr
-{
-    border-bottom: 1px solid white;
-}
-
-#sorting_dashboard_section table td,
-#sorting_dashboard_section table th
-{
-    padding: 0 10px;
-    text-align: center;
-    font-size: 16px;
-}
-
-#sorting_dashboard_section table th
-{
-    color: #ffbf00;
-}
-
 
 // sorting form
 #sorting_form form .form,
@@ -1306,79 +1091,6 @@ section h2
     background: #f5f5f5;
 }
 
-#treatment_process_dashboard .card{
-    padding: 0 10px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    background: black;
-    border-radius: 10px;
-    box-shadow: 0 7px 25px 0 rgba(0, 0, 0, 0.08);
-    border: 3px solid #ffbf00;
-}
-
-#treatment_process_dashboard .cards .card:hover{
-    background: #ffbf00;
-}
-
-#treatment_process_dashboard .cards .card:hover .number, 
-#treatment_process_dashboard .cards .card:hover .card-name,
-#treatment_process_dashboard .cards .card:hover .icon-box i
-{
-    color: black;
-}
-
-#treatment_process_dashboard .number
-{
-    font-size: 35px;
-    font-weight: bold;
-    color: #ffbf00;
-    text-align: center;
-}
-
-#treatment_process_dashboard .card-name
-{
-    color: white;
-    font-weight: 600;    
-}
-
-#treatment_process_dashboard .icon-box i
-{
-    font-size: 45px;
-    color: #ffbf00;
-}
-
-#treatment_process_dashboard .list
-{
-    width: 100%;
-    font-size: 25px;
-    color: white;
-}
-
-#treatment_process_dashboard table
-{
-    width: 100%;
-}
-
-#treatment_process_dashboard table tr
-{
-    border-bottom: 1px solid white;
-}
-
-#treatment_process_dashboard table td,
-#treatment_process_dashboard table th
-{
-    padding: 0 10px;
-    text-align: center;
-    font-size: 16px;
-}
-
-#treatment_process_dashboard table th
-{
-    color: #ffbf00;
-}
-
 // Treatment Process
 #treatment_process_form form .form
 {
@@ -1585,80 +1297,6 @@ section h2
     background: #f5f5f5;
 }
 
-#certification_dashboard .card{
-    padding: 0 10px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    background: black;
-    border-radius: 10px;
-    box-shadow: 0 7px 25px 0 rgba(0, 0, 0, 0.08);
-    border: 3px solid #ffbf00;
-}
-
-#certification_dashboard .cards .card:hover{
-    background: #ffbf00;
-}
-
-#certification_dashboard .cards .card:hover .number, 
-#certification_dashboard .cards .card:hover .card-name,
-#certification_dashboard .cards .card:hover .icon-box i
-{
-    color: black;
-}
-
-#certification_dashboard .number
-{
-    font-size: 35px;
-    font-weight: bold;
-    color: #ffbf00;
-    text-align: center;
-}
-
-#certification_dashboard .card-name
-{
-    color: white;
-    font-weight: 600;    
-}
-
-#certification_dashboard .icon-box i
-{
-    font-size: 45px;
-    color: #ffbf00;
-}
-
-#certification_dashboard .list
-{
-    width: 100%;
-    font-size: 25px;
-    color: white;
-}
-
-#certification_dashboard table
-{
-    width: 100%;
-}
-
-#certification_dashboard table tr
-{
-    border-bottom: 1px solid white;
-}
-
-#certification_dashboard table td,
-#certification_dashboard table th
-{
-    padding: 0 10px;
-    text-align: center;
-    font-size: 16px;
-}
-
-#certification_dashboard table th
-{
-    color: #ffbf00;
-}
-
-
 // Destruction
 #destruction_form
 {
@@ -1831,79 +1469,6 @@ section h2
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 20px;
     background: #f5f5f5;
-}
-
-#billing_dashboard .card{
-    padding: 0 10px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    background: black;
-    border-radius: 10px;
-    box-shadow: 0 7px 25px 0 rgba(0, 0, 0, 0.08);
-    border: 3px solid #ffbf00;
-}
-
-#billing_dashboard .cards .card:hover{
-    background: #ffbf00;
-}
-
-#billing_dashboard .cards .card:hover .number, 
-#billing_dashboard .cards .card:hover .card-name,
-#billing_dashboard .cards .card:hover .icon-box i
-{
-    color: black;
-}
-
-#billing_dashboard .number
-{
-    font-size: 35px;
-    font-weight: bold;
-    color: #ffbf00;
-    text-align: center;
-}
-
-#billing_dashboard .card-name
-{
-    color: white;
-    font-weight: 600;    
-}
-
-#billing_dashboard .icon-box i
-{
-    font-size: 45px;
-    color: #ffbf00;
-}
-
-#billing_dashboard .list
-{
-    width: 100%;
-    font-size: 25px;
-    color: white;
-}
-
-#billing_dashboard table
-{
-    width: 100%;
-}
-
-#billing_dashboard table tr
-{
-    border-bottom: 1px solid white;
-}
-
-#billing_dashboard table td,
-#billing_dashboard table th
-{
-    padding: 0 10px;
-    text-align: center;
-    font-size: 16px;
-}
-
-#billing_dashboard table th
-{
-    color: #ffbf00;
 }
 
 // Billing Process
@@ -2082,9 +1647,10 @@ section h2
 .marketing .cards2
 {
     width: 100%;
+    height: 120px;
     padding: 10px 0px 0 0px;
     display: grid;
-    grid-template-columns: 3fr 2fr;
+    grid-template-columns: repeat(5, 1fr);
     grid-gap: 20px;
     background: #f5f5f5;
 }
@@ -2092,31 +1658,11 @@ section h2
 .marketing .cards3
 {
     width: 100%;
-    height: 120px;
     padding: 10px 0px 0 0px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 3fr 2fr;
     grid-gap: 20px;
-}
-
-.marketing .cards4
-{
-    width: 100%;
-    height: 120px;
-    padding: 10px 0px 0 0px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 20px;
-}
-
-.marketing .cards5
-{
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    border: 3px solid black;
-    border-radius: 5px;
-    background-color: #ffbf00;
+    background: #f5f5f5;
 }
 
 .marketing .card
@@ -2431,76 +1977,6 @@ section h2
     background: #f5f5f5;
 }
 
-.logistic .card{
-    padding: 0 10px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    background: black;
-    border-radius: 10px;
-    box-shadow: 0 7px 25px 0 rgba(0, 0, 0, 0.08);
-    border: 3px solid #ffbf00;
-}
-
-.logistic .cards .card:hover{
-    background: #ffbf00;
-}
-
-.logistic .cards .card:hover .number, 
-.logistic .cards .card:hover .card-name,
-.logistic .cards .card:hover .icon-box i{
-    color: black;
-}
-
-.logistic .number{
-    font-size: 35px;
-    font-weight: bold;
-    color: #ffbf00;
-    text-align: center;
-}
-
-.logistic .card-name{
-    color: white;
-    font-weight: 600;    
-}
-
-.logistic .icon-box i{
-    font-size: 45px;
-    color: #ffbf00;
-}
-
-.logistic .list
-{
-    width: 100%;
-    font-size: 25px;
-    color: white;
-}
-
-.logistic table
-{
-    width: 100%;
-}
-
-.logistic table tr
-{
-    border-bottom: 1px solid white;
-}
-
-.logistic table td,
-.logistic table th
-{
-    padding: 0 10px;
-    text-align: center;
-    font-size: 16px;
-}
-
-.logistic table th
-{
-    color: #ffbf00;
-}
-
-
 /* LOGISTICS TRAVEL FORM section starts here */
 .logistic form .form
 {
@@ -2747,75 +2223,6 @@ section h2
     background: #f5f5f5;
 }
 
-.safety .card{
-    padding: 0 10px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    background: black;
-    border-radius: 10px;
-    box-shadow: 0 7px 25px 0 rgba(0, 0, 0, 0.08);
-    border: 3px solid #ffbf00;
-}
-
-.safety .cards .card:hover{
-    background: #ffbf00;
-}
-
-.safety .cards .card:hover .number, 
-.safety .cards .card:hover .card-name,
-.safety .cards .card:hover .icon-box i{
-    color: black;
-}
-
-.safety .number{
-    font-size: 35px;
-    font-weight: bold;
-    color: #ffbf00;
-    text-align: center;
-}
-
-.safety .card-name{
-    color: white;
-    font-weight: 600;    
-}
-
-.safety .icon-box i{
-    font-size: 45px;
-    color: #ffbf00;
-}
-
-.safety .list
-{
-    width: 100%;
-    font-size: 25px;
-    color: white;
-}
-
-.safety table
-{
-    width: 100%;
-}
-
-.safety table tr
-{
-    border-bottom: 1px solid white;
-}
-
-.safety table td,
-.safety table th
-{
-    padding: 0 10px;
-    text-align: center;
-    font-size: 16px;
-}
-
-.safety table th
-{
-    color: #ffbf00;
-}
-
 /* incident_documentation_form section starts here */
 .safety form .form
 {
@@ -3012,79 +2419,6 @@ section h2
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 20px;
     background: #f5f5f5;
-}
-
-.hr .card{
-    padding: 0 10px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    background: black;
-    border-radius: 10px;
-    box-shadow: 0 7px 25px 0 rgba(0, 0, 0, 0.08);
-    border: 3px solid #ffbf00;
-}
-
-.hr .cards .card:hover{
-    background: #ffbf00;
-}
-
-.hr .cards .card:hover .number, 
-.hr .cards .card:hover .card-name,
-.hr .cards .card:hover .icon-box i
-{
-    color: black;
-}
-
-.hr .number
-{
-    font-size: 35px;
-    font-weight: bold;
-    color: #ffbf00;
-    text-align: center;
-}
-
-.hr .card-name
-{
-    color: white;
-    font-weight: 600;    
-}
-
-.hr .icon-box i
-{
-    font-size: 45px;
-    color: #ffbf00;
-}
-
-.hr .list
-{
-    width: 100%;
-    font-size: 25px;
-    color: white;
-}
-
-.hr table
-{
-    width: 100%;
-}
-
-.hr table tr
-{
-    border-bottom: 1px solid white;
-}
-
-.hr table td,
-.hr table th
-{
-    padding: 0 10px;
-    text-align: center;
-    font-size: 16px;
-}
-
-.hr table th
-{
-    color: #ffbf00;
 }
 
 // attendance form
@@ -3428,7 +2762,7 @@ input:disabled {
     border-radius: 10px;
     overflow: scroll;
     min-height: 80%;
-    // display: none;
+    display: none;
 }
 
 .hr #generate_payslip_button,
@@ -3437,10 +2771,10 @@ input:disabled {
     max-width: 300px !important;
 }
 
-// .hr #download_payslip_button
-// {
-//     display: none;
-// }
+.hr #download_payslip_button
+{
+    display: none;
+}
 
 #payroll_form
 {
@@ -3888,7 +3222,7 @@ input:disabled {
     height: 120px;
     padding: 10px 0px 0 0px;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     grid-gap: 20px;
     background: #f5f5f5;
 }
@@ -4203,14 +3537,6 @@ input:disabled {
     font-size: 30px;
     font-weight: bold;
     color: white;
-}
-
-.ap_accounting button
-{
-    background-color: blue !important;
-    font-size: 30px;
-    font-weight: bold;
-    color: white !important;
 }
 
 .ap_accounting form #reset
