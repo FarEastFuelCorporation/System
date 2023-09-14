@@ -224,7 +224,7 @@ nav {
   transition: 0.5s;
   margin-top: 40px;
   letter-spacing: 4px;
-  background: #303030;
+  background: #f5f5f7;
   font-weight: bold;
   border-radius: 10px;
   border: 3px solid #ffbf00;
@@ -232,9 +232,9 @@ nav {
 
 .index_login-box .button:hover {
   background: #ffbf00;
-  color: #7a7a7a;
+  color: #f5f5f7;
   font-weight: bolder;
-  border: 3px solid black;
+  border: 3px solid white;
   border-radius: 5px;
   box-shadow: 0 0 5px #ffbf00, 0 0 25px #ffbf00, 0 0 50px #ffbf00, 0 0 100px #ffbf00;
 }
