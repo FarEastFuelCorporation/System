@@ -1143,6 +1143,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                     source2.style.display = "block";
                     source4.style.display = "none";
                     break;
+                case "SIR RUEL'S FUND":
+                    fundAmount = sir_ruels_fund;
+                    source2.style.display = "block";
+                    source4.style.display = "none";
+                    break;
                 case "SCRAP SALES":
                     fundAmount = scrap_sales;
                     source2.style.display = "block";
@@ -1160,6 +1165,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                     break;
                 case "HOUSE COLLECTION":
                     fundAmount = house_collection;
+                    source2.style.display = "block";
+                    source4.style.display = "none";
+                    break;
+                case "REPRESENTATION FUND":
+                    representation_fund = house_collection;
                     source2.style.display = "block";
                     source4.style.display = "none";
                     break;
