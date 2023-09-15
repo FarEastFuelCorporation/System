@@ -2060,67 +2060,71 @@ document.addEventListener('DOMContentLoaded', async function() {
                             //     payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DURATION")] != "SICK LEAVE"){
                             // if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DURATION")] != "ABSENT"){
                             if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DURATION")] != "ABSENT"){
-                                if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")] == "ORD"){
-                                    ord_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
-                                    ord_day_hrs_pay += parseFloat(ord_day_hrs) * (parseFloat(daily_rate)) / 8;
-                                    ord_ot_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
-                                    ord_ot_day_hrs_pay += parseFloat(ord_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.25) / 8;
-                                    ord_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
-                                    ord_night_hrs_pay += parseFloat(ord_night_hrs) * ((parseFloat(daily_rate)) * 1.10) / 8;
-                                    ord_ot_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
-                                    ord_ot_night_hrs_pay += parseFloat(ord_ot_night_hrs) * ((parseFloat(daily_rate)) * 1.375) / 8;
+                                var type_of_day = payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")];
+                                var day_hours = payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
+                                var ot_day_hours = payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
+                                var night_hours = payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
+                                var ot_night_hours = payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
+                                if(type_of_day == "ORD"){
+                                    ord_day_hrs += day_hours;
+                                    ord_ot_day_hrs += ot_day_hours;
+                                    ord_night_hrs += night_hours;
+                                    ord_ot_night_hrs += ot_night_hours;
                                 }
-                                if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")] == "RDD"){
-                                    rdd_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
-                                    rdd_day_hrs_pay += parseFloat(rdd_day_hrs) * ((parseFloat(daily_rate)) * 1.30) / 8;
-                                    rdd_ot_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
-                                    rdd_ot_day_hrs_pay += parseFloat(rdd_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.69 ) / 8;
-                                    rdd_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
-                                    rdd_night_hrs_pay += parseFloat(rdd_night_hrs) * ((parseFloat(daily_rate)) * 1.43) / 8;
-                                    rdd_ot_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
-                                    rdd_ot_night_hrs_pay += parseFloat(rdd_ot_night_hrs) * ((parseFloat(daily_rate)) * 1.859) / 8;
+                                else if(type_of_day == "RDD"){
+                                    rdd_day_hrs += day_hours;
+                                    rdd_ot_day_hrs += ot_day_hours;
+                                    rdd_night_hrs += night_hours;
+                                    rdd_ot_night_hrs += ot_night_hours;
                                 }
-                                else if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")] == "SH"){
-                                    sh_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
-                                    sh_day_hrs_pay += parseFloat(sh_day_hrs) * ((parseFloat(daily_rate)) * 1.30) / 8;
-                                    sh_ot_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
-                                    sh_ot_day_hrs_pay += parseFloat(sh_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.69) / 8;
-                                    sh_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
-                                    sh_night_hrs_pay += parseFloat(sh_night_hrs) * ((parseFloat(daily_rate)) * 1.43) / 8;
-                                    sh_ot_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
-                                    sh_ot_night_hrs_pay += parseFloat(sh_ot_night_hrs) * ((parseFloat(daily_rate)) * 1.859) / 8;
+                                else if(type_of_day == "SH"){
+                                    sh_day_hrs += day_hours;
+                                    sh_ot_day_hrs += ot_day_hours;
+                                    sh_night_hrs += night_hours;
+                                    sh_ot_night_hrs += ot_night_hours;
                                 }
-                                else if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")] == "RH"){
-                                    rh_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
-                                    rh_day_hrs_pay += parseFloat(rh_day_hrs) * ((parseFloat(daily_rate)) * 2) / 8;
-                                    rh_ot_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
-                                    rh_ot_day_hrs_pay += parseFloat(rh_ot_day_hrs) * ((parseFloat(daily_rate)) * 2.60) / 8;
-                                    rh_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
-                                    rh_night_hrs_pay += parseFloat(rh_night_hrs) * ((parseFloat(daily_rate)) * 2.20) / 8;
-                                    rh_ot_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
-                                    rh_ot_night_hrs_pay += parseFloat(rh_ot_night_hrs) * ((parseFloat(daily_rate)) * 2.86) / 8;
+                                else if(type_of_day == "RH"){
+                                    rh_day_hrs += day_hours;
+                                    rh_ot_day_hrs += ot_day_hours;
+                                    rh_night_hrs += night_hours;
+                                    rh_ot_night_hrs += ot_night_hours;
                                 }
-                                else if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")] == "SH & RDD"){
-                                    sh_rdd_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
-                                    sh_rdd_day_hrs_pay += parseFloat(sh_rdd_day_hrs) * ((parseFloat(daily_rate)) * 1.50) / 8;
-                                    sh_rdd_ot_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
-                                    sh_rdd_ot_day_hrs_pay += parseFloat(sh_rdd_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.95 ) / 8;
-                                    sh_rdd_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
-                                    sh_rdd_night_hrs_pay += parseFloat(sh_rdd_night_hrs) * ((parseFloat(daily_rate)) * 1.65) / 8;
-                                    sh_rdd_ot_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
-                                    sh_rdd_ot_night_hrs_pay += parseFloat(sh_rdd_ot_night_hrs) * ((parseFloat(daily_rate)) * 2.145) / 8;
-                                    console.log((parseFloat(daily_rate)) * 1.50)
+                                else if(type_of_day == "SH & RDD"){
+                                    sh_rdd_day_hrs += day_hours;
+                                    sh_rdd_ot_day_hrs += ot_day_hours;
+                                    sh_rdd_night_hrs += night_hours;
+                                    sh_rdd_ot_night_hrs += ot_night_hours;
                                 }
-                                else if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")] == "RH & RDD"){
-                                    rh_rdd_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
-                                    rh_rdd_day_hrs_pay += parseFloat(rh_rdd_day_hrs) * ((parseFloat(daily_rate)) * 2.60) / 8;
-                                    rh_rdd_ot_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
-                                    rh_rdd_ot_day_hrs_pay += parseFloat(rh_rdd_ot_day_hrs) * ((parseFloat(daily_rate)) * 3.38) / 8;
-                                    rh_rdd_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
-                                    rh_rdd_night_hrs_pay += parseFloat(rh_rdd_night_hrs) * ((parseFloat(daily_rate)) * 2.86) / 8;
-                                    rh_rdd_ot_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
-                                    rh_rdd_ot_night_hrs_pay += parseFloat(rh_rdd_ot_night_hrs) * ((parseFloat(daily_rate)) * 3.718) / 8;
-                                }    
+                                else if(type_of_day == "RH & RDD"){
+                                    rh_rdd_day_hrs += day_hours;
+                                    rh_rdd_ot_day_hrs += ot_day_hours;
+                                    rh_rdd_night_hrs += night_hours;
+                                    rh_rdd_ot_night_hrs += ot_night_hours;
+                                }
+                                ord_day_hrs_pay = parseFloat(ord_day_hrs) * (parseFloat(daily_rate)) / 8;
+                                ord_ot_day_hrs_pay = parseFloat(ord_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.25) / 8;
+                                ord_night_hrs_pay = parseFloat(ord_night_hrs) * ((parseFloat(daily_rate)) * 1.10) / 8;
+                                ord_ot_night_hrs_pay = parseFloat(ord_ot_night_hrs) * ((parseFloat(daily_rate)) * 1.375) / 8;
+                                rdd_day_hrs_pay = parseFloat(rdd_day_hrs) * ((parseFloat(daily_rate)) * 1.30) / 8;
+                                rdd_ot_day_hrs_pay = parseFloat(rdd_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.69 ) / 8;
+                                rdd_night_hrs_pay = parseFloat(rdd_night_hrs) * ((parseFloat(daily_rate)) * 1.43) / 8;
+                                rdd_ot_night_hrs_pay = parseFloat(rdd_ot_night_hrs) * ((parseFloat(daily_rate)) * 1.859) / 8;
+                                sh_day_hrs_pay = parseFloat(sh_day_hrs) * ((parseFloat(daily_rate)) * 1.30) / 8;
+                                sh_ot_day_hrs_pay = parseFloat(sh_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.69) / 8;
+                                sh_night_hrs_pay = parseFloat(sh_night_hrs) * ((parseFloat(daily_rate)) * 1.43) / 8;
+                                sh_ot_night_hrs_pay = parseFloat(sh_ot_night_hrs) * ((parseFloat(daily_rate)) * 1.859) / 8;
+                                rh_day_hrs_pay = parseFloat(rh_day_hrs) * ((parseFloat(daily_rate)) * 2) / 8;
+                                rh_ot_day_hrs_pay = parseFloat(rh_ot_day_hrs) * ((parseFloat(daily_rate)) * 2.60) / 8;
+                                rh_night_hrs_pay = parseFloat(rh_night_hrs) * ((parseFloat(daily_rate)) * 2.20) / 8;
+                                rh_ot_night_hrs_pay = parseFloat(rh_ot_night_hrs) * ((parseFloat(daily_rate)) * 2.86) / 8;
+                                sh_rdd_day_hrs_pay = parseFloat(sh_rdd_day_hrs) * ((parseFloat(daily_rate)) * 1.50) / 8;
+                                sh_rdd_ot_day_hrs_pay = parseFloat(sh_rdd_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.95 ) / 8;
+                                sh_rdd_night_hrs_pay = parseFloat(sh_rdd_night_hrs) * ((parseFloat(daily_rate)) * 1.65) / 8;
+                                sh_rdd_ot_night_hrs_pay = parseFloat(sh_rdd_ot_night_hrs) * ((parseFloat(daily_rate)) * 2.145) / 8;
+                                rh_rdd_day_hrs_pay = parseFloat(rh_rdd_day_hrs) * ((parseFloat(daily_rate)) * 2.60) / 8;
+                                rh_rdd_ot_day_hrs_pay = parseFloat(rh_rdd_ot_day_hrs) * ((parseFloat(daily_rate)) * 3.38) / 8;
+                                rh_rdd_night_hrs_pay = parseFloat(rh_rdd_night_hrs) * ((parseFloat(daily_rate)) * 2.86) / 8;
+                                rh_rdd_ot_night_hrs_pay = parseFloat(rh_rdd_ot_night_hrs) * ((parseFloat(daily_rate)) * 3.718) / 8;
                             }    
                         }
                     }
@@ -2455,67 +2459,71 @@ document.addEventListener('DOMContentLoaded', async function() {
                             //     payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DURATION")] != "SICK LEAVE"){
                             // if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DURATION")] != "ABSENT"){
                             if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DURATION")] != "ABSENT"){
-                                if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")] == "ORD"){
-                                    ord_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
-                                    ord_day_hrs_pay += parseFloat(ord_day_hrs) * (parseFloat(daily_rate)) / 8;
-                                    ord_ot_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
-                                    ord_ot_day_hrs_pay += parseFloat(ord_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.25) / 8;
-                                    ord_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
-                                    ord_night_hrs_pay += parseFloat(ord_night_hrs) * ((parseFloat(daily_rate)) * 1.10) / 8;
-                                    ord_ot_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
-                                    ord_ot_night_hrs_pay += parseFloat(ord_ot_night_hrs) * ((parseFloat(daily_rate)) * 1.375) / 8;
+                                var type_of_day = payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")];
+                                var day_hours = payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
+                                var ot_day_hours = payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
+                                var night_hours = payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
+                                var ot_night_hours = payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
+                                if(type_of_day == "ORD"){
+                                    ord_day_hrs += day_hours;
+                                    ord_ot_day_hrs += ot_day_hours;
+                                    ord_night_hrs += night_hours;
+                                    ord_ot_night_hrs += ot_night_hours;
                                 }
-                                if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")] == "RDD"){
-                                    rdd_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
-                                    rdd_day_hrs_pay += parseFloat(rdd_day_hrs) * ((parseFloat(daily_rate)) * 1.30) / 8;
-                                    rdd_ot_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
-                                    rdd_ot_day_hrs_pay += parseFloat(rdd_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.69 ) / 8;
-                                    rdd_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
-                                    rdd_night_hrs_pay += parseFloat(rdd_night_hrs) * ((parseFloat(daily_rate)) * 1.43) / 8;
-                                    rdd_ot_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
-                                    rdd_ot_night_hrs_pay += parseFloat(rdd_ot_night_hrs) * ((parseFloat(daily_rate)) * 1.859) / 8;
+                                else if(type_of_day == "RDD"){
+                                    rdd_day_hrs += day_hours;
+                                    rdd_ot_day_hrs += ot_day_hours;
+                                    rdd_night_hrs += night_hours;
+                                    rdd_ot_night_hrs += ot_night_hours;
                                 }
-                                else if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")] == "SH"){
-                                    sh_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
-                                    sh_day_hrs_pay += parseFloat(sh_day_hrs) * ((parseFloat(daily_rate)) * 1.30) / 8;
-                                    sh_ot_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
-                                    sh_ot_day_hrs_pay += parseFloat(sh_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.69) / 8;
-                                    sh_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
-                                    sh_night_hrs_pay += parseFloat(sh_night_hrs) * ((parseFloat(daily_rate)) * 1.43) / 8;
-                                    sh_ot_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
-                                    sh_ot_night_hrs_pay += parseFloat(sh_ot_night_hrs) * ((parseFloat(daily_rate)) * 1.859) / 8;
+                                else if(type_of_day == "SH"){
+                                    sh_day_hrs += day_hours;
+                                    sh_ot_day_hrs += ot_day_hours;
+                                    sh_night_hrs += night_hours;
+                                    sh_ot_night_hrs += ot_night_hours;
                                 }
-                                else if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")] == "RH"){
-                                    rh_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
-                                    rh_day_hrs_pay += parseFloat(rh_day_hrs) * ((parseFloat(daily_rate)) * 2) / 8;
-                                    rh_ot_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
-                                    rh_ot_day_hrs_pay += parseFloat(rh_ot_day_hrs) * ((parseFloat(daily_rate)) * 2.60) / 8;
-                                    rh_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
-                                    rh_night_hrs_pay += parseFloat(rh_night_hrs) * ((parseFloat(daily_rate)) * 2.20) / 8;
-                                    rh_ot_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
-                                    rh_ot_night_hrs_pay += parseFloat(rh_ot_night_hrs) * ((parseFloat(daily_rate)) * 2.86) / 8;
+                                else if(type_of_day == "RH"){
+                                    rh_day_hrs += day_hours;
+                                    rh_ot_day_hrs += ot_day_hours;
+                                    rh_night_hrs += night_hours;
+                                    rh_ot_night_hrs += ot_night_hours;
                                 }
-                                else if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")] == "SH & RDD"){
-                                    sh_rdd_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
-                                    sh_rdd_day_hrs_pay += parseFloat(sh_rdd_day_hrs) * ((parseFloat(daily_rate)) * 1.50) / 8;
-                                    sh_rdd_ot_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
-                                    sh_rdd_ot_day_hrs_pay += parseFloat(sh_rdd_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.95 ) / 8;
-                                    sh_rdd_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
-                                    sh_rdd_night_hrs_pay += parseFloat(sh_rdd_night_hrs) * ((parseFloat(daily_rate)) * 1.65) / 8;
-                                    sh_rdd_ot_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
-                                    sh_rdd_ot_night_hrs_pay += parseFloat(sh_rdd_ot_night_hrs) * ((parseFloat(daily_rate)) * 2.145) / 8;
-                                    console.log((parseFloat(daily_rate)) * 1.50)
+                                else if(type_of_day == "SH & RDD"){
+                                    sh_rdd_day_hrs += day_hours;
+                                    sh_rdd_ot_day_hrs += ot_day_hours;
+                                    sh_rdd_night_hrs += night_hours;
+                                    sh_rdd_ot_night_hrs += ot_night_hours;
                                 }
-                                else if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")] == "RH & RDD"){
-                                    rh_rdd_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
-                                    rh_rdd_day_hrs_pay += parseFloat(rh_rdd_day_hrs) * ((parseFloat(daily_rate)) * 2.60) / 8;
-                                    rh_rdd_ot_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
-                                    rh_rdd_ot_day_hrs_pay += parseFloat(rh_rdd_ot_day_hrs) * ((parseFloat(daily_rate)) * 3.38) / 8;
-                                    rh_rdd_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
-                                    rh_rdd_night_hrs_pay += parseFloat(rh_rdd_night_hrs) * ((parseFloat(daily_rate)) * 2.86) / 8;
-                                    rh_rdd_ot_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
-                                    rh_rdd_ot_night_hrs_pay += parseFloat(rh_rdd_ot_night_hrs) * ((parseFloat(daily_rate)) * 3.718) / 8;
-                                }    
+                                else if(type_of_day == "RH & RDD"){
+                                    rh_rdd_day_hrs += day_hours;
+                                    rh_rdd_ot_day_hrs += ot_day_hours;
+                                    rh_rdd_night_hrs += night_hours;
+                                    rh_rdd_ot_night_hrs += ot_night_hours;
+                                }
+                                ord_day_hrs_pay = parseFloat(ord_day_hrs) * (parseFloat(daily_rate)) / 8;
+                                ord_ot_day_hrs_pay = parseFloat(ord_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.25) / 8;
+                                ord_night_hrs_pay = parseFloat(ord_night_hrs) * ((parseFloat(daily_rate)) * 1.10) / 8;
+                                ord_ot_night_hrs_pay = parseFloat(ord_ot_night_hrs) * ((parseFloat(daily_rate)) * 1.375) / 8;
+                                rdd_day_hrs_pay = parseFloat(rdd_day_hrs) * ((parseFloat(daily_rate)) * 1.30) / 8;
+                                rdd_ot_day_hrs_pay = parseFloat(rdd_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.69 ) / 8;
+                                rdd_night_hrs_pay = parseFloat(rdd_night_hrs) * ((parseFloat(daily_rate)) * 1.43) / 8;
+                                rdd_ot_night_hrs_pay = parseFloat(rdd_ot_night_hrs) * ((parseFloat(daily_rate)) * 1.859) / 8;
+                                sh_day_hrs_pay = parseFloat(sh_day_hrs) * ((parseFloat(daily_rate)) * 1.30) / 8;
+                                sh_ot_day_hrs_pay = parseFloat(sh_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.69) / 8;
+                                sh_night_hrs_pay = parseFloat(sh_night_hrs) * ((parseFloat(daily_rate)) * 1.43) / 8;
+                                sh_ot_night_hrs_pay = parseFloat(sh_ot_night_hrs) * ((parseFloat(daily_rate)) * 1.859) / 8;
+                                rh_day_hrs_pay = parseFloat(rh_day_hrs) * ((parseFloat(daily_rate)) * 2) / 8;
+                                rh_ot_day_hrs_pay = parseFloat(rh_ot_day_hrs) * ((parseFloat(daily_rate)) * 2.60) / 8;
+                                rh_night_hrs_pay = parseFloat(rh_night_hrs) * ((parseFloat(daily_rate)) * 2.20) / 8;
+                                rh_ot_night_hrs_pay = parseFloat(rh_ot_night_hrs) * ((parseFloat(daily_rate)) * 2.86) / 8;
+                                sh_rdd_day_hrs_pay = parseFloat(sh_rdd_day_hrs) * ((parseFloat(daily_rate)) * 1.50) / 8;
+                                sh_rdd_ot_day_hrs_pay = parseFloat(sh_rdd_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.95 ) / 8;
+                                sh_rdd_night_hrs_pay = parseFloat(sh_rdd_night_hrs) * ((parseFloat(daily_rate)) * 1.65) / 8;
+                                sh_rdd_ot_night_hrs_pay = parseFloat(sh_rdd_ot_night_hrs) * ((parseFloat(daily_rate)) * 2.145) / 8;
+                                rh_rdd_day_hrs_pay = parseFloat(rh_rdd_day_hrs) * ((parseFloat(daily_rate)) * 2.60) / 8;
+                                rh_rdd_ot_day_hrs_pay = parseFloat(rh_rdd_ot_day_hrs) * ((parseFloat(daily_rate)) * 3.38) / 8;
+                                rh_rdd_night_hrs_pay = parseFloat(rh_rdd_night_hrs) * ((parseFloat(daily_rate)) * 2.86) / 8;
+                                rh_rdd_ot_night_hrs_pay = parseFloat(rh_rdd_ot_night_hrs) * ((parseFloat(daily_rate)) * 3.718) / 8;
                             }    
                         }
                     }
@@ -2794,9 +2802,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
             else if(payroll_type2.value == "SEMI-MONTHLY"){
-                console.log()
                 for(let c = 1; c < payroll_transaction_data_list.content.length; c++){
-                    console.log()
                     if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "YEAR")] == search_year.value && (payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "WEEK NUMBER / MONTH-CUT OFF")]).toString().substring(0,2) == (months.indexOf(search_month.value) + 1).toString().padStart(2, "0")){
                         if (!payslip_employee_id.includes(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "EMPLOYEE ID")])) {
                             payslip_employee_id.push(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "EMPLOYEE ID")]);
@@ -2907,67 +2913,71 @@ document.addEventListener('DOMContentLoaded', async function() {
                             //     payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DURATION")] != "SICK LEAVE"){
                             // if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DURATION")] != "ABSENT"){
                             if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DURATION")] != "ABSENT"){
-                                if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")] == "ORD"){
-                                    ord_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
-                                    ord_day_hrs_pay += parseFloat(ord_day_hrs) * (parseFloat(daily_rate)) / 8;
-                                    ord_ot_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
-                                    ord_ot_day_hrs_pay += parseFloat(ord_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.25) / 8;
-                                    ord_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
-                                    ord_night_hrs_pay += parseFloat(ord_night_hrs) * ((parseFloat(daily_rate)) * 1.10) / 8;
-                                    ord_ot_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
-                                    ord_ot_night_hrs_pay += parseFloat(ord_ot_night_hrs) * ((parseFloat(daily_rate)) * 1.375) / 8;
+                                var type_of_day = payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")];
+                                var day_hours = payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
+                                var ot_day_hours = payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
+                                var night_hours = payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
+                                var ot_night_hours = payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
+                                if(type_of_day == "ORD"){
+                                    ord_day_hrs += day_hours;
+                                    ord_ot_day_hrs += ot_day_hours;
+                                    ord_night_hrs += night_hours;
+                                    ord_ot_night_hrs += ot_night_hours;
                                 }
-                                if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")] == "RDD"){
-                                    rdd_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
-                                    rdd_day_hrs_pay += parseFloat(rdd_day_hrs) * ((parseFloat(daily_rate)) * 1.30) / 8;
-                                    rdd_ot_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
-                                    rdd_ot_day_hrs_pay += parseFloat(rdd_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.69 ) / 8;
-                                    rdd_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
-                                    rdd_night_hrs_pay += parseFloat(rdd_night_hrs) * ((parseFloat(daily_rate)) * 1.43) / 8;
-                                    rdd_ot_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
-                                    rdd_ot_night_hrs_pay += parseFloat(rdd_ot_night_hrs) * ((parseFloat(daily_rate)) * 1.859) / 8;
+                                else if(type_of_day == "RDD"){
+                                    rdd_day_hrs += day_hours;
+                                    rdd_ot_day_hrs += ot_day_hours;
+                                    rdd_night_hrs += night_hours;
+                                    rdd_ot_night_hrs += ot_night_hours;
                                 }
-                                else if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")] == "SH"){
-                                    sh_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
-                                    sh_day_hrs_pay += parseFloat(sh_day_hrs) * ((parseFloat(daily_rate)) * 1.30) / 8;
-                                    sh_ot_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
-                                    sh_ot_day_hrs_pay += parseFloat(sh_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.69) / 8;
-                                    sh_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
-                                    sh_night_hrs_pay += parseFloat(sh_night_hrs) * ((parseFloat(daily_rate)) * 1.43) / 8;
-                                    sh_ot_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
-                                    sh_ot_night_hrs_pay += parseFloat(sh_ot_night_hrs) * ((parseFloat(daily_rate)) * 1.859) / 8;
+                                else if(type_of_day == "SH"){
+                                    sh_day_hrs += day_hours;
+                                    sh_ot_day_hrs += ot_day_hours;
+                                    sh_night_hrs += night_hours;
+                                    sh_ot_night_hrs += ot_night_hours;
                                 }
-                                else if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")] == "RH"){
-                                    rh_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
-                                    rh_day_hrs_pay += parseFloat(rh_day_hrs) * ((parseFloat(daily_rate)) * 2) / 8;
-                                    rh_ot_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
-                                    rh_ot_day_hrs_pay += parseFloat(rh_ot_day_hrs) * ((parseFloat(daily_rate)) * 2.60) / 8;
-                                    rh_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
-                                    rh_night_hrs_pay += parseFloat(rh_night_hrs) * ((parseFloat(daily_rate)) * 2.20) / 8;
-                                    rh_ot_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
-                                    rh_ot_night_hrs_pay += parseFloat(rh_ot_night_hrs) * ((parseFloat(daily_rate)) * 2.86) / 8;
+                                else if(type_of_day == "RH"){
+                                    rh_day_hrs += day_hours;
+                                    rh_ot_day_hrs += ot_day_hours;
+                                    rh_night_hrs += night_hours;
+                                    rh_ot_night_hrs += ot_night_hours;
                                 }
-                                else if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")] == "SH & RDD"){
-                                    sh_rdd_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
-                                    sh_rdd_day_hrs_pay += parseFloat(sh_rdd_day_hrs) * ((parseFloat(daily_rate)) * 1.50) / 8;
-                                    sh_rdd_ot_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
-                                    sh_rdd_ot_day_hrs_pay += parseFloat(sh_rdd_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.95 ) / 8;
-                                    sh_rdd_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
-                                    sh_rdd_night_hrs_pay += parseFloat(sh_rdd_night_hrs) * ((parseFloat(daily_rate)) * 1.65) / 8;
-                                    sh_rdd_ot_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
-                                    sh_rdd_ot_night_hrs_pay += parseFloat(sh_rdd_ot_night_hrs) * ((parseFloat(daily_rate)) * 2.145) / 8;
-                                    console.log((parseFloat(daily_rate)) * 1.50)
+                                else if(type_of_day == "SH & RDD"){
+                                    sh_rdd_day_hrs += day_hours;
+                                    sh_rdd_ot_day_hrs += ot_day_hours;
+                                    sh_rdd_night_hrs += night_hours;
+                                    sh_rdd_ot_night_hrs += ot_night_hours;
                                 }
-                                else if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")] == "RH & RDD"){
-                                    rh_rdd_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
-                                    rh_rdd_day_hrs_pay += parseFloat(rh_rdd_day_hrs) * ((parseFloat(daily_rate)) * 2.60) / 8;
-                                    rh_rdd_ot_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
-                                    rh_rdd_ot_day_hrs_pay += parseFloat(rh_rdd_ot_day_hrs) * ((parseFloat(daily_rate)) * 3.38) / 8;
-                                    rh_rdd_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
-                                    rh_rdd_night_hrs_pay += parseFloat(rh_rdd_night_hrs) * ((parseFloat(daily_rate)) * 2.86) / 8;
-                                    rh_rdd_ot_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
-                                    rh_rdd_ot_night_hrs_pay += parseFloat(rh_rdd_ot_night_hrs) * ((parseFloat(daily_rate)) * 3.718) / 8;
-                                }    
+                                else if(type_of_day == "RH & RDD"){
+                                    rh_rdd_day_hrs += day_hours;
+                                    rh_rdd_ot_day_hrs += ot_day_hours;
+                                    rh_rdd_night_hrs += night_hours;
+                                    rh_rdd_ot_night_hrs += ot_night_hours;
+                                }
+                                ord_day_hrs_pay = parseFloat(ord_day_hrs) * (parseFloat(daily_rate)) / 8;
+                                ord_ot_day_hrs_pay = parseFloat(ord_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.25) / 8;
+                                ord_night_hrs_pay = parseFloat(ord_night_hrs) * ((parseFloat(daily_rate)) * 1.10) / 8;
+                                ord_ot_night_hrs_pay = parseFloat(ord_ot_night_hrs) * ((parseFloat(daily_rate)) * 1.375) / 8;
+                                rdd_day_hrs_pay = parseFloat(rdd_day_hrs) * ((parseFloat(daily_rate)) * 1.30) / 8;
+                                rdd_ot_day_hrs_pay = parseFloat(rdd_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.69 ) / 8;
+                                rdd_night_hrs_pay = parseFloat(rdd_night_hrs) * ((parseFloat(daily_rate)) * 1.43) / 8;
+                                rdd_ot_night_hrs_pay = parseFloat(rdd_ot_night_hrs) * ((parseFloat(daily_rate)) * 1.859) / 8;
+                                sh_day_hrs_pay = parseFloat(sh_day_hrs) * ((parseFloat(daily_rate)) * 1.30) / 8;
+                                sh_ot_day_hrs_pay = parseFloat(sh_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.69) / 8;
+                                sh_night_hrs_pay = parseFloat(sh_night_hrs) * ((parseFloat(daily_rate)) * 1.43) / 8;
+                                sh_ot_night_hrs_pay = parseFloat(sh_ot_night_hrs) * ((parseFloat(daily_rate)) * 1.859) / 8;
+                                rh_day_hrs_pay = parseFloat(rh_day_hrs) * ((parseFloat(daily_rate)) * 2) / 8;
+                                rh_ot_day_hrs_pay = parseFloat(rh_ot_day_hrs) * ((parseFloat(daily_rate)) * 2.60) / 8;
+                                rh_night_hrs_pay = parseFloat(rh_night_hrs) * ((parseFloat(daily_rate)) * 2.20) / 8;
+                                rh_ot_night_hrs_pay = parseFloat(rh_ot_night_hrs) * ((parseFloat(daily_rate)) * 2.86) / 8;
+                                sh_rdd_day_hrs_pay = parseFloat(sh_rdd_day_hrs) * ((parseFloat(daily_rate)) * 1.50) / 8;
+                                sh_rdd_ot_day_hrs_pay = parseFloat(sh_rdd_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.95 ) / 8;
+                                sh_rdd_night_hrs_pay = parseFloat(sh_rdd_night_hrs) * ((parseFloat(daily_rate)) * 1.65) / 8;
+                                sh_rdd_ot_night_hrs_pay = parseFloat(sh_rdd_ot_night_hrs) * ((parseFloat(daily_rate)) * 2.145) / 8;
+                                rh_rdd_day_hrs_pay = parseFloat(rh_rdd_day_hrs) * ((parseFloat(daily_rate)) * 2.60) / 8;
+                                rh_rdd_ot_day_hrs_pay = parseFloat(rh_rdd_ot_day_hrs) * ((parseFloat(daily_rate)) * 3.38) / 8;
+                                rh_rdd_night_hrs_pay = parseFloat(rh_rdd_night_hrs) * ((parseFloat(daily_rate)) * 2.86) / 8;
+                                rh_rdd_ot_night_hrs_pay = parseFloat(rh_rdd_ot_night_hrs) * ((parseFloat(daily_rate)) * 3.718) / 8;
                             }    
                         }
                     }
@@ -3302,67 +3312,71 @@ document.addEventListener('DOMContentLoaded', async function() {
                             //     payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DURATION")] != "SICK LEAVE"){
                             // if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DURATION")] != "ABSENT"){
                             if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DURATION")] != "ABSENT"){
-                                if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")] == "ORD"){
-                                    ord_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
-                                    ord_day_hrs_pay += parseFloat(ord_day_hrs) * (parseFloat(daily_rate)) / 8;
-                                    ord_ot_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
-                                    ord_ot_day_hrs_pay += parseFloat(ord_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.25) / 8;
-                                    ord_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
-                                    ord_night_hrs_pay += parseFloat(ord_night_hrs) * ((parseFloat(daily_rate)) * 1.10) / 8;
-                                    ord_ot_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
-                                    ord_ot_night_hrs_pay += parseFloat(ord_ot_night_hrs) * ((parseFloat(daily_rate)) * 1.375) / 8;
+                                var type_of_day = payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")];
+                                var day_hours = payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
+                                var ot_day_hours = payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
+                                var night_hours = payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
+                                var ot_night_hours = payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
+                                if(type_of_day == "ORD"){
+                                    ord_day_hrs += day_hours;
+                                    ord_ot_day_hrs += ot_day_hours;
+                                    ord_night_hrs += night_hours;
+                                    ord_ot_night_hrs += ot_night_hours;
                                 }
-                                if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")] == "RDD"){
-                                    rdd_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
-                                    rdd_day_hrs_pay += parseFloat(rdd_day_hrs) * ((parseFloat(daily_rate)) * 1.30) / 8;
-                                    rdd_ot_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
-                                    rdd_ot_day_hrs_pay += parseFloat(rdd_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.69 ) / 8;
-                                    rdd_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
-                                    rdd_night_hrs_pay += parseFloat(rdd_night_hrs) * ((parseFloat(daily_rate)) * 1.43) / 8;
-                                    rdd_ot_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
-                                    rdd_ot_night_hrs_pay += parseFloat(rdd_ot_night_hrs) * ((parseFloat(daily_rate)) * 1.859) / 8;
+                                else if(type_of_day == "RDD"){
+                                    rdd_day_hrs += day_hours;
+                                    rdd_ot_day_hrs += ot_day_hours;
+                                    rdd_night_hrs += night_hours;
+                                    rdd_ot_night_hrs += ot_night_hours;
                                 }
-                                else if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")] == "SH"){
-                                    sh_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
-                                    sh_day_hrs_pay += parseFloat(sh_day_hrs) * ((parseFloat(daily_rate)) * 1.30) / 8;
-                                    sh_ot_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
-                                    sh_ot_day_hrs_pay += parseFloat(sh_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.69) / 8;
-                                    sh_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
-                                    sh_night_hrs_pay += parseFloat(sh_night_hrs) * ((parseFloat(daily_rate)) * 1.43) / 8;
-                                    sh_ot_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
-                                    sh_ot_night_hrs_pay += parseFloat(sh_ot_night_hrs) * ((parseFloat(daily_rate)) * 1.859) / 8;
+                                else if(type_of_day == "SH"){
+                                    sh_day_hrs += day_hours;
+                                    sh_ot_day_hrs += ot_day_hours;
+                                    sh_night_hrs += night_hours;
+                                    sh_ot_night_hrs += ot_night_hours;
                                 }
-                                else if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")] == "RH"){
-                                    rh_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
-                                    rh_day_hrs_pay += parseFloat(rh_day_hrs) * ((parseFloat(daily_rate)) * 2) / 8;
-                                    rh_ot_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
-                                    rh_ot_day_hrs_pay += parseFloat(rh_ot_day_hrs) * ((parseFloat(daily_rate)) * 2.60) / 8;
-                                    rh_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
-                                    rh_night_hrs_pay += parseFloat(rh_night_hrs) * ((parseFloat(daily_rate)) * 2.20) / 8;
-                                    rh_ot_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
-                                    rh_ot_night_hrs_pay += parseFloat(rh_ot_night_hrs) * ((parseFloat(daily_rate)) * 2.86) / 8;
+                                else if(type_of_day == "RH"){
+                                    rh_day_hrs += day_hours;
+                                    rh_ot_day_hrs += ot_day_hours;
+                                    rh_night_hrs += night_hours;
+                                    rh_ot_night_hrs += ot_night_hours;
                                 }
-                                else if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")] == "SH & RDD"){
-                                    sh_rdd_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
-                                    sh_rdd_day_hrs_pay += parseFloat(sh_rdd_day_hrs) * ((parseFloat(daily_rate)) * 1.50) / 8;
-                                    sh_rdd_ot_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
-                                    sh_rdd_ot_day_hrs_pay += parseFloat(sh_rdd_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.95 ) / 8;
-                                    sh_rdd_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
-                                    sh_rdd_night_hrs_pay += parseFloat(sh_rdd_night_hrs) * ((parseFloat(daily_rate)) * 1.65) / 8;
-                                    sh_rdd_ot_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
-                                    sh_rdd_ot_night_hrs_pay += parseFloat(sh_rdd_ot_night_hrs) * ((parseFloat(daily_rate)) * 2.145) / 8;
-                                    console.log((parseFloat(daily_rate)) * 1.50)
+                                else if(type_of_day == "SH & RDD"){
+                                    sh_rdd_day_hrs += day_hours;
+                                    sh_rdd_ot_day_hrs += ot_day_hours;
+                                    sh_rdd_night_hrs += night_hours;
+                                    sh_rdd_ot_night_hrs += ot_night_hours;
                                 }
-                                else if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "TYPE OF DAY")] == "RH & RDD"){
-                                    rh_rdd_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAY HOURS")];
-                                    rh_rdd_day_hrs_pay += parseFloat(rh_rdd_day_hrs) * ((parseFloat(daily_rate)) * 2.60) / 8;
-                                    rh_rdd_ot_day_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT DAY HOURS")];
-                                    rh_rdd_ot_day_hrs_pay += parseFloat(rh_rdd_ot_day_hrs) * ((parseFloat(daily_rate)) * 3.38) / 8;
-                                    rh_rdd_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "NIGHT HOURS")];
-                                    rh_rdd_night_hrs_pay += parseFloat(rh_rdd_night_hrs) * ((parseFloat(daily_rate)) * 2.86) / 8;
-                                    rh_rdd_ot_night_hrs += payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "OT NIGHT HOURS")];
-                                    rh_rdd_ot_night_hrs_pay += parseFloat(rh_rdd_ot_night_hrs) * ((parseFloat(daily_rate)) * 3.718) / 8;
-                                }    
+                                else if(type_of_day == "RH & RDD"){
+                                    rh_rdd_day_hrs += day_hours;
+                                    rh_rdd_ot_day_hrs += ot_day_hours;
+                                    rh_rdd_night_hrs += night_hours;
+                                    rh_rdd_ot_night_hrs += ot_night_hours;
+                                }
+                                ord_day_hrs_pay = parseFloat(ord_day_hrs) * (parseFloat(daily_rate)) / 8;
+                                ord_ot_day_hrs_pay = parseFloat(ord_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.25) / 8;
+                                ord_night_hrs_pay = parseFloat(ord_night_hrs) * ((parseFloat(daily_rate)) * 1.10) / 8;
+                                ord_ot_night_hrs_pay = parseFloat(ord_ot_night_hrs) * ((parseFloat(daily_rate)) * 1.375) / 8;
+                                rdd_day_hrs_pay = parseFloat(rdd_day_hrs) * ((parseFloat(daily_rate)) * 1.30) / 8;
+                                rdd_ot_day_hrs_pay = parseFloat(rdd_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.69 ) / 8;
+                                rdd_night_hrs_pay = parseFloat(rdd_night_hrs) * ((parseFloat(daily_rate)) * 1.43) / 8;
+                                rdd_ot_night_hrs_pay = parseFloat(rdd_ot_night_hrs) * ((parseFloat(daily_rate)) * 1.859) / 8;
+                                sh_day_hrs_pay = parseFloat(sh_day_hrs) * ((parseFloat(daily_rate)) * 1.30) / 8;
+                                sh_ot_day_hrs_pay = parseFloat(sh_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.69) / 8;
+                                sh_night_hrs_pay = parseFloat(sh_night_hrs) * ((parseFloat(daily_rate)) * 1.43) / 8;
+                                sh_ot_night_hrs_pay = parseFloat(sh_ot_night_hrs) * ((parseFloat(daily_rate)) * 1.859) / 8;
+                                rh_day_hrs_pay = parseFloat(rh_day_hrs) * ((parseFloat(daily_rate)) * 2) / 8;
+                                rh_ot_day_hrs_pay = parseFloat(rh_ot_day_hrs) * ((parseFloat(daily_rate)) * 2.60) / 8;
+                                rh_night_hrs_pay = parseFloat(rh_night_hrs) * ((parseFloat(daily_rate)) * 2.20) / 8;
+                                rh_ot_night_hrs_pay = parseFloat(rh_ot_night_hrs) * ((parseFloat(daily_rate)) * 2.86) / 8;
+                                sh_rdd_day_hrs_pay = parseFloat(sh_rdd_day_hrs) * ((parseFloat(daily_rate)) * 1.50) / 8;
+                                sh_rdd_ot_day_hrs_pay = parseFloat(sh_rdd_ot_day_hrs) * ((parseFloat(daily_rate)) * 1.95 ) / 8;
+                                sh_rdd_night_hrs_pay = parseFloat(sh_rdd_night_hrs) * ((parseFloat(daily_rate)) * 1.65) / 8;
+                                sh_rdd_ot_night_hrs_pay = parseFloat(sh_rdd_ot_night_hrs) * ((parseFloat(daily_rate)) * 2.145) / 8;
+                                rh_rdd_day_hrs_pay = parseFloat(rh_rdd_day_hrs) * ((parseFloat(daily_rate)) * 2.60) / 8;
+                                rh_rdd_ot_day_hrs_pay = parseFloat(rh_rdd_ot_day_hrs) * ((parseFloat(daily_rate)) * 3.38) / 8;
+                                rh_rdd_night_hrs_pay = parseFloat(rh_rdd_night_hrs) * ((parseFloat(daily_rate)) * 2.86) / 8;
+                                rh_rdd_ot_night_hrs_pay = parseFloat(rh_rdd_ot_night_hrs) * ((parseFloat(daily_rate)) * 3.718) / 8;
                             }    
                         }
                     }
