@@ -63,12 +63,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         user_sidebar_department.innerText = username_data_list.content[7][findTextInArray(username_data_list, "DEPARTMENT")];
         
         // logistic_dashboard
-        const booked_transactions_logistics = document.querySelector("#logistic_dashboard #booked_transactions");
-        const on_hauling_transactions_logistics = document.querySelector("#logistic_dashboard #on_hauling_transactions");
-        const hauled_transactions_logistics = document.querySelector("#logistic_dashboard #hauled_transactions");
-        const pending_transactions_logistics = document.querySelector("#logistic_dashboard #pending_transactions");
-        const ongoing_list_logistics = document.querySelector("#logistic_dashboard #ongoing_list");
-        const pending_list_logistics = document.querySelector("#logistic_dashboard #pending_list");
+        const logistic_dashboard = document.querySelector("#logistic_dashboard");
+        const booked_transactions_logistics = logistic_dashboard.querySelector("#booked_transactions");
+        const on_hauling_transactions_logistics = logistic_dashboard.querySelector("#on_hauling_transactions");
+        const hauled_transactions_logistics = logistic_dashboard.querySelector("#hauled_transactions");
+        const pending_transactions_logistics = logistic_dashboard.querySelector("#pending_transactions");
+        const ongoing_list_logistics = logistic_dashboard.querySelector("#ongoing_list");
+        const pending_list_logistics = logistic_dashboard.querySelector("#pending_list");
+        const vehicle_type_container_logistics = logistic_dashboard.querySelector("#vehicle_type_container");
         const vehicle_list_logistics = document.querySelector("#vehicle_list_section #vehicle_list");
         var mtf_transaction_logistics = [];
         var mtf_ltf_transaction_logistics = [];
@@ -213,7 +215,98 @@ document.addEventListener('DOMContentLoaded', async function() {
             data2_value_counter += 1;
 
         }
-        vehicle_list_logistics.innerHTML = data2_value;    
+        vehicle_list_logistics.innerHTML = data2_value;  
+        
+        var vehicle_type = [];
+        var vehicle_count = {};
+        var available_vehicle = [];
+        var available_vehicle_type = [];
+        var available_vehicle_count = {};
+        for (let x = 1; x < vehicle_data_list.content.length; x++) {
+        const vehicleType = vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")];
+            if (!vehicle_type.includes(vehicleType)) {
+                vehicle_type.push(vehicleType);
+                vehicle_count[vehicleType] = 1;
+            } else {
+                vehicle_count[vehicleType]++;
+            }
+            available_vehicle.push(vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "PLATE #")])
+        }
+        for (let y = 1; y < vehicle_log_data_list.content.length; y++) {
+            const plateStatus = vehicle_log_data_list.content[y][findTextInArray(vehicle_log_data_list, "STATUS")];
+            const plate = vehicle_log_data_list.content[y][findTextInArray(vehicle_log_data_list, "PLATE #")];
+            if (plateStatus === "AVAILABLE") {
+            available_vehicle.push(plate);
+            } else {
+                // Remove the plate number from the available_vehicle array
+                const plateIndex = available_vehicle.indexOf(plate);
+                if (plateIndex !== -1) {
+                    available_vehicle.splice(plateIndex, 1);
+                }
+            }
+        }
+        for (let x = 1; x < vehicle_data_list.content.length; x++) {
+            for(let y = 0; y < available_vehicle.length; y++){
+                if(vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "PLATE #")] == available_vehicle[y]){
+                    const vehicleType = vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")];
+                    if (!available_vehicle_type.includes(vehicleType)) {
+                        available_vehicle_type.push(vehicleType);
+                        available_vehicle_count[vehicleType] = 1;
+                    } else {
+                        available_vehicle_count[vehicleType]++;
+                    }
+                }
+            }
+        }
+        console.log(available_vehicle)
+        // Ascending order (default behavior)
+        vehicle_type.sort();
+
+        var vehicle_type_list = "";
+        for(let x = 0; x < vehicle_type.length; x++){
+            var count = 0;
+            var actual_count = 0;
+            count = vehicle_count[vehicle_type[x]]
+            actual_count = available_vehicle_count[vehicle_type[x]]
+            vehicle_type_list += `
+            <div class="card">
+                <div class="card-content">
+                    <div class="number" id="vehicle_type${x + 1}">${actual_count}/${count}</div>
+                    <div class="card-name">${toProperCase(splitText(vehicle_type[x], 1))}<br>${toProperCase(splitText(vehicle_type[x], 2))}</div>
+                </div>
+                <div class="icon-box">
+                    <i class="fa-solid fa-truck-moving"></i>
+                </div>
+            </div>
+            `
+        }
+        vehicle_type_container_logistics.innerHTML = vehicle_type_list
+
+        function splitText(inputText, partNumber) {
+            // Use a regular expression to split after "WHEELER" while keeping "6 WHEELER"
+            let parts = inputText.split(/( WHEELER )/);
+        
+            if (parts.length === 3) {
+            let firstPart = parts[0] + parts[1];
+            let secondPart = parts[2];
+        
+            if (partNumber === 1) {
+                return firstPart;
+            } else if (partNumber === 2) {
+                return secondPart;
+            } else {
+                return "Invalid part number. Use 1 for the first part or 2 for the second part.";
+            }
+            } else {
+            return "The word 'WHEELER' was not found in the input text.";
+            }
+        }
+        
+        function toProperCase(inputString) {
+            return inputString.toLowerCase().replace(/(?:^|\s)\w/g, function(match) {
+                return match.toUpperCase();
+            });
+        }
 
         // driver_data
         const search_wrapper2 = document.getElementById("search_driver");
