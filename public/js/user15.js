@@ -1048,21 +1048,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         const transfer_history_list_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#transfer_history_list");
         const fund_source_other_details_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_source_other_details_container");
         const fund_allocation_other_details_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_allocation_other_details_container");
-        const filter_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#filter");
-        const filter_tab_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#filter_tab");
-
-        filter_ap_accounting.addEventListener("click", () => {
-            if(filter_tab_ap_accounting.style.display == "block"){
-                filter_tab_ap_accounting.style.display = "none"
-            }
-            else{
-                filter_tab_ap_accounting.style.display = "block"
-            }
-        })
-
-        filter_tab_ap_accounting.addEventListener("click", () => {
-            
-        })
+        const filter_fund_source_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#filter_fund_source");
+        const filter_tab_fund_source_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#filter_tab_fund_source");
+        const filter_fund_allocation_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#filter_fund_allocation");
+        const filter_tab_fund_allocation_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#filter_tab_fund_allocation");
 
         var month_new;
         var code_year_month;
@@ -1228,7 +1217,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             else{}
         }
         
-        data_content = parseInt(data_last_3digit) +1
+        data_content = parseInt(data_last_3digit) + 1
     
         if(data_content.toString().length == 1){
             data_counter = `00${data_content}`;
@@ -1304,24 +1293,100 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         });
 
-        var data = "";
-        var data_value_counter = 0;
-        for(let x = 1; x < ftf_data_list.content.length; x++){
-            data_value_counter += 1;
-            data += `
-            <tr>
-                <td>${data_value_counter}</td>
-                <td>${ftf_data_list.content[x][0]}</td>
-                <td>${date_decoder(ftf_data_list.content[x][6])} / ${time_decoder2(ftf_data_list.content[x][6])}</td>
-                <td>${ftf_data_list.content[x][1]}</td>
-                <td>${ftf_data_list.content[x][2]}</td>
-                <td>${formatNumber(ftf_data_list.content[x][3])}</td>
-                <td>${ftf_data_list.content[x][5]}</td>
-                <td>${ftf_data_list.content[x][4]}</td>
-            </tr>
-            `
+        function generateData(fund_source = "ALL", fund_allocation = "ALL"){
+            var data = "";
+            var data_value_counter = 0;
+            for(let x = 1; x < ftf_data_list.content.length; x++){
+                if(fund_source == "ALL" && fund_allocation == "ALL"){
+                    data_value_counter += 1;
+                    data += `
+                    <tr>
+                        <td>${data_value_counter}</td>
+                        <td>${ftf_data_list.content[x][0]}</td>
+                        <td>${date_decoder(ftf_data_list.content[x][6])} / ${time_decoder2(ftf_data_list.content[x][6])}</td>
+                        <td>${ftf_data_list.content[x][1]}</td>
+                        <td>${ftf_data_list.content[x][2]}</td>
+                        <td>${formatNumber(ftf_data_list.content[x][3])}</td>
+                        <td>${ftf_data_list.content[x][5]}</td>
+                        <td>${ftf_data_list.content[x][4]}</td>
+                    </tr>
+                    `
+                }
+                else if(fund_source != "ALL" && fund_allocation == "ALL"){
+                    if(ftf_data_list.content[x][findTextInArray(ftf_data_list, "FUND SOURCE")] == fund_source){
+                        data_value_counter += 1;
+                        data += `
+                        <tr>
+                            <td>${data_value_counter}</td>
+                            <td>${ftf_data_list.content[x][0]}</td>
+                            <td>${date_decoder(ftf_data_list.content[x][6])} / ${time_decoder2(ftf_data_list.content[x][6])}</td>
+                            <td>${ftf_data_list.content[x][1]}</td>
+                            <td>${ftf_data_list.content[x][2]}</td>
+                            <td>${formatNumber(ftf_data_list.content[x][3])}</td>
+                            <td>${ftf_data_list.content[x][5]}</td>
+                            <td>${ftf_data_list.content[x][4]}</td>
+                        </tr>
+                        `
+                    }
+                }
+                else if(fund_source == "ALL" && fund_allocation != "ALL"){
+                    if(ftf_data_list.content[x][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == fund_allocation){
+                        data_value_counter += 1;
+                        data += `
+                        <tr>
+                            <td>${data_value_counter}</td>
+                            <td>${ftf_data_list.content[x][0]}</td>
+                            <td>${date_decoder(ftf_data_list.content[x][6])} / ${time_decoder2(ftf_data_list.content[x][6])}</td>
+                            <td>${ftf_data_list.content[x][1]}</td>
+                            <td>${ftf_data_list.content[x][2]}</td>
+                            <td>${formatNumber(ftf_data_list.content[x][3])}</td>
+                            <td>${ftf_data_list.content[x][5]}</td>
+                            <td>${ftf_data_list.content[x][4]}</td>
+                        </tr>
+                        `
+                    }
+                    console.log("pass3")
+                }
+            }
+            transfer_history_list_ap_accounting.innerHTML = data;
+            console.log(fund_source)
+            console.log(fund_allocation)
         }
-        transfer_history_list_ap_accounting.innerHTML = data;
+        generateData();
+
+        filter_fund_source_ap_accounting.addEventListener("click", () => {
+            if(filter_tab_fund_source_ap_accounting.style.display == "block"){
+                filter_tab_fund_source_ap_accounting.style.display = "none"
+            }
+            else{
+                filter_tab_fund_source_ap_accounting.style.display = "block"
+            }
+        })
+        filter_fund_allocation_ap_accounting.addEventListener("click", () => {
+            if(filter_tab_fund_allocation_ap_accounting.style.display == "block"){
+                filter_tab_fund_allocation_ap_accounting.style.display = "none"
+            }
+            else{
+                filter_tab_fund_allocation_ap_accounting.style.display = "block"
+            }
+        })
+
+        filter_tab_fund_source_ap_accounting.addEventListener("change", () => {
+            var filter_fund_source = filter_tab_fund_source_ap_accounting.value || "ALL";
+            var filter_fund_allocation = filter_tab_fund_allocation_ap_accounting.value || "ALL";
+            console.log(filter_fund_source)
+            console.log(filter_fund_allocation)
+            console.log("pass")
+            generateData(filter_fund_source, filter_fund_allocation);
+        })
+        filter_tab_fund_allocation_ap_accounting.addEventListener("change", () => {
+            var filter_fund_source = filter_tab_fund_source_ap_accounting.value || "ALL";
+            var filter_fund_allocation = filter_tab_fund_allocation_ap_accounting.value || "ALL";
+            console.log(filter_fund_source)
+            console.log(filter_fund_allocation)
+            console.log("pass")
+            generateData(filter_fund_source, filter_fund_allocation);
+        })
 
         var data = "";
         var data_value_counter = 0;

@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         }
         vehicle_list_logistics.innerHTML = data2_value;  
-        
+
         var vehicle_type = [];
         var vehicle_count = {};
         var available_vehicle = [];
@@ -258,7 +258,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         }
-        console.log(available_vehicle)
         // Ascending order (default behavior)
         vehicle_type.sort();
 

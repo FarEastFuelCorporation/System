@@ -891,9 +891,9 @@
                                         <th>#</th>
                                         <th>TBF # / TLF #<br>FTF #</th>
                                         <th>TRANSACTION<br>DATE/TIME</th>
-                                        <th style="position: relative;">FUND SOURCE<i class="fa-solid fa-filter ms-1" id="filter"></i>
-                                            <select id="filter_tab" style="position: absolute; display: none; z-index: 2; width: 200px;">
-                                                <option value="SELECT">SELECT</option>
+                                        <th style="position: relative;">FUND SOURCE<i class="fa-solid fa-filter ms-1" id="filter_fund_source"></i>
+                                            <select id="filter_tab_fund_source" style="position: absolute; display: none; z-index: 2; width: 200px;">
+                                                <option value="ALL">ALL</option>
                                                 <option value="SOURCE OF FUND">SOURCE OF FUND</option>
                                                 <option value="TRUCKING FUND">TRUCKING FUND</option>
                                                 <option value="HAULING FUND">HAULING FUND</option>
@@ -907,7 +907,22 @@
                                                 <option value="REPRESENTATION FUND">REPRESENTATION FUND</option>        
                                             </select>
                                         </th>
-                                        <th>FUND ALLOCATION</th>
+                                        <th style="position: relative;">FUND ALLOCATION<i class="fa-solid fa-filter ms-1" id="filter_fund_allocation"></i>
+                                            <select id="filter_tab_fund_allocation" style="position: absolute; display: none; z-index: 2; width: 200px;">
+                                                <option value="ALL">ALL</option>
+                                                <option value="SOURCE OF FUND">SOURCE OF FUND</option>
+                                                <option value="TRUCKING FUND">TRUCKING FUND</option>
+                                                <option value="HAULING FUND">HAULING FUND</option>
+                                                <option value="DIESEL FUND">DIESEL FUND</option>
+                                                <option value="GASOLINE FUND">GASOLINE FUND</option>
+                                                <option value="SIR RUEL'S FUND">SIR RUEL'S FUND</option>
+                                                <option value="SCRAP SALES">SCRAP SALES</option>
+                                                <option value="MOLD RUNNER SALES">MOLD RUNNER SALES</option>
+                                                <option value="TRUCK SCALE COLLECTION">TRUCK SCALE COLLECTION</option>
+                                                <option value="HOUSE COLLECTION">HOUSE COLLECTION</option>
+                                                <option value="REPRESENTATION FUND">REPRESENTATION FUND</option>        
+                                            </select>
+                                        </th>
                                         <th>FUND AMOUNT</th>
                                         <th>SUBMITTED BY</th>
                                         <th>REMARKS</th>
