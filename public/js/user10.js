@@ -115,6 +115,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const truck_scale_collection_ap_accounting = ap_accounting_dashboard.querySelector("#truck_scale_collection");
         const house_collection_ap_accounting = ap_accounting_dashboard.querySelector("#house_collection");
         const representation_fund_ap_accounting = ap_accounting_dashboard.querySelector("#representation_fund");
+        const request_history_list_ap_accounting = ap_accounting_dashboard.querySelector("#request_history_list");
+        const transfer_history_list_ap_accounting = ap_accounting_dashboard.querySelector("#transfer_history_list");
         
         var source_of_fund = 0;
         var trucking_fund = 0;
