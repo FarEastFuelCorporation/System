@@ -640,32 +640,59 @@ document.addEventListener('DOMContentLoaded', async function() {
             search_mtf_form_no.value = ``;
         })
 
+        // vehicle_list_section
         const vehicle_list_section = document.querySelector("#vehicle_list_section"); 
         const new_vehicle_tab = vehicle_list_section.querySelector("#new_vehicle_tab");
-        const vehicle_maintenance_tab = vehicle_list_section.querySelector("#vehicle_maintenance_tab");
+        const update_vehicle_tab = vehicle_list_section.querySelector("#update_vehicle_tab");
         const new_vehicle_button = vehicle_list_section.querySelector("#new_vehicle_button");
-        const vehicle_maintenance_button = vehicle_list_section.querySelector("#vehicle_maintenance_button");
+        const update_vehicle_button = vehicle_list_section.querySelector("#update_vehicle_button");
 
         new_vehicle_button.addEventListener("click", () => {
             if(new_vehicle_tab.style.display == "block"){
                 new_vehicle_tab.style.display = "none";
-                vehicle_maintenance_tab.style.display = "none";
+                update_vehicle_tab.style.display = "none";
             }
             else{
                 new_vehicle_tab.style.display = "block";
-                vehicle_maintenance_tab.style.display = "none";
+                update_vehicle_tab.style.display = "none";
             }
         })
-        vehicle_maintenance_button.addEventListener("click", () => {
-            if(vehicle_maintenance_tab.style.display == "block"){
-                vehicle_maintenance_tab.style.display = "none";
+        update_vehicle_button.addEventListener("click", () => {
+            if(update_vehicle_tab.style.display == "block"){
+                update_vehicle_tab.style.display = "none";
                 new_vehicle_tab.style.display = "none";
             }
             else{
-                vehicle_maintenance_tab.style.display = "block";
+                update_vehicle_tab.style.display = "block";
                 new_vehicle_tab.style.display = "none";
             }
         })
+
+        // vehicle_maintenance_form
+        const vehicle_maintenance_form = document.querySelector("#vehicle_maintenance_form"); 
+        const vehicle_maintenance_tab = vehicle_maintenance_form.querySelector("#vehicle_maintenance_tab");
+        const vehicle_maintenance_button = vehicle_maintenance_form.querySelector("#vehicle_maintenance_button");
+
+        vehicle_maintenance_button.addEventListener("click", () => {
+            if(vehicle_maintenance_tab.style.display == "block"){
+                vehicle_maintenance_tab.style.display = "none";
+                // update_vehicle_tab.style.display = "none";
+            }
+            else{
+                vehicle_maintenance_tab.style.display = "block";
+                // update_vehicle_tab.style.display = "none";
+            }
+        })
+        // update_vehicle_button.addEventListener("click", () => {
+        //     if(update_vehicle_tab.style.display == "block"){
+        //         update_vehicle_tab.style.display = "none";
+        //         new_vehicle_tab.style.display = "none";
+        //     }
+        //     else{
+        //         update_vehicle_tab.style.display = "block";
+        //         new_vehicle_tab.style.display = "none";
+        //     }
+        // })
     
         function findEmployeeName(employee_id){
             var employee_name = "";
