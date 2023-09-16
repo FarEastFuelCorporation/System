@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td>${date_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "COMPLETION DATE")])} /<br> ${time_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "COMPLETION TIME")])}</td>
                         <td>${findClientName(sf_data_list.content[j][findTextInArray(sf_data_list, "CLIENT ID")])}</td>
                         <td>${findWasteCode(sf_data_list.content[j][findTextInArray(sf_data_list, "WASTE ID")])}</td>
-                        <td>${findWasteName(sf_data_list.content[j][findTextInArray(sf_data_list, "CLIENT ID")], sf_data_list.content[j][findTextInArray(sf_data_list, "WASTE ID")])}</td>
+                        <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "WASTE NAME")]}</td>
                         <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")]}</td>
                         <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "WEIGHT")]}</td>
                     </tr>
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <td>${date_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "COMPLETION DATE")])} /<br> ${time_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "COMPLETION TIME")])}</td>
                     <td>${findClientName(sf_data_list.content[j][findTextInArray(sf_data_list, "CLIENT ID")])}</td>
                     <td>${findWasteCode(sf_data_list.content[j][findTextInArray(sf_data_list, "WASTE ID")])}</td>
-                    <td>${findWasteName(sf_data_list.content[j][findTextInArray(sf_data_list, "CLIENT ID")], sf_data_list.content[j][findTextInArray(sf_data_list, "WASTE ID")])}</td>
+                    <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "WASTE NAME")]}</td>
                     <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")]}</td>
                     <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "WEIGHT")]} Kg.</td>
                     <td>${sorted_date} /<br> ${sorted_time}</td>
@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             wcf_form_no.value = sf_data_list.content[a][findTextInArray(sf_data_list, "WCF #")];
                             client.value = sf_data_list.content[a][findTextInArray(sf_data_list, "CLIENT ID")];
                             waste_description.value = sf_data_list.content[a][findTextInArray(sf_data_list, "WASTE ID")];
-                            waste_code_input.value = findWasteCode(sf_data_list.content[a][findTextInArray(sf_data_list, "WASTE ID")]);
+                            waste_code_input.value = findWasteCode(sf_data_list.content[a][findTextInArray(sf_data_list, "WASTE NAME")]);
                             weight.value = sf_data_list.content[a][findTextInArray(sf_data_list, "WEIGHT")];
                             destruction_process.value = sf_data_list.content[a][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")];
                             hauling_date.value = date_decoder(sf_data_list.content[a][findTextInArray(sf_data_list, "HAULING DATE")]);

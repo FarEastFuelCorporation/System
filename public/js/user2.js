@@ -98,7 +98,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         }
-        console.log(wcf_transaction_sorting)
 
         // Get elements from wcf_transaction not included in wcf_sf_transaction
         const pending_sorting = wcf_transaction_sorting.filter((element) => !wcf_sf_transaction_sorting.includes(element));
@@ -182,7 +181,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <td>${date_decoder(sf_data_list.content[i][findTextInArray(sf_data_list, "COMPLETION DATE")])} /<br> ${time_decoder(sf_data_list.content[i][findTextInArray(sf_data_list, "COMPLETION TIME")])}</td>
                     <td>${findClientName(sf_data_list.content[i][findTextInArray(sf_data_list, "CLIENT ID")])}</td>
                     <td>${findWasteCode(sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE ID")])}</td>
-                    <td>${findWasteName(sf_data_list.content[i][findTextInArray(sf_data_list, "CLIENT ID")], sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE ID")])}</td>
+                    <td>${sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE NAME")]}</td>
                     <td>${sf_data_list.content[i][findTextInArray(sf_data_list, "WEIGHT")]} kg.</td>
                     <td>${sf_data_list.content[i][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")]}</td>
                 </tr>
@@ -330,6 +329,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const search_wrapper = [];
         const destruction_process = [];
         const waste_id = [];
+        const waste_name = [];
         const weight = [];
         const input_box = [];
         const sugg_box = [];
@@ -339,6 +339,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             search_wrapper[z] = document.getElementById(`search_type_of_waste${z}`);
             destruction_process[z] = document.getElementById(`destruction_process${z}`);
             waste_id[z] = document.getElementById(`waste_id${z}`);
+            waste_name[z] = document.getElementById(`waste_name${z}`);
             weight[z] = document.getElementById(`weight${z}`);
             input_box[z] = search_wrapper[z].querySelector("input");
             sugg_box[z] = search_wrapper[z].querySelector(".autocom_box");
@@ -375,13 +376,15 @@ document.addEventListener('DOMContentLoaded', async function() {
                     if (input_box[z].value == `${type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "WASTE NAME")]} (${type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "WASTE CODE")]})`) {
                         destruction_process[z].value = type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "TREATMENT PROCESS")];
                         waste_id[z].value = type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "WASTE ID")];
+                        waste_name[z].value = type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "WASTE NAME")];
                         treatment_input.setAttribute("readonly", "true")
                         break
                     }
                     else{
                         destruction_process[z].value = "";
                         treatment_input.removeAttribute("readonly");
-                        waste_id[z].value = input_box[z].value;
+                        waste_id[z].value = "W2023000";
+                        waste_name[z].value = input_box[z].value;
                     }
                 }
             }
