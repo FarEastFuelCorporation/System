@@ -204,6 +204,7 @@
                                 <th>CLIENT</th>
                                 <th>WASTE DESCRIPTION</th>
                                 <th>TYPE OF VEHICLE</th>
+                                <th>PLATE #</th>
                                 <th>REMARKS</th>
                             </thead>
                             <tbody id="pending_list">
@@ -226,7 +227,7 @@
                             TRIP LIQUIDATION FORM
                         </button>
                     </label><br>
-                    <form id="budget_form" action="https://script.google.com/macros/s/AKfycbxoheJCrpI1hbtVeVAq02wEaX-rIiaUXBNXzatz-dy0mv8HtR6OxufxtXl2FYljG5ep/exec" method="post">
+                    <form id="budget_form" action="https://script.google.com/macros/s/AKfycbyJ-x7xqN1BY5h89mGsaD7hDDqHRLRgwo9zvaWLzpuaiM24-dEwYqJ7zqYZbUNA-e8_/exec" method="post">
                         <input type="hidden" name="user" id="user">
                         <h2>TRIP BUDGET FORM</h2><br>
                         <div class="ap_form">
@@ -261,6 +262,10 @@
                                 PCV #
                                 <input type="number" id="pcv_no" name="pcv_no" class="form-control" autocomplete="off" placeholder="Input PCV #" required><br>
                             </label><br>
+                            <label for="particulars">
+                                Particulars
+                                <input type="text" id="particulars" name="particulars" class="form-control" autocomplete="off" placeholder="Input particulars" required><br>
+                            </label><br>
                             <label for="budget">
                                 Budget
                                 <input type="number" id="budget" name="budget" class="form-control" autocomplete="off" placeholder="Input Budget" required><br>
@@ -281,7 +286,7 @@
                             </button>
                         </div><br>
                     </form>
-                    <form id="liquidation_form" action="https://script.google.com/macros/s/AKfycbxUlEBVAB8o6JcGltXp3NnFQZdYTiOCczpjOYx5RqGzKylFoFZjSUDDIuomBHf0PAzFAw/exec" method="post">
+                    <form id="liquidation_form" action="https://script.google.com/macros/s/AKfycby2rd2NaQPEf9-cNYRwgTGFea-H0hRp2tQS8eqd-1NUHw5DKhOHn12ku_qnEjjqLOu9qA/exec" method="post">
                         <input type="hidden" name="user" id="user">
                         <input type="hidden" name="ltf_no" id="ltf_no">
                         <h2>TRIP LIQUIDATION FORM</h2><br>
@@ -380,7 +385,7 @@
                         </div><br> 
                     </form>
                     <div id="trip_history_list">
-                        <h2>TRIP BUDGET HISTORY LIST</h2>
+                        <h2>TRIP BUDGET HISTORY</h2>
                         <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
                             <div class="list">
                                 <table>
@@ -398,6 +403,28 @@
                                         <th>ACTUAL<br>BUDGET</th>
                                     </thead>
                                     <tbody id="history_list">
+        
+                                    </tbody>
+                                </table>
+                                <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                            </div>
+                        </div><br>
+                        <h2>TRIP LIQUIDATION HISTORY</h2>
+                        <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
+                            <div class="list">
+                                <table>
+                                    <thead style="position: sticky; top: 0; background-color: black;">
+                                        <th>#</th>
+                                        <th>TLF #</th>
+                                        <th>TBF #</th>
+                                        <th>PCV #</th>
+                                        <th>LTF #</th>
+                                        <th>LIQUIDATED<br>DATE/TIME</th>
+                                        <th>PARTICULARS</th>
+                                        <th>AMOUNT</th>
+                                        <th>LIQUIDATED BY</th>
+                                    </thead>
+                                    <tbody id="liquidation_history_list">
         
                                     </tbody>
                                 </table>

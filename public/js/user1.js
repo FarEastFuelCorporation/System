@@ -507,7 +507,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     break
                 }
                 else{
-                    employee_name = employee_id
+                    employee_name = employee_id;
                 }
             }
             return employee_name

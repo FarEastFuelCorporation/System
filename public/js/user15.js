@@ -172,6 +172,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         const pending_list_container_ap_accounting = ap_accounting_dashboard.querySelector("#pending_list");
         const history_list_container_ap_accounting = document.querySelector("#history_list");
+        const liquidation_history_list_container_ap_accounting = document.querySelector("#liquidation_history_list");
         
         let ltf_transaction_ap_accounting = []; // Variable containing existing elements
         let ltf_tbf_transaction_ap_accounting = []; // Variable containing existing elements
@@ -226,7 +227,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         for(let y = 0; y < pending_list_ltf_ap_accounting.length; y++){
             for(let x = 1; x < ltf_data_list.content.length; x++){
                 if(pending_list_ltf_ap_accounting[y] == ltf_data_list.content[x][0]){
-                    if(ltf_data_list.content[x][6] == "10 WHEELER WING VAN"){
+                    if(ltf_data_list.content[x][6] == "10 WHEELER WING VAN" && ltf_data_list.content[x][7] !== "NAY2264"){
                         var client_name = "";
                         for(let c = 1; c < client_data_list.content.length; c++){
                             if(ltf_data_list.content[x][2] == client_data_list.content[c][0]){
@@ -247,6 +248,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${client_name}</td>
                             <td>${waste_name}</td>
                             <td>${ltf_data_list.content[x][6]}</td>
+                            <td>${ltf_data_list.content[x][7]}</td>
                             <td>${ltf_data_list.content[x][12]}</td>
                         </tr>
                         `
@@ -320,6 +322,26 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             history_list_container_ap_accounting.innerHTML = data_value;
         }
+
+        var data_value = "";
+        var data_value_counter = 1;
+        for(let x = 1; x < tlf_data_list.content.length; x++){
+            data_value += `
+            <tr>
+                <td>${data_value_counter}</td>
+                <td>${tlf_data_list.content[x][0]}</td>
+                <td>${tlf_data_list.content[x][1]}</td>
+                <td>${tlf_data_list.content[x][2]}</td>
+                <td>${tlf_data_list.content[x][3]}</td>
+                <td>${date_decoder(tlf_data_list.content[x][7])}<br>${time_decoder2(tlf_data_list.content[x][7])}</td>
+                <td>${findEmployeeName2(tlf_data_list.content[x][4])}</td>
+                <td>${tlf_data_list.content[x][5]}</td>
+                <td>${tlf_data_list.content[x][6]}</td>
+            </tr>
+            `
+        }
+        liquidation_history_list_container_ap_accounting.innerHTML = data_value
+
 
         // trip_forms
         const trip_forms_ap_accounting = document.querySelector("#trip_forms");
@@ -1600,7 +1622,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         })
 
-    
         function findEmployeeName(employee_id){
             var employee_name = "";
             for(let c = 1; c < employee_data_list.content.length; c++){
@@ -1615,7 +1636,26 @@ document.addEventListener('DOMContentLoaded', async function() {
                     break
                 }
                 else{
-                    employee_name = employee_id == employee_data_list.content[c][findTextInArray(employee_data_list, "EMPLOYEE ID")]
+                    employee_name = employee_id;
+                }
+            }
+            return employee_name
+        }
+        function findEmployeeName2(employee_id){
+            var employee_name = "";
+            for(let c = 1; c < employee_data_list.content.length; c++){
+                if(employee_id == employee_data_list.content[c][findTextInArray(employee_data_list, "EMPLOYEE ID")]){
+                    var gender = employee_data_list.content[c][findTextInArray(employee_data_list, "GENDER")];
+                    if(gender == "MALE"){
+                        employee_name = `${employee_data_list.content[c][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[c][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[c][findTextInArray(employee_data_list, "MIDDLE NAME")]} ${employee_data_list.content[c][findTextInArray(employee_data_list, "AFFIX")]} - ADVANCE SALARY`
+                    }
+                    else{
+                        employee_name = `${employee_data_list.content[c][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[c][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[c][findTextInArray(employee_data_list, "MIDDLE NAME")]} - ${employee_data_list.content[c][findTextInArray(employee_data_list, "SPOUSE NAME")]} - ADVANCE SALARY`
+                    }
+                    break
+                }
+                else{
+                    employee_name = employee_id;
                 }
             }
             return employee_name
