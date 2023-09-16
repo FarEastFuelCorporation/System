@@ -434,10 +434,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 if(search_ltf_form_no_ap_accounting.value == pending_list_ltf_ap_accounting[b]){
                     for(a=0; a < ltf_data_list.content.length; a++){
                         if(search_ltf_form_no_ap_accounting.value == ltf_data_list.content[a][0]){
-                            console.log(pending_list_ltf_ap_accounting)
-                            console.log(search_ltf_form_no_ap_accounting.value)
-                            console.log(search_ltf_form_no_ap_accounting.value)
-                            console.log("pass")
                             for(let x = 1; x<employee_data_list.content.length; x++){
                                 if(employee_data_list.content[x][0] == ltf_data_list.content[a][8]){
                                     var gender = employee_data_list.content[x][6];
@@ -561,8 +557,16 @@ document.addEventListener('DOMContentLoaded', async function() {
             var pcv_no = "";
             var driver_name = "";
             var truck_helper_name_list = "";
+            var released_by = "";
             for(b=0; b<pending_list_tbf_ap_accounting.length; b++){
                 if(search_tbf_form_no_ap_accounting.value == pending_list_tbf_ap_accounting[b]){
+                    for(let y = 1; y<tbf_data_list.content.length; y++){
+                        if(search_tbf_form_no_ap_accounting.value == tbf_data_list.content[y][0]){
+                            released_budget = tbf_data_list.content[y][3];
+                            released_by = tbf_data_list.content[y][4];
+                            pcv_no = tbf_data_list.content[y][1];
+                        }
+                    }
                     for(a=1; a<ltf_data_list.content.length; a++){
                         for(let x = 1; x<employee_data_list.content.length; x++){
                             for(let c = 1; c < tbf_data_list.content.length; c++){
@@ -592,17 +596,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             </div>
                                             `
                                             liquidation_list_ap_accounting.insertAdjacentHTML("afterbegin", cash_advance);
-                                            console.log("driver${c + 1}")
                                         }
                                     }
-                                }
-                            }
-                            var released_by = "";
-                            for(let y = 1; y<tbf_data_list.content.length; y++){
-                                if(ltf_data_list.content[a][0] == tbf_data_list.content[y][2]){
-                                    released_budget = tbf_data_list.content[a][3];
-                                    released_by = tbf_data_list.content[a][4];
-                                    pcv_no = tbf_data_list.content[a][1];
                                 }
                             }
                             var values = "";
@@ -645,7 +640,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     truck_helper_count_ap_accounting.value = parseFloat(truck_helper_count_ap_accounting.value) + 1;
                                     diesel_gasoline_expense_container_ap_accounting.insertAdjacentHTML("beforebegin", cash_advance);
                                     add_item_button_ap_accounting.style.display = "block";
-                                    console.log("th${c + 1}")
                                 }
                             };   
                         }
@@ -832,8 +826,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                 }
             }
-            console.log("🚀 ~ file: user15.js:764 ~ generate_payslip_button_ap_accounting.addEventListener ~ employee_array:", employee_array)
-
             for(let z = 0; z < employee_array.length; z++){
                 var ltf_data = [];
                 var cash_advance = [];
@@ -896,7 +888,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                     }
                 }
-                console.log(employee_designation)
                 for(let x = 1; x < tlf_data_list.content.length; x++){
                     for(let y = 0; y < ltf_data.length; y++){
                         if(tlf_data_list.content[x][4] == employee_array[z]){
@@ -1345,12 +1336,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </tr>
                         `
                     }
-                    console.log("pass3")
                 }
             }
             transfer_history_list_ap_accounting.innerHTML = data;
-            console.log(fund_source)
-            console.log(fund_allocation)
         }
         generateData();
 
@@ -1374,17 +1362,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         filter_tab_fund_source_ap_accounting.addEventListener("change", () => {
             var filter_fund_source = filter_tab_fund_source_ap_accounting.value || "ALL";
             var filter_fund_allocation = filter_tab_fund_allocation_ap_accounting.value || "ALL";
-            console.log(filter_fund_source)
-            console.log(filter_fund_allocation)
-            console.log("pass")
             generateData(filter_fund_source, filter_fund_allocation);
         })
         filter_tab_fund_allocation_ap_accounting.addEventListener("change", () => {
             var filter_fund_source = filter_tab_fund_source_ap_accounting.value || "ALL";
             var filter_fund_allocation = filter_tab_fund_allocation_ap_accounting.value || "ALL";
-            console.log(filter_fund_source)
-            console.log(filter_fund_allocation)
-            console.log("pass")
             generateData(filter_fund_source, filter_fund_allocation);
         })
 
