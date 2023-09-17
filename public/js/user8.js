@@ -241,6 +241,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     
         airf_form_no.value = `${code_year_month}${data_counter}`
 
+        const incident_documentation_form = document.getElementById("incident_documentation_form");
         const unsafe_act_condition = document.getElementById("unsafe_act_condition");
         const near_miss = document.getElementById("near_miss");
         const accident = document.getElementById("accident");
@@ -248,12 +249,21 @@ document.addEventListener('DOMContentLoaded', async function() {
         const nmrf_form = document.getElementById("nmrf_form");
         const airf_form = document.getElementById("airf_form");
         const form_details = document.getElementById("form_details");
+        const generate_btn = document.getElementById("generate_btn");
+        const generate_report_btn = document.getElementById("generate_report_btn");
+        const identified_hazard_input = document.getElementById("identified_hazard");
+        const recommendation_input = document.getElementById("recommendation");
+        const file_input_container = document.getElementById("file_input_container");
+        var counter = ""
+        var header = ""
 
         unsafe_act_condition.addEventListener("click", () => {
             form_details.style.display = "block";
             uarf_form.style.display = "block";
             nmrf_form.style.display = "none";
             airf_form.style.display = "none";
+            counter = `UARF NO. ${uarf_form_no.value}`
+            header = `UNSAFE ACT/CONDITION REPORT FORM`
         })
         
         near_miss.addEventListener("click", () => {
@@ -261,6 +271,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             uarf_form.style.display = "none";
             nmrf_form.style.display = "block";
             airf_form.style.display = "none";
+            counter = `NMRF NO. ${uarf_form_no.value}`
+            header = `NEAR-MISS REPORT FORM`
         })
         
         accident.addEventListener("click", () => {
@@ -268,13 +280,54 @@ document.addEventListener('DOMContentLoaded', async function() {
             uarf_form.style.display = "none";
             nmrf_form.style.display = "none";
             airf_form.style.display = "block";
+            counter = `AIRF NO. ${uarf_form_no.value}`
+            header = `ACCIDENT REPORT FORM`
         })
 
         const search_irf_form_no = document.getElementById("search_irf_form_no");
         const search_irf_form_no_button = document.getElementById("search_irf_form_no_button");
-        const clear_irf_form_no_button = document.getElementById("clear_irf_form_no_button");
         const search_irf_result = document.getElementById("search_irf_result");
         const head_button = document.getElementById("head_button");
+        var employee_id = [];
+        var employee_names = [];
+        var employee_department = [];
+        var employee_designation = [];
+        var incident_date = "";
+        var incident_time = "";
+        var location = "";
+        var details = "";
+        var action_taken = "";
+        var recommendation = "";
+
+        generate_btn.addEventListener("click", () => {
+            generateData();
+            recommendation = recommendation_input.value
+            generate_report_btn.style.display = "block";
+            file_input_container.style.display = "block";
+            // Get the textarea element
+            const hazardTextarea = document.getElementById('identified_hazard');
+            const hazardTextarea2 = document.getElementById('potential_harm');
+            const hazardTextarea3 = document.getElementById('recommendation');
+            
+            // Get the container for displaying formatted information
+            const formattedHazardInfo = document.getElementById('identified_hazard_input');
+            const formattedHazardInfo2 = document.getElementById('potential_harm_input');
+            const formattedHazardInfo3 = document.getElementById('recommendation_input');
+            
+            // Event listener to update formatted content when the textarea changes
+            hazardTextarea.addEventListener('input', function () {
+                const content = this.value.replace(/\n/g, '<br>'); // Replace newline characters with <br> tags
+                formattedHazardInfo.innerHTML = content;
+            });
+            hazardTextarea2.addEventListener('input', function () {
+                const content = this.value.replace(/\n/g, '<br>'); // Replace newline characters with <br> tags
+                formattedHazardInfo2.innerHTML = content;
+            });
+            hazardTextarea3.addEventListener('input', function () {
+                const content = this.value.replace(/\n/g, '<br>'); // Replace newline characters with <br> tags
+                formattedHazardInfo3.innerHTML = content;
+            });
+        })
 
         search_irf_form_no_button.addEventListener("click", () => {
             var data_value;
@@ -282,14 +335,21 @@ document.addEventListener('DOMContentLoaded', async function() {
                 for(let b = 0; b<=pending_safety.length; b++){
                     if(search_irf_form_no.value == irf_data_list.content[a][findTextInArray(irf_data_list, "IRF #")]){
                         if(search_irf_form_no.value == pending_safety[b]){
-                            var employee_names = [];
                             if(((irf_data_list.content[x][findTextInArray(irf_data_list, "PERSON INVOLVE")]).toString()).includes("||")){
                                 (irf_data_list.content[x][findTextInArray(irf_data_list, "PERSON INVOLVE")]).split("||").map(number => {
                                     employee_names.push(findEmployeeName(number.trim()))
+                                    employee_id.push(number.trim())
+                                });
+                                (irf_data_list.content[x][findTextInArray(irf_data_list, "DEPARTMENT")]).split("||").map(number => {
+                                    employee_department.push(number.trim())
+                                });
+                                (irf_data_list.content[x][findTextInArray(irf_data_list, "DESIGNATION")]).split("||").map(number => {
+                                    employee_designation.push(number.trim())
                                 });
                             }
                             else{
                                 employee_names.push(number.trim())
+                                employee_id.push(number.trim())
                             }
                             data_value = `
                             <b>IRF #: </b>${irf_data_list.content[a][findTextInArray(irf_data_list, "IRF #")]}<br>
@@ -304,15 +364,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <b>REPORT TIME: </b>${time_decoder(irf_data_list.content[a][findTextInArray(irf_data_list, "REPORT TIME")])}<br>
                             <b>SUBMITTED BY: </b>${irf_data_list.content[a][findTextInArray(irf_data_list, "SUBMITTED BY")]}<br>
                             `
-                            // wcf_form_no.value = sf_data_list.content[a][2];
-                            // client.value = sf_data_list.content[a][3];
-                            // waste_description.value = sf_data_list.content[a][4];
-                            // weight.value = sf_data_list.content[a][6];
-                            // waste_description.value = sf_data_list.content[a][4];
-                            // destruction_process.value = sf_data_list.content[a][5];
-                            // hauling_date.value = date_decoder(sf_data_list.content[a][7]);
-                            // var hauling_date_plus2 = new Date(date_decoder(sf_data_list.content[a][7]));
-                            // target_date_of_completion.value = date_decoder(hauling_date_plus2.setDate(hauling_date_plus2.getDate()+2));
+                            incident_date = date_decoder(irf_data_list.content[a][findTextInArray(irf_data_list, "INCIDENT DATE")])
+                            incident_time = time_decoder(irf_data_list.content[a][findTextInArray(irf_data_list, "INCIDENT TIME")])
+                            location = irf_data_list.content[a][findTextInArray(irf_data_list, "LOCATION")]
+                            details = irf_data_list.content[a][findTextInArray(irf_data_list, "INCIDENT DETAILS")]
+                            action_taken = irf_data_list.content[a][findTextInArray(irf_data_list, "INCIDENT DETAILS")]
                             search_irf_result.style.display = "block";
                             head_button.style.display = "block";
                         }
@@ -334,6 +390,193 @@ document.addEventListener('DOMContentLoaded', async function() {
                 </div><br>`
             }        
         })
+        function generateData() {
+            var data = 
+            `
+            <div class="what_to_print" id="what_to_print" style="width: 816px; height: 1056px; border: 3px solid black; background-color: white; padding: 50px 50px 25px 50px; position: relative;">
+                <div style="display: flex; align-items: end; gap: 10px;">
+                    <img src="/public/images/logo.png" alt="" style="height: 50px;">
+                    <img src="/public/images/logo_name2.png" alt="" style="height: 40px;">
+                </div>
+                <h4 style="margin: 20px 0 0 0; text-align: center; font-weight: bold;">${header}</h4>
+                <h6 style="text-align: center; font-weight: bold; margin: 0;">${counter}</h6>
+                <h5 style="margin: 20px 0 0 0; font-weight: bold; margin: 0;">PERSONS INVOLVE</h5>
+                <div style="display: grid; grid-template-columns: 30px 1fr 1fr 1fr; border: 1px solid black;">
+                    <h6 style="margin: 0; font-weight: bold; display: flex; align-items: center; justify-content: center; padding: 0 5px;">
+                        #
+                    </h6>
+                    <h6 style="margin: 0; font-weight: bold; border-left: 1px solid black;  display: flex; align-items: center; justify-content: center; padding: 0 5px;">
+                        NAME:
+                    </h6>
+                    <h6 style="margin: 0; font-weight: bold; border-left: 1px solid black;  display: flex; align-items: center; justify-content: center; padding: 0 5px;">
+                        DEPARTMENT:
+                    </h6>
+                    <h6 style="margin: 0; font-weight: bold; border-left: 1px solid black;  display: flex; align-items: center; justify-content: center; padding: 0 5px;">
+                        DESIGNATION:
+                    </h6>
+                </div>
+                ${employee_id.map((id, index) => {
+                    const incrementedValue = index + 1;
+                    return `
+                    <div style="display: grid; grid-template-columns: 30px 1fr 1fr 1fr; border: 1px solid black;">
+                        <h6 style="margin: 0; font-size: 12px; text-align: center; height: 100%; display: flex; align-items: center; justify-content: center; padding: 0 5px;">
+                            ${incrementedValue}
+                        </h6>
+                        <h6 style="margin: 0; font-size: 12px; text-align: center; border-left: 1px solid black; height: 100%; display: flex; align-items: center; justify-content: center; padding: 0 5px;">
+                            ${findEmployeeName(id)}
+                        </h6>
+                        <h6 style="margin: 0; font-size: 12px; text-align: center; border-left: 1px solid black; height: 100%; display: flex; align-items: center; justify-content: center; padding: 0 5px;">
+                            ${employee_department[index]}
+                        </h6>
+                        <h6 style="margin: 0; font-size: 12px; text-align: center; border-left: 1px solid black; height: 100%; display: flex; align-items: center; justify-content: center; padding: 0 5px;">
+                            ${employee_designation[index]}
+                        </h6>
+                    </div>
+                    `;
+                }).join('')}                
+                <h5 style="margin: 20px 0 0 0; font-weight: bold;">DESCRIPTION OF ACCIDENT</h5>
+                <div style="border: 1px solid black;">
+                    <div style="display: flex; padding: 0 5px;">
+                        <h6 style="margin: 0; font-weight: bold;">LOCATION:</h6>
+                        <h6 style="margin: 0; padding-left: 5px">${location}</h6>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 2fr; border-top: 1px solid black;">
+                        <div style="display: flex; padding: 0 5px">
+                            <h6 style="margin: 0; font-weight: bold;">DATE:</h6>
+                            <h6 style="margin: 0; padding-left: 5px">${incident_date}</h6>
+                        </div>
+                        <div style="display: flex; padding: 0 5px; border-left: 1px solid black;">
+                            <h6 style="margin: 0; font-weight: bold;">TIME:</h6>
+                            <h6 style="margin: 0; padding-left: 5px">${incident_time}</h6>
+                        </div>
+                        <div style="display: flex; align-items: center; padding: 0 5px; border-left: 1px solid black;">
+                            <h6 style="margin: 0; font-weight: bold; padding: 0 5px">POLICE NOTIFED:</h6>
+                            <div style="border: 1px solid black; height: 10px; width: 10px; margin-left: 15px;"></div>
+                            <h6 style="margin: 0; padding-left: 5px">YES</h6>
+                            <div style="border: 1px solid black; height: 10px; width: 10px; margin-left: 15px;"></div>
+                            <h6 style="margin: 0; padding-left: 5px">NO</h6>
+                            <div style="border: 1px solid black; height: 10px; width: 10px; margin-left: 15px; background-color: black;"></div>
+                            <h6 style="margin: 0; padding-left: 5px">N/A</h6>
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; border-top: 1px solid black;">
+                        <h6 style="margin: 0; font-weight: bold; padding: 0 5px">ACCIDENT/INCIDENT DETAILS:</h6>
+                        <h6 style="margin: 0; padding-left: 5px; padding: 0 5px; text-indent: 50px; text-align: justify;">${details}</h6>
+                    </div>
+                    <h6 style="margin: 0; font-weight: bold; padding: 0 5px; border-top: 1px solid black;">ATTACHMENT:</h6>
+                    <div id="fileDisplayArea" style="height: 400px; max-width: 700px; max-height: 400px; padding: 5px; display: flex; justify-content: center; align-items: center;"></div>
+                </div>
+                <div style="margin: 20px 0 0 0; border: 1px solid black; display: grid; grid-template-columns: 50% 50%; height: 170px;">
+                    <div style="display: flex; flex-direction: column;">
+                        <h6 style="margin: 0; font-weight: bold; padding: 0 5px">IDENTIFIED HAZARD:</h6>
+                        <h6 id="identified_hazard_input" style="margin: 0; padding-left: 5px; padding: 0 5px; text-align: justify; border-top: 1px solid black;"></h6>
+                    </div>
+                    <div style="display: flex; flex-direction: column; border-left: 1px solid black;">
+                        <h6 style="margin: 0; font-weight: bold; padding: 0 5px;">ACTION TAKEN:</h6>
+                        <h6 style="margin: 0; padding-left: 5px; padding: 0 5px; text-align: justify; border-top: 1px solid black;">${action_taken}</h6>
+                    </div>
+                </div>
+                <style>
+                    h5{
+                        font-size: 16px;
+                    }
+                    h6{
+                        font-size: 14px;
+                    }
+                    #fileDisplayArea img{
+                        max-height: 100%;
+                        max-width: 100%;
+                        border: 1px solid black;
+                    }
+                </style>
+            </div>
+            <div class="what_to_print2" id="what_to_print2" style="width: 816px; height: 1056px; border: 3px solid black; background-color: white; padding: 50px 50px 25px 50px; position: relative;">
+                <div style="display: flex; align-items: end; gap: 10px;">
+                    <img src="/public/images/logo.png" alt="" style="height: 50px;">
+                    <img src="/public/images/logo_name2.png" alt="" style="height: 40px;">
+                </div>
+                <h4 style="margin: 20px 0 0 0; text-align: center; font-weight: bold;">${header}</h4>
+                <h6 style="text-align: center; font-weight: bold; margin: 0;">${counter}</h6>
+                <div style="margin: 20px 0 0 0; border: 1px solid black;">
+                    <div style="display: flex; flex-direction: column; border-top: 1px solid black; height: 65px;">
+                        <h6 style="margin: 0; font-weight: bold; padding: 0 5px">POTENTIAL HARM:</h6>
+                        <h6 id="potential_harm_input" style="margin: 0; padding-left: 5px; padding: 0 5px; text-indent: 50px; text-align: justify;"></h6>
+                    </div>
+                    <h6 style="margin: 0; font-weight: bold; padding: 0 5px; border-top: 1px solid black;">ATTACHMENT:</h6>
+                    <div id="fileDisplayArea2" style="height: 400px; max-width: 700px; max-height: 400px; padding: 5px; display: grid; justify-content: center; align-items: center; grid-template-columns: repeat(3, 1fr);"></div>
+                </div>
+                <div style="margin: 20px 0 0 0; border: 1px solid black; display: grid; grid-template-columns: 1fr; height: 140px;">
+                    <div style="display: flex; flex-direction: column;">
+                        <h6 style="margin: 0; font-weight: bold; padding: 0 5px">RECOMMENDATION / CONTROL MEASURE::</h6>
+                        <h6 id="recommendation_input" style="margin: 0; padding-left: 5px; padding: 0 5px; text-indent: 50px; text-align: justify; border-top: 1px solid black;"></h6>
+                    </div>
+                </div>
+                <div style="margin: 20px 0 0 0; border: 1px solid black; display: grid; grid-template-columns: 1fr 3fr; height: 175px;">
+                    <div style="display: flex; flex-direction: column; border-right: 1px solid black;">
+                        <h6 style="margin: 0; font-weight: bold; padding: 0 5px">REPORTED BY:</h6>
+                        <h6 style="margin: 106px 0 0 0; padding: 0 5px; text-align: center; font-size: 13px"><u><b>ARLENE DELOS SANTOS</b></u></h6>
+                        <h6 style="margin: 0; padding: 0 5px; text-align: center; font-size: 13px"><i>PLANT SAFETY OFFICER 2</i></h6>            
+                        <h6 style="margin: 0; padding: 0 5px; font-size: 13px; border-top: 1px solid black;">DATE:</h6>     
+                    </div>
+                    <div>
+                        <div style="height: 85px;">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr;">
+                                <div style="display: flex; flex-direction: column;">
+                                    <h6 style="margin: 0; font-weight: bold; padding: 0 5px">RECEIVED BY:</h6>
+                                    <h6 style="margin: 20px 0 0 0;padding: 0 5px; text-align: center; font-size: 13px"><u><b>____________________</b></u></h6>
+                                    <h6 style="margin: 0; padding: 0 5px; text-align: center; font-size: 13px"><i>SUPERVISOR</i></h6>            
+                                    <h6 style="margin: 0; padding: 0 5px; font-size: 13px; border-top: 1px solid black;">DATE:</h6>            
+                                </div>
+                                <div style="display: flex; flex-direction: column; border-left: 1px solid black;">
+                                    <h6 style="margin: 0; font-weight: bold; padding: 0 5px">RECEIVED BY:</h6>
+                                    <h6 style="margin: 20px 0 0 0;padding: 0 5px; text-align: center; font-size: 13px"><u><b>ROSARIO RIVERA</b></u></h6>
+                                    <h6 style="margin: 0; padding: 0 5px; text-align: center; font-size: 13px"><i>HR ASSOCIATE</i></h6>            
+                                    <h6 style="margin: 0; padding: 0 5px; font-size: 13px; border-top: 1px solid black;">DATE:</h6>            
+                                </div>
+                                <div style="display: flex; flex-direction: column; border-left: 1px solid black;">
+                                    <h6 style="margin: 0; font-weight: bold; padding: 0 5px">RECEIVED BY:</h6>
+                                    <h6 style="margin: 20px 0 0 0;padding: 0 5px; text-align: center; font-size: 13px"><u><b>LAWRENCE ANTONIO</b></u></h6>
+                                    <h6 style="margin: 0; padding: 0 5px; text-align: center; font-size: 13px"><i>PCO</i></h6>
+                                    <h6 style="margin: 0; padding: 0 5px; font-size: 13px; border-top: 1px solid black;">DATE:</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div style=" border-top: 1px solid black;; height: 70px;">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr;">
+                                <div style="display: flex; flex-direction: column;">
+                                    <h6 style="margin: 0; font-weight: bold; padding: 0 5px">NOTED BY:</h6>
+                                    <h6 style="margin: 20px 0 0 0;padding: 0 5px; text-align: center; font-size: 13px"><u><b>DAISY CARDINEZ</b></u></h6>
+                                    <h6 style="margin: 0; padding: 0 5px; text-align: center; font-size: 13px"><i>ADMINISTRATIVE HEAD</i></h6>
+                                    <h6 style="margin: 0; padding: 0 5px; font-size: 13px; border-top: 1px solid black;">DATE:</h6>            
+                                </div>
+                                <div style="display: flex; flex-direction: column; border-left: 1px solid black;">
+                                    <h6 style="margin: 0; font-weight: bold; padding: 0 5px">NOTED BY:</h6>
+                                    <h6 style="margin: 20px 0 0 0;padding: 0 5px; text-align: center; font-size: 13px"><u><b>CRIS DURAN</b></u></h6>
+                                    <h6 style="margin: 0; padding: 0 5px; text-align: center; font-size: 13px"><i>PLANT MANAGER</i></h6>
+                                    <h6 style="margin: 0; padding: 0 5px; font-size: 13px; border-top: 1px solid black;">DATE:</h6>           
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div><br>
+                <style>
+                    h5{
+                        font-size: 16px;
+                    }
+                    h6{
+                        font-size: 14px;
+                    }
+                    #fileDisplayArea img{
+                        max-height: 100%;
+                        max-width: 100%;
+                        border: 1px solid black;
+                    }
+                </style>
+            </div>
+            `
+            incident_documentation_form.insertAdjacentHTML("beforeend", data)
+        }
 
         function findEmployeeName(employee_id){
             var employee_name = "";

@@ -519,7 +519,7 @@ nav{
 #vehicle_list_section,
 #new_vehicle_form,
 #vehicle_maintenance_form,
-#incident_documentation_form,
+#safety_dashboard,
 #employee_list_section,
 #attendance_form,
 #employee_form,
@@ -1602,7 +1602,7 @@ section h2
     height: 1056px;
     border: 3px solid black;
     background-color: white;
-    // display: none;
+    display: none;
 }
 
 #billing_process_form form #submit
@@ -3428,7 +3428,8 @@ input:disabled {
     display: flex;
 }
 
-.ap_accounting form #add_item_button
+.ap_accounting form #add_item_button,
+.ap_accounting form #add_item_button2
 {
     max-width: 60px !important;
     background-color: blue !important;
@@ -3439,7 +3440,8 @@ input:disabled {
     text-align: center;
 }
 
-.ap_accounting form #remove_item_button
+.ap_accounting form #remove_item_button,
+.ap_accounting form #remove_item_button2
 {
     max-width: 60px !important;
     background-color: blue;

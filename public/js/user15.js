@@ -86,78 +86,113 @@ document.addEventListener('DOMContentLoaded', async function() {
         var truck_scale_collection = 0;
         var house_collection = 0;
         var representation_fund = 0;
+        var deduction_source_of_fund = 0;
+        var deduction_trucking_fund = 0;
+        var deduction_hauling_fund = 0;
+        var deduction_diesel_fund = 0;
+        var deduction_gasoline_fund = 0;
+        var deduction_sir_ruels_fund = 0;
+        var deduction_scrap_sales = 0;
+        var deduction_mold_runner_sales = 0;
+        var deduction_truck_scale_collection = 0;
+        var deduction_house_collection = 0;
+        var deduction_representation_fund = 0;
+        var additional_source_of_fund = 0;
+        var additional_trucking_fund = 0;
+        var additional_hauling_fund = 0;
+        var additional_diesel_fund = 0;
+        var additional_gasoline_fund = 0;
+        var additional_sir_ruels_fund = 0;
+        var additional_scrap_sales = 0;
+        var additional_mold_runner_sales = 0;
+        var additional_truck_scale_collection = 0;
+        var additional_house_collection = 0;
+        var additional_representation_fund = 0;
 
-        for (let i = 1; i < ftf_data_list.content.length; i++) {
-            // fund_source
-            if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "SOURCE OF FUND") {
-                source_of_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "HAULING FUND") {
-                hauling_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "TRUCKING FUND") {
-                trucking_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "DIESEL FUND") {
-                diesel_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "GASOLINE FUND") {
-                gasoline_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "SIR RUEL'S FUND") {
-                sir_ruels_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "SCRAP SALES") {
-                scrap_sales -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "MOLD RUNNER SALES") {
-                mold_runner_sales -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "TRUCK SCALE COLLECTION") {
-                truck_scale_collection -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "HOUSE COLLECTION") {
-                house_collection -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "REPRESENTATION FUND") {
-                representation_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            // fund_allocation
-            if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "SOURCE OF FUND") {
-                source_of_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "HAULING FUND") {
-                hauling_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "TRUCKING FUND") {
-                trucking_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "DIESEL FUND") {
-                diesel_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "GASOLINE FUND") {
-                gasoline_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "SIR RUEL'S FUND") {
-                sir_ruels_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "SCRAP SALES") {
-                scrap_sales += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "MOLD RUNNER SALES") {
-                mold_runner_sales += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "TRUCK SCALE COLLECTION") {
-                truck_scale_collection += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "HOUSE COLLECTION") {
-                house_collection += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "REPRESENTATION FUND") {
-                representation_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+        function updateAmount(){
+            source_of_fund = 0;
+            trucking_fund = 0;
+            hauling_fund = 0;
+            diesel_fund = 0;
+            gasoline_fund = 0;
+            sir_ruels_fund = 0;
+            scrap_sales = 0;
+            mold_runner_sales = 0;
+            truck_scale_collection = 0;
+            house_collection = 0;
+            representation_fund = 0;
+            for (let i = 1; i < ftf_data_list.content.length; i++) {
+                // fund_source
+                if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "SOURCE OF FUND") {
+                    source_of_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "HAULING FUND") {
+                    hauling_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "TRUCKING FUND") {
+                    trucking_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "DIESEL FUND") {
+                    diesel_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "GASOLINE FUND") {
+                    gasoline_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "SIR RUEL'S FUND") {
+                    sir_ruels_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "SCRAP SALES") {
+                    scrap_sales -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "MOLD RUNNER SALES") {
+                    mold_runner_sales -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "TRUCK SCALE COLLECTION") {
+                    truck_scale_collection -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "HOUSE COLLECTION") {
+                    house_collection -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "REPRESENTATION FUND") {
+                    representation_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                // fund_allocation
+                if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "SOURCE OF FUND") {
+                    source_of_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "HAULING FUND") {
+                    hauling_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "TRUCKING FUND") {
+                    trucking_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "DIESEL FUND") {
+                    diesel_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "GASOLINE FUND") {
+                    gasoline_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "SIR RUEL'S FUND") {
+                    sir_ruels_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "SCRAP SALES") {
+                    scrap_sales += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "MOLD RUNNER SALES") {
+                    mold_runner_sales += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "TRUCK SCALE COLLECTION") {
+                    truck_scale_collection += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "HOUSE COLLECTION") {
+                    house_collection += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "REPRESENTATION FUND") {
+                    representation_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
             }
         }
-        
+        updateAmount();
         source_of_fund_ap_accounting.innerText = formatNumber(source_of_fund);
         trucking_fund_ap_accounting.innerText = formatNumber(trucking_fund);
         hauling_fund_ap_accounting.innerText = formatNumber(hauling_fund);
@@ -1044,27 +1079,21 @@ document.addEventListener('DOMContentLoaded', async function() {
             payslip_container_ap_accounting.innerHTML = payslip_form_data;
         })
 
-
-
         // FORM GENERATOR
         // ftf_data_list
         const fund_transfer_form_ap_accounting = document.querySelector("#fund_transfer_form");
         const fund_transfer_form_button_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_transfer_form_button");
         const fund_transfer_form_id_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_transfer_form_id");
         const ftf_form_no_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#ftf_form_no");
-        const fund_source_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_source");
-        const fund_allocation_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_allocation");
-        const fund_source_amount_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_source_amount");
-        const fund_allocation_amount_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_allocation_amount");
-        const fund_source_amount_container_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_source_amount_container");
-        const fund_allocation_amount_container_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_allocation_amount_container");
         const transfer_history_list_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#transfer_history_list");
-        const fund_source_other_details_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_source_other_details_container");
-        const fund_allocation_other_details_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_allocation_other_details_container");
         const filter_fund_source_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#filter_fund_source");
         const filter_tab_fund_source_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#filter_tab_fund_source");
         const filter_fund_allocation_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#filter_fund_allocation");
         const filter_tab_fund_allocation_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#filter_tab_fund_allocation");
+        const add_item_button2_ftf_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#add_item_button2_ftf");
+        const remove_item_button2_ftf_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#remove_item_button2_ftf");
+        const data_counter_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#data_counter");
+        const fund_transfer_form_buttons_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_transfer_form_buttons");
 
         var month_new;
         var code_year_month;
@@ -1115,63 +1144,185 @@ document.addEventListener('DOMContentLoaded', async function() {
             }        
         });
 
-        function updateFundSourceAmount(source, source2, source3, source4) {
-            const fundSourceValue = source.value;
-            let fundAmount = 0;
+        add_item_button2_ftf_ap_accounting.addEventListener("click", () => {
+            data_counter_ap_accounting.value = parseInt(data_counter_ap_accounting.value) + 1;
+            addNewData();
+        })
+
+        function addNewData(){            
+            var data = 
+            `
+            <div class="d-flex gap-4" id="data">
+                <div style="width: 30%;">
+                    <div>
+                        <label for="fund_source${data_counter_ap_accounting.value}">
+                            Fund Source
+                        </label><br>
+                        <select name="fund_source${data_counter_ap_accounting.value}" id="fund_source${data_counter_ap_accounting.value}" class="form-control" required>
+                            <option value="">SELECT FUND SOURCE</option>
+                            <option value="SOURCE OF FUND">SOURCE OF FUND</option>
+                            <option value="TRUCKING FUND">TRUCKING FUND</option>
+                            <option value="HAULING FUND">HAULING FUND</option>
+                            <option value="DIESEL FUND">DIESEL FUND</option>
+                            <option value="GASOLINE FUND">GASOLINE FUND</option>
+                            <option value="SIR RUEL'S FUND">SIR RUEL'S FUND</option>
+                            <option value="SCRAP SALES">SCRAP SALES</option>
+                            <option value="MOLD RUNNER SALES">MOLD RUNNER SALES</option>
+                            <option value="TRUCK SCALE COLLECTION">TRUCK SCALE COLLECTION</option>
+                            <option value="HOUSE COLLECTION">HOUSE COLLECTION</option>
+                            <option value="REPRESENTATION FUND">REPRESENTATION FUND</option>
+                            <option value="OTHERS">OTHERS</option>
+                        </select>
+                    </div>
+                    <div id="fund_source_amount_container${data_counter_ap_accounting.value}">
+                        <label for="fund_source_amount${data_counter_ap_accounting.value}">
+                            Fund Source Amount
+                        </label><br>
+                        <input type="text" id="fund_source_amount${data_counter_ap_accounting.value}" name="fund_source_amount${data_counter_ap_accounting.value}" class="form-control" autocomplete="off" readonly>
+                    </div>
+                    <div id="fund_source_other_details_container${data_counter_ap_accounting.value}" style="display: none">
+                        <label for="fund_source_other_details${data_counter_ap_accounting.value}">
+                            Fund Source Input
+                        </label><br>
+                        <input type="text" id="fund_source_other_details${data_counter_ap_accounting.value}" name="fund_source_other_details${data_counter_ap_accounting.value}" class="form-control"  autocomplete="off" placeholder="Input Fund Allocation"><br>
+                    </div>
+                </div>
+                <div style="width: 30%;">
+                    <div>
+                        <label for="fund_allocation${data_counter_ap_accounting.value}">
+                            Fund Allocation
+                        </label><br>
+                        <select name="fund_allocation${data_counter_ap_accounting.value}" id="fund_allocation${data_counter_ap_accounting.value}" class="form-control" required>
+                            <option value="">SELECT FUND ALLOCATION</option>
+                            <option value="BANK">BANK</option>
+                            <option value="SOURCE OF FUND">SOURCE OF FUND</option>
+                            <option value="TRUCKING FUND">TRUCKING FUND</option>
+                            <option value="HAULING FUND">HAULING FUND</option>
+                            <option value="DIESEL FUND">DIESEL FUND</option>
+                            <option value="GASOLINE FUND">GASOLINE FUND</option>
+                            <option value="SIR RUEL'S FUND">SIR RUEL'S FUND</option>
+                            <option value="SCRAP SALES">SCRAP SALES</option>
+                            <option value="MOLD RUNNER SALES">MOLD RUNNER SALES</option>
+                            <option value="TRUCK SCALE COLLECTION">TRUCK SCALE COLLECTION</option>
+                            <option value="HOUSE COLLECTION">HOUSE COLLECTION</option>
+                            <option value="REPRESENTATION FUND">REPRESENTATION FUND</option>
+                            <option value="OTHERS">OTHERS</option>
+                        </select>
+                    </div>
+                    <div id="fund_allocation_amount_container${data_counter_ap_accounting.value}">
+                        <label for="fund_allocation_amount${data_counter_ap_accounting.value}">
+                            Fund Allocation Amount
+                        </label><br>
+                        <input type="text" id="fund_allocation_amount${data_counter_ap_accounting.value}" name="fund_allocation_amount${data_counter_ap_accounting.value}" class="form-control" autocomplete="off" readonly>
+                    </div>
+                    <div id="fund_allocation_other_details_container${data_counter_ap_accounting.value}" style="display: none">
+                        <label for="fund_allocation_other_details${data_counter_ap_accounting.value}">
+                            Fund Allocation Input
+                        </label><br>
+                        <input type="text" id="fund_allocation_other_details${data_counter_ap_accounting.value}" name="fund_allocation_other_details${data_counter_ap_accounting.value}" class="form-control"  autocomplete="off" placeholder="Input Fund Allocation"><br>
+                    </div>
+                </div>
+                <div style="width: 20%;">
+                    <div>
+                        <label for="fund_amount${data_counter_ap_accounting.value}">
+                            Fund Amount
+                        </label><br>
+                        <input type="number" id="fund_amount${data_counter_ap_accounting.value}" name="fund_amount${data_counter_ap_accounting.value}" class="form-control"  autocomplete="off" placeholder="Input Fund Amount" required value="0"><br>    
+                    </div>
+                </div>
+            </div>
+            `
+            fund_transfer_form_buttons_ap_accounting.insertAdjacentHTML("beforebegin", data);
+            updateFunction ();
+        }
+        addNewData();
         
+        function updateFundSourceAmount(source, source2, source3, source4, source5) {
+            updateAmount();
+            const fundSourceValue = source.value;
+            const fundAllocationValue = source3.value;
+            let fundAmount = 0;
+            source_of_fund += deduction_source_of_fund + additional_source_of_fund;
+            trucking_fund += deduction_trucking_fund + additional_trucking_fund;
+            hauling_fund += deduction_hauling_fund + additional_hauling_fund;
+            diesel_fund += deduction_diesel_fund + additional_diesel_fund;
+            gasoline_fund += deduction_gasoline_fund + additional_gasoline_fund;
+            sir_ruels_fund += deduction_sir_ruels_fund + additional_sir_ruels_fund;
+            scrap_sales += deduction_scrap_sales + additional_scrap_sales;
+            mold_runner_sales += deduction_mold_runner_sales + additional_mold_runner_sales;
+            truck_scale_collection += deduction_truck_scale_collection + additional_truck_scale_collection;
+            house_collection += deduction_house_collection + additional_house_collection;
+            representation_fund += deduction_representation_fund + additional_representation_fund;
+            console.log(source_of_fund)
+            console.log(deduction_source_of_fund)
+            console.log(trucking_fund)
+            console.log(additional_hauling_fund)
+            console.log(fundSourceValue)
+            console.log(fundAllocationValue)
             switch (fundSourceValue) {
                 case "SOURCE OF FUND":
-                    fundAmount = source_of_fund;
+                    fundAmount = source_of_fund - source5;
+                    deduction_source_of_fund -= source5;
                     source2.style.display = "block";
                     source4.style.display = "none";
                     break;
                 case "TRUCKING FUND":
-                    fundAmount = trucking_fund;
+                    fundAmount = trucking_fund - source5;
+                    deduction_trucking_fund -= source5;
                     source2.style.display = "block";
                     source4.style.display = "none";
                     break;
                 case "HAULING FUND":
-                    fundAmount = hauling_fund;
+                    fundAmount = hauling_fund - source5;
+                    deduction_hauling_fund -= source5;
                     source2.style.display = "block";
                     source4.style.display = "none";
                     break;
                 case "DIESEL FUND":
-                    fundAmount = diesel_fund;
+                    fundAmount = diesel_fund - source5;
+                    deduction_diesel_fund -= source5;
                     source2.style.display = "block";
                     source4.style.display = "none";
                     break;
                 case "GASOLINE FUND":
-                    fundAmount = gasoline_fund;
+                    fundAmount = gasoline_fund - source5;
+                    deduction_gasoline_fund -= source5;
                     source2.style.display = "block";
                     source4.style.display = "none";
                     break;
                 case "SIR RUEL'S FUND":
-                    fundAmount = sir_ruels_fund;
+                    fundAmount = sir_ruels_fund - source5;
+                    deduction_sir_ruels_fund -= source5;
                     source2.style.display = "block";
                     source4.style.display = "none";
                     break;
                 case "SCRAP SALES":
-                    fundAmount = scrap_sales;
+                    fundAmount = scrap_sales - source5;
+                    deduction_scrap_sales -= source5;
                     source2.style.display = "block";
                     source4.style.display = "none";
                     break;
                 case "MOLD RUNNER SALES":
-                    fundAmount = mold_runner_sales;
+                    fundAmount = mold_runner_sales - source5;
+                    deduction_mold_runner_sales -= source5;
                     source2.style.display = "block";
                     source4.style.display = "none";
                     break;
                 case "TRUCK SCALE COLLECTION":
-                    fundAmount = truck_scale_collection;
+                    fundAmount = truck_scale_collection - source5;
+                    deduction_truck_scale_collection -= source5;
                     source2.style.display = "block";
                     source4.style.display = "none";
                     break;
                 case "HOUSE COLLECTION":
-                    fundAmount = house_collection;
+                    fundAmount = house_collection - source5;
+                    deduction_house_collection -= source5;
                     source2.style.display = "block";
                     source4.style.display = "none";
                     break;
                 case "REPRESENTATION FUND":
-                    representation_fund = house_collection;
+                    fundAmount = representation_fund - source5;
+                    deduction_representation_fund -= source5;
                     source2.style.display = "block";
                     source4.style.display = "none";
                     break;
@@ -1184,18 +1335,209 @@ document.addEventListener('DOMContentLoaded', async function() {
                     source4.style.display = "block";
                     return;
             }
+            switch (fundAllocationValue) {
+                case "SOURCE OF FUND":
+                    additional_source_of_fund += source5;
+                    break;
+                case "TRUCKING FUND":
+                    additional_trucking_fund += source5;
+                    break;
+                case "HAULING FUND":
+                    additional_hauling_fund += source5;
+                    break;
+                case "DIESEL FUND":
+                    additional_diesel_fund += source5;
+                    break;
+                case "GASOLINE FUND":
+                    additional_gasoline_fund += source5;
+                    break;
+                case "SIR RUEL'S FUND":
+                    additional_sir_ruels_fund += source5;
+                    break;
+                case "SCRAP SALES":
+                    additional_scrap_sales += source5;
+                    break;
+                case "MOLD RUNNER SALES":
+                    additional_mold_runner_sales += source5;
+                    break;
+                case "TRUCK SCALE COLLECTION":
+                    additional_truck_scale_collection += source5;
+                    break;
+                case "HOUSE COLLECTION":
+                    additional_house_collection += source5;
+                    break;
+                case "REPRESENTATION FUND":
+                    additional_representation_fund += source5;
+                    break;
+            }
         
             source3.value = fundAmount.toFixed(2);
             source3.style.display = "flex";
         }
+        function updateFundSourceAmount2(source, source2, source3, source4, source5, source6) {
+            updateAmount();
+            const fundSourceValue = source.value;
+            const fundAllocationValue = source6.value;
+            let fundAmount = 0;
+            source_of_fund += deduction_source_of_fund + additional_source_of_fund;
+            trucking_fund += deduction_trucking_fund + additional_trucking_fund;
+            hauling_fund += deduction_hauling_fund + additional_hauling_fund;
+            diesel_fund += deduction_diesel_fund + additional_diesel_fund;
+            gasoline_fund += deduction_gasoline_fund + additional_gasoline_fund;
+            sir_ruels_fund += deduction_sir_ruels_fund + additional_sir_ruels_fund;
+            scrap_sales += deduction_scrap_sales + additional_scrap_sales;
+            mold_runner_sales += deduction_mold_runner_sales + additional_mold_runner_sales;
+            truck_scale_collection += deduction_truck_scale_collection + additional_truck_scale_collection;
+            house_collection += deduction_house_collection + additional_house_collection;
+            representation_fund += deduction_representation_fund + additional_representation_fund;
+            switch (fundSourceValue) {
+                case "SOURCE OF FUND":
+                    fundAmount = source_of_fund;
+                    deduction_source_of_fund -= source5;
+                    source2.style.display = "block";
+                    source4.style.display = "none";
+                    break;
+                case "TRUCKING FUND":
+                    fundAmount = trucking_fund;
+                    deduction_trucking_fund -= source5;
+                    source2.style.display = "block";
+                    source4.style.display = "none";
+                    break;
+                case "HAULING FUND":
+                    fundAmount = hauling_fund;
+                    deduction_hauling_fund -= source5;
+                    source2.style.display = "block";
+                    source4.style.display = "none";
+                    break;
+                case "DIESEL FUND":
+                    fundAmount = diesel_fund;
+                    deduction_diesel_fund -= source5;
+                    source2.style.display = "block";
+                    source4.style.display = "none";
+                    break;
+                case "GASOLINE FUND":
+                    fundAmount = gasoline_fund;
+                    deduction_gasoline_fund -= source5;
+                    source2.style.display = "block";
+                    source4.style.display = "none";
+                    break;
+                case "SIR RUEL'S FUND":
+                    fundAmount = sir_ruels_fund;
+                    deduction_sir_ruels_fund -= source5;
+                    source2.style.display = "block";
+                    source4.style.display = "none";
+                    break;
+                case "SCRAP SALES":
+                    fundAmount = scrap_sales;
+                    deduction_scrap_sales -= source5;
+                    source2.style.display = "block";
+                    source4.style.display = "none";
+                    break;
+                case "MOLD RUNNER SALES":
+                    fundAmount = mold_runner_sales;
+                    deduction_mold_runner_sales -= source5;
+                    source2.style.display = "block";
+                    source4.style.display = "none";
+                    break;
+                case "TRUCK SCALE COLLECTION":
+                    fundAmount = truck_scale_collection;
+                    deduction_truck_scale_collection -= source5;
+                    source2.style.display = "block";
+                    source4.style.display = "none";
+                    break;
+                case "HOUSE COLLECTION":
+                    fundAmount = house_collection;
+                    deduction_house_collection -= source5;
+                    source2.style.display = "block";
+                    source4.style.display = "none";
+                    break;
+                case "REPRESENTATION FUND":
+                    fundAmount = representation_fund;
+                    deduction_representation_fund -= source5;
+                    source2.style.display = "block";
+                    source4.style.display = "none";
+                    break;
+                case "BANK":
+                    source2.style.display = "none";
+                    source4.style.display = "none";
+                    return;
+                case "OTHERS":
+                    source2.style.display = "none";
+                    source4.style.display = "block";
+                    return;
+            }
+            switch (fundAllocationValue) {
+                case "SOURCE OF FUND":
+                    additional_source_of_fund += parseFloat(source5);
+                    break;
+                case "TRUCKING FUND":
+                    additional_trucking_fund += parseFloat(source5);
+                    console.log("pass")
+                    break;
+                case "HAULING FUND":
+                    additional_hauling_fund += parseFloat(source5);
+                    break;
+                case "DIESEL FUND":
+                    additional_diesel_fund += parseFloat(source5);
+                    break;
+                case "GASOLINE FUND":
+                    additional_gasoline_fund += parseFloat(source5);
+                    break;
+                case "SIR RUEL'S FUND":
+                    additional_sir_ruels_fund += parseFloat(source5);
+                    break;
+                case "SCRAP SALES":
+                    additional_scrap_sales += parseFloat(source5);
+                    break;
+                case "MOLD RUNNER SALES":
+                    additional_mold_runner_sales += parseFloat(source5);
+                    break;
+                case "TRUCK SCALE COLLECTION":
+                    additional_truck_scale_collection += parseFloat(source5);
+                    break;
+                case "HOUSE COLLECTION":
+                    additional_house_collection += parseFloat(source5);
+                    break;
+                case "REPRESENTATION FUND":
+                    additional_representation_fund += parseFloat(source5);
+                    break;
+            }
+            console.log(source_of_fund)
+            console.log(deduction_source_of_fund)
+            console.log(trucking_fund)
+            console.log(additional_trucking_fund)
+            console.log(fundSourceValue)
+            console.log(fundAllocationValue)
+            source3.value = fundAmount.toFixed(2);
+            source3.style.display = "flex";
+        }
+
+        function updateFunction(){
+            const data_ap_accounting = fund_transfer_form_ap_accounting.querySelectorAll("#data");
+            data_ap_accounting.forEach((data, index) => {
+                const fund_source_ap_accounting = data.querySelector(`#fund_source${index + 1}`);
+                const fund_allocation_ap_accounting = data.querySelector(`#fund_allocation${index + 1}`);
+                const fund_source_amount_ap_accounting = data.querySelector(`#fund_source_amount${index + 1}`);
+                const fund_allocation_amount_ap_accounting = data.querySelector(`#fund_allocation_amount${index + 1}`);
+                const fund_source_amount_container_ap_accounting = data.querySelector(`#fund_source_amount_container${index + 1}`);
+                const fund_allocation_amount_container_ap_accounting = data.querySelector(`#fund_allocation_amount_container${index + 1}`);
+                const fund_source_other_details_ap_accounting = data.querySelector(`#fund_source_other_details_container${index + 1}`);
+                const fund_allocation_other_details_ap_accounting = data.querySelector(`#fund_allocation_other_details_container${index + 1}`);
+                const fund_amount_ap_accounting = data.querySelector(`#fund_amount${index + 1}`);
+                fund_source_ap_accounting.addEventListener("change", function() {
+                    updateFundSourceAmount(fund_source_ap_accounting, fund_source_amount_container_ap_accounting, fund_source_amount_ap_accounting, fund_source_other_details_ap_accounting, fund_amount_ap_accounting.value);
+                });
+                
+                fund_allocation_ap_accounting.addEventListener("change", function() {
+                    updateFundSourceAmount(fund_allocation_ap_accounting, fund_allocation_amount_container_ap_accounting, fund_allocation_amount_ap_accounting, fund_allocation_other_details_ap_accounting, fund_amount_ap_accounting.value);
+                });
+                fund_amount_ap_accounting.addEventListener("change", function() {
+                    updateFundSourceAmount2(fund_source_ap_accounting, fund_source_amount_container_ap_accounting, fund_source_amount_ap_accounting, fund_source_other_details_ap_accounting, fund_amount_ap_accounting.value, fund_allocation_ap_accounting);
+                });
+                console.log("pass_new")
+            })
+        }
         
-        fund_source_ap_accounting.addEventListener("change", function() {
-            updateFundSourceAmount(fund_source_ap_accounting, fund_source_amount_container_ap_accounting, fund_source_amount_ap_accounting, fund_source_other_details_ap_accounting);
-        });
-        
-        fund_allocation_ap_accounting.addEventListener("change", function() {
-            updateFundSourceAmount(fund_allocation_ap_accounting, fund_allocation_amount_container_ap_accounting, fund_allocation_amount_ap_accounting, fund_allocation_other_details_ap_accounting);
-        });
         
         // frf_data_list
         const fund_request_form_button_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_request_form_button");
