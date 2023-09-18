@@ -545,11 +545,12 @@ function customValidation3() {
   const fund_amount = document.getElementById(`fund_amount${data_counter.value}`);
   const fund_source_amount = document.getElementById(`fund_source_amount${data_counter.value}`);
   const fund_source = document.getElementById(`fund_source${data_counter.value}`);
-  console.log(data_counter)
+  console.log(data_counter.value)
   console.log(fund_amount.value)
   console.log(fund_source_amount.value)
   console.log(fund_source.value)
-  if(fund_source.value != "BANK" || fund_source.value != "OTHERS"){
+  if(fund_source.value !== "BANK" && fund_source.value !== "OTHERS"){
+    console.log("pass")
       if (fund_amount.value > fund_source_amount.value) {
           alert('Invalid TransaCtion! Fund Amount is Greater than Fund Source Amount.');
           
