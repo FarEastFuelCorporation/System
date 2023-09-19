@@ -231,7 +231,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 for(let c = 1; c < qlf_data_list.content.length; c++){
                     if(cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")] &&
                         cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE ID")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
-                        waste_name = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE NAME")];
+                        // waste_name = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE NAME")];
                         mode = qlf_data_list.content[c][findTextInArray(qlf_data_list, "MODE")];
                         unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")];
                         unit_price = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")];
@@ -262,10 +262,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
                 var data = "";
                 var data3 = "";
-                if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #" && vat_calculation == "CHARGE")]){
+                if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]){
+                    // && vat_calculation == "CHARGE"
                     bpf_form_no_container.innerText = bpf_form_no.value;
                     date_made_container.innerText = date_decoder(new Date());
-                    client_name_container.innerText = client_name;
+                    client_name_container.innerHTML = client_name;
                     si_client_name_container.innerText = client_name;
                     address_container.innerText = address;
                     si_address_container.innerText = address;
@@ -278,11 +279,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <tr>
                         <td>${date_of_certification}</td>
                         <td></td>
-                        <td>4648</td>
-                        <td style="font-size: 10px !important">${waste_name}</td>
+                        <td></td>
+                        <td style="font-size: 10px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
                         <td>${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
                         <td>${unit}</td>
-                        <td style="text-align: right; padding-right: 5px">${unit_price}</td>
+                        <td style="text-align: right; padding-right: 5px">${formatNumber(unit_price)}</td>
                         <td style="text-align: right; padding-right: 5px">${formatNumber(parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price))}</td>
                         <td style="font-size: 10px !important">${vat_calculation}</td>
                     </tr>
@@ -327,7 +328,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td>${date_of_certification}</td>
                         <td></td>
                         <td>4648</td>
-                        <td style="font-size: 10px !important">TRANS. FEE ${transportation_vehicle}</td>
+                        <td style="font-size: 10px !important; padding-top: 2px">TRANS. FEE ${transportation_vehicle}</td>
                         <td>${1}</td>
                         <td>${transportation_unit}</td>
                         <td style="text-align: right; padding-right: 5px">${formatNumber(transportation_fee)}</td>
@@ -350,7 +351,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                         si_amount = (1 * (parseFloat(transportation_fee)));
                         si_total_amount += (1 * (parseFloat(transportation_fee)));
                     }
-                    console.log(transportation_calculation)
                     data4 = `
                     <tr>
                         <td>${data3_counter}</td>
