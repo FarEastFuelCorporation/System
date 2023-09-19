@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
             for(let k = 1; k < wcf_data_list.content.length; k++){
-                if(ltf_data_list.content[j][findTextInArray(ltf_data_list, "LTF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF #")]){
+                if(ltf_data_list.content[j][findTextInArray(ltf_data_list, "LTF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
                     data3_value +=`
                     <tr>
                     <td>${data_value3_counter}</td>
@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         }
         ongoing_list_logistics.innerHTML = data3_value;    
-        
+
         var on_hauling_vehicle_counter_logistics = 0;
         var under_maintenance_vehicle_counter_logistics = 0;
         var for_maintenance_vehicle_counter_logistics = 0;
