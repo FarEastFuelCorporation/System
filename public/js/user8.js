@@ -125,6 +125,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td>${employee_names.join(" || ")}</td>
                         <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "DESIGNATION")]}</td>
                         <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "INCIDENT DETAILS")]}</td>
+                        <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "ACTION TAKEN")]}</td>
                         <td>${date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "REPORT DATE")])} /<br> ${time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "REPORT TIME")])}</td>
                         <td>${calculateTravelTime(date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "INCIDENT DATE")]),time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "INCIDENT TIME")]),date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "REPORT DATE")]),time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "REPORT TIME")]))}</td>
                     </tr>
@@ -368,7 +369,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             incident_time = time_decoder(irf_data_list.content[a][findTextInArray(irf_data_list, "INCIDENT TIME")])
                             location = irf_data_list.content[a][findTextInArray(irf_data_list, "LOCATION")]
                             details = irf_data_list.content[a][findTextInArray(irf_data_list, "INCIDENT DETAILS")]
-                            action_taken = irf_data_list.content[a][findTextInArray(irf_data_list, "INCIDENT DETAILS")]
+                            action_taken = irf_data_list.content[a][findTextInArray(irf_data_list, "ACTION TAKEN")]
                             search_irf_result.style.display = "block";
                             head_button.style.display = "block";
                         }
