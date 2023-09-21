@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const pending_list_ltf_ap_accounting = ltf_transaction_ap_accounting.filter((element) => !ltf_tbf_transaction_ap_accounting.includes(element));
         const done_list_ltf_ap_accounting = ltf_transaction_ap_accounting.filter((element) => ltf_tbf_transaction_ap_accounting.includes(element));
         const pending_list_tbf_ap_accounting = tbf_transaction_ap_accounting.filter((element) => !tbf_tlf_transaction_ap_accounting.includes(element));
-
+        
         // ordered_transactions_purchasing.innerText = prf_transaction_treatment.length;
         // pending_purchasing.innerText = pending_list_purchasing.length;
         // requested_purchasing.innerText = 0;
@@ -612,6 +612,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         search_tbf_form_no_button_ap_accounting.addEventListener("click", () => {
             var data_value;
             var pcv_no = "";
+            var ltf_no = "";
             var driver_name = "";
             var truck_helper_name_list = "";
             var released_by = "";
@@ -622,6 +623,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             released_budget = tbf_data_list.content[y][3];
                             released_by = tbf_data_list.content[y][4];
                             pcv_no = tbf_data_list.content[y][1];
+                            ltf_no = tbf_data_list.content[y][2];
                         }
                     }
                     for(a=1; a<ltf_data_list.content.length; a++){
@@ -663,9 +665,15 @@ document.addEventListener('DOMContentLoaded', async function() {
                             var truck_helper_name = "";
                             for(let c = 1; c < tbf_data_list.content.length; c++){
                                 if(search_tbf_form_no_ap_accounting.value == tbf_data_list.content[c][0]){
-                                    if(ltf_data_list.content[a][0] == tbf_data_list.content[c][2]){
+                                    if (ltf_data_list.content[a][0] == tbf_data_list.content[c][2]) {
                                         var values = ltf_data_list.content[a][9];
-                                        var valueArray = values.split(" || ");
+                                        // Check if the values contain "||"
+                                        if (values.toString().includes("||")) {
+                                            var valueArray = values.split(" || ");
+                                        } else {
+                                            // If there are no "||", set valueArray to an empty array
+                                            var valueArray = [values];
+                                        }
                                     }
                                 }
                             }
@@ -750,7 +758,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             remaining.value = parseFloat(released_budget).toFixed(2) - sum;
                         }
 
-                        ltf_no_ap_accounting.value = ltf_data_list.content[a][0];
+                        ltf_no_ap_accounting.value = ltf_no;
                         pcv_no_ap_accounting.value = pcv_no;
                         liquidation_form_inputs_ap_accounting.style.display = "flex";
                         liquidation_form_buttons_ap_accounting.style.display = "flex";
@@ -1253,12 +1261,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             truck_scale_collection += deduction_truck_scale_collection + additional_truck_scale_collection;
             house_collection += deduction_house_collection + additional_house_collection;
             representation_fund += deduction_representation_fund + additional_representation_fund;
-            console.log(source_of_fund)
-            console.log(deduction_source_of_fund)
-            console.log(trucking_fund)
-            console.log(additional_hauling_fund)
-            console.log(fundSourceValue)
-            console.log(fundAllocationValue)
             switch (fundSourceValue) {
                 case "SOURCE OF FUND":
                     fundAmount = source_of_fund - source5;
@@ -1472,7 +1474,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     break;
                 case "TRUCKING FUND":
                     additional_trucking_fund += parseFloat(source5);
-                    console.log("pass")
                     break;
                 case "HAULING FUND":
                     additional_hauling_fund += parseFloat(source5);
@@ -1502,12 +1503,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     additional_representation_fund += parseFloat(source5);
                     break;
             }
-            console.log(source_of_fund)
-            console.log(deduction_source_of_fund)
-            console.log(trucking_fund)
-            console.log(additional_trucking_fund)
-            console.log(fundSourceValue)
-            console.log(fundAllocationValue)
             source3.value = fundAmount.toFixed(2);
             source3.style.display = "flex";
         }
@@ -1534,7 +1529,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 fund_amount_ap_accounting.addEventListener("change", function() {
                     updateFundSourceAmount2(fund_source_ap_accounting, fund_source_amount_container_ap_accounting, fund_source_amount_ap_accounting, fund_source_other_details_ap_accounting, fund_amount_ap_accounting.value, fund_allocation_ap_accounting);
                 });
-                console.log("pass_new")
             })
         }
         
