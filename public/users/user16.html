@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User 6</title>
+    <title>User 16</title>
     <link rel="shortcut icon" href="../images/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="../css/main-css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
@@ -145,66 +145,64 @@
                             <i class="fa-solid fa-clipboard-check"></i>
                         </div>
                     </div>
+                    <div style="position: relative;">
+                        <div id="pieChart" style="position: absolute; margin-top: -70px;">
+                        </div>
+                    </div>
                 </div><br>
+                <!-- <div class="cards3">
+                    <h2 class="m-0">TO LOGISTICS</h2>
+                    <h2 class="m-0">TO RECEIVING</h2>
+                </div>
                 <div class="cards2">
-                    <div class="cards5">
-                        <h2 class="m-0">TO LOGISTICS</h2>
-                        <div class="cards3">
-                            <div class="card">
-                                <div class="card-content">
-                                    <div class="number" id="for_logistics_pending"></div>
-                                    <div class="card-name">Pending</div>
-                                </div>
-                                <div class="icon-box">
-                                    <i class="fa-solid fa-clipboard-list"></i>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-content">
-                                    <div class="number" id="for_logistics_on_haul"></div>
-                                    <div class="card-name">On Hauling</div>
-                                </div>
-                                <div class="icon-box">
-                                    <i class="fa-solid fa-truck"></i>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-content">
-                                    <div class="number" id="for_logistics_received"></div>
-                                    <div class="card-name">Received</div>
-                                </div>
-                                <div class="icon-box">
-                                    <i class="fa-solid fa-clipboard-check"></i>
-                                </div>
-                            </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="for_logistics_pending"></div>
+                            <div class="card-name">Pending</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-clipboard-list"></i>
                         </div>
                     </div>
-                    <div class="cards5">
-                        <h2 class="m-0">TO RECEIVING</h2>
-                        <div class="cards4">
-                            <div class="card">
-                                <div class="card-content">
-                                    <div class="number" id="for_receiving_pending"></div>
-                                    <div class="card-name">Pending</div>
-                                </div>
-                                <div class="icon-box">
-                                    <i class="fa-solid fa-clipboard-list"></i>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-content">
-                                    <div class="number" id="for_receiving_received"></div>
-                                    <div class="card-name">Received</div>
-                                </div>
-                                <div class="icon-box">
-                                    <i class="fa-solid fa-clipboard-check"></i>
-                                </div>
-                            </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="for_logistics_on_haul"></div>
+                            <div class="card-name">On Hauling</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-truck"></i>
                         </div>
                     </div>
-                </div><br>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="for_logistics_received"></div>
+                            <div class="card-name">Received</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-clipboard-check"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="for_receiving_pending"></div>
+                            <div class="card-name">Pending</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-clipboard-list"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="for_receiving_received"></div>
+                            <div class="card-name">Received</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-clipboard-check"></i>
+                        </div>
+                    </div>
+                </div><br> -->
                 <h2>BOOKED TRANSACTIONS</h2>
-                <div class="card" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
+                <div class="table" style="max-height: 50vh; align-items: start; overflow-y: scroll;">                            
                     <div class="list">
                         <table>
                             <thead style="position: sticky; top: 0; background-color: black;">
@@ -222,7 +220,7 @@
 
                             </tbody>
                         </table>
-                        <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                        <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
                     </div>
                 </div><br>
             </section>
@@ -343,12 +341,12 @@
                         <button type="button" id="new_employee_button" class="form-control fw-bold fs-3 bg-success text-white">
                             NEW CLIENT FORM
                         </button>
-                        <button type="button" id="update_record_button" class="form-control fw-bold fs-3">
+                        <button type="button" id="update_record_button" class="form-control fw-bold fs-3 bg-danger text-white">
                             UPDATE RECORD
                         </button>
                     </label><br>
                 </div>
-                <div class="card" style="max-height: 70vh; align-items: start; overflow-y: scroll;">                            
+                <div class="table" style="max-height: 70vh; align-items: start; overflow-y: scroll;">                            
                     <div class="list">
                         <table>
                             <thead style="position: sticky; top: 0; background-color: black;">
@@ -363,10 +361,10 @@
 
                             </tbody>
                         </table>
-                        <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                        <div class="text-center text_end">>>>>>>>>> END OF LIST <<<<<<<<<<</div>
                     </div>
                 </div><br>
-                <div id="new_client_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid orangered; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
+                <div id="new_client_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
                     <h2>NEW CLIENT FORM</h2><br>
                     <form  action="https://script.google.com/macros/s/AKfycbze0PEH9EChdZS2Wu9iufIXRiJb9Oy2ZhNIKz79JW8d3LxeXyh78tlVG1c5oNDZiBU3/exec" method="post">
                         <label for="client_id">
@@ -404,7 +402,7 @@
                         </div>    
                     </form>
                 </div>
-                <div id="update_client_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid orangered; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
+                <div id="update_client_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #dc3545; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
                     <h2>UPDATE CLIENT FORM</h2><br>
                     <form  action="https://script.google.com/macros/s/AKfycbze0PEH9EChdZS2Wu9iufIXRiJb9Oy2ZhNIKz79JW8d3LxeXyh78tlVG1c5oNDZiBU3/exec" method="post">
                         <div style="display: flex; gap: 20px;">
@@ -458,7 +456,7 @@
             <!-- type_of_waste_list -->
             <section class="marketing" id="type_of_waste_list_section">
                 <h2>TYPE OF WASTES</h2>
-                <div class="card" style="max-height: 70vh; align-items: start; overflow-y: scroll;">                            
+                <div class="table" style="max-height: 80vh; align-items: start; overflow-y: scroll;">                            
                     <div class="list">
                         <table>
                             <thead style="position: sticky; top: 0; background-color: black;">
@@ -473,7 +471,7 @@
 
                             </tbody>
                         </table>
-                        <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                        <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
                     </div>
                 </div><br>
             </section>
@@ -485,12 +483,12 @@
                         <button type="button" id="new_quotation_button" class="form-control fw-bold fs-3 bg-success text-white">
                             NEW QUOTATION
                         </button>
-                        <button type="button" id="update_quotation_button" class="form-control fw-bold fs-3">
+                        <button type="button" id="update_quotation_button" class="form-control fw-bold fs-3 bg-danger text-white">
                             UPDATE QUOTATION
                         </button>
                     </label><br>
                 </div>
-                <div class="card" style="max-height: 70vh; align-items: start; overflow-y: scroll;">                            
+                <div class="table" style="max-height: 70vh; align-items: start; overflow-y: scroll;">                            
                     <div class="list">
                         <table>
                             <thead style="position: sticky; top: 0; background-color: black;">
@@ -511,10 +509,10 @@
 
                             </tbody>
                         </table>
-                        <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                        <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
                     </div>
                 </div><br>
-                <div id="new_quotation_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid orangered; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
+                <div id="new_quotation_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
                     <h2>NEW QUOTATION FORM</h2><br>
                     <form  action="https://script.google.com/macros/s/AKfycbxGEksq1CxxLsjp2-v7FZieghygklICRDbEdziNdTMjZG1CsZ1z2G0Ixc3zXdou-5LxPg/exec" method="post">
                         <input type="hidden" name="user" id="user">
@@ -748,7 +746,7 @@
                         </div>    
                     </form>
                 </div>
-                <div id="update_quotation_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid orangered; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
+                <div id="update_quotation_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #dc3545; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
                     <h2>UPDATE QUOTATION FORM</h2><br>
                     <form action="https://script.google.com/macros/s/AKfycbxGEksq1CxxLsjp2-v7FZieghygklICRDbEdziNdTMjZG1CsZ1z2G0Ixc3zXdou-5LxPg/exec" method="post">
                         <input type="hidden" name="user" id="user">
@@ -919,7 +917,7 @@
                     </form>
                 </div>
             </section>
-            <!-- order_request_form -->
+            <!-- purchase_request_form -->
             <section class="marketing" id="purchase_request_form">
                 <h2>PURCHASE REQUESTS</h2>
                 <div>
@@ -929,7 +927,7 @@
                         </button>
                     </label><br>
                 </div>
-                <div id="form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid orangered; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
+                <div id="form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
                     <form action="https://script.google.com/macros/s/AKfycbw4wpqb5yFlzKY6ortaVZppEAgYqm5G_otQl5I-3fGzPjiEAVKVOEv93mAFLeUbneTlAA/exec" method="post">
                         <input type="hidden" name="prf_user" id="prf_user">
                         <input type="hidden" name="prf_department" id="prf_department">
@@ -1016,7 +1014,7 @@
                         </div> 
                     </form>
                 </div>
-                <div class="card" style="max-height: 70vh; align-items: start; overflow-y: scroll;">                            
+                <div class="table style="max-height: 70vh; align-items: start; overflow-y: scroll;">                            
                     <div class="list">
                         <table>
                             <thead style="position: sticky; top: 0; background-color: black;">
@@ -1036,7 +1034,7 @@
 
                             </tbody>
                         </table>
-                        <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                        <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
                     </div>
                 </div><br>
             </section>
@@ -1050,8 +1048,8 @@
                         </button>
                     </label><br>
                 </div>
-                <div id="form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid orangered; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
-                    <form action="https://script.google.com/macros/s/AKfycbxfVbhyxvKN9GuDW4Oz1VbrT9xQUInBBPI9yxurCxcvHnzY2jdy0YqentxjO0eyvoLe/exec" method="post">
+                <div id="form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
+                    <form action="https://script.google.com/macros/s/AKfycbzFKwCvOpt7feeVGZlRY64h9ANKry_Ap7ivqwdmJyQM_6nY8rT0LzSYlVLjbF-V4Kj7Mg/exec" method="post">
                         <input type="hidden" name="irf_user" id="irf_user">
                         <label for="irf_form_no">
                             <i class="fa-solid fa-list-ol"></i>
@@ -1158,7 +1156,7 @@
                         </div> 
                     </form>
                 </div>
-                <div class="card" style="max-height: 70vh; align-items: start; overflow-y: scroll;">                            
+                <div class="table" style="max-height: 70vh; align-items: start; overflow-y: scroll;">                            
                     <div class="list">
                         <table>
                             <thead style="position: sticky; top: 0; background-color: black;">
@@ -1177,7 +1175,7 @@
 
                             </tbody>
                         </table>
-                        <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                        <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
                     </div>
                 </div><br>
             </section>
@@ -1192,6 +1190,7 @@
             </section>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.37.1/apexcharts.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="../js/main.js"></script>
     <script src="../js/user16.js"></script>
