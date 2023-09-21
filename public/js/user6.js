@@ -187,11 +187,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
         pending_list_marketing.innerHTML = data_value;
 
-        for_logistics_pending_marketing.innerText = for_logistics_pending_counter_marketing;
-        for_logistics_on_haul_marketing.innerText = for_logistics_on_haul_counter_marketing;
-        for_logistics_received_marketing.innerText = for_logistics_received_counter_marketing;
-        for_receiving_pending_marketing.innerText = for_receiving_pending_counter_marketing;
-        for_receiving_received_marketing.innerText = for_receiving_received_counter_marketing;
+        // for_logistics_pending_marketing.innerText = for_logistics_pending_counter_marketing;
+        // for_logistics_on_haul_marketing.innerText = for_logistics_on_haul_counter_marketing;
+        // for_logistics_received_marketing.innerText = for_logistics_received_counter_marketing;
+        // for_receiving_pending_marketing.innerText = for_receiving_pending_counter_marketing;
+        // for_receiving_received_marketing.innerText = for_receiving_received_counter_marketing;
         on_hauling_marketing.innerText = for_logistics_on_haul_counter_marketing;
         pending_marketing.innerText = for_logistics_pending_counter_marketing + for_receiving_pending_counter_marketing;
         received_marketing.innerText = for_logistics_received_counter_marketing + for_receiving_received_counter_marketing;
@@ -1839,6 +1839,55 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             return waste_name
         }
+
+        var options = {
+            series: [for_logistics_pending_counter_marketing + for_receiving_pending_counter_marketing, for_logistics_on_haul_counter_marketing, for_logistics_received_counter_marketing + for_receiving_received_counter_marketing],
+            chart: {
+                width: 550, // Set the desired width
+                height: 550, // Set the desired height
+                type: 'pie',
+            },
+            plotOptions: {
+                pie: {
+                    startAngle: 0,
+                    endAngle: 360
+                }
+            },
+            dataLabels: {
+                enabled: false, // Disable data labels inside the pie chart
+            },
+            fill: {
+                type: 'gradient', // Use solid fill type
+            },
+            legend: {
+                show: true,
+                position: "left", // Set the legend position to "left"
+                fontSize: '30px', // Increase legend font size as needed
+                formatter: function (seriesName, opts) {
+                    // Here, you should use the correct variable to get the series value
+                    var seriesValue = opts.w.globals.series[opts.seriesIndex];
+                    var totalValue = opts.w.globals.series.reduce((acc, val) => acc + val, 0);
+                    var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
+                    return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
+                },
+                labels: {
+                    useSeriesColors: false, // Use custom color
+                },
+            },
+            labels: ["Pending", "Ongoing", "Received"],
+            colors: ["#dc3545", "#c3c3c3", "#198754"], // Specify solid colors here
+            responsive: [{
+                breakpoint: 480,
+                options: {
+                    chart: {
+                        width: 200
+                    },
+                }
+            }]
+        };
+        
+        var chart = new ApexCharts(document.querySelector("#pieChart"), options);
+        chart.render();  
 
     } catch (error) {
         console.error('Error fetching data:', error);

@@ -1229,8 +1229,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             },
             plotOptions: {
                 pie: {
-                    startAngle: -90,
-                    endAngle: 270
+                    startAngle: 0,
+                    endAngle: 360
                 }
             },
             dataLabels: {
