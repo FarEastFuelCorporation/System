@@ -547,6 +547,56 @@ document.addEventListener('DOMContentLoaded', async function() {
             return waste_name
         }
 
+        var options = {
+            series: [newElements_receiving.length + newElements2_receiving.length, ltf_wcf_transaction_counter_receiving],
+            chart: {
+                width: 550, // Set the desired width
+                height: 550, // Set the desired height
+                type: 'pie',
+            },
+            plotOptions: {
+                pie: {
+                    startAngle: -90,
+                    endAngle: 270
+                }
+            },
+            dataLabels: {
+                enabled: false, // Disable data labels inside the pie chart
+            },
+            fill: {
+                type: 'gradient', // Use solid fill type
+            },
+            legend: {
+                show: true,
+                position: "left", // Set the legend position to "left"
+                fontSize: '30px', // Increase legend font size as needed
+                formatter: function (seriesName, opts) {
+                    // Here, you should use the correct variable to get the series value
+                    var seriesValue = opts.w.globals.series[opts.seriesIndex];
+                    var totalValue = opts.w.globals.series.reduce((acc, val) => acc + val, 0);
+                    var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
+                    return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
+                },
+                labels: {
+                    useSeriesColors: false, // Use custom color
+                },
+            },
+            labels: ["Pending", "Received"],
+            colors: ["#dc3545", "#198754"], // Specify solid colors here
+            responsive: [{
+                breakpoint: 480,
+                options: {
+                    chart: {
+                        width: 200
+                    },
+                }
+            }]
+        };
+        
+        
+        var chart = new ApexCharts(document.querySelector("#pieChart"), options);
+        chart.render();   
+
     } catch (error) {
         console.error('Error fetching data:', error);
     }
