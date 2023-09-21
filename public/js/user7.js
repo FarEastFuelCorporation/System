@@ -1203,7 +1203,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     break
                 }
                 else{
-                    waste_code = waste_id;
+                    waste_code = "NHW";
                 }
             }
             return waste_code
@@ -1223,7 +1223,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var options = {
             series: [newElements_logistics.length, newElements2_logistics.length, newElements3_logistics.length],
             chart: {
-                width: 550, // Set the desired width
+                width: 500, // Set the desired width
                 height: 550, // Set the desired height
                 type: 'pie',
             },

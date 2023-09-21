@@ -550,7 +550,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var options = {
             series: [newElements_receiving.length + newElements2_receiving.length, ltf_wcf_transaction_counter_receiving],
             chart: {
-                width: 550, // Set the desired width
+                width: 500, // Set the desired width
                 height: 550, // Set the desired height
                 type: 'pie',
             },

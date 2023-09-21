@@ -1810,7 +1810,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     break
                 }
                 else{
-                    waste_code = waste_id;
+                    waste_code = "NHW";
                 }
             }
             return waste_code
@@ -1843,7 +1843,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var options = {
             series: [for_logistics_pending_counter_marketing + for_receiving_pending_counter_marketing, for_logistics_on_haul_counter_marketing, for_logistics_received_counter_marketing + for_receiving_received_counter_marketing],
             chart: {
-                width: 550, // Set the desired width
+                width: 500, // Set the desired width
                 height: 550, // Set the desired height
                 type: 'pie',
             },
