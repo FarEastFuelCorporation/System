@@ -1538,6 +1538,12 @@ document.addEventListener('DOMContentLoaded', async function() {
             })
         }
         
+        const numberInputs = form_tab.querySelectorAll('input[type="number"]');
+    
+        // Loop through each input and set the "step" attribute
+        numberInputs.forEach(input => {
+            input.setAttribute('step', '0.01'); // Set the desired step value
+        });
         
         // frf_data_list
         const fund_request_form_button_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_request_form_button");
