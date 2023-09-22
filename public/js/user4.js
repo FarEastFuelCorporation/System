@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const username_response_promise = fetch('https://script.google.com/macros/s/AKfycbwmA97K4sdfq6dhzSsp14JU9KgQrFgSARNZbvSfiU7vuH8oEipt6TmcFo_o-jCI0kiQ/exec');
         const client_list_response_promise = fetch('https://script.google.com/macros/s/AKfycbxXnIsmgK52Ws9H2qAh47qkgZxDltFJaHSFV0e9UQRwaK1g_xwFUKGokL_hk4fq-_mhSg/exec');
         const type_of_waste_response_promise = fetch('https://script.google.com/macros/s/AKfycbw0yC-8_V38Zl1-KGyBwX1JmfTEW1jwyFxgpZ-oNC2lvtoAraUtkLCS27HfNbXi_l4IPg/exec');
+        const wcf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyBFTBuFZ4PkvwmPi_3Pp_v74DCSEK2VpNy6janIGgaAK-P22wazmmShOKn6iwFbrQn/exec');
         const tpf_response_promise = fetch('https://script.google.com/macros/s/AKfycbwbKss2XtW5lylCrUe8IC-ZA4ffA5CM5tY6kqIja9t80NXJw2nB8RBOJFWbXQz0hWMadw/exec');
         const cod_response_promise = fetch('https://script.google.com/macros/s/AKfycbzgiOuXizUVviCsLVfihqYN9HJ3pyNr7ElHoCl3JGkbtQnChnm2U42yQuLd4UMH0ci5/exec');
         const qlf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyFU_skru2tnyEiv8I5HkpRCXbUlQb5vlJUm8Le0nZBCvfZeFkQPd2Naljs5CZY41I17w/exec');
@@ -11,6 +12,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             username_response,
             client_list_response,
             type_of_waste_response,
+            wcf_response,
             tpf_response,
             cod_response,
             qlf_response,
@@ -18,6 +20,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             username_response_promise,
             client_list_response_promise,
             type_of_waste_response_promise,
+            wcf_response_promise,
             tpf_response_promise,
             cod_response_promise,
             qlf_response_promise,
@@ -26,6 +29,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const username_data_list  = await username_response.json();
         const client_data_list  = await client_list_response.json();
         const type_of_waste_data_list  = await type_of_waste_response.json();
+        const wcf_data_list  = await wcf_response.json();
         const tpf_data_list  = await tpf_response.json();
         const cod_data_list  = await cod_response.json();
         const qlf_data_list  = await qlf_response.json();
@@ -266,7 +270,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         var month = "";
         generate_button.addEventListener("click", choose);
         function choose() {
-            genericTemplate();
             var table_data_value = "";
             var table_head_data_value = "";
             var table_data_input = "";
@@ -288,17 +291,31 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 if (waste_description.value == findWasteName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")], tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")]) &&
                                     year_covered.value == year &&
                                     month_covered.value == month) {
+                                    var pull_out_form = ""
+                                    for(let y = 1; y < wcf_data_list.content.length; y++){
+                                        if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")] == wcf_data_list.content[y][findTextInArray(wcf_data_list, "WCF #")])
+                                        pull_out_form = wcf_data_list.content[y][findTextInArray(wcf_data_list, "PULL OUT FORM #")]
+                                    }
                                     table_data_counter += 1;
                                     table_data_value +=
                                     `<tr>
                                     <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                     <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                                     <td>${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
-                                    <td>${formatNumber(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WEIGHT")])} Kgs.</td>
+                                    <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WEIGHT")]} kgs.</td>
                                     <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                     <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                                     </tr>
                                     `;
+                                    table_head_data_value = 
+                                    `
+                                    <th>Date Hauled</th>
+                                    <th>Waste Description</th>
+                                    <th>Pull-out Form #</th>
+                                    <th>Quantity</th>
+                                    <th>Destruction Process</th>
+                                    <th>Date of Completion</th>
+                                    `
                                     table_data_input += `
                                     <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "TPF #")]}" name="tpf_no_input${table_data_counter}" id="tpf_no_input${table_data_counter}">
                                     <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "SF #")]}" name="sf_no_input${table_data_counter}" id="sf_no_input${table_data_counter}">
@@ -306,6 +323,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")]}" name="client_input${table_data_counter}" id="client_input${table_data_counter}">
                                     <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")]}" name="waste_description_input${table_data_counter}" id="waste_description_input${table_data_counter}">
                                     <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
+                                    <input type="hidden" value="${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
                                     <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
                                     <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WEIGHT")]}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
                                     <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
@@ -322,6 +340,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     completion.style.display = "grid";    
                                     convertToPDFandDownload_button.style.display = "block";    
                                     table_data.innerHTML = table_data_value;
+                                    table_head_data.innerHTML = table_head_data_value;
                                     result_remarks.innerHTML = "";
                                 }
                             }
@@ -346,14 +365,18 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 if (waste_description.value == certification_day &&
                                     year_covered.value == year &&
                                     month_covered.value == month) {
+                                    var pull_out_form = ""
+                                    for(let y = 1; y < wcf_data_list.content.length; y++){
+                                        if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")] == wcf_data_list.content[y][findTextInArray(wcf_data_list, "WCF #")])
+                                        pull_out_form = wcf_data_list.content[y][findTextInArray(wcf_data_list, "PULL OUT FORM #")]
+                                    }
                                     table_data_counter += 1;
                                     table_data_value +=
-                                    `
-                                    <tr>
+                                    `<tr>
                                     <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                     <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
-                                    <td>${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
-                                    <td>${formatNumber(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WEIGHT")])} Kgs.</td>
+                                    <td>${pull_out_form}</td>
+                                    <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WEIGHT")]} kgs.</td>
                                     <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                     <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                                     </tr>
@@ -374,6 +397,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")]}" name="client_input${table_data_counter}" id="client_input${table_data_counter}">
                                     <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")]}" name="waste_description_input${table_data_counter}" id="waste_description_input${table_data_counter}">
                                     <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
+                                    <input type="hidden" value="${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
                                     <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
                                     <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WEIGHT")]}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
                                     <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
@@ -390,11 +414,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     completion.style.display = "grid";    
                                     convertToPDFandDownload_button.style.display = "block";    
                                     table_data.innerHTML = table_data_value;
-                                    table_head_data.innerHTML = table_data_value;
                                     table_head_data.innerHTML = table_head_data_value;
                                     result_remarks.innerHTML = "";
                                 }
-
                             }
                         }
                     }    
@@ -532,7 +554,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         function search() {
             var table_data_value = "";
             var table_data_counter = 0;
-            genericTemplate();
             certification.innerText = `${certification_day_ordinal} of ${certification_month} ${year}`;
             df_no.innerHTML = `${code_year_month}${data_counter4}`
             for (let x = 1; x < cod_data_list.content.length; x++) {
@@ -578,7 +599,155 @@ document.addEventListener('DOMContentLoaded', async function() {
         function genericTemplate(){
             var data = 
             `
-
+            <h2 class="text-center">C E R T I F I C A T I O N</h2>
+            <div class="cod text-center">
+                <h4>C. No. </h4>
+                <div id="df_no" class="fw-bold"></div>    
+            </div><br>
+            <div class="header_detail">
+                <h3>Pursuant to the provisions of Republic Act 9003 also known as Ecological Solid Waste Management Act of 2000 we are issuing this certificate of destruction to:</h3>
+            </div><br>
+            <div class="company">
+                <h2 id="table_company"></h2>
+                <h4 id="table_company_address"></h4>
+            </div><br>
+            <h4>For the waste(s) processed/ treated as follows:</h4>
+            <table>
+                <thead>
+                    <th>Date Hauled</th>
+                    <th>Waste Description</th>
+                    <th>Waste Code</th>
+                    <th>Quantity</th>
+                    <th>Destruction Process</th>
+                    <th>Date of Completion</th>
+                </thead>
+                <tbody id="table_data">
+                </tbody>
+            </table>
+            <h4>That is/are transported by <b>FAR EAST FUEL CORPORATION</b> to our TSD facility located at No. 888 Purok 5, Irabagon St., Barangay Anyatam, San Ildefonso, Bulacan with <b>TSD No. OL-TR-R3-14-000152.</b></h4><br>
+            <div class="d-flex">
+                <h4 class="fw-bold me-1">Certified this</h4>
+                <h4 class="fw-bold" id="certification"></h4>
+            </div>
+            <br>
+            <h4>Certified By:</h4><br><br><br><br>
+            <div class="signature">
+                <div>
+                    <h3 class="fw-bold"><u>LAWRENCE R. ANTONIO</u></h3>
+                    <h4>Pollution Control Officer</h4>
+                    <img class="pco" src="../images/pco_signature.JPG" alt="">
+                </div>
+                <div>
+                    <h3 class="fw-bold"><u>CRIS DURAN</u></h3>
+                    <h4>Plant Manager</h4>
+                    <img class="pm" src="../images/pm_signature.JPG" alt="">
+                </div>    
+            </div><br>
+            <div>
+                <h4 class="fw-bold">COA No. 2023-RIII-5575</h4>
+                <h4>Not Valid Without FEFC Dry Seal. </h4>
+            </div><br>
+            <p>Cc</p>
+            <p>DENR-EMB R3</p>
+            <style>
+                #what_to_print
+                {
+                    padding: 123px 38px 38px 76px;
+                }
+    
+                #what_to_print h2
+                {
+                    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                    font-size: 24px;
+                    font-weight: bold;
+                    margin: 0;
+                }
+    
+                #what_to_print h3
+                {
+                    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                    font-size: 16px;
+                    margin: 0;
+                }
+    
+                #what_to_print h4,
+                #what_to_print #df_no
+                {
+                    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                    font-size: 14px;
+                    margin: 0;
+                }
+    
+                #what_to_print .cod
+                {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 10px;
+                }
+    
+                #what_to_print .header_detail
+                {
+                    text-align: justify;
+                }
+    
+                #what_to_print .company
+                {
+                    text-align: center;
+                }
+    
+                #what_to_print .company h2
+                {
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 18px;
+                }
+    
+                #what_to_print table
+                {
+                    border: 2px solid black;
+                }
+    
+                #what_to_print table th,
+                #what_to_print table td
+                {
+                    border: 1px solid black;
+                    padding: 0 5px;
+                    text-align: center;
+                }
+    
+                #what_to_print .signature
+                {
+                    position: relative;
+                    width: 660px;
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    text-align: center;
+                }
+    
+                #what_to_print .signature .pco
+                {
+                    position: absolute;
+                    top: -90px;
+                    left: 75px;
+                    width: 200px;
+    
+                }
+    
+                #what_to_print .signature .pm
+                {
+                    position: absolute;
+                    top: -100px;
+                    left: 430px;
+                    width: 120px;
+    
+                }
+    
+                .overflow-element 
+                {
+                break-inside: avoid; /* Prevent the element from being split across pages */
+                page-break-inside: avoid; /* Additional property for better cross-browser support */
+                }
+            </style>
             `
             what_to_print.insertAdjacentHTML("beforeend", data)
             console.log(what_to_print)
