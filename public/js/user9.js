@@ -728,26 +728,31 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
                 
                 function calculateAllowance(){
-                    if(parseInt(time_in_sched.value.slice(0,2)) >= 18){
-                        if(((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) >= 8){
-                            allowance[x].value = parseFloat(night_allowance.value);
-                        }
-                        else if(((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) < 8 && ((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) >= 4){
-                            allowance[x].value = parseFloat(night_allowance.value)/2;
-                        }
-                        else if(((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) < 4){
-                            allowance[x].value = 0;
-                        }
+                    if(rest_day_duty_box[x].checked == true){
+                        allowance[x].value = 0;
                     }
                     else{
-                        if(((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) >= 8){
-                            allowance[x].value = parseFloat(day_allowance.value);
+                        if(parseInt(time_in_sched.value.slice(0,2)) >= 18){
+                            if(((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) >= 8){
+                                allowance[x].value = parseFloat(night_allowance.value);
+                            }
+                            else if(((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) < 8 && ((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) >= 4){
+                                allowance[x].value = parseFloat(night_allowance.value)/2;
+                            }
+                            else if(((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) < 4){
+                                allowance[x].value = 0;
+                            }
                         }
-                        else if(((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) < 8 && ((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) >= 4){
-                            allowance[x].value = parseFloat(day_allowance.value)/2;
-                        }
-                        else if(((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) < 8){
-                            allowance[x].value = 0;
+                        else{
+                            if(((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) >= 8){
+                                allowance[x].value = parseFloat(day_allowance.value);
+                            }
+                            else if(((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) < 8 && ((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) >= 4){
+                                allowance[x].value = parseFloat(day_allowance.value)/2;
+                            }
+                            else if(((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) < 8){
+                                allowance[x].value = 0;
+                            }
                         }
                     }
                 }
