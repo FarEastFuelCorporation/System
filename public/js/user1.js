@@ -237,19 +237,30 @@ document.addEventListener('DOMContentLoaded', async function() {
         const clear_ltf_form_no_button = document.getElementById("clear_ltf_form_no_button");
         const search_ltf_result = document.getElementById("search_ltf_result");
         const wcf_data = document.getElementById("wcf_data");
+        const pull_out_form = document.getElementById("pull_out_form");
+        const ptt = document.getElementById("ptt");
+        const manifest = document.getElementById("manifest");
         
         search_ltf_form_no_button.addEventListener("click", () => {
             var data_value;
-            for(a=0; a<=newElements_receiving.length; a++){
+            var pull_out_value = "";
+            var ptt_value = "";
+            var manifest_value = "";
+            for(let a = 0; a < newElements_receiving.length; a++){
                 if(search_ltf_form_no.value == newElements_receiving[a]){
                     for(let z = 1; z < ltf_data_list.content.length; z++){
                         if(search_ltf_form_no.value == ltf_data_list.content[z][findTextInArray(ltf_data_list, "LTF #")]){
+                            for(let x = 1; x < mtf_data_list.content.length; x++){
+                                if(ltf_data_list.content[z][findTextInArray(ltf_data_list, "MTF #")] == mtf_data_list.content[x][findTextInArray(mtf_data_list, "MTF #")]){
+                                    pull_out_value = mtf_data_list.content[x][findTextInArray(mtf_data_list, "PULL OUT FORM #")]
+                                    ptt_value = mtf_data_list.content[x][findTextInArray(mtf_data_list, "PTT #")]
+                                    manifest_value = mtf_data_list.content[x][findTextInArray(mtf_data_list, "MANIFEST #")]
+                                }
+                            }
                             var truck_helpers_array = [];
-                            var number;
                             if(((ltf_data_list.content[z][findTextInArray(ltf_data_list, "TRUCK HELPER")]).toString()).includes("||")){
                                 (ltf_data_list.content[z][findTextInArray(ltf_data_list, "TRUCK HELPER")]).split("||").map(number => {
                                     truck_helpers_array.push(findEmployeeName(number.trim()))
-                                    console.log(findEmployeeName(number.trim()))
                                 });
                             }
                             else{
@@ -283,7 +294,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                 }
             }
-            for(a=0; a<=newElements2_receiving.length; a++){
+            for(let a = 0; a < newElements2_receiving.length; a++){
                 if(search_ltf_form_no.value == newElements2_receiving[a]){
                     for(z=1; z<mtf_data_list.content.length; z++){
                         if(search_ltf_form_no.value == mtf_data_list.content[z][findTextInArray(mtf_data_list, "MTF #")]){
@@ -301,6 +312,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                             REMARKS: ${mtf_data_list.content[z][findTextInArray(mtf_data_list, "REMARKS")]}<br>
                             SUBMITTED BY: ${mtf_data_list.content[z][findTextInArray(mtf_data_list, "SUBMITTED BY")]}<br>
                             `
+                            pull_out_value = mtf_data_list.content[z][findTextInArray(mtf_data_list, "PULL OUT FORM #")]
+                            ptt_value = mtf_data_list.content[z][findTextInArray(mtf_data_list, "PTT #")]
+                            manifest_value = mtf_data_list.content[z][findTextInArray(mtf_data_list, "MANIFEST #")]
                             ltf_form_no.value = mtf_data_list.content[z][findTextInArray(mtf_data_list, "MTF #")];
                             client_id.value = mtf_data_list.content[z][findTextInArray(mtf_data_list, "CLIENT ID")];
                             waste_description.value = mtf_data_list.content[z][findTextInArray(mtf_data_list, "WASTE ID")];
@@ -308,8 +322,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                             wcf_data.style.display = "block";
                         }
                     }
-                }
+                } 
             }
+            pull_out_form.value = pull_out_value
+            ptt.value = ptt_value
+            manifest.value = manifest_value    
             if(data_value == undefined){
                 search_ltf_result.innerHTML = `
                 <div class="search_ltf_result">
