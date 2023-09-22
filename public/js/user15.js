@@ -1529,6 +1529,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                 fund_amount_ap_accounting.addEventListener("change", function() {
                     updateFundSourceAmount2(fund_source_ap_accounting, fund_source_amount_container_ap_accounting, fund_source_amount_ap_accounting, fund_source_other_details_ap_accounting, fund_amount_ap_accounting.value, fund_allocation_ap_accounting);
                 });
+                const numberInputs = form_tab.querySelectorAll('input[type="number"]');
+    
+                // Loop through each input and set the "step" attribute
+                numberInputs.forEach(input => {
+                    input.setAttribute('step', '0.01'); // Set the desired step value
+                });
             })
         }
         

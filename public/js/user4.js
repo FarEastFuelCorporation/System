@@ -429,6 +429,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                 No Data Found
                 </div><br>`            
             }  
+            const generate_qr_button =document.getElementById("generate_qr_button")
+            generate_qr_button.addEventListener("click", processAndGenerateQRCode)
         }
 
         function show_suggestions(list) {
@@ -545,6 +547,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                 type_of_cod_list.innerHTML = data_content;
             }
         })
+
+        // Function to generate a QR code from the content of an HTML element
+        function processAndGenerateQRCode() {
+            convertElementToImage(function (imageDataUrl) {
+                generateQRCodeFromImage(imageDataUrl);
+            });
+        }
         
         const search_cod_form_no_button = document.getElementById("search_cod_form_no_button");
         const search_cod_form_no = document.getElementById("search_cod_form_no");
