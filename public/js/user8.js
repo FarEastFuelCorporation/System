@@ -501,7 +501,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <div style="margin: 20px 0 0 0; border: 1px solid black;">
                     <div style="display: flex; flex-direction: column; border-top: 1px solid black; height: 65px;">
                         <h6 style="margin: 0; font-weight: bold; padding: 0 5px">POTENTIAL HARM:</h6>
-                        <h6 id="potential_harm_input" style="margin: 0; padding-left: 5px; padding: 0 5px; text-indent: 50px; text-align: justify;"></h6>
+                        <h6 id="potential_harm_input" style="margin: 0; padding-left: 5px; padding: 0 5px; text-align: justify;"></h6>
                     </div>
                     <h6 style="margin: 0; font-weight: bold; padding: 0 5px; border-top: 1px solid black;">ATTACHMENT:</h6>
                     <div id="fileDisplayArea2" style="height: 400px; max-width: 700px; max-height: 400px; padding: 5px; display: grid; justify-content: center; align-items: center; grid-template-columns: repeat(3, 1fr);"></div>
@@ -509,7 +509,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <div style="margin: 20px 0 0 0; border: 1px solid black; display: grid; grid-template-columns: 1fr; height: 140px;">
                     <div style="display: flex; flex-direction: column;">
                         <h6 style="margin: 0; font-weight: bold; padding: 0 5px">RECOMMENDATION / CONTROL MEASURE::</h6>
-                        <h6 id="recommendation_input" style="margin: 0; padding-left: 5px; padding: 0 5px; text-indent: 50px; text-align: justify; border-top: 1px solid black;"></h6>
+                        <h6 id="recommendation_input" style="margin: 0; padding-left: 5px; padding: 0 5px; text-align: justify; border-top: 1px solid black;"></h6>
                     </div>
                 </div>
                 <div style="margin: 20px 0 0 0; border: 1px solid black; display: grid; grid-template-columns: 1fr 3fr; height: 175px;">
