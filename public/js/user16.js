@@ -456,7 +456,55 @@ document.addEventListener('DOMContentLoaded', async function() {
         const marketing_transaction_form = document.querySelector("#marketing_transaction_form");
         const waste_category = marketing_transaction_form.querySelector("#waste_category");
         const document_container = marketing_transaction_form.querySelector("#document_container");
+        const submit_to = marketing_transaction_form.querySelector("#submit_to");
+        const type_of_vehicle_container = marketing_transaction_form.querySelector("#type_of_vehicle_container");
+        const type_of_waste_container = marketing_transaction_form.querySelector("#type_of_waste_container");
         
+        submit_to.addEventListener("change", () => {
+            if(submit_to.value == "RECEIVING"){
+                type_of_vehicle_container.remove()
+            }
+            else{
+                // type_of_waste_data_list
+                const marketing_transaction_form = document.querySelector("#marketing_transaction_form");
+                const date_time_weight = marketing_transaction_form.querySelector("#date_time_weight");
+                const client = marketing_transaction_form.querySelector("#client");
+                
+                var data_value = 
+                `
+                    <div id="type_of_vehicle_container" >
+                    <label for="type_of_vehicle">
+                        <i class="fa-solid fa-truck"></i>
+                        Type of Vehicle
+                    </label>
+                    <select name="type_of_vehicle" id="type_of_vehicle" class="form-control" required>
+                        <option value="">SELECT</option>
+                    </select>
+                </div>
+                `
+                console.log(date_time_weight)
+                date_time_weight.insertAdjacentHTML("beforeend", data_value)
+
+                const type_of_waste = marketing_transaction_form.querySelector("#type_of_waste");
+                const type_of_vehicle = marketing_transaction_form.querySelector("#type_of_vehicle");
+
+                for (let y = 1; y < client_data_list.content.length; y++) {
+                    if (client.value == client_data_list.content[y][1]) {
+                        var client_id = "";
+                        client_id = client_data_list.content[y][findTextInArray(client_data_list, "CLIENT ID")];
+                        for (let x = 1; x < qlf_data_list.content.length; x++) {
+                            if (client_id == qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")] && qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")] == "TRIP") {
+                                var data = `
+                                <option value="${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]}">${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]}</option>
+                                `
+                                type_of_vehicle.insertAdjacentHTML("beforeend", data)
+                            }
+                        }
+                    }
+                }  
+            }
+        })
+
         waste_category.addEventListener("change", () => {
             if(waste_category.value == "HAZARDOUS WASTE"){
                 while (document_container.firstChild) {
