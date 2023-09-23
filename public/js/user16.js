@@ -661,23 +661,44 @@ document.addEventListener('DOMContentLoaded', async function() {
         var qlf_data_value = "";
         var qlf_data_value_counter = 1;
         for(let x = 1; x < qlf_data_list.content.length; x++){
-            qlf_data_value += `
-            <tr>
-                <td>${qlf_data_value_counter}</td>
-                <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "QUOTATION CODE")]}</td>
-                <td>${date_decoder(qlf_data_list.content[x][findTextInArray(qlf_data_list, "VALIDITY")])}</td>
-                <td>${findClientName(qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")])}</td>
-                <td>${findWasteCode(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])}</td>
-                <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")]}</td>
-                <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "MODE")]}</td>
-                <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")]}</td>
-                <td>${formatNumber(qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT PRICE")])}</td>
-                <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "VAT CALCULATION")]}</td>
-                <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "TERMS DAYS")]}</td>
-                <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "SUBMITTED BY")]}</td>
-            </tr>
-            `
-            qlf_data_value_counter += 1;
+            if(qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")] != "TRIP"){
+                qlf_data_value += `
+                <tr>
+                    <td>${qlf_data_value_counter}</td>
+                    <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "QUOTATION CODE")]}</td>
+                    <td>${date_decoder(qlf_data_list.content[x][findTextInArray(qlf_data_list, "VALIDITY")])}</td>
+                    <td>${findClientName(qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")])}</td>
+                    <td>${findWasteCode(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])}</td>
+                    <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")]}</td>
+                    <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "MODE")]}</td>
+                    <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")]}</td>
+                    <td>${formatNumber(qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT PRICE")])}</td>
+                    <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "VAT CALCULATION")]}</td>
+                    <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "TERMS DAYS")]}</td>
+                    <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "SUBMITTED BY")]}</td>
+                </tr>
+                `
+                qlf_data_value_counter += 1;
+            }
+            else if(qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")] == "TRIP"){
+                qlf_data_value += `
+                <tr>
+                    <td>${qlf_data_value_counter}</td>
+                    <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "QUOTATION CODE")]}</td>
+                    <td>${date_decoder(qlf_data_list.content[x][findTextInArray(qlf_data_list, "VALIDITY")])}</td>
+                    <td>${findClientName(qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")])}</td>
+                    <td>${findWasteCode2(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])}</td>
+                    <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")]}</td>
+                    <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "MODE")]}</td>
+                    <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")]}</td>
+                    <td>${formatNumber(qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT PRICE")])}</td>
+                    <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "VAT CALCULATION")]}</td>
+                    <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "TERMS DAYS")]}</td>
+                    <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "SUBMITTED BY")]}</td>
+                </tr>
+                `
+                qlf_data_value_counter += 1;
+            }
         }
         qlf_list_quotation_form.innerHTML = qlf_data_value;
 
@@ -1810,7 +1831,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     break
                 }
                 else{
-                    waste_code = waste_id;
+                    waste_code = "NHW";
                 }
             }
             return waste_code

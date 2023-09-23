@@ -550,8 +550,28 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         // Function to generate a QR code from the content of an HTML element
         function processAndGenerateQRCode() {
+            // convertElementToImage(function (imageDataUrl) {
+            //     generateQRCodeFromImage(imageDataUrl);
+            // });
+            function convertElementToImage(callback) {
+                const element = document.getElementById("what_to_print");
+            
+                // Set the scale to 2 to double the resolution (adjust as needed)
+                html2canvas(element, {
+                    scale: 10, // Increase the resolution by 2x (you can adjust this value)
+                }).then(function (canvas) {
+                    const imageDataUrl = canvas.toDataURL("image/png");
+                    callback(imageDataUrl);
+                });
+            }
+            
+            // Usage example
             convertElementToImage(function (imageDataUrl) {
-                generateQRCodeFromImage(imageDataUrl);
+                const imgElement = document.createElement("img");
+                imgElement.src = imageDataUrl;
+                console.log(imageDataUrl)
+                const containerElement = document.getElementById("image-container");
+                containerElement.appendChild(imgElement);
             });
         }
         
