@@ -1023,12 +1023,14 @@ document.addEventListener('DOMContentLoaded', async function() {
             list_container_quotation_form2.style.display = "block";
             transportation_fee_container.style.display = "block";
             button_container_quotation_form.style.display = "flex";
+            var waste_counter = 1;
             var counter = 1;
             for(let x = 1; x < qlf_data_list.content.length; x++){
                 for(let y = 1; y < type_of_waste_data_list.content.length; y++){
                     if(quotation_no_quotation_form2.value == qlf_data_list.content[x][findTextInArray(qlf_data_list, "QUOTATION CODE")] &&
                     qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")] == type_of_waste_data_list.content[y][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
-                        if(x == 1){
+                        console.log("pass")
+                        if(waste_counter == 1){
                             timestamp_quotation_form2.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "CREATED AT")];
                             validity_quotation_form2.value = date_decoder2(qlf_data_list.content[x][findTextInArray(qlf_data_list, "VALIDITY")]);
                             terms_quotation_form2.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "TERMS DAYS")];
@@ -1039,15 +1041,16 @@ document.addEventListener('DOMContentLoaded', async function() {
                             unit1_quotation_form2.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")];
                             unit_price1_quotation_form2.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT PRICE")];
                             vat_calculation1_quotation_form2.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "VAT CALCULATION")];
+                            waste_counter += 1;
                         }
-                        else if (x > 1){
+                        else if (waste_counter > 1){
                             addQuotationList();
-                            var waste_code1_quotation_form = update_quotation_form_tab.querySelector(`#waste_code${x}`);
-                            var waste_name1_quotation_form = update_quotation_form_tab.querySelector(`#waste_name${x}`);
-                            var mode1_quotation_form = update_quotation_form_tab.querySelector(`#mode${x}`);
-                            var unit1_quotation_form = update_quotation_form_tab.querySelector(`#unit${x}`);
-                            var unit_price1_quotation_form = update_quotation_form_tab.querySelector(`#unit_price${x}`);
-                            var vat_calculation1_quotation_form = update_quotation_form_tab.querySelector(`#vat_calculation${x}`);
+                            var waste_code1_quotation_form = update_quotation_form_tab.querySelector(`#waste_code${waste_counter}`);
+                            var waste_name1_quotation_form = update_quotation_form_tab.querySelector(`#waste_name${waste_counter}`);
+                            var mode1_quotation_form = update_quotation_form_tab.querySelector(`#mode${waste_counter}`);
+                            var unit1_quotation_form = update_quotation_form_tab.querySelector(`#unit${waste_counter}`);
+                            var unit_price1_quotation_form = update_quotation_form_tab.querySelector(`#unit_price${waste_counter}`);
+                            var vat_calculation1_quotation_form = update_quotation_form_tab.querySelector(`#vat_calculation${waste_counter}`);
                                                 
                             waste_code1_quotation_form.value = findWasteCode2(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]);
                             waste_name1_quotation_form.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")];
@@ -1055,6 +1058,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             unit1_quotation_form.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")];
                             unit_price1_quotation_form.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT PRICE")];
                             vat_calculation1_quotation_form.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "VAT CALCULATION")];
+                            waste_counter += 1;
                         }
                     }
                 }
