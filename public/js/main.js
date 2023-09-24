@@ -858,3 +858,25 @@ function getDatesInWeek(year, weekNumber) {
 
   return formattedDatesInWeek;
 }
+
+function formatMonth(dateString) {
+  const months = [
+  "JANUARY", "FEBRUARY", "MARCH", "APRIL",
+  "MAY", "JUNE", "JULY", "AUGUST",
+  "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"
+  ];
+
+  const date = new Date(dateString);
+
+  if (isNaN(date.getTime())) {
+  return "Invalid Date";
+  }
+
+  const monthIndex = date.getMonth();
+
+  if (monthIndex >= 0 && monthIndex < 12) {
+  return months[monthIndex];
+  } else {
+  return "Invalid Month";
+  }
+}

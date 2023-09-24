@@ -443,6 +443,12 @@ nav {
   color: #f6d754;
 }
 
+.apexcharts-legend {
+  top: 50% !important;
+  transform: translateY(-50%);
+  height: 120px;
+}
+
 /* main starts here */
 #dashboard_section,
 #waste_collection_form,
@@ -608,7 +614,7 @@ section h2 {
   height: 120px;
   padding: 10px 0px 0 0px;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: 1fr 1fr 1fr 500px;
   grid-gap: 20px;
   background: #f5f5f5;
 }
@@ -1489,7 +1495,7 @@ section h2 {
   height: 120px;
   padding: 10px 0px 0 0px;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: 1fr 1fr 1fr 1fr 500px;
   grid-gap: 20px;
   background: #f5f5f5;
 }
@@ -1711,7 +1717,7 @@ section h2 {
   height: 120px;
   padding: 10px 0px 0 0px;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: 1fr 1fr 1fr 1fr 500px;
   grid-gap: 20px;
   background: #f5f5f5;
 }
@@ -1733,12 +1739,6 @@ section h2 {
   grid-template-columns: repeat(7, 1fr);
   grid-gap: 20px;
   background: #f5f5f5;
-}
-
-.apexcharts-legend {
-  top: 50% !important;
-  transform: translateY(-50%);
-  height: 120px;
 }
 
 /* LOGISTICS TRAVEL FORM section starts here */

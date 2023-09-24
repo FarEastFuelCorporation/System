@@ -64,164 +64,358 @@ document.addEventListener('DOMContentLoaded', async function() {
         const pending_receiving = document.querySelector("#dashboard_section #pending");
         const pending_list_receiving = document.querySelector("#dashboard_section #pending_list");
         const received_list_receiving = document.querySelector("#dashboard_section #received_list");
-        var ltf_transaction_counter_receiving = 0;
-        var ltf_wcf_transaction_counter_receiving = 0;
-        var mtf_transaction_counter_receiving = 0;
-        var mtf_wcf_transaction_counter_receiving = 0;
-        var ltf_transaction_receiving = []; // Variable containing existing elements
-        var ltf_wcf_transaction_receiving = []; // Variable containing existing elements
-        var mtf_transaction_receiving = []; // Variable containing existing elements
-        var mtf_wcf_transaction_receiving = []; // Variable containing existing elements
-        
-        for (let i = 1; i < mtf_data_list.content.length; i++) {
-            if(mtf_data_list.content[i][findTextInArray(mtf_data_list, "SUBMIT TO")] ==  "RECEIVING"){
-                if (!mtf_transaction_receiving.includes(mtf_data_list.content[i][findTextInArray(mtf_data_list, "MTF #")])) {
-                    mtf_transaction_receiving.push(mtf_data_list.content[i][findTextInArray(mtf_data_list, "MTF #")]);
-                    mtf_transaction_counter_receiving += 1
-                }
-            }
-        }
+        const month_filter = document.getElementById("month_filter");
 
-        for (let i = 1; i < ltf_data_list.content.length; i++) {
-            if (!ltf_transaction_receiving.includes(ltf_data_list.content[i][findTextInArray(ltf_data_list, "LTF #")])) {
-                ltf_transaction_receiving.push(ltf_data_list.content[i][findTextInArray(ltf_data_list, "LTF #")]);
-                ltf_transaction_counter_receiving += 1
-            }
-        }
         
-        for (let i = 1; i < wcf_data_list.content.length; i++) {
-            if (!ltf_wcf_transaction_receiving.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "LTF/ MTF  #")])) {
-                ltf_wcf_transaction_receiving.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "LTF/ MTF  #")]);
-                ltf_wcf_transaction_counter_receiving += 1
-            }
-            if (!mtf_wcf_transaction_receiving.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "LTF/ MTF  #")])) {
-                mtf_wcf_transaction_receiving.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "LTF/ MTF  #")]);
-                mtf_wcf_transaction_counter_receiving += 1
-            }
-        }
-        // Get elements from wcf_transaction not included in wcf_sf_transaction
-        const newElements_receiving = ltf_transaction_receiving.filter((element) => !ltf_wcf_transaction_receiving.includes(element));
-        const newElements2_receiving = mtf_transaction_receiving.filter((element) => !mtf_wcf_transaction_receiving.includes(element));
-        const newElements3_receiving = ltf_transaction_receiving.filter((element) => ltf_wcf_transaction_receiving.includes(element));
-        const newElements4_receiving = mtf_transaction_receiving.filter((element) => mtf_wcf_transaction_receiving.includes(element));
-
-        received_receiving.innerText = ltf_wcf_transaction_counter_receiving;
-        to_received_receiving.innerText = ltf_transaction_counter_receiving + mtf_transaction_counter_receiving;
-        pending_receiving.innerText = newElements_receiving.length + newElements2_receiving.length;
-        
-        var data_value = "";
-        var data_value_counter = 1;
-        
-        for(let i = 0; i < newElements_receiving.length; i++){
-            for(let j = 1; j < ltf_data_list.content.length; j++){
-                if(newElements_receiving[i] == ltf_data_list.content[j][findTextInArray(ltf_data_list, "LTF #")]){
-                    data_value +=`
-                    <tr>
-                        <td>${data_value_counter}</td>
-                        <td>${ltf_data_list.content[j][findTextInArray(ltf_data_list, "LTF #")]}</td>
-                        <td>${date_decoder(ltf_data_list.content[j][findTextInArray(ltf_data_list, "HAULING DATE")])} /<br> ${time_decoder(ltf_data_list.content[j][findTextInArray(ltf_data_list, "HAULING TIME")])}</td>
-                        <td>${findClientName(ltf_data_list.content[j][findTextInArray(ltf_data_list, "CLIENT ID")])}</td>
-                        <td>${findWasteCode(ltf_data_list.content[j][findTextInArray(ltf_data_list, "WASTE ID")])}</td>
-                        <td>${findWasteName(ltf_data_list.content[j][findTextInArray(ltf_data_list, "CLIENT ID")], ltf_data_list.content[j][findTextInArray(ltf_data_list, "WASTE ID")])}</td>
-                        <td>${ltf_data_list.content[j][findTextInArray(ltf_data_list, "TYPE OF VEHICLE")]}</td>
-                        <td>${ltf_data_list.content[j][findTextInArray(ltf_data_list, "PLATE #")]}</td>
-                        <td>${findEmployeeName(ltf_data_list.content[j][findTextInArray(ltf_data_list, "DRIVER ID")])}</td>
-                    </tr>
-                    `
-                    data_value_counter += 1;
-                }
-            }
-        }
-
-        for(let i = 0; i < newElements2_receiving.length; i++){
-            for(let j = 1; j < mtf_data_list.content.length; j++){
-                if(newElements2_receiving[i] == mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")]){
-                    data_value +=`
-                    <tr>
-                        <td>${data_value_counter}</td>
-                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")]}</td>
-                        <td>${date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])} /<br> ${time_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING TIME")])}</td>
-                        <td>${findClientName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")])}</td>
-                        <td>${findWasteCode(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")])}</td>
-                        <td>${findWasteName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")], mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")])}</td>
-                        <td>PROVIDED BY CLIENT</td>
-                        <td>PROVIDED BY CLIENT</td>
-                        <td>PROVIDED BY CLIENT</td>
-                    </tr>
-                    `
-                    data_value_counter += 1;
-                }
-            }
-        }
-        pending_list_receiving.innerHTML = data_value;
-
-        var data_value = "";
-        var data_value_counter = 1;
-        for(let i = 0; i < newElements3_receiving.length; i++){
-            for(let j = 1; j < wcf_data_list.content.length; j++){
-                if(newElements3_receiving[i] == wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
-                    for(let k = 1; k < ltf_data_list.content.length; k++){
-                        var hauling_date_info;
-                        var hauling_time_info;
-                        if(wcf_data_list.content[j][1] == ltf_data_list.content[k][0]){
-                            hauling_date_info =  date_decoder(ltf_data_list.content[k][findTextInArray(ltf_data_list, "HAULING DATE")]);
-                            hauling_time_info =  time_decoder(ltf_data_list.content[k][findTextInArray(ltf_data_list, "HAULING TIME")]);
-                            break
-                        }
+        month_filter.addEventListener("change", generatePending)
+        generatePending();
+        function generatePending(){
+            var ltf_transaction_receiving = []; // Variable containing existing elements
+            var ltf_wcf_transaction_receiving = []; // Variable containing existing elements
+            var mtf_transaction_receiving = []; // Variable containing existing elements
+            var mtf_wcf_transaction_receiving = []; // Variable containing existing elements
+            var ltf_transaction_counter_receiving = 0;
+            var ltf_wcf_transaction_counter_receiving = 0;
+            var mtf_transaction_counter_receiving = 0;
+            var mtf_wcf_transaction_counter_receiving = 0;
+            
+            for (let i = 1; i < mtf_data_list.content.length; i++) {
+                if(mtf_data_list.content[i][findTextInArray(mtf_data_list, "SUBMIT TO")] ==  "RECEIVING" &&
+                month_filter.value == formatMonth(mtf_data_list.content[i][findTextInArray(mtf_data_list, "HAULING DATE")])){
+                    if (!mtf_transaction_receiving.includes(mtf_data_list.content[i][findTextInArray(mtf_data_list, "MTF #")])) {
+                        mtf_transaction_receiving.push(mtf_data_list.content[i][findTextInArray(mtf_data_list, "MTF #")]);
+                        mtf_transaction_counter_receiving += 1
                     }
-                    data_value +=`
-                    <tr>
-                        <td>${data_value_counter}</td>
-                        <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]}</td>
-                        <td>${hauling_date_info} /<br> ${hauling_time_info}</td>
-                        <td>${findClientName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
-                        <td>${findWasteCode(wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
-                        <td>${findWasteName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")], wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
-                        <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "NET WEIGHT")]}</td>
-                        <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "PLATE #")]}</td>
-                        <td>${findEmployeeName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "DRIVER ID")])}</td>
-                        <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}</td>
-                        <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "DATE OUT")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "TIME OUT")])}</td>
-                        <td>${calculateTravelTime(date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")]),time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")]),date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "DATE OUT")]),time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "TIME OUT")]))}</td>
-                    </tr>
-                    `
-                    data_value_counter += 1;
+                }
+                else if(mtf_data_list.content[i][findTextInArray(mtf_data_list, "SUBMIT TO")] ==  "RECEIVING" &&
+                month_filter.value == "ALL"){
+                    if (!mtf_transaction_receiving.includes(mtf_data_list.content[i][findTextInArray(mtf_data_list, "MTF #")])) {
+                        mtf_transaction_receiving.push(mtf_data_list.content[i][findTextInArray(mtf_data_list, "MTF #")]);
+                        mtf_transaction_counter_receiving += 1
+                    }
                 }
             }
-        }
-        for(let i = 0; i < newElements4_receiving.length; i++){
-            for(let j = 1; j < wcf_data_list.content.length; j++){
-                if(newElements4_receiving[i] == wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
-                    for(let k = 1; k < mtf_data_list.content.length; k++){
-                        var hauling_date_info;
-                        var hauling_time_info;
-                        if(wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")] == mtf_data_list.content[k][findTextInArray(mtf_data_list, "MTF #")]){
-                            hauling_date_info =  date_decoder(mtf_data_list.content[k][findTextInArray(mtf_data_list, "HAULING DATE")]);
-                            hauling_time_info =  time_decoder(mtf_data_list.content[k][findTextInArray(mtf_data_list, "HAULING TIME")]);
-                            break
-                        }
+            for (let i = 1; i < ltf_data_list.content.length; i++) {
+                if (!ltf_transaction_receiving.includes(ltf_data_list.content[i][findTextInArray(ltf_data_list, "LTF #")]) &&
+                month_filter.value == formatMonth(ltf_data_list.content[i][findTextInArray(ltf_data_list, "HAULING DATE")])) {
+                    ltf_transaction_receiving.push(ltf_data_list.content[i][findTextInArray(ltf_data_list, "LTF #")]);
+                    ltf_transaction_counter_receiving += 1
+                }
+                else if (!ltf_transaction_receiving.includes(ltf_data_list.content[i][findTextInArray(ltf_data_list, "LTF #")]) &&
+                month_filter.value == "ALL") {
+                    ltf_transaction_receiving.push(ltf_data_list.content[i][findTextInArray(ltf_data_list, "LTF #")]);
+                    ltf_transaction_counter_receiving += 1
+                }
+            }
+            for (let i = 1; i < wcf_data_list.content.length; i++) {
+                if (!ltf_wcf_transaction_receiving.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "LTF/ MTF  #")]) &&
+                month_filter.value == formatMonth(wcf_data_list.content[i][findTextInArray(wcf_data_list, "HAULING DATE")])) {
+                    ltf_wcf_transaction_receiving.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "LTF/ MTF  #")]);
+                    ltf_wcf_transaction_counter_receiving += 1
+                }
+                else if (!ltf_wcf_transaction_receiving.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "LTF/ MTF  #")]) &&
+                month_filter.value == "ALL") {
+                    ltf_wcf_transaction_receiving.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "LTF/ MTF  #")]);
+                    ltf_wcf_transaction_counter_receiving += 1
+                }
+                if (!mtf_wcf_transaction_receiving.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "LTF/ MTF  #")]) &&
+                month_filter.value == formatMonth(wcf_data_list.content[i][findTextInArray(wcf_data_list, "HAULING DATE")])) {
+                    mtf_wcf_transaction_receiving.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "LTF/ MTF  #")]);
+                    mtf_wcf_transaction_counter_receiving += 1
+                }
+                else if (!mtf_wcf_transaction_receiving.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "LTF/ MTF  #")]) &&
+                month_filter.value == "ALL") {
+                    mtf_wcf_transaction_receiving.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "LTF/ MTF  #")]);
+                    mtf_wcf_transaction_counter_receiving += 1
+                }
+            }
+
+            // Get elements from wcf_transaction not included in wcf_sf_transaction
+            const newElements_receiving = ltf_transaction_receiving.filter((element) => !ltf_wcf_transaction_receiving.includes(element));
+            const newElements2_receiving = mtf_transaction_receiving.filter((element) => !mtf_wcf_transaction_receiving.includes(element));
+            const newElements3_receiving = ltf_transaction_receiving.filter((element) => ltf_wcf_transaction_receiving.includes(element));
+            const newElements4_receiving = mtf_transaction_receiving.filter((element) => mtf_wcf_transaction_receiving.includes(element));
+    
+            received_receiving.innerText = ltf_wcf_transaction_counter_receiving;
+            to_received_receiving.innerText = ltf_transaction_counter_receiving + mtf_transaction_counter_receiving;
+            pending_receiving.innerText = newElements_receiving.length + newElements2_receiving.length;
+            
+            var options = {
+                series: [newElements_receiving.length + newElements2_receiving.length, ltf_wcf_transaction_counter_receiving],
+                chart: {
+                    width: 500, // Set the desired width
+                    height: 550, // Set the desired height
+                    type: 'pie',
+                },
+                plotOptions: {
+                    pie: {
+                        startAngle: 0,
+                        endAngle: 360
                     }
-                    data_value +=`
-                    <tr>
-                    <td>${data_value_counter}</td>
-                        <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]}</td>
-                        <td>${hauling_date_info} /<br> ${hauling_time_info}</td>
-                        <td>${findClientName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
-                        <td>${findWasteCode(wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
-                        <td>${findWasteName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")], wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
-                        <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "NET WEIGHT")]}</td>
-                        <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "PLATE #")]}</td>
-                        <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "DRIVER ID")]}</td>
-                        <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}</td>
-                        <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "DATE OUT")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "TIME OUT")])}</td>
-                        <td>${calculateTravelTime(date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")]),time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")]),date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "DATE OUT")]),time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "TIME OUT")]))}</td>
+                },
+                dataLabels: {
+                    enabled: false, // Disable data labels inside the pie chart
+                },
+                fill: {
+                    type: 'gradient', // Use solid fill type
+                },
+                legend: {
+                    show: true,
+                    position: "left", // Set the legend position to "left"
+                    fontSize: '30px', // Increase legend font size as needed
+                    formatter: function (seriesName, opts) {
+                        // Here, you should use the correct variable to get the series value
+                        var seriesValue = opts.w.globals.series[opts.seriesIndex];
+                        var totalValue = opts.w.globals.series.reduce((acc, val) => acc + val, 0);
+                        var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
+                        return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
+                    },
+                    labels: {
+                        useSeriesColors: false, // Use custom color
+                    },
+                },
+                labels: ["Pending", "Received"],
+                colors: ["#dc3545", "#198754"], // Specify solid colors here
+                responsive: [{
+                    breakpoint: 480,
+                    options: {
+                        chart: {
+                            width: 200
+                        },
+                    }
+                }]
+            };
+            const pieChart = document.querySelector("#pieChart");
+            while (pieChart.firstChild) {
+                pieChart.removeChild(pieChart.firstChild);
+            }
+            var chart = new ApexCharts(pieChart, options);
+            chart.render();  
+
+            var data_value = "";
+            var data_value_counter = 1;
+            for(let i = 0; i < newElements_receiving.length; i++){
+                for(let j = 1; j < ltf_data_list.content.length; j++){
+                    if(newElements_receiving[i] == ltf_data_list.content[j][findTextInArray(ltf_data_list, "LTF #")] &&
+                    month_filter.value == formatMonth(ltf_data_list.content[j][findTextInArray(ltf_data_list, "HAULING DATE")])){
+                        data_value +=`
+                        <tr>
+                            <td>${data_value_counter}</td>
+                            <td>${ltf_data_list.content[j][findTextInArray(ltf_data_list, "LTF #")]}</td>
+                            <td>${date_decoder(ltf_data_list.content[j][findTextInArray(ltf_data_list, "HAULING DATE")])} /<br> ${time_decoder(ltf_data_list.content[j][findTextInArray(ltf_data_list, "HAULING TIME")])}</td>
+                            <td>${findClientName(ltf_data_list.content[j][findTextInArray(ltf_data_list, "CLIENT ID")])}</td>
+                            <td>${findWasteCode(ltf_data_list.content[j][findTextInArray(ltf_data_list, "WASTE ID")])}</td>
+                            <td>${findWasteName(ltf_data_list.content[j][findTextInArray(ltf_data_list, "CLIENT ID")], ltf_data_list.content[j][findTextInArray(ltf_data_list, "WASTE ID")])}</td>
+                            <td>${ltf_data_list.content[j][findTextInArray(ltf_data_list, "TYPE OF VEHICLE")]}</td>
+                            <td>${ltf_data_list.content[j][findTextInArray(ltf_data_list, "PLATE #")]}</td>
+                            <td>${findEmployeeName(ltf_data_list.content[j][findTextInArray(ltf_data_list, "DRIVER ID")])}</td>
                         </tr>
                         `
-                    data_value_counter += 1;
+                        data_value_counter += 1;
+                    }
+                    else if(newElements_receiving[i] == ltf_data_list.content[j][findTextInArray(ltf_data_list, "LTF #")] &&
+                    month_filter.value == "ALL"){
+                        data_value +=`
+                        <tr>
+                            <td>${data_value_counter}</td>
+                            <td>${ltf_data_list.content[j][findTextInArray(ltf_data_list, "LTF #")]}</td>
+                            <td>${date_decoder(ltf_data_list.content[j][findTextInArray(ltf_data_list, "HAULING DATE")])} /<br> ${time_decoder(ltf_data_list.content[j][findTextInArray(ltf_data_list, "HAULING TIME")])}</td>
+                            <td>${findClientName(ltf_data_list.content[j][findTextInArray(ltf_data_list, "CLIENT ID")])}</td>
+                            <td>${findWasteCode(ltf_data_list.content[j][findTextInArray(ltf_data_list, "WASTE ID")])}</td>
+                            <td>${findWasteName(ltf_data_list.content[j][findTextInArray(ltf_data_list, "CLIENT ID")], ltf_data_list.content[j][findTextInArray(ltf_data_list, "WASTE ID")])}</td>
+                            <td>${ltf_data_list.content[j][findTextInArray(ltf_data_list, "TYPE OF VEHICLE")]}</td>
+                            <td>${ltf_data_list.content[j][findTextInArray(ltf_data_list, "PLATE #")]}</td>
+                            <td>${findEmployeeName(ltf_data_list.content[j][findTextInArray(ltf_data_list, "DRIVER ID")])}</td>
+                        </tr>
+                        `
+                        data_value_counter += 1;
+                    }
                 }
             }
+            for(let i = 0; i < newElements2_receiving.length; i++){
+                for(let j = 1; j < mtf_data_list.content.length; j++){
+                    if(newElements2_receiving[i] == mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")] &&
+                    month_filter.value == formatMonth(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])){
+                        data_value +=`
+                        <tr>
+                            <td>${data_value_counter}</td>
+                            <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")]}</td>
+                            <td>${date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])} /<br> ${time_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING TIME")])}</td>
+                            <td>${findClientName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")])}</td>
+                            <td>${findWasteCode(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")])}</td>
+                            <td>${findWasteName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")], mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")])}</td>
+                            <td>PROVIDED BY CLIENT</td>
+                            <td>PROVIDED BY CLIENT</td>
+                            <td>PROVIDED BY CLIENT</td>
+                        </tr>
+                        `
+                        data_value_counter += 1;
+                    }
+                    else if(newElements2_receiving[i] == mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")] &&
+                    month_filter.value == "ALL"){
+                        data_value +=`
+                        <tr>
+                            <td>${data_value_counter}</td>
+                            <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")]}</td>
+                            <td>${date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])} /<br> ${time_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING TIME")])}</td>
+                            <td>${findClientName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")])}</td>
+                            <td>${findWasteCode(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")])}</td>
+                            <td>${findWasteName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")], mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")])}</td>
+                            <td>PROVIDED BY CLIENT</td>
+                            <td>PROVIDED BY CLIENT</td>
+                            <td>PROVIDED BY CLIENT</td>
+                        </tr>
+                        `
+                        data_value_counter += 1;
+                    }
+                }
+            }
+            pending_list_receiving.innerHTML = data_value;
+    
+            var data_value = "";
+            var data_value_counter = 1;
+            for(let i = 0; i < newElements3_receiving.length; i++){
+                for(let j = 1; j < wcf_data_list.content.length; j++){
+                    if(newElements3_receiving[i] == wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")] &&
+                    month_filter.value == formatMonth(wcf_data_list.content[j][findTextInArray(wcf_data_list, "HAULING DATE")])){
+                        for(let k = 1; k < ltf_data_list.content.length; k++){
+                            var hauling_date_info;
+                            var hauling_time_info;
+                            var mtf_no;
+                            if(wcf_data_list.content[j][1] == ltf_data_list.content[k][0]){
+                                hauling_date_info =  date_decoder(ltf_data_list.content[k][findTextInArray(ltf_data_list, "HAULING DATE")]);
+                                hauling_time_info =  time_decoder(ltf_data_list.content[k][findTextInArray(ltf_data_list, "HAULING TIME")]);
+                                mtf_no =  ltf_data_list.content[k][findTextInArray(ltf_data_list, "MTF #")];
+                                break
+                            }
+                        }
+                        data_value +=`
+                        <tr>
+                            <td>${data_value_counter}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]}</td>
+                            <td>${mtf_no}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "TRUCK SCALE #")]}</td>
+                            <td>${hauling_date_info} /<br> ${hauling_time_info}</td>
+                            <td>${findClientName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
+                            <td>${findWasteCode(wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
+                            <td>${findWasteName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")], wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "NET WEIGHT")]}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "PLATE #")]}</td>
+                            <td>${findEmployeeName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "DRIVER ID")])}</td>
+                            <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}</td>
+                            <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "DATE OUT")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "TIME OUT")])}</td>
+                            <td>${calculateTravelTime(date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")]),time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")]),date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "DATE OUT")]),time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "TIME OUT")]))}</td>
+                        </tr>
+                        `
+                        data_value_counter += 1;
+                    }
+                    else if(newElements3_receiving[i] == wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")] &&
+                    month_filter.value == "ALL"){
+                        for(let k = 1; k < ltf_data_list.content.length; k++){
+                            var hauling_date_info;
+                            var hauling_time_info;
+                            var mtf_no;
+                            if(wcf_data_list.content[j][1] == ltf_data_list.content[k][0]){
+                                hauling_date_info =  date_decoder(ltf_data_list.content[k][findTextInArray(ltf_data_list, "HAULING DATE")]);
+                                hauling_time_info =  time_decoder(ltf_data_list.content[k][findTextInArray(ltf_data_list, "HAULING TIME")]);
+                                mtf_no =  ltf_data_list.content[k][findTextInArray(ltf_data_list, "MTF #")];
+                                break
+                            }
+                        }
+                        data_value +=`
+                        <tr>
+                            <td>${data_value_counter}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]}</td>
+                            <td>${mtf_no}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "TRUCK SCALE #")]}</td>
+                            <td>${hauling_date_info} /<br> ${hauling_time_info}</td>
+                            <td>${findClientName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
+                            <td>${findWasteCode(wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
+                            <td>${findWasteName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")], wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "NET WEIGHT")]}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "PLATE #")]}</td>
+                            <td>${findEmployeeName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "DRIVER ID")])}</td>
+                            <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}</td>
+                            <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "DATE OUT")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "TIME OUT")])}</td>
+                            <td>${calculateTravelTime(date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")]),time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")]),date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "DATE OUT")]),time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "TIME OUT")]))}</td>
+                        </tr>
+                        `
+                        data_value_counter += 1;
+                    }
+                }
+            }
+            for(let i = 0; i < newElements4_receiving.length; i++){
+                for(let j = 1; j < wcf_data_list.content.length; j++){
+                    if(newElements4_receiving[i] == wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")] &&
+                    month_filter.value == formatMonth(wcf_data_list.content[j][findTextInArray(wcf_data_list, "HAULING DATE")])){
+                        for(let k = 1; k < mtf_data_list.content.length; k++){
+                            var hauling_date_info;
+                            var hauling_time_info;
+                            var mtf_no;
+                            if(wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")] == mtf_data_list.content[k][findTextInArray(mtf_data_list, "MTF #")]){
+                                hauling_date_info =  date_decoder(mtf_data_list.content[k][findTextInArray(mtf_data_list, "HAULING DATE")]);
+                                hauling_time_info =  time_decoder(mtf_data_list.content[k][findTextInArray(mtf_data_list, "HAULING TIME")]);
+                                mtf_no =  mtf_data_list.content[k][findTextInArray(mtf_data_list, "MTF #")];
+                                break
+                            }
+                        }
+                        data_value +=`
+                        <tr>
+                        <td>${data_value_counter}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]}</td>
+                            <td>${mtf_no}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "TRUCK SCALE #")]}</td>
+                            <td>${hauling_date_info} /<br> ${hauling_time_info}</td>
+                            <td>${findClientName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
+                            <td>${findWasteCode(wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
+                            <td>${findWasteName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")], wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "NET WEIGHT")]}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "PLATE #")]}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "DRIVER ID")]}</td>
+                            <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}</td>
+                            <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "DATE OUT")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "TIME OUT")])}</td>
+                            <td>${calculateTravelTime(date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")]),time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")]),date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "DATE OUT")]),time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "TIME OUT")]))}</td>
+                            </tr>
+                            `
+                        data_value_counter += 1;
+                    }
+                    else if(newElements4_receiving[i] == wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")] &&
+                    month_filter.value == "ALL"){
+                        for(let k = 1; k < mtf_data_list.content.length; k++){
+                            var hauling_date_info;
+                            var hauling_time_info;
+                            var mtf_no;
+                            if(wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")] == mtf_data_list.content[k][findTextInArray(mtf_data_list, "MTF #")]){
+                                hauling_date_info =  date_decoder(mtf_data_list.content[k][findTextInArray(mtf_data_list, "HAULING DATE")]);
+                                hauling_time_info =  time_decoder(mtf_data_list.content[k][findTextInArray(mtf_data_list, "HAULING TIME")]);
+                                mtf_no =  mtf_data_list.content[k][findTextInArray(mtf_data_list, "MTF #")];
+                                break
+                            }
+                        }
+                        data_value +=`
+                        <tr>
+                        <td>${data_value_counter}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]}</td>
+                            <td>${mtf_no}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "TRUCK SCALE #")]}</td>
+                            <td>${hauling_date_info} /<br> ${hauling_time_info}</td>
+                            <td>${findClientName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
+                            <td>${findWasteCode(wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
+                            <td>${findWasteName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")], wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "NET WEIGHT")]}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "PLATE #")]}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "DRIVER ID")]}</td>
+                            <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}</td>
+                            <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "DATE OUT")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "TIME OUT")])}</td>
+                            <td>${calculateTravelTime(date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")]),time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")]),date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "DATE OUT")]),time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "TIME OUT")]))}</td>
+                            </tr>
+                            `
+                        data_value_counter += 1;
+                    }
+                }
+            }
+            received_list_receiving.innerHTML = data_value;
         }
-        received_list_receiving.innerHTML = data_value;
 
         const wcf_data2 = document.getElementById("wcf_data2");
         const ltf_form_no = document.getElementById("ltf_form_no");
@@ -562,57 +756,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
             return waste_name
-        }
-
-        var options = {
-            series: [newElements_receiving.length + newElements2_receiving.length, ltf_wcf_transaction_counter_receiving],
-            chart: {
-                width: 500, // Set the desired width
-                height: 550, // Set the desired height
-                type: 'pie',
-            },
-            plotOptions: {
-                pie: {
-                    startAngle: 0,
-                    endAngle: 360
-                }
-            },
-            dataLabels: {
-                enabled: false, // Disable data labels inside the pie chart
-            },
-            fill: {
-                type: 'gradient', // Use solid fill type
-            },
-            legend: {
-                show: true,
-                position: "left", // Set the legend position to "left"
-                fontSize: '30px', // Increase legend font size as needed
-                formatter: function (seriesName, opts) {
-                    // Here, you should use the correct variable to get the series value
-                    var seriesValue = opts.w.globals.series[opts.seriesIndex];
-                    var totalValue = opts.w.globals.series.reduce((acc, val) => acc + val, 0);
-                    var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
-                    return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
-                },
-                labels: {
-                    useSeriesColors: false, // Use custom color
-                },
-            },
-            labels: ["Pending", "Received"],
-            colors: ["#dc3545", "#198754"], // Specify solid colors here
-            responsive: [{
-                breakpoint: 480,
-                options: {
-                    chart: {
-                        width: 200
-                    },
-                }
-            }]
-        };
-        
-        
-        var chart = new ApexCharts(document.querySelector("#pieChart"), options);
-        chart.render();   
+        }  
 
     } catch (error) {
         console.error('Error fetching data:', error);
