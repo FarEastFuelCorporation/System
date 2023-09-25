@@ -803,7 +803,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "QUOTATION CODE")]}</td>
                     <td>${date_decoder(qlf_data_list.content[x][findTextInArray(qlf_data_list, "VALIDITY")])}</td>
                     <td>${findClientName(qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")])}</td>
-                    <td>${findWasteCode(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])}</td>
+                    <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]}</td>
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")]}</td>
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "MODE")]}</td>
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")]}</td>
