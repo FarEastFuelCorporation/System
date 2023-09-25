@@ -230,7 +230,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <input type="hidden" name="purpose" id="purpose" value="${frf_data_list.content[x][findTextInArray(frf_data_list, "PURPOSE")]}">
                     <input type="hidden" name="submitted_by" id="submitted_by" value="${frf_data_list.content[x][findTextInArray(frf_data_list, "STATUS")]}">
                     <input type="hidden" name="timestamp" id="timestamp" value="${frf_data_list.content[x][findTextInArray(frf_data_list, "CREATED AT")]}">
-                    <button type="submit" style="background-color: black !important; padding:0; border: 1px solid black; color: #ffbf00 !important;">
+                    <button type="submit" style="background-color: transparent !important; padding:0; color: #198754; border: none">
                         <i class="fa-solid fa-thumbs-up"></i>
                     </button>
                 </form>
@@ -245,7 +245,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <input type="hidden" name="purpose" id="purpose" value="${frf_data_list.content[x][findTextInArray(frf_data_list, "PURPOSE")]}">
                 <input type="hidden" name="submitted_by" id="submitted_by" value="${frf_data_list.content[x][findTextInArray(frf_data_list, "STATUS")]}">
                 <input type="hidden" name="timestamp" id="timestamp" value="${frf_data_list.content[x][findTextInArray(frf_data_list, "CREATED AT")]}">
-                <button type="submit" style="background-color: black !important; padding:0; border: 1px solid black; color: #ffbf00 !important;">
+                <button type="submit" style="background-color: transparent !important; padding:0; color: #dc3545; border: none">
                         <i class="fa-solid fa-thumbs-down"></i>
                     </button>
                 </form>
@@ -253,8 +253,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             if(frf_data_list.content[x][findTextInArray(frf_data_list, "APPROVED AMOUNT")] == "" && frf_data_list.content[x][findTextInArray(frf_data_list, "STATUS")] !== "DISAPPROVED"){
                 button3 = `
-                <button type="button" id="amount_tab_button" style="background-color: black !important; padding:0; border: 1px solid black; color: #ffbf00 !important;">
-                    <i class="fa-solid fa-pen-to-square"></i>
+                <button type="button" id="amount_tab_button" style="background-color: transparent !important; padding:0; color: #f6d754; border: none;">
+                    <i class="fa-solid fa-pen-to-square" style="font-size: 30px;"></i>
                     <input type="hidden" name="frf_no" id="frf_no" value="${frf_data_list.content[x][findTextInArray(frf_data_list, "FRF #")]}">
                 </button>
                 `

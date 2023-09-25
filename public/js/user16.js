@@ -97,6 +97,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             var for_receiving_pending_counter_marketing = 0;
             var for_receiving_received_counter_marketing = 0;    
             var data_value_counter = 1;
+            var data_value = "";
             for(let j = 1; j < mtf_data_list.content.length; j++){
                 var status = "PENDING";
                 // for logistics
@@ -163,6 +164,40 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     for_receiving_pending_counter_marketing += 1;
                 }
+                if(month_filter.value == formatMonth(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])){
+                    data_value +=`
+                    <tr>
+                        <td>${data_value_counter}</td>
+                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")]}</td>
+                        <td>${date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])} /<br> ${time_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING TIME")])}</td>
+                        <td>${findClientName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")])}</td>
+                        <td>${findWasteCode(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")])}</td>
+                        <td>${findWasteName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")], (mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")]))}</td>
+                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")]}</td>
+                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")]}</td>
+                        <td>${status}</td>
+                    </tr>
+                    `
+                    data_value_counter += 1;
+                    pending_list_marketing.innerHTML = data_value;
+                }
+                else if(month_filter.value == "ALL"){
+                    data_value +=`
+                    <tr>
+                        <td>${data_value_counter}</td>
+                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")]}</td>
+                        <td>${date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])} /<br> ${time_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING TIME")])}</td>
+                        <td>${findClientName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")])}</td>
+                        <td>${findWasteCode(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")])}</td>
+                        <td>${findWasteName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")], (mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")]))}</td>
+                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")]}</td>
+                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")]}</td>
+                        <td>${status}</td>
+                    </tr>
+                    `
+                    data_value_counter += 1;
+                    pending_list_marketing.innerHTML = data_value;
+                }
             }
             booked_transactions_marketing.innerText = for_logistics_on_haul_counter_marketing + for_logistics_pending_counter_marketing + for_receiving_pending_counter_marketing + for_logistics_received_counter_marketing + for_receiving_received_counter_marketing;
             on_hauling_marketing.innerText = for_logistics_on_haul_counter_marketing;
@@ -220,44 +255,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             var chart = new ApexCharts(pieChart, options);
             chart.render();
-
-            var data_value = "";
-            for(let j = 1; j < mtf_data_list.content.length; j++){
-                if(month_filter.value == formatMonth(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])){
-                    data_value +=`
-                    <tr>
-                        <td>${data_value_counter}</td>
-                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")]}</td>
-                        <td>${date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])} /<br> ${time_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING TIME")])}</td>
-                        <td>${findClientName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")])}</td>
-                        <td>${findWasteCode(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")])}</td>
-                        <td>${findWasteName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")], (mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")]))}</td>
-                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")]}</td>
-                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")]}</td>
-                        <td>${status}</td>
-                    </tr>
-                    `
-                    data_value_counter += 1;
-                    pending_list_marketing.innerHTML = data_value;
-                }
-                else if(month_filter.value == "ALL"){
-                    data_value +=`
-                    <tr>
-                        <td>${data_value_counter}</td>
-                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")]}</td>
-                        <td>${date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])} /<br> ${time_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING TIME")])}</td>
-                        <td>${findClientName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")])}</td>
-                        <td>${findWasteCode(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")])}</td>
-                        <td>${findWasteName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")], (mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")]))}</td>
-                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")]}</td>
-                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")]}</td>
-                        <td>${status}</td>
-                    </tr>
-                    `
-                    data_value_counter += 1;
-                    pending_list_marketing.innerHTML = data_value;
-                }
-            }
         }
 
         // client_data_list
