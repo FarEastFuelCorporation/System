@@ -350,12 +350,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 `
                                 type_of_waste.insertAdjacentHTML("beforeend", data)
                             }
-                            if (client_id == qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")] && qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")] == "TRIP") {
-                                var data = `
-                                <option value="${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]}">${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]}</option>
-                                `
-                                type_of_vehicle.insertAdjacentHTML("beforeend", data)
-                            }
                         }
                     }
                 }              
@@ -522,10 +516,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const type_of_waste_container = marketing_transaction_form.querySelector("#type_of_waste_container");
         
         submit_to.addEventListener("change", () => {
-            if(submit_to.value == "RECEIVING"){
-                type_of_vehicle_container.remove()
-            }
-            else{
+            console.log(submit_to.value)
+            if(submit_to.value == "LOGISTICS"){
                 // type_of_waste_data_list
                 const marketing_transaction_form = document.querySelector("#marketing_transaction_form");
                 const date_time_weight = marketing_transaction_form.querySelector("#date_time_weight");
@@ -533,7 +525,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 
                 var data_value = 
                 `
-                    <div id="type_of_vehicle_container" >
+                <div id="type_of_vehicle_container" >
                     <label for="type_of_vehicle">
                         <i class="fa-solid fa-truck"></i>
                         Type of Vehicle
@@ -544,7 +536,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 </div>
                 `
                 console.log(date_time_weight)
-                date_time_weight.insertAdjacentHTML("beforeend", data_value)
+                type_of_waste_container.insertAdjacentHTML("beforebegin", data_value)
 
                 const type_of_waste = marketing_transaction_form.querySelector("#type_of_waste");
                 const type_of_vehicle = marketing_transaction_form.querySelector("#type_of_vehicle");
@@ -563,6 +555,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                     }
                 }  
+
+            }
+            else{
+                const type_of_vehicle_container = marketing_transaction_form.querySelector("#type_of_vehicle_container");
+                if(type_of_vehicle_container != undefined){
+                    type_of_vehicle_container.remove()
+                }
             }
         })
 
@@ -804,7 +803,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "QUOTATION CODE")]}</td>
                     <td>${date_decoder(qlf_data_list.content[x][findTextInArray(qlf_data_list, "VALIDITY")])}</td>
                     <td>${findClientName(qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")])}</td>
-                    <td>${findWasteCode2(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])}</td>
+                    <td>${findWasteCode(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])}</td>
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")]}</td>
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "MODE")]}</td>
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")]}</td>
@@ -1104,7 +1103,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             validity_quotation_form2.value = date_decoder2(qlf_data_list.content[x][findTextInArray(qlf_data_list, "VALIDITY")]);
                             terms_quotation_form2.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "TERMS DAYS")];
                             client_quotation_form2.value = findClientName(qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")]);
-                            waste_code1_quotation_form2.value = findWasteCode2(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]);
+                            waste_code1_quotation_form2.value = findWasteCode(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]);
                             waste_name1_quotation_form2.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")];
                             mode1_quotation_form2.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "MODE")];
                             unit1_quotation_form2.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")];
@@ -1121,7 +1120,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             var unit_price1_quotation_form = update_quotation_form_tab.querySelector(`#unit_price${waste_counter}`);
                             var vat_calculation1_quotation_form = update_quotation_form_tab.querySelector(`#vat_calculation${waste_counter}`);
                                                 
-                            waste_code1_quotation_form.value = findWasteCode2(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]);
+                            waste_code1_quotation_form.value = findWasteCode(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]);
                             waste_name1_quotation_form.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")];
                             mode1_quotation_form.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "MODE")];
                             unit1_quotation_form.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")];
@@ -1947,25 +1946,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         function findWasteCode(waste_id){
             var waste_code = "";
             for(let c = 1; c < type_of_waste_data_list.content.length; c++){
-                if(waste_id == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
+                if(waste_id.substring(0, 8) == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
                     waste_code = (type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")]).substring(0, 4);
                     break
                 }
                 else{
-                    waste_code = "NHW";
-                }
-            }
-            return waste_code
-        }
-        function findWasteCode2(waste_id){
-            var waste_code = "";
-            for(let c = 1; c < type_of_waste_data_list.content.length; c++){
-                if(waste_id == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
-                    waste_code = (type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")]);
-                    break
-                }
-                else{
-                    waste_code = waste_id;
+                    waste_code = waste_code;
                 }
             }
             return waste_code

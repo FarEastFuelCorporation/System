@@ -619,12 +619,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         function findWasteCode(waste_id){
             var waste_code = "";
             for(let c = 1; c < type_of_waste_data_list.content.length; c++){
-                if(waste_id == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
+                if(waste_id.substring(0, 8) == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
                     waste_code = (type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")]).substring(0, 4);
                     break
                 }
                 else{
-                    waste_code = waste_id;
+                    waste_code = waste_code;
                 }
             }
             return waste_code

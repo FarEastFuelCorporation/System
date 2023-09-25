@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const username_response_promise = fetch('https://script.google.com/macros/s/AKfycbwmA97K4sdfq6dhzSsp14JU9KgQrFgSARNZbvSfiU7vuH8oEipt6TmcFo_o-jCI0kiQ/exec');
         const client_list_response_promise = fetch('https://script.google.com/macros/s/AKfycbxXnIsmgK52Ws9H2qAh47qkgZxDltFJaHSFV0e9UQRwaK1g_xwFUKGokL_hk4fq-_mhSg/exec');
         const type_of_waste_response_promise = fetch('https://script.google.com/macros/s/AKfycbw0yC-8_V38Zl1-KGyBwX1JmfTEW1jwyFxgpZ-oNC2lvtoAraUtkLCS27HfNbXi_l4IPg/exec');
+        const wcf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyBFTBuFZ4PkvwmPi_3Pp_v74DCSEK2VpNy6janIGgaAK-P22wazmmShOKn6iwFbrQn/exec');
         const sf_response_promise = fetch('https://script.google.com/macros/s/AKfycby9b2VCfXc0ifkwBXJRi2UVUwgZIj9F4FTOdZa_SYKZdsTwbVtAzAXzNMFeklE35bg1/exec');
         const tpf_response_promise = fetch('https://script.google.com/macros/s/AKfycbwbKss2XtW5lylCrUe8IC-ZA4ffA5CM5tY6kqIja9t80NXJw2nB8RBOJFWbXQz0hWMadw/exec');
         const qlf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyFU_skru2tnyEiv8I5HkpRCXbUlQb5vlJUm8Le0nZBCvfZeFkQPd2Naljs5CZY41I17w/exec');
@@ -11,6 +12,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             username_response,
             client_list_response,
             type_of_waste_response,
+            wcf_response,
             sf_response,
             tpf_response,
             qlf_response,
@@ -18,6 +20,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             username_response_promise,
             client_list_response_promise,
             type_of_waste_response_promise,
+            wcf_response_promise,
             sf_response_promise,
             tpf_response_promise,
             qlf_response_promise,
@@ -26,6 +29,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const username_data_list  = await username_response.json();
         const client_data_list  = await client_list_response.json();
         const type_of_waste_data_list  = await type_of_waste_response.json();
+        const wcf_data_list  = await wcf_response.json();
         const sf_data_list  = await sf_response.json();
         const tpf_data_list  = await tpf_response.json();
         const qlf_data_list  = await qlf_response.json();
@@ -57,42 +61,58 @@ document.addEventListener('DOMContentLoaded', async function() {
         const treated_counter_treatment = document.querySelector("#treatment_process_dashboard #treated_counter");
         const pending_list_treatment = document.querySelector("#treatment_process_dashboard #pending_list");
         const finished_list_treatment = document.querySelector("#treatment_process_dashboard #finished_list");
-        var sf_tpf_transaction_counter_treatment = 0;
-        var sf_transaction_counter_treatment = 0;
+        let wcf_transaction_sorting = []; // Variable containing existing elements
+        let wcf_tpf_transaction_sorting = []; // Variable containing existing elements
         let sf_transaction_treatment = []; // Variable containing existing elements
         let sf_tpf_transaction_treatment = []; // Variable containing existing elements
+        let sf_tpf_wcf_transaction_treatment = []; // Variable containing existing elements
         
+        for (let i = 1; i < wcf_data_list.content.length; i++) {
+            if(wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] !== "SORTING" &&
+            wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] !== "WAREHOUSE"){
+                if (!wcf_transaction_sorting.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")])) {
+                    wcf_transaction_sorting.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]);
+                }
+            }
+        }
+
         for (let i = 1; i < sf_data_list.content.length; i++) {
             if(sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE ID")] !== "DISCREPANCY"){
                 if(sf_data_list.content[i][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")] !== "FOR STORAGE"){
                     if (!sf_transaction_treatment.includes(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")])) {
                         sf_transaction_treatment.push(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")]);
-                        sf_transaction_counter_treatment += 1
                     }
                 }
             }
         }
-
         for (let i = 1; i < tpf_data_list.content.length; i++) {
             if (!sf_tpf_transaction_treatment.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "SF #")])) {
                 sf_tpf_transaction_treatment.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "SF #")]);
-                sf_tpf_transaction_counter_treatment += 1
+            }
+            if (!sf_tpf_wcf_transaction_treatment.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")])) {
+                sf_tpf_wcf_transaction_treatment.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")]);
             }
         }
-
+        for (let i = 1; i < tpf_data_list.content.length; i++) {
+            if (!wcf_tpf_transaction_sorting.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")])) {
+                wcf_tpf_transaction_sorting.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")]);
+            }
+        }
         // Get elements from sf_transaction not included in sf_tpf_transaction
-        const pending_treatment = sf_transaction_treatment.filter((element) => !sf_tpf_transaction_treatment.includes(element));
+        const pending_treatment_sf = sf_transaction_treatment.filter((element) => !sf_tpf_transaction_treatment.includes(element));
+        const pending_treatment_wcf = wcf_transaction_sorting.filter((element) => !wcf_tpf_transaction_sorting.includes(element));
         const finished_treatment = sf_transaction_treatment.filter((element) => sf_tpf_transaction_treatment.includes(element));
+        const filtered_pending_treatment_wcf = wcf_tpf_transaction_sorting.filter(element => !sf_tpf_wcf_transaction_treatment.includes(element));
 
         // pending_list
-        treated_counter_treatment.innerText = sf_tpf_transaction_counter_treatment;
-        total_counter_treatment.innerText = sf_transaction_counter_treatment;
-        pending_counter_treatment.innerText = sf_transaction_counter_treatment - sf_tpf_transaction_counter_treatment;
+        treated_counter_treatment.innerText = sf_tpf_transaction_treatment.length + filtered_pending_treatment_wcf.length;
+        total_counter_treatment.innerText = sf_transaction_treatment.length + wcf_transaction_sorting.length;
+        pending_counter_treatment.innerText = pending_treatment_sf.length + pending_treatment_wcf.length;
         var data_value = "";
         var data_value_counter = 1;
-        for(let i = 0; i < pending_treatment.length; i++){
+        for(let i = 0; i < pending_treatment_sf.length; i++){
             for(let j = 1; j < sf_data_list.content.length; j++){
-                if(pending_treatment[i] == sf_data_list.content[j][findTextInArray(sf_data_list, "SF #")]){
+                if(pending_treatment_sf[i] == sf_data_list.content[j][findTextInArray(sf_data_list, "SF #")]){
                     data_value +=`
                     <tr>
                         <td>${data_value_counter}</td>
@@ -103,6 +123,25 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "WASTE NAME")]}</td>
                         <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")]}</td>
                         <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "WEIGHT")]}</td>
+                    </tr>
+                    `
+                    data_value_counter += 1;
+                }
+            }
+        }
+        for(let i = 0; i < pending_treatment_wcf.length; i++){
+            for(let j = 1; j < wcf_data_list.content.length; j++){
+                if(pending_treatment_wcf[i] == wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]){
+                    data_value +=`
+                    <tr>
+                        <td>${data_value_counter}</td>
+                        <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]}</td>
+                        <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}</td>
+                        <td>${findClientName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
+                        <td>${findWasteCode(wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
+                        <td>${findWasteName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")], wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
+                        <td>${findTreatmentProcess(wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
+                        <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "NET WEIGHT")]}</td>
                     </tr>
                     `
                     data_value_counter += 1;
@@ -202,9 +241,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         search_sf_form_no_button.addEventListener("click", () => {
             var data_value;
             for(let a = 1; a < sf_data_list.content.length; a++){
-                for(let b=0; b<=pending_treatment.length; b++){
+                for(let b=0; b<=pending_treatment_sf.length; b++){
                     if(search_sf_form_no.value == sf_data_list.content[a][findTextInArray(sf_data_list, "SF #")]){
-                        if(search_sf_form_no.value == pending_treatment[b]){
+                        if(search_sf_form_no.value == pending_treatment_sf[b]){
                             data_value = `
                             SF #: ${sf_data_list.content[a][findTextInArray(sf_data_list, "SF #")]}<br>
                             WCF #: ${sf_data_list.content[a][findTextInArray(sf_data_list, "WCF #")]}<br>
@@ -258,6 +297,69 @@ document.addEventListener('DOMContentLoaded', async function() {
                             destruction_process.value = sf_data_list.content[a][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")];
                             hauling_date.value = date_decoder(sf_data_list.content[a][findTextInArray(sf_data_list, "HAULING DATE")]);
                             var hauling_date_plus2 = new Date(date_decoder(sf_data_list.content[a][findTextInArray(sf_data_list, "HAULING DATE")]));
+                            target_date_of_completion.value = date_decoder(hauling_date_plus2.setDate(hauling_date_plus2.getDate()+2));
+                            additional_item1.style.display = "grid";
+                            add_item_button.style.display = "block";
+                            completion.style.display = "grid";
+                            buttons.style.display = "flex";    
+                        }
+                    }
+                }
+            }
+            for(let a = 1; a < wcf_data_list.content.length; a++){
+                for(let b=0; b<=pending_treatment_wcf.length; b++){
+                    if(search_sf_form_no.value == wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")]){
+                        if(search_sf_form_no.value == pending_treatment_wcf[b]){
+                            data_value = `
+                            WCF #: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")]}<br>
+                            CLIENT: ${findClientName(wcf_data_list.content[a][findTextInArray(wcf_data_list, "CLIENT ID")])}<br>
+                            WASTE CODE: ${findWasteCode(wcf_data_list.content[a][findTextInArray(wcf_data_list, "WASTE ID")])}<br>
+                            WASTE DESCRIPTION: ${findWasteName(wcf_data_list.content[a][findTextInArray(wcf_data_list, "CLIENT ID")], wcf_data_list.content[a][findTextInArray(wcf_data_list, "WASTE ID")])}<br>
+                            DESTRUCTION PROCESS: ${findTreatmentProcess(wcf_data_list.content[a][findTextInArray(wcf_data_list, "WASTE ID")])}<br>
+                            WEIGHT: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "NET WEIGHT")]} kg.<br>
+                            HAULING DATE: ${date_decoder(wcf_data_list.content[a][findTextInArray(wcf_data_list, "HAULING DATE")])}<br>
+                            SUBMITTED BY: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "SUBMITTED BY")]}<br>
+                            `
+                            if(findTreatmentProcess(wcf_data_list.content[a][findTextInArray(wcf_data_list, "WASTE ID")]) == 'THERMAL DECOMPOSITION'){
+                                machine_list.innerHTML = `
+                                <label for="tpf_form_no">
+                                    <i class="fa-solid fa-gears"></i>
+                                    Machine
+                                </label><br>
+                                <div>
+                                    <select name="machine" id="machine" class="form-control">
+                                        <option value="">Select Machine</option>
+                                        <option value="THERMAL 1 (ALPHA)">THERMAL 1 (ALPHA)</option>
+                                        <option value="THERMAL 2 (BRAVO)">THERMAL 2 (BRAVO)</option>
+                                        <option value="THERMAL 3 (CHARLIE)">THERMAL 3 (CHARLIE)</option>
+                                    </select>
+                                </div><br>
+                                `
+                            }
+                            else if(findTreatmentProcess(wcf_data_list.content[a][findTextInArray(wcf_data_list, "WASTE ID")]) == 'PYROLYSIS'){
+                                machine_list.innerHTML = `
+                                <label for="tpf_form_no">
+                                    <i class="fa-solid fa-gears"></i>
+                                    Machine
+                                </label><br>
+                                <div>
+                                    <select name="machine" id="machine" class="form-control">
+                                        <option value="">Select Machine</option>
+                                        <option value="PYROLYSIS 1">PYROLYSIS 1</option>
+                                        <option value="PYROLYSIS 2">PYROLYSIS 2</option>
+                                        <option value="PYROLYSIS 3">PYROLYSIS 3</option>
+                                    </select>
+                                </div><br>
+                                `
+                            }
+                            wcf_form_no.value = wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")];
+                            client.value = wcf_data_list.content[a][findTextInArray(wcf_data_list, "CLIENT ID")];
+                            waste_description.value = wcf_data_list.content[a][findTextInArray(wcf_data_list, "WASTE ID")];
+                            waste_code_input.value = findWasteName(wcf_data_list.content[a][findTextInArray(wcf_data_list, "CLIENT ID")], wcf_data_list.content[a][findTextInArray(wcf_data_list, "WASTE ID")]);
+                            weight.value = wcf_data_list.content[a][findTextInArray(wcf_data_list, "NET WEIGHT")];
+                            destruction_process.value = findTreatmentProcess(wcf_data_list.content[a][findTextInArray(wcf_data_list, "WASTE ID")]);
+                            hauling_date.value = date_decoder(wcf_data_list.content[a][findTextInArray(wcf_data_list, "HAULING DATE")]);
+                            var hauling_date_plus2 = new Date(date_decoder(wcf_data_list.content[a][findTextInArray(wcf_data_list, "HAULING DATE")]));
                             target_date_of_completion.value = date_decoder(hauling_date_plus2.setDate(hauling_date_plus2.getDate()+2));
                             additional_item1.style.display = "grid";
                             add_item_button.style.display = "block";
@@ -374,12 +476,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         function findWasteCode(waste_id){
             var waste_code = "";
             for(let c = 1; c < type_of_waste_data_list.content.length; c++){
-                if(waste_id == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
+                if(waste_id.substring(0, 8) == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
                     waste_code = (type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")]).substring(0, 4);
                     break
                 }
                 else{
-                    waste_code = waste_id;
+                    waste_code = waste_code;
                 }
             }
             return waste_code
@@ -394,6 +496,16 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
             return waste_name
+        }
+        function findTreatmentProcess(waste_id){
+            var treatment_process = "";
+            for(let c = 1; c < type_of_waste_data_list.content.length; c++){
+                if(waste_id.substring(0, 8) == (type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")])){
+                    treatment_process = (type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "TREATMENT PROCESS")]);
+                    break
+                }
+            }
+            return treatment_process
         }
 
     } catch (error) {
