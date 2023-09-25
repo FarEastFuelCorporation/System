@@ -98,13 +98,15 @@ document.addEventListener('DOMContentLoaded', async function() {
             var for_receiving_received_counter_marketing = 0;    
             var data_value_counter = 1;
             var data_value = "";
-            for(let j = 1; j < mtf_data_list.content.length; j++){
+            for(let j = mtf_data_list.content.length - 1; j >= 1; j--){
                 var status = "PENDING";
+                var vehicle = "";
                 // for logistics
                 if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")] == "LOGISTICS" &&
                 month_filter.value == formatMonth(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])){
                     for(let k = 1; k < ltf_data_list.content.length; k++){
                         if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")] == ltf_data_list.content[k][findTextInArray(ltf_data_list, "MTF #")]){
+                            vehicle = mtf_data_list.content[k][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")];
                             status = "ON HAULING";
                             for_logistics_on_haul_counter_marketing += 1;
                             for_logistics_pending_counter_marketing -= 1;
@@ -121,6 +123,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
                 else if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")] == "LOGISTICS" &&
                 month_filter.value == "ALL"){
+                    vehicle = mtf_data_list.content[j][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")];
                     for(let k = 1; k < ltf_data_list.content.length; k++){
                         if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")] == ltf_data_list.content[k][findTextInArray(ltf_data_list, "MTF #")]){
                             status = "ON HAULING";
@@ -143,6 +146,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     for(let m = 1; m < wcf_data_list.content.length; m++){
                         if((wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).slice(0,3) == "MTF"){
                             if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")] == wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
+                                vehicle = "PROVIDED BY CLIENT";
                                 status = "RECEIVED";
                                 for_receiving_received_counter_marketing += 1;
                                 for_receiving_pending_counter_marketing -= 1;
@@ -153,6 +157,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
                 else if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")] == "RECEIVING" &&
                 month_filter.value == "ALL"){
+                    vehicle = "PROVIDED BY CLIENT";
                     for(let m = 1; m < wcf_data_list.content.length; m++){
                         if((wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).slice(0,3) == "MTF"){
                             if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")] == wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
@@ -164,6 +169,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     for_receiving_pending_counter_marketing += 1;
                 }
+                console.log(vehicle)
                 if(month_filter.value == formatMonth(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])){
                     data_value +=`
                     <tr>
@@ -173,11 +179,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td>${findClientName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")])}</td>
                         <td>${findWasteCode(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")])}</td>
                         <td>${findWasteName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")], (mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")]))}</td>
-                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")]}</td>
+                        <td>${vehicle}</td>
                         <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")]}</td>
                         <td>${status}</td>
+                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "REMARKS")]}</td>
+                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMITTED BY")]}</td>
                     </tr>
                     `
+                    
                     data_value_counter += 1;
                     pending_list_marketing.innerHTML = data_value;
                 }
@@ -190,14 +199,17 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td>${findClientName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")])}</td>
                         <td>${findWasteCode(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")])}</td>
                         <td>${findWasteName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")], (mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")]))}</td>
-                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")]}</td>
+                        <td>${vehicle}</td>
                         <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")]}</td>
                         <td>${status}</td>
+                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "REMARKS")]}</td>
+                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMITTED BY")]}</td>
                     </tr>
                     `
                     data_value_counter += 1;
                     pending_list_marketing.innerHTML = data_value;
                 }
+                console.log(mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMITTED BY")])
             }
             booked_transactions_marketing.innerText = for_logistics_on_haul_counter_marketing + for_logistics_pending_counter_marketing + for_receiving_pending_counter_marketing + for_logistics_received_counter_marketing + for_receiving_received_counter_marketing;
             on_hauling_marketing.innerText = for_logistics_on_haul_counter_marketing;
