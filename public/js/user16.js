@@ -169,7 +169,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     for_receiving_pending_counter_marketing += 1;
                 }
-                console.log(vehicle)
                 if(month_filter.value == formatMonth(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])){
                     data_value +=`
                     <tr>
@@ -209,7 +208,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     data_value_counter += 1;
                     pending_list_marketing.innerHTML = data_value;
                 }
-                console.log(mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMITTED BY")])
             }
             booked_transactions_marketing.innerText = for_logistics_on_haul_counter_marketing + for_logistics_pending_counter_marketing + for_receiving_pending_counter_marketing + for_logistics_received_counter_marketing + for_receiving_received_counter_marketing;
             on_hauling_marketing.innerText = for_logistics_on_haul_counter_marketing;
@@ -331,7 +329,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     });
                     search_wrapper.classList.add("active");
                     show_suggestions(empty_array);
-                    console.log(empty_array)
                 } else {
                     search_wrapper.classList.remove("active");
                 }
@@ -528,7 +525,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         const type_of_waste_container = marketing_transaction_form.querySelector("#type_of_waste_container");
         
         submit_to.addEventListener("change", () => {
-            console.log(submit_to.value)
             if(submit_to.value == "LOGISTICS"){
                 // type_of_waste_data_list
                 const marketing_transaction_form = document.querySelector("#marketing_transaction_form");
@@ -547,7 +543,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     </select>
                 </div>
                 `
-                console.log(date_time_weight)
                 type_of_waste_container.insertAdjacentHTML("beforebegin", data_value)
 
                 const type_of_waste = marketing_transaction_form.querySelector("#type_of_waste");
@@ -1109,7 +1104,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 for(let y = 1; y < type_of_waste_data_list.content.length; y++){
                     if(quotation_no_quotation_form2.value == qlf_data_list.content[x][findTextInArray(qlf_data_list, "QUOTATION CODE")] &&
                     qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")] == type_of_waste_data_list.content[y][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
-                        console.log("pass")
                         if(waste_counter == 1){
                             timestamp_quotation_form2.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "CREATED AT")];
                             validity_quotation_form2.value = date_decoder2(qlf_data_list.content[x][findTextInArray(qlf_data_list, "VALIDITY")]);

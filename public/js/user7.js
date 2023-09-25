@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
             var data_value = "";
             var data_value_counter = 1;
-            for(let i = 0; i < newElements_logistics.length; i++){
+            for(let i = newElements_logistics.length; i <= 0 ; i++){
                 for(let j = 1; j < mtf_data_list.content.length; j++){
                     if(newElements_logistics[i] == mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")] &&
                     month_filter.value == formatMonth(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])){
@@ -245,7 +245,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
             var data3_value = "";
             var data_value3_counter = 1;
-            for(let j = 1; j < ltf_data_list.content.length; j++){
+            for( let j = ltf_data_list.content.length - 1; j >= 1; j--){
                 for(let k = 0; k <= newElements2_logistics.length; k++){
                     if(ltf_data_list.content[j][findTextInArray(ltf_data_list, "LTF #")] == newElements2_logistics[k] &&
                     month_filter.value == formatMonth(ltf_data_list.content[j][findTextInArray(ltf_data_list, "HAULING DATE")])){
