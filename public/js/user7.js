@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
             var data_value = "";
             var data_value_counter = 1;
-            for(let i = newElements_logistics.length; i <= 0 ; i++){
+            for(let i = newElements_logistics.length; i >= 0 ; i--){
                 for(let j = 1; j < mtf_data_list.content.length; j++){
                     if(newElements_logistics[i] == mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")] &&
                     month_filter.value == formatMonth(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])){

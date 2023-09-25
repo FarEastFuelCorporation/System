@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     
             var data_value = "";
             var data_value_counter = 1;
-            for(let i = 0; i < newElements3_receiving.length; i++){
+            for(let i = newElements3_receiving.length; i >= 0 ; i--){
                 for(let j = 1; j < wcf_data_list.content.length; j++){
                     if(newElements3_receiving[i] == wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")] &&
                     month_filter.value == formatMonth(wcf_data_list.content[j][findTextInArray(wcf_data_list, "HAULING DATE")])){
@@ -344,7 +344,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                 }
             }
-            for(let i = 0; i < newElements4_receiving.length; i++){
+            for(let i = newElements4_receiving.length; i >= 0 ; i--){
                 for(let j = 1; j < wcf_data_list.content.length; j++){
                     if(newElements4_receiving[i] == wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")] &&
                     month_filter.value == formatMonth(wcf_data_list.content[j][findTextInArray(wcf_data_list, "HAULING DATE")])){
