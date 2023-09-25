@@ -647,6 +647,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const contact_number_update_client_form = update_client_form_tab_client_list_section.querySelector("#contact_number");
         const biller_name_update_client_form = update_client_form_tab_client_list_section.querySelector("#biller_name");
         const biller_address_update_client_form = update_client_form_tab_client_list_section.querySelector("#biller_address");
+        const biller_contact_person_update_client_form = update_client_form_tab_client_list_section.querySelector("#biller_contact_person");
         const biller_contact_number_update_client_form = update_client_form_tab_client_list_section.querySelector("#biller_contact_number");
         const timestamp_update_client_form = update_client_form_tab_client_list_section.querySelector("#timestamp");
         const update_client_form_tab_container_client_form = update_client_form_tab_client_list_section.querySelector("#update_client_form_tab_container");
@@ -678,6 +679,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     contact_number_update_client_form.value = client_data_list.content[x][findTextInArray(client_data_list, "CONTACT NUMBER")];
                     biller_name_update_client_form.value = client_data_list.content[x][findTextInArray(client_data_list, "BILLER NAME")];
                     biller_address_update_client_form.value = client_data_list.content[x][findTextInArray(client_data_list, "BILLER ADDRESS")];
+                    biller_contact_person_update_client_form.value = client_data_list.content[x][findTextInArray(client_data_list, "BILLER CONTACT PERSON")];
                     biller_contact_number_update_client_form.value = client_data_list.content[x][findTextInArray(client_data_list, "BILLER CONTACT NUMBER")];
                     timestamp_update_client_form.value = client_data_list.content[x][findTextInArray(client_data_list, "CREATED AT")];
                     update_client_form_tab_container_client_form.style.display = "block"
