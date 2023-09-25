@@ -194,8 +194,8 @@ document.addEventListener('DOMContentLoaded', async function() {
 
             var data_value = "";
             var data_value_counter = 1;
-            for(let i = 0; i < newElements_receiving.length; i++){
-                for(let j = 1; j < ltf_data_list.content.length; j++){
+            for(let j = ltf_data_list.content.length -1; j >= 1 ; j--){
+                for(let i = 0; i < newElements_receiving.length; i++){
                     if(newElements_receiving[i] == ltf_data_list.content[j][findTextInArray(ltf_data_list, "LTF #")] &&
                     month_filter.value == formatMonth(ltf_data_list.content[j][findTextInArray(ltf_data_list, "HAULING DATE")])){
                         data_value +=`
@@ -232,8 +232,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                 }
             }
-            for(let i = 0; i < newElements2_receiving.length; i++){
-                for(let j = 1; j < mtf_data_list.content.length; j++){
+            for(let j = mtf_data_list.content.length -1; j >= 1 ; j--){
+                for(let i = 0; i < newElements2_receiving.length; i++){
                     if(newElements2_receiving[i] == mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")] &&
                     month_filter.value == formatMonth(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])){
                         data_value +=`
@@ -274,8 +274,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     
             var data_value = "";
             var data_value_counter = 1;
-            for(let i = newElements3_receiving.length; i >= 0 ; i--){
-                for(let j = 1; j < wcf_data_list.content.length; j++){
+            for(let j = wcf_data_list.content.length -1; j >= 1 ; j--){
+                for(let i = 0; i < newElements3_receiving.length ; i++){
                     if(newElements3_receiving[i] == wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")] &&
                     month_filter.value == formatMonth(wcf_data_list.content[j][findTextInArray(wcf_data_list, "HAULING DATE")])){
                         for(let k = 1; k < ltf_data_list.content.length; k++){
@@ -343,9 +343,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         data_value_counter += 1;
                     }
                 }
-            }
-            for(let i = newElements4_receiving.length; i >= 0 ; i--){
-                for(let j = 1; j < wcf_data_list.content.length; j++){
+                for(let i = 0; i < newElements4_receiving.length ; i++){
                     if(newElements4_receiving[i] == wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")] &&
                     month_filter.value == formatMonth(wcf_data_list.content[j][findTextInArray(wcf_data_list, "HAULING DATE")])){
                         for(let k = 1; k < mtf_data_list.content.length; k++){
