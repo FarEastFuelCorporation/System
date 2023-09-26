@@ -86,6 +86,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         const vehicle_list_logistics = document.querySelector("#vehicle_list_section #vehicle_list");
         const month_filter = document.getElementById("month_filter");
 
+        var newElements_logistics = [];
+        var newElements2_logistics = [];
+        var newElements3_logistics = [];
+
         month_filter.addEventListener("change", generatePending)
         generatePending();
         function generatePending(){
@@ -139,9 +143,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
     
-            const newElements_logistics = mtf_transaction_logistics.filter((element) => !mtf_ltf_transaction_logistics.includes(element));
-            const newElements2_logistics = ltf_transaction_logistics.filter((element) => !ltf_wcf_transaction_logistics.includes(element));
-            const newElements3_logistics = ltf_transaction_logistics.filter((element) => ltf_wcf_transaction_logistics.includes(element));
+            newElements_logistics = mtf_transaction_logistics.filter((element) => !mtf_ltf_transaction_logistics.includes(element));
+            newElements2_logistics = ltf_transaction_logistics.filter((element) => !ltf_wcf_transaction_logistics.includes(element));
+            newElements3_logistics = ltf_transaction_logistics.filter((element) => ltf_wcf_transaction_logistics.includes(element));
             on_hauling_transactions_logistics.innerText = newElements2_logistics.length;
             hauled_transactions_logistics.innerText = newElements3_logistics.length;
             booked_transactions_logistics.innerText = mtf_transaction_logistics.length;

@@ -66,6 +66,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         const received_list_receiving = document.querySelector("#dashboard_section #received_list");
         const month_filter = document.getElementById("month_filter");
 
+        var newElements_receiving = [];
+        var newElements2_receiving = [];
+        var newElements3_receiving = [];
+        var newElements4_receiving = [];
         
         month_filter.addEventListener("change", generatePending)
         generatePending();
@@ -131,10 +135,10 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
 
             // Get elements from wcf_transaction not included in wcf_sf_transaction
-            const newElements_receiving = ltf_transaction_receiving.filter((element) => !ltf_wcf_transaction_receiving.includes(element));
-            const newElements2_receiving = mtf_transaction_receiving.filter((element) => !mtf_wcf_transaction_receiving.includes(element));
-            const newElements3_receiving = ltf_transaction_receiving.filter((element) => ltf_wcf_transaction_receiving.includes(element));
-            const newElements4_receiving = mtf_transaction_receiving.filter((element) => mtf_wcf_transaction_receiving.includes(element));
+            newElements_receiving = ltf_transaction_receiving.filter((element) => !ltf_wcf_transaction_receiving.includes(element));
+            newElements2_receiving = mtf_transaction_receiving.filter((element) => !mtf_wcf_transaction_receiving.includes(element));
+            newElements3_receiving = ltf_transaction_receiving.filter((element) => ltf_wcf_transaction_receiving.includes(element));
+            newElements4_receiving = mtf_transaction_receiving.filter((element) => mtf_wcf_transaction_receiving.includes(element));
     
             received_receiving.innerText = ltf_wcf_transaction_counter_receiving;
             to_received_receiving.innerText = ltf_transaction_counter_receiving + mtf_transaction_counter_receiving;
