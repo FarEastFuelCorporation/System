@@ -256,8 +256,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                         data3_value +=`
                         <tr>
                         <td>${data_value3_counter}</td>
-                        <td>${ltf_data_list.content[j][findTextInArray(ltf_data_list, "MTF #")]}</td>
                         <td>${ltf_data_list.content[j][findTextInArray(ltf_data_list, "LTF #")]}</td>
+                        <td>${ltf_data_list.content[j][findTextInArray(ltf_data_list, "MTF #")]}</td>
                         <td>${date_decoder(ltf_data_list.content[j][findTextInArray(ltf_data_list, "DEPARTURE DATE")])}<br>${time_decoder(ltf_data_list.content[j][findTextInArray(ltf_data_list, "DEPARTURE TIME")])}</td>
                         <td>${findClientName(ltf_data_list.content[j][findTextInArray(ltf_data_list, "CLIENT ID")])}</td>
                         <td>${findWasteCode(ltf_data_list.content[j][findTextInArray(ltf_data_list, "WASTE ID")])}</td>
@@ -275,8 +275,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                         data3_value +=`
                         <tr>
                         <td>${data_value3_counter}</td>
-                        <td>${ltf_data_list.content[j][findTextInArray(ltf_data_list, "MTF #")]}</td>
                         <td>${ltf_data_list.content[j][findTextInArray(ltf_data_list, "LTF #")]}</td>
+                        <td>${ltf_data_list.content[j][findTextInArray(ltf_data_list, "MTF #")]}</td>
                         <td>${date_decoder(ltf_data_list.content[j][findTextInArray(ltf_data_list, "DEPARTURE DATE")])}<br>${time_decoder(ltf_data_list.content[j][findTextInArray(ltf_data_list, "DEPARTURE TIME")])}</td>
                         <td>${findClientName(ltf_data_list.content[j][findTextInArray(ltf_data_list, "CLIENT ID")])}</td>
                         <td>${findWasteCode(ltf_data_list.content[j][findTextInArray(ltf_data_list, "WASTE ID")])}</td>
