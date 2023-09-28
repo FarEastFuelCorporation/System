@@ -78,6 +78,59 @@ document.addEventListener('DOMContentLoaded', async function() {
         treated_counter_certification.innerText = sf_transaction_counter_certification;
         pending_counter_certification.innerText = sf_transaction_counter_certification - sf_tpf_transaction_counter_certification;
         certified_counter_certification.innerText = sf_tpf_transaction_counter_certification;
+        
+        var options = {
+            series: [sf_transaction_counter_certification - sf_tpf_transaction_counter_certification, sf_tpf_transaction_counter_certification],
+            chart: {
+                width: 500, // Set the desired width
+                height: 550, // Set the desired height
+                type: 'pie',
+            },
+            plotOptions: {
+                pie: {
+                    startAngle: 0,
+                    endAngle: 360
+                }
+            },
+            dataLabels: {
+                enabled: false, // Disable data labels inside the pie chart
+            },
+            fill: {
+                type: 'gradient', // Use solid fill type
+            },
+            legend: {
+                show: true,
+                position: "left", // Set the legend position to "left"
+                fontSize: '30px', // Increase legend font size as needed
+                formatter: function (seriesName, opts) {
+                    // Here, you should use the correct variable to get the series value
+                    var seriesValue = opts.w.globals.series[opts.seriesIndex];
+                    var totalValue = opts.w.globals.series.reduce((acc, val) => acc + val, 0);
+                    var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
+                    return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
+                },
+                labels: {
+                    useSeriesColors: false, // Use custom color
+                },
+            },
+            labels: ["Pending", "Treated"],
+            colors: ["#dc3545", "#198754"], // Specify solid colors here
+            responsive: [{
+                breakpoint: 480,
+                options: {
+                    chart: {
+                        width: 200
+                    },
+                }
+            }]
+        };
+        const pieChart = document.querySelector("#pieChart");
+        while (pieChart.firstChild) {
+            pieChart.removeChild(pieChart.firstChild);
+        }
+        var chart = new ApexCharts(pieChart, options);
+        chart.render();
+
         var data_value = "";
         var data_value_counter = 1;
         for(let i = 0; i < pending_certification.length; i++){
