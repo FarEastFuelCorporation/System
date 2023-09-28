@@ -259,8 +259,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         // pending_list
         var data_value = "";
         var data_value_counter = 1;
-        for(let y = 0; y < pending_list_ltf_ap_accounting.length; y++){
-            for(let x = 1; x < ltf_data_list.content.length; x++){
+        for(let x = ltf_data_list.content.length -1; x >= 1 ; x--){
+            for(let y = 0; y < pending_list_ltf_ap_accounting.length; y++){
                 if(pending_list_ltf_ap_accounting[y] == ltf_data_list.content[x][0]){
                     if(ltf_data_list.content[x][6] == "10 WHEELER WING VAN" && ltf_data_list.content[x][7] !== "NAY2264"){
                         var client_name = "";
@@ -297,8 +297,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         // history_list
         var data_value = "";
         var data_value_counter = 1;
-        for(let y = 0; y < done_list_ltf_ap_accounting.length; y++){
-            for(let x = 1; x < ltf_data_list.content.length; x++){
+        for(let x = ltf_data_list.content.length -1; x >= 1 ; x--){
+            for(let y = 0; y < done_list_ltf_ap_accounting.length; y++){
                 if(done_list_ltf_ap_accounting[y] == ltf_data_list.content[x][0]){
                     if(ltf_data_list.content[x][6] == "10 WHEELER WING VAN"){
                         var tbf_data = "";
@@ -360,7 +360,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         var data_value = "";
         var data_value_counter = 1;
-        for(let x = 1; x < tlf_data_list.content.length; x++){
+        for(let x = tlf_data_list.content.length -1; x >= 1 ; x--){
             data_value += `
             <tr>
                 <td>${data_value_counter}</td>
@@ -1656,7 +1656,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         function generateData(fund_source = "ALL", fund_allocation = "ALL"){
             var data = "";
             var data_value_counter = 0;
-            for(let x = 1; x < ftf_data_list.content.length; x++){
+            for(let x = ftf_data_list.content.length -1; x >= 1 ; x--){
                 if(fund_source == "ALL" && fund_allocation == "ALL"){
                     data_value_counter += 1;
                     data += `
@@ -1741,7 +1741,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         var data = "";
         var data_value_counter = 0;
-        for(let x = 1; x < frf_data_list.content.length; x++){
+        for(let x = frf_data_list.content.length -1; x >= 1 ; x--){
             data_value_counter += 1;
             var approved_date = "";
             var approved_time = "";
