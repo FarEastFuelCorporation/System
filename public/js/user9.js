@@ -114,10 +114,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         }
-        regular_employee.innerText = `M:${regular_employee_male}/F:${regular_employee_female}/T:${regular_employee_name.length}`
-        project_based_employee.innerText = `M:${project_based_employee_male}/F:${project_based_employee_female}/T:${project_based_employee_name.length}`
-        subcon_employee.innerText = `M:${subcon_employee_male}/F:${subcon_employee_female}/T:${subcon_employee_name.length}`
-        total_employee.innerText = `M:${total_employee_male}/F:${total_employee_female}/T:${total_employee_name.length}`
+        regular_employee.innerText = `${regular_employee_male}/${regular_employee_female}/${regular_employee_name.length}`
+        project_based_employee.innerText = `${project_based_employee_male}/${project_based_employee_female}/${project_based_employee_name.length}`
+        subcon_employee.innerText = `${subcon_employee_male}/${subcon_employee_female}/${subcon_employee_name.length}`
+        total_employee.innerText = `${total_employee_male}/${total_employee_female}/${total_employee_name.length}`
 
         // employee_list_section
         const employee_list = document.querySelector("#employee_list_section #employee_list");
@@ -140,6 +140,57 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
         employee_list.innerHTML = employee_record
 
+        var options = {
+            series: [regular_employee_male + regular_employee_female, project_based_employee_male + project_based_employee_female, subcon_employee_male + subcon_employee_female],
+            chart: {
+                width: 500, // Set the desired width
+                height: 550, // Set the desired height
+                type: 'pie',
+            },
+            plotOptions: {
+                pie: {
+                    startAngle: 0,
+                    endAngle: 360
+                }
+            },
+            dataLabels: {
+                enabled: false, // Disable data labels inside the pie chart
+            },
+            fill: {
+                type: 'gradient', // Use solid fill type
+            },
+            legend: {
+                show: true,
+                position: "left", // Set the legend position to "left"
+                fontSize: '30px', // Increase legend font size as needed
+                formatter: function (seriesName, opts) {
+                    // Here, you should use the correct variable to get the series value
+                    var seriesValue = opts.w.globals.series[opts.seriesIndex];
+                    var totalValue = opts.w.globals.series.reduce((acc, val) => acc + val, 0);
+                    var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
+                    return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
+                },
+                labels: {
+                    useSeriesColors: false, // Use custom color
+                },
+            },
+            labels: ["Regular", "Project Based", "Subcon"],
+            colors: ["#198754", "#c3c3c3", "#dc3545"], // Specify solid colors here
+            responsive: [{
+                breakpoint: 480,
+                options: {
+                    chart: {
+                        width: 200
+                    },
+                }
+            }]
+        };
+        const pieChart = document.querySelector("#pieChart");
+        while (pieChart.firstChild) {
+            pieChart.removeChild(pieChart.firstChild);
+        }
+        var chart = new ApexCharts(pieChart, options);
+        chart.render();
 
         // attendance form
         const attendance_form = document.querySelector("#attendance_form");
