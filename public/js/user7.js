@@ -487,13 +487,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         }
-        console.log(driver_data)
         input_box2.onkeyup = (e) => {
-            console.log(driver_data)
             let user_data = e.target.value;
             let empty_array = [];
             if (user_data) {
-                console.log(driver_data)
                 empty_array = driver_data.filter((data) => {
                     return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
                 });
@@ -501,7 +498,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     return '<li>' + data + '</li>';
                 });
                 search_wrapper2.classList.add("active");
-                console.log(driver_data)
                 show_suggestions2(empty_array);
             } else {
                 search_wrapper2.classList.remove("active");
