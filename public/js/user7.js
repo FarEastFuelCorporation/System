@@ -473,31 +473,35 @@ document.addEventListener('DOMContentLoaded', async function() {
         const search_wrapper2 = document.getElementById("search_driver");
         const input_box2 = search_wrapper2.querySelector("input");
         const sugg_box2 = search_wrapper2.querySelector(".autocom_box");
-        var data_value2 = [];
+        var driver_data = [];
         for(let x = 1; x < employee_data_list.content.length; x++){
             if(employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE STATUS")] == "ACTIVE"){
                 var gender = employee_data_list.content[x][findTextInArray(employee_data_list, "GENDER")];
                 if(gender == "MALE"){
                     var full_name = `${employee_data_list.content[x][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[x][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[x][findTextInArray(employee_data_list, "MIDDLE NAME")]} ${employee_data_list.content[x][findTextInArray(employee_data_list, "AFFIX")]}`
-                    data_value2.push(full_name);
+                    driver_data.push(full_name);
                 }
                 else{
                     var full_name = `${employee_data_list.content[x][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[x][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[x][findTextInArray(employee_data_list, "MIDDLE NAME")]} - ${employee_data_list.content[x][findTextInArray(employee_data_list, "SPOUSE NAME")]}`
-                    data_value2.push(full_name);
+                    driver_data.push(full_name);
                 }
             }
         }
+        console.log(driver_data)
         input_box2.onkeyup = (e) => {
+            console.log(driver_data)
             let user_data = e.target.value;
             let empty_array = [];
             if (user_data) {
-                empty_array = data_value2.filter((data) => {
+                console.log(driver_data)
+                empty_array = driver_data.filter((data) => {
                     return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
                 });
                 empty_array = empty_array.map((data) => {
                     return '<li>' + data + '</li>';
                 });
                 search_wrapper2.classList.add("active");
+                console.log(driver_data)
                 show_suggestions2(empty_array);
             } else {
                 search_wrapper2.classList.remove("active");
