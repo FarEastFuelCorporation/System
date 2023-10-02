@@ -484,42 +484,13 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         // mtf_data_list
         const mtf_form_no = document.getElementById("mtf_form_no");
-        var month_new;
-        var code_year_month;
-        var data_counter;
-        
-        // FORM GENERATOR
-        if(today_month.toString().length == 1){
-            month_new = `0${today_month}`
-        }
-        
-        code_year_month = `MTF${today_year}${month_new}`;
-        
-        var data_content = 1;
-        var data_info;
-        var data_last_3digit = 0;
-        
-        for(x=1; x<mtf_data_list.content.length; x++){
-            data_info = mtf_data_list.content[x][findTextInArray(mtf_data_list, "MTF #")];
-            
-            if(data_info.includes(code_year_month) == true){
-                data_last_3digit = data_info.slice(9)
-            }
-        }
-        
-        data_content = parseInt(data_last_3digit) +1
-        
-        if(data_content.toString().length == 1){
-            data_counter = `00${data_content}`;
-        }
-        else if(data_content.toString().length == 2){
-            data_counter = `0${data_content}`;
-        }
-        else if(data_content.toString().length == 3){
-            data_counter = `${data_content}`;
-        }
-        
-        mtf_form_no.value = `${code_year_month}${data_counter}`
+        var last_row = mtf_data_list.content.length -1;        
+        var data_info = mtf_data_list.content[last_row][findTextInArray(mtf_data_list, "MTF #")];
+        var data_counter = data_info.substring(9,12);
+        var year = new Date().getFullYear();
+        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        mtf_form_no.value = `MTF${year}${month}${data_counter}`;
 
         const marketing_transaction_form = document.querySelector("#marketing_transaction_form");
         const waste_category = marketing_transaction_form.querySelector("#waste_category");
@@ -1573,26 +1544,20 @@ document.addEventListener('DOMContentLoaded', async function() {
         var prf_form_no = [];
         
         function prf_generator() {
-            var data_content = 0;
-            var data_info;
-            var data_last_3digit = 0;
-            var prf_code_year_month;
-            prf_code_year_month = `PR${today_year}${month_new}`;
-        
-            for (let x = 1; x < prf_data_list.content.length; x++) {
-                data_info = prf_data_list.content[x][findTextInArray(prf_data_list, "PR #")];
-        
-                if (data_info.includes(prf_code_year_month) == true) {
-                    data_last_3digit = data_info.slice(8);
-                }
-            }
-        
-            data_content = parseInt(data_last_3digit);
+            var last_row = prf_data_list.content.length -1;        
+            var data_info = prf_data_list.content[last_row][findTextInArray(prf_data_list, "PR #")];
+            var data_counter = data_info.substring(9,12) || 0;
+            var year = new Date().getFullYear();
+            var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
         
             for (let y = 1; y <= prf_counter.value; y++) {
                 prf_form_no[y] = document.querySelector(`#prf_form_no${y}`);
-                prf_form_no[y].value = `${prf_code_year_month}${String(parseInt(data_content) + y).padStart(3,"0")}`;
+                console.log(data_counter)
+                console.log(data_counter)
+                prf_form_no[y].value = `PR${year}${month}${((parseInt(data_counter) + y).toString().padStart(3,"0"))}`;
             }
+
+
         }
         
         prf_generator()
