@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const df_no = document.getElementById("df_no");
         const tpf_form_no = document.getElementById("tpf_form_no");
         var last_row = cod_data_list.content.length -1;        
-        var data_info = cod_data_list.content[last_row][findTextInArray(cod_data_list, "COD #")] || 0;
+        var data_info = cod_data_list.content[last_row][findTextInArray(cod_data_list, "COD #")];
         var data_counter = data_info.substring(9,12);
         var year = new Date().getFullYear();
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");

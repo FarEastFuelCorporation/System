@@ -111,9 +111,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 // for logistics
                 if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")] == "LOGISTICS" &&
                 month_filter.value == formatMonth(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])){
+                    vehicle = mtf_data_list.content[j][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")];
                     for(let k = 1; k < ltf_data_list.content.length; k++){
                         if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")] == ltf_data_list.content[k][findTextInArray(ltf_data_list, "MTF #")]){
-                            vehicle = mtf_data_list.content[k][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")];
                             status = "ON HAULING";
                             for_logistics_on_haul_counter_marketing += 1;
                             for_logistics_pending_counter_marketing -= 1;
@@ -150,10 +150,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                 // for receiving
                 else if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")] == "RECEIVING" &&
                 month_filter.value == formatMonth(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])){
+                    vehicle = "PROVIDED BY CLIENT";
                     for(let m = 1; m < wcf_data_list.content.length; m++){
                         if((wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).slice(0,3) == "MTF"){
                             if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")] == wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
-                                vehicle = "PROVIDED BY CLIENT";
                                 status = "RECEIVED";
                                 for_receiving_received_counter_marketing += 1;
                                 for_receiving_pending_counter_marketing -= 1;
@@ -489,6 +489,13 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         }       
 
+        var vehicle_list = [];
+        for(let y = 1; y < vehicle_data_list.content.length; y++){
+            if (!vehicle_list.includes(vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")])) {
+                vehicle_list.push(vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")]);
+            }
+        }
+
         // mtf_data_list
         const mtf_form_no = document.getElementById("mtf_form_no");
         var last_row = mtf_data_list.content.length -1;        
@@ -503,14 +510,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         const waste_category = marketing_transaction_form.querySelector("#waste_category");
         const document_container = marketing_transaction_form.querySelector("#document_container");
         const submit_to = marketing_transaction_form.querySelector("#submit_to");
-        const type_of_vehicle_container = marketing_transaction_form.querySelector("#type_of_vehicle_container");
         const type_of_waste_container = marketing_transaction_form.querySelector("#type_of_waste_container");
-        
+        vehicle_list
         submit_to.addEventListener("change", () => {
             if(submit_to.value == "LOGISTICS"){
                 // type_of_waste_data_list
                 const marketing_transaction_form = document.querySelector("#marketing_transaction_form");
-                const date_time_weight = marketing_transaction_form.querySelector("#date_time_weight");
                 const client = marketing_transaction_form.querySelector("#client");
                 
                 var data_value = 
@@ -527,7 +532,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 `
                 type_of_waste_container.insertAdjacentHTML("beforebegin", data_value)
 
-                const type_of_waste = marketing_transaction_form.querySelector("#type_of_waste");
                 const type_of_vehicle = marketing_transaction_form.querySelector("#type_of_vehicle");
 
                 for (let y = 1; y < client_data_list.content.length; y++) {
@@ -536,15 +540,16 @@ document.addEventListener('DOMContentLoaded', async function() {
                         client_id = client_data_list.content[y][findTextInArray(client_data_list, "CLIENT ID")];
                         for (let x = 1; x < qlf_data_list.content.length; x++) {
                             if (client_id == qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")] && qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")] == "TRIP") {
-                                var data = `
-                                <option value="${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]}">${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]}</option>
-                                `
-                                type_of_vehicle.insertAdjacentHTML("beforeend", data)
+                                if(vehicle_list.includes(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])){
+                                    var data = `
+                                    <option value="${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]}">${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]}</option>
+                                    `
+                                    type_of_vehicle.insertAdjacentHTML("beforeend", data)
+                                }
                             }
                         }
                     }
                 }  
-
             }
             else{
                 const type_of_vehicle_container = marketing_transaction_form.querySelector("#type_of_vehicle_container");
@@ -715,7 +720,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         const unit1_quotation_form2 = update_quotation_form_tab.querySelector("#unit1");
         const unit_price1_quotation_form2 = update_quotation_form_tab.querySelector("#unit_price1");
         const vat_calculation1_quotation_form2 = update_quotation_form_tab.querySelector("#vat_calculation1");
-
 
         function typeOfVehicleOption(){
             var type_of_vehicle = [];
@@ -1066,13 +1070,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         });
-
-        var vehicle_list = [];
-        for(let y = 1; y < vehicle_data_list.content.length; y++){
-            if (!vehicle_list.includes(vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")])) {
-                vehicle_list.push(vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")]);
-            }
-        }
 
         search_quotation_no_button_quotation_form.addEventListener("click", () => {
             search_quotation_no_button_container_quotation_form.style.display = "none";
