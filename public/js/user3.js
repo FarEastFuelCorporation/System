@@ -46,15 +46,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         user_sidebar_officer.innerText = username_data_list.content[3][findTextInArray(username_data_list, "SECTIONS")];
         user_sidebar_department.innerText = username_data_list.content[3][findTextInArray(username_data_list, "DEPARTMENT")];
 
-        // tpf_data_list
-        const tpf_form_no = document.getElementById("tpf_form_no"); 
-        const today = new Date();
-        const today_year = today.getFullYear();
-        const today_month = today.getMonth()+1;
-        var month_new;
-        var code_year_month;
-        var data_counter;
-
         // treatment_process_dashboard
         const total_counter_treatment = document.querySelector("#treatment_process_dashboard #total_counter");
         const pending_counter_treatment = document.querySelector("#treatment_process_dashboard #pending_counter");
@@ -241,37 +232,15 @@ document.addEventListener('DOMContentLoaded', async function() {
         finished_list_treatment.innerHTML = data_value;    
 
         // FORM GENERATOR
-        if(today_month.toString().length == 1){
-            month_new = `0${today_month}`
-        }
-
-        code_year_month = `TPF${today_year}${month_new}`;
-
-        var data_content = 1;
-        var data_info;
-        var data_last_3digit = 0;
-
-        for(x=1; x<tpf_data_list.content.length; x++){
-            data_info = tpf_data_list.content[x][findTextInArray(tpf_data_list, "TPF #")];
-
-            if(data_info.includes(code_year_month) == true){
-                data_last_3digit = data_info.slice(9)
-            }
-        }
-                
-        data_content = parseInt(data_last_3digit) +1
-
-        if(data_content.toString().length == 1){
-            data_counter = `00${data_content}`;
-        }
-        else if(data_content.toString().length == 2){
-            data_counter = `0${data_content}`;
-        }
-        else if(data_content.toString().length == 3){
-            data_counter = `${data_content}`;
-        }
-
-        tpf_form_no.value = `${code_year_month}${data_counter}`
+        // tpf_data_list
+        const tpf_form_no = document.getElementById("tpf_form_no");
+        var last_row = tpf_data_list.content.length -1;        
+        var data_info = tpf_data_list.content[last_row][findTextInArray(tpf_data_list, "TPF #")];
+        var data_counter = data_info.substring(9,12);
+        var year = new Date().getFullYear();
+        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        tpf_form_no.value = `TPF${year}${month}${data_counter}`;
 
         // sf_data_list
         const wcf_form_no = document.getElementById("wcf_form_no");

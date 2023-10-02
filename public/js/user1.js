@@ -70,7 +70,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         var newElements2_receiving = [];
         var newElements3_receiving = [];
         var newElements4_receiving = [];
-        
+        function getCurrentMonthName() {
+            const months = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
+            const currentDate = new Date();
+            const currentMonthIndex = currentDate.getMonth();
+            
+            return months[currentMonthIndex];
+        }        
+        month_filter.value = getCurrentMonthName();
         month_filter.addEventListener("change", generatePending)
         generatePending();
         function generatePending(){

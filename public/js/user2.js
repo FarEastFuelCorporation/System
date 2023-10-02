@@ -243,12 +243,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
         sorted_items_list_sorting.innerHTML = data_value_done;    
 
-        // FORM GENERATOR
-        if(today_month.toString().length == 1){
-            month_new = `0${today_month}`
-        }
-    
-        code_year_month = `SF${today_year}${month_new}`;
+        // FORM GENERATOR    
+        code_year_month = `SF${today_year}${today_month.toString().padStart(2, "0")}`;
     
         var data_info;
         var data_last_3digit = 0;

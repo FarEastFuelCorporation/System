@@ -87,7 +87,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         const received_marketing = document.getElementById("received");
         const pending_list_marketing = document.getElementById("pending_list");
         const month_filter = document.getElementById("month_filter");
-
+        function getCurrentMonthName() {
+            const months = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
+            const currentDate = new Date();
+            const currentMonthIndex = currentDate.getMonth();
+            
+            return months[currentMonthIndex];
+        }        
+        month_filter.value = getCurrentMonthName();
         month_filter.addEventListener("change", generatePending)
         generatePending();
         function generatePending(){
@@ -1554,8 +1561,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 prf_form_no[y] = document.querySelector(`#prf_form_no${y}`);
                 prf_form_no[y].value = `PR${year}${month}${((parseInt(data_counter) + y).toString().padStart(3,"0"))}`;
             }
-
-
         }
         
         prf_generator()

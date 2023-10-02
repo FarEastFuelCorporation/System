@@ -221,47 +221,17 @@ document.addEventListener('DOMContentLoaded', async function() {
         finished_list_certification.innerHTML = data_value;
 
         // cod_data_list
+        // FORM GENERATOR
         const cod_form_no = document.getElementById("cod_form_no");
         const df_no = document.getElementById("df_no");
-        const today = new Date();
-        const today_year = today.getFullYear();
-        const today_month = today.getMonth()+1;
-        var month_new;
-        var code_year_month;
-        var data_counter4;
-
-        // FORM GENERATOR
-        if(today_month.toString().length == 1){ 
-            month_new = `0${today_month}`;
-        }
-    
-        code_year_month = `COD${today_year}${month_new}`;
-    
-        var data_content4;
-        var data_info4;
-        var data_last_3digit = 0;
-    
-        for(x=1; x<cod_data_list.content.length; x++){
-            data_info4 = cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")];
-            
-            if(data_info4.includes(code_year_month) == true){
-                data_last_3digit = data_info4.slice(9)
-            }
-        }
-
-        data_content4 = parseInt(data_last_3digit) +1
-    
-        if(data_content4.toString().length == 1){
-            data_counter4 = `00${data_content4}`;
-        }
-        else if(data_content4.toString().length == 2){
-            data_counter4 = `0${data_content4}`;
-        }
-        else if(data_content4.toString().length == 3){
-            data_counter4 = `${data_content4}`;
-        }
-    
-        cod_form_no.value = `${code_year_month}${data_counter4}`
+        const tpf_form_no = document.getElementById("tpf_form_no");
+        var last_row = cod_data_list.content.length -1;        
+        var data_info = cod_data_list.content[last_row][findTextInArray(cod_data_list, "COD #")] || 0;
+        var data_counter = data_info.substring(9,12);
+        var year = new Date().getFullYear();
+        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        cod_form_no.value = `COD${year}${month}${data_counter}`;
     
         // tpf_data_list
         var data_value2 = [];
@@ -834,7 +804,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             what_to_print.insertAdjacentHTML("beforeend", data)
             console.log(what_to_print)
         }
-
 
         function findEmployeeName(employee_id){
             var employee_name = "";
