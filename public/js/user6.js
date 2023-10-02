@@ -1552,12 +1552,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         
             for (let y = 1; y <= prf_counter.value; y++) {
                 prf_form_no[y] = document.querySelector(`#prf_form_no${y}`);
-                console.log(data_counter)
-                console.log(data_counter)
                 prf_form_no[y].value = `PR${year}${month}${((parseInt(data_counter) + y).toString().padStart(3,"0"))}`;
             }
-
-
         }
         
         prf_generator()
@@ -1692,38 +1688,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         })
                 
         // incident report form
-        // const today = new Date();
-        // const today_year = today.getFullYear();
-        // const today_month = today.getMonth()+1;
-        const irf_form_no = document.getElementById("irf_form_no"); 
-        var irf_code_year_month;
-        irf_code_year_month = `IRF${today_year}${today_month}`;
-        
-        var data_content = 1;
-        var data_info;
-        var data_last_3digit = 0;
-    
-        for(x=1; x<irf_data_list.content.length; x++){
-            data_info = irf_data_list.content[x][findTextInArray(irf_data_list, "IRF #")];
-            
-            if(data_info.includes(irf_code_year_month) == true){
-                data_last_3digit = data_info.slice(9)
-            }
-        }
-
-        data_content = parseInt(data_last_3digit) +1
-    
-        if(data_content.toString().length == 1){
-            data_counter = `00${data_content}`;
-        }
-        else if(data_content.toString().length == 2){
-            data_counter = `0${data_content}`;
-        }
-        else if(data_content.toString().length == 3){
-            data_counter = `${data_content}`;
-        }
-    
-        irf_form_no.value = `${irf_code_year_month}${data_counter}`
+        const irf_form_no = document.getElementById("irf_form_no");
+        var last_row = irf_data_list.content.length -1;        
+        var data_info = irf_data_list.content[last_row][findTextInArray(irf_data_list, "IRF #")];
+        var data_counter = data_info.substring(9,12);
+        var year = new Date().getFullYear();
+        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        irf_form_no.value = `IRF${year}${month}${data_counter}`;
 
         const incident_report_form = document.querySelector("#incident_report_form");
         const person_involved_containers = incident_report_form.querySelector("#person_involved_containers");

@@ -742,7 +742,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         }    
 
         // ltf_data_list
-        const ltf_form_no = document.getElementById("ltf_form_no"); 
         const search_ltf_form_no = document.getElementById("search_ltf_form_no");
         const search_ltf_form_no_button = document.getElementById("search_ltf_form_no_button");
         const clear_ltf_form_no_button = document.getElementById("clear_ltf_form_no_button");
@@ -757,45 +756,15 @@ document.addEventListener('DOMContentLoaded', async function() {
         const weight = document.getElementById("weight");
         const timestamp = document.getElementById("timestamp");
         const ltf_data = document.getElementById("ltf_data");
-        const today = new Date();
-        const today_year = today.getFullYear();
-        const today_month = today.getMonth()+1;
-        var month_new;
-        var code_year_month;
-        var data_counter;
-    
-        // FORM GENERATOR
-        if(today_month.toString().length == 1){
-            month_new = `0${today_month}`
-        }
-    
-        code_year_month = `LTF${today_year}${month_new}`;
-    
-        var data_content = 1;
-        var data_info;
-        var data_last_3digit = 0;
-    
-        for(x=1; x < ltf_data_list.content.length; x++){
-            data_info = ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")];
-            
-            if(data_info.includes(code_year_month) == true){
-                data_last_3digit = data_info.slice(9)
-            }
-        }
 
-        data_content = parseInt(data_last_3digit) +1
-    
-        if(data_content.toString().length == 1){
-            data_counter = `00${data_content}`;
-        }
-        else if(data_content.toString().length == 2){
-            data_counter = `0${data_content}`;
-        }
-        else if(data_content.toString().length == 3){
-            data_counter = `${data_content}`;
-        }
-    
-        ltf_form_no.value = `${code_year_month}${data_counter}`
+        const ltf_form_no = document.getElementById("ltf_form_no");
+        var last_row = ltf_data_list.content.length -1;        
+        var data_info = ltf_data_list.content[last_row][findTextInArray(ltf_data_list, "LTF #")];
+        var data_counter = data_info.substring(9,12);
+        var year = new Date().getFullYear();
+        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        ltf_form_no.value = `LTF${year}${month}${data_counter}`
     
         // Search Button
         search_mtf_form_no_button.addEventListener("click", () => {
@@ -960,27 +929,18 @@ document.addEventListener('DOMContentLoaded', async function() {
         var prf_form_no = [];
         
         function prf_generator() {
-            var data_content = 0;
-            var data_info;
-            var data_last_3digit = 0;
-            var prf_code_year_month;
-            prf_code_year_month = `PR${today_year}${month_new}`;
-        
-            for (let x = 1; x < prf_data_list.content.length; x++) {
-                data_info = prf_data_list.content[x][findTextInArray(prf_data_list, "PR #")];
-        
-                if (data_info.includes(prf_code_year_month) == true) {
-                    data_last_3digit = data_info.slice(8);
-                }
-            }
-        
-            data_content = parseInt(data_last_3digit);
+            var last_row = prf_data_list.content.length -1;        
+            var data_info = prf_data_list.content[last_row][findTextInArray(prf_data_list, "PR #")];
+            var data_counter = data_info.substring(9,12) || 0;
+            var year = new Date().getFullYear();
+            var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
         
             for (let y = 1; y <= prf_counter.value; y++) {
                 prf_form_no[y] = document.querySelector(`#prf_form_no${y}`);
-                prf_form_no[y].value = `${prf_code_year_month}${String(parseInt(data_content) + y).padStart(3,"0")}`;
+                prf_form_no[y].value = `PR${year}${month}${((parseInt(data_counter) + y).toString().padStart(3,"0"))}`;
             }
         }
+        
         
         prf_generator()
         
@@ -1117,35 +1077,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         // const today = new Date();
         // const today_year = today.getFullYear();
         // const today_month = today.getMonth()+1;
-        const irf_form_no = document.getElementById("irf_form_no"); 
-        var irf_code_year_month;
-        irf_code_year_month = `IRF${today_year}${today_month}`;
-        
-        var data_content = 1;
-        var data_info;
-        var data_last_3digit = 0;
-    
-        for(x=1; x<irf_data_list.content.length; x++){
-            data_info = irf_data_list.content[x][findTextInArray(irf_data_list, "IRF #")];
-            
-            if(data_info.includes(irf_code_year_month) == true){
-                data_last_3digit = data_info.slice(9)
-            }
-        }
-
-        data_content = parseInt(data_last_3digit) +1
-    
-        if(data_content.toString().length == 1){
-            data_counter = `00${data_content}`;
-        }
-        else if(data_content.toString().length == 2){
-            data_counter = `0${data_content}`;
-        }
-        else if(data_content.toString().length == 3){
-            data_counter = `${data_content}`;
-        }
-    
-        irf_form_no.value = `${irf_code_year_month}${data_counter}`
+        const irf_form_no = document.getElementById("irf_form_no");
+        var last_row = irf_data_list.content.length -1;        
+        var data_info = irf_data_list.content[last_row][findTextInArray(irf_data_list, "IRF #")];
+        var data_counter = data_info.substring(9,12);
+        var year = new Date().getFullYear();
+        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        irf_form_no.value = `IRF${year}${month}${data_counter}`;
 
         const incident_report_form = document.querySelector("#incident_report_form");
         const person_involved_containers = incident_report_form.querySelector("#person_involved_containers");
