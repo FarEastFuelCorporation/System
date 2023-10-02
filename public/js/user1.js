@@ -662,49 +662,13 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         // wcf_data_list
         const wcf_form_no = document.getElementById("wcf_form_no"); 
-        const search_wcf_form_no = document.getElementById("search_wcf_form_no");
-        const search_wcf_form_no_button = document.getElementById("search_wcf_form_no_button");
-        const clear_wcf_form_no_button = document.getElementById("clear_wcf_form_no_button");
-        const search_wcf_result = document.getElementById("search_wcf_result");
-        const today = new Date();
-        const today_year = today.getFullYear();
-        const today_month = today.getMonth()+1;
-        var month_new;
-        var code_year_month;
-        var data_counter;
-    
-        // FORM GENERATOR
-        if(today_month.toString().length == 1){
-            month_new = `0${today_month}`
-        }
-    
-        code_year_month = `WCF${today_year}${month_new}`;
-    
-        var data_content = 1;
-        var data_info;
-        var data_last_3digit = 0;
-    
-        for(x=1; x<wcf_data_list.content.length; x++){
-            data_info = wcf_data_list.content[x][findTextInArray(wcf_data_list, "WCF #")];
-            
-            if(data_info.includes(code_year_month) == true){
-                data_last_3digit = data_info.slice(9)
-            }
-        }
-        
-        data_content = parseInt(data_last_3digit) +1
-    
-        if(data_content.toString().length == 1){
-            data_counter = `00${data_content}`;
-        }
-        else if(data_content.toString().length == 2){
-            data_counter = `0${data_content}`;
-        }
-        else if(data_content.toString().length == 3){
-            data_counter = `${data_content}`;
-        }
-    
-        wcf_form_no.value = `${code_year_month}${data_counter}`
+        var last_row = wcf_data_list.content.length -1;        
+        var data_info = wcf_data_list.content[last_row][findTextInArray(wcf_data_list, "WCF #")];
+        var data_counter = data_info.substring(9,12);
+        var year = new Date().getFullYear();
+        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        wcf_form_no.value = `MTF${year}${month}${data_counter}`;
     
         function findEmployeeName(employee_id){
             var employee_name = "";

@@ -1074,9 +1074,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         })
                 
         // incident report form
-        // const today = new Date();
-        // const today_year = today.getFullYear();
-        // const today_month = today.getMonth()+1;
         const irf_form_no = document.getElementById("irf_form_no");
         var last_row = irf_data_list.content.length -1;        
         var data_info = irf_data_list.content[last_row][findTextInArray(irf_data_list, "IRF #")];
