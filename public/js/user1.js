@@ -668,7 +668,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var year = new Date().getFullYear();
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
         data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-        wcf_form_no.value = `MTF${year}${month}${data_counter}`;
+        wcf_form_no.value = `WCF${year}${month}${data_counter}`;
     
         function findEmployeeName(employee_id){
             var employee_name = "";

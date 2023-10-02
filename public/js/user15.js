@@ -393,7 +393,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         const budget_form_ap_accounting = trip_forms_ap_accounting.querySelector("#budget_form");
         const search_ltf_form_no_ap_accounting = budget_form_ap_accounting.querySelector("#search_ltf_form_no");
         const search_ltf_result_container_ap_accounting = budget_form_ap_accounting.querySelector("#search_ltf_result");
-        const tbf_no_ap_accounting = budget_form_ap_accounting.querySelector("#tbf_no");
         const search_ltf_form_no_button_ap_accounting = budget_form_ap_accounting.querySelector("#search_ltf_form_no_button");
         const reset_ap_accounting = budget_form_ap_accounting.querySelector("#reset");
         const budget_form_inputs_ap_accounting = budget_form_ap_accounting.querySelector("#budget_form_inputs");
@@ -403,7 +402,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         const liquidation_form_ap_accounting = trip_forms_ap_accounting.querySelector("#liquidation_form");
         const search_tbf_form_no_ap_accounting = liquidation_form_ap_accounting.querySelector("#search_tbf_form_no");
         const search_tbf_result_container_ap_accounting = liquidation_form_ap_accounting.querySelector("#search_tbf_result");
-        const tlf_no_ap_accounting = liquidation_form_ap_accounting.querySelector("#tlf_no");
         const ltf_no_ap_accounting = liquidation_form_ap_accounting.querySelector("#ltf_no");
         const pcv_no_ap_accounting = liquidation_form_ap_accounting.querySelector("#pcv_no");
         const search_tbf_form_no_button_ap_accounting = liquidation_form_ap_accounting.querySelector("#search_tbf_form_no_button");
@@ -418,10 +416,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         const add_item_button_ap_accounting = liquidation_form_ap_accounting.querySelector("#add_item_button");
         const remove_item_button_ap_accounting = liquidation_form_ap_accounting.querySelector("#remove_item_button");
         const particular_counter_ap_accounting = liquidation_form_ap_accounting.querySelector("#particular_counter");
-
-        const today = new Date();
-        const today_year = today.getFullYear();
-        const today_month = today.getMonth()+1;
 
         budget_form_button_ap_accounting.addEventListener("click", () => {
             if(budget_form_ap_accounting.style.display == "block"){
@@ -448,40 +442,14 @@ document.addEventListener('DOMContentLoaded', async function() {
     
         // FORM GENERATOR
         // tbf_data_list
-        var month_new;
-        var code_year_month;
-        var data_counter;
-        if(today_month.toString().length == 1){
-            month_new = `0${today_month}`
-        }
-    
-        code_year_month = `TBF${today_year}${month_new}`;
-    
-        var data_content = 1;
-        var data_info;
-        var data_last_3digit = 0;
-    
-        for(x=1; x<tbf_data_list.content.length; x++){
-            data_info = tbf_data_list.content[x][0];
-            
-            if(data_info.includes(code_year_month) == true){
-                data_last_3digit = data_info.slice(9)
-            }
-        }
-        
-        data_content = parseInt(data_last_3digit) +1
-    
-        if(data_content.toString().length == 1){
-            data_counter = `00${data_content}`;
-        }
-        else if(data_content.toString().length == 2){
-            data_counter = `0${data_content}`;
-        }
-        else if(data_content.toString().length == 3){
-            data_counter = `${data_content}`;
-        }
-    
-        tbf_no_ap_accounting.value = `${code_year_month}${data_counter}`
+        const tbf_no_ap_accounting = budget_form_ap_accounting.querySelector("#tbf_no");
+        var last_row = tbf_data_list.content.length -1;        
+        var data_info = tbf_data_list.content[last_row][findTextInArray(tbf_data_list, "TBF #")];
+        var data_counter = data_info.substring(9,12);
+        var year = new Date().getFullYear();
+        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        tbf_no_ap_accounting.value = `TBF${year}${month}${data_counter}`;
 
         search_ltf_form_no_button_ap_accounting.addEventListener("click", () => {
             var data_value;
@@ -573,40 +541,14 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         // FORM GENERATOR
         // tlf_data_list
-        var month_new;
-        var code_year_month;
-        var data_counter;
-        if(today_month.toString().length == 1){
-            month_new = `0${today_month}`
-        }
-    
-        code_year_month = `TLF${today_year}${month_new}`;
-    
-        var data_content = 1;
-        var data_info;
-        var data_last_3digit = 0;
-    
-        for(x=1; x<tlf_data_list.content.length; x++){
-            data_info = tlf_data_list.content[x][0];
-            
-            if(data_info.includes(code_year_month) == true){
-                data_last_3digit = data_info.slice(9)
-            }
-        }
-        
-        data_content = parseInt(data_last_3digit) +1
-    
-        if(data_content.toString().length == 1){
-            data_counter = `00${data_content}`;
-        }
-        else if(data_content.toString().length == 2){
-            data_counter = `0${data_content}`;
-        }
-        else if(data_content.toString().length == 3){
-            data_counter = `${data_content}`;
-        }
-    
-        tlf_no_ap_accounting.value = `${code_year_month}${data_counter}`
+        const tlf_no_ap_accounting = liquidation_form_ap_accounting.querySelector("#tlf_no");
+        var last_row = tlf_data_list.content.length -1;        
+        var data_info = tlf_data_list.content[last_row][findTextInArray(tlf_data_list, "TLF #")];
+        var data_counter = data_info.substring(9,12);
+        var year = new Date().getFullYear();
+        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        tlf_no_ap_accounting.value = `TLF${year}${month}${data_counter}`;
 
         var released_budget = "";
         search_tbf_form_no_button_ap_accounting.addEventListener("click", () => {
@@ -1092,7 +1034,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         const fund_transfer_form_ap_accounting = document.querySelector("#fund_transfer_form");
         const fund_transfer_form_button_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_transfer_form_button");
         const fund_transfer_form_id_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_transfer_form_id");
-        const ftf_form_no_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#ftf_form_no");
         const transfer_history_list_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#transfer_history_list");
         const filter_fund_source_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#filter_fund_source");
         const filter_tab_fund_source_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#filter_tab_fund_source");
@@ -1103,43 +1044,32 @@ document.addEventListener('DOMContentLoaded', async function() {
         const data_counter_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#data_counter");
         const fund_transfer_form_buttons_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_transfer_form_buttons");
 
-        var month_new;
-        var code_year_month;
-        var data_counter;
-        if(today_month.toString().length == 1){
-            month_new = `0${today_month}`
-        }
-    
-        code_year_month = `FTF${today_year}${month_new}`;
-    
-        
-        var data_content = 1;
+        const ftf_form_no_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#ftf_form_no");
+        var last_row = ftf_data_list.content.length -1;
+        var year = new Date().getFullYear();
+        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        var ftf_data;
+        var is_ftf_data = false;
         var data_info;
-        var data_last_3digit = 0;
-        
-        for(x=1; x<ftf_data_list.content.length; x++){
-            data_info = ftf_data_list.content[x][0];
+        var data_counter;
+        console.log(is_ftf_data)
+        for(let x = 1; x < ftf_data_list.content.length; x++){
+            ftf_data = ftf_data_list.content[x][findTextInArray(ftf_data_list, "FTF # / FORM #")];
             
-            if((String(data_info)).includes(code_year_month) == true){
-                data_last_3digit = data_info.slice(9)
+            if(ftf_data.includes(`FTF${year}${month}`) == true){
+                is_ftf_data = true;
             }
-            else{}
         }
-        
-        data_content = parseInt(data_last_3digit) +1
-    
-        if(data_content.toString().length == 1){
-            data_counter = `00${data_content}`;
+        console.log(is_ftf_data)
+        if(is_ftf_data){
+            data_info = ftf_data_list.content[last_row][findTextInArray(ftf_data_list, "FTF # / FORM #")];
+            data_counter = data_info.substring(9,12);
         }
-        else if(data_content.toString().length == 2){
-            data_counter = `0${data_content}`;
+        else{
+            data_counter = 0;
         }
-        else if(data_content.toString().length == 3){
-            data_counter = `${data_content}`;
-        }
-    
-        ftf_form_no_ap_accounting.value = `${code_year_month}${data_counter}`
-
+        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        ftf_form_no_ap_accounting.value = `FTF${year}${month}${data_counter}`;
         
         fund_transfer_form_button_ap_accounting.addEventListener("click", () => {
             if(fund_transfer_form_id_ap_accounting.style.display == "block"){
@@ -1547,50 +1477,20 @@ document.addEventListener('DOMContentLoaded', async function() {
         // frf_data_list
         const fund_request_form_button_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_request_form_button");
         const fund_request_form_id_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_request_form_id");
-        const frf_form_no_ap_accounting = fund_request_form_id_ap_accounting.querySelector("#frf_form_no1");
         const add_item_button2_ap_accounting = fund_request_form_id_ap_accounting.querySelector("#add_item_button");
         const remove_item_button2_ap_accounting = fund_request_form_id_ap_accounting.querySelector("#remove_item_button");
         const request_list_container_ap_accounting = fund_request_form_id_ap_accounting.querySelector("#request_list_container");
         const request_list_counter_ap_accounting = fund_request_form_id_ap_accounting.querySelector("#request_list_counter");
         const request_history_list_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#request_history_list");
 
-        var month_new;
-        var code_year_month;
-        var data_counter;
-        if(today_month.toString().length == 1){
-            month_new = `0${today_month}`
-        }
-    
-        code_year_month = `FRF${today_year}${month_new}`;
-    
-        
-        var data_content = 1;
-        var data_info;
-        var data_last_3digit = 0;
-        
-        for(x=1; x<frf_data_list.content.length; x++){
-            data_info = frf_data_list.content[x][0];
-            
-            if((String(data_info)).includes(code_year_month) == true){
-                data_last_3digit = data_info.slice(9)
-            }
-            else{}
-        }
-        
-        data_content = parseInt(data_last_3digit) + 1
-    
-        if(data_content.toString().length == 1){
-            data_counter = `00${data_content}`;
-        }
-        else if(data_content.toString().length == 2){
-            data_counter = `0${data_content}`;
-        }
-        else if(data_content.toString().length == 3){
-            data_counter = `${data_content}`;
-        }
-    
-        frf_form_no_ap_accounting.value = `${code_year_month}${data_counter}`
-
+        const frf_form_no_ap_accounting = fund_request_form_id_ap_accounting.querySelector("#frf_form_no1");
+        var last_row = frf_data_list.content.length -1;        
+        var data_info = frf_data_list.content[last_row][findTextInArray(frf_data_list, "FRF #")];
+        var data_counter = data_info.substring(9,12);
+        var year = new Date().getFullYear();
+        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        frf_form_no_ap_accounting.value = `FRF${year}${month}${data_counter}`;
         
         fund_request_form_button_ap_accounting.addEventListener("click", () => {
             if(fund_request_form_id_ap_accounting.style.display == "block"){
@@ -1772,38 +1672,15 @@ document.addEventListener('DOMContentLoaded', async function() {
         request_history_list_ap_accounting.innerHTML = data;
 
         // incident report form
-        // const today = new Date();
-        // const today_year = today.getFullYear();
-        // const today_month = today.getMonth()+1;
-        const irf_form_no = document.getElementById("irf_form_no"); 
-        var irf_code_year_month;
-        irf_code_year_month = `IRF${today_year}${month_new}`;
-        
-        var data_content = 1;
-        var data_info;
-        var data_last_3digit = 0;
-    
-        for(x=1; x<irf_data_list.content.length; x++){
-            data_info = irf_data_list.content[x][findTextInArray(irf_data_list, "IRF #")];
-            
-            if(data_info.includes(irf_code_year_month) == true){
-                data_last_3digit = data_info.slice(9)
-            }
-        }
+        const irf_form_no = document.getElementById("irf_form_no");
+        var last_row = irf_data_list.content.length -1;        
+        var data_info = irf_data_list.content[last_row][findTextInArray(irf_data_list, "IRF #")];
+        var data_counter = data_info.substring(9,12);
+        var year = new Date().getFullYear();
+        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        irf_form_no.value = `IRF${year}${month}${data_counter}`;
 
-        data_content = parseInt(data_last_3digit) +1
-    
-        if(data_content.toString().length == 1){
-            data_counter = `00${data_content}`;
-        }
-        else if(data_content.toString().length == 2){
-            data_counter = `0${data_content}`;
-        }
-        else if(data_content.toString().length == 3){
-            data_counter = `${data_content}`;
-        }
-    
-        irf_form_no.value = `${irf_code_year_month}${data_counter}`
 
         const incident_report_form = document.querySelector("#incident_report_form");
         const person_involved_containers = incident_report_form.querySelector("#person_involved_containers");
