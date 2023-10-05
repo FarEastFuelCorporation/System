@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const mtf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzkzS4OVm3IfNl6KwOfLZq_uO3MnsXfu-oS5Su_1kxhfo1mMoKpYDm8a4RxWqsQh0qv/exec');
         const ltf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxBLMvyNDsT9_dlVO4Qc31dI4ErcymUHbzKimOpCZHgbJxip2XxCl7Wk3hJyqcdtrxU/exec');
         const wcf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyBFTBuFZ4PkvwmPi_3Pp_v74DCSEK2VpNy6janIGgaAK-P22wazmmShOKn6iwFbrQn/exec');
+        const sf_response_promise = fetch('https://script.google.com/macros/s/AKfycby9b2VCfXc0ifkwBXJRi2UVUwgZIj9F4FTOdZa_SYKZdsTwbVtAzAXzNMFeklE35bg1/exec');
         const tpf_response_promise = fetch('https://script.google.com/macros/s/AKfycbwbKss2XtW5lylCrUe8IC-ZA4ffA5CM5tY6kqIja9t80NXJw2nB8RBOJFWbXQz0hWMadw/exec');
         const cod_response_promise = fetch('https://script.google.com/macros/s/AKfycbzgiOuXizUVviCsLVfihqYN9HJ3pyNr7ElHoCl3JGkbtQnChnm2U42yQuLd4UMH0ci5/exec');
         const qlf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyFU_skru2tnyEiv8I5HkpRCXbUlQb5vlJUm8Le0nZBCvfZeFkQPd2Naljs5CZY41I17w/exec');
@@ -17,6 +18,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             mtf_response,
             ltf_response,
             wcf_response,
+            sf_response,
             tpf_response,
             cod_response,
             qlf_response,
@@ -27,6 +29,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             mtf_response_promise,
             ltf_response_promise,
             wcf_response_promise,
+            sf_response_promise,
             tpf_response_promise,
             cod_response_promise,
             qlf_response_promise,
@@ -38,6 +41,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const mtf_data_list  = await mtf_response.json();
         const ltf_data_list  = await ltf_response.json();
         const wcf_data_list  = await wcf_response.json();
+        const sf_data_list  = await sf_response.json();
         const tpf_data_list  = await tpf_response.json();
         const cod_data_list  = await cod_response.json();
         const qlf_data_list  = await qlf_response.json();
@@ -61,6 +65,15 @@ document.addEventListener('DOMContentLoaded', async function() {
         const pending_marketing = marketing_dashboard_pco.querySelector("#pending");
         const received_marketing = marketing_dashboard_pco.querySelector("#received");
         const pending_list_marketing = marketing_dashboard_pco.querySelector("#pending_list"); 
+        // certification_dashboard
+        const certification_dashboard = document.querySelector("#certification_dashboard");
+        const treated_counter_certification = certification_dashboard.querySelector("#treated_counter");
+        const pending_counter_certification = certification_dashboard.querySelector("#pending_counter");
+        const certified_counter_certification = certification_dashboard.querySelector("#certified_counter");
+        const pending_list_certification = certification_dashboard.querySelector("#pending_list");
+        const finished_list_certification = certification_dashboard.querySelector("#finished_list");
+        let sf_transaction_certification = []; // Variable containing existing elements
+        let sf_tpf_transaction_certification = []; // Variable containing existing elements
         const month_filter = document.querySelector("#month_filter");
         function getCurrentMonthName() {
             const months = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
@@ -247,16 +260,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             var chart = new ApexCharts(pieChart2, options);
             chart.render();
 
-            // certification_dashboard
-            const certification_dashboard = document.querySelector("#certification_dashboard");
-            const treated_counter_certification = certification_dashboard.querySelector("#treated_counter");
-            const pending_counter_certification = certification_dashboard.querySelector("#pending_counter");
-            const certified_counter_certification = certification_dashboard.querySelector("#certified_counter");
-            const pending_list_certification = certification_dashboard.querySelector("#pending_list");
-            const finished_list_certification = certification_dashboard.querySelector("#finished_list");
-            let sf_transaction_certification = []; // Variable containing existing elements
-            let sf_tpf_transaction_certification = []; // Variable containing existing elements
-            
             for (let i = 1; i < tpf_data_list.content.length; i++) {
                 if (!sf_transaction_certification.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "TPF #")]) &&
                 month_filter.value == formatMonth(tpf_data_list.content[i][findTextInArray(tpf_data_list, "HAULING DATE")])) {
@@ -495,21 +498,26 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             finished_list_certification.innerHTML = data_value;
         }
-
-
+        const pending_certification = sf_transaction_certification.filter((element) => !sf_tpf_transaction_certification.includes(element));
 
         // cod_data_list
         // FORM GENERATOR
         const cod_form_no = document.getElementById("cod_form_no");
         const df_no = document.getElementById("df_no");
-        const tpf_form_no = document.getElementById("tpf_form_no");
-        var last_row = cod_data_list.content.length -1;        
+        var last_row = cod_data_list.content.length -1;
         var data_info = cod_data_list.content[last_row][findTextInArray(cod_data_list, "COD #")];
-        var data_counter = data_info.substring(9,12);
+        var data_counter;
+        if(last_row == 0){
+            data_counter = 0;
+        }
+        else{
+            data_counter = data_info.substring(9,12);
+        }
         var year = new Date().getFullYear();
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
         data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
         cod_form_no.value = `COD${year}${month}${data_counter}`;
+        df_no.innerText = `COD${year}${month}${data_counter}`;
     
         // tpf_data_list
         var data_value2 = [];
@@ -668,9 +676,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     year_covered.value == year &&
                                     month_covered.value == month) {
                                     var pull_out_form = ""
-                                    for(let y = 1; y < wcf_data_list.content.length; y++){
-                                        if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")] == wcf_data_list.content[y][findTextInArray(wcf_data_list, "WCF #")])
-                                        pull_out_form = wcf_data_list.content[y][findTextInArray(wcf_data_list, "PULL OUT FORM #")]
+                                    for(let y = 1; y < sf_data_list.content.length; y++){
+                                        if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "SF #")] == sf_data_list.content[y][findTextInArray(sf_data_list, "SF #")])
+                                        pull_out_form = sf_data_list.content[y][findTextInArray(sf_data_list, "FORM #")]
                                     }
                                     table_data_counter += 1;
                                     table_data_value +=
@@ -687,7 +695,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     `
                                     <th>Date Hauled</th>
                                     <th>Waste Description</th>
-                                    <th>Pull-out Form #</th>
+                                    <th>Gate pass No./ TS No.</th>
                                     <th>Quantity</th>
                                     <th>Destruction Process</th>
                                     <th>Date of Completion</th>

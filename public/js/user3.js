@@ -403,21 +403,24 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <i class="fa-solid fa-gears"></i>
                                             Thermal Gasifier Alpha
                                         </label><br>
-                                        <input type="number" autocomplete="off" name="thermal_alpha" id="thermal_alpha" class="form-control" placeholder="Input Weight">
+                                        <input type="number" autocomplete="off" name="weight1" id="weight1" step="0.01" class="form-control" placeholder="Input Weight">
+                                        <input type="hidden" name="machine1" value="THERMAL GASIFIER ALPHA">
                                     </div>
                                     <div>
                                         <label for="tpf_form_no">
                                             <i class="fa-solid fa-gears"></i>
                                             Thermal Gasifier Bravo
                                         </label><br>
-                                        <input type="number" autocomplete="off" name="thermal_bravo" id="thermal_bravo" class="form-control" placeholder="Input Weight">
+                                        <input type="number" autocomplete="off" name="weight2" id="weight2" step="0.01" class="form-control" placeholder="Input Weight">
+                                        <input type="hidden" name="machine2" value="THERMAL GASIFIER BRAVO">
                                     </div>
                                     <div>
                                         <label for="tpf_form_no">
                                             <i class="fa-solid fa-gears"></i>
                                             Thermal Gasifier Charlie
                                         </label><br>
-                                        <input type="number" autocomplete="off" name="thermal_charlie" id="thermal_charlie" class="form-control" placeholder="Input Weight">
+                                        <input type="number" autocomplete="off" name="weight3" id="weight3" step="0.01" class="form-control" placeholder="Input Weight">
+                                        <input type="hidden" name="machine3" value="THERMAL GASIFIER CHARLIE">
                                     </div>
                                 </div><br>
                                 `
@@ -447,8 +450,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                             client.value = sf_data_list.content[a][findTextInArray(sf_data_list, "CLIENT ID")];
                             waste_description.value = sf_data_list.content[a][findTextInArray(sf_data_list, "WASTE ID")];
                             waste_code_input.value = findWasteCode(sf_data_list.content[a][findTextInArray(sf_data_list, "WASTE NAME")]);
-                            console.log(sf_data_list.content[a][findTextInArray(sf_data_list, "WASTE NAME")])
-                            console.log(waste_code_input.value)
                             weight.value = sf_data_list.content[a][findTextInArray(sf_data_list, "WEIGHT")];
                             destruction_process.value = sf_data_list.content[a][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")];
                             hauling_date.value = date_decoder(sf_data_list.content[a][findTextInArray(sf_data_list, "HAULING DATE")]);
@@ -488,21 +489,24 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <i class="fa-solid fa-gears"></i>
                                             Thermal Gasifier Alpha
                                         </label><br>
-                                        <input type="number" autocomplete="off" name="thermal_alpha" id="thermal_alpha" class="form-control" placeholder="Input Weight">
+                                        <input type="number" autocomplete="off" name="weight1" id="weight1" step="0.01" class="form-control" placeholder="Input Weight">
+                                        <input type="hidden" name="machine1" value="THERMAL GASIFIER ALPHA">
                                     </div>
                                     <div>
                                         <label for="tpf_form_no">
                                             <i class="fa-solid fa-gears"></i>
                                             Thermal Gasifier Bravo
                                         </label><br>
-                                        <input type="number" autocomplete="off" name="thermal_bravo" id="thermal_bravo" class="form-control" placeholder="Input Weight">
+                                        <input type="number" autocomplete="off" name="weight2" id="weight2" step="0.01" class="form-control" placeholder="Input Weight">
+                                        <input type="hidden" name="machine2" value="THERMAL GASIFIER BRAVO">
                                     </div>
                                     <div>
                                         <label for="tpf_form_no">
                                             <i class="fa-solid fa-gears"></i>
                                             Thermal Gasifier Charlie
                                         </label><br>
-                                        <input type="number" autocomplete="off" name="thermal_charlie" id="thermal_charlie" class="form-control" placeholder="Input Weight">
+                                        <input type="number" autocomplete="off" name="weight3" id="weight3" step="0.01" class="form-control" placeholder="Input Weight">
+                                        <input type="hidden" name="machine3" value="THERMAL GASIFIER CHARLIE">
                                     </div>
                                 </div><br>
                                 `
