@@ -52,184 +52,291 @@ document.addEventListener('DOMContentLoaded', async function() {
         const treated_counter_treatment = document.querySelector("#treatment_process_dashboard #treated_counter");
         const pending_list_treatment = document.querySelector("#treatment_process_dashboard #pending_list");
         const finished_list_treatment = document.querySelector("#treatment_process_dashboard #finished_list");
+        const month_filter = document.getElementById("month_filter");
         let wcf_transaction_sorting = []; // Variable containing existing elements
         let wcf_tpf_transaction_sorting = []; // Variable containing existing elements
         let sf_transaction_treatment = []; // Variable containing existing elements
         let sf_tpf_transaction_treatment = []; // Variable containing existing elements
         let sf_tpf_wcf_transaction_treatment = []; // Variable containing existing elements
         
-        for (let i = 1; i < wcf_data_list.content.length; i++) {
-            if(wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] !== "SORTING" &&
-            wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] !== "WAREHOUSE"){
-                if (!wcf_transaction_sorting.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")])) {
-                    wcf_transaction_sorting.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]);
+        function getCurrentMonthName() {
+            const months = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
+            const currentDate = new Date();
+            const currentMonthIndex = currentDate.getMonth();
+            
+            return months[currentMonthIndex];
+        }        
+        month_filter.value = getCurrentMonthName();
+        month_filter.addEventListener("change", generatePending)
+        generatePending();
+        function generatePending(){
+            for (let i = 1; i < wcf_data_list.content.length; i++) {
+                if(wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] !== "SORTING" &&
+                wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] !== "WAREHOUSE" &&
+                month_filter.value == formatMonth(wcf_data_list.content[i][findTextInArray(wcf_data_list, "HAULING DATE")])){
+                    if (!wcf_transaction_sorting.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")])) {
+                        wcf_transaction_sorting.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]);
+                    }
                 }
-            }
-        }
-
-        for (let i = 1; i < sf_data_list.content.length; i++) {
-            if(sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE ID")] !== "DISCREPANCY"){
-                if(sf_data_list.content[i][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")] !== "FOR STORAGE"){
-                    if (!sf_transaction_treatment.includes(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")])) {
-                        sf_transaction_treatment.push(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")]);
+                else if(wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] !== "SORTING" &&
+                wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] !== "WAREHOUSE" &&
+                month_filter.value == "ALL"){
+                    if (!wcf_transaction_sorting.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")])) {
+                        wcf_transaction_sorting.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]);
                     }
                 }
             }
-        }
-        for (let i = 1; i < tpf_data_list.content.length; i++) {
-            if (!sf_tpf_transaction_treatment.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "SF #")])) {
-                sf_tpf_transaction_treatment.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "SF #")]);
+            for (let i = 1; i < sf_data_list.content.length; i++) {
+                if(sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE ID")] !== "DISCREPANCY"){
+                    if(sf_data_list.content[i][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")] !== "FOR STORAGE" &&
+                    month_filter.value == formatMonth(sf_data_list.content[i][findTextInArray(sf_data_list, "HAULING DATE")])){
+                        if (!sf_transaction_treatment.includes(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")])) {
+                            sf_transaction_treatment.push(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")]);
+                        }
+                    }
+                }
+                else if(sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE ID")] !== "DISCREPANCY"){
+                    if(sf_data_list.content[i][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")] !== "FOR STORAGE" &&
+                    month_filter.value == "ALL"){
+                        if (!sf_transaction_treatment.includes(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")])) {
+                            sf_transaction_treatment.push(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")]);
+                        }
+                    }
+                }
             }
-            if (!sf_tpf_wcf_transaction_treatment.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")])) {
-                sf_tpf_wcf_transaction_treatment.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")]);
+            for (let i = 1; i < tpf_data_list.content.length; i++) {
+                if (!sf_tpf_transaction_treatment.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "SF #")]) &&
+                month_filter.value == formatMonth(tpf_data_list.content[i][findTextInArray(tpf_data_list, "HAULING DATE")])) {
+                    sf_tpf_transaction_treatment.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "SF #")]);
+                }
+                else if (!sf_tpf_transaction_treatment.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "SF #")]) &&
+                month_filter.value == "ALL") {
+                    sf_tpf_transaction_treatment.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "SF #")]);
+                }
+                if (!sf_tpf_wcf_transaction_treatment.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")]) &&
+                month_filter.value == formatMonth(tpf_data_list.content[i][findTextInArray(tpf_data_list, "HAULING DATE")])) {
+                    sf_tpf_wcf_transaction_treatment.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")]);
+                }
+                else if (!sf_tpf_wcf_transaction_treatment.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")]) &&
+                month_filter.value == "ALL") {
+                    sf_tpf_wcf_transaction_treatment.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")]);
+                }
+                if (!wcf_tpf_transaction_sorting.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")]) &&
+                month_filter.value == formatMonth(tpf_data_list.content[i][findTextInArray(tpf_data_list, "HAULING DATE")])) {
+                    wcf_tpf_transaction_sorting.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")]);
+                }
+                else if (!wcf_tpf_transaction_sorting.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")]) &&
+                month_filter.value == "ALL") {
+                    wcf_tpf_transaction_sorting.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")]);
+                }
             }
-        }
-        for (let i = 1; i < tpf_data_list.content.length; i++) {
-            if (!wcf_tpf_transaction_sorting.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")])) {
-                wcf_tpf_transaction_sorting.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")]);
-            }
-        }
-        // Get elements from sf_transaction not included in sf_tpf_transaction
-        const pending_treatment_sf = sf_transaction_treatment.filter((element) => !sf_tpf_transaction_treatment.includes(element));
-        const pending_treatment_wcf = wcf_transaction_sorting.filter((element) => !wcf_tpf_transaction_sorting.includes(element));
-        const finished_treatment = sf_transaction_treatment.filter((element) => sf_tpf_transaction_treatment.includes(element));
-        const filtered_pending_treatment_wcf = wcf_tpf_transaction_sorting.filter(element => !sf_tpf_wcf_transaction_treatment.includes(element));
 
-        // pending_list
-        treated_counter_treatment.innerText = sf_tpf_transaction_treatment.length + filtered_pending_treatment_wcf.length;
-        total_counter_treatment.innerText = sf_transaction_treatment.length + wcf_transaction_sorting.length;
-        pending_counter_treatment.innerText = pending_treatment_sf.length + pending_treatment_wcf.length;
-        
-        var options = {
-            series: [pending_treatment_sf.length + pending_treatment_wcf.length, sf_tpf_transaction_treatment.length + filtered_pending_treatment_wcf.length],
-            chart: {
-                width: 500, // Set the desired width
-                height: 550, // Set the desired height
-                type: 'pie',
-            },
-            plotOptions: {
-                pie: {
-                    startAngle: 0,
-                    endAngle: 360
-                }
-            },
-            dataLabels: {
-                enabled: false, // Disable data labels inside the pie chart
-            },
-            fill: {
-                type: 'gradient', // Use solid fill type
-            },
-            legend: {
-                show: true,
-                position: "left", // Set the legend position to "left"
-                fontSize: '30px', // Increase legend font size as needed
-                formatter: function (seriesName, opts) {
-                    // Here, you should use the correct variable to get the series value
-                    var seriesValue = opts.w.globals.series[opts.seriesIndex];
-                    var totalValue = opts.w.globals.series.reduce((acc, val) => acc + val, 0);
-                    var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
-                    return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
+            // Get elements from sf_transaction not included in sf_tpf_transaction
+            const pending_treatment_sf = sf_transaction_treatment.filter((element) => !sf_tpf_transaction_treatment.includes(element));
+            const pending_treatment_wcf = wcf_transaction_sorting.filter((element) => !wcf_tpf_transaction_sorting.includes(element));
+            const finished_treatment = sf_transaction_treatment.filter((element) => sf_tpf_transaction_treatment.includes(element));
+            const filtered_pending_treatment_wcf = wcf_tpf_transaction_sorting.filter(element => !sf_tpf_wcf_transaction_treatment.includes(element));
+    
+            // pending_list
+            treated_counter_treatment.innerText = sf_tpf_transaction_treatment.length + filtered_pending_treatment_wcf.length;
+            total_counter_treatment.innerText = sf_transaction_treatment.length + wcf_transaction_sorting.length;
+            pending_counter_treatment.innerText = pending_treatment_sf.length + pending_treatment_wcf.length;
+            
+            var options = {
+                series: [pending_treatment_sf.length + pending_treatment_wcf.length, sf_tpf_transaction_treatment.length + filtered_pending_treatment_wcf.length],
+                chart: {
+                    width: 500, // Set the desired width
+                    height: 550, // Set the desired height
+                    type: 'pie',
                 },
-                labels: {
-                    useSeriesColors: false, // Use custom color
+                plotOptions: {
+                    pie: {
+                        startAngle: 0,
+                        endAngle: 360
+                    }
                 },
-            },
-            labels: ["Pending", "Treated"],
-            colors: ["#dc3545", "#198754"], // Specify solid colors here
-            responsive: [{
-                breakpoint: 480,
-                options: {
-                    chart: {
-                        width: 200
+                dataLabels: {
+                    enabled: false, // Disable data labels inside the pie chart
+                },
+                fill: {
+                    type: 'gradient', // Use solid fill type
+                },
+                legend: {
+                    show: true,
+                    position: "left", // Set the legend position to "left"
+                    fontSize: '30px', // Increase legend font size as needed
+                    formatter: function (seriesName, opts) {
+                        // Here, you should use the correct variable to get the series value
+                        var seriesValue = opts.w.globals.series[opts.seriesIndex];
+                        var totalValue = opts.w.globals.series.reduce((acc, val) => acc + val, 0);
+                        var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
+                        return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
                     },
+                    labels: {
+                        useSeriesColors: false, // Use custom color
+                    },
+                },
+                labels: ["Pending", "Treated"],
+                colors: ["#dc3545", "#198754"], // Specify solid colors here
+                responsive: [{
+                    breakpoint: 480,
+                    options: {
+                        chart: {
+                            width: 200
+                        },
+                    }
+                }]
+            };
+            const pieChart = document.querySelector("#pieChart");
+            while (pieChart.firstChild) {
+                pieChart.removeChild(pieChart.firstChild);
+            }
+            var chart = new ApexCharts(pieChart, options);
+            chart.render();
+            
+            var data_value = "";
+            var data_value_counter = 1;
+            for(let i = 0; i < pending_treatment_sf.length; i++){
+                for(let j = 1; j < sf_data_list.content.length; j++){
+                    if(pending_treatment_sf[i] == sf_data_list.content[j][findTextInArray(sf_data_list, "SF #")] &&
+                    month_filter.value == formatMonth(sf_data_list.content[j][findTextInArray(sf_data_list, "HAULING DATE")])){
+                        data_value +=`
+                        <tr>
+                            <td>${data_value_counter}</td>
+                            <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "SF #")]}</td>
+                            <td>${date_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "COMPLETION DATE")])} /<br> ${time_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "COMPLETION TIME")])}</td>
+                            <td>${findClientName(sf_data_list.content[j][findTextInArray(sf_data_list, "CLIENT ID")])}</td>
+                            <td>${findWasteCode(sf_data_list.content[j][findTextInArray(sf_data_list, "WASTE ID")])}</td>
+                            <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "WASTE NAME")]}</td>
+                            <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")]}</td>
+                            <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "WEIGHT")]}</td>
+                        </tr>
+                        `
+                        data_value_counter += 1;
+                    }
+                    else if(pending_treatment_sf[i] == sf_data_list.content[j][findTextInArray(sf_data_list, "SF #")] &&
+                    month_filter.value == "ALL"){
+                        data_value +=`
+                        <tr>
+                            <td>${data_value_counter}</td>
+                            <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "SF #")]}</td>
+                            <td>${date_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "COMPLETION DATE")])} /<br> ${time_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "COMPLETION TIME")])}</td>
+                            <td>${findClientName(sf_data_list.content[j][findTextInArray(sf_data_list, "CLIENT ID")])}</td>
+                            <td>${findWasteCode(sf_data_list.content[j][findTextInArray(sf_data_list, "WASTE ID")])}</td>
+                            <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "WASTE NAME")]}</td>
+                            <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")]}</td>
+                            <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "WEIGHT")]}</td>
+                        </tr>
+                        `
+                        data_value_counter += 1;
+                    }
                 }
-            }]
-        };
-        const pieChart = document.querySelector("#pieChart");
-        while (pieChart.firstChild) {
-            pieChart.removeChild(pieChart.firstChild);
-        }
-        var chart = new ApexCharts(pieChart, options);
-        chart.render();
-        
-        var data_value = "";
-        var data_value_counter = 1;
-        for(let i = 0; i < pending_treatment_sf.length; i++){
-            for(let j = 1; j < sf_data_list.content.length; j++){
-                if(pending_treatment_sf[i] == sf_data_list.content[j][findTextInArray(sf_data_list, "SF #")]){
-                    data_value +=`
-                    <tr>
+            }
+            for(let i = 0; i < pending_treatment_wcf.length; i++){
+                for(let j = 1; j < wcf_data_list.content.length; j++){
+                    if(pending_treatment_wcf[i] == wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")] &&
+                    month_filter.value == formatMonth(wcf_data_list.content[j][findTextInArray(wcf_data_list, "HAULING DATE")])){
+                        data_value +=`
+                        <tr>
+                            <td>${data_value_counter}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]}</td>
+                            <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}</td>
+                            <td>${findClientName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
+                            <td>${findWasteCode(wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
+                            <td>${findWasteName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")], wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
+                            <td>${findTreatmentProcess(wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "NET WEIGHT")]}</td>
+                        </tr>
+                        `
+                        data_value_counter += 1;
+                    }
+                    else if(pending_treatment_wcf[i] == wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")] &&
+                    month_filter.value == "ALL"){
+                        data_value +=`
+                        <tr>
+                            <td>${data_value_counter}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]}</td>
+                            <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}</td>
+                            <td>${findClientName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
+                            <td>${findWasteCode(wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
+                            <td>${findWasteName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")], wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
+                            <td>${findTreatmentProcess(wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "NET WEIGHT")]}</td>
+                        </tr>
+                        `
+                        data_value_counter += 1;
+                    }
+                }
+            }
+            pending_list_treatment.innerHTML = data_value;    
+    
+            // finished_list
+            var data_value = "";
+            var data_value_counter = 1;
+            for(let i = 0; i < finished_treatment.length; i++){
+                for(let j = 1; j < sf_data_list.content.length; j++){
+                    if(finished_treatment[i] == sf_data_list.content[j][findTextInArray(sf_data_list, "SF #")] &&
+                    month_filter.value == formatMonth(sf_data_list.content[j][findTextInArray(sf_data_list, "HAULING DATE")])){
+                        var sorted_date;
+                        var sorted_time;
+                        var tpf_no;
+                        for(let k = 1; k < tpf_data_list.content.length; k++){
+                            if(sf_data_list.content[j][findTextInArray(sf_data_list, "SF #")] == tpf_data_list.content[k][findTextInArray(tpf_data_list, "SF #")]){
+                                sorted_date = date_decoder(tpf_data_list.content[k][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")]);
+                                sorted_time = time_decoder(tpf_data_list.content[k][findTextInArray(tpf_data_list, "ACTUAL COMPLETION TIME")]);
+                                tpf_no = tpf_data_list.content[k][findTextInArray(tpf_data_list, "TPF #")];
+                                break
+                            }
+                        }
+                        data_value +=`
+                        <tr>
                         <td>${data_value_counter}</td>
-                        <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "SF #")]}</td>
+                        <td>${tpf_no}</td>
                         <td>${date_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "COMPLETION DATE")])} /<br> ${time_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "COMPLETION TIME")])}</td>
                         <td>${findClientName(sf_data_list.content[j][findTextInArray(sf_data_list, "CLIENT ID")])}</td>
                         <td>${findWasteCode(sf_data_list.content[j][findTextInArray(sf_data_list, "WASTE ID")])}</td>
                         <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "WASTE NAME")]}</td>
                         <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")]}</td>
-                        <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "WEIGHT")]}</td>
-                    </tr>
-                    `
-                    data_value_counter += 1;
-                }
-            }
-        }
-        for(let i = 0; i < pending_treatment_wcf.length; i++){
-            for(let j = 1; j < wcf_data_list.content.length; j++){
-                if(pending_treatment_wcf[i] == wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]){
-                    data_value +=`
-                    <tr>
-                        <td>${data_value_counter}</td>
-                        <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]}</td>
-                        <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}</td>
-                        <td>${findClientName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
-                        <td>${findWasteCode(wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
-                        <td>${findWasteName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")], wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
-                        <td>${findTreatmentProcess(wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
-                        <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "NET WEIGHT")]}</td>
-                    </tr>
-                    `
-                    data_value_counter += 1;
-                }
-            }
-        }
-        pending_list_treatment.innerHTML = data_value;    
-
-        // finished_list
-        var data_value = "";
-        var data_value_counter = 1;
-        for(let i = 0; i < finished_treatment.length; i++){
-            for(let j = 1; j < sf_data_list.content.length; j++){
-                if(finished_treatment[i] == sf_data_list.content[j][findTextInArray(sf_data_list, "SF #")]){
-                    var sorted_date;
-                    var sorted_time;
-                    var tpf_no;
-                    for(let k = 1; k < tpf_data_list.content.length; k++){
-                        if(sf_data_list.content[j][findTextInArray(sf_data_list, "SF #")] == tpf_data_list.content[k][findTextInArray(tpf_data_list, "SF #")]){
-                            sorted_date = date_decoder(tpf_data_list.content[k][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")]);
-                            sorted_time = time_decoder(tpf_data_list.content[k][findTextInArray(tpf_data_list, "ACTUAL COMPLETION TIME")]);
-                            tpf_no = tpf_data_list.content[k][findTextInArray(tpf_data_list, "TPF #")];
-                            break
-                        }
+                        <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "WEIGHT")]} Kg.</td>
+                        <td>${sorted_date} /<br> ${sorted_time}</td>
+                        <td>${calculateTravelTime(date_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "COMPLETION DATE")]),time_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "COMPLETION TIME")]),sorted_date,sorted_time)}</td>
+                        </tr>
+                        `
+                        data_value_counter += 1;
                     }
-                    data_value +=`
-                    <tr>
-                    <td>${data_value_counter}</td>
-                    <td>${tpf_no}</td>
-                    <td>${date_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "COMPLETION DATE")])} /<br> ${time_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "COMPLETION TIME")])}</td>
-                    <td>${findClientName(sf_data_list.content[j][findTextInArray(sf_data_list, "CLIENT ID")])}</td>
-                    <td>${findWasteCode(sf_data_list.content[j][findTextInArray(sf_data_list, "WASTE ID")])}</td>
-                    <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "WASTE NAME")]}</td>
-                    <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")]}</td>
-                    <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "WEIGHT")]} Kg.</td>
-                    <td>${sorted_date} /<br> ${sorted_time}</td>
-                    <td>${calculateTravelTime(date_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "COMPLETION DATE")]),time_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "COMPLETION TIME")]),sorted_date,sorted_time)}</td>
-                    </tr>
-                    `
-                    data_value_counter += 1;
+                    else if(finished_treatment[i] == sf_data_list.content[j][findTextInArray(sf_data_list, "SF #")] &&
+                    month_filter.value == "ALL"){
+                        var sorted_date;
+                        var sorted_time;
+                        var tpf_no;
+                        for(let k = 1; k < tpf_data_list.content.length; k++){
+                            if(sf_data_list.content[j][findTextInArray(sf_data_list, "SF #")] == tpf_data_list.content[k][findTextInArray(tpf_data_list, "SF #")]){
+                                sorted_date = date_decoder(tpf_data_list.content[k][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")]);
+                                sorted_time = time_decoder(tpf_data_list.content[k][findTextInArray(tpf_data_list, "ACTUAL COMPLETION TIME")]);
+                                tpf_no = tpf_data_list.content[k][findTextInArray(tpf_data_list, "TPF #")];
+                                break
+                            }
+                        }
+                        data_value +=`
+                        <tr>
+                        <td>${data_value_counter}</td>
+                        <td>${tpf_no}</td>
+                        <td>${date_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "COMPLETION DATE")])} /<br> ${time_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "COMPLETION TIME")])}</td>
+                        <td>${findClientName(sf_data_list.content[j][findTextInArray(sf_data_list, "CLIENT ID")])}</td>
+                        <td>${findWasteCode(sf_data_list.content[j][findTextInArray(sf_data_list, "WASTE ID")])}</td>
+                        <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "WASTE NAME")]}</td>
+                        <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")]}</td>
+                        <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "WEIGHT")]} Kg.</td>
+                        <td>${sorted_date} /<br> ${sorted_time}</td>
+                        <td>${calculateTravelTime(date_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "COMPLETION DATE")]),time_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "COMPLETION TIME")]),sorted_date,sorted_time)}</td>
+                        </tr>
+                        `
+                        data_value_counter += 1;
+                    }
                 }
             }
+            finished_list_treatment.innerHTML = data_value;        
         }
-        finished_list_treatment.innerHTML = data_value;    
 
         // FORM GENERATOR
         // tpf_data_list

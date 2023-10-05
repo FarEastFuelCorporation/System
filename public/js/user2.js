@@ -52,15 +52,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         user_sidebar_department.innerText = username_data_list.content[2][findTextInArray(username_data_list, "DEPARTMENT")];
 
         // sf_data_list
-        const total = document.getElementById("total");
-        const sorted = document.getElementById("sorted");
-        const unsorted = document.getElementById("unsorted");
-        const today = new Date();
-        const today_year = today.getFullYear();
-        const today_month = today.getMonth()+1;
-        var month_new;
-        var code_year_month;
-    
         // sorting_dashboard_section
         const total_sorting = document.querySelector("#sorting_dashboard_section #total");
         const sorted_sorting = document.querySelector("#sorting_dashboard_section #sorted");
@@ -69,179 +60,270 @@ document.addEventListener('DOMContentLoaded', async function() {
         const sorted_list_sorting = document.querySelector("#sorting_dashboard_section #sorted_list");
         const sorted_items_sorting = document.querySelector("#sorting_dashboard_section #sorted_items");
         const sorted_items_list_sorting = document.querySelector("#sorting_dashboard_section #sorted_items_list");
-        var wcf_sf_transaction_counter_sorting = 0;
-        var wcf_transaction_counter_sorting = 0;
-        var sf_transaction_counter_sorting = 0;
+        const month_filter = document.getElementById("month_filter");
         var wcf_transaction_sorting = []; // Variable containing existing elements
         var wcf_sf_transaction_sorting = []; // Variable containing existing elements
         var sf_transaction_sorting = []; // Variable containing existing elements
         
-        for (let i = 1; i < wcf_data_list.content.length; i++) {
-            if(wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] == "SORTING"){
-                if (!wcf_transaction_sorting.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")])) {
-                    wcf_transaction_sorting.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]);
-                    wcf_transaction_counter_sorting += 1
-                    console.log()
+        function getCurrentMonthName() {
+            const months = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
+            const currentDate = new Date();
+            const currentMonthIndex = currentDate.getMonth();
+            
+            return months[currentMonthIndex];
+        }        
+        month_filter.value = getCurrentMonthName();
+        month_filter.addEventListener("change", generatePending)
+        generatePending();
+        function generatePending(){
+            for (let i = 1; i < wcf_data_list.content.length; i++) {
+                if(wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] == "SORTING"){
+                    if (!wcf_transaction_sorting.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]) &&
+                    month_filter.value == formatMonth(wcf_data_list.content[i][findTextInArray(wcf_data_list, "HAULING DATE")])) {
+                        wcf_transaction_sorting.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]);
+                    }
+                    else if (!wcf_transaction_sorting.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]) &&
+                    month_filter.value == "ALL") {
+                        wcf_transaction_sorting.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]);
+                    }
                 }
             }
-        }
-
-        for (let i = 1; i < sf_data_list.content.length; i++) {
-            if (!wcf_sf_transaction_sorting.includes(sf_data_list.content[i][findTextInArray(sf_data_list, "WCF #")])) {
-                wcf_sf_transaction_sorting.push(sf_data_list.content[i][findTextInArray(sf_data_list, "WCF #")]);
-                wcf_sf_transaction_counter_sorting += 1
-            }
-            if (sf_data_list.content[i][4] !==  "DISCREPANCY") {
-                if (!sf_transaction_sorting.includes(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")])) {
-                    sf_transaction_sorting.push(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")]);
-                    sf_transaction_counter_sorting += 1
+    
+            for (let i = 1; i < sf_data_list.content.length; i++) {
+                if (!wcf_sf_transaction_sorting.includes(sf_data_list.content[i][findTextInArray(sf_data_list, "WCF #")]) &&
+                month_filter.value == formatMonth(sf_data_list.content[i][findTextInArray(sf_data_list, "HAULING DATE")])) {
+                    wcf_sf_transaction_sorting.push(sf_data_list.content[i][findTextInArray(sf_data_list, "WCF #")]);
+                }
+                else if (!wcf_sf_transaction_sorting.includes(sf_data_list.content[i][findTextInArray(sf_data_list, "WCF #")]) &&
+                month_filter.value == "ALL") {
+                    wcf_sf_transaction_sorting.push(sf_data_list.content[i][findTextInArray(sf_data_list, "WCF #")]);
+                }
+                if (sf_data_list.content[i][4] !==  "DISCREPANCY") {
+                    if (!sf_transaction_sorting.includes(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")]) &&
+                    month_filter.value == formatMonth(sf_data_list.content[i][findTextInArray(sf_data_list, "HAULING DATE")])) {
+                        sf_transaction_sorting.push(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")]);
+                    }
+                    else if (!sf_transaction_sorting.includes(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")]) &&
+                    month_filter.value == "ALL") {
+                        sf_transaction_sorting.push(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")]);
+                    }
                 }
             }
-        }
-
-        // Get elements from wcf_transaction not included in wcf_sf_transaction
-        const pending_sorting = wcf_transaction_sorting.filter((element) => !wcf_sf_transaction_sorting.includes(element));
-        const done_sorting_sorting = wcf_transaction_sorting.filter((element) => wcf_sf_transaction_sorting.includes(element));
-        total_sorting.innerText = wcf_transaction_counter_sorting;
-        unsorted_sorting.innerText = wcf_transaction_counter_sorting - wcf_sf_transaction_counter_sorting;
-        sorted_sorting.innerText = wcf_sf_transaction_counter_sorting;
-        sorted_items_sorting.innerText = sf_transaction_counter_sorting;
-
-        var options = {
-            series: [wcf_transaction_counter_sorting - wcf_sf_transaction_counter_sorting, wcf_sf_transaction_counter_sorting],
-            chart: {
-                width: 500, // Set the desired width
-                height: 550, // Set the desired height
-                type: 'pie',
-            },
-            plotOptions: {
-                pie: {
-                    startAngle: 0,
-                    endAngle: 360
-                }
-            },
-            dataLabels: {
-                enabled: false, // Disable data labels inside the pie chart
-            },
-            fill: {
-                type: 'gradient', // Use solid fill type
-            },
-            legend: {
-                show: true,
-                position: "left", // Set the legend position to "left"
-                fontSize: '30px', // Increase legend font size as needed
-                formatter: function (seriesName, opts) {
-                    // Here, you should use the correct variable to get the series value
-                    var seriesValue = opts.w.globals.series[opts.seriesIndex];
-                    var totalValue = opts.w.globals.series.reduce((acc, val) => acc + val, 0);
-                    var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
-                    return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
+    
+            // Get elements from wcf_transaction not included in wcf_sf_transaction
+            const pending_sorting = wcf_transaction_sorting.filter((element) => !wcf_sf_transaction_sorting.includes(element));
+            const done_sorting_sorting = wcf_transaction_sorting.filter((element) => wcf_sf_transaction_sorting.includes(element));
+            total_sorting.innerText = wcf_transaction_sorting.length;
+            unsorted_sorting.innerText = wcf_transaction_sorting.length - wcf_sf_transaction_sorting.length;
+            sorted_sorting.innerText = wcf_sf_transaction_sorting.length;
+            sorted_items_sorting.innerText = sf_transaction_sorting.length;
+    
+            var options = {
+                series: [wcf_transaction_sorting.length - wcf_sf_transaction_sorting.length, wcf_sf_transaction_sorting.length],
+                chart: {
+                    width: 500, // Set the desired width
+                    height: 550, // Set the desired height
+                    type: 'pie',
                 },
-                labels: {
-                    useSeriesColors: false, // Use custom color
+                plotOptions: {
+                    pie: {
+                        startAngle: 0,
+                        endAngle: 360
+                    }
                 },
-            },
-            labels: ["Pending", "Sorted"],
-            colors: ["#dc3545", "#198754"], // Specify solid colors here
-            responsive: [{
-                breakpoint: 480,
-                options: {
-                    chart: {
-                        width: 200
+                dataLabels: {
+                    enabled: false, // Disable data labels inside the pie chart
+                },
+                fill: {
+                    type: 'gradient', // Use solid fill type
+                },
+                legend: {
+                    show: true,
+                    position: "left", // Set the legend position to "left"
+                    fontSize: '30px', // Increase legend font size as needed
+                    formatter: function (seriesName, opts) {
+                        // Here, you should use the correct variable to get the series value
+                        var seriesValue = opts.w.globals.series[opts.seriesIndex];
+                        var totalValue = opts.w.globals.series.reduce((acc, val) => acc + val, 0);
+                        var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
+                        return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
                     },
-                }
-            }]
-        };
-        const pieChart = document.querySelector("#pieChart");
-        while (pieChart.firstChild) {
-            pieChart.removeChild(pieChart.firstChild);
-        }
-        var chart = new ApexCharts(pieChart, options);
-        chart.render();
-
-        var data_value = "";
-        var data_value_counter = 1;
-        for(let i = 0; i < pending_sorting.length; i++){
-            for(let j = 1; j < wcf_data_list.content.length; j++){
-                if(pending_sorting[i] == wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]){
-                    data_value +=`
-                    <tr>
-                        <td>${data_value_counter}</td>
-                        <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]}</td>
-                        <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}</td>
-                        <td>${findClientName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
-                        <td>${findWasteCode(wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
-                        <td>${findWasteName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")], wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
-                        <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "NET WEIGHT")]} kg.</td>
-                    </tr>
-                    `
-                    data_value_counter += 1;
+                    labels: {
+                        useSeriesColors: false, // Use custom color
+                    },
+                },
+                labels: ["Pending", "Sorted"],
+                colors: ["#dc3545", "#198754"], // Specify solid colors here
+                responsive: [{
+                    breakpoint: 480,
+                    options: {
+                        chart: {
+                            width: 200
+                        },
+                    }
+                }]
+            };
+            const pieChart = document.querySelector("#pieChart");
+            while (pieChart.firstChild) {
+                pieChart.removeChild(pieChart.firstChild);
+            }
+            var chart = new ApexCharts(pieChart, options);
+            chart.render();
+    
+            var data_value = "";
+            var data_value_counter = 1;
+            for(let i = 0; i < pending_sorting.length; i++){
+                for(let j = 1; j < wcf_data_list.content.length; j++){
+                    if(pending_sorting[i] == wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")] &&
+                    month_filter.value == formatMonth(wcf_data_list.content[j][findTextInArray(wcf_data_list, "HAULING DATE")])){
+                        data_value +=`
+                        <tr>
+                            <td>${data_value_counter}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]}</td>
+                            <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}</td>
+                            <td>${findClientName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
+                            <td>${findWasteCode(wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
+                            <td>${findWasteName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")], wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "NET WEIGHT")]} kg.</td>
+                        </tr>
+                        `
+                        data_value_counter += 1;
+                    }
+                    else if(pending_sorting[i] == wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")] &&
+                    month_filter.value == "ALL"){
+                        data_value +=`
+                        <tr>
+                            <td>${data_value_counter}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]}</td>
+                            <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}</td>
+                            <td>${findClientName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
+                            <td>${findWasteCode(wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
+                            <td>${findWasteName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")], wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "NET WEIGHT")]} kg.</td>
+                        </tr>
+                        `
+                        data_value_counter += 1;
+                    }
                 }
             }
-        }
-        unsorted_list_sorting.innerHTML = data_value;    
-
-        // sorted_list
-        var data_value_done = "";
-        var data_value__done_counter = 1;
-        for(let i = 0; i < done_sorting_sorting.length; i++){
-            for(let j = 1; j < wcf_data_list.content.length; j++){
-                if(done_sorting_sorting[i] == wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]){
-                    var discrepancy_weight = 0;
-                    var discrepancy_remarks ="COMPLETE";
-                    var finished_date;
-                    var finished_time;
-                    for(let k = 1; k < sf_data_list.content.length; k++){
-                        finished_date = date_decoder(sf_data_list.content[k][findTextInArray(sf_data_list, "COMPLETION DATE")]);
-                        finished_time = time_decoder(sf_data_list.content[k][findTextInArray(sf_data_list, "COMPLETION TIME")]);
-                        if(done_sorting_sorting[i] == sf_data_list.content[k][findTextInArray(sf_data_list, "WCF #")]){
-                            if(sf_data_list.content[k][findTextInArray(sf_data_list, "WASTE ID")] == "DISCREPANCY"){
-                                discrepancy_weight = sf_data_list.content[k][findTextInArray(sf_data_list, "WEIGHT")];
-                                discrepancy_remarks = sf_data_list.content[k][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")];
+            unsorted_list_sorting.innerHTML = data_value;    
+    
+            // sorted_list
+            var data_value_done = "";
+            var data_value__done_counter = 1;
+            for(let i = 0; i < done_sorting_sorting.length; i++){
+                for(let j = 1; j < wcf_data_list.content.length; j++){
+                    if(done_sorting_sorting[i] == wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")] &&
+                    month_filter.value == formatMonth(wcf_data_list.content[j][findTextInArray(wcf_data_list, "HAULING DATE")])){
+                        var discrepancy_weight = 0;
+                        var discrepancy_remarks ="COMPLETE";
+                        var finished_date;
+                        var finished_time;
+                        for(let k = 1; k < sf_data_list.content.length; k++){
+                            finished_date = date_decoder(sf_data_list.content[k][findTextInArray(sf_data_list, "COMPLETION DATE")]);
+                            finished_time = time_decoder(sf_data_list.content[k][findTextInArray(sf_data_list, "COMPLETION TIME")]);
+                            if(done_sorting_sorting[i] == sf_data_list.content[k][findTextInArray(sf_data_list, "WCF #")]){
+                                if(sf_data_list.content[k][findTextInArray(sf_data_list, "WASTE ID")] == "DISCREPANCY"){
+                                    discrepancy_weight = sf_data_list.content[k][findTextInArray(sf_data_list, "WEIGHT")];
+                                    discrepancy_remarks = sf_data_list.content[k][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")];
+                                }
                             }
                         }
+                        data_value_done +=`
+                        <tr>
+                            <td>${data_value__done_counter}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]}</td>
+                            <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}</td>
+                            <td>${findClientName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "NET WEIGHT")]} kg.</td>
+                            <td>${discrepancy_weight} kg.</td>
+                            <td>${discrepancy_remarks}</td>
+                            <td>${finished_date} /<br> ${finished_time}</td>
+                            <td>${calculateTravelTime(date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")]),time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")]),finished_date,finished_time)}</td>
+                        </tr>
+                        `
+                        data_value__done_counter += 1;
                     }
-                    data_value_done +=`
-                    <tr>
-                        <td>${data_value__done_counter}</td>
-                        <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]}</td>
-                        <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}</td>
-                        <td>${findClientName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
-                        <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "NET WEIGHT")]} kg.</td>
-                        <td>${discrepancy_weight} kg.</td>
-                        <td>${discrepancy_remarks}</td>
-                        <td>${finished_date} /<br> ${finished_time}</td>
-                        <td>${calculateTravelTime(date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")]),time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")]),finished_date,finished_time)}</td>
-                    </tr>
-                    `
-                    data_value__done_counter += 1;
+                    else if(done_sorting_sorting[i] == wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")] &&
+                    month_filter.value == "ALL"){
+                        var discrepancy_weight = 0;
+                        var discrepancy_remarks ="COMPLETE";
+                        var finished_date;
+                        var finished_time;
+                        for(let k = 1; k < sf_data_list.content.length; k++){
+                            finished_date = date_decoder(sf_data_list.content[k][findTextInArray(sf_data_list, "COMPLETION DATE")]);
+                            finished_time = time_decoder(sf_data_list.content[k][findTextInArray(sf_data_list, "COMPLETION TIME")]);
+                            if(done_sorting_sorting[i] == sf_data_list.content[k][findTextInArray(sf_data_list, "WCF #")]){
+                                if(sf_data_list.content[k][findTextInArray(sf_data_list, "WASTE ID")] == "DISCREPANCY"){
+                                    discrepancy_weight = sf_data_list.content[k][findTextInArray(sf_data_list, "WEIGHT")];
+                                    discrepancy_remarks = sf_data_list.content[k][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")];
+                                }
+                            }
+                        }
+                        data_value_done +=`
+                        <tr>
+                            <td>${data_value__done_counter}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]}</td>
+                            <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}</td>
+                            <td>${findClientName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "NET WEIGHT")]} kg.</td>
+                            <td>${discrepancy_weight} kg.</td>
+                            <td>${discrepancy_remarks}</td>
+                            <td>${finished_date} /<br> ${finished_time}</td>
+                            <td>${calculateTravelTime(date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")]),time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")]),finished_date,finished_time)}</td>
+                        </tr>
+                        `
+                        data_value__done_counter += 1;
+                    }
                 }
             }
-        }
-        sorted_list_sorting.innerHTML = data_value_done;
-
-        // sorted_items_list
-        var data_value_done = "";
-        var data_value__done_counter = 1;
-        for(let i = 1; i < sf_data_list.content.length; i++){
-            if(sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE ID")] !== "DISCREPANCY"){
-                data_value_done +=`
-                <tr>
-                    <td>${data_value__done_counter}</td>
-                    <td>${sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")]}</td>
-                    <td>${sf_data_list.content[i][findTextInArray(sf_data_list, "WCF #")]}</td>
-                    <td>${date_decoder(sf_data_list.content[i][findTextInArray(sf_data_list, "COMPLETION DATE")])} /<br> ${time_decoder(sf_data_list.content[i][findTextInArray(sf_data_list, "COMPLETION TIME")])}</td>
-                    <td>${findClientName(sf_data_list.content[i][findTextInArray(sf_data_list, "CLIENT ID")])}</td>
-                    <td>${findWasteCode(sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE ID")])}</td>
-                    <td>${sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE NAME")]}</td>
-                    <td>${sf_data_list.content[i][findTextInArray(sf_data_list, "WEIGHT")]} kg.</td>
-                    <td>${sf_data_list.content[i][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")]}</td>
-                </tr>
-                `
-                data_value__done_counter += 1;
+            sorted_list_sorting.innerHTML = data_value_done;
+    
+            // sorted_items_list
+            var data_value_done = "";
+            var data_value__done_counter = 1;
+            for(let j = 0; j < sf_transaction_sorting.length; j++){
+                for(let i = 1; i < sf_data_list.content.length; i++){
+                    if(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")] == sf_transaction_sorting[j] &&
+                    sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE ID")] !== "DISCREPANCY" &&
+                    month_filter.value == formatMonth(sf_data_list.content[j][findTextInArray(sf_data_list, "HAULING DATE")])){
+                        data_value_done +=`
+                        <tr>
+                            <td>${data_value__done_counter}</td>
+                            <td>${sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")]}</td>
+                            <td>${sf_data_list.content[i][findTextInArray(sf_data_list, "WCF #")]}</td>
+                            <td>${date_decoder(sf_data_list.content[i][findTextInArray(sf_data_list, "COMPLETION DATE")])} /<br> ${time_decoder(sf_data_list.content[i][findTextInArray(sf_data_list, "COMPLETION TIME")])}</td>
+                            <td>${findClientName(sf_data_list.content[i][findTextInArray(sf_data_list, "CLIENT ID")])}</td>
+                            <td>${findWasteCode(sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE ID")])}</td>
+                            <td>${sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE NAME")]}</td>
+                            <td>${sf_data_list.content[i][findTextInArray(sf_data_list, "WEIGHT")]} kg.</td>
+                            <td>${sf_data_list.content[i][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")]}</td>
+                        </tr>
+                        `
+                        data_value__done_counter += 1;
+                    }
+                    if(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")] == sf_transaction_sorting[j] &&
+                    sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE ID")] !== "DISCREPANCY" &&
+                    month_filter.value == "ALL"){
+                        data_value_done +=`
+                        <tr>
+                            <td>${data_value__done_counter}</td>
+                            <td>${sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")]}</td>
+                            <td>${sf_data_list.content[i][findTextInArray(sf_data_list, "WCF #")]}</td>
+                            <td>${date_decoder(sf_data_list.content[i][findTextInArray(sf_data_list, "COMPLETION DATE")])} /<br> ${time_decoder(sf_data_list.content[i][findTextInArray(sf_data_list, "COMPLETION TIME")])}</td>
+                            <td>${findClientName(sf_data_list.content[i][findTextInArray(sf_data_list, "CLIENT ID")])}</td>
+                            <td>${findWasteCode(sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE ID")])}</td>
+                            <td>${sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE NAME")]}</td>
+                            <td>${sf_data_list.content[i][findTextInArray(sf_data_list, "WEIGHT")]} kg.</td>
+                            <td>${sf_data_list.content[i][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")]}</td>
+                        </tr>
+                        `
+                        data_value__done_counter += 1;
+                    }
+                }
             }
+            sorted_items_list_sorting.innerHTML = data_value_done;    
         }
-        sorted_items_list_sorting.innerHTML = data_value_done;    
 
         // FORM GENERATOR    
         code_year_month = `SF${today_year}${today_month.toString().padStart(2, "0")}`;
