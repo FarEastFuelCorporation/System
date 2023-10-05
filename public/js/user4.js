@@ -685,8 +685,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     `<tr>
                                     <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                     <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
-                                    <td>${pull_out_form}</td>
-                                    <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WEIGHT")]} kgs.</td>
+                                    <td>${`TS ${pull_out_form}`}</td>
+                                    <td>${formatNumber(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WEIGHT")])} kgs.</td>
                                     <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                     <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                                     </tr>
