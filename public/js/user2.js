@@ -324,43 +324,25 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             sorted_items_list_sorting.innerHTML = data_value_done;    
         }
+        const pending_sorting = wcf_transaction_sorting.filter((element) => !wcf_sf_transaction_sorting.includes(element));
 
         // FORM GENERATOR    
-        code_year_month = `SF${today_year}${today_month.toString().padStart(2, "0")}`;
-    
-        var data_info;
-        var data_last_3digit = 0;
-    
-        for(x=1; x<sf_data_list.content.length; x++){
-            data_info = sf_data_list.content[x][findTextInArray(sf_data_list, "SF #")];
-            
-            if(data_info.includes(code_year_month) == true){
-                data_last_3digit = data_info.slice(9)
-            }
-        }
-                
-        const data_content = parseInt(data_last_3digit) + 1;
-        const data_counters = [];
         const sf_form_nos = [];
+        var last_row = sf_data_list.content.length -1;        
+        var data_info = sf_data_list.content[last_row][findTextInArray(sf_data_list, "SF #")];
+        var year = new Date().getFullYear();
+        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
         
         for (let i = 0; i < 11; i++) {
-        const data_counter = data_content + i;
-        let formatted_counter = data_counter.toString();
-        
-        if (formatted_counter.length === 1) {
-            formatted_counter = `00${formatted_counter}`;
-        } else if (formatted_counter.length === 2) {
-            formatted_counter = `0${formatted_counter}`;
+            var data_counter = data_info.substring(8,11);
+            data_counter = (parseInt(data_counter) + i + 1).toString().padStart(3, "0");
+            sf_form_nos.push(`SF${year}${month}${data_counter}`);
         }
-        
-        data_counters.push(formatted_counter);
-        sf_form_nos.push(`${code_year_month}${formatted_counter}`);
-        }
-        
+
         // Assigning values to sf_form_no variables
         for (let i = 0; i < 11; i++) {
-        const sf_form_no = document.getElementById(`sf_form_no${i + 1}`);
-        sf_form_no.value = sf_form_nos[i];
+            const sf_form_no = document.getElementById(`sf_form_no${i + 1}`);
+            sf_form_no.value = sf_form_nos[i];
         }
         
         // wcf_data_list
@@ -464,7 +446,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         const input_box = [];
         const sugg_box = [];
 
-
         for (let z = 1; z <= itemcounter.length; z++) {
             search_wrapper[z] = document.getElementById(`search_type_of_waste${z}`);
             destruction_process[z] = document.getElementById(`destruction_process${z}`);
@@ -538,7 +519,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 // Store the input values in the array and exclude NaN values
                 for (let i = 1; i <= 11; i++) {
                     var weightInput = document.getElementById(`weight${i}`);
-                    var intWeight = parseInt(weightInput.value);
+                    var intWeight = parseFloat(weightInput.value);
                     if (!isNaN(intWeight)) {
                         inputWeights.push(intWeight);
                     }
@@ -754,7 +735,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     break
                 }
                 else{
-                    waste_code = waste_code;
+                    waste_code = waste_id;
                 }
             }
             return waste_code

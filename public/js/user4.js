@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const username_response_promise = fetch('https://script.google.com/macros/s/AKfycbwmA97K4sdfq6dhzSsp14JU9KgQrFgSARNZbvSfiU7vuH8oEipt6TmcFo_o-jCI0kiQ/exec');
         const client_list_response_promise = fetch('https://script.google.com/macros/s/AKfycbxXnIsmgK52Ws9H2qAh47qkgZxDltFJaHSFV0e9UQRwaK1g_xwFUKGokL_hk4fq-_mhSg/exec');
         const type_of_waste_response_promise = fetch('https://script.google.com/macros/s/AKfycbw0yC-8_V38Zl1-KGyBwX1JmfTEW1jwyFxgpZ-oNC2lvtoAraUtkLCS27HfNbXi_l4IPg/exec');
+        const mtf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzkzS4OVm3IfNl6KwOfLZq_uO3MnsXfu-oS5Su_1kxhfo1mMoKpYDm8a4RxWqsQh0qv/exec');
+        const ltf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxBLMvyNDsT9_dlVO4Qc31dI4ErcymUHbzKimOpCZHgbJxip2XxCl7Wk3hJyqcdtrxU/exec');
         const wcf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyBFTBuFZ4PkvwmPi_3Pp_v74DCSEK2VpNy6janIGgaAK-P22wazmmShOKn6iwFbrQn/exec');
         const tpf_response_promise = fetch('https://script.google.com/macros/s/AKfycbwbKss2XtW5lylCrUe8IC-ZA4ffA5CM5tY6kqIja9t80NXJw2nB8RBOJFWbXQz0hWMadw/exec');
         const cod_response_promise = fetch('https://script.google.com/macros/s/AKfycbzgiOuXizUVviCsLVfihqYN9HJ3pyNr7ElHoCl3JGkbtQnChnm2U42yQuLd4UMH0ci5/exec');
@@ -12,6 +14,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             username_response,
             client_list_response,
             type_of_waste_response,
+            mtf_response,
+            ltf_response,
             wcf_response,
             tpf_response,
             cod_response,
@@ -20,6 +24,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             username_response_promise,
             client_list_response_promise,
             type_of_waste_response_promise,
+            mtf_response_promise,
+            ltf_response_promise,
             wcf_response_promise,
             tpf_response_promise,
             cod_response_promise,
@@ -29,6 +35,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const username_data_list  = await username_response.json();
         const client_data_list  = await client_list_response.json();
         const type_of_waste_data_list  = await type_of_waste_response.json();
+        const mtf_data_list  = await mtf_response.json();
+        const ltf_data_list  = await ltf_response.json();
         const wcf_data_list  = await wcf_response.json();
         const tpf_data_list  = await tpf_response.json();
         const cod_data_list  = await cod_response.json();
@@ -46,6 +54,201 @@ document.addEventListener('DOMContentLoaded', async function() {
         user_sidebar_officer.innerText = username_data_list.content[4][findTextInArray(username_data_list, "SECTIONS")];
         user_sidebar_department.innerText = username_data_list.content[4][findTextInArray(username_data_list, "DEPARTMENT")];
     
+        // marketing_dashboard
+        const marketing_dashboard_pco = document.getElementById("marketing_dashboard_pco");
+        const booked_transactions_marketing = marketing_dashboard_pco.querySelector("#booked_transactions");
+        const on_hauling_marketing = marketing_dashboard_pco.querySelector("#on_hauling");
+        const pending_marketing = marketing_dashboard_pco.querySelector("#pending");
+        const received_marketing = marketing_dashboard_pco.querySelector("#received");
+        const pending_list_marketing = marketing_dashboard_pco.querySelector("#pending_list"); 
+        const month_filter = document.querySelector("#month_filter");
+        function getCurrentMonthName() {
+            const months = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
+            const currentDate = new Date();
+            const currentMonthIndex = currentDate.getMonth();
+            
+            return months[currentMonthIndex];
+        }        
+        month_filter.value = getCurrentMonthName();
+        month_filter.addEventListener("change", generatePending)
+        generatePending();
+        function generatePending(){
+            var for_logistics_pending_counter_marketing = 0;
+            var for_logistics_on_haul_counter_marketing = 0;
+            var for_logistics_received_counter_marketing = 0;
+            var for_receiving_pending_counter_marketing = 0;
+            var for_receiving_received_counter_marketing = 0;    
+            var data_value_counter = 1;
+            var data_value = "";
+            for(let j = mtf_data_list.content.length - 1; j >= 1; j--){
+                var status = "PENDING";
+                var vehicle = "";
+                // for logistics
+                if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")] == "LOGISTICS" &&
+                month_filter.value == formatMonth(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])){
+                    vehicle = mtf_data_list.content[j][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")];
+                    for(let k = 1; k < ltf_data_list.content.length; k++){
+                        if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")] == ltf_data_list.content[k][findTextInArray(ltf_data_list, "MTF #")]){
+                            status = "ON HAULING";
+                            for_logistics_on_haul_counter_marketing += 1;
+                            for_logistics_pending_counter_marketing -= 1;
+                            for(let m = 1; m < wcf_data_list.content.length; m++){
+                                if(ltf_data_list.content[k][findTextInArray(ltf_data_list, "LTF #")] == wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
+                                    status = "RECEIVED";
+                                    for_logistics_received_counter_marketing += 1;
+                                    for_logistics_on_haul_counter_marketing -= 1;
+                                }
+                            }
+                        }
+                    }
+                    for_logistics_pending_counter_marketing += 1;
+                }
+                else if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")] == "LOGISTICS" &&
+                month_filter.value == "ALL"){
+                    vehicle = mtf_data_list.content[j][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")];
+                    for(let k = 1; k < ltf_data_list.content.length; k++){
+                        if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")] == ltf_data_list.content[k][findTextInArray(ltf_data_list, "MTF #")]){
+                            status = "ON HAULING";
+                            for_logistics_on_haul_counter_marketing += 1;
+                            for_logistics_pending_counter_marketing -= 1;
+                            for(let m = 1; m < wcf_data_list.content.length; m++){
+                                if(ltf_data_list.content[k][findTextInArray(ltf_data_list, "LTF #")] == wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
+                                    status = "RECEIVED";
+                                    for_logistics_received_counter_marketing += 1;
+                                    for_logistics_on_haul_counter_marketing -= 1;
+                                }
+                            }
+                        }
+                    }
+                    for_logistics_pending_counter_marketing += 1;
+                }
+                // for receiving
+                else if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")] == "RECEIVING" &&
+                month_filter.value == formatMonth(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])){
+                    vehicle = "PROVIDED BY CLIENT";
+                    for(let m = 1; m < wcf_data_list.content.length; m++){
+                        if((wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).slice(0,3) == "MTF"){
+                            if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")] == wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
+                                status = "RECEIVED";
+                                for_receiving_received_counter_marketing += 1;
+                                for_receiving_pending_counter_marketing -= 1;
+                            }
+                        }
+                    }
+                    for_receiving_pending_counter_marketing += 1;
+                }
+                else if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")] == "RECEIVING" &&
+                month_filter.value == "ALL"){
+                    vehicle = "PROVIDED BY CLIENT";
+                    for(let m = 1; m < wcf_data_list.content.length; m++){
+                        if((wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).slice(0,3) == "MTF"){
+                            if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")] == wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
+                                status = "RECEIVED";
+                                for_receiving_received_counter_marketing += 1;
+                                for_receiving_pending_counter_marketing -= 1;
+                            }
+                        }
+                    }
+                    for_receiving_pending_counter_marketing += 1;
+                }
+                if(month_filter.value == formatMonth(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])){
+                    data_value +=`
+                    <tr>
+                        <td>${data_value_counter}</td>
+                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")]}</td>
+                        <td>${date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])} /<br> ${time_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING TIME")])}</td>
+                        <td>${findClientName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")])}</td>
+                        <td>${findWasteCode(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")])}</td>
+                        <td>${findWasteName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")], (mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")]))}</td>
+                        <td>${vehicle}</td>
+                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")]}</td>
+                        <td>${status}</td>
+                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "REMARKS")]}</td>
+                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMITTED BY")]}</td>
+                    </tr>
+                    `
+                    data_value_counter += 1;
+                    pending_list_marketing.innerHTML = data_value;
+                }
+                else if(month_filter.value == "ALL"){
+                    data_value +=`
+                    <tr>
+                        <td>${data_value_counter}</td>
+                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")]}</td>
+                        <td>${date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])} /<br> ${time_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING TIME")])}</td>
+                        <td>${findClientName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")])}</td>
+                        <td>${findWasteCode(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")])}</td>
+                        <td>${findWasteName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")], (mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")]))}</td>
+                        <td>${vehicle}</td>
+                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")]}</td>
+                        <td>${status}</td>
+                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "REMARKS")]}</td>
+                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMITTED BY")]}</td>
+                    </tr>
+                    `
+                    data_value_counter += 1;
+                    pending_list_marketing.innerHTML = data_value;
+                }
+            }
+            booked_transactions_marketing.innerText = for_logistics_on_haul_counter_marketing + for_logistics_pending_counter_marketing + for_receiving_pending_counter_marketing + for_logistics_received_counter_marketing + for_receiving_received_counter_marketing;
+            on_hauling_marketing.innerText = for_logistics_on_haul_counter_marketing;
+            pending_marketing.innerText = for_logistics_pending_counter_marketing + for_receiving_pending_counter_marketing;
+            received_marketing.innerText = for_logistics_received_counter_marketing + for_receiving_received_counter_marketing;
+    
+            var options = {
+                series: [for_logistics_pending_counter_marketing + for_receiving_pending_counter_marketing, for_logistics_on_haul_counter_marketing, for_logistics_received_counter_marketing + for_receiving_received_counter_marketing],
+                chart: {
+                    width: 500, // Set the desired width
+                    height: 550, // Set the desired height
+                    type: 'pie',
+                },
+                plotOptions: {
+                    pie: {
+                        startAngle: 0,
+                        endAngle: 360
+                    }
+                },
+                dataLabels: {
+                    enabled: false, // Disable data labels inside the pie chart
+                },
+                fill: {
+                    type: 'gradient', // Use solid fill type
+                },
+                legend: {
+                    show: true,
+                    position: "left", // Set the legend position to "left"
+                    fontSize: '30px', // Increase legend font size as needed
+                    formatter: function (seriesName, opts) {
+                        // Here, you should use the correct variable to get the series value
+                        var seriesValue = opts.w.globals.series[opts.seriesIndex];
+                        var totalValue = opts.w.globals.series.reduce((acc, val) => acc + val, 0);
+                        var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
+                        return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
+                    },
+                    labels: {
+                        useSeriesColors: false, // Use custom color
+                    },
+                },
+                labels: ["Pending", "Ongoing", "Received"],
+                colors: ["#dc3545", "#c3c3c3", "#198754"], // Specify solid colors here
+                responsive: [{
+                    breakpoint: 480,
+                    options: {
+                        chart: {
+                            width: 200
+                        },
+                    }
+                }]
+            };
+            const pieChart = document.querySelector("#pieChart2");
+            while (pieChart.firstChild) {
+                pieChart.removeChild(pieChart.firstChild);
+            }
+            var chart = new ApexCharts(pieChart, options);
+            chart.render();
+        }
+
+
         // certification_dashboard
         const treated_counter_certification = document.querySelector("#certification_dashboard #treated_counter");
         const pending_counter_certification = document.querySelector("#certification_dashboard #pending_counter");

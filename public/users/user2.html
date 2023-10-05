@@ -224,7 +224,7 @@
             <!-- Sorting -->
             <section id="sorting_form">
                 <h2>SORTING FORM</h2><br>
-                <form id="sorting_form_id" action="https://script.google.com/macros/s/AKfycbzfOfZy9ni6bPE1xEEYuOU6PhkcjsS_RN3ugUpcvlSHqcPd8U4nOt5OIwKTM_DhTw_e/exec" method="post">
+                <form id="sorting_form_id" action="https://script.google.com/macros/s/AKfycbwCIU3aE-_7jaXO5ivZjLA4YWkHBhYyJA_ALRS5AeQ_bmJrTbfNUxTn6VwowIUgZ09a/exec" method="post">
                     <input type="hidden" name="user" id="user">
                     <input type="hidden" name="hauling_date" id="hauling_date">
                     <!-- <div class="sf_form">
@@ -312,15 +312,26 @@
                                 <input type="number" autocomplete="off" name="weight1" id="weight1" class="form-control" required>
                             </div>
                         </div>
-                        <div class="wrapper">
-                            <label for="destruction_process1">
-                                <i class="fa-solid fa-dumpster-fire"></i>
-                                Treatment Process
-                            </label>
-                            <div class="search_input search_treatment_type"  id="search_type_of_treatment1">
-                                <input type="text" autocomplete="off" name="destruction_process1" id="destruction_process1" class="form-control" required readonly>
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
+                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+                            <div class="wrapper">
+                                <label for="destruction_process1">
+                                    <i class="fa-solid fa-dumpster-fire"></i>
+                                    Treatment Process
+                                </label>
+                                <div class="search_input search_treatment_type"  id="search_type_of_treatment1">
+                                    <input type="text" autocomplete="off" name="destruction_process1" id="destruction_process1" class="form-control" required readonly>
+                                    <div class="autocom_box"></div>
+                                    <div class="icon"><i class="fas fa-search"></i></div>
+                                </div>
+                            </div>
+                            <div class="wrapper">
+                                <label for="form_no1">
+                                    <i class="fa-solid fa-list-ol"></i>
+                                    Gate Pass # / Truck Scale #
+                                </label><br>
+                                <div>
+                                    <input type="text" id="form_no1" autocomplete="off" name="form_no1" class="form-control" style="height: 55px;">
+                                </div>
                             </div>
                         </div>
                         <div class="wrapper">
@@ -357,15 +368,26 @@
                                 <input type="number" autocomplete="off" name="weight2" id="weight2" class="form-control">
                             </div>
                         </div>
-                        <div class="wrapper">
-                            <label for="destruction_process2">
-                                <i class="fa-solid fa-dumpster-fire"></i>
-                                Treatment Process
-                            </label>
-                            <div class="search_input search_treatment_type"  id="search_type_of_treatment2">
-                                <input type="text" autocomplete="off" name="destruction_process2" id="destruction_process2" class="form-control" required readonly>
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
+                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+                            <div class="wrapper">
+                                <label for="destruction_process2">
+                                    <i class="fa-solid fa-dumpster-fire"></i>
+                                    Treatment Process
+                                </label>
+                                <div class="search_input search_treatment_type"  id="search_type_of_treatment2">
+                                    <input type="text" autocomplete="off" name="destruction_process2" id="destruction_process2" class="form-control" required readonly>
+                                    <div class="autocom_box"></div>
+                                    <div class="icon"><i class="fas fa-search"></i></div>
+                                </div>
+                            </div>
+                            <div class="wrapper">
+                                <label for="form_no2">
+                                    <i class="fa-solid fa-list-ol"></i>
+                                    Gate Pass # / Truck Scale #
+                                </label><br>
+                                <div>
+                                    <input type="text" id="form_no2" autocomplete="off" name="form_no2" class="form-control" style="height: 55px;">
+                                </div>
                             </div>
                         </div>
                         <div class="wrapper">
@@ -401,17 +423,28 @@
                                 <input type="number" autocomplete="off" name="weight3" id="weight3" class="form-control">
                             </div>
                         </div>
-                        <div class="wrapper">
-                            <label for="destruction_process3">
-                                <i class="fa-solid fa-dumpster-fire"></i>
-                                Treatment Process
-                            </label>
-                            <div class="search_input search_treatment_type"  id="search_type_of_treatment3">
-                                <input type="text" autocomplete="off" name="destruction_process3" id="destruction_process3" class="form-control" required readonly>
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
+                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+                            <div class="wrapper">
+                                <label for="destruction_process3">
+                                    <i class="fa-solid fa-dumpster-fire"></i>
+                                    Treatment Process
+                                </label>
+                                <div class="search_input search_treatment_type"  id="search_type_of_treatment3">
+                                    <input type="text" autocomplete="off" name="destruction_process3" id="destruction_process3" class="form-control" required readonly>
+                                    <div class="autocom_box"></div>
+                                    <div class="icon"><i class="fas fa-search"></i></div>
+                                </div>
                             </div>
-                        </div>
+                            <div class="wrapper">
+                                <label for="form_no3">
+                                    <i class="fa-solid fa-list-ol"></i>
+                                    Gate Pass # / Truck Scale #
+                                </label><br>
+                                <div>
+                                    <input type="text" id="form_no3" autocomplete="off" name="form_no3" class="form-control" style="height: 55px;">
+                                </div>
+                            </div>
+                        </div>  
                         <div class="wrapper">
                             <label for="sf_form_no3">
                                 <i class="fa-solid fa-list-ol"></i>
@@ -445,15 +478,26 @@
                                 <input type="number" autocomplete="off" name="weight4" id="weight4" class="form-control">
                             </div>
                         </div>
-                        <div class="wrapper">
-                            <label for="destruction_process4">
-                                <i class="fa-solid fa-dumpster-fire"></i>
-                                Treatment Process
-                            </label>
-                            <div class="search_input search_treatment_type"  id="search_type_of_treatment4">
-                                <input type="text" autocomplete="off" name="destruction_process4" id="destruction_process4" class="form-control" required readonly>
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
+                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+                            <div class="wrapper">
+                                <label for="destruction_process4">
+                                    <i class="fa-solid fa-dumpster-fire"></i>
+                                    Treatment Process
+                                </label>
+                                <div class="search_input search_treatment_type"  id="search_type_of_treatment4">
+                                    <input type="text" autocomplete="off" name="destruction_process4" id="destruction_process4" class="form-control" required readonly>
+                                    <div class="autocom_box"></div>
+                                    <div class="icon"><i class="fas fa-search"></i></div>
+                                </div>
+                            </div>
+                            <div class="wrapper">
+                                <label for="form_no4">
+                                    <i class="fa-solid fa-list-ol"></i>
+                                    Gate Pass # / Truck Scale #
+                                </label><br>
+                                <div>
+                                    <input type="text" id="form_no4" autocomplete="off" name="form_no4" class="form-control" style="height: 55px;">
+                                </div>
                             </div>
                         </div>
                         <div class="wrapper">
@@ -489,15 +533,26 @@
                                 <input type="number" autocomplete="off" name="weight5" id="weight5" class="form-control">
                             </div>
                         </div>
-                        <div class="wrapper">
-                            <label for="destruction_process5">
-                                <i class="fa-solid fa-dumpster-fire"></i>
-                                Treatment Process
-                            </label>
-                            <div class="search_input search_treatment_type"  id="search_type_of_treatment5">
-                                <input type="text" autocomplete="off" name="destruction_process5" id="destruction_process5" class="form-control" required readonly>
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
+                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+                            <div class="wrapper">
+                                <label for="destruction_process5">
+                                    <i class="fa-solid fa-dumpster-fire"></i>
+                                    Treatment Process
+                                </label>
+                                <div class="search_input search_treatment_type"  id="search_type_of_treatment5">
+                                    <input type="text" autocomplete="off" name="destruction_process5" id="destruction_process5" class="form-control" required readonly>
+                                    <div class="autocom_box"></div>
+                                    <div class="icon"><i class="fas fa-search"></i></div>
+                                </div>
+                            </div>
+                            <div class="wrapper">
+                                <label for="form_no5">
+                                    <i class="fa-solid fa-list-ol"></i>
+                                    Gate Pass # / Truck Scale #
+                                </label><br>
+                                <div>
+                                    <input type="text" id="form_no5" autocomplete="off" name="form_no5" class="form-control" style="height: 55px;">
+                                </div>
                             </div>
                         </div>
                         <div class="wrapper">
@@ -533,15 +588,26 @@
                                 <input type="number" autocomplete="off" name="weight6" id="weight6" class="form-control">
                             </div>
                         </div>
-                        <div class="wrapper">
-                            <label for="destruction_process6">
-                                <i class="fa-solid fa-dumpster-fire"></i>
-                                Treatment Process
-                            </label>
-                            <div class="search_input search_treatment_type"  id="search_type_of_treatment6">
-                                <input type="text" autocomplete="off" name="destruction_process6" id="destruction_process6" class="form-control" required readonly>
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
+                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+                            <div class="wrapper">
+                                <label for="destruction_process6">
+                                    <i class="fa-solid fa-dumpster-fire"></i>
+                                    Treatment Process
+                                </label>
+                                <div class="search_input search_treatment_type"  id="search_type_of_treatment6">
+                                    <input type="text" autocomplete="off" name="destruction_process6" id="destruction_process6" class="form-control" required readonly>
+                                    <div class="autocom_box"></div>
+                                    <div class="icon"><i class="fas fa-search"></i></div>
+                                </div>
+                            </div>
+                            <div class="wrapper">
+                                <label for="form_no6">
+                                    <i class="fa-solid fa-list-ol"></i>
+                                    Gate Pass # / Truck Scale #
+                                </label><br>
+                                <div>
+                                    <input type="text" id="form_no6" autocomplete="off" name="form_no6" class="form-control" style="height: 55px;">
+                                </div>
                             </div>
                         </div>
                         <div class="wrapper">
@@ -577,15 +643,26 @@
                                 <input type="number" autocomplete="off" name="weight7" id="weight7" class="form-control">
                             </div>
                         </div>
-                        <div class="wrapper">
-                            <label for="destruction_process7">
-                                <i class="fa-solid fa-dumpster-fire"></i>
-                                Treatment Process
-                            </label>
-                            <div class="search_input search_treatment_type"  id="search_type_of_treatment7">
-                                <input type="text" autocomplete="off" name="destruction_process7" id="destruction_process7" class="form-control" required readonly>
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
+                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+                            <div class="wrapper">
+                                <label for="destruction_process7">
+                                    <i class="fa-solid fa-dumpster-fire"></i>
+                                    Treatment Process
+                                </label>
+                                <div class="search_input search_treatment_type"  id="search_type_of_treatment7">
+                                    <input type="text" autocomplete="off" name="destruction_process7" id="destruction_process7" class="form-control" required readonly>
+                                    <div class="autocom_box"></div>
+                                    <div class="icon"><i class="fas fa-search"></i></div>
+                                </div>
+                            </div>
+                            <div class="wrapper">
+                                <label for="form_no7">
+                                    <i class="fa-solid fa-list-ol"></i>
+                                    Gate Pass # / Truck Scale #
+                                </label><br>
+                                <div>
+                                    <input type="text" id="form_no7" autocomplete="off" name="form_no7" class="form-control" style="height: 55px;">
+                                </div>
                             </div>
                         </div>
                         <div class="wrapper">
@@ -621,15 +698,26 @@
                                 <input type="number" autocomplete="off" name="weight8" id="weight8" class="form-control">
                             </div>
                         </div>
-                        <div class="wrapper">
-                            <label for="destruction_process8">
-                                <i class="fa-solid fa-dumpster-fire"></i>
-                                Treatment Process
-                            </label>
-                            <div class="search_input search_treatment_type"  id="search_type_of_treatment8">
-                                <input type="text" autocomplete="off" name="destruction_process8" id="destruction_process8" class="form-control" required readonly>
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
+                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+                            <div class="wrapper">
+                                <label for="destruction_process8">
+                                    <i class="fa-solid fa-dumpster-fire"></i>
+                                    Treatment Process
+                                </label>
+                                <div class="search_input search_treatment_type"  id="search_type_of_treatment8">
+                                    <input type="text" autocomplete="off" name="destruction_process8" id="destruction_process8" class="form-control" required readonly>
+                                    <div class="autocom_box"></div>
+                                    <div class="icon"><i class="fas fa-search"></i></div>
+                                </div>
+                            </div>
+                            <div class="wrapper">
+                                <label for="form_no8">
+                                    <i class="fa-solid fa-list-ol"></i>
+                                    Gate Pass # / Truck Scale #
+                                </label><br>
+                                <div>
+                                    <input type="text" id="form_no8" autocomplete="off" name="form_no8" class="form-control" style="height: 55px;">
+                                </div>
                             </div>
                         </div>
                         <div class="wrapper">
@@ -665,15 +753,26 @@
                                 <input type="number" autocomplete="off" name="weight9" id="weight9" class="form-control">
                             </div>
                         </div>
-                        <div class="wrapper">
-                            <label for="destruction_process9">
-                                <i class="fa-solid fa-dumpster-fire"></i>
-                                Treatment Process
-                            </label>
-                            <div class="search_input search_treatment_type"  id="search_type_of_treatment9">
-                                <input type="text" autocomplete="off" name="destruction_process9" id="destruction_process9" class="form-control" required readonly>
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
+                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+                            <div class="wrapper">
+                                <label for="destruction_process9">
+                                    <i class="fa-solid fa-dumpster-fire"></i>
+                                    Treatment Process
+                                </label>
+                                <div class="search_input search_treatment_type"  id="search_type_of_treatment9">
+                                    <input type="text" autocomplete="off" name="destruction_process9" id="destruction_process9" class="form-control" required readonly>
+                                    <div class="autocom_box"></div>
+                                    <div class="icon"><i class="fas fa-search"></i></div>
+                                </div>
+                            </div>
+                            <div class="wrapper">
+                                <label for="form_no9">
+                                    <i class="fa-solid fa-list-ol"></i>
+                                    Gate Pass # / Truck Scale #
+                                </label><br>
+                                <div>
+                                    <input type="text" id="form_no9" autocomplete="off" name="form_no9" class="form-control" style="height: 55px;">
+                                </div>
                             </div>
                         </div>
                         <div class="wrapper">
@@ -709,15 +808,26 @@
                                 <input type="number" autocomplete="off" name="weight10" id="weight10" class="form-control">
                             </div>
                         </div>
-                        <div class="wrapper">
-                            <label for="destruction_process10">
-                                <i class="fa-solid fa-dumpster-fire"></i>
-                                Treatment Process
-                            </label>
-                            <div class="search_input search_treatment_type"  id="search_type_of_treatment10">
-                                <input type="text" autocomplete="off" name="destruction_process10" id="destruction_process10" class="form-control" required readonly>
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
+                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+                            <div class="wrapper">
+                                <label for="destruction_process10">
+                                    <i class="fa-solid fa-dumpster-fire"></i>
+                                    Treatment Process
+                                </label>
+                                <div class="search_input search_treatment_type"  id="search_type_of_treatment10">
+                                    <input type="text" autocomplete="off" name="destruction_process10" id="destruction_process10" class="form-control" required readonly>
+                                    <div class="autocom_box"></div>
+                                    <div class="icon"><i class="fas fa-search"></i></div>
+                                </div>
+                            </div>
+                            <div class="wrapper">
+                                <label for="form_no10">
+                                    <i class="fa-solid fa-list-ol"></i>
+                                    Gate Pass # / Truck Scale #
+                                </label><br>
+                                <div>
+                                    <input type="text" id="form_no10" autocomplete="off" name="form_no10" class="form-control" style="height: 55px;">
+                                </div>
                             </div>
                         </div>
                         <div class="wrapper">
@@ -794,6 +904,7 @@
                                 <div class="search_input">
                                     <input type="text" id="sf_discrepancy" autocomplete="off" name="sf_discrepancy" class="form-control" readonly>
                                     <input type="hidden" id="sf_form_no11" autocomplete="off" name="sf_form_no11" class="form-control" readonly>
+                                    <input type="hidden" id="form_no11" autocomplete="off" name="form_no11" class="form-control" style="height: 55px;">
                                 </div>
                             </div>
                             <div class="wrapper d-none">

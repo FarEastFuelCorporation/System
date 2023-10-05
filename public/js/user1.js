@@ -714,7 +714,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     break
                 }
                 else{
-                    waste_code = waste_code;
+                    waste_code = waste_id;
                 }
             }
             return waste_code

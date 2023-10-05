@@ -130,13 +130,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                     wcf_tpf_transaction_sorting.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")]);
                 }
             }
-
-            // Get elements from sf_transaction not included in sf_tpf_transaction
+    
             const pending_treatment_sf = sf_transaction_treatment.filter((element) => !sf_tpf_transaction_treatment.includes(element));
             const pending_treatment_wcf = wcf_transaction_sorting.filter((element) => !wcf_tpf_transaction_sorting.includes(element));
             const finished_treatment = sf_transaction_treatment.filter((element) => sf_tpf_transaction_treatment.includes(element));
             const filtered_pending_treatment_wcf = wcf_tpf_transaction_sorting.filter(element => !sf_tpf_wcf_transaction_treatment.includes(element));
-    
+
             // pending_list
             treated_counter_treatment.innerText = sf_tpf_transaction_treatment.length + filtered_pending_treatment_wcf.length;
             total_counter_treatment.innerText = sf_transaction_treatment.length + wcf_transaction_sorting.length;
@@ -268,8 +267,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                 }
             }
-            pending_list_treatment.innerHTML = data_value;    
-    
+            pending_list_treatment.innerHTML = data_value;
+
             // finished_list
             var data_value = "";
             var data_value_counter = 1;
@@ -338,6 +337,10 @@ document.addEventListener('DOMContentLoaded', async function() {
             finished_list_treatment.innerHTML = data_value;        
         }
 
+        // Get elements from sf_transaction not included in sf_tpf_transaction
+        const pending_treatment_sf = sf_transaction_treatment.filter((element) => !sf_tpf_transaction_treatment.includes(element));
+        const pending_treatment_wcf = wcf_transaction_sorting.filter((element) => !wcf_tpf_transaction_sorting.includes(element));
+
         // FORM GENERATOR
         // tpf_data_list
         const tpf_form_no = document.getElementById("tpf_form_no");
@@ -366,6 +369,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const remove_item_button = document.getElementById("remove_item_button");
         const completion = document.getElementById("completion");
         const buttons = document.getElementById("buttons");
+        const machine_counter = document.getElementById("machine_counter");
 
         search_sf_form_no_button.addEventListener("click", () => {
             var data_value;
@@ -377,6 +381,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             SF #: ${sf_data_list.content[a][findTextInArray(sf_data_list, "SF #")]}<br>
                             WCF #: ${sf_data_list.content[a][findTextInArray(sf_data_list, "WCF #")]}<br>
                             CLIENT: ${findClientName(sf_data_list.content[a][findTextInArray(sf_data_list, "CLIENT ID")])}<br>
+                            WASTE NAME: ${sf_data_list.content[a][findTextInArray(sf_data_list, "WASTE NAME")]}<br>
                             WASTE CODE: ${findWasteCode(sf_data_list.content[a][findTextInArray(sf_data_list, "WASTE ID")])}<br>
                             WASTE DESCRIPTION: ${findWasteName(sf_data_list.content[a][findTextInArray(sf_data_list, "CLIENT ID")], sf_data_list.content[a][findTextInArray(sf_data_list, "WASTE ID")])}<br>
                             DESTRUCTION PROCESS: ${sf_data_list.content[a][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")]}<br>
@@ -392,15 +397,31 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <i class="fa-solid fa-gears"></i>
                                     Machine
                                 </label><br>
-                                <div>
-                                    <select name="machine" id="machine" class="form-control">
-                                        <option value="">Select Machine</option>
-                                        <option value="THERMAL 1 (ALPHA)">THERMAL 1 (ALPHA)</option>
-                                        <option value="THERMAL 2 (BRAVO)">THERMAL 2 (BRAVO)</option>
-                                        <option value="THERMAL 3 (CHARLIE)">THERMAL 3 (CHARLIE)</option>
-                                    </select>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px">
+                                    <div>
+                                        <label for="tpf_form_no">
+                                            <i class="fa-solid fa-gears"></i>
+                                            Thermal Gasifier Alpha
+                                        </label><br>
+                                        <input type="number" autocomplete="off" name="thermal_alpha" id="thermal_alpha" class="form-control" placeholder="Input Weight">
+                                    </div>
+                                    <div>
+                                        <label for="tpf_form_no">
+                                            <i class="fa-solid fa-gears"></i>
+                                            Thermal Gasifier Bravo
+                                        </label><br>
+                                        <input type="number" autocomplete="off" name="thermal_bravo" id="thermal_bravo" class="form-control" placeholder="Input Weight">
+                                    </div>
+                                    <div>
+                                        <label for="tpf_form_no">
+                                            <i class="fa-solid fa-gears"></i>
+                                            Thermal Gasifier Charlie
+                                        </label><br>
+                                        <input type="number" autocomplete="off" name="thermal_charlie" id="thermal_charlie" class="form-control" placeholder="Input Weight">
+                                    </div>
                                 </div><br>
                                 `
+                                machine_counter.value = 3
                             }
                             else if(sf_data_list.content[a][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")] == 'PYROLYSIS'){
                                 machine_list.innerHTML = `
@@ -417,11 +438,17 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     </select>
                                 </div><br>
                                 `
+                                machine_counter.value = 3
+                            }
+                            else{
+                                machine_counter.value = 1
                             }
                             wcf_form_no.value = sf_data_list.content[a][findTextInArray(sf_data_list, "WCF #")];
                             client.value = sf_data_list.content[a][findTextInArray(sf_data_list, "CLIENT ID")];
                             waste_description.value = sf_data_list.content[a][findTextInArray(sf_data_list, "WASTE ID")];
                             waste_code_input.value = findWasteCode(sf_data_list.content[a][findTextInArray(sf_data_list, "WASTE NAME")]);
+                            console.log(sf_data_list.content[a][findTextInArray(sf_data_list, "WASTE NAME")])
+                            console.log(waste_code_input.value)
                             weight.value = sf_data_list.content[a][findTextInArray(sf_data_list, "WEIGHT")];
                             destruction_process.value = sf_data_list.content[a][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")];
                             hauling_date.value = date_decoder(sf_data_list.content[a][findTextInArray(sf_data_list, "HAULING DATE")]);
@@ -455,15 +482,31 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <i class="fa-solid fa-gears"></i>
                                     Machine
                                 </label><br>
-                                <div>
-                                    <select name="machine" id="machine" class="form-control">
-                                        <option value="">Select Machine</option>
-                                        <option value="THERMAL 1 (ALPHA)">THERMAL 1 (ALPHA)</option>
-                                        <option value="THERMAL 2 (BRAVO)">THERMAL 2 (BRAVO)</option>
-                                        <option value="THERMAL 3 (CHARLIE)">THERMAL 3 (CHARLIE)</option>
-                                    </select>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px">
+                                    <div>
+                                        <label for="tpf_form_no">
+                                            <i class="fa-solid fa-gears"></i>
+                                            Thermal Gasifier Alpha
+                                        </label><br>
+                                        <input type="number" autocomplete="off" name="thermal_alpha" id="thermal_alpha" class="form-control" placeholder="Input Weight">
+                                    </div>
+                                    <div>
+                                        <label for="tpf_form_no">
+                                            <i class="fa-solid fa-gears"></i>
+                                            Thermal Gasifier Bravo
+                                        </label><br>
+                                        <input type="number" autocomplete="off" name="thermal_bravo" id="thermal_bravo" class="form-control" placeholder="Input Weight">
+                                    </div>
+                                    <div>
+                                        <label for="tpf_form_no">
+                                            <i class="fa-solid fa-gears"></i>
+                                            Thermal Gasifier Charlie
+                                        </label><br>
+                                        <input type="number" autocomplete="off" name="thermal_charlie" id="thermal_charlie" class="form-control" placeholder="Input Weight">
+                                    </div>
                                 </div><br>
                                 `
+                                machine_counter.value = 3
                             }
                             else if(findTreatmentProcess(wcf_data_list.content[a][findTextInArray(wcf_data_list, "WASTE ID")]) == 'PYROLYSIS'){
                                 machine_list.innerHTML = `
@@ -480,6 +523,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     </select>
                                 </div><br>
                                 `
+                                machine_counter.value = 3
                             }
                             wcf_form_no.value = wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")];
                             client.value = wcf_data_list.content[a][findTextInArray(wcf_data_list, "CLIENT ID")];
@@ -610,7 +654,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     break
                 }
                 else{
-                    waste_code = waste_code;
+                    waste_code = waste_id;
                 }
             }
             return waste_code
@@ -618,7 +662,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         function findWasteName(client_id, waste_id){
             var waste_name = "";
             for(let c = 1; c < qlf_data_list.content.length; c++){
-                if(client_id == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")]&& 
+                if(client_id == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")] && 
                     waste_id == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
                     waste_name = (qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE NAME")]);
                     break
@@ -636,7 +680,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             return treatment_process
         }
-
     } catch (error) {
         console.error('Error fetching data:', error);
     }
