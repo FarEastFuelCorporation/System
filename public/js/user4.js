@@ -240,188 +240,263 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                 }]
             };
-            const pieChart = document.querySelector("#pieChart2");
+            const pieChart2 = document.querySelector("#pieChart2");
+            while (pieChart2.firstChild) {
+                pieChart2.removeChild(pieChart2.firstChild);
+            }
+            var chart = new ApexCharts(pieChart2, options);
+            chart.render();
+
+            // certification_dashboard
+            const certification_dashboard = document.querySelector("#certification_dashboard");
+            const treated_counter_certification = certification_dashboard.querySelector("#treated_counter");
+            const pending_counter_certification = certification_dashboard.querySelector("#pending_counter");
+            const certified_counter_certification = certification_dashboard.querySelector("#certified_counter");
+            const pending_list_certification = certification_dashboard.querySelector("#pending_list");
+            const finished_list_certification = certification_dashboard.querySelector("#finished_list");
+            let sf_transaction_certification = []; // Variable containing existing elements
+            let sf_tpf_transaction_certification = []; // Variable containing existing elements
+            
+            for (let i = 1; i < tpf_data_list.content.length; i++) {
+                if (!sf_transaction_certification.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "TPF #")]) &&
+                month_filter.value == formatMonth(tpf_data_list.content[i][findTextInArray(tpf_data_list, "HAULING DATE")])) {
+                    sf_transaction_certification.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "TPF #")]);
+                }
+                else if (!sf_transaction_certification.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "TPF #")]) &&
+                month_filter.value == "ALL") {
+                    sf_transaction_certification.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "TPF #")]);
+                }
+            }
+    
+            for (let i = 1; i < cod_data_list.content.length; i++) {
+                if (!sf_tpf_transaction_certification.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "TPF #")]) &&
+                month_filter.value == formatMonth(cod_data_list.content[j][findTextInArray(cod_data_list, "HAULING DATE")])) {
+                    sf_tpf_transaction_certification.push(cod_data_list.content[i][findTextInArray(cod_data_list, "TPF #")]);
+                }
+            }
+    
+            // Get elements from sf_transaction not included in sf_tpf_transaction
+            const pending_certification = sf_transaction_certification.filter((element) => !sf_tpf_transaction_certification.includes(element));
+            const finish_certification = sf_transaction_certification.filter((element) => sf_tpf_transaction_certification.includes(element));
+    
+            treated_counter_certification.innerText = sf_transaction_certification.length;
+            pending_counter_certification.innerText = sf_transaction_certification.length - sf_tpf_transaction_certification.length;
+            certified_counter_certification.innerText = sf_tpf_transaction_certification.length;
+            
+            var options = {
+                series: [sf_transaction_certification.length - sf_tpf_transaction_certification.length, sf_tpf_transaction_certification.length],
+                chart: {
+                    width: 500, // Set the desired width
+                    height: 550, // Set the desired height
+                    type: 'pie',
+                },
+                plotOptions: {
+                    pie: {
+                        startAngle: 0,
+                        endAngle: 360
+                    }
+                },
+                dataLabels: {
+                    enabled: false, // Disable data labels inside the pie chart
+                },
+                fill: {
+                    type: 'gradient', // Use solid fill type
+                },
+                legend: {
+                    show: true,
+                    position: "left", // Set the legend position to "left"
+                    fontSize: '30px', // Increase legend font size as needed
+                    formatter: function (seriesName, opts) {
+                        // Here, you should use the correct variable to get the series value
+                        var seriesValue = opts.w.globals.series[opts.seriesIndex];
+                        var totalValue = opts.w.globals.series.reduce((acc, val) => acc + val, 0);
+                        var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
+                        return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
+                    },
+                    labels: {
+                        useSeriesColors: false, // Use custom color
+                    },
+                },
+                labels: ["Pending", "Treated"],
+                colors: ["#dc3545", "#198754"], // Specify solid colors here
+                responsive: [{
+                    breakpoint: 480,
+                    options: {
+                        chart: {
+                            width: 200
+                        },
+                    }
+                }]
+            };
+            const pieChart = document.querySelector("#pieChart");
             while (pieChart.firstChild) {
                 pieChart.removeChild(pieChart.firstChild);
             }
             var chart = new ApexCharts(pieChart, options);
             chart.render();
-        }
-
-
-        // certification_dashboard
-        const treated_counter_certification = document.querySelector("#certification_dashboard #treated_counter");
-        const pending_counter_certification = document.querySelector("#certification_dashboard #pending_counter");
-        const certified_counter_certification = document.querySelector("#certification_dashboard #certified_counter");
-        const pending_list_certification = document.querySelector("#certification_dashboard #pending_list");
-        const finished_list_certification = document.querySelector("#certification_dashboard #finished_list");
-        var sf_tpf_transaction_counter_certification = 0;
-        var sf_transaction_counter_certification = 0;
-        let sf_transaction_certification = []; // Variable containing existing elements
-        let sf_tpf_transaction_certification = []; // Variable containing existing elements
-        
-        for (let i = 1; i < tpf_data_list.content.length; i++) {
-            if (!sf_transaction_certification.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "TPF #")])) {
-                sf_transaction_certification.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "TPF #")]);
-                sf_transaction_counter_certification += 1
-            }
-        }
-
-        for (let i = 1; i < cod_data_list.content.length; i++) {
-            if (!sf_tpf_transaction_certification.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "TPF #")])) {
-                sf_tpf_transaction_certification.push(cod_data_list.content[i][findTextInArray(cod_data_list, "TPF #")]);
-                sf_tpf_transaction_counter_certification += 1
-            }
-        }
-
-        // Get elements from sf_transaction not included in sf_tpf_transaction
-        const pending_certification = sf_transaction_certification.filter((element) => !sf_tpf_transaction_certification.includes(element));
-        const finish_certification = sf_transaction_certification.filter((element) => sf_tpf_transaction_certification.includes(element));
-
-        treated_counter_certification.innerText = sf_transaction_counter_certification;
-        pending_counter_certification.innerText = sf_transaction_counter_certification - sf_tpf_transaction_counter_certification;
-        certified_counter_certification.innerText = sf_tpf_transaction_counter_certification;
-        
-        var options = {
-            series: [sf_transaction_counter_certification - sf_tpf_transaction_counter_certification, sf_tpf_transaction_counter_certification],
-            chart: {
-                width: 500, // Set the desired width
-                height: 550, // Set the desired height
-                type: 'pie',
-            },
-            plotOptions: {
-                pie: {
-                    startAngle: 0,
-                    endAngle: 360
-                }
-            },
-            dataLabels: {
-                enabled: false, // Disable data labels inside the pie chart
-            },
-            fill: {
-                type: 'gradient', // Use solid fill type
-            },
-            legend: {
-                show: true,
-                position: "left", // Set the legend position to "left"
-                fontSize: '30px', // Increase legend font size as needed
-                formatter: function (seriesName, opts) {
-                    // Here, you should use the correct variable to get the series value
-                    var seriesValue = opts.w.globals.series[opts.seriesIndex];
-                    var totalValue = opts.w.globals.series.reduce((acc, val) => acc + val, 0);
-                    var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
-                    return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
-                },
-                labels: {
-                    useSeriesColors: false, // Use custom color
-                },
-            },
-            labels: ["Pending", "Treated"],
-            colors: ["#dc3545", "#198754"], // Specify solid colors here
-            responsive: [{
-                breakpoint: 480,
-                options: {
-                    chart: {
-                        width: 200
-                    },
-                }
-            }]
-        };
-        const pieChart = document.querySelector("#pieChart");
-        while (pieChart.firstChild) {
-            pieChart.removeChild(pieChart.firstChild);
-        }
-        var chart = new ApexCharts(pieChart, options);
-        chart.render();
-
-        var data_value = "";
-        var data_value_counter = 1;
-        for(let i = 0; i < pending_certification.length; i++){
-            var status;
-            var date_accomplished;
-            var target_date;
-            for(let j = 1; j < tpf_data_list.content.length; j++){
-                if(pending_certification[i] == tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")]){
-                    date_accomplished = new Date(date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")]));
-                    target_date = new Date(date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")]));
-                    if(date_accomplished.getDate() < target_date.getDate()){
-                        status = "AHEAD OF TIME";
-                    }
-                    else if(date_accomplished.getDate() == target_date.getDate()){
-                        status = "ON TIME";
-                    }
-                    else if(date_accomplished.getDate() > target_date.getDate()){
-                        status = "DELAYED";
-                    }
-                    data_value +=`
-                    <tr>
-                        <td>${data_value_counter}</td>
-                        <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")]}</td>
-                        <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")])} /<br> ${time_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION TIME")])}</td>
-                        <td>${findClientName(tpf_data_list.content[j][findTextInArray(tpf_data_list, "CLIENT ID")])}</td>
-                        <td>${findWasteCode(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
-                        <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
-                        <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "WEIGHT")]} kg.</td>
-                        <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
-                        <td>${status}</td>
-                        </tr>
-                    `
-                    data_value_counter += 1;
-                }
-            }
-        }
-        pending_list_certification.innerHTML = data_value;
-
-        var data_value = "";
-        var data_value_counter = 1;
-        for(let i = 0; i < finish_certification.length; i++){
-            var status;
-            var date_accomplished;
-            var target_date;
-            for(let j = 1; j < tpf_data_list.content.length; j++){
-                if(finish_certification[i] == tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")]){
-                    date_accomplished = new Date(date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")]));
-                    target_date = new Date(date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")]));
-                    if(date_accomplished.getDate() < target_date.getDate()){
-                        status = "AHEAD OF TIME";
-                    }
-                    else if(date_accomplished.getDate() == target_date.getDate()){
-                        status = "ON TIME";
-                    }
-                    else if(date_accomplished.getDate() > target_date.getDate()){
-                        status = "DELAYED";
-                    }
-                    var cod_no;
-                    var finished_date;
-                    var finished_time;
-                    for(let k = 1; k < cod_data_list.content.length; k++){
-                        if(tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")] == cod_data_list.content[k][findTextInArray(cod_data_list, "TPF #")]){
-                            cod_no = cod_data_list.content[k][findTextInArray(cod_data_list, "COD #")];
-                            finished_date = date_decoder(cod_data_list.content[k][findTextInArray(cod_data_list, "DATE ACCOMPLISHED")]);
-                            finished_time = time_decoder(cod_data_list.content[k][findTextInArray(cod_data_list, "TIME ACCOMPLISHED")]);
+    
+            var data_value = "";
+            var data_value_counter = 1;
+            for(let i = 0; i < pending_certification.length; i++){
+                var status;
+                var date_accomplished;
+                var target_date;
+                for(let j = 1; j < tpf_data_list.content.length; j++){
+                    if(pending_certification[i] == tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")] &&
+                    month_filter.value == formatMonth(tpf_data_list.content[j][findTextInArray(tpf_data_list, "HAULING DATE")])){
+                        date_accomplished = new Date(date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")]));
+                        target_date = new Date(date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")]));
+                        if(date_accomplished.getDate() < target_date.getDate()){
+                            status = "AHEAD OF TIME";
                         }
+                        else if(date_accomplished.getDate() == target_date.getDate()){
+                            status = "ON TIME";
+                        }
+                        else if(date_accomplished.getDate() > target_date.getDate()){
+                            status = "DELAYED";
+                        }
+                        data_value +=`
+                        <tr>
+                            <td>${data_value_counter}</td>
+                            <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")]}</td>
+                            <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")])} /<br> ${time_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION TIME")])}</td>
+                            <td>${findClientName(tpf_data_list.content[j][findTextInArray(tpf_data_list, "CLIENT ID")])}</td>
+                            <td>${findWasteCode(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
+                            <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
+                            <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "WEIGHT")]} kg.</td>
+                            <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
+                            <td>${status}</td>
+                            </tr>
+                        `
+                        data_value_counter += 1;
                     }
-                    data_value +=`
-                    <tr>
-                        <td>${data_value_counter}</td>
-                        <td>${cod_no}</td>
-                        <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")]}</td>
-                        <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")])} /<br> ${time_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION TIME")])}</td>
-                        <td>${findClientName(tpf_data_list.content[j][findTextInArray(tpf_data_list, "CLIENT ID")])}</td>
-                        <td>${findWasteCode(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
-                        <td>${findWasteName(tpf_data_list.content[j][findTextInArray(tpf_data_list, "CLIENT ID")], tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
-                        <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "WEIGHT")]} kg.</td>
-                        <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
-                        <td>${status}</td>
-                        <td>${finished_date} /<br> ${finished_time}</td>
-                        <td>${calculateTravelTime(date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")]),time_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION TIME")]),finished_date,finished_time)}</td>
-                    </tr>
-                    `
-                    data_value_counter += 1;
+                    else if(pending_certification[i] == tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")] &&
+                    month_filter.value == "ALL"){
+                        date_accomplished = new Date(date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")]));
+                        target_date = new Date(date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")]));
+                        if(date_accomplished.getDate() < target_date.getDate()){
+                            status = "AHEAD OF TIME";
+                        }
+                        else if(date_accomplished.getDate() == target_date.getDate()){
+                            status = "ON TIME";
+                        }
+                        else if(date_accomplished.getDate() > target_date.getDate()){
+                            status = "DELAYED";
+                        }
+                        data_value +=`
+                        <tr>
+                            <td>${data_value_counter}</td>
+                            <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")]}</td>
+                            <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")])} /<br> ${time_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION TIME")])}</td>
+                            <td>${findClientName(tpf_data_list.content[j][findTextInArray(tpf_data_list, "CLIENT ID")])}</td>
+                            <td>${findWasteCode(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
+                            <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
+                            <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "WEIGHT")]} kg.</td>
+                            <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
+                            <td>${status}</td>
+                            </tr>
+                        `
+                        data_value_counter += 1;
+                    }
                 }
             }
+            pending_list_certification.innerHTML = data_value;
+    
+            var data_value = "";
+            var data_value_counter = 1;
+            for(let i = 0; i < finish_certification.length; i++){
+                var status;
+                var date_accomplished;
+                var target_date;
+                for(let j = 1; j < tpf_data_list.content.length; j++){
+                    if(finish_certification[i] == tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")] &&
+                    month_filter.value == formatMonth(tpf_data_list.content[j][findTextInArray(tpf_data_list, "HAULING DATE")])){
+                        date_accomplished = new Date(date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")]));
+                        target_date = new Date(date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")]));
+                        if(date_accomplished.getDate() < target_date.getDate()){
+                            status = "AHEAD OF TIME";
+                        }
+                        else if(date_accomplished.getDate() == target_date.getDate()){
+                            status = "ON TIME";
+                        }
+                        else if(date_accomplished.getDate() > target_date.getDate()){
+                            status = "DELAYED";
+                        }
+                        var cod_no;
+                        var finished_date;
+                        var finished_time;
+                        for(let k = 1; k < cod_data_list.content.length; k++){
+                            if(tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")] == cod_data_list.content[k][findTextInArray(cod_data_list, "TPF #")]){
+                                cod_no = cod_data_list.content[k][findTextInArray(cod_data_list, "COD #")];
+                                finished_date = date_decoder(cod_data_list.content[k][findTextInArray(cod_data_list, "DATE ACCOMPLISHED")]);
+                                finished_time = time_decoder(cod_data_list.content[k][findTextInArray(cod_data_list, "TIME ACCOMPLISHED")]);
+                            }
+                        }
+                        data_value +=`
+                        <tr>
+                            <td>${data_value_counter}</td>
+                            <td>${cod_no}</td>
+                            <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")]}</td>
+                            <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")])} /<br> ${time_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION TIME")])}</td>
+                            <td>${findClientName(tpf_data_list.content[j][findTextInArray(tpf_data_list, "CLIENT ID")])}</td>
+                            <td>${findWasteCode(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
+                            <td>${findWasteName(tpf_data_list.content[j][findTextInArray(tpf_data_list, "CLIENT ID")], tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
+                            <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "WEIGHT")]} kg.</td>
+                            <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
+                            <td>${status}</td>
+                            <td>${finished_date} /<br> ${finished_time}</td>
+                            <td>${calculateTravelTime(date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")]),time_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION TIME")]),finished_date,finished_time)}</td>
+                        </tr>
+                        `
+                        data_value_counter += 1;
+                    }
+                    if(finish_certification[i] == tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")] &&
+                    month_filter.value == "ALL"){
+                        date_accomplished = new Date(date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")]));
+                        target_date = new Date(date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")]));
+                        if(date_accomplished.getDate() < target_date.getDate()){
+                            status = "AHEAD OF TIME";
+                        }
+                        else if(date_accomplished.getDate() == target_date.getDate()){
+                            status = "ON TIME";
+                        }
+                        else if(date_accomplished.getDate() > target_date.getDate()){
+                            status = "DELAYED";
+                        }
+                        var cod_no;
+                        var finished_date;
+                        var finished_time;
+                        for(let k = 1; k < cod_data_list.content.length; k++){
+                            if(tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")] == cod_data_list.content[k][findTextInArray(cod_data_list, "TPF #")]){
+                                cod_no = cod_data_list.content[k][findTextInArray(cod_data_list, "COD #")];
+                                finished_date = date_decoder(cod_data_list.content[k][findTextInArray(cod_data_list, "DATE ACCOMPLISHED")]);
+                                finished_time = time_decoder(cod_data_list.content[k][findTextInArray(cod_data_list, "TIME ACCOMPLISHED")]);
+                            }
+                        }
+                        data_value +=`
+                        <tr>
+                            <td>${data_value_counter}</td>
+                            <td>${cod_no}</td>
+                            <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")]}</td>
+                            <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")])} /<br> ${time_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION TIME")])}</td>
+                            <td>${findClientName(tpf_data_list.content[j][findTextInArray(tpf_data_list, "CLIENT ID")])}</td>
+                            <td>${findWasteCode(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
+                            <td>${findWasteName(tpf_data_list.content[j][findTextInArray(tpf_data_list, "CLIENT ID")], tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
+                            <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "WEIGHT")]} kg.</td>
+                            <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
+                            <td>${status}</td>
+                            <td>${finished_date} /<br> ${finished_time}</td>
+                            <td>${calculateTravelTime(date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")]),time_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION TIME")]),finished_date,finished_time)}</td>
+                        </tr>
+                        `
+                        data_value_counter += 1;
+                    }
+                }
+            }
+            finished_list_certification.innerHTML = data_value;
         }
-        finished_list_certification.innerHTML = data_value;
+
+
 
         // cod_data_list
         // FORM GENERATOR
@@ -553,6 +628,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
                                     <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WEIGHT")]}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
                                     <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
+                                    <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                     <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
                                     `
                                     table_company.innerHTML = findClientName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")]);
@@ -627,6 +703,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
                                     <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WEIGHT")]}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
                                     <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
+                                    <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                     <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
                                         `
                                     table_company.innerHTML = findClientName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")]);
