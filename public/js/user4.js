@@ -74,8 +74,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const finished_list_certification = certification_dashboard.querySelector("#finished_list");
         let sf_transaction_certification = {};
         let sf_tpf_transaction_certification = {};
-        const pending_certification = [];
-        const finish_certification = [];
+        let pending_certification = [];
+        let finish_certification = [];
         const month_filter = document.querySelector("#month_filter");
         function getCurrentMonthName() {
             const months = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
@@ -87,6 +87,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         month_filter.value = getCurrentMonthName();
         month_filter.addEventListener("change", generatePending)
         generatePending();
+        sf_transaction_certification = {};
+        sf_tpf_transaction_certification = {};
+        pending_certification = [];
+        finish_certification = [];
         function generatePending(){
             var for_logistics_pending_counter_marketing = 0;
             var for_logistics_on_haul_counter_marketing = 0;
@@ -321,7 +325,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
     
-            for (const key in sf_transaction_certification) {
+            for (const key in sf_transaction_certification) {     
                 // Check if the key exists in sf_tpf_transaction_certification
                 if (sf_tpf_transaction_certification[key]) {
                     // If it exists in sf_tpf_transaction_certification, add both "tpf #" and weight to finish_certification
