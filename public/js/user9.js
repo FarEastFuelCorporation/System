@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                     }
                 }
-                if(employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE TYPE")] == "SUB CONTRACTOR"){
+                if(employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE TYPE")] == "TEMPORARY"){
                     if (!subcon_employee_name.includes(full_name)) {
                         subcon_employee_name.push(full_name);
                         if(gender == "MALE"){

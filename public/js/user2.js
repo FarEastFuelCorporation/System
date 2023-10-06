@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         wcf_transaction_sorting.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]);
                     }
                     else if (!wcf_transaction_sorting.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]) &&
-                    month_filter.value == "ALL") {
+                month_filter.value == "ALL") {
                         wcf_transaction_sorting.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]);
                     }
                 }

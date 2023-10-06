@@ -310,7 +310,7 @@
                             <thead id="table_head_data">
                                 
                             </thead>
-                            <tbody id="table_data" style="font-size: 14px;">
+                            <tbody id="table_data" style="font-size: 12px;">
                             </tbody>
                         </table>
                         <h4>That is/are transported by <b>FAR EAST FUEL CORPORATION</b> to our TSD facility located at No. 888 Purok 5, Irabagon St., Barangay Anyatam, San Ildefonso, Bulacan with <b>TSD No. OL-TR-R3-14-000152.</b></h4><br>
@@ -393,15 +393,24 @@
                 
                             #what_to_print table
                             {
-                                border: 2px solid black;
+                                border: 1px solid black;
                             }
                 
+                            #what_to_print table tr
+                            {
+                                display: grid;
+                                grid-template-columns: 90px 1fr 90px 90px 1fr 90px;
+                            }
+
                             #what_to_print table th,
                             #what_to_print table td
                             {
-                                border: 1px solid black;
+                                border: 0.5px solid black;
                                 padding: 0 5px;
                                 text-align: center;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
                             }
                 
                             #what_to_print .signature

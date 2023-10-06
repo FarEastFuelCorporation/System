@@ -107,47 +107,21 @@ document.addEventListener('DOMContentLoaded', async function() {
         unsorted_list_billing.innerHTML = data_value;            
 
         // cod_data_list
-        const bpf_form_no = document.getElementById("bpf_form_no");
-        const df_no = document.getElementById("df_no");
-        const today = new Date();
-        const today_year = today.getFullYear();
-        const today_month = today.getMonth()+1;
-        var month_new;
-        var code_year_month;
-        var data_counter4;
-
         // FORM GENERATOR
-        if(today_month.toString().length == 1){ 
-            month_new = `0${today_month}`;
+        const bpf_form_no = document.getElementById("bpf_form_no");
+        var last_row = bpf_data_list.content.length -1;
+        var data_info = bpf_data_list.content[last_row][findTextInArray(bpf_data_list, "BPF #")];
+        var data_counter;
+        if(last_row == 0){
+            data_counter = 0;
         }
-    
-        code_year_month = `BPF${today_year}${month_new}`;
-    
-        var data_content4 = 1;
-        var data_info4;
-        var data_last_3digit = 0;
-    
-        for(x=1; x<bpf_data_list.content.length; x++){
-            data_info4 = bpf_data_list.content[x][findTextInArray(bpf_data_list, "BILLING NUMBER")];
-            
-            if(data_info4.includes(code_year_month) == true){
-                data_last_3digit = data_info4.slice(9)
-            }
+        else{
+            data_counter = data_info.substring(9,12);
         }
-        
-        data_content4 = parseInt(data_last_3digit) +1
-    
-        if(data_content4.toString().length == 1){
-            data_counter4 = `00${data_content4}`;
-        }
-        else if(data_content4.toString().length == 2){
-            data_counter4 = `0${data_content4}`;
-        }
-        else if(data_content4.toString().length == 3){
-            data_counter4 = `${data_content4}`;
-        }
-    
-        bpf_form_no.value = `${code_year_month}${data_counter4}`
+        var year = new Date().getFullYear();
+        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        bpf_form_no.value = `BPF${year}${month}${data_counter}`;
         
         const billing_process_form = document.querySelector("#billing_process_form");
         const search_cod_form_no = billing_process_form.querySelector("#search_cod_form_no");
