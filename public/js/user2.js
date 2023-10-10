@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const client_list_response_promise = fetch('https://script.google.com/macros/s/AKfycbxXnIsmgK52Ws9H2qAh47qkgZxDltFJaHSFV0e9UQRwaK1g_xwFUKGokL_hk4fq-_mhSg/exec');
         const type_of_waste_response_promise = fetch('https://script.google.com/macros/s/AKfycbw0yC-8_V38Zl1-KGyBwX1JmfTEW1jwyFxgpZ-oNC2lvtoAraUtkLCS27HfNbXi_l4IPg/exec');
         const treatment_process_response_promise = fetch('https://script.google.com/macros/s/AKfycbzlzR7zmvdHSz4JpeXtEzPE4OQckTIVaE6PBw5IYwlqmmeIprQxEKkp4d2Jb1kBcgndzA/exec');
+        const ltf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxBLMvyNDsT9_dlVO4Qc31dI4ErcymUHbzKimOpCZHgbJxip2XxCl7Wk3hJyqcdtrxU/exec');
         const wcf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyBFTBuFZ4PkvwmPi_3Pp_v74DCSEK2VpNy6janIGgaAK-P22wazmmShOKn6iwFbrQn/exec');
         const sf_response_promise = fetch('https://script.google.com/macros/s/AKfycby9b2VCfXc0ifkwBXJRi2UVUwgZIj9F4FTOdZa_SYKZdsTwbVtAzAXzNMFeklE35bg1/exec');
         const qlf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyFU_skru2tnyEiv8I5HkpRCXbUlQb5vlJUm8Le0nZBCvfZeFkQPd2Naljs5CZY41I17w/exec');
@@ -15,6 +16,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             client_list_response,
             type_of_waste_response,
             treatment_process_response,
+            ltf_response,
             wcf_response,
             sf_response,
             qlf_response,
@@ -24,6 +26,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             client_list_response_promise,
             type_of_waste_response_promise,
             treatment_process_response_promise,
+            ltf_response_promise,
             wcf_response_promise,
             sf_response_promise,
             qlf_response_promise,
@@ -35,6 +38,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const client_data_list  = await client_list_response.json();
         const type_of_waste_data_list  = await type_of_waste_response.json();
         const treatment_process_data_list  = await treatment_process_response.json();
+        const ltf_data_list  = await ltf_response.json();
         const wcf_data_list  = await wcf_response.json();
         const sf_data_list  = await sf_response.json();
         const qlf_data_list  = await qlf_response.json();
@@ -176,10 +180,25 @@ document.addEventListener('DOMContentLoaded', async function() {
                 for(let j = 1; j < wcf_data_list.content.length; j++){
                     if(pending_sorting[i] == wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")] &&
                     month_filter.value == formatMonth(wcf_data_list.content[j][findTextInArray(wcf_data_list, "HAULING DATE")])){
+                        var mtf = "";
+                        var ltf = "";
+                        if((wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                            mtf = wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                        }else{
+                            ltf = wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                            for(let x = 1; x < ltf_data_list.content.length; x++){
+                                if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                    mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                    break
+                                }
+                            }
+                        }
                         data_value +=`
                         <tr>
                             <td>${data_value_counter}</td>
                             <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]}</td>
+                            <td>${mtf}</td>
+                            <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "HAULING DATE")])}</td>
                             <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}</td>
                             <td>${findClientName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
                             <td>${findWasteCode(wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
@@ -191,10 +210,25 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     else if(pending_sorting[i] == wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")] &&
                     month_filter.value == "ALL"){
+                        var mtf = "";
+                        var ltf = "";
+                        if((wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                            mtf = wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                        }else{
+                            ltf = wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                            for(let x = 1; x < ltf_data_list.content.length; x++){
+                                if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                    mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                    break
+                                }
+                            }
+                        }
                         data_value +=`
                         <tr>
                             <td>${data_value_counter}</td>
                             <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]}</td>
+                            <td>${mtf}</td>
+                            <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "HAULING DATE")])}</td>
                             <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}</td>
                             <td>${findClientName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
                             <td>${findWasteCode(wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
@@ -229,10 +263,25 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 }
                             }
                         }
+                        var mtf = "";
+                        var ltf = "";
+                        if((wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                            mtf = wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                        }else{
+                            ltf = wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                            for(let x = 1; x < ltf_data_list.content.length; x++){
+                                if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                    mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                    break
+                                }
+                            }
+                        }
                         data_value_done +=`
                         <tr>
                             <td>${data_value__done_counter}</td>
                             <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]}</td>
+                            <td>${mtf}</td>
+                            <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "HAULING DATE")])}</td>
                             <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}</td>
                             <td>${findClientName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
                             <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "NET WEIGHT")]} kg.</td>
@@ -260,10 +309,25 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 }
                             }
                         }
+                        var mtf = "";
+                        var ltf = "";
+                        if((wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                            mtf = wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                        }else{
+                            ltf = wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                            for(let x = 1; x < ltf_data_list.content.length; x++){
+                                if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                    mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                    break
+                                }
+                            }
+                        }
                         data_value_done +=`
                         <tr>
                             <td>${data_value__done_counter}</td>
                             <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]}</td>
+                            <td>${mtf}</td>
+                            <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "HAULING DATE")])}</td>
                             <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}</td>
                             <td>${findClientName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
                             <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "NET WEIGHT")]} kg.</td>
@@ -287,11 +351,31 @@ document.addEventListener('DOMContentLoaded', async function() {
                     if(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")] == sf_transaction_sorting[j] &&
                     sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE ID")] !== "DISCREPANCY" &&
                     month_filter.value == formatMonth(sf_data_list.content[j][findTextInArray(sf_data_list, "HAULING DATE")])){
+                        var mtf = "";
+                        var ltf = "";
+                        var wcf = "";
+                        for(let j = 1; j < wcf_data_list.content.length; j++){
+                            if(sf_data_list.content[i][findTextInArray(sf_data_list, "WCF #")] == wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]){
+                                if((wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                    mtf = wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                }else{
+                                    ltf = wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                    for(let x = 1; x < ltf_data_list.content.length; x++){
+                                        if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                            mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                            break
+                                        }
+                                    }
+                                }
+                            }
+                        }
                         data_value_done +=`
                         <tr>
                             <td>${data_value__done_counter}</td>
                             <td>${sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")]}</td>
                             <td>${sf_data_list.content[i][findTextInArray(sf_data_list, "WCF #")]}</td>
+                            <td>${mtf}</td>
+                            <td>${date_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "HAULING DATE")])}</td>
                             <td>${date_decoder(sf_data_list.content[i][findTextInArray(sf_data_list, "COMPLETION DATE")])} /<br> ${time_decoder(sf_data_list.content[i][findTextInArray(sf_data_list, "COMPLETION TIME")])}</td>
                             <td>${findClientName(sf_data_list.content[i][findTextInArray(sf_data_list, "CLIENT ID")])}</td>
                             <td>${findWasteCode(sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE ID")])}</td>
@@ -305,11 +389,31 @@ document.addEventListener('DOMContentLoaded', async function() {
                     if(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")] == sf_transaction_sorting[j] &&
                     sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE ID")] !== "DISCREPANCY" &&
                     month_filter.value == "ALL"){
+                        var mtf = "";
+                        var ltf = "";
+                        var wcf = "";
+                        for(let j = 1; j < wcf_data_list.content.length; j++){
+                            if(sf_data_list.content[i][findTextInArray(sf_data_list, "WCF #")] == wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]){
+                                if((wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                    mtf = wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                }else{
+                                    ltf = wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                    for(let x = 1; x < ltf_data_list.content.length; x++){
+                                        if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                            mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                            break
+                                        }
+                                    }
+                                }
+                            }
+                        }
                         data_value_done +=`
                         <tr>
                             <td>${data_value__done_counter}</td>
                             <td>${sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")]}</td>
                             <td>${sf_data_list.content[i][findTextInArray(sf_data_list, "WCF #")]}</td>
+                            <td>${mtf}</td>
+                            <td>${date_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "HAULING DATE")])}</td>
                             <td>${date_decoder(sf_data_list.content[i][findTextInArray(sf_data_list, "COMPLETION DATE")])} /<br> ${time_decoder(sf_data_list.content[i][findTextInArray(sf_data_list, "COMPLETION TIME")])}</td>
                             <td>${findClientName(sf_data_list.content[i][findTextInArray(sf_data_list, "CLIENT ID")])}</td>
                             <td>${findWasteCode(sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE ID")])}</td>
@@ -344,6 +448,9 @@ document.addEventListener('DOMContentLoaded', async function() {
             const sf_form_no = document.getElementById(`sf_form_no${i + 1}`);
             sf_form_no.value = sf_form_nos[i];
         }
+
+        // type_of_waste_data_list
+        var data_value = [];
         
         // wcf_data_list
         const search_sf_wcf_form_no = document.getElementById("search_sf_wcf_form_no");
@@ -363,12 +470,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         const hauling_date = document.getElementById("hauling_date");
         
         search_sf_wcf_form_no_button.addEventListener("click", () => {
-            var data_value;
+            var data_value_text;
             for(let a = 1; a < wcf_data_list.content.length; a++){
                 if(search_sf_wcf_form_no.value == wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")]){
                     for(let b = 0; b < pending_sorting.length; b++){
                         if(search_sf_wcf_form_no.value == pending_sorting[b]){
-                            data_value = `
+                            data_value_text = `
                             WCF #: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")]}<br>
                             CLIENT: ${findClientName(wcf_data_list.content[a][findTextInArray(wcf_data_list, "CLIENT ID")])}<br>
                             WASTE CODE: ${findWasteCode(wcf_data_list.content[a][findTextInArray(wcf_data_list, "WASTE ID")])}<br>
@@ -404,9 +511,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                         No Data Found
                         </div><br>`
                     }
+                    for (var x = 1; x < qlf_data_list.content.length; x++) {
+                        if(qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "CLIENT ID")]){
+                            data_value.push(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")]);
+                        }
+                    }
                 }
             }
-            if(data_value == undefined){
+            if(data_value_text == undefined){
                 search_sf_wcf_result.innerHTML = `
                 <div class="search_sf_wcf_result">
                 <h2>INFORMATION</h2>
@@ -417,7 +529,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 search_sf_wcf_result.innerHTML = `
                 <div class="search_sf_wcf_result">
                 <h2>INFORMATION</h2>
-                ${data_value}
+                ${data_value_text}
                 </div><br>`
             }
         });
@@ -427,12 +539,10 @@ document.addEventListener('DOMContentLoaded', async function() {
             search_sf_wcf_form_no.value = ``;
         })
 
-        // type_of_waste_data_list
-        var data_value = [];
+        // for (var x = 1; x < type_of_waste_data_list.content.length; x++) {
+        //     data_value.push(`${type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "WASTE NAME")]} (${type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "WASTE CODE")]})`);
+        // }
 
-        for (var x = 1; x < type_of_waste_data_list.content.length; x++) {
-            data_value.push(`${type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "WASTE NAME")]} (${type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "WASTE CODE")]})`);
-        }
         
         const total_weight = document.getElementById("total_weight");
         const rem_weight = document.getElementById("rem_weight");
