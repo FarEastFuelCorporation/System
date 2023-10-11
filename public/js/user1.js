@@ -528,10 +528,20 @@ document.addEventListener('DOMContentLoaded', async function() {
                             waste_description.value = mtf_data_list.content[z][findTextInArray(mtf_data_list, "WASTE ID")];
                             hauling_date.value = date_decoder(mtf_data_list.content[z][findTextInArray(mtf_data_list, "HAULING DATE")]);
                             wcf_data.style.display = "block";
+                            var vehicle_list = [];
+                            for(let x = 1; x < vehicle_data_list.content.length; x++){
+                                if(!vehicle_list.includes(vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")])){
+                                    vehicle_list.push(vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")])
+                                }
+                            }
                             var vehicle_choice = [];
                             for(let x = 1; x < qlf_data_list.content.length; x++){
                                 if(mtf_data_list.content[z][findTextInArray(mtf_data_list, "CLIENT ID")] == qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")]){
-                                    vehicle_choice.push(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])
+                                    if(vehicle_list.includes(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])){
+                                        if(!vehicle_choice.includes(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])){
+                                            vehicle_choice.push(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])
+                                        }
+                                    }
                                 }
                             }
                             var type_of_vehicle_data = `
