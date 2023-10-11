@@ -178,6 +178,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         const si_total_sales_container = billing_process_form.querySelector("#si_total_sales_container");
         const si_terms_container = billing_process_form.querySelector("#si_terms_container");
         const what_to_print = billing_process_form.querySelector("#what_to_print");
+        const what_to_print2 = billing_process_form.querySelector("#what_to_print2");
+        let table_data_info = [];
+        let table_data_transportation = [];
+        let si_table_data_info = [];
+        let si_table_data_transportation = [];
 
         var wcf_transaction = [];
         var cod_transaction = [];
@@ -194,23 +199,25 @@ document.addEventListener('DOMContentLoaded', async function() {
             var si_total_amount = 0;
             var si_credits = 0;
             var date_of_certification = "";
+            var date_of_certification_transportation = "";
             var transportation_vehicle = ""
             var transportation_unit = ""
             var transportation_fee = ""
             var transportation_calculation = ""
             var term = ""
             var data3_counter = 1;
+            var data4_counter = 2;
             var table_counter = 0;
             for(let x = 1; x < cod_data_list.content.length; x++){
                 var client_name = "";
                 var address = "";
                 var nature_of_business = "";
-                date_of_certification = date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "DATE OF CERTIFICATION")]);
+                date_of_certification = date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]);
                 for(let c = 1; c < client_data_list.content.length; c++){
                     if(cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")] == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")]){
-                        client_name = client_data_list.content[c][findTextInArray(client_data_list, "CLIENT NAME")];
-                        address = client_data_list.content[c][findTextInArray(client_data_list, "ADDRESS")];
-                        nature_of_business = client_data_list.content[c][findTextInArray(client_data_list, "NATURE OF BUSINESS")];
+                        client_name = client_data_list.content[c][findTextInArray(client_data_list, "BILLER NAME")];
+                        address = client_data_list.content[c][findTextInArray(client_data_list, "BILLER ADDRESS")];
+                        // nature_of_business = client_data_list.content[c][findTextInArray(client_data_list, "NATURE OF BUSINESS")];
                         break
                     }
                 }
@@ -228,8 +235,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                 var vat_calculation = "";
                 for(let c = 1; c < qlf_data_list.content.length; c++){
                     if(cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")] &&
-                        cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE ID")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
-                        // waste_name = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE NAME")];
+                    cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE ID")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
+                        console.log(cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")])
+                        console.log(qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")])
+                        console.log(cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE ID")])
+                        console.log(qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])
+                        waste_name = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE NAME")];
                         mode = qlf_data_list.content[c][findTextInArray(qlf_data_list, "MODE")];
                         unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")];
                         unit_price = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")];
@@ -237,25 +248,19 @@ document.addEventListener('DOMContentLoaded', async function() {
                         break
                     }
                     else{
-                        waste_name = cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE ID")];
+                        waste_name = cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")];
                     }
                 }
-                console.log("pass")
                 for(let a = 1; a < wcf_data_list.content.length; a++){
                     if(cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")]){
-                        for(let b = 1; b < vehicle_data_list.content.length; b++){
-                            if(wcf_data_list.content[a][findTextInArray(wcf_data_list, "PLATE #")] == vehicle_data_list.content[b][findTextInArray(vehicle_data_list, "PLATE #")]){
-                                for(let c = 1; c < qlf_data_list.content.length; c++){
-                                    if(wcf_data_list.content[a][findTextInArray(wcf_data_list, "CLIENT ID")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")] &&
-                                        vehicle_data_list.content[b][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
-                                        transportation_vehicle = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]
-                                        transportation_unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
-                                        transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
-                                        transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
-                                        term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS DAYS")]
-                                        console.log(transportation_vehicle)
-                                    }
-                                }
+                        for(let c = 1; c < qlf_data_list.content.length; c++){
+                            if(wcf_data_list.content[a][findTextInArray(wcf_data_list, "CLIENT ID")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")] &&
+                            wcf_data_list.content[a][findTextInArray(wcf_data_list, "TYPE OF VEHICLE")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
+                                transportation_vehicle = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]
+                                transportation_unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
+                                transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
+                                transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
+                                term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS DAYS")]
                             }
                         }
                     }
@@ -288,7 +293,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td style="font-size: 10px !important">${vat_calculation}</td>
                     </tr>
                     `
-                    table_data.insertAdjacentHTML("beforeend", data);
+                    table_data_info.push(data);
                     var si_unit_price = 0;
                     var si_amount = 0;
                     if(vat_calculation == "VAT EXCLUSIVE"){
@@ -314,18 +319,23 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td class="amount">${formatNumber(si_amount)}</td>
                     </tr>
                     `
-                    data3_counter += 1;
+                    data3_counter += 2;
                     table_counter += 1;
-                    si_table_data.insertAdjacentHTML("beforeend", data3);
+                    si_table_data_info.push(data3);
                 }
             }
-            for(let x = 0; x < wcf_transaction.length; x++){
-                if(search_cod_form_no.value == cod_transaction[x]){
+            for(let y = 0; y < wcf_transaction.length; y++){
+                if(search_cod_form_no.value == cod_transaction[y]){
+                    for(let x = 1; x < cod_data_list.content.length; x++){
+                        if(wcf_transaction[y] == cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")]){
+                            date_of_certification_transportation = date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]);
+                        }
+                    }
                     var data2 = "";
                     var data4 = "";
                     data2 = `
                     <tr>
-                        <td>${date_of_certification}</td>
+                        <td>${date_of_certification_transportation}</td>
                         <td></td>
                         <td></td>
                         <td style="font-size: 10px !important; padding-top: 2px">TRANS. FEE ${transportation_vehicle}</td>
@@ -336,7 +346,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td style="font-size: 10px !important">${transportation_calculation}</td>
                     </tr>
                     `
-                    table_data.insertAdjacentHTML("beforeend", data2);
+                    table_data_transportation.push(data2);
                     var si_unit_price = 0;
                     var si_amount = 0;
                     if(transportation_calculation == "VAT EXCLUSIVE"){
@@ -353,19 +363,27 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     data4 = `
                     <tr>
-                        <td>${data3_counter}</td>
+                        <td>${data4_counter}</td>
                         <td class="amount">${1}</td>
                         <td>${transportation_unit}</td>
-                        <td>${date_of_certification}</td>
+                        <td>${date_of_certification_transportation}</td>
                         <td style="font-size: 10px !important; padding-top: 5px !important;">TRANS. FEE ${transportation_vehicle}</td>
                         <td class="amount">${formatNumber(si_unit_price)}</td>
                         <td class="amount">${formatNumber(si_amount)}</td>
                     </tr>
                     `
-                    data3_counter += 1;
+                    data4_counter += 2;
                     table_counter += 1;
-                    si_table_data.insertAdjacentHTML("beforeend", data4);
+                    si_table_data_transportation.push(data4);
                 }
+            }
+            for(let x = 0; x < table_data_info.length; x++){
+                table_data.insertAdjacentHTML("beforeend", table_data_info[x])
+                table_data.insertAdjacentHTML("beforeend", table_data_transportation[x])
+            }
+            for(let x = 0; x < si_table_data_info.length; x++){
+                si_table_data.insertAdjacentHTML("beforeend", si_table_data_info[x])
+                si_table_data.insertAdjacentHTML("beforeend", si_table_data_transportation[x])
             }
             for(let x = 0; x < 20 - table_counter; x++){
                 var data5 = "";
@@ -401,6 +419,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             convertToPDFandDownload_button.style.display = "block";
             convertToPDF_button.style.display = "block";
             what_to_print.style.display = "block";
+            what_to_print2.style.display = "block";
         })
 
         function findEmployeeName(employee_id){
