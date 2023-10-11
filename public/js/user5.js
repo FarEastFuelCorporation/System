@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const client_list_response_promise = fetch('https://script.google.com/macros/s/AKfycbxXnIsmgK52Ws9H2qAh47qkgZxDltFJaHSFV0e9UQRwaK1g_xwFUKGokL_hk4fq-_mhSg/exec');
         const type_of_waste_response_promise = fetch('https://script.google.com/macros/s/AKfycbw0yC-8_V38Zl1-KGyBwX1JmfTEW1jwyFxgpZ-oNC2lvtoAraUtkLCS27HfNbXi_l4IPg/exec');
         const vehicle_response_promise = fetch('https://script.google.com/macros/s/AKfycbw-JCnctX1x1W1ogGbrkhNdIGd9q6bYjy_nvaYeoiaBf7HreB2a1tKJZaJHw2wu4wmpcA/exec');
+        const ltf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxBLMvyNDsT9_dlVO4Qc31dI4ErcymUHbzKimOpCZHgbJxip2XxCl7Wk3hJyqcdtrxU/exec');
         const wcf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyBFTBuFZ4PkvwmPi_3Pp_v74DCSEK2VpNy6janIGgaAK-P22wazmmShOKn6iwFbrQn/exec');
         const tpf_response_promise = fetch('https://script.google.com/macros/s/AKfycbwbKss2XtW5lylCrUe8IC-ZA4ffA5CM5tY6kqIja9t80NXJw2nB8RBOJFWbXQz0hWMadw/exec');
         const cod_response_promise = fetch('https://script.google.com/macros/s/AKfycbzgiOuXizUVviCsLVfihqYN9HJ3pyNr7ElHoCl3JGkbtQnChnm2U42yQuLd4UMH0ci5/exec');
@@ -15,6 +16,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             client_list_response,
             type_of_waste_response,
             vehicle_response,
+            ltf_response,
             wcf_response,
             tpf_response,
             cod_response,
@@ -25,6 +27,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             client_list_response_promise,
             type_of_waste_response_promise,
             vehicle_response_promise,
+            ltf_response_promise,
             wcf_response_promise,
             tpf_response_promise,
             cod_response_promise,
@@ -36,6 +39,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const client_data_list  = await client_list_response.json();
         const type_of_waste_data_list  = await type_of_waste_response.json();
         const vehicle_data_list  = await vehicle_response.json();
+        const ltf_data_list  = await ltf_response.json();
         const wcf_data_list  = await wcf_response.json();
         const tpf_data_list  = await tpf_response.json();
         const cod_data_list  = await cod_response.json();
@@ -89,11 +93,30 @@ document.addEventListener('DOMContentLoaded', async function() {
         for(let i = 0; i < newElements_billing.length; i++){
             for(let j = 1; j < cod_data_list.content.length; j++){
                 if(newElements_billing[i] == cod_data_list.content[j][findTextInArray(cod_data_list, "COD #")]){
+                    var mtf = "";
+                    var ltf = "";
+                    for(let k = 1; k < wcf_data_list.content.length; k++){
+                        if(cod_data_list.content[j][findTextInArray(cod_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                            if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                            }else{
+                                ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                for(let x = 1; x < ltf_data_list.content.length; x++){
+                                    if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                        mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                        break
+                                    }
+                                }
+                            }
+                        }
+                    }
                     data_value +=`
                     <tr>
                         <td>${data_value_counter}</td>
                         <td>${cod_data_list.content[j][findTextInArray(cod_data_list, "COD #")]}</td>
-                        <td>${date_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "DATE OF CERTIFICATION")])}</td>
+                        <td>${mtf}</td>
+                        <td>${date_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "HAULING DATE")])}</td>
+                        <td>${date_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "ACTUAL COMPLETION DATE")])} /<br>${time_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "ACTUAL COMPLETION TIME")])}</td>
                         <td>${findClientName(cod_data_list.content[j][findTextInArray(cod_data_list, "CLIENT ID")])}</td>
                         <td>${findWasteCode(cod_data_list.content[j][findTextInArray(cod_data_list, "WASTE ID")])}</td>
                         <td>${findWasteName(cod_data_list.content[j][findTextInArray(cod_data_list, "CLIENT ID")], cod_data_list.content[j][findTextInArray(cod_data_list, "WASTE ID")])}</td>
@@ -154,6 +177,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const si_total_amount_container = billing_process_form.querySelector("#si_total_amount_container");
         const si_total_sales_container = billing_process_form.querySelector("#si_total_sales_container");
         const si_terms_container = billing_process_form.querySelector("#si_terms_container");
+        const what_to_print = billing_process_form.querySelector("#what_to_print");
 
         var wcf_transaction = [];
         var cod_transaction = [];
@@ -216,6 +240,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         waste_name = cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE ID")];
                     }
                 }
+                console.log("pass")
                 for(let a = 1; a < wcf_data_list.content.length; a++){
                     if(cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")]){
                         for(let b = 1; b < vehicle_data_list.content.length; b++){
@@ -228,6 +253,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
                                         transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
                                         term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS DAYS")]
+                                        console.log(transportation_vehicle)
                                     }
                                 }
                             }
@@ -301,7 +327,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <tr>
                         <td>${date_of_certification}</td>
                         <td></td>
-                        <td>4648</td>
+                        <td></td>
                         <td style="font-size: 10px !important; padding-top: 2px">TRANS. FEE ${transportation_vehicle}</td>
                         <td>${1}</td>
                         <td>${transportation_unit}</td>
@@ -374,6 +400,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             si_terms_container.innerText = `${term} Days Term`;
             convertToPDFandDownload_button.style.display = "block";
             convertToPDF_button.style.display = "block";
+            what_to_print.style.display = "block";
         })
 
         function findEmployeeName(employee_id){

@@ -89,9 +89,13 @@ document.addEventListener('DOMContentLoaded', async function() {
         month_filter.value = getCurrentMonthName();
         month_filter.addEventListener("change", generatePending)
         generatePending();
-        sf_transaction_certification = {};
-        sf_tpf_transaction_certification = {};
         function generatePending(){
+            sf_transaction_certification = {};
+            sf_tpf_transaction_certification = {};
+            sf_transaction_certification_date = {};
+            sf_tpf_transaction_certification_date = {};
+            pending_certification = [];
+            finish_certification = [];
             var for_logistics_pending_counter_marketing = 0;
             var for_logistics_on_haul_counter_marketing = 0;
             var for_logistics_received_counter_marketing = 0;
@@ -268,7 +272,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
             for (let i = 1; i < tpf_data_list.content.length; i++) {
                 const tpfNumber = tpf_data_list.content[i][findTextInArray(tpf_data_list, "TPF #")];
-                const haulingDate = tpf_data_list.content[i][findTextInArray(tpf_data_list, "HAULING DATE")];
+                const haulingDate = new Date(tpf_data_list.content[i][findTextInArray(tpf_data_list, "HAULING DATE")]);
                 
                 if (month_filter.value === formatMonth(haulingDate)) {
                     const weight = tpf_data_list.content[i][findTextInArray(tpf_data_list, "WEIGHT")];
@@ -299,7 +303,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             for (let i = 1; i < cod_data_list.content.length; i++) {
                 const tpfNumber = cod_data_list.content[i][findTextInArray(cod_data_list, "TPF #")];
-                const haulingDate = cod_data_list.content[i][findTextInArray(cod_data_list, "HAULING DATE")];
+                const haulingDate = new Date(cod_data_list.content[i][findTextInArray(cod_data_list, "HAULING DATE")]);
                 
                 if (month_filter.value === formatMonth(haulingDate)) {
                     const weight = cod_data_list.content[i][findTextInArray(cod_data_list, "WEIGHT")];
@@ -327,6 +331,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     sf_tpf_transaction_certification_date[tpfNumber] = haulingDate;
                 }
+                console.log(haulingDate)
+                console.log("pass")
             }
     
             for (const key in sf_transaction_certification) {     
@@ -336,9 +342,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                     finish_certification.push({ tpfNumber: key, weight: sf_tpf_transaction_certification[key], date: sf_tpf_transaction_certification_date[key]});
                 } else {
                     // If it doesn't exist in sf_tpf_transaction_certification, add both "tpf #" and weight to pending_certification
-                    pending_certification.push({ tpfNumber: key, weight: sf_transaction_certification[key], date: sf_tpf_transaction_certification_date[key]});
+                    pending_certification.push({ tpfNumber: key, weight: sf_transaction_certification[key], date: sf_transaction_certification_date[key]});
                 }
-            }  
+            }
+            pending_certification.sort((a, b) => a.date - b.date);
+            finish_certification.sort((a, b) => a.date - b.date);
 
             treated_counter_certification.innerText = pending_certification.length;
             pending_counter_certification.innerText = pending_certification.length - finish_certification.length;

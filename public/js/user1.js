@@ -443,6 +443,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const pull_out_form = document.getElementById("pull_out_form");
         const ptt = document.getElementById("ptt");
         const manifest = document.getElementById("manifest");
+        const type_of_vehicle_container = document.getElementById("type_of_vehicle_container");
         
         search_ltf_form_no_button.addEventListener("click", () => {
             var data_value;
@@ -493,6 +494,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                             driver_id.value = ltf_data_list.content[z][findTextInArray(ltf_data_list, "DRIVER ID")];
                             hauling_date.value = date_decoder(ltf_data_list.content[z][findTextInArray(ltf_data_list, "HAULING DATE")]);
                             wcf_data.style.display = "block";
+                            var type_of_vehicle_data = `
+                            <input type="text" autocomplete="off" name="type_of_vehicle" id="type_of_vehicle" class="form-control" required readonly style="height: 55px;" value="${ltf_data_list.content[z][findTextInArray(ltf_data_list, "TYPE OF VEHICLE")]}">
+                            `
+                            type_of_vehicle_container.insertAdjacentHTML("afterbegin", type_of_vehicle_data)
                         }
                     }
                 }
@@ -523,6 +528,20 @@ document.addEventListener('DOMContentLoaded', async function() {
                             waste_description.value = mtf_data_list.content[z][findTextInArray(mtf_data_list, "WASTE ID")];
                             hauling_date.value = date_decoder(mtf_data_list.content[z][findTextInArray(mtf_data_list, "HAULING DATE")]);
                             wcf_data.style.display = "block";
+                            var vehicle_choice = [];
+                            for(let x = 1; x < qlf_data_list.content.length; x++){
+                                if(mtf_data_list.content[z][findTextInArray(mtf_data_list, "CLIENT ID")] == qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")]){
+                                    vehicle_choice.push(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])
+                                }
+                            }
+                            var type_of_vehicle_data = `
+                            <select autocomplete="off" name="type_of_vehicle" id="type_of_vehicle" class="form-control" required style="height: 55px;">
+                                <option value="">SELECT</option>
+                                ${vehicle_choice.map(choice => `<option value="${choice}">${choice}</option>`).join('')}
+                            </select>
+                            `
+                            type_of_vehicle_container.insertAdjacentHTML("afterbegin", type_of_vehicle_data)
+
                         }
                     }
                 } 
@@ -550,6 +569,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             search_ltf_result.innerHTML = ``;
             search_ltf_form_no.value = ``;
         })
+
+        
 
         // driver_data
         const search_wrapper2 = document.getElementById("search_driver");

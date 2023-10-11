@@ -753,8 +753,15 @@ section h2
     background-color: #efefef;
 }
 
-#waste_collection_form form .time_in_out,
 #waste_collection_form form .plate_and_driver
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+}
+
+#waste_collection_form form .time_in_out
 {
     display: grid;
     grid-template-columns: 1fr 1fr;
