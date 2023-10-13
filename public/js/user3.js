@@ -97,6 +97,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             for (let i = 1; i < sf_data_list.content.length; i++) {
                 if(sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE ID")] !== "DISCREPANCY"){
                     if(sf_data_list.content[i][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")] !== "FOR STORAGE" &&
+                    sf_data_list.content[i][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")] !== "RECYCLING" &&
+                    sf_data_list.content[i][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")] !== "CRUSHING" &&
                     month_filter.value == formatMonth(sf_data_list.content[i][findTextInArray(sf_data_list, "HAULING DATE")])){
                         if (!sf_transaction_treatment.includes(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")])) {
                             sf_transaction_treatment.push(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")]);
@@ -105,6 +107,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
                 else if(sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE ID")] !== "DISCREPANCY"){
                     if(sf_data_list.content[i][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")] !== "FOR STORAGE" &&
+                    sf_data_list.content[i][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")] !== "RECYCLING" &&
+                    sf_data_list.content[i][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")] !== "CRUSHING" &&
                     month_filter.value == "ALL"){
                         if (!sf_transaction_treatment.includes(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")])) {
                             sf_transaction_treatment.push(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")]);
@@ -148,7 +152,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             treated_counter_treatment.innerText = sf_tpf_transaction_treatment.length + filtered_pending_treatment_wcf.length;
             total_counter_treatment.innerText = sf_transaction_treatment.length + wcf_transaction_sorting.length;
             pending_counter_treatment.innerText = pending_treatment_sf.length + pending_treatment_wcf.length;
-            
             var options = {
                 series: [pending_treatment_sf.length + pending_treatment_wcf.length, sf_tpf_transaction_treatment.length + filtered_pending_treatment_wcf.length],
                 chart: {

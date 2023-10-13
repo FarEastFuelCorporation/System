@@ -428,10 +428,28 @@ document.addEventListener('DOMContentLoaded', async function() {
                         else if(date_accomplished.getDate() > target_date.getDate()){
                             status = "DELAYED";
                         }
+                        var mtf = "";
+                        var ltf = "";
+                        for(let k = 1; k < wcf_data_list.content.length; k++){
+                            if(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                                if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                    mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                }else{
+                                    ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                    for(let x = 1; x < ltf_data_list.content.length; x++){
+                                        if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                            mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                            break
+                                        }
+                                    }
+                                }
+                            }
+                        }
                         data_value +=`
                         <tr>
                             <td>${data_value_counter}</td>
                             <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")]}</td>
+                            <td>${mtf}</td>
                             <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")])} /<br> ${time_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION TIME")])}</td>
                             <td>${findClientName(tpf_data_list.content[j][findTextInArray(tpf_data_list, "CLIENT ID")])}</td>
                             <td>${findWasteCode(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
@@ -457,10 +475,28 @@ document.addEventListener('DOMContentLoaded', async function() {
                         else if(date_accomplished.getDate() > target_date.getDate()){
                             status = "DELAYED";
                         }
+                        var mtf = "";
+                        var ltf = "";
+                        for(let k = 1; k < wcf_data_list.content.length; k++){
+                            if(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                                if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                    mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                }else{
+                                    ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                    for(let x = 1; x < ltf_data_list.content.length; x++){
+                                        if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                            mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                            break
+                                        }
+                                    }
+                                }
+                            }
+                        }
                         data_value +=`
                         <tr>
                             <td>${data_value_counter}</td>
                             <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")]}</td>
+                            <td>${mtf}</td>
                             <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")])} /<br> ${time_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION TIME")])}</td>
                             <td>${findClientName(tpf_data_list.content[j][findTextInArray(tpf_data_list, "CLIENT ID")])}</td>
                             <td>${findWasteCode(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
@@ -510,11 +546,28 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 finished_time = time_decoder(cod_data_list.content[k][findTextInArray(cod_data_list, "ACTUAL COMPLETION TIME")]);
                             }
                         }
+                        var mtf = "";
+                        var ltf = "";
+                        for(let k = 1; k < wcf_data_list.content.length; k++){
+                            if(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                                if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                    mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                }else{
+                                    ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                    for(let x = 1; x < ltf_data_list.content.length; x++){
+                                        if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                            mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                            break
+                                        }
+                                    }
+                                }
+                            }
+                        }
                         data_value +=`
                         <tr>
                             <td>${data_value_counter}</td>
                             <td>${cod_no}</td>
-                            <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")]}</td>
+                            <td>${mtf}</td>
                             <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")])} /<br> ${time_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION TIME")])}</td>
                             <td>${findClientName(tpf_data_list.content[j][findTextInArray(tpf_data_list, "CLIENT ID")])}</td>
                             <td>${findWasteCode(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
@@ -551,6 +604,23 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 cod_no = cod_data_list.content[k][findTextInArray(cod_data_list, "COD #")];
                                 finished_date = date_decoder(cod_data_list.content[k][findTextInArray(cod_data_list, "ACTUAL COMPLETION DATE")]);
                                 finished_time = time_decoder(cod_data_list.content[k][findTextInArray(cod_data_list, "ACTUAL COMPLETION TIME")]);
+                            }
+                        }
+                        var mtf = "";
+                        var ltf = "";
+                        for(let k = 1; k < wcf_data_list.content.length; k++){
+                            if(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                                if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                    mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                }else{
+                                    ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                    for(let x = 1; x < ltf_data_list.content.length; x++){
+                                        if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                            mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                            break
+                                        }
+                                    }
+                                }
                             }
                         }
                         data_value +=`
