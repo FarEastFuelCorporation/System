@@ -67,67 +67,183 @@ document.addEventListener('DOMContentLoaded', async function() {
         var sf_transaction_counter_billing = 0;
         let sf_transaction_billing = []; // Variable containing existing elements
         let sf_tpf_transaction_billing = []; // Variable containing existing elements
-
-        for (let i = 1; i < cod_data_list.content.length; i++) {
-            if (!sf_transaction_billing.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")])) {
-                sf_transaction_billing.push(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]);
-                sf_transaction_counter_billing += 1
+        const month_filter = document.querySelector("#month_filter");
+        function getCurrentMonthName() {
+            const months = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
+            const currentDate = new Date();
+            const currentMonthIndex = currentDate.getMonth();
+            
+            return months[currentMonthIndex];
+        }        
+        month_filter.value = getCurrentMonthName();
+        month_filter.addEventListener("change", generatePending)
+        generatePending();
+        function generatePending(){
+            sf_tpf_transaction_counter_billing = 0;
+            sf_transaction_counter_billing = 0;
+            sf_transaction_billing = [];
+            sf_tpf_transaction_billing = [];
+            for (let i = 1; i < cod_data_list.content.length; i++) {
+                if (!sf_transaction_billing.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]) &&
+                month_filter.value == formatMonth(cod_data_list.content[i][findTextInArray(cod_data_list, "HAULING DATE")])) {
+                    sf_transaction_billing.push(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]);
+                    sf_transaction_counter_billing += 1
+                }
+                else if (!sf_transaction_billing.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]) &&
+                month_filter.value == "ALL") {
+                    sf_transaction_billing.push(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]);
+                    sf_transaction_counter_billing += 1
+                }
             }
-        }
-
-        for (let i = 1; i < bpf_data_list.content.length; i++) {
-            if (!sf_tpf_transaction_billing.includes(bpf_data_list.content[i][findTextInArray(bpf_data_list, "COD #")])) {
-                sf_tpf_transaction_billing.push(bpf_data_list.content[i][findTextInArray(bpf_data_list, "COD #")]);
-                sf_tpf_transaction_counter_billing += 1
+    
+            for (let i = 1; i < bpf_data_list.content.length; i++) {
+                if (!sf_tpf_transaction_billing.includes(bpf_data_list.content[i][findTextInArray(bpf_data_list, "COD #")]) &&
+                month_filter.value == formatMonth(bpf_data_list.content[i][findTextInArray(bpf_data_list, "HAULING DATE")])) {
+                    sf_tpf_transaction_billing.push(bpf_data_list.content[i][findTextInArray(bpf_data_list, "COD #")]);
+                    sf_tpf_transaction_counter_billing += 1
+                }
+                else if (!sf_tpf_transaction_billing.includes(bpf_data_list.content[i][findTextInArray(bpf_data_list, "COD #")]) &&
+                month_filter.value == "ALL") {
+                    sf_tpf_transaction_billing.push(bpf_data_list.content[i][findTextInArray(bpf_data_list, "COD #")]);
+                    sf_tpf_transaction_counter_billing += 1
+                }
             }
-        }
-
-        // Get elements from sf_transaction not included in sf_tpf_transaction
-        const newElements_billing = sf_transaction_billing.filter((element) => !sf_tpf_transaction_billing.includes(element));
-
-        certified_counter_billing.innerText = sf_transaction_counter_billing;
-        pending_counter_billing.innerText = sf_transaction_counter_billing - sf_tpf_transaction_counter_billing;
-        billed_counter_billing.innerText = sf_tpf_transaction_counter_billing;
-        var data_value = "";
-        var data_value_counter = 1;
-        for(let i = 0; i < newElements_billing.length; i++){
-            for(let j = 1; j < cod_data_list.content.length; j++){
-                if(newElements_billing[i] == cod_data_list.content[j][findTextInArray(cod_data_list, "COD #")]){
-                    var mtf = "";
-                    var ltf = "";
-                    for(let k = 1; k < wcf_data_list.content.length; k++){
-                        if(cod_data_list.content[j][findTextInArray(cod_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
-                            if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
-                                mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
-                            }else{
-                                ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
-                                for(let x = 1; x < ltf_data_list.content.length; x++){
-                                    if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
-                                        mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
-                                        break
+    
+            // Get elements from sf_transaction not included in sf_tpf_transaction
+            const newElements_billing = sf_transaction_billing.filter((element) => !sf_tpf_transaction_billing.includes(element));
+    
+            certified_counter_billing.innerText = sf_transaction_counter_billing;
+            pending_counter_billing.innerText = sf_transaction_counter_billing - sf_tpf_transaction_counter_billing;
+            billed_counter_billing.innerText = sf_tpf_transaction_counter_billing;
+            
+            var options = {
+                series: [sf_transaction_counter_billing - sf_tpf_transaction_counter_billing, sf_tpf_transaction_counter_billing],
+                chart: {
+                    width: 500, // Set the desired width
+                    height: 550, // Set the desired height
+                    type: 'pie',
+                },
+                plotOptions: {
+                    pie: {
+                        startAngle: 0,
+                        endAngle: 360
+                    }
+                },
+                dataLabels: {
+                    enabled: false, // Disable data labels inside the pie chart
+                },
+                fill: {
+                    type: 'gradient', // Use solid fill type
+                },
+                legend: {
+                    show: true,
+                    position: "left", // Set the legend position to "left"
+                    fontSize: '30px', // Increase legend font size as needed
+                    formatter: function (seriesName, opts) {
+                        // Here, you should use the correct variable to get the series value
+                        var seriesValue = opts.w.globals.series[opts.seriesIndex];
+                        var totalValue = opts.w.globals.series.reduce((acc, val) => acc + val, 0);
+                        var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
+                        return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
+                    },
+                    labels: {
+                        useSeriesColors: false, // Use custom color
+                    },
+                },
+                labels: ["Pending", "Billed"],
+                colors: ["#dc3545", "#198754"], // Specify solid colors here
+                responsive: [{
+                    breakpoint: 480,
+                    options: {
+                        chart: {
+                            width: 200
+                        },
+                    }
+                }]
+            };
+            const pieChart = document.querySelector("#pieChart");
+            while (pieChart.firstChild) {
+                pieChart.removeChild(pieChart.firstChild);
+            }
+            var chart = new ApexCharts(pieChart, options);
+            chart.render();
+            
+            var data_value = "";
+            var data_value_counter = 1;
+            for(let i = 0; i < newElements_billing.length; i++){
+                for(let j = 1; j < cod_data_list.content.length; j++){
+                    if(newElements_billing[i] == cod_data_list.content[j][findTextInArray(cod_data_list, "COD #")] &&
+                    month_filter.value == formatMonth(cod_data_list.content[j][findTextInArray(cod_data_list, "HAULING DATE")])){
+                        var mtf = "";
+                        var ltf = "";
+                        for(let k = 1; k < wcf_data_list.content.length; k++){
+                            if(cod_data_list.content[j][findTextInArray(cod_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                                if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                    mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                }else{
+                                    ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                    for(let x = 1; x < ltf_data_list.content.length; x++){
+                                        if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                            mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                            break
+                                        }
                                     }
                                 }
                             }
                         }
+                        data_value +=`
+                        <tr>
+                            <td>${data_value_counter}</td>
+                            <td>${cod_data_list.content[j][findTextInArray(cod_data_list, "COD #")]}</td>
+                            <td>${mtf}</td>
+                            <td>${date_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "HAULING DATE")])}</td>
+                            <td>${date_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "ACTUAL COMPLETION DATE")])} /<br>${time_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "ACTUAL COMPLETION TIME")])}</td>
+                            <td>${findClientName(cod_data_list.content[j][findTextInArray(cod_data_list, "CLIENT ID")])}</td>
+                            <td>${findWasteCode(cod_data_list.content[j][findTextInArray(cod_data_list, "WASTE ID")])}</td>
+                            <td>${findWasteName(cod_data_list.content[j][findTextInArray(cod_data_list, "CLIENT ID")], cod_data_list.content[j][findTextInArray(cod_data_list, "WASTE ID")])}</td>
+                            <td>${cod_data_list.content[j][findTextInArray(cod_data_list, "WEIGHT")]}</td>
+                        </tr>
+                        `
+                        data_value_counter += 1;
                     }
-                    data_value +=`
-                    <tr>
-                        <td>${data_value_counter}</td>
-                        <td>${cod_data_list.content[j][findTextInArray(cod_data_list, "COD #")]}</td>
-                        <td>${mtf}</td>
-                        <td>${date_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "HAULING DATE")])}</td>
-                        <td>${date_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "ACTUAL COMPLETION DATE")])} /<br>${time_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "ACTUAL COMPLETION TIME")])}</td>
-                        <td>${findClientName(cod_data_list.content[j][findTextInArray(cod_data_list, "CLIENT ID")])}</td>
-                        <td>${findWasteCode(cod_data_list.content[j][findTextInArray(cod_data_list, "WASTE ID")])}</td>
-                        <td>${findWasteName(cod_data_list.content[j][findTextInArray(cod_data_list, "CLIENT ID")], cod_data_list.content[j][findTextInArray(cod_data_list, "WASTE ID")])}</td>
-                        <td>${cod_data_list.content[j][findTextInArray(cod_data_list, "WEIGHT")]}</td>
-                    </tr>
-                    `
-                    data_value_counter += 1;
+                    else if(newElements_billing[i] == cod_data_list.content[j][findTextInArray(cod_data_list, "COD #")] &&
+                    month_filter.value == "ALL"){
+                        var mtf = "";
+                        var ltf = "";
+                        for(let k = 1; k < wcf_data_list.content.length; k++){
+                            if(cod_data_list.content[j][findTextInArray(cod_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                                if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                    mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                }else{
+                                    ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                    for(let x = 1; x < ltf_data_list.content.length; x++){
+                                        if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                            mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                            break
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        data_value +=`
+                        <tr>
+                            <td>${data_value_counter}</td>
+                            <td>${cod_data_list.content[j][findTextInArray(cod_data_list, "COD #")]}</td>
+                            <td>${mtf}</td>
+                            <td>${date_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "HAULING DATE")])}</td>
+                            <td>${date_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "ACTUAL COMPLETION DATE")])} /<br>${time_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "ACTUAL COMPLETION TIME")])}</td>
+                            <td>${findClientName(cod_data_list.content[j][findTextInArray(cod_data_list, "CLIENT ID")])}</td>
+                            <td>${findWasteCode(cod_data_list.content[j][findTextInArray(cod_data_list, "WASTE ID")])}</td>
+                            <td>${findWasteName(cod_data_list.content[j][findTextInArray(cod_data_list, "CLIENT ID")], cod_data_list.content[j][findTextInArray(cod_data_list, "WASTE ID")])}</td>
+                            <td>${cod_data_list.content[j][findTextInArray(cod_data_list, "WEIGHT")]}</td>
+                        </tr>
+                        `
+                        data_value_counter += 1;
+                    }
                 }
             }
+            unsorted_list_billing.innerHTML = data_value;            
         }
-        unsorted_list_billing.innerHTML = data_value;            
 
         // cod_data_list
         // FORM GENERATOR
@@ -147,7 +263,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         bpf_form_no.value = `BPF${year}${month}${data_counter}`;
         
         const billing_process_form = document.querySelector("#billing_process_form");
-        const search_cod_form_no = billing_process_form.querySelector("#search_cod_form_no");
         const generate_button = billing_process_form.querySelector("#generate_button");
         const convertToPDFandDownload_button = billing_process_form.querySelector("#convertToPDFandDownload_button");
         const convertToPDF_button = billing_process_form.querySelector("#convertToPDF_button");
@@ -192,7 +307,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 cod_transaction.push(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]);
             }
         }
-        generate_button.addEventListener("click", () => {
+        function generate(){
+            const search_cod_form_no = billing_process_form.querySelector("#search_cod_form_no");
+            const service_invoice_no = billing_process_form.querySelector("#service_invoice_no");
             var non_vatable = 0;
             var vatable = 0;
             var credits = 0;
@@ -236,10 +353,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 for(let c = 1; c < qlf_data_list.content.length; c++){
                     if(cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")] &&
                     cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE ID")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
-                        console.log(cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")])
-                        console.log(qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")])
-                        console.log(cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE ID")])
-                        console.log(qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])
                         waste_name = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE NAME")];
                         mode = qlf_data_list.content[c][findTextInArray(qlf_data_list, "MODE")];
                         unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")];
@@ -267,7 +380,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
                 var data = "";
                 var data3 = "";
-                if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]){
+                if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")] &&
+                type_of_form.value == "By COD"){
                     // && vat_calculation == "CHARGE"
                     bpf_form_no_container.innerText = bpf_form_no.value;
                     date_made_container.innerText = date_decoder(new Date());
@@ -284,7 +398,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <tr>
                         <td>${date_of_certification}</td>
                         <td></td>
-                        <td></td>
+                        <td>${service_invoice_no.value}</td>
                         <td style="font-size: 10px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
                         <td>${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
                         <td>${unit}</td>
@@ -325,7 +439,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
             for(let y = 0; y < wcf_transaction.length; y++){
-                if(search_cod_form_no.value == cod_transaction[y]){
+                if(search_cod_form_no.value == cod_transaction[y] &&
+                    type_of_form.value == "By COD"){
                     for(let x = 1; x < cod_data_list.content.length; x++){
                         if(wcf_transaction[y] == cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")]){
                             date_of_certification_transportation = date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]);
@@ -337,7 +452,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <tr>
                         <td>${date_of_certification_transportation}</td>
                         <td></td>
-                        <td></td>
+                        <td>${service_invoice_no.value}</td>
                         <td style="font-size: 10px !important; padding-top: 2px">TRANS. FEE ${transportation_vehicle}</td>
                         <td>${1}</td>
                         <td>${transportation_unit}</td>
@@ -420,6 +535,126 @@ document.addEventListener('DOMContentLoaded', async function() {
             convertToPDF_button.style.display = "block";
             what_to_print.style.display = "block";
             what_to_print2.style.display = "block";
+
+        }
+
+        const type_of_form = document.getElementById("type_of_form");
+        const type_of_form_list = document.getElementById("type_of_form_list");
+        const bpf_form = document.getElementById("bpf_form");
+        
+        type_of_form.addEventListener("change", () => {
+            var data_content;
+            if(type_of_form.value == "By Waste Description"){
+                data_content = 
+                `
+                <div>
+                    <label for="waste_description">
+                        <i class="fa-solid fa-list-ol"></i>
+                        Waste Description
+                    </label><br>
+                    <div class="form">
+                        <input type="text" id="waste_description" autocomplete="off" name="waste_description" class="form-control"><br>
+                    </div>
+                </div>
+                <div>
+                    <label for="year_covered">
+                        <i class="fa-solid fa-list-ol"></i>
+                        Year Covered
+                    </label><br>
+                    <div class="form">
+                        <input type="text" autocomplete="off" name="year_covered" id="year_covered" class="form-control"><br>
+                    </div>
+                </div>
+                <div>
+                    <label for="month_covered">
+                        <i class="fa-solid fa-list-ol"></i>
+                        Month Covered
+                    </label><br>
+                    <div class="form">
+                        <select name="month_covered" id="month_covered" class="form-control">
+                            <option value="">Select Month</option>
+                            <option value="1">JANUARY</option>
+                            <option value="2">FEBRUARY</option>
+                            <option value="3">MARCH</option>
+                            <option value="4">APRIL</option>
+                            <option value="5">MAY</option>
+                            <option value="6">JUNE</option>
+                            <option value="7">JULY</option>
+                            <option value="8">AUGUST</option>
+                            <option value="9">SEPTEMBER</option>
+                            <option value="10">OCTOBER</option>
+                            <option value="11">NOVEMBER</option>
+                            <option value="12">DECEMBER</option>
+                        </select>
+                    </div>
+                </div>
+                `
+                // what_to_print.style.display = "none";
+                // client_container.style.display = "grid";    
+                type_of_form_list.innerHTML = data_content;
+            }
+            else if(type_of_form.value == "By COD"){
+                data_content = 
+                `
+                <div>
+                    <label for="search_cod_form_no">
+                        Search COD #
+                    </label><br>
+                    <div class="bpf_form">
+                        <div class="form">
+                            <input type="text" id="search_cod_form_no" autocomplete="off" name="search_cod_form_no" class="form-control"><br>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label for="service_invoice_no">
+                        Service Invoice #
+                    </label><br>
+                    <div class="bpf_form">
+                        <div class="form">
+                            <input type="text" id="service_invoice_no" autocomplete="off" name="service_invoice_no" class="form-control"><br>
+                        </div>
+                    </div>
+                </div>
+                `
+                type_of_form_list.innerHTML = data_content;
+                generate_button.addEventListener("click", generate)
+            }
+            else if(type_of_form.value == "By Waste and Date Coverage"){
+                data_content = 
+                `
+                <div>
+                    <label for="waste_description">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Waste Description
+                    </label><br>
+                    <div class="form">
+                        <input type="text" id="waste_description" autocomplete="off" name="waste_description" class="form-control"><br>
+                    </div>
+                </div>
+                <div>
+                    <label for="waste_description">
+                        <i class="fa-solid fa-list-ol"></i>
+                        From
+                    </label><br>
+                    <div class="form">
+                        <input type="date" id="date_from" autocomplete="off" name="date_from" class="form-control"><br>
+                    </div>
+                </div>
+                <div>
+                    <label for="waste_description">
+                        <i class="fa-solid fa-list-ol"></i>
+                        To
+                    </label><br>
+                    <div class="form">
+                        <input type="date" id="date_to" autocomplete="off" name="date_to" class="form-control"><br>
+                    </div>
+                </div>
+                `
+                // what_to_print.style.display = "none";
+                // client_container.style.display = "grid";    
+                type_of_form_list.innerHTML = data_content;
+            }
         })
 
         function findEmployeeName(employee_id){
@@ -454,7 +689,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         function findWasteCode(waste_id){
             var waste_code = "";
             for(let c = 1; c < type_of_waste_data_list.content.length; c++){
-                if(waste_id == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
+                if(waste_id.substring(0, 8) == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
                     waste_code = (type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")]).substring(0, 4);
                     break
                 }

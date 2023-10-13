@@ -593,19 +593,21 @@ document.addEventListener('DOMContentLoaded', async function() {
                 input_box[index].value = select_user_data;
                 search_wrapper[index].classList.remove("active");
                 var treatment_input = document.getElementById(`destruction_process${index}`);
-                for (var x = 1; x < type_of_waste_data_list.content.length; x++) {
-                    if (input_box[z].value == `${type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "WASTE NAME")]} (${type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "WASTE CODE")]})`) {
-                        destruction_process[z].value = type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "TREATMENT PROCESS")];
-                        waste_id[z].value = type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "WASTE ID")];
-                        waste_name[z].value = type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "WASTE NAME")];
-                        treatment_input.setAttribute("readonly", "true")
-                        break
-                    }
-                    else{
-                        destruction_process[z].value = "";
-                        treatment_input.removeAttribute("readonly");
-                        waste_id[z].value = "W2023000";
-                        waste_name[z].value = input_box[z].value;
+                for(let i = 1; i < wcf_data_list.content.length; i++){
+                    if(search_sf_wcf_form_no.value == wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]){
+                        for (var x = 1; x < qlf_data_list.content.length; x++) {
+                            if (wcf_data_list.content[i][findTextInArray(wcf_data_list, "CLIENT ID")] == qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")] &&
+                                input_box[z].value == qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")]) {
+                                waste_id[z].value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")];
+                                waste_name[z].value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")];
+                                break
+                            }
+                            else{
+                                waste_id[z].value = "W2023000";
+                                waste_name[z].value = input_box[z].value;
+                            }
+                            treatment_input.removeAttribute("readonly");
+                        }
                     }
                 }
             }

@@ -76,6 +76,24 @@
                     <i class="fa-solid fa-arrows-rotate"></i>
                 </button>
             </div>
+            <div style="display: flex; position: absolute; top: 80px; right: 20px; z-index: 2; border: 3px solid #dc3545; border-radius: 5px; padding: 10px 20px; background-color: #198754;">
+                <label for="month_filter" style="font-weight: bold; color: #ffffff;">FILTER MONTH</label>
+                <select name="month_filter" id="month_filter" class="form-control">
+                    <option value="ALL">ALL</option>
+                    <option value="JANUARY">JANUARY</option>
+                    <option value="FEBRUARY">FEBRUARY</option>
+                    <option value="MARCH">MARCH</option>
+                    <option value="APRIL">APRIL</option>
+                    <option value="MAY">MAY</option>
+                    <option value="JUNE">JUNE</option>
+                    <option value="JULY">JULY</option>
+                    <option value="AUGUST">AUGUST</option>
+                    <option value="SEPTEMBER">SEPTEMBER</option>
+                    <option value="OCTOBER">OCTOBER</option>
+                    <option value="NOVEMBER">NOVEMBER</option>
+                    <option value="DECEMBER">DECEMBER</option>
+                </select>
+            </div>
             <!-- dashboard -->
             <section id="billing_dashboard">
                 <h2>DASHBOARD</h2><br>
@@ -107,6 +125,10 @@
                             </div>
                             <div class="icon-box">
                                 <i class="fa-solid fa-money-bill-wave"></i>
+                            </div>
+                        </div>
+                        <div style="position: relative;">
+                            <div id="pieChart" style="position: absolute; margin-top: -40px;">
                             </div>
                         </div>
                     </div><br>
@@ -209,17 +231,18 @@
                     <div id="search_tpf_result">
 
                     </div>
-                    <div class="bpf_form">
-                        <div>
-                            <label for="search_cod_form_no">
-                                Search COD #
-                            </label><br>
-                            <div class="bpf_form">
-                                <div class="form">
-                                    <input type="text" id="search_cod_form_no" autocomplete="off" name="search_cod_form_no" class="form-control"><br>
-                                </div>
-                            </div>
-                        </div>
+                    <label for="type_of_form">
+                        <i class="fa-solid fa-list-ol"></i>
+                        Type of Billing
+                    </label><br>
+                    <select name="type_of_form" id="type_of_form" class="form-control">
+                        <option value="">Select</option>
+                        <option value="By COD">By COD</option>
+                        <option value="By Waste Description">By Waste Description</option>
+                        <option value="By Waste and Date Coverage">By Waste and Date Coverage</option>
+                    </select><br>
+                    <div id="type_of_form_list" style="display: flex; gap: 20px;">
+
                     </div>
                     <div class="buttons">
                         <button type="button" id="generate_button" class="form-control form" style="max-width: max-content !important;">
@@ -683,7 +706,7 @@
                             <div id="si_client_name_container">
                                 
                             </div>
-                            <div id="si_address_container">
+                            <div id="si_address_container" style="font-size: 10px;">
                                 
                             </div>
                             <div id="si_tin_nature_of_business_container" class="si_tin">
