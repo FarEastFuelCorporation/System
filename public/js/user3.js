@@ -540,13 +540,31 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <i class="fa-solid fa-gears"></i>
                                         Machine
                                     </label><br>
-                                    <div>
-                                        <select name="machine" id="machine" class="form-control">
-                                            <option value="">Select Machine</option>
-                                            <option value="PYROLYSIS 1">PYROLYSIS 1</option>
-                                            <option value="PYROLYSIS 2">PYROLYSIS 2</option>
-                                            <option value="PYROLYSIS 3">PYROLYSIS 3</option>
-                                        </select>
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px">
+                                        <div>
+                                            <label for="tpf_form_no">
+                                                <i class="fa-solid fa-gears"></i>
+                                                Rotary 1
+                                            </label><br>
+                                            <input type="number" autocomplete="off" name="weight1" id="weight1" step="0.01" class="form-control" placeholder="Input Weight">
+                                            <input type="hidden" name="machine1" value="Rotary 1">
+                                        </div>
+                                        <div>
+                                            <label for="tpf_form_no">
+                                                <i class="fa-solid fa-gears"></i>
+                                                Rotary 2
+                                            </label><br>
+                                            <input type="number" autocomplete="off" name="weight2" id="weight2" step="0.01" class="form-control" placeholder="Input Weight">
+                                            <input type="hidden" name="machine2" value="Rotary 2">
+                                        </div>
+                                        <div>
+                                            <label for="tpf_form_no">
+                                                <i class="fa-solid fa-gears"></i>
+                                                Rotary 3
+                                            </label><br>
+                                            <input type="number" autocomplete="off" name="weight3" id="weight3" step="0.01" class="form-control" placeholder="Input Weight">
+                                            <input type="hidden" name="machine3" value="Rotary 3">
+                                        </div>
                                     </div><br>
                                     `
                                     machine_counter.value = 3
@@ -583,6 +601,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 DESTRUCTION PROCESS: ${findTreatmentProcess(wcf_data_list.content[a][findTextInArray(wcf_data_list, "WASTE ID")])}<br>
                                 WEIGHT: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "NET WEIGHT")]} kg.<br>
                                 HAULING DATE: ${date_decoder(wcf_data_list.content[a][findTextInArray(wcf_data_list, "HAULING DATE")])}<br>
+                                ARRIVAL DATE: ${date_decoder(wcf_data_list.content[a][findTextInArray(wcf_data_list, "ARRIVAL DATE")])}<br>
+                                ARRIVAL TIME: ${time_decoder(wcf_data_list.content[a][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}<br>
                                 SUBMITTED BY: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "SUBMITTED BY")]}<br>
                                 `
                                 if(findTreatmentProcess(wcf_data_list.content[a][findTextInArray(wcf_data_list, "WASTE ID")]) == 'THERMAL DECOMPOSITION'){
@@ -626,13 +646,31 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <i class="fa-solid fa-gears"></i>
                                         Machine
                                     </label><br>
-                                    <div>
-                                        <select name="machine" id="machine" class="form-control">
-                                            <option value="">Select Machine</option>
-                                            <option value="PYROLYSIS 1">PYROLYSIS 1</option>
-                                            <option value="PYROLYSIS 2">PYROLYSIS 2</option>
-                                            <option value="PYROLYSIS 3">PYROLYSIS 3</option>
-                                        </select>
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px">
+                                        <div>
+                                            <label for="tpf_form_no">
+                                                <i class="fa-solid fa-gears"></i>
+                                                Rotary 1
+                                            </label><br>
+                                            <input type="number" autocomplete="off" name="weight1" id="weight1" step="0.01" class="form-control" placeholder="Input Weight">
+                                            <input type="hidden" name="machine1" value="Rotary 1">
+                                        </div>
+                                        <div>
+                                            <label for="tpf_form_no">
+                                                <i class="fa-solid fa-gears"></i>
+                                                Rotary 2
+                                            </label><br>
+                                            <input type="number" autocomplete="off" name="weight2" id="weight2" step="0.01" class="form-control" placeholder="Input Weight">
+                                            <input type="hidden" name="machine2" value="Rotary 2">
+                                        </div>
+                                        <div>
+                                            <label for="tpf_form_no">
+                                                <i class="fa-solid fa-gears"></i>
+                                                Rotary 3
+                                            </label><br>
+                                            <input type="number" autocomplete="off" name="weight3" id="weight3" step="0.01" class="form-control" placeholder="Input Weight">
+                                            <input type="hidden" name="machine3" value="Rotary 3">
+                                        </div>
                                     </div><br>
                                     `
                                     machine_counter.value = 3

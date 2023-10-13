@@ -624,7 +624,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         sugg_box.addEventListener("click", (e) => {
             if (e.target.tagName === "LI") {
-                select(e.target.innerHTML);
+                select(e.target.innerText);
             }
         });
 
@@ -881,7 +881,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         `<tr>
                                         <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                         <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
-                                        <td>N/A</td>
+                                        <td>${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
                                         <td>${formatNumber(item.weight)} kgs.</td>
                                         <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                         <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
@@ -1139,7 +1139,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         `<tr>
                                         <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                         <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
-                                        <td>N/A</td>
+                                        <td>${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
                                         <td>${formatNumber(item.weight)} kgs.</td>
                                         <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                         <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
@@ -1398,7 +1398,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         `<tr>
                                         <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                         <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
-                                        <td>N/A</td>
+                                        <td>${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
                                         <td>${formatNumber(item.weight)} kgs.</td>
                                         <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                         <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
