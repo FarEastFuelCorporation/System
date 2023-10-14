@@ -814,7 +814,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         add_item_button_quotation_form.addEventListener("click", () => {
             list_counter_quotation_form.value = parseInt(list_counter_quotation_form.value) + 1;
             var data = `
-            <div class="list_item" id="list${list_counter_quotation_form.value}" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; width: calc(100% - 240px);">
+            <div class="list_item" id="list${list_counter_quotation_form.value}" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15% 25% 15%; gap: 20px;">
                 <div class="wrapper">
                     <div class="search_input" id="search_waste_code">
                         <input type="text" name="waste_code${list_counter_quotation_form.value}" id="waste_code${list_counter_quotation_form.value}" autocomplete="off" class="form-control" required placeholder="Search">
@@ -862,6 +862,16 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <option value="VAT EXCLUSIVE">VAT EXCLUSIVE</option>
                             <option value="NON VATABLE">NON VATABLE</option>
                         </select>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <input type="text" name="agent${list_counter_quotation_form2.value}" id="agent${list_counter_quotation_form2.value}" autocomplete="off" class="form-control" required style="padding-right: 20px !important;" placeholder="Type Agent...">
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <input type="number" name="commission${list_counter_quotation_form2.value}" id="commission${list_counter_quotation_form2.value}" step="0.01" autocomplete="off" class="form-control" required value="0" style="padding-right: 20px !important;">
                     </div>
                 </div>
             </div>
@@ -1274,7 +1284,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         add_item_button_quotation_form2.addEventListener("click", () => {
             list_counter_quotation_form2.value = parseInt(list_counter_quotation_form2.value) + 1;
             var data = `
-            <div class="list_item" id="list${list_counter_quotation_form2.value}" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; width: calc(100% - 240px);">
+            <div class="list_item" id="list${list_counter_quotation_form2.value}" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15% 25% 15%; gap: 20px;">
                 <div class="wrapper">
                     <div class="search_input" id="search_waste_code">
                         <input type="text" name="waste_code${list_counter_quotation_form2.value}" id="waste_code${list_counter_quotation_form2.value}" autocomplete="off" class="form-control" required placeholder="Search">
@@ -1322,6 +1332,16 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <option value="VAT EXCLUSIVE">VAT EXCLUSIVE</option>
                             <option value="NON VATABLE">NON VATABLE</option>
                         </select>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <input type="text" name="agent${list_counter_quotation_form2.value}" id="agent${list_counter_quotation_form2.value}" autocomplete="off" class="form-control" required style="padding-right: 20px !important;" placeholder="Type Agent...">
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <input type="number" name="commission${list_counter_quotation_form2.value}" id="commission${list_counter_quotation_form2.value}" step="0.01" autocomplete="off" class="form-control" required value="0" style="padding-right: 20px !important;">
                     </div>
                 </div>
             </div>

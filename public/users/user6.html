@@ -445,16 +445,6 @@
                             Biller Contact Number
                         </label><br>
                         <input type="text" name="biller_contact_number" id="biller_contact_number" autocomplete="off" class="form-control" required placeholder="Input Biller's Contact Number..."><br>
-                        <label for="agent">
-                            <i class="fa-solid fa-user"></i>
-                            Agent
-                        </label><br>
-                        <input type="text" name="agent" id="agent" autocomplete="off" class="form-control" required placeholder="Input Agent..."><br>
-                        <label for="commission_rate">
-                            <i class="fa-solid fa-sack-dollar"></i>
-                            Commission Rate (%)
-                        </label><br>
-                        <input type="number" name="commission_rate" id="commission_rate" step="0.01" autocomplete="off" class="form-control" required placeholder="Input Commission Rate..."><br>
                         <div class="buttons">
                             <button type="submit" id="submit_btn" class="form-control" >
                                 Submit
@@ -523,16 +513,6 @@
                                 Biller Contact Number
                             </label><br>
                             <input type="text" name="biller_contact_number" id="biller_contact_number" autocomplete="off" class="form-control" required placeholder="Input Biller's Contact Number..."><br>
-                            <label for="agent">
-                                <i class="fa-solid fa-user"></i>
-                                Agent
-                            </label><br>
-                            <input type="text" name="agent" id="agent" autocomplete="off" class="form-control" required placeholder="Input Agent..."><br>
-                            <label for="commission_rate">
-                                <i class="fa-solid fa-sack-dollar"></i>
-                                Commission Rate (%)
-                            </label><br>
-                            <input type="number" name="commission_rate" id="commission_rate" step="0.01" autocomplete="off" class="form-control" required placeholder="Input Commission Rate..."><br>    
                             <input type="hidden" name="timestamp" id="timestamp">
                             <div class="buttons">
                                 <button type="submit" id="submit_btn" class="form-control" >
@@ -653,7 +633,7 @@
                         <div id="list_container">
                             <h4>QUOTATION DETAILS</h4>
                             <input type="hidden" id="list_counter" name="list_counter" value="1">
-                            <div class="list_item" id="list1"  style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; width: calc(100% - 240px);">
+                            <div class="list_item" id="list1"  style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15% 25% 15%; gap: 20px;">
                                 <div class="wrapper">
                                     <label for="waste_code1">
                                         <i class="fa-solid fa-list"></i>
@@ -727,6 +707,24 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div>
+                                    <label for="agent1">
+                                        <i class="fa-solid fa-user"></i>
+                                        Agent
+                                    </label><br>
+                                    <input type="text" name="agent1" id="agent1" autocomplete="off" class="form-control" placeholder="Input Agent..." style="height: 55px;">
+                                </div>
+                                <div>
+                                    <label for="commission_rate1">
+                                        <i class="fa-solid fa-sack-dollar"></i>
+                                        Commission Price
+                                    </label><br>
+                                    <div class="wrapper">
+                                        <div class="search_input">
+                                            <input type="number" name="commission1" id="commission1" step="0.01" autocomplete="off" class="form-control" value="0" style="padding-right: 20px !important;">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="add_item pt-3" style="top: -75px;">
@@ -740,7 +738,7 @@
                             </div>
                         </div>
                         <div id="transportation_fee_container" style="position: relative;">
-                            <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; width: calc(100% - 240px); margin-top: 30px;">
+                            <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; margin-top: 30px;">
                                 <h4 style="position: absolute; top: -30px;">TRANSPORTATION FEE</h4>
                                 <div class="wrapper" id="type_of_vehicle_container">
                                     <label for="type_of_vehicle1">
@@ -843,7 +841,7 @@
                     <h2>UPDATE QUOTATION FORM</h2><br>
                     <form action="https://script.google.com/macros/s/AKfycbxGEksq1CxxLsjp2-v7FZieghygklICRDbEdziNdTMjZG1CsZ1z2G0Ixc3zXdou-5LxPg/exec" method="post">
                         <input type="hidden" name="user" id="user">
-                        <div style="display: grid; grid-template-columns: 15% 20% 15% 50%; gap: 20px; width: calc(100% - 60px);">
+                        <div style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15% 25% 15%; gap: 20px;">
                             <div class="wrapper">
                                 <label for="quotation_no">
                                     <i class="fa-solid fa-list-ol"></i>
@@ -893,7 +891,7 @@
                             <h4>QUOTATION DETAILS</h4>
                             <input type="hidden" id="list_counter" name="list_counter" value="1">
                             <input type="hidden" id="timestamp" name="timestamp">
-                            <div class="list_item" id="list1" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; width: calc(100% - 240px);">
+                            <div class="list_item" id="list1" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px;">
                                 <div class="wrapper">
                                     <label for="waste_code1">
                                         <i class="fa-solid fa-list"></i>
@@ -964,6 +962,28 @@
                                             <option value="VAT INCLUSIVE">VAT INCLUSIVE</option>
                                             <option value="VAT EXCLUSIVE">VAT EXCLUSIVE</option>
                                         </select>
+                                    </div>
+                                </div>
+                                <label for="vat_calculation1">
+                                    <i class="fa-solid fa-user"></i>
+                                    Vat Calculation
+                                </label><br>
+                                <div>
+                                    <label for="agent1">
+                                        <i class="fa-solid fa-user"></i>
+                                        Agent
+                                    </label><br>
+                                    <input type="text" name="agent1" id="agent1" autocomplete="off" class="form-control" placeholder="Input Agent..." style="height: 55px;">
+                                </div>
+                                <div>
+                                    <label for="commission_rate1">
+                                        <i class="fa-solid fa-sack-dollar"></i>
+                                        Commission Price
+                                    </label><br>
+                                    <div class="wrapper">
+                                        <div class="search_input">
+                                            <input type="number" name="commission1" id="commission1" step="0.01" autocomplete="off" class="form-control" value="0" style="padding-right: 20px !important;">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
