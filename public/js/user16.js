@@ -459,7 +459,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <td>${client_data_list.content[x][findTextInArray(client_data_list, "BILLER ADDRESS")]}</td>
                 <td>${client_data_list.content[x][findTextInArray(client_data_list, "BILLER CONTACT PERSON")]}</td>
                 <td>${client_data_list.content[x][findTextInArray(client_data_list, "BILLER CONTACT NUMBER")]}</td>
-                <td>${client_data_list.content[x][findTextInArray(client_data_list, "AGENT")]}</td>
             </tr>
             `
             data_value_counter += 1;
