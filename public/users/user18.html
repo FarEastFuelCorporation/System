@@ -87,8 +87,26 @@
                     <i class="fa-solid fa-arrows-rotate"></i>
                 </button>
             </div>
+            <div style="display: flex; position: absolute; top: 80px; right: 20px; z-index: 2; border: 3px solid #dc3545; border-radius: 5px; padding: 10px 20px; background-color: #198754;">
+                <label for="month_filter" style="font-weight: bold; color: #ffffff;">FILTER MONTH</label>
+                <select name="month_filter" id="month_filter" class="form-control">
+                    <option value="ALL">ALL</option>
+                    <option value="JANUARY">JANUARY</option>
+                    <option value="FEBRUARY">FEBRUARY</option>
+                    <option value="MARCH">MARCH</option>
+                    <option value="APRIL">APRIL</option>
+                    <option value="MAY">MAY</option>
+                    <option value="JUNE">JUNE</option>
+                    <option value="JULY">JULY</option>
+                    <option value="AUGUST">AUGUST</option>
+                    <option value="SEPTEMBER">SEPTEMBER</option>
+                    <option value="OCTOBER">OCTOBER</option>
+                    <option value="NOVEMBER">NOVEMBER</option>
+                    <option value="DECEMBER">DECEMBER</option>
+                </select>
+            </div>
             <!-- dashboard -->
-            <section class="marketing" id="warehouse_dashboard">
+            <section id="warehouse_dashboard">
                 <h2>DASHBOARD</h2><br>
                 <h2>TRANSACTION SUMMARY</h2>
                 <div class="cards">
@@ -128,6 +146,10 @@
                             <i class="fa-solid fa-clipboard-check"></i>
                         </div>
                     </div>
+                    <div style="position: relative;">
+                        <div id="pieChart" style="position: absolute; margin-top: -40px;">
+                        </div>
+                    </div>
                 </div><br>
                 <h2>SUPPLIES WAREHOUSE PENDING TRANSACTIONS</h2>
                 <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
@@ -157,14 +179,14 @@
                         <table>
                             <thead style="position: sticky; top: 0; background-color: black;">
                                 <th>#</th>
+                                <th>WCF #</th>
                                 <th>MTF #</th>
-                                <th>HAULING<br>DATE/TIME</th>
+                                <th>HAULING<br>DATE</th>
+                                <th>ARRIVAL<br>DATE/TIME</th>
                                 <th>CLIENT</th>
                                 <th>WASTE<br>CODE</th>
                                 <th>WASTE DESCRIPTION</th>
-                                <th>TYPE OF VEHICLE</th>
-                                <th>TO</th>
-                                <th>STATUS</th>
+                                <th>BATCH WEIGHT</th>
                             </thead>
                             <tbody id="disposal_warehouse_pending_list">
 
@@ -175,110 +197,81 @@
                 </div><br>
             </section>
             <!-- MARKETING TRANSACTION FORM -->
-            <section class="marketing" id="disposal_warehouse">
+            <section id="disposal_warehouse">
                 <div class="section_container">
                     <h2>DISPOSAL WAREHOUSE</h2><br>
                     <form id="form_id" action="https://script.google.com/macros/s/AKfycbzDGYOWbPAURr04SwoYzEEYphphMdD6L0yQEzQAcOcjEqugw_2qdo7sjWYL9Xj47TNJRA/exec" method="post">
                         <input type="hidden" name="user" id="user">
+                        <input type="hidden" name="hauling_date" id="hauling_date">
                         <div class="mtf_form">
                             <div>
-                                <label for="mtf_form_no">
+                                <label for="wcf_form_no">
                                     <i class="fa-solid fa-list-ol"></i>
-                                    MTF #
+                                    WCF #
                                 </label><br>
-                                <div class="form">
-                                    <input type="text" id="mtf_form_no" autocomplete="off" name="mtf_form_no" class="form-control" readonly><br>
+                                <div style="display: flex; gap: 20px;">
+                                    <div class="form">
+                                        <input type="text" id="wcf_form_no" autocomplete="off" name="wcf_form_no" class="form-control"><br>
+                                    </div>
+                                    <div>
+                                        <button id="search_wcf_form_no_button" class="form-control" type="button">
+                                            <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
+                                        </button>
+                                    </div>
+                                    <div>
+                                        <button id="clear_wcf_form_no_button" type="reset" class="form-control">
+                                            <i class="fa-solid fa-rectangle-xmark" style="color: #ffffff;"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div id="search_mtf_result">
+                        <div id="search_wcf_result">
 
                         </div>
-                        <div class="wrapper">
-                            <label for="client">
-                                <i class="fa-solid fa-user"></i>
-                                Client
-                            </label><br>
-                            <div class="search_input" id="search_client">
-                                <input type="text" name="client" id="client" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
-                                <div class="autocom_box">
-                                </div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
-                            </div>
+                        <div class="form">
+                            <label for="gate_pass">
+                                <i class="fa-solid fa-table-list"></i>
+                                Gate Pass
+                            </label>
+                            <input type="text" id="gate_pass" name="gate_pass" class="form-control" autocomplete="off" required>
                         </div><br>
-                        <div id="mtf_data">
-                            <div class="date_time_weight">
-                                <div>
-                                    <label for="hauling_date">
-                                        <i class="fa-solid fa-right-to-bracket"></i>
-                                        Hauling Date
-                                    </label>
-                                    <input type="date" autocomplete="off" name="hauling_date" id="hauling_date" class="form-control" required>
-                                </div>
-                                <div>
-                                    <label for="hauling_time">
-                                        <i class="fa-solid fa-right-from-bracket"></i>
-                                        Hauling Time
-                                    </label>
-                                    <input type="time" autocomplete="off" name="hauling_time" id="hauling_time" class="form-control" required><br>
-                                </div>
-                                <div class="wrapper">
-                                    <label for="submit_to">
-                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                        Submit To
-                                    </label><br>
-                                    <select name="submit_to" id="submit_to" class="form-control" required>
-                                        <option value="">SELECT</option>
-                                        <option value="LOGISTICS">LOGISTICS</option>
-                                        <option value="RECEIVING">RECEIVING</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label for="type_of_vehicle">
-                                        <i class="fa-solid fa-truck"></i>
-                                        Type of Vehicle
-                                    </label>
-                                    <select name="type_of_vehicle" id="type_of_vehicle" class="form-control" required>
-                                        <option value="">SELECT</option>
-                                    </select>
-                                </div>
-                                <div class="wrapper">
-                                    <label for="type_of_waste">
-                                        <i class="fa-solid fa-trash-can"></i>
-                                        Type of Waste
-                                    </label><br>
-                                    <select name="type_of_waste" id="type_of_waste" class="form-control">
-                                        <option value="">SELECT</option>
-                                    </select>
-                                </div>
+                        <div style="display: flex; gap: 20px;">
+                            <div class="form">
+                                <label for="warehouse_no">
+                                    <i class="fa-solid fa-table-list"></i>
+                                    Warehouse #
+                                </label>
+                                <select name="warehouse_no" id="warehouse_no" class="form-control">
+                                    <option value="">SELECT</option>
+                                    <option value="WAREHOUSE 1">WAREHOUSE 1</option>
+                                    <option value="WAREHOUSE 2">WAREHOUSE 2</option>
+                                    <option value="WAREHOUSE 3">WAREHOUSE 3</option>
+                                    <option value="WAREHOUSE A">WAREHOUSE A</option>
+                                    <option value="WAREHOUSE B">WAREHOUSE B</option>
+                                    <option value="WAREHOUSE C">WAREHOUSE C</option>
+                                </select>
                             </div>
-                            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 20px;">
-                                <div class="wrapper">
-                                    <label for="submit_to">
-                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                        Waste Category
-                                    </label><br>
-                                    <select name="waste_category" id="waste_category" class="form-control" required>
-                                        <option value="">SELECT</option>
-                                        <option value="HAZARDOUS WASTE">HAZARDOUS WASTE</option>
-                                        <option value="NON-HAZARDOUS WASTE">NON-HAZARDOUS WASTE</option>
-                                    </select>
-                                </div>
-                                <div id="document_container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;"></div>
-                            </div><br>
-                            <label for="remarks">
-                                <i class="fa-brands fa-rocketchat"></i>
-                                Remarks
-                            </label><br>
-                            <input class="form-control" autocapitalize="words" autocomplete="off" name="remarks" id="remarks" type="text" placeholder="Type your Remarks"><br>
-                            <div class="buttons">
-                                <button type="submit" id="submit_btn" class="form-control" >
-                                    Submit
+                            <div class="form">
+                                <label for="area">
+                                    <i class="fa-solid fa-table-list"></i>
+                                    Area
+                                </label>
+                                <select name="warehouse_no" id="warehouse_no" class="form-control">
+                                    <option value="">SELECT</option>
+                                    <option value="A">A</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="add_item">
+                            <div class="item_buttons">
+                                <button type="button" id="add_item_button" class="form-control">
+                                    <i class="fa-solid fa-plus"></i>
                                 </button>
-                                <button type="reset" id="reset" class="form-control" >
-                                    Clear
+                                <button type="button" id="remove_item_button" class="form-control">
+                                    <i class="fa-solid fa-minus"></i>
                                 </button>
-                            </div>    
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -556,6 +549,7 @@
             </section>
         </div>
     </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="../js/main.js"></script>
     <script src="../js/user18.js"></script>

@@ -6,10 +6,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         const treatment_process_response_promise = fetch('https://script.google.com/macros/s/AKfycbzlzR7zmvdHSz4JpeXtEzPE4OQckTIVaE6PBw5IYwlqmmeIprQxEKkp4d2Jb1kBcgndzA/exec');
         const employee_response_promise = fetch('https://script.google.com/macros/s/AKfycbwns5R6TA8U64ywbb9hwYu4LKurAjTM0Z18NYNZMt0Ft0m-_NUHYbYqblk_5KWugvt7lA/exec');
         const vehicle_response_promise = fetch('https://script.google.com/macros/s/AKfycbw-JCnctX1x1W1ogGbrkhNdIGd9q6bYjy_nvaYeoiaBf7HreB2a1tKJZaJHw2wu4wmpcA/exec');
-        const mtf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzkzS4OVm3IfNl6KwOfLZq_uO3MnsXfu-oS5Su_1kxhfo1mMoKpYDm8a4RxWqsQh0qv/exec');
         const ltf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxBLMvyNDsT9_dlVO4Qc31dI4ErcymUHbzKimOpCZHgbJxip2XxCl7Wk3hJyqcdtrxU/exec');
         const wcf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyBFTBuFZ4PkvwmPi_3Pp_v74DCSEK2VpNy6janIGgaAK-P22wazmmShOKn6iwFbrQn/exec');
-        const sf_response_promise = fetch('https://script.google.com/macros/s/AKfycby9b2VCfXc0ifkwBXJRi2UVUwgZIj9F4FTOdZa_SYKZdsTwbVtAzAXzNMFeklE35bg1/exec');
+        const wtf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxYB-N38emc6GUCKuuy-gGVRHQm4NoYgRRayHf56BwjiAPwsBKZ0llHjLAsW7Vt3j9I/exec');
         const qlf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyFU_skru2tnyEiv8I5HkpRCXbUlQb5vlJUm8Le0nZBCvfZeFkQPd2Naljs5CZY41I17w/exec');
         const prf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxZctLub-6PuQGykx298syeH7Qm__S37uqQrVFYsHVtv-Qk8M2oSkRIPIMVT_1WexqRZA/exec');
         const pof_response_promise = fetch('https://script.google.com/macros/s/AKfycby9i2KfOZ_uF7-JUPX8qpXg7Jewmw6oU3EfUTpXiwnRRB91_qIW3xAVNy5SZBN1YhVzzg/exec');
@@ -22,10 +21,9 @@ document.addEventListener('DOMContentLoaded', async function() {
             treatment_process_response,
             employee_response,
             vehicle_response,
-            mtf_response,
             ltf_response,
             wcf_response,
-            sf_response,
+            wtf_response,
             qlf_response,
             prf_response,
             pof_response,
@@ -37,10 +35,9 @@ document.addEventListener('DOMContentLoaded', async function() {
             treatment_process_response_promise,
             employee_response_promise,
             vehicle_response_promise,
-            mtf_response_promise,
             ltf_response_promise,
             wcf_response_promise,
-            sf_response_promise,
+            wtf_response_promise,
             qlf_response_promise,
             prf_response_promise,
             pof_response_promise,
@@ -53,10 +50,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         const treatment_process_data_list  = await treatment_process_response.json();
         const employee_data_list  = await employee_response.json();
         const vehicle_data_list  = await vehicle_response.json();
-        const mtf_data_list  = await mtf_response.json();
         const ltf_data_list  = await ltf_response.json();
         const wcf_data_list  = await wcf_response.json();
-        const sf_data_list  = await sf_response.json();
+        const wtf_data_list  = await wtf_response.json();
         const qlf_data_list  = await qlf_response.json();
         const prf_data_list  = await prf_response.json();
         const pof_data_list  = await pof_response.json();
@@ -80,6 +76,184 @@ document.addEventListener('DOMContentLoaded', async function() {
         user_sidebar_officer.innerText = username_data_list.content[18][findTextInArray(username_data_list, "SECTIONS")];
         user_sidebar_department.innerText = username_data_list.content[18][findTextInArray(username_data_list, "DEPARTMENT")];
         
+        const warehouse_dashboard = document.querySelector("#warehouse_dashboard");
+        const supplies_warehouse_pending_list = warehouse_dashboard.querySelector("#supplies_warehouse_pending_list");
+        const disposal_warehouse_pending_list = warehouse_dashboard.querySelector("#disposal_warehouse_pending_list");
+        const month_filter = document.getElementById("month_filter");
+        var wcf_transaction_warehouse = []; // Variable containing existing elements
+        var wtf_transaction_warehouse = []; // Variable containing existing elements
+        let pending_warehouse = [];
+        let done_warehouse = [];
+
+        function getCurrentMonthName() {
+            const months = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
+            const currentDate = new Date();
+            const currentMonthIndex = currentDate.getMonth();
+            
+            return months[currentMonthIndex];
+        }        
+        month_filter.value = getCurrentMonthName();
+        month_filter.addEventListener("change", generatePending)
+        generatePending();
+        function generatePending(){
+            wcf_transaction_warehouse = [];
+            wtf_transaction_warehouse = [];
+            for (let i = 1; i < wcf_data_list.content.length; i++) {
+                if(wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] == "WAREHOUSE"){
+                    if (!wcf_transaction_warehouse.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]) &&
+                    month_filter.value == formatMonth(wcf_data_list.content[i][findTextInArray(wcf_data_list, "HAULING DATE")])) {
+                        wcf_transaction_warehouse.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]);
+                    }
+                    else if (!wcf_transaction_warehouse.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]) &&
+                    month_filter.value == "ALL") {
+                    wcf_transaction_warehouse.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]);
+                    }
+                }
+            }
+            for (let i = 1; i < wtf_data_list.content.length; i++) {
+                if (!wtf_transaction_warehouse.includes(wtf_data_list.content[i][findTextInArray(wtf_data_list, "WCF #")]) &&
+                month_filter.value == formatMonth(wtf_data_list.content[i][findTextInArray(wtf_data_list, "HAULING DATE")])) {
+                    wtf_transaction_warehouse.push(wtf_data_list.content[i][findTextInArray(wtf_data_list, "WCF #")]);
+                }
+                else if (!wtf_transaction_warehouse.includes(wtf_data_list.content[i][findTextInArray(wtf_data_list, "WCF #")]) &&
+                month_filter.value == "ALL") {
+                wtf_transaction_warehouse.push(wtf_data_list.content[i][findTextInArray(wtf_data_list, "WCF #")]);
+                }
+            }
+
+            pending_warehouse = wcf_transaction_warehouse.filter((element) => !wtf_transaction_warehouse.includes(element));
+            done_warehouse = wcf_transaction_warehouse.filter((element) => wtf_transaction_warehouse.includes(element));
+        
+            var data_value_pending = "";
+            var data_value_pending_counter = 1;
+            for(let j = 0; j < pending_warehouse.length; j++){
+                for(let i = 1; i < wcf_data_list.content.length; i++){
+                    if(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")] == pending_warehouse[j] &&
+                    month_filter.value == formatMonth(wcf_data_list.content[i][findTextInArray(wcf_data_list, "HAULING DATE")])){
+                        var mtf = "";
+                        var ltf = "";
+                        if((wcf_data_list.content[i][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                            mtf = wcf_data_list.content[i][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                        }else{
+                            ltf = wcf_data_list.content[i][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                            for(let x = 1; x < ltf_data_list.content.length; x++){
+                                if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                    mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                    break
+                                }
+                            }
+                        }
+                        data_value_pending +=`
+                        <tr>
+                            <td>${data_value_pending_counter}</td>
+                            <td>${wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]}</td>
+                            <td>${mtf}</td>
+                            <td>${date_decoder(wcf_data_list.content[i][findTextInArray(wcf_data_list, "HAULING DATE")])}</td>
+                            <td>${date_decoder(wcf_data_list.content[i][findTextInArray(wcf_data_list, "ARRIVAL DATE")])} /<br> ${time_decoder(wcf_data_list.content[i][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}</td>
+                            <td>${findClientName(wcf_data_list.content[i][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
+                            <td>${findWasteCode(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
+                            <td>${findWasteName(wcf_data_list.content[i][findTextInArray(wcf_data_list, "CLIENT ID")], wcf_data_list.content[i][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
+                            <td>${wcf_data_list.content[i][findTextInArray(wcf_data_list, "NET WEIGHT")]} kg.</td>
+                        </tr>
+                        `
+                        data_value_pending_counter += 1;
+                    }
+                    else if(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")] == pending_warehouse[j] &&
+                    month_filter.value == "ALL"){
+                        var mtf = "";
+                        var ltf = "";
+                        if((wcf_data_list.content[i][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                            mtf = wcf_data_list.content[i][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                        }else{
+                            ltf = wcf_data_list.content[i][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                            for(let x = 1; x < ltf_data_list.content.length; x++){
+                                if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                    mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                    break
+                                }
+                            }
+                        }
+                        data_value_pending +=`
+                        <tr>
+                            <td>${data_value_pending_counter}</td>
+                            <td>${wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]}</td>
+                            <td>${mtf}</td>
+                            <td>${date_decoder(wcf_data_list.content[i][findTextInArray(wcf_data_list, "HAULING DATE")])}</td>
+                            <td>${date_decoder(wcf_data_list.content[i][findTextInArray(wcf_data_list, "ARRIVAL DATE")])} /<br> ${time_decoder(wcf_data_list.content[i][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}</td>
+                            <td>${findClientName(wcf_data_list.content[i][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
+                            <td>${findWasteCode(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
+                            <td>${findWasteName(wcf_data_list.content[i][findTextInArray(wcf_data_list, "CLIENT ID")], wcf_data_list.content[i][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
+                            <td>${wcf_data_list.content[i][findTextInArray(wcf_data_list, "NET WEIGHT")]} kg.</td>
+                        </tr>
+                        `
+                        data_value_pending_counter += 1;
+                    }
+                }
+            }
+            disposal_warehouse_pending_list.innerHTML = data_value_pending;    
+
+        }
+
+        const disposal_warehouse = document.querySelector("#disposal_warehouse");
+        const wcf_form_no_warehouse = disposal_warehouse.querySelector("#wcf_form_no");
+        const search_wcf_form_no_button_warehouse = disposal_warehouse.querySelector("#search_wcf_form_no_button");
+        const search_wcf_result_warehouse = disposal_warehouse.querySelector("#search_wcf_result");
+
+        function addItem () {
+
+        }
+
+        
+        search_wcf_form_no_button_warehouse.addEventListener("click", () => {
+            var data_value_text;
+            for(let a = 1; a < wcf_data_list.content.length; a++){
+                if(wcf_form_no_warehouse.value == wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")]){
+                    for(let b = 0; b < pending_warehouse.length; b++){
+                        if(wcf_form_no_warehouse.value == pending_warehouse[b]){
+                            data_value_text = `
+                            WCF #: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")]}<br>
+                            CLIENT: ${findClientName(wcf_data_list.content[a][findTextInArray(wcf_data_list, "CLIENT ID")])}<br>
+                            WASTE CODE: ${findWasteCode(wcf_data_list.content[a][findTextInArray(wcf_data_list, "WASTE ID")])}<br>
+                            WASTE DESCRIPTION: ${findWasteName(wcf_data_list.content[a][findTextInArray(wcf_data_list, "CLIENT ID")], wcf_data_list.content[a][findTextInArray(wcf_data_list, "WASTE ID")])}<br>
+                            PLATE NO: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "PLATE #")]}<br>
+                            DRIVER: ${findEmployeeName(wcf_data_list.content[a][findTextInArray(wcf_data_list, "DRIVER ID")])}<br>
+                            DATE IN: ${date_decoder(wcf_data_list.content[a][findTextInArray(wcf_data_list, "ARRIVAL DATE")])}<br>
+                            TIME IN: ${time_decoder(wcf_data_list.content[a][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}<br>
+                            CLIENT WEIGHT: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "CLIENT WEIGHT")]} Kg.<br>
+                            TRUCK SCALE #: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "TRUCK SCALE #")]}<br>
+                            GROSS WEIGHT: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "GROSS WEIGHT")]} Kg.<br>
+                            TARE WEIGHT: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "TARE WEIGHT")]} Kg.<br>
+                            NET WEIGHT: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "NET WEIGHT")]} Kg.<br>
+                            HAULING DATE: ${date_decoder(wcf_data_list.content[a][findTextInArray(wcf_data_list, "HAULING DATE")])}<br>
+                            REMARKS: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "REMARKS")]}<br>
+                            SUBMITTED BY: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "SUBMITTED BY")]}<br>
+                            `
+                            hauling_date.value = date_decoder(wcf_data_list.content[a][findTextInArray(wcf_data_list, "HAULING DATE")]);
+                        }
+                        search_wcf_result_warehouse.innerHTML = `
+                        <div class="search_wcf_result">
+                        <h2>INFORMATION</h2>
+                        No Data Found
+                        </div><br>`
+                    }
+                }
+            }
+            if(data_value_text == undefined){
+                search_wcf_result_warehouse.innerHTML = `
+                <div class="search_wcf_result">
+                <h2>INFORMATION</h2>
+                No Data Found
+                </div><br>`            
+            }
+            else{
+                search_wcf_result_warehouse.innerHTML = `
+                <div class="search_wcf_result">
+                <h2>INFORMATION</h2>
+                ${data_value_text}
+                </div><br>`
+            }
+        })
+
         // multi section
         // purchase_request_form
         const today = new Date();
@@ -97,30 +271,30 @@ document.addEventListener('DOMContentLoaded', async function() {
         var prf_counter = purchase_request_form.querySelector("#prf_counter");
         var prf_form_no = [];
         
-        function prf_generator() {
-            var data_content = 0;
-            var data_info;
-            var data_last_3digit = 0;
-            var prf_code_year_month;
-            prf_code_year_month = `PR${today_year}${month_new}`;
+        // function prf_generator() {
+        //     var data_content = 0;
+        //     var data_info;
+        //     var data_last_3digit = 0;
+        //     var prf_code_year_month;
+        //     prf_code_year_month = `PR${today_year}${month_new}`;
         
-            for (let x = 1; x < prf_data_list.content.length; x++) {
-                data_info = prf_data_list.content[x][findTextInArray(prf_data_list, "PR #")];
+        //     for (let x = 1; x < prf_data_list.content.length; x++) {
+        //         data_info = prf_data_list.content[x][findTextInArray(prf_data_list, "PR #")];
         
-                if (data_info.includes(prf_code_year_month) == true) {
-                    data_last_3digit = data_info.slice(8);
-                }
-            }
+        //         if (data_info.includes(prf_code_year_month) == true) {
+        //             data_last_3digit = data_info.slice(8);
+        //         }
+        //     }
         
-            data_content = parseInt(data_last_3digit);
+        //     data_content = parseInt(data_last_3digit);
         
-            for (let y = 1; y <= prf_counter.value; y++) {
-                prf_form_no[y] = document.querySelector(`#prf_form_no${y}`);
-                prf_form_no[y].value = `${prf_code_year_month}${String(parseInt(data_content) + y).padStart(3,"0")}`;
-            }
-        }
+        //     for (let y = 1; y <= prf_counter.value; y++) {
+        //         prf_form_no[y] = document.querySelector(`#prf_form_no${y}`);
+        //         prf_form_no[y].value = `${prf_code_year_month}${String(parseInt(data_content) + y).padStart(3,"0")}`;
+        //     }
+        // }
         
-        prf_generator()
+        // prf_generator()
         
         add_item_button.addEventListener("click", () => {
             const prf_item_container = purchase_request_form.querySelector("#prf_item_container");

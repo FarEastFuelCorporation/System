@@ -906,7 +906,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             if(tf_value_quotation_form.value == "false"){
                 tf_counter_quotation_form.value = 1;
                 var data = `                        
-                <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; width: calc(100% - 240px); margin-top: 30px;">
+                <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; margin-top: 30px;">
                     <h4 style="position: absolute; top: -30px;">TRANSPORTATION FEE</h4>
                     <div class="wrapper">
                         <label for="type_of_vehicle1">
