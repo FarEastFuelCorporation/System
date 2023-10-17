@@ -450,6 +450,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${data_value_counter}</td>
                             <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")]}</td>
                             <td>${mtf}</td>
+                            <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "HAULING DATE")])}
                             <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")])} /<br> ${time_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION TIME")])}</td>
                             <td>${findClientName(tpf_data_list.content[j][findTextInArray(tpf_data_list, "CLIENT ID")])}</td>
                             <td>${findWasteCode(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
@@ -497,6 +498,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${data_value_counter}</td>
                             <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")]}</td>
                             <td>${mtf}</td>
+                            <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "HAULING DATE")])}
                             <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")])} /<br> ${time_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION TIME")])}</td>
                             <td>${findClientName(tpf_data_list.content[j][findTextInArray(tpf_data_list, "CLIENT ID")])}</td>
                             <td>${findWasteCode(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
@@ -568,6 +570,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${data_value_counter}</td>
                             <td>${cod_no}</td>
                             <td>${mtf}</td>
+                            <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "HAULING DATE")])}
                             <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")])} /<br> ${time_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION TIME")])}</td>
                             <td>${findClientName(tpf_data_list.content[j][findTextInArray(tpf_data_list, "CLIENT ID")])}</td>
                             <td>${findWasteCode(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
@@ -628,6 +631,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${data_value_counter}</td>
                             <td>${cod_no}</td>
                             <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")]}</td>
+                            <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                             <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")])} /<br> ${time_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION TIME")])}</td>
                             <td>${findClientName(tpf_data_list.content[j][findTextInArray(tpf_data_list, "CLIENT ID")])}</td>
                             <td>${findWasteCode(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
