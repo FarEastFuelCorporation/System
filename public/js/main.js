@@ -184,15 +184,15 @@ function convertToOrdinal(cardinal) {
     var lastTwoDigits = cardinal % 100;
   
     if (lastTwoDigits >= 11 && lastTwoDigits <= 13) {
-      return cardinal + "th";
+      return "th";
     } else if (lastDigit === 1) {
-      return cardinal + "st";
+      return "st";
     } else if (lastDigit === 2) {
-      return cardinal + "nd";
+      return "nd";
     } else if (lastDigit === 3) {
-      return cardinal + "rd";
+      return "rd";
     } else {
-      return cardinal + "th";
+      return "th";
     }
 }
 

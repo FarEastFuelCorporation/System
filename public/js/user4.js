@@ -724,6 +724,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const table_company = document.getElementById("table_company");
         const table_company_address = document.getElementById("table_company_address");
         const certification = document.getElementById("certification");
+        const certification2 = document.getElementById("certification2");
+        const certification3 = document.getElementById("certification3");
         const table_data_input_value = document.getElementById("table_data_input_value");
         const result_remarks = document.getElementById("result_remarks");
         const table_data = document.getElementById("table_data");
@@ -993,7 +995,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     convertToPDFandDownload_button.style.display = "block";    
                                     table_data.innerHTML = table_data_value;
                                     table_head_data.innerHTML = table_head_data_value;
-                                    certification.innerHTML = `${certification_day_ordinal} day of ${certification_month} ${year}`;
+                                    certification.innerHTML = `${certification_day}`;
+                                    certification2.innerHTML = `${certification_day_ordinal} s`;
+                                    certification3.innerHTML = ` day of ${certification_month} ${year}`;
                                     result_remarks.innerHTML = "";
                                 }
                             }
@@ -1251,7 +1255,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     convertToPDFandDownload_button.style.display = "block";    
                                     table_data.innerHTML = table_data_value;
                                     table_head_data.innerHTML = table_head_data_value;
-                                    certification.innerHTML = `${certification_day_ordinal} day of ${certification_month} ${year}`;
+                                    certification.innerHTML = `${certification_day}`;
+                                    certification2.innerHTML = `${certification_day_ordinal} `;
+                                    certification3.innerHTML = ` day of ${certification_month} ${year}`;
                                     result_remarks.innerHTML = "";
                                 }
                             }
@@ -1510,7 +1516,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     convertToPDFandDownload_button.style.display = "block";    
                                     table_data.innerHTML = table_data_value;
                                     table_head_data.innerHTML = table_head_data_value;
-                                    certification.innerHTML = `${certification_day_ordinal} day of ${certification_month} ${year}`;
+                                    certification.innerHTML = `${certification_day}`;
+                                    certification2.innerHTML = `${certification_day_ordinal} `;
+                                    certification3.innerHTML = ` day of ${certification_month} ${year}`;
                                     result_remarks.innerHTML = "";
                                 }
                             }
