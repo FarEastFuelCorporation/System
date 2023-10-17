@@ -77,6 +77,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         user_sidebar_department.innerText = username_data_list.content[18][findTextInArray(username_data_list, "DEPARTMENT")];
         
         const warehouse_dashboard = document.querySelector("#warehouse_dashboard");
+        const received_transactions_warehouse = warehouse_dashboard.querySelector("#received_transactions");
+        const pending_counter_warehouse = warehouse_dashboard.querySelector("#pending");
+        const finished_counter_warehouse = warehouse_dashboard.querySelector("#finished");
         const supplies_warehouse_pending_list = warehouse_dashboard.querySelector("#supplies_warehouse_pending_list");
         const disposal_warehouse_pending_list = warehouse_dashboard.querySelector("#disposal_warehouse_pending_list");
         const month_filter = document.getElementById("month_filter");
@@ -123,7 +126,11 @@ document.addEventListener('DOMContentLoaded', async function() {
 
             pending_warehouse = wcf_transaction_warehouse.filter((element) => !wtf_transaction_warehouse.includes(element));
             done_warehouse = wcf_transaction_warehouse.filter((element) => wtf_transaction_warehouse.includes(element));
-        
+            
+            received_transactions_warehouse.innerText = pending_warehouse.length + done_warehouse.length;
+            pending_counter_warehouse.innerText = pending_warehouse.length;
+            finished_counter_warehouse.innerText = done_warehouse.length;
+
             var data_value_pending = "";
             var data_value_pending_counter = 1;
             for(let j = 0; j < pending_warehouse.length; j++){
@@ -192,17 +199,209 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             disposal_warehouse_pending_list.innerHTML = data_value_pending;    
 
+            var options = {
+                series: [pending_warehouse.length, done_warehouse.length],
+                chart: {
+                    width: 500, // Set the desired width
+                    height: 550, // Set the desired height
+                    type: 'pie',
+                },
+                plotOptions: {
+                    pie: {
+                        startAngle: 0,
+                        endAngle: 360
+                    }
+                },
+                dataLabels: {
+                    enabled: false, // Disable data labels inside the pie chart
+                },
+                fill: {
+                    type: 'gradient', // Use solid fill type
+                },
+                legend: {
+                    show: true,
+                    position: "left", // Set the legend position to "left"
+                    fontSize: '30px', // Increase legend font size as needed
+                    formatter: function (seriesName, opts) {
+                        // Here, you should use the correct variable to get the series value
+                        var seriesValue = opts.w.globals.series[opts.seriesIndex];
+                        var totalValue = opts.w.globals.series.reduce((acc, val) => acc + val, 0);
+                        var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
+                        return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
+                    },
+                    labels: {
+                        useSeriesColors: false, // Use custom color
+                    },
+                },
+                labels: ["Pending", "Treated"],
+                colors: ["#dc3545", "#198754"], // Specify solid colors here
+                responsive: [{
+                    breakpoint: 480,
+                    options: {
+                        chart: {
+                            width: 200
+                        },
+                    }
+                }]
+            };
+            const pieChart = document.querySelector("#pieChart");
+            while (pieChart.firstChild) {
+                pieChart.removeChild(pieChart.firstChild);
+            }
+            var chart = new ApexCharts(pieChart, options);
+            chart.render();
+
         }
+
+        // FORM GENERATOR
+        // wtf_data_list
+        const wtf_form_no = document.getElementById("wtf_form_no");
+        var last_row = wtf_data_list.content.length -1;
+        var data_info = wtf_data_list.content[last_row][findTextInArray(wtf_data_list, "WTF #")];
+        var data_counter;
+        if(last_row == 0){
+            data_counter = 0;
+        }
+        else{
+            data_counter = data_info.substring(9,12);
+        }
+        var year = new Date().getFullYear();
+        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        wtf_form_no.value = `WTF${year}${month}${data_counter}`;
 
         const disposal_warehouse = document.querySelector("#disposal_warehouse");
         const wcf_form_no_warehouse = disposal_warehouse.querySelector("#wcf_form_no");
         const search_wcf_form_no_button_warehouse = disposal_warehouse.querySelector("#search_wcf_form_no_button");
         const search_wcf_result_warehouse = disposal_warehouse.querySelector("#search_wcf_result");
+        const hauling_date_warehouse = disposal_warehouse.querySelector("#hauling_date");
+        const arrival_date_warehouse = disposal_warehouse.querySelector("#arrival_date");
+        const item_container_warehouse = disposal_warehouse.querySelector("#item_container");
+        const item_counter_warehouse = disposal_warehouse.querySelector("#item_counter");
+        const add_item_button_warehouse = disposal_warehouse.querySelector("#add_item_button");
+        const remove_item_button_warehouse = disposal_warehouse.querySelector("#remove_item_button");
+        const warehouse_data_warehouse = disposal_warehouse.querySelector("#warehouse_data");
 
         function addItem () {
-
+            item_counter_warehouse.value = parseInt(item_counter_warehouse.value) +1;
+            var item_data = 
+            `
+            <div id="items${item_counter_warehouse.value}" style="display: flex; gap: 20px;">
+                <div class="form">
+                    <select name="warehouse_no${item_counter_warehouse.value}" id="warehouse_no${item_counter_warehouse.value}" class="form-control">
+                        <option value="">SELECT</option>
+                        <option value="WAREHOUSE 1">WAREHOUSE 1</option>
+                        <option value="WAREHOUSE 2">WAREHOUSE 2</option>
+                        <option value="WAREHOUSE 3">WAREHOUSE 3</option>
+                        <option value="WAREHOUSE A">WAREHOUSE A</option>
+                        <option value="WAREHOUSE B">WAREHOUSE B</option>
+                        <option value="WAREHOUSE C">WAREHOUSE C</option>
+                    </select>
+                </div>
+                <div class="form">
+                    <select name="area${item_counter_warehouse.value}" id="area${item_counter_warehouse.value}" class="form-control">
+                        <option value="">SELECT</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                        <option value="F">F</option>
+                        <option value="G">G</option>
+                        <option value="H">H</option>
+                        <option value="I">I</option>
+                        <option value="J">J</option>
+                        <option value="K">K</option>
+                        <option value="L">L</option>
+                        <option value="M">M</option>
+                        <option value="N">N</option>
+                        <option value="O">O</option>
+                        <option value="P">P</option>
+                        <option value="Q">Q</option>
+                        <option value="R">R</option>
+                        <option value="S">S</option>
+                        <option value="T">T</option>
+                        <option value="U">U</option>
+                        <option value="V">V</option>
+                        <option value="W">W</option>
+                        <option value="X">X</option>
+                        <option value="Y">Y</option>
+                        <option value="Z">Z</option>
+                        <option value="AA">AA</option>
+                        <option value="AB">AB</option>
+                        <option value="AC">AC</option>
+                        <option value="AD">AD</option>
+                        <option value="AE">AE</option>
+                        <option value="AF">AF</option>
+                    </select>
+                </div>
+                <div class="form">
+                    <select name="section${item_counter_warehouse.value}" id="section${item_counter_warehouse.value}" class="form-control">
+                        <option value="">SELECT</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>                                    
+                    </select>
+                </div>
+                <div class="form">
+                    <select name="level${item_counter_warehouse.value}" id="level${item_counter_warehouse.value}" class="form-control" required>
+                        <option value="">SELECT</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>                                 
+                    </select>
+                </div>
+                <div class="form">
+                    <input type="number" name="pallet${item_counter_warehouse.value}" id="pallet${item_counter_warehouse.value}" class="form-control" step="1" autocomplete="off" required style="width: 100px;">
+                </div>
+                <div class="form">
+                    <input type="text" name="steam${item_counter_warehouse.value}" id="steam${item_counter_warehouse.value}" class="form-control" autocomplete="off" required style="width: 110px;">
+                </div>
+                <div class="form">
+                    <input type="number" name="quantity${item_counter_warehouse.value}" id="quantity${item_counter_warehouse.value}" class="form-control" step="1" autocomplete="off" required style="width: 100px;">
+                </div>
+                <div class="form">
+                    <select name="unit${item_counter_warehouse.value}" id="unit${item_counter_warehouse.value}" class="form-control" required>
+                        <option value="">SELECT</option>
+                        <option value="PC">PC</option>
+                        <option value="CASE">CASE</option>
+                        <option value="JUMBO">JUMBO</option>                             
+                    </select>
+                </div>
+                <div class="form">
+                    <input type="text" name="description${item_counter_warehouse.value}" id="description${item_counter_warehouse.value}" class="form-control" autocomplete="off" required style="width: 250px;">
+                </div>
+            </div>
+            `
+            item_container_warehouse.insertAdjacentHTML("beforeend", item_data)
+            if(item_counter_warehouse.value > 1){
+                remove_item_button_warehouse.style.display = "block"
+            }
         }
 
+        function remove_item() {
+            const item_counter_warehouse = disposal_warehouse.querySelector("#item_counter");
+            const items_warehouse = disposal_warehouse.querySelector(`#items${item_counter_warehouse.value}`);
+            items_warehouse.remove()
+            item_counter_warehouse.value = parseInt(item_counter_warehouse.value) -1;
+            if(item_counter_warehouse.value == 1){
+                remove_item_button_warehouse.style.display = "none"
+            }
+        }
+
+        add_item_button_warehouse.addEventListener("click", addItem)
+        remove_item_button_warehouse.addEventListener("click", remove_item)
         
         search_wcf_form_no_button_warehouse.addEventListener("click", () => {
             var data_value_text;
@@ -228,7 +427,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                             REMARKS: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "REMARKS")]}<br>
                             SUBMITTED BY: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "SUBMITTED BY")]}<br>
                             `
-                            hauling_date.value = date_decoder(wcf_data_list.content[a][findTextInArray(wcf_data_list, "HAULING DATE")]);
+                            hauling_date_warehouse.value = date_decoder(wcf_data_list.content[a][findTextInArray(wcf_data_list, "HAULING DATE")]);
+                            arrival_date_warehouse.value = date_decoder(wcf_data_list.content[a][findTextInArray(wcf_data_list, "ARRIVAL DATE")]);
+                            warehouse_data_warehouse.style.display = "block"
                         }
                         search_wcf_result_warehouse.innerHTML = `
                         <div class="search_wcf_result">

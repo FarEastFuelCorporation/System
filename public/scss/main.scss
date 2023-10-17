@@ -534,7 +534,7 @@ nav{
 #purchase_order_form,
 #trip_forms,
 #fund_transfer_form,
-#warehouse_dashboard,
+#disposal_warehouse,
 #purchase_request_form,
 #incident_report_form,
 #settingsSection,
@@ -2839,7 +2839,7 @@ input:disabled {
     height: 120px;
     padding: 10px 0px 0 0px;
     display: grid;
-    grid-template-columns: repeat(4, 1fr) 500px;
+    grid-template-columns: repeat(3, 1fr) 500px;
     grid-gap: 20px;
     background: #f5f5f5;
 }
