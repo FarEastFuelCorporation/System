@@ -547,6 +547,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             var type_of_vehicle_data = `
                             <select autocomplete="off" name="type_of_vehicle" id="type_of_vehicle" class="form-control" required style="height: 55px;">
                                 <option value="">SELECT</option>
+                                <option value="CLIENT VEHICLE">CLIENT VEHICLE</option>
                                 ${vehicle_choice.map(choice => `<option value="${choice}">${choice}</option>`).join('')}
                             </select>
                             `
