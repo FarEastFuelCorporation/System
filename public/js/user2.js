@@ -375,7 +375,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")]}</td>
                             <td>${sf_data_list.content[i][findTextInArray(sf_data_list, "WCF #")]}</td>
                             <td>${mtf}</td>
-                            <td>${date_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "HAULING DATE")])}</td>
+                            <td>${date_decoder(sf_data_list.content[i][findTextInArray(sf_data_list, "HAULING DATE")])}</td>
                             <td>${date_decoder(sf_data_list.content[i][findTextInArray(sf_data_list, "COMPLETION DATE")])} /<br> ${time_decoder(sf_data_list.content[i][findTextInArray(sf_data_list, "COMPLETION TIME")])}</td>
                             <td>${findClientName(sf_data_list.content[i][findTextInArray(sf_data_list, "CLIENT ID")])}</td>
                             <td>${findWasteCode(sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE ID")])}</td>
@@ -413,7 +413,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")]}</td>
                             <td>${sf_data_list.content[i][findTextInArray(sf_data_list, "WCF #")]}</td>
                             <td>${mtf}</td>
-                            <td>${date_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "HAULING DATE")])}</td>
+                            <td>${date_decoder(sf_data_list.content[i][findTextInArray(sf_data_list, "HAULING DATE")])}</td>
                             <td>${date_decoder(sf_data_list.content[i][findTextInArray(sf_data_list, "COMPLETION DATE")])} /<br> ${time_decoder(sf_data_list.content[i][findTextInArray(sf_data_list, "COMPLETION TIME")])}</td>
                             <td>${findClientName(sf_data_list.content[i][findTextInArray(sf_data_list, "CLIENT ID")])}</td>
                             <td>${findWasteCode(sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE ID")])}</td>
