@@ -253,6 +253,56 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         }
 
+        var data_value = [];
+
+        for (x = 1; x < client_data_list.content.length; x++) {
+            data_value.push(client_data_list.content[x][1]);
+        }
+        const search_wrappers = document.querySelectorAll("#search_client");
+
+        search_wrappers.forEach((search_wrapper) => {
+            const input_box = search_wrapper.querySelector("input");
+            const sugg_box = search_wrapper.querySelector(".autocom_box");
+            input_box.onkeyup = (e) => {
+                let user_data = e.target.value;
+                let empty_array = [];
+                if (user_data) {
+                    empty_array = data_value.filter((data) => {
+                        return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
+                    });
+                    empty_array = empty_array.map((data) => {
+                        return '<li>' + data + '</li>';
+                    });
+                    search_wrapper.classList.add("active");
+                    show_suggestions(empty_array);
+                } else {
+                    search_wrapper.classList.remove("active");
+                }
+            };
+            sugg_box.addEventListener("click", (e) => {
+                if (e.target.tagName === "LI") {
+                    select(e.target.innerText);
+                }
+            });
+            function select(element) {
+                let select_user_data = element;
+                input_box.value = select_user_data;
+                search_wrapper.classList.remove("active");
+            }
+        
+            function show_suggestions(list) {
+                let list_data;
+                if (!list.length) {
+                    user_value = input_box.value;
+                    list_data = '<li>' + user_value + '</li>';
+                } else {
+                    list_data = list.join("");
+                }
+                sugg_box.innerHTML = list_data;
+            }    
+        })
+
+
         // FORM GENERATOR
         // wtf_data_list
         const wtf_form_no = document.getElementById("wtf_form_no");

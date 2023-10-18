@@ -32,7 +32,7 @@
                 <li>
                     <a href="#">
                         <i class="fa-solid fa-clipboard-list"></i>
-                        Disposal Warehouse
+                        Warehouse Transaction
                     </a>
                 </li>
                 </li>
@@ -235,13 +235,27 @@
                         <div id="search_wcf_result">
 
                         </div>
-                        <div id="warehouse_data" style="display: none;">
-                            <div class="form">
-                                <label for="gate_pass">
-                                    <i class="fa-solid fa-table-list"></i>
-                                    Gate Pass
-                                </label>
-                                <input type="text" id="gate_pass" name="gate_pass" class="form-control" autocomplete="off" required>
+                        <div id="warehouse_data">
+                            <div style="display: flex; gap: 20px;">
+                                <div class="form">
+                                    <label for="gate_pass">
+                                        <i class="fa-solid fa-table-list"></i>
+                                        Gate Pass
+                                    </label>
+                                    <input type="text" id="gate_pass" name="gate_pass" class="form-control" autocomplete="off" required style="height: 55px;">
+                                </div>
+                                <div class="wrapper">
+                                    <label for="client">
+                                        <i class="fa-solid fa-user"></i>
+                                        Client
+                                    </label><br>
+                                    <div class="search_input" id="search_client">
+                                        <input type="text" name="client" id="client" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name..." style="width: 800px;">
+                                        <div class="autocom_box">
+                                        </div>
+                                        <div class="icon"><i class="fas fa-search"></i></div>
+                                    </div>
+                                </div>
                             </div><br>
                             <div id="item_container">
                                 <div id="items1" style="display: flex; gap: 20px;">
