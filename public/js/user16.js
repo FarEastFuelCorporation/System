@@ -784,6 +784,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <td>${formatNumber(qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT PRICE")])}</td>
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "VAT CALCULATION")]}</td>
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "TERMS DAYS")]}</td>
+                    <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "AGENT NAME")]}</td>
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "SUBMITTED BY")]}</td>
                 </tr>
                 `
@@ -803,6 +804,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <td>${formatNumber(qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT PRICE")])}</td>
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "VAT CALCULATION")]}</td>
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "TERMS DAYS")]}</td>
+                    <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "AGENT NAME")]}</td>
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "SUBMITTED BY")]}</td>
                 </tr>
                 `
@@ -814,7 +816,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         add_item_button_quotation_form.addEventListener("click", () => {
             list_counter_quotation_form.value = parseInt(list_counter_quotation_form.value) + 1;
             var data = `
-            <div class="list_item" id="list${list_counter_quotation_form.value}" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; width: calc(100% - 240px);">
+            <div class="list_item" id="list${list_counter_quotation_form.value}" style="display: grid; grid-template-columns: 10% 20% 13% 10% 8% 10% 15% 10%; gap: 10px;">
                 <div class="wrapper">
                     <div class="search_input" id="search_waste_code">
                         <input type="text" name="waste_code${list_counter_quotation_form.value}" id="waste_code${list_counter_quotation_form.value}" autocomplete="off" class="form-control" required placeholder="Search">
@@ -864,6 +866,16 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </select>
                     </div>
                 </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <input type="text" name="agent${list_counter_quotation_form2.value}" id="agent${list_counter_quotation_form2.value}" autocomplete="off" class="form-control" required style="padding-right: 20px !important;" placeholder="Type Agent...">
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <input type="number" name="commission${list_counter_quotation_form2.value}" id="commission${list_counter_quotation_form2.value}" step="0.01" autocomplete="off" class="form-control" required value="0" style="padding-right: 20px !important;">
+                    </div>
+                </div>
             </div>
             `
             list_container_quotation_form.insertAdjacentHTML("beforeend", data);
@@ -896,7 +908,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             if(tf_value_quotation_form.value == "false"){
                 tf_counter_quotation_form.value = 1;
                 var data = `                        
-                <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; width: calc(100% - 240px); margin-top: 30px;">
+                <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; margin-top: 30px;">
                     <h4 style="position: absolute; top: -30px;">TRANSPORTATION FEE</h4>
                     <div class="wrapper">
                         <label for="type_of_vehicle1">
@@ -1073,6 +1085,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         search_quotation_no_button_quotation_form.addEventListener("click", () => {
             search_quotation_no_button_container_quotation_form.style.display = "none";
+            add_item_button_quotation_form2.style.display = "block";
             display_input_quotation_form.forEach(input => {input.style.display = "block"});
             list_container_quotation_form2.style.display = "block";
             transportation_fee_container.style.display = "block";
@@ -1141,7 +1154,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         function addQuotationList() {
             list_counter_quotation_form2.value = parseInt(list_counter_quotation_form2.value) + 1;
             var data = `
-            <div class="list_item" id="list${list_counter_quotation_form2.value}" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; width: calc(100% - 240px);">
+            <div class="list_item" id="list${list_counter_quotation_form2.value}" style="display: grid; grid-template-columns: 10% 20% 13% 10% 8% 10% 15% 10%; gap: 10px;">
                 <div class="wrapper">
                     <div class="search_input" id="search_waste_code">
                         <input type="text" name="waste_code${list_counter_quotation_form2.value}" id="waste_code${list_counter_quotation_form2.value}" autocomplete="off" class="form-control" required placeholder="Search">
@@ -1213,18 +1226,31 @@ document.addEventListener('DOMContentLoaded', async function() {
         function addTransportationFeeList() {
             tf_counter_quotation_form2.value = parseInt(tf_counter_quotation_form2.value) + 1;
             var data = `                        
-            <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; width: calc(100% - 240px);">
+            <h4 style="position: absolute; top: -30px;">TRANSPORTATION FEE</h4>
+            <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; width: calc(100% - 240px); margin-top: 100px;">
                 <div class="wrapper" id="type_of_vehicle_container">
+                    <label for="type_of_vehicle${tf_counter_quotation_form2.value}">
+                        <i class="fa-solid fa-truck"></i>
+                        Type of Vehicle
+                    </label><br>
                     <select name="type_of_vehicle${tf_counter_quotation_form2.value}" id="type_of_vehicle${tf_counter_quotation_form2.value}" class="form-control" required style=" height: 55px !important;">
                         <option value="">SELECT</option>
                     </select>
                 </div>
                 <div class="wrapper">
+                    <label for="transportation_fee${tf_counter_quotation_form2.value}">
+                        <i class="fa-solid fa-list"></i>
+                        Area of Hauling
+                    </label><br>
                     <div class="search_input">
                         <input type="text" name="transportation_fee${tf_counter_quotation_form2.value}" id="transportation_fee${tf_counter_quotation_form2.value}" autocomplete="off" class="form-control" required style="padding-right: 20px !important;" placeholder="Type Area of Hauling...">
                     </div>
                 </div>
                 <div class="wrapper">
+                    <label for="tf_mode${tf_counter_quotation_form2.value}">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        Mode
+                    </label><br>
                     <div class="search_input">
                         <select name="tf_mode${tf_counter_quotation_form2.value}" id="tf_mode${tf_counter_quotation_form2.value}" class="form-control" required style="height: 55px;">
                             <option value="">SELECT</option>
@@ -1234,6 +1260,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                     </div>
                 </div>
                 <div class="wrapper">
+                    <label for="tf_unit${tf_counter_quotation_form2.value}">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                        Unit
+                    </label><br>
                     <div class="search_input">
                         <select name="tf_unit${tf_counter_quotation_form2.value}" id="tf_unit${tf_counter_quotation_form2.value}" class="form-control" required style="height: 55px;">
                             <option value="">SELECT</option>
@@ -1242,11 +1272,19 @@ document.addEventListener('DOMContentLoaded', async function() {
                     </div>
                 </div>
                 <div class="wrapper">
+                    <label for="tf_unit_price${tf_counter_quotation_form2.value}">
+                        <i class="fa-solid fa-money-bill-wave"></i>
+                        Unit Price
+                    </label><br>
                     <div class="search_input">
                         <input type="number" name="tf_unit_price${tf_counter_quotation_form2.value}" id="tf_unit_price${tf_counter_quotation_form2.value}" autocomplete="off" class="form-control" required value="0" style="padding-right: 20px !important;">
                     </div>
                 </div>
                 <div class="wrapper">
+                    <label for="tf_vat_calculation${tf_counter_quotation_form2.value}">
+                        <i class="fa-solid fa-calculator"></i>
+                        Vat Calculation
+                    </label><br>
                     <div class="search_input">
                         <select name="tf_vat_calculation${tf_counter_quotation_form2.value}" id="tf_vat_calculation${tf_counter_quotation_form2.value}" class="form-control" required style="height: 55px;">
                             <option value="">SELECT</option>
@@ -1260,7 +1298,9 @@ document.addEventListener('DOMContentLoaded', async function() {
             `
             transportation_fee_container_quotation_form2.insertAdjacentHTML("beforeend", data);
             tf_value_quotation_form2.value = "true";
-            remove_tf_button_quotation_form2.style.display = "block";
+            if(tf_counter_quotation_form2.value > 1){
+                remove_tf_button_quotation_form2.style.display = "block";
+            }
             // Get all input elements of type "number"
             const numberInputs = document.querySelectorAll('input[type="number"]');
             typeOfVehicleOption2();
@@ -1274,7 +1314,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         add_item_button_quotation_form2.addEventListener("click", () => {
             list_counter_quotation_form2.value = parseInt(list_counter_quotation_form2.value) + 1;
             var data = `
-            <div class="list_item" id="list${list_counter_quotation_form2.value}" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; width: calc(100% - 240px);">
+            <div class="list_item" id="list${list_counter_quotation_form2.value}" style="display: grid; grid-template-columns: 10% 20% 13% 10% 8% 10% 15% 10%; gap: 10px;">
                 <div class="wrapper">
                     <div class="search_input" id="search_waste_code">
                         <input type="text" name="waste_code${list_counter_quotation_form2.value}" id="waste_code${list_counter_quotation_form2.value}" autocomplete="off" class="form-control" required placeholder="Search">
@@ -1324,6 +1364,16 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </select>
                     </div>
                 </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <input type="text" name="agent${list_counter_quotation_form2.value}" id="agent${list_counter_quotation_form2.value}" autocomplete="off" class="form-control" required style="padding-right: 20px !important;" placeholder="Type Agent...">
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <input type="number" name="commission${list_counter_quotation_form2.value}" id="commission${list_counter_quotation_form2.value}" step="0.01" autocomplete="off" class="form-control" required value="0" style="padding-right: 20px !important;">
+                    </div>
+                </div>
             </div>
             `
             list_container_quotation_form2.insertAdjacentHTML("beforeend", data);
@@ -1356,7 +1406,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         });
-
+        
         tf_button_quotation_form2.addEventListener("click", () => {
             if(tf_value_quotation_form2.value == "false"){
                 tf_counter_quotation_form2.value = 1;
@@ -1461,6 +1511,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         
         add_tf_button_quotation_form2.addEventListener("click", () => {
             tf_counter_quotation_form2.value = parseInt(tf_counter_quotation_form2.value) + 1;
+            if(tf_counter_quotation_form2.value == 1){
+                
+            }
             var data = `                        
             <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; width: calc(100% - 240px);">
                 <div class="wrapper" id="type_of_vehicle_container">
