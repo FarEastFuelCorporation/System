@@ -73,6 +73,12 @@
                 </li>
                 <li>
                     <a href="#">
+                        <i class="fa-solid fa-sack-dollar"></i>
+                        Commissions
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
                         <i class="fa-solid fa-cart-shopping"></i>
                         Purchase Requests
                     </a>
@@ -499,14 +505,14 @@
             </section>
             <!-- quotation_form -->
             <section class="marketing" id="quotation_form">
-                <h2>QUOTAIONS</h2>
+                <h2>QUOTATIONS</h2>
                 <div>
                     <label class="d-flex gap-3">
                         <button type="button" id="new_quotation_button" class="form-control fw-bold fs-3 bg-success text-white">
-                            NEW QUOTATION
+                            NEW QUOTATION FORM
                         </button>
                         <button type="button" id="update_quotation_button" class="form-control fw-bold fs-3 bg-danger text-white">
-                            UPDATE QUOTATION
+                            UPDATE QUOTATION FORM
                         </button>
                     </label><br>
                 </div>
@@ -789,6 +795,305 @@
                 </div>
                 <div id="update_quotation_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #dc3545; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
                     <h2>UPDATE QUOTATION FORM</h2><br>
+                    <form action="https://script.google.com/macros/s/AKfycbx_Qxgs9HtQPnbxcrwxxxdh9MlBM9ClrLdglzzALhsd2WNYkvXfcGJjdnh7qIX-dWXkDQ/exec" method="post">
+                        <input type="hidden" name="user" id="user">
+                        <input type="hidden" name="timestamp" id="timestamp">
+                        <div style="display: grid; grid-template-columns: 15% 20% 15% 50%; gap: 20px; width: calc(100% - 60px);">
+                            <div class="wrapper">
+                                <label for="quotation_no">
+                                    <i class="fa-solid fa-list-ol"></i>
+                                    Quotation #
+                                </label><br>
+                                <div class="search_input">
+                                    <input type="text" name="quotation_no" id="quotation_no" autocomplete="off" class="form-control" required placeholder="Type Quotation #" style="padding-right: 20px !important;">
+                                </div>
+                            </div>
+                            <div id="search_quotation_no_button_container" style="display: flex; align-items: end;">
+                                <button id="search_quotation_no_button" type="button" class="form-control" style="width: 60px; height: 60px;">
+                                    <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
+                                </button>
+                            </div>
+                            <div class="wrapper display_input" style="display: none;">
+                                <label for="terms">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                    Valid Until (MOA End Date)
+                                </label><br>
+                                <div class="search_input">
+                                    <input type="date" name="validity" id="validity" autocomplete="off" class="form-control" required placeholder="Type Quotation #" style="padding-right: 20px !important;">
+                                </div>
+                            </div>
+                            <div class="wrapper display_input" style="display: none;">
+                                <label for="terms">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                    Terms (Days)
+                                </label><br>
+                                <div class="search_input">
+                                    <input type="number" name="terms" id="terms" autocomplete="off" class="form-control" required placeholder="Type Quotation #" style="padding-right: 20px !important;">
+                                </div>
+                            </div>
+                            <div class="wrapper display_input" style="display: none;">
+                                <label for="client">
+                                    <i class="fa-solid fa-user"></i>
+                                    Client
+                                </label><br>
+                                <div class="search_input" id="search_client">
+                                    <input type="text" name="client" id="client" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
+                                    <div class="autocom_box">
+                                    </div>
+                                    <div class="icon"><i class="fas fa-search"></i></div>
+                                </div>
+                            </div>
+                        </div><br>
+                        <div id="list_container" style="display: none;">
+                            <h4>QUOTATION DETAILS</h4>
+                            <input type="hidden" id="list_counter" name="list_counter" value="1">
+                            <div class="list_item" id="list1"  style="display: grid; grid-template-columns: 10% 20% 13% 10% 8% 10% 15% 10%; gap: 10px;">
+                                <div class="wrapper">
+                                    <label for="waste_code1">
+                                        <i class="fa-solid fa-list"></i>
+                                        Waste Code
+                                    </label><br>
+                                    <div class="search_input" id="search_waste_code">
+                                        <input type="text" name="waste_code1" id="waste_code1" autocomplete="off" class="form-control" required placeholder="Search">
+                                        <div class="autocom_box">
+                                        </div>
+                                        <div class="icon"><i class="fas fa-search"></i></div>
+                                    </div>
+                                </div>
+                                <div class="wrapper">
+                                    <label for="waste_name1">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                        Waste Name
+                                    </label><br>
+                                    <div class="search_input">
+                                        <input type="text" name="waste_name1" id="waste_name1" autocomplete="off" class="form-control" required placeholder="Type Waste Name..." style="padding-right: 20px !important;">
+                                    </div>
+                                </div>
+                                <div class="wrapper">
+                                    <label for="mode1">
+                                        <i class="fa-solid fa-cart-shopping"></i>
+                                        Mode
+                                    </label><br>
+                                    <div class="search_input">
+                                        <select name="mode1" id="mode1" class="form-control" required style="height: 55px;">
+                                            <option value="">SELECT</option>
+                                            <option value="CHARGE">CHARGE</option>
+                                            <option value="FREE OF CHARGE">FREE OF CHARGE</option>
+                                            <option value="BUYING">BUYING</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="wrapper">
+                                    <label for="unit1">
+                                        <i class="fa-solid fa-scale-balanced"></i>
+                                        Unit
+                                    </label><br>
+                                    <div class="search_input">
+                                        <select name="unit1" id="unit1" class="form-control" required style="height: 55px;">
+                                            <option value="">SELECT</option>
+                                            <option value="Kg">KILOGRAMS</option>
+                                            <option value="L">LITERS</option>
+                                            <option value="DRUM">DRUM</option>
+                                            <option value="TRIP">TRIP</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="wrapper">
+                                    <label for="unit_price1">
+                                        <i class="fa-solid fa-money-bill-wave"></i>
+                                        Price
+                                    </label><br>
+                                    <div class="search_input">
+                                        <input type="number" name="unit_price1" id="unit_price1" autocomplete="off" class="form-control" required value="0" style="padding-right: 20px !important;">
+                                    </div>
+                                </div>
+                                <div class="wrapper">
+                                    <label for="vat_calculation1">
+                                        <i class="fa-solid fa-calculator"></i>
+                                        Vat Calculation
+                                    </label><br>
+                                    <div class="search_input">
+                                        <select name="vat_calculation1" id="vat_calculation1" class="form-control" required style="height: 55px;">
+                                            <option value="">SELECT</option>
+                                            <option value="VAT INCLUSIVE">VAT INCLUSIVE</option>
+                                            <option value="VAT EXCLUSIVE">VAT EXCLUSIVE</option>
+                                            <option value="NON VATABLE">NON VATABLE</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="agent1">
+                                        <i class="fa-solid fa-user"></i>
+                                        Agent
+                                    </label><br>
+                                    <input type="text" name="agent1" id="agent1" autocomplete="off" class="form-control" placeholder="Input Agent..." style="height: 55px;">
+                                </div>
+                                <div>
+                                    <label for="commission_rate1">
+                                        <i class="fa-solid fa-sack-dollar"></i>
+                                        Commission
+                                    </label><br>
+                                    <div class="wrapper">
+                                        <div class="search_input">
+                                            <input type="number" name="commission1" id="commission1" step="0.01" autocomplete="off" class="form-control" value="0" style="padding-right: 20px !important;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="add_item pt-3" style="top: 0;">
+                            <div class="item_buttons">
+                                <button type="button" id="remove_item_button" class="form-control">
+                                    <i class="fa-solid fa-minus"></i>
+                                </button>
+                                <button type="button" id="add_item_button" class="form-control" style="display: none;">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div id="transportation_fee_container" style="position: relative; display: none; margin-top: 45px;">   
+                            <input type="hidden" id="tf_value" name="tf_value" value="true">
+                            <input type="hidden" id="tf_counter" name="tf_counter" value="0">
+                            <div class="add_item pt-3" style="position: absolute; top: 0; right: 0px !important; width: 100px;">
+                                <div class="item_buttons">
+                                    <button type="button" id="tf_button" class="" style="padding: 5px; border-radius: 5px; font-size: 12px; color: white !important">
+                                        WITHOUT<br>TRANSPORTATION<br>FEE
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="add_item pt-3" style="position: absolute; top: 80px; right: 0px !important; width: 100px;;">
+                                <div class="item_buttons">
+                                    <button type="button" id="remove_tf_button" class="form-control">
+                                        <i class="fa-solid fa-minus"></i>
+                                    </button>
+                                    <button type="button" id="add_tf_button" class="form-control">
+                                        <i class="fa-solid fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="button_container" class="buttons" style="display: none;">
+                            <button type="submit" id="submit_btn" class="form-control">
+                                Submit
+                            </button>
+                            <button type="reset" id="reset" class="form-control" >
+                                Clear
+                            </button>
+                        </div>    
+                    </form>
+                </div>
+            </section>
+            <!-- commission_form -->
+            <section class="marketing" id="commission_form">
+                <h2>COMMISSIONS</h2>
+                <div>
+                    <label class="d-flex gap-3">
+                        <button type="button" id="new_commission_button" class="form-control fw-bold fs-3 bg-success text-white">
+                            NEW COMMISSION FORM
+                        </button>
+                        <button type="button" id="update_commission_button" class="form-control fw-bold fs-3 bg-danger text-white">
+                            UPDATE COMMISSION FORM
+                        </button>
+                    </label><br>
+                </div>
+                <div class="table" style="max-height: 70vh; align-items: start; overflow-y: scroll;">                            
+                    <div class="list">
+                        <table>
+                            <thead style="position: sticky; top: 0; background-color: black;">
+                                <th>#</th>
+                                <th>CLF #</th>
+                                <th>QUOTATION<br>CODE</th>
+                                <th>CLIENT</th>
+                                <th>WASTE NAME/<br>AREA</th>
+                                <th>AGENT NAME</th>
+                                <th>SUBMITTED<br>BY</th>
+                            </thead>
+                            <tbody id="clf_list">
+
+                            </tbody>
+                        </table>
+                        <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
+                </div><br>
+                <div id="new_commission_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
+                    <h2>NEW COMMISSION FORM</h2><br>
+                    <form  action="https://script.google.com/macros/s/AKfycbx_Qxgs9HtQPnbxcrwxxxdh9MlBM9ClrLdglzzALhsd2WNYkvXfcGJjdnh7qIX-dWXkDQ/exec" method="post">
+                        <input type="hidden" name="user" id="user">
+                        <input type="hidden" name="commission_data_counter" id="commission_data_counter" value="1">
+                        <div id="commission_list">
+                            <div style="display: grid; grid-template-columns: 15% 25% 15% 25% 20%; gap: 20px; width: calc(100% - 60px);">
+                                <div class="wrapper">
+                                    <label for="quotation_selection">
+                                        <i class="fa-solid fa-list-ol"></i>
+                                        Quotation #
+                                    </label><br>
+                                    <select name="quotation_selection" id="quotation_selection" class="form-control" required style="height: 55px;">
+                                        <option value="SELECT">SELECT</option>
+                                    </select>
+                                </div>
+                                <div class="wrapper">
+                                    <label for="client">
+                                        <i class="fa-solid fa-user"></i>
+                                        Client
+                                    </label><br>
+                                    <div class="search_input" id="search_client">
+                                        <input type="text" name="client" id="client" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
+                                        <div class="autocom_box">
+                                        </div>
+                                        <div class="icon"><i class="fas fa-search"></i></div>
+                                    </div>
+                                </div>
+                                <div class="wrapper">
+                                    <label for="waste_name_selection">
+                                        <i class="fa-solid fa-list-ol"></i>
+                                        Waste Name
+                                    </label><br>
+                                    <select name="waste_name_selection" id="waste_name_selection" class="form-control" required style="height: 55px;">
+                                        <option value="SELECT">SELECT</option>
+                                    </select>
+                                </div>
+                                <div class="wrapper">
+                                    <label for="agent_name1">
+                                        <i class="fa-solid fa-user"></i>
+                                        Agent Name
+                                    </label><br>
+                                    <div>
+                                        <input type="text" name="agent_name1" id="agent_name1" autocomplete="off" class="form-control" required placeholder="Type Agent Name">
+                                    </div>
+                                </div>
+                                <div class="wrapper">
+                                    <label for="commission_price1">
+                                        <i class="fa-solid fa-user"></i>
+                                        Commission
+                                    </label><br>
+                                    <div>
+                                        <input type="number" name="commission_price1" id="commission_price1" autocomplete="off" class="form-control" required placeholder="Type Commission">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="add_item pt-3" style="top: 0;">
+                            <div class="item_buttons">
+                                <button type="button" id="remove_item_button" class="form-control">
+                                    <i class="fa-solid fa-minus"></i>
+                                </button>
+                                <button type="button" id="add_item_button" class="form-control">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="buttons">
+                            <button type="submit" id="submit_btn" class="form-control">
+                                Submit
+                            </button>
+                            <button type="reset" id="reset" class="form-control" >
+                                Clear
+                            </button>
+                        </div>    
+                    </form>
+                </div>
+                <div id="update_commission_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #dc3545; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
+                    <h2>UPDATE COMMISSION FORM</h2><br>
                     <form action="https://script.google.com/macros/s/AKfycbx_Qxgs9HtQPnbxcrwxxxdh9MlBM9ClrLdglzzALhsd2WNYkvXfcGJjdnh7qIX-dWXkDQ/exec" method="post">
                         <input type="hidden" name="user" id="user">
                         <input type="hidden" name="timestamp" id="timestamp">
