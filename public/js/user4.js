@@ -353,6 +353,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             pending_certification.sort((a, b) => a.date - b.date);
             finish_certification.sort((a, b) => a.date - b.date);
+
             treated_counter_certification.innerText = tpf_certification.length;
             pending_counter_certification.innerText = pending_certification.length;
             certified_counter_certification.innerText = finish_certification.length;
@@ -456,6 +457,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${findWasteCode(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
                             <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                             <td>${item.weight} kg.</td>
+                            <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                             <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                             <td>${status}</td>
                             </tr>
@@ -504,6 +506,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${findWasteCode(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
                             <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                             <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "WEIGHT")]} kg.</td>
+                            <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                             <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                             <td>${status}</td>
                             </tr>
@@ -576,6 +579,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${findWasteCode(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
                             <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                             <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "WEIGHT")]} kg.</td>
+                            <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                             <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                             <td>${status}</td>
                             <td>${finished_date} /<br> ${finished_time}</td>
@@ -637,6 +641,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${findWasteCode(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
                             <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                             <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "WEIGHT")]} kg.</td>
+                            <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                             <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                             <td>${status}</td>
                             <td>${finished_date} /<br> ${finished_time}</td>
@@ -722,6 +727,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const generate_button = document.getElementById("generate_button");
         const what_to_print = document.getElementById("what_to_print");
         const convertToPDFandDownload_button = document.getElementById("convertToPDFandDownload_button");
+        const submit_button = document.getElementById("submit_button");
         const client_container = document.getElementById("client_container");
         const completion = document.getElementById("completion");
         const type_of_cod = document.getElementById("type_of_cod");
@@ -958,7 +964,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                         <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                                         <td>N/A</td>
-                                        <td> style="font-weight: bold"${formatNumber(item.weight)} kgs.</td>
+                                        <td style="font-weight: bold">${formatNumber(item.weight)} kgs.</td>
                                         <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                         <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                                         </tr>
@@ -1253,7 +1259,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                         <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                                         <td>N/A</td>
-                                        <td> style="font-weight: bold"${formatNumber(item.weight)} kgs.</td>
+                                        <td style="font-weight: bold">${formatNumber(item.weight)} kgs.</td>
                                         <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                         <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                                         </tr>
@@ -1549,7 +1555,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                         <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                                         <td>N/A</td>
-                                        <td> style="font-weight: bold"${formatNumber(item.weight)} kgs.</td>
+                                        <td style="font-weight: bold">${formatNumber(item.weight)} kgs.</td>
                                         <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                         <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                                         </tr>
@@ -1643,6 +1649,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 </div><br>`            
             }  
             const generate_qr_button =document.getElementById("generate_qr_button")
+            submit_button.style.display = "block"
             generate_qr_button.addEventListener("click", processAndGenerateQRCode)
         }
 

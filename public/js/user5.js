@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const tpf_response_promise = fetch('https://script.google.com/macros/s/AKfycbwbKss2XtW5lylCrUe8IC-ZA4ffA5CM5tY6kqIja9t80NXJw2nB8RBOJFWbXQz0hWMadw/exec');
         const cod_response_promise = fetch('https://script.google.com/macros/s/AKfycbzgiOuXizUVviCsLVfihqYN9HJ3pyNr7ElHoCl3JGkbtQnChnm2U42yQuLd4UMH0ci5/exec');
         const bpf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyux0GBj9tk6quRz46IkXa0VemEDAi-v2iEHx7C_6OFi416ERkv_BFtKqBmbw-bxaaiFQ/exec');
+        const ctf_response_promise = fetch('https://script.google.com/macros/s/AKfycbx1baTJSEL1piW4QrLRRuqIw0FW1kvz37Zo3NaMfJivPZUZObrkuDlcSZaa8GDUw9Td/exec');
         const qlf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyFU_skru2tnyEiv8I5HkpRCXbUlQb5vlJUm8Le0nZBCvfZeFkQPd2Naljs5CZY41I17w/exec');
 
         const [
@@ -21,6 +22,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             tpf_response,
             cod_response,
             bpf_response,
+            ctf_response,
             qlf_response,
         ] = await Promise.all([
             username_response_promise,
@@ -32,6 +34,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             tpf_response_promise,
             cod_response_promise,
             bpf_response_promise,
+            ctf_response_promise,
             qlf_response_promise,
         ]);
 
@@ -44,6 +47,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const tpf_data_list  = await tpf_response.json();
         const cod_data_list  = await cod_response.json();
         const bpf_data_list  = await bpf_response.json();
+        const ctf_data_list  = await ctf_response.json();
         const qlf_data_list  = await qlf_response.json();
 
         // Code that depends on the fetched data
@@ -59,14 +63,25 @@ document.addEventListener('DOMContentLoaded', async function() {
         user_sidebar_department.innerText = username_data_list.content[5][findTextInArray(username_data_list, "DEPARTMENT")];
     
         // billing_dashboard
-        const certified_counter_billing = document.querySelector("#billing_dashboard #certified_counter");
-        const pending_counter_billing = document.querySelector("#billing_dashboard #pending_counter");
-        const billed_counter_billing = document.querySelector("#billing_dashboard #billed_counter");
-        const unsorted_list_billing = document.querySelector("#billing_dashboard #unsorted_list");
-        var sf_tpf_transaction_counter_billing = 0;
-        var sf_transaction_counter_billing = 0;
-        let sf_transaction_billing = []; // Variable containing existing elements
-        let sf_tpf_transaction_billing = []; // Variable containing existing elements
+        const billing_dashboard = document.querySelector("#billing_dashboard");
+        const certified_counter_billing = billing_dashboard.querySelector("#certified_counter");
+        const pending_counter_billing = billing_dashboard.querySelector("#pending_counter");
+        const billed_counter_billing = billing_dashboard.querySelector("#billed_counter");
+        const pending_list_billing = billing_dashboard.querySelector("#pending_list");
+        let sf_transaction_billing = []; 
+        let sf_tpf_transaction_billing = [];
+        const collection_dashboard = document.querySelector("#collection_dashboard");
+        const billed_counter_collection = collection_dashboard.querySelector("#billed_counter");
+        const pending_counter_collection = collection_dashboard.querySelector("#pending_counter");
+        const collected_counter_collection = collection_dashboard.querySelector("#collected_counter");
+        const billed_counter_amount_collection = collection_dashboard.querySelector("#billed_counter_amount");
+        const pending_counter_amount_collection = collection_dashboard.querySelector("#pending_counter_amount");
+        const collected_counter_amount_collection = collection_dashboard.querySelector("#collected_counter_amount");
+        const pending_list_collection = collection_dashboard.querySelector("#pending_list");
+        let bpf_transaction_collection = []; 
+        let bpf_ctf_transaction_collection = []; 
+        let bpf_transaction_amount_collection = 0; 
+        let bpf_ctf_transaction_amount_collection = 0; 
         const month_filter = document.querySelector("#month_filter");
         function getCurrentMonthName() {
             const months = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
@@ -79,20 +94,17 @@ document.addEventListener('DOMContentLoaded', async function() {
         month_filter.addEventListener("change", generatePending)
         generatePending();
         function generatePending(){
-            sf_tpf_transaction_counter_billing = 0;
-            sf_transaction_counter_billing = 0;
+            // billing
             sf_transaction_billing = [];
             sf_tpf_transaction_billing = [];
             for (let i = 1; i < cod_data_list.content.length; i++) {
                 if (!sf_transaction_billing.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]) &&
                 month_filter.value == formatMonth(cod_data_list.content[i][findTextInArray(cod_data_list, "HAULING DATE")])) {
                     sf_transaction_billing.push(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]);
-                    sf_transaction_counter_billing += 1
                 }
                 else if (!sf_transaction_billing.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]) &&
                 month_filter.value == "ALL") {
                     sf_transaction_billing.push(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]);
-                    sf_transaction_counter_billing += 1
                 }
             }
     
@@ -100,24 +112,64 @@ document.addEventListener('DOMContentLoaded', async function() {
                 if (!sf_tpf_transaction_billing.includes(bpf_data_list.content[i][findTextInArray(bpf_data_list, "COD #")]) &&
                 month_filter.value == formatMonth(bpf_data_list.content[i][findTextInArray(bpf_data_list, "HAULING DATE")])) {
                     sf_tpf_transaction_billing.push(bpf_data_list.content[i][findTextInArray(bpf_data_list, "COD #")]);
-                    sf_tpf_transaction_counter_billing += 1
                 }
                 else if (!sf_tpf_transaction_billing.includes(bpf_data_list.content[i][findTextInArray(bpf_data_list, "COD #")]) &&
                 month_filter.value == "ALL") {
                     sf_tpf_transaction_billing.push(bpf_data_list.content[i][findTextInArray(bpf_data_list, "COD #")]);
-                    sf_tpf_transaction_counter_billing += 1
+                }
+            }
+
+            // collection
+            bpf_transaction_collection = [];
+            bpf_ctf_transaction_collection = [];
+            bpf_transaction_amount_collection = 0;
+            bpf_ctf_transaction_amount_collection = 0;
+            for (let i = 1; i < bpf_data_list.content.length; i++) {
+                if (!bpf_transaction_collection.includes(bpf_data_list.content[i][findTextInArray(bpf_data_list, "BPF #")]) &&
+                month_filter.value == formatMonth(bpf_data_list.content[i][findTextInArray(bpf_data_list, "HAULING DATE")])) {
+                    bpf_transaction_collection.push(bpf_data_list.content[i][findTextInArray(bpf_data_list, "BPF #")]);
+                    bpf_transaction_amount_collection += bpf_data_list.content[i][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")];
+                }
+                else if (!bpf_transaction_collection.includes(bpf_data_list.content[i][findTextInArray(bpf_data_list, "BPF #")]) &&
+                month_filter.value == "ALL") {
+                    bpf_transaction_collection.push(bpf_data_list.content[i][findTextInArray(bpf_data_list, "BPF #")]);
+                    bpf_transaction_amount_collection += bpf_data_list.content[i][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")];
                 }
             }
     
-            // Get elements from sf_transaction not included in sf_tpf_transaction
-            const newElements_billing = sf_transaction_billing.filter((element) => !sf_tpf_transaction_billing.includes(element));
+            for (let i = 1; i < ctf_data_list.content.length; i++) {
+                if (!bpf_ctf_transaction_collection.includes(ctf_data_list.content[i][findTextInArray(ctf_data_list, "BPF #")]) &&
+                month_filter.value == formatMonth(ctf_data_list.content[i][findTextInArray(ctf_data_list, "HAULING DATE")])) {
+                    bpf_ctf_transaction_collection.push(ctf_data_list.content[i][findTextInArray(ctf_data_list, "BPF #")]);
+                    bpf_ctf_transaction_amount_collection += ctf_data_list.content[i][findTextInArray(ctf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")];
+                }
+                else if (!bpf_ctf_transaction_collection.includes(ctf_data_list.content[i][findTextInArray(ctf_data_list, "BPF #")]) &&
+                month_filter.value == "ALL") {
+                    bpf_ctf_transaction_collection.push(ctf_data_list.content[i][findTextInArray(ctf_data_list, "BPF #")]);
+                    bpf_ctf_transaction_amount_collection += ctf_data_list.content[i][findTextInArray(ctf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")];
+                }
+            }
     
-            certified_counter_billing.innerText = sf_transaction_counter_billing;
-            pending_counter_billing.innerText = sf_transaction_counter_billing - sf_tpf_transaction_counter_billing;
-            billed_counter_billing.innerText = sf_tpf_transaction_counter_billing;
+            // billing
+            const pending_billing = sf_transaction_billing.filter((element) => !sf_tpf_transaction_billing.includes(element));
+    
+            certified_counter_billing.innerText = sf_transaction_billing.length;
+            pending_counter_billing.innerText = sf_transaction_billing.length - sf_tpf_transaction_billing.length;
+            billed_counter_billing.innerText = sf_tpf_transaction_billing.length;
+
+            // collection
+            const pending_collection = bpf_transaction_collection.filter((element) => !bpf_ctf_transaction_collection.includes(element));
+    
+            billed_counter_collection.innerText = bpf_transaction_collection.length;
+            pending_counter_collection.innerText = bpf_transaction_collection.length - bpf_ctf_transaction_collection.length;
+            collected_counter_collection.innerText = bpf_ctf_transaction_collection.length;
+            billed_counter_amount_collection.innerText = formatNumber(bpf_transaction_amount_collection);
+            pending_counter_amount_collection.innerText = formatNumber(bpf_transaction_amount_collection - bpf_ctf_transaction_amount_collection);
+            collected_counter_amount_collection.innerText = formatNumber(bpf_ctf_transaction_amount_collection);
             
+            // billing
             var options = {
-                series: [sf_transaction_counter_billing - sf_tpf_transaction_counter_billing, sf_tpf_transaction_counter_billing],
+                series: [sf_transaction_billing.length - sf_tpf_transaction_billing.length, sf_tpf_transaction_billing.length],
                 chart: {
                     width: 500, // Set the desired width
                     height: 550, // Set the desired height
@@ -168,11 +220,65 @@ document.addEventListener('DOMContentLoaded', async function() {
             var chart = new ApexCharts(pieChart, options);
             chart.render();
             
+            // collection
+            var options = {
+                series: [bpf_transaction_collection.length - bpf_ctf_transaction_collection.length, bpf_ctf_transaction_collection.length],
+                chart: {
+                    width: 500, // Set the desired width
+                    height: 550, // Set the desired height
+                    type: 'pie',
+                },
+                plotOptions: {
+                    pie: {
+                        startAngle: 0,
+                        endAngle: 360
+                    }
+                },
+                dataLabels: {
+                    enabled: false, // Disable data labels inside the pie chart
+                },
+                fill: {
+                    type: 'gradient', // Use solid fill type
+                },
+                legend: {
+                    show: true,
+                    position: "left", // Set the legend position to "left"
+                    fontSize: '30px', // Increase legend font size as needed
+                    formatter: function (seriesName, opts) {
+                        // Here, you should use the correct variable to get the series value
+                        var seriesValue = opts.w.globals.series[opts.seriesIndex];
+                        var totalValue = opts.w.globals.series.reduce((acc, val) => acc + val, 0);
+                        var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
+                        return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
+                    },
+                    labels: {
+                        useSeriesColors: false, // Use custom color
+                    },
+                },
+                labels: ["Pending", "Collected"],
+                colors: ["#dc3545", "#198754"], // Specify solid colors here
+                responsive: [{
+                    breakpoint: 480,
+                    options: {
+                        chart: {
+                            width: 200
+                        },
+                    }
+                }]
+            };
+            const pieChart2 = document.querySelector("#pieChart2");
+            while (pieChart2.firstChild) {
+                pieChart2.removeChild(pieChart2.firstChild);
+            }
+            var chart = new ApexCharts(pieChart2, options);
+            chart.render();
+            
+            // billing
             var data_value = "";
             var data_value_counter = 1;
-            for(let i = 0; i < newElements_billing.length; i++){
+            for(let i = 0; i < pending_billing.length; i++){
                 for(let j = 1; j < cod_data_list.content.length; j++){
-                    if(newElements_billing[i] == cod_data_list.content[j][findTextInArray(cod_data_list, "COD #")] &&
+                    if(pending_billing[i] == cod_data_list.content[j][findTextInArray(cod_data_list, "COD #")] &&
                     month_filter.value == formatMonth(cod_data_list.content[j][findTextInArray(cod_data_list, "HAULING DATE")])){
                         var mtf = "";
                         var ltf = "";
@@ -202,11 +308,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${findWasteCode(cod_data_list.content[j][findTextInArray(cod_data_list, "WASTE ID")])}</td>
                             <td>${findWasteName(cod_data_list.content[j][findTextInArray(cod_data_list, "CLIENT ID")], cod_data_list.content[j][findTextInArray(cod_data_list, "WASTE ID")])}</td>
                             <td>${cod_data_list.content[j][findTextInArray(cod_data_list, "WEIGHT")]}</td>
+                            <td>${cod_data_list.content[j][findTextInArray(cod_data_list, "SUBMITTED BY")]}</td>
                         </tr>
                         `
                         data_value_counter += 1;
                     }
-                    else if(newElements_billing[i] == cod_data_list.content[j][findTextInArray(cod_data_list, "COD #")] &&
+                    else if(pending_billing[i] == cod_data_list.content[j][findTextInArray(cod_data_list, "COD #")] &&
                     month_filter.value == "ALL"){
                         var mtf = "";
                         var ltf = "";
@@ -236,13 +343,87 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${findWasteCode(cod_data_list.content[j][findTextInArray(cod_data_list, "WASTE ID")])}</td>
                             <td>${findWasteName(cod_data_list.content[j][findTextInArray(cod_data_list, "CLIENT ID")], cod_data_list.content[j][findTextInArray(cod_data_list, "WASTE ID")])}</td>
                             <td>${cod_data_list.content[j][findTextInArray(cod_data_list, "WEIGHT")]}</td>
+                            <td>${cod_data_list.content[j][findTextInArray(cod_data_list, "SUBMITTED BY")]}</td>
                         </tr>
                         `
                         data_value_counter += 1;
                     }
                 }
             }
-            unsorted_list_billing.innerHTML = data_value;            
+            pending_list_billing.innerHTML = data_value;            
+            
+            // collection
+            var data_value_collection = "";
+            var data_value_counter_collection = 1;
+            for(let i = 0; i < pending_collection.length; i++){
+                for(let j = 1; j < bpf_data_list.content.length; j++){
+                    if(pending_collection[i] == bpf_data_list.content[j][findTextInArray(bpf_data_list, "BPF #")] &&
+                    month_filter.value == formatMonth(bpf_data_list.content[j][findTextInArray(bpf_data_list, "HAULING DATE")])){
+                        var mtf = "";
+                        var ltf = "";
+                        for(let k = 1; k < wcf_data_list.content.length; k++){
+                            if(bpf_data_list.content[j][findTextInArray(bpf_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                                if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                    mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                }else{
+                                    ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                    for(let x = 1; x < ltf_data_list.content.length; x++){
+                                        if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                            mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                            break
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        data_value_collection +=`
+                        <tr>
+                            <td>${data_value_counter}</td>
+                            <td>${bpf_data_list.content[j][findTextInArray(bpf_data_list, "BPF #")]}</td>
+                            <td>${mtf}</td>
+                            <td>${date_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "HAULING DATE")])}</td>
+                            <td>${date_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "CREATED AT")])} /<br>${time_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "CREATED AT")])}</td>
+                            <td>${findClientName(bpf_data_list.content[j][findTextInArray(bpf_data_list, "CLIENT ID")])}</td>
+                            <td>${formatNumber(bpf_data_list.content[j][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")])}</td>
+                        </tr>
+                        `
+                        data_value_counter_collection += 1;
+                    }
+                    else if(pending_collection[i] == bpf_data_list.content[j][findTextInArray(bpf_data_list, "BPF #")] &&
+                    month_filter.value == "ALL"){
+                        var mtf = "";
+                        var ltf = "";
+                        for(let k = 1; k < wcf_data_list.content.length; k++){
+                            if(bpf_data_list.content[j][findTextInArray(bpf_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                                if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                    mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                }else{
+                                    ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                    for(let x = 1; x < ltf_data_list.content.length; x++){
+                                        if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                            mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                            break
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        data_value_collection +=`
+                        <tr>
+                            <td>${data_value_counter}</td>
+                            <td>${bpf_data_list.content[j][findTextInArray(bpf_data_list, "BPF #")]}</td>
+                            <td>${mtf}</td>
+                            <td>${date_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "HAULING DATE")])}</td>
+                            <td>${date_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "CREATED AT")])} /<br>${time_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "CREATED AT")])}</td>
+                            <td>${findClientName(bpf_data_list.content[j][findTextInArray(bpf_data_list, "CLIENT ID")])}</td>
+                            <td>${formatNumber(bpf_data_list.content[j][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")])}</td>
+                        </tr>
+                        `
+                        data_value_counter_collection += 1;
+                    }
+                }
+            }
+            pending_list_collection.innerHTML = data_value_collection;            
         }
 
         // cod_data_list
@@ -294,6 +475,13 @@ document.addEventListener('DOMContentLoaded', async function() {
         const si_terms_container = billing_process_form.querySelector("#si_terms_container");
         const what_to_print = billing_process_form.querySelector("#what_to_print");
         const what_to_print2 = billing_process_form.querySelector("#what_to_print2");
+        const wcf_form_no = billing_process_form.querySelector("#wcf_form_no");
+        const client_id = billing_process_form.querySelector("#client");
+        const hauling_date = billing_process_form.querySelector("#hauling_date");
+        const total_vat_in = billing_process_form.querySelector("#total_vat_in");
+        const total_vat_ex = billing_process_form.querySelector("#total_vat_ex");
+        const billing_date = billing_process_form.querySelector("#billing_date");
+        const terms = billing_process_form.querySelector("#terms");
         let table_data_info = [];
         let table_data_transportation = [];
         let si_table_data_info = [];
@@ -326,9 +514,15 @@ document.addEventListener('DOMContentLoaded', async function() {
             var data4_counter = 2;
             var table_counter = 0;
             var client = ""
+            billing_date.value = date_decoder(new Date());
+            console.log(date_decoder(new Date()))
             for(let x = 1; x < cod_data_list.content.length; x++){
                 if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]){
                     client = cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")]
+                    wcf_form_no.value = cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")]
+                    client_id.value = cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")]
+                    hauling_date.value = date_decoder(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")])
+                    console.log(date_decoder(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]))
                     break
                 }
             }
@@ -723,8 +917,10 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             non_vatable_container.innerText = formatNumber(non_vatable);
             vatable_container.innerText = formatNumber(vatable);
+            total_vat_ex.value = formatNumber(vatable);
             vat_container.innerText = formatNumber((parseFloat(vatable))*.12);
             total_amount_payable_container.innerText = formatNumber(non_vatable + vatable + (parseFloat(vatable))*.12);
+            total_vat_in.value = formatNumber(non_vatable + vatable + (parseFloat(vatable))*.12);
             credits_container.innerText = formatNumber(credits);
             total_amount_due_container.innerText = formatNumber((non_vatable + vatable + (parseFloat(vatable))*.12) - parseFloat(credits));
             due_date_container.innerHTML = `${term} days<br>from the date received`;
@@ -735,11 +931,12 @@ document.addEventListener('DOMContentLoaded', async function() {
             si_total_amount_container.innerText = formatNumber(si_total_amount);
             si_total_sales_container.innerText = formatNumber(si_total_amount);
             si_terms_container.innerText = `${term} Days Term`;
+            terms.value = term;
             convertToPDFandDownload_button.style.display = "block";
             convertToPDF_button.style.display = "block";
             what_to_print.style.display = "block";
             what_to_print2.style.display = "block";
-
+            
         }
 
         const type_of_form = document.getElementById("type_of_form");

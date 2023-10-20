@@ -40,7 +40,7 @@
                 <li>
                     <a href="#">
                         <i class="fa-solid fa-fire-burner"></i>
-                        Destruction Form
+                        Certification Form
                     </a>
                 </li>
                 <li>
@@ -88,7 +88,7 @@
                     <i class="fa-solid fa-arrows-rotate"></i>
                 </button>
             </div>
-            <div style="display: flex; position: absolute; top: 80px; right: 20px; z-index: 2; border: 3px solid #dc3545; border-radius: 5px; padding: 10px 20px; background-color: #198754;">
+            <div style="display: flex; position: absolute; top: 60px; right: 20px; z-index: 2; border: 3px solid #dc3545; border-radius: 5px; padding: 5px 20px; background-color: #198754;">
                 <label for="month_filter" style="font-weight: bold; color: #ffffff;">FILTER MONTH</label>
                 <select name="month_filter" id="month_filter" class="form-control">
                     <option value="ALL">ALL</option>
@@ -158,6 +158,7 @@
                                     <th>WASTE<br>CODE</th>
                                     <th>WASTE NAME</th>
                                     <th>WEIGHT</th>
+                                    <th>TREATMENT<br>PROCESS</th>
                                     <th>TARGET DATE OF COMPLETION</th>
                                     <th>STATUS</th>
                                 </thead>
@@ -183,6 +184,7 @@
                                 <th>WASTE<br>CODE</th>
                                 <th>WASTE NAME</th>
                                 <th>WEIGHT</th>
+                                <th>TREATMENT<br>PROCESS</th>
                                 <th>TARGET DATE OF COMPLETION</th>
                                 <th>STATUS</th>
                                 <th>CERTIFICATION<br>DATE/TIME</th>
@@ -289,7 +291,7 @@
                         <button type="button" onclick="convertToPDF()" id="convertToPDF_button" class="form-control bg-primary form">
                             Download
                         </button>
-                        <button type="submit" id="submit_button" class="form-control bg-primary form d-none">
+                        <button type="submit" id="submit_button" class="form-control bg-primary form" style="display: none;">
                             Submit
                         </button>
                     </div><br>
@@ -327,18 +329,18 @@
                                 <h4 class="fw-bold" id="certification3"></h4>
                             </div>
                             <br>
-                            <h4>Certified By:</h4><br><br><br><br>
+                            <h4>Certified By:</h4><br><br>
                             <div class="signature">
                                 <div>
                                     <h3 class="fw-bold"><u>LAWRENCE R. ANTONIO</u></h3>
                                     <h4>Pollution Control Officer</h4>
                                     <h4 class="fw-bold">COA No. 2023-RIII-5575</h4>
-                                    <img class="pco" src="../images/pco_signature.JPG" alt="">
+                                    <img class="pco" src="../images/pco_signature.png" alt="">
                                 </div>
                                 <div>
                                     <h3 class="fw-bold"><u>CRIS DURAN</u></h3>
                                     <h4>Plant Manager</h4>
-                                    <img class="pm" src="../images/pm_signature.JPG" alt="">
+                                    <img class="pm" src="../images/pm_signature.png" alt="">
                                 </div>    
                             </div><br>
                             <div>
@@ -428,7 +430,7 @@
                             #what_to_print .signature .pco
                             {
                                 position: absolute;
-                                top: -90px;
+                                top: -70px;
                                 left: 75px;
                                 width: 200px;
                 
@@ -437,7 +439,7 @@
                             #what_to_print .signature .pm
                             {
                                 position: absolute;
-                                top: -100px;
+                                top: -80px;
                                 left: 430px;
                                 width: 120px;
                 

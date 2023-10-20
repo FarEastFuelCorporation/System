@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const wcf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyBFTBuFZ4PkvwmPi_3Pp_v74DCSEK2VpNy6janIGgaAK-P22wazmmShOKn6iwFbrQn/exec');
         const sf_response_promise = fetch('https://script.google.com/macros/s/AKfycby9b2VCfXc0ifkwBXJRi2UVUwgZIj9F4FTOdZa_SYKZdsTwbVtAzAXzNMFeklE35bg1/exec');
         const qlf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyFU_skru2tnyEiv8I5HkpRCXbUlQb5vlJUm8Le0nZBCvfZeFkQPd2Naljs5CZY41I17w/exec');
+        const clf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxTthjFI5UO-6LgpCH7bcy7A-c59g83xfiRiWgeBpetpHrPU9TBY7pP-TabLCQXc0zlSQ/exec');
         const prf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxZctLub-6PuQGykx298syeH7Qm__S37uqQrVFYsHVtv-Qk8M2oSkRIPIMVT_1WexqRZA/exec');
         const pof_response_promise = fetch('https://script.google.com/macros/s/AKfycby9i2KfOZ_uF7-JUPX8qpXg7Jewmw6oU3EfUTpXiwnRRB91_qIW3xAVNy5SZBN1YhVzzg/exec');
         const irf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzTmhNOz5cXeKitSXAriUJ_FEahAQugYEKIRwDuFt9tjhj2AtPKEf2H4yTMmZ1igpUxlQ/exec');
@@ -27,6 +28,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             wcf_response,
             sf_response,
             qlf_response,
+            clf_response,
             prf_response,
             pof_response,
             irf_response,
@@ -42,6 +44,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             wcf_response_promise,
             sf_response_promise,
             qlf_response_promise,
+            clf_response_promise,
             prf_response_promise,
             pof_response_promise,
             irf_response_promise,
@@ -58,6 +61,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const wcf_data_list  = await wcf_response.json();
         const sf_data_list  = await sf_response.json();
         const qlf_data_list  = await qlf_response.json();
+        const clf_data_list  = await clf_response.json();
         const prf_data_list  = await prf_response.json();
         const pof_data_list  = await pof_response.json();
         const irf_data_list  = await irf_response.json();
@@ -1588,6 +1592,64 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         });
+
+        // commission
+        const commission_form = document.querySelector("#commission_form");
+        const new_commission_button_commission = commission_form.querySelector("#new_commission_button");
+        const update_commission_button_commission = commission_form.querySelector("#update_commission_button");
+        const new_commission_form_tab_commission = commission_form.querySelector("#new_commission_form_tab");
+        const update_commission_form_tab_commission = commission_form.querySelector("#update_commission_form_tab");
+        const add_item_button_commission = commission_form.querySelector("#add_item_button");
+        const remove_item_button_commission = commission_form.querySelector("#remove_item_button");
+
+        new_commission_button_commission.addEventListener("click", () => {
+            if(new_commission_form_tab_commission.style.display == "block"){
+                new_commission_form_tab_commission.style.display = "none";
+            }
+            else{
+                new_commission_form_tab_commission.style.display = "block";
+                update_commission_form_tab_commission.style.display = "none";
+            }
+        })
+        update_commission_button_commission.addEventListener("click", () => {
+            if(update_commission_form_tab_commission.style.display == "block"){
+                update_commission_form_tab_commission.style.display = "none";
+            }
+            else{
+                update_commission_form_tab_commission.style.display = "block";
+                new_commission_form_tab_commission.style.display = "none";
+            }
+        })
+
+        add_item_button_commission.addEventListener("click", addCommissionList)
+
+        function addCommissionList(){
+            const commission_data_counter_commission = commission_form.querySelector("#commission_data_counter");
+            const commission_list_commission = commission_form.querySelector("#commission_list");
+            commission_data_counter_commission.value = parseInt(commission_data_counter_commission.value) + 1;
+            var commission_data = 
+            `
+            <div style="display: grid; grid-template-columns: 15% 25% 15% 25% 20%; gap: 20px; width: calc(100% - 60px);">
+                <div class="wrapper">
+                </div>
+                <div class="wrapper">
+                </div>
+                <div class="wrapper">
+                </div>
+                <div class="wrapper">
+                    <div>
+                        <input type="text" name="agent_name${commission_data_counter_commission.value}" id="agent_name${commission_data_counter_commission.value}" autocomplete="off" class="form-control" required placeholder="Type Agent Name">
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div>
+                        <input type="number" name="commission_price${commission_data_counter_commission.value}" id="commission_price${commission_data_counter_commission.value}" autocomplete="off" class="form-control" required placeholder="Type Commission">
+                    </div>
+                </div>
+            </div>
+            `
+            commission_list_commission.insertAdjacentHTML("beforeend", commission_data)
+        }
 
         // multi section
         // purchase_request_form

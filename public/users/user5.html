@@ -28,13 +28,19 @@
                 <li class="hover">
                     <a href="#">
                         <i class="fas fa-th-large"></i>
-                        Dashboard
+                        Billing Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-th-large"></i>
+                        Collection Dashboard
                     </a>
                 </li>
                 <li>
                     <a href="#">
                         <i class="fa-solid fa-clipboard-list"></i>
-                        Billing
+                        Billing Transaction Form
                     </a>
                 </li>
                 <li>
@@ -76,7 +82,7 @@
                     <i class="fa-solid fa-arrows-rotate"></i>
                 </button>
             </div>
-            <div style="display: flex; position: absolute; top: 80px; right: 20px; z-index: 2; border: 3px solid #dc3545; border-radius: 5px; padding: 10px 20px; background-color: #198754;">
+            <div style="display: flex; position: absolute; top: 60px; right: 20px; z-index: 2; border: 3px solid #dc3545; border-radius: 5px; padding: 5px 20px; background-color: #198754;">
                 <label for="month_filter" style="font-weight: bold; color: #ffffff;">FILTER MONTH</label>
                 <select name="month_filter" id="month_filter" class="form-control">
                     <option value="ALL">ALL</option>
@@ -94,9 +100,9 @@
                     <option value="DECEMBER">DECEMBER</option>
                 </select>
             </div>
-            <!-- dashboard -->
+            <!-- billing_dashboard -->
             <section id="billing_dashboard">
-                <h2>DASHBOARD</h2><br>
+                <h2>BILLING DASHBOARD</h2><br>
                 <h2>BILLING SUMMARY</h2>
                 <div>
                     <div class="cards">
@@ -124,7 +130,7 @@
                                 <div class="card-name">Billed Transaction</div>
                             </div>
                             <div class="icon-box">
-                                <i class="fa-solid fa-money-bill-wave"></i>
+                                <i class="fa-solid fa-clipboard-check"></i>
                             </div>
                         </div>
                         <div style="position: relative;">
@@ -132,35 +138,6 @@
                             </div>
                         </div>
                     </div><br>
-                    <!-- <div class="cards">
-                        <div class="card">
-                            <div class="card-content">
-                                <div class="number" id="total2"></div>
-                                <div class="card-name">Billed Amount</div>
-                            </div>
-                            <div class="icon-box">
-                                <i class="fa-solid fa-receipt"></i>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-content">
-                                <div class="number" id="sorted2"></div>
-                                <div class="card-name">Unbilled Amount</div>
-                            </div>
-                            <div class="icon-box">
-                                <i class="fa-solid fa-money-check"></i>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-content">
-                                <div class="number" id="unsorted2"></div>
-                                <div class="card-name">Total Amount</div>
-                            </div>
-                            <div class="icon-box">
-                                <i class="fa-solid fa-sack-dollar"></i>
-                            </div>
-                        </div>
-                    </div><br> -->
                     <h2>PENDING TRANSACTION LIST</h2>
                     <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
                         <div class="list">
@@ -175,8 +152,98 @@
                                     <th>WASTE CODE</th>
                                     <th>WASTE DESCRIPTION</th>
                                     <th>WEIGHT</th>
+                                    <th>SUBMITTED BY</th>
                                 </thead>
-                                <tbody id="unsorted_list">
+                                <tbody id="pending_list">
+
+                                </tbody>
+                            </table>
+                            <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                        </div>
+                    </div>
+                </div>
+            </section>     
+            <!-- collection_dashboard -->
+            <section id="collection_dashboard">
+                <h2>COLLECTION DASHBOARD</h2><br>
+                <h2>COLLECTION SUMMARY</h2>
+                <div>
+                    <div class="cards">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="billed_counter"></div>
+                                <div class="card-name">Billed Transaction</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-clipboard-check"></i>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="pending_counter"></div>
+                                <div class="card-name">Pending Transaction</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-clipboard-list"></i>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="collected_counter"></div>
+                                <div class="card-name">Collection</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-sack-dollar"></i>
+                            </div>
+                        </div>
+                        <div style="position: relative;">
+                            <div id="pieChart2" style="position: absolute; margin-top: 40px;">
+                            </div>
+                        </div>
+                    </div><br>
+                    <div class="cards">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="billed_counter_amount"></div>
+                                <div class="card-name">Billed Amount</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-clipboard-check"></i>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="pending_counter_amount"></div>
+                                <div class="card-name">Pending Amount</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-clipboard-list"></i>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="collected_counter_amount"></div>
+                                <div class="card-name">Collected Amount</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-sack-dollar"></i>
+                            </div>
+                        </div>
+                    </div><br>
+                    <h2>PENDING TRANSACTION LIST</h2>
+                    <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
+                        <div class="list">
+                            <table>
+                                <thead style="position: sticky; top: 0; background-color: black;">
+                                    <th>#</th>
+                                    <th>BPF #</th>
+                                    <th>MTF #</th>
+                                    <th>HAULING<br>DATE</th>
+                                    <th>BILLING<br>DATE/TIME</th>
+                                    <th>CLIENT</th>
+                                    <th>AMOUNT</th>
+                                </thead>
+                                <tbody id="pending_list">
 
                                 </tbody>
                             </table>
@@ -187,16 +254,15 @@
             </section>     
             <section id="billing_process_form">
                 <h2>BILLING PROCESS FORM</h2><br>
-                <form id="form_id" action="https://script.google.com/macros/s/AKfycby6mIrmbEiK74S9dqFwizyQ13EGE_vfcQTxnP7soPXPQXg7vQEx0Df7TV5JCeQJJpcQ7A/exec" method="post">
+                <form id="form_id" action="https://script.google.com/macros/s/AKfycbyFaz_pKx6-xCPBm9c13MT6HPwAsRddpskzFa67YIebsQ0Ectv0h-7bX7wWQp3vm0G_Zw/exec" method="post">
                     <input type="hidden" name="user" id="user">
                     <input type="hidden" name="wcf_form_no" id="wcf_form_no">
                     <input type="hidden" name="client" id="client">
-                    <input type="hidden" name="waste_description" id="waste_description">
-                    <input type="hidden" name="waste_code" id="waste_code" value="N/A">
-                    <input type="hidden" name="weight" id="weight">
-                    <input type="hidden" name="destruction_process" id="destruction_process">
                     <input type="hidden" name="hauling_date" id="hauling_date">
-                    <input type="hidden" name="target_date_of_completion" id="target_date_of_completion">
+                    <input type="hidden" name="total_vat_in" id="total_vat_in">
+                    <input type="hidden" name="total_vat_ex" id="total_vat_ex">
+                    <input type="hidden" name="billing_date" id="billing_date">
+                    <input type="hidden" name="terms" id="terms">
                     <div class="bpf_form">
                         <div>
                             <label for="bpf_form_no">
@@ -207,26 +273,6 @@
                                 <input type="text" id="bpf_form_no" autocomplete="off" name="bpf_form_no" class="form-control" readonly><br>
                             </div>
                         </div>
-                        <!-- <div>
-                            <label for="search_bpf_form_no">
-                                Search BPF #
-                            </label><br>
-                            <div class="bpf_form">
-                                <div class="form">
-                                    <input type="text" id="search_bpf_form_no" autocomplete="off" name="search_bpf_form_no" class="form-control"><br>
-                                </div>
-                                <div>
-                                    <button id="search_bpf_form_no_button" type="button" class="form-control">
-                                        <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
-                                    </button>
-                                </div>
-                                <div>
-                                    <button id="clear_bpf_form_no_button" type="button" class="form-control">
-                                        <i class="fa-solid fa-rectangle-xmark" style="color: #ffffff;"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div> -->
                     </div>
                     <div id="search_tpf_result">
 
@@ -957,7 +1003,6 @@
 
                         </style>
                     </div><br>
-                    
                 </form>
             </section>
             <!-- settings -->
@@ -976,44 +1021,9 @@
     <script src="../js/user5.js"></script>
     <script>
         function convertToPDFandDownload() {
-            const element = document.getElementById('what_to_print');
-            const cod_form_no = document.getElementById('cod_form_no').value;
-            const opt = {
-                filename: `${cod_form_no}`,
-                image: { type: 'jpeg', quality: 1 },
-                html2canvas: { scale: 10 },
-                jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
-            };
-
-            const marginTop = 32.5; // Top margin in mm
-            const marginBottom = 10; // Bottom margin in mm
-            const pageHeight = 236.9; // Adjust the value based on your available space for each page
-
-            const totalPages = Math.ceil(element.clientHeight / pageHeight);
-
-            let promises = [];
-
-            for (let i = 0; i < totalPages; i++) {
-                const promise = html2pdf()
-                .set(opt)
-                .from(element)
-                .toContainer()
-                .then(() => {
-                    const newPosition = -pageHeight * (i + 1) - marginTop;
-                    element.style.transform = `translate(0, ${newPosition}px)`;
-                });
-
-                promises.push(promise);
-            }
-
-            Promise.all(promises)
-                .then(() => {
-                element.style.transform = 'none';
-                html2pdf().set(opt).from(element).save().then(() => {
-                    // Call the submit button click event immediately after the PDF is downloaded
-                    document.getElementById('submit_button').click();
-                });
-            });
+            convertToPDF();
+            convertToPDF2();
+            document.getElementById('submit_button').click();
         }
 
         function executeMultipleFunctions() {
@@ -1027,7 +1037,7 @@
             const opt = {
                 image: { type: 'jpeg', quality: 1 },
                 html2canvas: { scale: 10 },
-                jsPDF: { unit: 'mm', format: 'letter', orientation: 'landscape' }
+                jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
             };
 
             const marginTop = 32.5; // Top margin in mm
