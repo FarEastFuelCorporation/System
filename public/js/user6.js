@@ -788,7 +788,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <td>${formatNumber(qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT PRICE")])}</td>
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "VAT CALCULATION")]}</td>
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "TERMS DAYS")]}</td>
-                    <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "AGENT NAME")]}</td>
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "SUBMITTED BY")]}</td>
                 </tr>
                 `
@@ -808,7 +807,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <td>${formatNumber(qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT PRICE")])}</td>
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "VAT CALCULATION")]}</td>
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "TERMS DAYS")]}</td>
-                    <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "AGENT NAME")]}</td>
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "SUBMITTED BY")]}</td>
                 </tr>
                 `
