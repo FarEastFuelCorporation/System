@@ -62,6 +62,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         let wcf_transaction_sorting = []; // Variable containing existing elements
         let wcf_tpf_transaction_sorting = []; // Variable containing existing elements
         let sf_transaction_treatment = []; // Variable containing existing elements
+        let tpf_transaction_treatment = []; // Variable containing existing elements
         let sf_tpf_transaction_treatment = []; // Variable containing existing elements
         let sf_tpf_wcf_transaction_treatment = []; // Variable containing existing elements
         
@@ -120,10 +121,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                 if (!sf_tpf_transaction_treatment.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "SF #")]) &&
                 month_filter.value == formatMonth(tpf_data_list.content[i][findTextInArray(tpf_data_list, "HAULING DATE")])) {
                     sf_tpf_transaction_treatment.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "SF #")]);
+                    tpf_transaction_treatment.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "TPF #")]);
                 }
                 else if (!sf_tpf_transaction_treatment.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "SF #")]) &&
                 month_filter.value == "ALL") {
                     sf_tpf_transaction_treatment.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "SF #")]);
+                    tpf_transaction_treatment.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "TPF #")]);
                 }
                 if (!sf_tpf_wcf_transaction_treatment.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")]) &&
                 month_filter.value == formatMonth(tpf_data_list.content[i][findTextInArray(tpf_data_list, "HAULING DATE")])) {
@@ -149,9 +152,10 @@ document.addEventListener('DOMContentLoaded', async function() {
             const filtered_pending_treatment_wcf = wcf_tpf_transaction_sorting.filter(element => !sf_tpf_wcf_transaction_treatment.includes(element));
 
             // pending_list
-            treated_counter_treatment.innerText = sf_tpf_transaction_treatment.length + filtered_pending_treatment_wcf.length;
-            total_counter_treatment.innerText = sf_transaction_treatment.length + wcf_transaction_sorting.length;
+            total_counter_treatment.innerText = tpf_transaction_treatment.length;
             pending_counter_treatment.innerText = pending_treatment_sf.length + pending_treatment_wcf.length;
+            treated_counter_treatment.innerText = sf_tpf_transaction_treatment.length + filtered_pending_treatment_wcf.length;
+
             var options = {
                 series: [pending_treatment_sf.length + pending_treatment_wcf.length, sf_tpf_transaction_treatment.length + filtered_pending_treatment_wcf.length],
                 chart: {
@@ -452,7 +456,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
             finished_list_treatment.innerHTML = data_value;   
- 
+
+
             // FORM GENERATOR
             // tpf_data_list
             const tpf_form_no = document.getElementById("tpf_form_no");
