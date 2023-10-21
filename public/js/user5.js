@@ -426,22 +426,22 @@ document.addEventListener('DOMContentLoaded', async function() {
             pending_list_collection.innerHTML = data_value_collection;            
         }
 
-        // cod_data_list
+        // bpf_data_list
         // FORM GENERATOR
-        const bpf_form_no = document.getElementById("bpf_form_no");
-        var last_row = bpf_data_list.content.length -1;
-        var data_info = bpf_data_list.content[last_row][findTextInArray(bpf_data_list, "BPF #")];
-        var data_counter;
-        if(last_row == 0){
-            data_counter = 0;
-        }
-        else{
-            data_counter = data_info.substring(9,12);
-        }
-        var year = new Date().getFullYear();
-        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
-        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-        bpf_form_no.value = `BPF${year}${month}${data_counter}`;
+        // const bpf_form_no = document.getElementById("bpf_form_no");
+        // var last_row = bpf_data_list.content.length -1;
+        // var data_info = bpf_data_list.content[last_row][findTextInArray(bpf_data_list, "BPF #")];
+        // var data_counter;
+        // if(last_row == 0){
+        //     data_counter = 0;
+        // }
+        // else{
+        //     data_counter = data_info.substring(9,12);
+        // }
+        // var year = new Date().getFullYear();
+        // var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        // data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        // bpf_form_no.value = `BPF${year}${month}${data_counter}`;
         
         const billing_process_form = document.querySelector("#billing_process_form");
         const generate_button = billing_process_form.querySelector("#generate_button");
