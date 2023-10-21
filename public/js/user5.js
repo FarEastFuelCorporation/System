@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const client_list_response_promise = fetch('https://script.google.com/macros/s/AKfycbxXnIsmgK52Ws9H2qAh47qkgZxDltFJaHSFV0e9UQRwaK1g_xwFUKGokL_hk4fq-_mhSg/exec');
         const type_of_waste_response_promise = fetch('https://script.google.com/macros/s/AKfycbw0yC-8_V38Zl1-KGyBwX1JmfTEW1jwyFxgpZ-oNC2lvtoAraUtkLCS27HfNbXi_l4IPg/exec');
         const vehicle_response_promise = fetch('https://script.google.com/macros/s/AKfycbw-JCnctX1x1W1ogGbrkhNdIGd9q6bYjy_nvaYeoiaBf7HreB2a1tKJZaJHw2wu4wmpcA/exec');
+        const mtf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzkzS4OVm3IfNl6KwOfLZq_uO3MnsXfu-oS5Su_1kxhfo1mMoKpYDm8a4RxWqsQh0qv/exec');
         const ltf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxBLMvyNDsT9_dlVO4Qc31dI4ErcymUHbzKimOpCZHgbJxip2XxCl7Wk3hJyqcdtrxU/exec');
         const wcf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyBFTBuFZ4PkvwmPi_3Pp_v74DCSEK2VpNy6janIGgaAK-P22wazmmShOKn6iwFbrQn/exec');
         const tpf_response_promise = fetch('https://script.google.com/macros/s/AKfycbwbKss2XtW5lylCrUe8IC-ZA4ffA5CM5tY6kqIja9t80NXJw2nB8RBOJFWbXQz0hWMadw/exec');
@@ -17,6 +18,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             client_list_response,
             type_of_waste_response,
             vehicle_response,
+            mtf_response,
             ltf_response,
             wcf_response,
             tpf_response,
@@ -29,6 +31,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             client_list_response_promise,
             type_of_waste_response_promise,
             vehicle_response_promise,
+            mtf_response_promise,
             ltf_response_promise,
             wcf_response_promise,
             tpf_response_promise,
@@ -42,6 +45,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const client_data_list  = await client_list_response.json();
         const type_of_waste_data_list  = await type_of_waste_response.json();
         const vehicle_data_list  = await vehicle_response.json();
+        const mtf_data_list  = await mtf_response.json();
         const ltf_data_list  = await ltf_response.json();
         const wcf_data_list  = await wcf_response.json();
         const tpf_data_list  = await tpf_response.json();
@@ -568,14 +572,40 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     for(let a = 1; a < wcf_data_list.content.length; a++){
                         if(cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")]){
-                            for(let c = 1; c < qlf_data_list.content.length; c++){
-                                if(wcf_data_list.content[a][findTextInArray(wcf_data_list, "CLIENT ID")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")] &&
-                                wcf_data_list.content[a][findTextInArray(wcf_data_list, "TYPE OF VEHICLE")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
-                                    transportation_vehicle = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]
-                                    transportation_unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
-                                    transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
-                                    transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
-                                    term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS DAYS")]
+                            if((wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).substring(0,3) == "MTF"){
+                                for(let b = 1; b < mtf_data_list.content.length; b++){
+                                    if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "MTF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
+                                        for(let c = 1; c < qlf_data_list.content.length; c++){
+                                            if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "CLIENT ID")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")] &&
+                                            mtf_data_list.content[b][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
+                                                transportation_vehicle = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]
+                                                transportation_unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
+                                                transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
+                                                transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
+                                                term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS DAYS")]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else if((wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).substring(0,3) == "LTF"){
+                                for(let d = 1; d < ltf_data_list.content.length; d++){
+                                    if(ltf_data_list.content[d][findTextInArray(ltf_data_list, "LTF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
+                                        for(let b = 1; b < mtf_data_list.content.length; b++){
+                                            if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "MTF #")] == ltf_data_list.content[d][findTextInArray(ltf_data_list, "MTF #")]){
+                                                for(let c = 1; c < qlf_data_list.content.length; c++){
+                                                    if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "CLIENT ID")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")] &&
+                                                    mtf_data_list.content[b][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
+                                                        transportation_vehicle = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]
+                                                        transportation_unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
+                                                        transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
+                                                        transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
+                                                        term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS DAYS")]
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -762,14 +792,40 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     for(let a = 1; a < wcf_data_list.content.length; a++){
                         if(cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")]){
-                            for(let c = 1; c < qlf_data_list.content.length; c++){
-                                if(wcf_data_list.content[a][findTextInArray(wcf_data_list, "CLIENT ID")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")] &&
-                                wcf_data_list.content[a][findTextInArray(wcf_data_list, "TYPE OF VEHICLE")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
-                                    transportation_vehicle = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]
-                                    transportation_unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
-                                    transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
-                                    transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
-                                    term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS DAYS")]
+                            if((wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).substring(0,3) == "MTF"){
+                                for(let b = 1; b < mtf_data_list.content.length; b++){
+                                    if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "MTF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
+                                        for(let c = 1; c < qlf_data_list.content.length; c++){
+                                            if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "CLIENT ID")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")] &&
+                                            mtf_data_list.content[b][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
+                                                transportation_vehicle = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]
+                                                transportation_unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
+                                                transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
+                                                transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
+                                                term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS DAYS")]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else if((wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).substring(0,3) == "LTF"){
+                                for(let d = 1; d < ltf_data_list.content.length; d++){
+                                    if(ltf_data_list.content[d][findTextInArray(ltf_data_list, "LTF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
+                                        for(let b = 1; b < mtf_data_list.content.length; b++){
+                                            if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "MTF #")] == ltf_data_list.content[d][findTextInArray(ltf_data_list, "MTF #")]){
+                                                for(let c = 1; c < qlf_data_list.content.length; c++){
+                                                    if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "CLIENT ID")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")] &&
+                                                    mtf_data_list.content[b][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
+                                                        transportation_vehicle = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]
+                                                        transportation_unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
+                                                        transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
+                                                        transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
+                                                        term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS DAYS")]
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -915,7 +971,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     table_data.insertAdjacentHTML("beforeend", data5);
                 }
             }
-            if(client == "C2023018"){
+            else if(client == "C2023018"){
                 for(let x = 1; x < cod_data_list.content.length; x++){
                     var client_name = "";
                     var address = "";
@@ -957,14 +1013,40 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     for(let a = 1; a < wcf_data_list.content.length; a++){
                         if(cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")]){
-                            for(let c = 1; c < qlf_data_list.content.length; c++){
-                                if(wcf_data_list.content[a][findTextInArray(wcf_data_list, "CLIENT ID")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")] &&
-                                wcf_data_list.content[a][findTextInArray(wcf_data_list, "TYPE OF VEHICLE")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
-                                    transportation_vehicle = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]
-                                    transportation_unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
-                                    transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
-                                    transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
-                                    term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS DAYS")]
+                            if((wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).substring(0,3) == "MTF"){
+                                for(let b = 1; b < mtf_data_list.content.length; b++){
+                                    if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "MTF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
+                                        for(let c = 1; c < qlf_data_list.content.length; c++){
+                                            if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "CLIENT ID")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")] &&
+                                            mtf_data_list.content[b][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
+                                                transportation_vehicle = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]
+                                                transportation_unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
+                                                transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
+                                                transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
+                                                term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS DAYS")]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else if((wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).substring(0,3) == "LTF"){
+                                for(let d = 1; d < ltf_data_list.content.length; d++){
+                                    if(ltf_data_list.content[d][findTextInArray(ltf_data_list, "LTF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
+                                        for(let b = 1; b < mtf_data_list.content.length; b++){
+                                            if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "MTF #")] == ltf_data_list.content[d][findTextInArray(ltf_data_list, "MTF #")]){
+                                                for(let c = 1; c < qlf_data_list.content.length; c++){
+                                                    if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "CLIENT ID")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")] &&
+                                                    mtf_data_list.content[b][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
+                                                        transportation_vehicle = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]
+                                                        transportation_unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
+                                                        transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
+                                                        transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
+                                                        term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS DAYS")]
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
