@@ -2050,6 +2050,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         })
 
         report_generate_button.addEventListener("click", () => {
+            const filteredData = [];
             for(let x = 1; x < mtf_data_list.content.length; x++){
                 var hauling_date = new Date(mtf_data_list.content[x][findTextInArray(mtf_data_list, "HAULING DATE")])
                 var mtf_data = mtf_data_list.content[x][findTextInArray(mtf_data_list, "MTF #")]
@@ -2059,24 +2060,48 @@ document.addEventListener('DOMContentLoaded', async function() {
                 var waste_id_data = mtf_data_list.content[x][findTextInArray(mtf_data_list, "WASTE ID")]
                 var report_from = new Date(report_date_from.value)
                 var report_to = new Date(report_date_to.value)
-                if(hauling_date >= report_from && hauling_date <= report_to){
-                    var data = 
-                    `
-                    <tr>
-                        <td>${mtf_data}</td>
-                        <td>${date_decoder(hauling_date_data)}</td>
-                        <td>${time_decoder(hauling_time_data)}</td>
-                        <td>${findClientName(client_id_data)}</td>
-                        <td>${findWasteName(client_id_data, waste_id_data)}</td>
-                    </tr>
-                    `
-                    report_body.insertAdjacentHTML("beforeend", data);
-                    date_covered.innerText = `${date_decoder(report_from)} - ${date_decoder(report_to)}`
-                    report_generate_button.style.display = "none";
-                    report_download_button.style.display = "block";
+                var datePortion = hauling_date_data.split("T")[0];
+                var timePortion = hauling_time_data.split("T")[1];
+                var hauling_datetime = new Date(datePortion + "T" + timePortion);
+                if (hauling_date >= report_from && hauling_date <= report_to) {
+                    filteredData.push({
+                    mtf_data,
+                    hauling_date_data,
+                    hauling_time_data,
+                    client_id_data,
+                    waste_id_data,
+                    hauling_datetime,
+                    });
+                    console.log(hauling_datetime)
                 }
             }
-        })
+            
+            // Sort the data by hauling date and time
+            console.log(filteredData)
+            filteredData.sort((a, b) => a.hauling_datetime - b.hauling_datetime);
+            console.log(filteredData)
+        
+            // Clear the existing table content
+            report_body.innerHTML = "";
+        
+            // Render the sorted data
+            filteredData.forEach((item) => {
+            var data = `
+                <tr>
+                    <td>${item.mtf_data}</td>
+                    <td>${date_decoder(item.hauling_date_data)}</td>
+                    <td>${time_decoder(item.hauling_time_data)}</td>
+                    <td>${findClientName(item.client_id_data)}</td>
+                    <td>${findWasteName(item.client_id_data, item.waste_id_data)}</td>
+                </tr>
+            `;
+            report_body.insertAdjacentHTML("beforeend", data);
+            });
+        
+            date_covered.innerText = `${date_decoder(report_from)} - ${date_decoder(report_to)}`;
+            report_generate_button.style.display = "none";
+            report_download_button.style.display = "block";
+        });
 
     } catch (error) {
         console.error('Error fetching data:', error);
