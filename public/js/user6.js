@@ -2032,6 +2032,52 @@ document.addEventListener('DOMContentLoaded', async function() {
             return waste_name
         }
 
+        const generate_report_button = document.getElementById("generate_report_button");
+        const close_report_button = document.getElementById("close_report_button");
+        const report_generate_button = document.getElementById("report_generate_button");
+        const report_download_button = document.getElementById("report_download_button");
+        const generate_report_tab = document.getElementById("generate_report_tab");
+        const report_date_from = document.getElementById("report_date_from");
+        const report_date_to = document.getElementById("report_date_to");
+        const date_covered = document.getElementById("date_covered");
+        const report_body = document.getElementById("report_body");
+
+        generate_report_button.addEventListener("click", () => {
+            generate_report_tab.style.display = "block"
+        })
+        close_report_button.addEventListener("click", () => {
+            generate_report_tab.style.display = "none"
+        })
+
+        report_generate_button.addEventListener("click", () => {
+            for(let x = 1; x < mtf_data_list.content.length; x++){
+                var hauling_date = new Date(mtf_data_list.content[x][findTextInArray(mtf_data_list, "HAULING DATE")])
+                var mtf_data = mtf_data_list.content[x][findTextInArray(mtf_data_list, "MTF #")]
+                var hauling_date_data = mtf_data_list.content[x][findTextInArray(mtf_data_list, "HAULING DATE")]
+                var hauling_time_data = mtf_data_list.content[x][findTextInArray(mtf_data_list, "HAULING TIME")]
+                var client_id_data = mtf_data_list.content[x][findTextInArray(mtf_data_list, "CLIENT ID")]
+                var waste_id_data = mtf_data_list.content[x][findTextInArray(mtf_data_list, "WASTE ID")]
+                var report_from = new Date(report_date_from.value)
+                var report_to = new Date(report_date_to.value)
+                if(hauling_date >= report_from && hauling_date <= report_to){
+                    var data = 
+                    `
+                    <tr>
+                        <td>${mtf_data}</td>
+                        <td>${date_decoder(hauling_date_data)}</td>
+                        <td>${time_decoder(hauling_time_data)}</td>
+                        <td>${findClientName(client_id_data)}</td>
+                        <td>${findWasteName(client_id_data, waste_id_data)}</td>
+                    </tr>
+                    `
+                    report_body.insertAdjacentHTML("beforeend", data);
+                    date_covered.innerText = `${date_decoder(report_from)} - ${date_decoder(report_to)}`
+                    report_generate_button.style.display = "none";
+                    report_download_button.style.display = "block";
+                }
+            }
+        })
+
     } catch (error) {
         console.error('Error fetching data:', error);
     }
