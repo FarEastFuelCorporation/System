@@ -2072,14 +2072,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                     waste_id_data,
                     hauling_datetime,
                     });
-                    console.log(hauling_datetime)
                 }
             }
             
             // Sort the data by hauling date and time
-            console.log(filteredData)
             filteredData.sort((a, b) => a.hauling_datetime - b.hauling_datetime);
-            console.log(filteredData)
         
             // Clear the existing table content
             report_body.innerHTML = "";

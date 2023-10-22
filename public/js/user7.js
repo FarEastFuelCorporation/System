@@ -1308,6 +1308,85 @@ document.addEventListener('DOMContentLoaded', async function() {
             return waste_name
         }    
 
+        const generate_report_button = document.getElementById("generate_report_button");
+        const close_report_button = document.getElementById("close_report_button");
+        const report_generate_button = document.getElementById("report_generate_button");
+        const report_download_button = document.getElementById("report_download_button");
+        const generate_report_tab = document.getElementById("generate_report_tab");
+        const report_date_from = document.getElementById("report_date_from");
+        const report_date_to = document.getElementById("report_date_to");
+        const date_covered = document.getElementById("date_covered");
+        const report_body = document.getElementById("report_body");
+
+        generate_report_button.addEventListener("click", () => {
+            generate_report_tab.style.display = "block"
+        })
+        close_report_button.addEventListener("click", () => {
+            generate_report_tab.style.display = "none"
+        })
+
+        report_generate_button.addEventListener("click", () => {
+            const filteredData = [];
+            for(let x = 1; x < ltf_data_list.content.length; x++){
+                var hauling_date = new Date(ltf_data_list.content[x][findTextInArray(ltf_data_list, "HAULING DATE")])
+                var mtf_data = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")]
+                var ltf_data = ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]
+                var date_data = ltf_data_list.content[x][findTextInArray(ltf_data_list, "DEPARTURE DATE")]
+                var time_data = ltf_data_list.content[x][findTextInArray(ltf_data_list, "DEPARTURE TIME")]
+                var client_id_data = ltf_data_list.content[x][findTextInArray(ltf_data_list, "CLIENT ID")]
+                var waste_id_data = ltf_data_list.content[x][findTextInArray(ltf_data_list, "WASTE ID")]
+                var type_of_vehicle_data = ltf_data_list.content[x][findTextInArray(ltf_data_list, "TYPE OF VEHICLE")]
+                var plate_no_data = ltf_data_list.content[x][findTextInArray(ltf_data_list, "PLATE #")]
+                var report_from = new Date(report_date_from.value)
+                var report_to = new Date(report_date_to.value)
+                var datePortion = date_data.split("T")[0];
+                var timePortion = time_data.split("T")[1];
+                var datetime = new Date(datePortion + "T" + timePortion);
+                if (hauling_date >= report_from && hauling_date <= report_to) {
+                    filteredData.push({
+                    ltf_data,
+                    mtf_data,
+                    hauling_date,
+                    date_data,
+                    time_data,
+                    client_id_data,
+                    waste_id_data,
+                    type_of_vehicle_data,
+                    plate_no_data,
+                    datetime,
+                    });
+                }
+            }
+            
+            // Sort the data by hauling date and time
+            filteredData.sort((a, b) => a.datetime - b.datetime);
+        
+            // Clear the existing table content
+            report_body.innerHTML = "";
+        
+            // Render the sorted data
+            filteredData.forEach((item) => {
+            var data = `
+                <tr>
+                    <td>${item.ltf_data}</td>
+                    <td>${item.mtf_data}</td>
+                    <td>${date_decoder(item.hauling_date)}</td>
+                    <td>${date_decoder(item.date_data)}</td>
+                    <td>${time_decoder(item.time_data)}</td>
+                    <td>${findClientName(item.client_id_data)}</td>
+                    <td>${findWasteName(item.client_id_data, item.waste_id_data)}</td>
+                    <td>${item.type_of_vehicle_data}</td>
+                    <td>${item.plate_no_data}</td>
+                </tr>
+            `;
+            report_body.insertAdjacentHTML("beforeend", data);
+            });
+        
+            date_covered.innerText = `${date_decoder(report_from)} - ${date_decoder(report_to)}`;
+            report_generate_button.style.display = "none";
+            report_download_button.style.display = "block";
+        });
+
     } catch (error) {
         console.error('Error fetching data:', error);
     }
