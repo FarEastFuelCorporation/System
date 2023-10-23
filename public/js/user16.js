@@ -839,6 +839,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <option value="CHARGE">CHARGE</option>
                             <option value="FREE OF CHARGE">FREE OF CHARGE</option>
                             <option value="BUYING">BUYING</option>
+                            <option value="SELLING">SELLING</option>
                         </select>
                     </div>
                 </div>
@@ -1177,6 +1178,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <option value="CHARGE">CHARGE</option>
                             <option value="FREE OF CHARGE">FREE OF CHARGE</option>
                             <option value="BUYING">BUYING</option>
+                            <option value="SELLING">SELLING</option>
                         </select>
                     </div>
                 </div>
@@ -1337,6 +1339,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <option value="CHARGE">CHARGE</option>
                             <option value="FREE OF CHARGE">FREE OF CHARGE</option>
                             <option value="BUYING">BUYING</option>
+                            <option value="SELLING">SELLING</option>
                         </select>
                     </div>
                 </div>
