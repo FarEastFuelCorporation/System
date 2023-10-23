@@ -839,6 +839,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                     </tr>
                 `;
 
+                const page_max_counter = document.querySelectorAll("#page_max_counter");
+                page_max_counter.forEach((counter) => {
+                    counter.innerText = `${page_number.value}`;
+                    console.log(`of ${page_number.value}`)
+                })
 
                 // Check if adding this data exceeds the current page height
                 if (currentPageHeight + dataHeight > pageHeight) {
