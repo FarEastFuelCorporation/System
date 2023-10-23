@@ -545,19 +545,28 @@ function customValidation3() {
   const fund_amount = document.getElementById(`fund_amount${data_counter.value}`);
   const fund_source_amount = document.getElementById(`fund_source_amount${data_counter.value}`);
   const fund_source = document.getElementById(`fund_source${data_counter.value}`);
-  console.log(data_counter.value)
-  console.log(fund_amount.value)
-  console.log(fund_source_amount.value)
-  console.log(fund_source.value)
+  const fund_sources = document.querySelectorAll(`.fund_source`);
+  const fund_allocations = document.querySelectorAll(`.fund_allocation`);
+  fund_sources.forEach((fund_source, i) => {
+    if(fund_source.value !== "OTHERS" && fund_allocations[i].value !== "OTHERS"){
+      return true;
+    }
+    else if(fund_source.value == "OTHERS" && fund_allocations[i].value == "OTHERS"){
+      alert('Invalid TransaCtion!');
+      return false;
+    }
+  })
+
   if(fund_source.value !== "BANK" && fund_source.value !== "OTHERS"){
-    console.log("pass")
-      if (fund_amount.value > fund_source_amount.value) {
-          alert('Invalid TransaCtion! Fund Amount is Greater than Fund Source Amount.');
-          
-          return false;
-      }
+    if (fund_amount.value <= fund_source_amount.value) {
+      return true;
+    }
+    if (fund_amount.value > fund_source_amount.value) {
+      alert('Invalid TransaCtion! Fund Amount is Greater than Fund Source Amount.');
+      return false;
+    }
   }
-  return true;
+  return false;
 }
 
 function customValidation4() {
@@ -584,6 +593,7 @@ form_elements.forEach(function(form) {
     addConfirmationListener(form, customValidation2);
   }
   else if (form.id === 'fund_transfer_form_id') {
+    console.log(customValidation3)
     addConfirmationListener(form, customValidation3);
   }
   else if (form.id === 'budget_form') {

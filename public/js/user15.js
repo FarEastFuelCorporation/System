@@ -1104,7 +1104,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <label for="fund_source${data_counter_ap_accounting.value}">
                             Fund Source
                         </label><br>
-                        <select name="fund_source${data_counter_ap_accounting.value}" id="fund_source${data_counter_ap_accounting.value}" class="form-control" required>
+                        <select name="fund_source${data_counter_ap_accounting.value}" id="fund_source${data_counter_ap_accounting.value}" class="form-control fund_source" required>
                             <option value="">SELECT FUND SOURCE</option>
                             <option value="SOURCE OF FUND">SOURCE OF FUND</option>
                             <option value="TRUCKING FUND">TRUCKING FUND</option>
@@ -1138,7 +1138,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <label for="fund_allocation${data_counter_ap_accounting.value}">
                             Fund Allocation
                         </label><br>
-                        <select name="fund_allocation${data_counter_ap_accounting.value}" id="fund_allocation${data_counter_ap_accounting.value}" class="form-control" required>
+                        <select name="fund_allocation${data_counter_ap_accounting.value}" id="fund_allocation${data_counter_ap_accounting.value}" class="form-control fund_allocation" required>
                             <option value="">SELECT FUND ALLOCATION</option>
                             <option value="BANK">BANK</option>
                             <option value="SOURCE OF FUND">SOURCE OF FUND</option>
