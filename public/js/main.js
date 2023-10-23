@@ -593,7 +593,6 @@ form_elements.forEach(function(form) {
     addConfirmationListener(form, customValidation2);
   }
   else if (form.id === 'fund_transfer_form_id') {
-    console.log(customValidation3)
     addConfirmationListener(form, customValidation3);
   }
   else if (form.id === 'budget_form') {
