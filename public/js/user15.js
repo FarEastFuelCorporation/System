@@ -1082,15 +1082,23 @@ document.addEventListener('DOMContentLoaded', async function() {
             }        
         });
 
+        addNewData();
+
         add_item_button2_ftf_ap_accounting.addEventListener("click", () => {
             data_counter_ap_accounting.value = parseInt(data_counter_ap_accounting.value) + 1;
             addNewData();
         })
 
+        remove_item_button2_ftf_ap_accounting.addEventListener("click", () => {
+            const item_data = document.getElementById(`data${data_counter_ap_accounting.value}`)
+            item_data.remove()
+            data_counter_ap_accounting.value = parseInt(data_counter_ap_accounting.value) - 1;
+        })
+
         function addNewData(){            
             var data = 
             `
-            <div class="d-flex gap-4" id="data">
+            <div class="d-flex gap-4" id="data${data_counter_ap_accounting.value}">
                 <div style="width: 30%;">
                     <div>
                         <label for="fund_source${data_counter_ap_accounting.value}">
@@ -1173,7 +1181,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             fund_transfer_form_buttons_ap_accounting.insertAdjacentHTML("beforebegin", data);
             updateFunction ();
         }
-        addNewData();
         
         function updateFundSourceAmount(source, source2, source3, source4, source5) {
             updateAmount();
