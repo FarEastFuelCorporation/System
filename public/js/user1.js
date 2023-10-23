@@ -770,7 +770,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         const generate_report_tab = document.getElementById("generate_report_tab");
         const report_date_from = document.getElementById("report_date_from");
         const report_date_to = document.getElementById("report_date_to");
-        const date_covered = document.getElementById("date_covered");
         let currentPageHeight = 31;
 
         generate_report_button.addEventListener("click", () => {
@@ -825,7 +824,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 const report_tab_container = document.querySelector(`#report_tab_container`);
                 const report_tab = document.querySelector(`#report_tab${page_number.value}`);
                 const report_body = report_tab.querySelector("tbody");
-    
+                
                 var data = `
                     <tr>
                         <td>${item.wcf_data}</td>
@@ -852,11 +851,17 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <div id="report_tab${page_number.value}" class="report_tab">
                         <img src="../images/logo.png" alt="logo" style="height: 50px;">
                         <img src="../images/logo_name2.png" alt="logo" style="height: 50px; margin-top: 10px;"><hr>
-                        <h1 style="text-align: center; font-weight: bold; font-size: 32px;">WEEKLY REPORT</h1>
-                        <h1 style="text-align: center; font-weight: bold;">RECEIVING</h1>
-                        <h1 style="text-align: center; font-weight: bold;">LOGISTICS DEPARTMENT</h1>
-                        <h3 id="date_covered" style="text-align: center;"></h3><br>
-                        <input type="hidden" id="page_number" value="1">
+                        <div style="position: relative;">
+                            <h1 style="text-align: center; font-weight: bold; font-size: 32px;">WEEKLY REPORT</h1>
+                            <h1 style="text-align: center; font-weight: bold;">RECEIVING</h1>
+                            <h1 style="text-align: center; font-weight: bold;">LOGISTICS DEPARTMENT</h1>
+                            <h3 id="date_covered" style="text-align: center;"></h3><br>
+                            <div style="display: flex; position: absolute; right: 0; top: 0;">
+                                <h6 id="page_counter${page_number.value}" style="margin-right: 5px;"></h6>
+                                <h6 style="margin-right: 5px;">of</h6>
+                                <h6 id="page_max_counter"></h6>
+                            </div>
+                        </div>
                         <div id="table_info">
                             <table>
                                 <thead id="report_head">
@@ -872,19 +877,32 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <th>PLATE #</th>
                                     </tr>
                                 </thead>
-                                <tbody id="report_body1"></tbody>
+                                <tbody id="report_body"></tbody>
                             </table>
                         </div>
                     </div>
-                    `
+                        `
                     )
+                    const page_counter_new = document.querySelector(`#page_counter${page_number.value}`);
+                    page_counter_new.innerText = `Page ${page_number.value}`
+                    const page_max_counter = document.querySelectorAll("#page_max_counter");
+                    page_max_counter.forEach((counter) => {
+                        counter.innerText = `${page_number.value}`;
+                        console.log(`of ${page_number.value}`)
+                    })
                 }
+                const page_counter = document.getElementById("page_counter1");
+                page_counter.innerText = `Page 1`
 
                 report_body.insertAdjacentHTML("beforeend", data);
                 currentPageHeight += dataHeight;
+
             });
-        
-            date_covered.innerText = `${date_decoder(report_from)} - ${date_decoder(report_to)}`;
+            
+            const date_covered = document.querySelectorAll("#date_covered");
+            date_covered.forEach((date) => {
+                date.innerText = `${date_decoder(report_from)} - ${date_decoder(report_to)}`;
+            })
             report_generate_button.style.display = "none";
             report_download_button.style.display = "block";
         });

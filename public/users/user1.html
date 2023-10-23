@@ -146,15 +146,22 @@
                     <h4 style="margin: 0; color: white;">Download</h4>
                 </button>
             </div>
+            <input type="hidden" id="page_number" value="1">
             <div id="report_tab_container" style="position: absolute; top: 0; right: 0;">
                 <div id="report_tab1" class="report_tab">
                     <img src="../images/logo.png" alt="logo" style="height: 50px;">
                     <img src="../images/logo_name2.png" alt="logo" style="height: 50px; margin-top: 10px;"><hr>
-                    <h1 style="text-align: center; font-weight: bold; font-size: 32px;">WEEKLY REPORT</h1>
-                    <h1 style="text-align: center; font-weight: bold;">RECEIVING</h1>
-                    <h1 style="text-align: center; font-weight: bold;">LOGISTICS DEPARTMENT</h1>
-                    <h3 id="date_covered" style="text-align: center;"></h3><br>
-                    <input type="hidden" id="page_number" value="1">
+                    <div style="position: relative;">
+                        <h1 style="text-align: center; font-weight: bold; font-size: 32px;">WEEKLY REPORT</h1>
+                        <h1 style="text-align: center; font-weight: bold;">RECEIVING</h1>
+                        <h1 style="text-align: center; font-weight: bold;">LOGISTICS DEPARTMENT</h1>
+                        <h3 id="date_covered" style="text-align: center;"></h3><br>
+                        <div style="display: flex; position: absolute; right: 0; top: 0;">
+                            <h6 id="page_counter1" style="margin-right: 5px;"></h6>
+                            <h6 style="margin-right: 5px;">of</h6>
+                            <h6 id="page_max_counter"></h6>
+                        </div>
+                    </div>
                     <div id="table_info">
                         <table>
                             <thead id="report_head">
@@ -170,7 +177,7 @@
                                     <th>PLATE #</th>
                                 </tr>
                             </thead>
-                            <tbody id="report_body1"></tbody>
+                            <tbody id="report_body"></tbody>
                         </table>
                     </div>
                 </div>
