@@ -1088,7 +1088,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         })
 
         remove_item_button2_ftf_ap_accounting.addEventListener("click", () => {
-            const item_data = document.getElementById(`data${data_counter_ap_accounting.value}`)
+            const item_data = document.querySelector(`.data${data_counter_ap_accounting.value}`)
             item_data.remove()
             data_counter_ap_accounting.value = parseInt(data_counter_ap_accounting.value) - 1;
         })
@@ -1096,7 +1096,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         function addNewData(){            
             var data = 
             `
-            <div class="d-flex gap-4" id="data${data_counter_ap_accounting.value}">
+            <div class="d-flex gap-4" id="data" class="data${data_counter_ap_accounting.value}">
                 <div style="width: 30%;">
                     <div>
                         <label for="fund_source${data_counter_ap_accounting.value}">
@@ -1307,7 +1307,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     additional_representation_fund += source5;
                     break;
             }
-        
+            console.log("pass")
             source3.value = fundAmount.toFixed(2);
             source3.style.display = "flex";
         }
@@ -1438,6 +1438,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     additional_representation_fund += parseFloat(source5);
                     break;
             }
+            console.log("pass")
             source3.value = fundAmount.toFixed(2);
             source3.style.display = "flex";
         }

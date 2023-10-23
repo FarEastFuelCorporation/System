@@ -547,26 +547,21 @@ function customValidation3() {
   const fund_source = document.getElementById(`fund_source${data_counter.value}`);
   const fund_sources = document.querySelectorAll(`.fund_source`);
   const fund_allocations = document.querySelectorAll(`.fund_allocation`);
-  fund_sources.forEach((fund_source, i) => {
-    if(fund_source.value !== "OTHERS" && fund_allocations[i].value !== "OTHERS"){
-      return true;
-    }
-    else if(fund_source.value == "OTHERS" && fund_allocations[i].value == "OTHERS"){
-      alert('Invalid TransaCtion!');
-      return false;
-    }
-  })
-
-  if(fund_source.value !== "BANK" && fund_source.value !== "OTHERS"){
-    if (fund_amount.value <= fund_source_amount.value) {
-      return true;
-    }
+  let validationFailed = false;
+  if (fund_source.value !== "BANK" && fund_source.value !== "OTHERS") {
     if (fund_amount.value > fund_source_amount.value) {
-      alert('Invalid TransaCtion! Fund Amount is Greater than Fund Source Amount.');
-      return false;
+      alert('Invalid Transaction! Fund Amount is Greater than Fund Source Amount.');
+      validationFailed = true; // Set the flag to indicate validation failure
     }
   }
-  return false;
+  
+  fund_sources.forEach((fund_source, i) => {
+    if (fund_source.value == "OTHERS" && fund_allocations[i].value == "OTHERS") {
+      alert('Invalid Transaction! Fund Amount is Greater than Fund Source Amount.');
+      validationFailed = true; // Set the flag to indicate validation failure
+    }
+  });
+  return !validationFailed;
 }
 
 function customValidation4() {
