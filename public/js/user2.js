@@ -437,14 +437,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         var year = new Date().getFullYear();
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
         
-        for (let i = 0; i < 11; i++) {
+        for (let i = 0; i < 21; i++) {
             var data_counter = data_info.substring(8,11);
             data_counter = (parseInt(data_counter) + i + 1).toString().padStart(3, "0");
             sf_form_nos.push(`SF${year}${month}${data_counter}`);
         }
 
         // Assigning values to sf_form_no variables
-        for (let i = 0; i < 11; i++) {
+        for (let i = 0; i < 21; i++) {
             const sf_form_no = document.getElementById(`sf_form_no${i + 1}`);
             sf_form_no.value = sf_form_nos[i];
         }
@@ -629,7 +629,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 var inputWeights = [];
 
                 // Store the input values in the array and exclude NaN values
-                for (let i = 1; i <= 11; i++) {
+                for (let i = 1; i <= 21; i++) {
                     var weightInput = document.getElementById(`weight${i}`);
                     var intWeight = parseFloat(weightInput.value);
                     if (!isNaN(intWeight)) {
@@ -653,7 +653,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 var inputWeights = [];
 
                 // Store the input values in the array and exclude NaN values
-                for (let i = 1; i <= 10; i++) {
+                for (let i = 1; i <= 20; i++) {
                     var weightInput = document.getElementById(`weight${i}`);
                     var intWeight = parseInt(weightInput.value);
                     if (!isNaN(intWeight)) {
@@ -760,7 +760,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             item_counter.value = item_counter_int;
 
             
-            if (item_counter_int >= 2 && item_counter_int <= 10) {
+            if (item_counter_int >= 2 && item_counter_int <= 20) {
                 const additional_item = document.getElementById(`additional_item${item_counter_int}`);
                 const type_of_waste = document.getElementById(`type_of_waste${item_counter_int}`);
                 const weight = document.getElementById(`weight${item_counter_int}`);
@@ -774,7 +774,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     remove_item_button.style.display = "block";
                 }
                 
-                if (item_counter_int === 10) {
+                if (item_counter_int === 20) {
                     add_item_button.style.display = "none";
                 }
             }
@@ -783,7 +783,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         function remove_new_item() {
             const item_counter_int = parseInt(item_counter.value);
             
-            if (item_counter_int >= 2 && item_counter_int <= 10) {
+            if (item_counter_int >= 2 && item_counter_int <= 20) {
                 const additional_item = document.getElementById(`additional_item${item_counter_int}`);
                 additional_item.style.display = "none";
                 const type_of_waste = document.getElementById(`type_of_waste${item_counter_int}`);
@@ -802,7 +802,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     remove_item_button.style.display = "none";
                 }
                 
-                if (item_counter_int === 10) {
+                if (item_counter_int === 20) {
                     add_item_button.style.display = "block";
                 }
             }
