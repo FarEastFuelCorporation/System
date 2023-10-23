@@ -505,6 +505,111 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         })
 
+        const warehouse_inventory = document.getElementById("warehouse_inventory")
+        const warehouse_inventory_list = warehouse_inventory.querySelector("#warehouse_inventory_list")
+        const search_filter_options = warehouse_inventory.querySelector("#search_filter_options")
+
+        var inventory_data = "";
+        var inventory_data_counter = 1;
+
+        search_filter_options.addEventListener("click", () => {
+            warehouse_inventory_list.innerHTML = "";
+            filterData()
+        })
+        filterData()
+        function filterData(){
+            inventory_data = ""
+            const filter_option = warehouse_inventory.querySelector("#filter_option")
+            const filter_info = warehouse_inventory.querySelector("#filter_info")
+            for(let x = 1; x < wtf_data_list.content.length; x++){
+                var column_name = "";
+                for(let y = 0; y < wtf_data_list.content[0].length; y++){
+                    if(filter_option.value == wtf_data_list.content[0][y]){
+                        column_name = y
+                        break
+                    }
+                }
+                if(wtf_data_list.content[x][column_name] == filter_info.value){
+                    var mtf = "";
+                    var ltf = "";
+                    for(let k = 1; k < wcf_data_list.content.length; k++){
+                        if(wtf_data_list.content[x][findTextInArray(wtf_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                            if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                            }else{
+                                ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                for(let x = 1; x < ltf_data_list.content.length; x++){
+                                    if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                        mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                        break
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    inventory_data += 
+                    `
+                    <tr>
+                        <td>${inventory_data_counter}</td>
+                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "WTF #")]}</td>
+                        <td>${mtf}</td>
+                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "GATE PASS #")]}</td>
+                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "STEAM #")]}</td>
+                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "WAREHOUSE #")]}</td>
+                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "AREA")]}</td>
+                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "SECTION")]}</td>
+                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "LEVEL")]}</td>
+                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "PALLET #")]}</td>
+                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "QUANTITY")]}</td>
+                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "UNIT")]}</td>
+                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "DESCRIPTION")]}</td>
+                    </tr>
+                    `
+                    inventory_data_counter += 1;
+                }
+                else if(filter_info.value == ""){
+                    console.log("pass")
+                    var mtf = "";
+                    var ltf = "";
+                    for(let k = 1; k < wcf_data_list.content.length; k++){
+                        if(wtf_data_list.content[x][findTextInArray(wtf_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                            if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                            }else{
+                                ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                for(let x = 1; x < ltf_data_list.content.length; x++){
+                                    if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                        mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                        break
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    inventory_data += 
+                    `
+                    <tr>
+                        <td>${inventory_data_counter}</td>
+                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "WTF #")]}</td>
+                        <td>${mtf}</td>
+                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "GATE PASS #")]}</td>
+                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "STEAM #")]}</td>
+                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "WAREHOUSE #")]}</td>
+                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "AREA")]}</td>
+                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "SECTION")]}</td>
+                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "LEVEL")]}</td>
+                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "PALLET #")]}</td>
+                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "QUANTITY")]}</td>
+                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "UNIT")]}</td>
+                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "DESCRIPTION")]}</td>
+                    </tr>
+                    `
+                    inventory_data_counter += 1;
+                }
+            }
+            warehouse_inventory_list.insertAdjacentHTML("beforeend", inventory_data)
+        }
+
         // multi section
         // purchase_request_form
         const today = new Date();

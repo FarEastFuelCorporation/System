@@ -557,7 +557,7 @@ function customValidation3() {
   
   fund_sources.forEach((fund_source, i) => {
     if (fund_source.value == "OTHERS" && fund_allocations[i].value == "OTHERS") {
-      alert('Invalid Transaction! Fund Amount is Greater than Fund Source Amount.');
+      alert('Invalid Transaction!');
       validationFailed = true; // Set the flag to indicate validation failure
     }
   });
