@@ -568,7 +568,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     inventory_data_counter += 1;
                 }
                 else if(filter_info.value == ""){
-                    console.log("pass")
                     var mtf = "";
                     var ltf = "";
                     for(let k = 1; k < wcf_data_list.content.length; k++){
