@@ -1052,7 +1052,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         var is_ftf_data = false;
         var data_info;
         var data_counter;
-        console.log(is_ftf_data)
         for(let x = 1; x < ftf_data_list.content.length; x++){
             ftf_data = ftf_data_list.content[x][findTextInArray(ftf_data_list, "FTF # / FORM #")];
             
@@ -1060,7 +1059,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 is_ftf_data = true;
             }
         }
-        console.log(is_ftf_data)
         if(is_ftf_data){
             data_info = ftf_data_list.content[last_row][findTextInArray(ftf_data_list, "FTF # / FORM #")];
             data_counter = data_info.substring(9,12);
