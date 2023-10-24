@@ -426,7 +426,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <option value="">SELECT</option>
                         <option value="PC">PC</option>
                         <option value="CASE">CASE</option>
-                        <option value="JUMBO">JUMBO</option>                             
+                        <option value="JUMBO">JUMBO</option>
+                        <option value="POLYSACK">POLYSACK</option>                             
                     </select>
                 </div>
                 <div class="form">
