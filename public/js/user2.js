@@ -887,6 +887,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
             for(let x = 1; x < sf_data_list.content.length; x++){
                 var hauling_date = new Date(sf_data_list.content[x][findTextInArray(sf_data_list, "HAULING DATE")])
+                var wcf_data = sf_data_list.content[x][findTextInArray(sf_data_list, "WCF #")]
                 var sf_data = sf_data_list.content[x][findTextInArray(sf_data_list, "SF #")]
                 var date_data = sf_data_list.content[x][findTextInArray(sf_data_list, "COMPLETION DATE")]
                 var time_data = sf_data_list.content[x][findTextInArray(sf_data_list, "COMPLETION TIME")]
@@ -901,7 +902,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                 for(let j = 1; j < wcf_data_list.content.length; j++){
                     var mtf = "";
                     var ltf = "";
-                    if((wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                    if((wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")] == wcf_data && 
+                        wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
                         mtf = wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
                     }else{
                         ltf = wcf_data_list.content[j][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
