@@ -786,7 +786,6 @@ document.addEventListener('DOMContentLoaded', async function() {
 
             for(let x = 1; x < wcf_data_list.content.length; x++){
                 var hauling_date = new Date(wcf_data_list.content[x][findTextInArray(wcf_data_list, "HAULING DATE")])
-                var mtf_ltf_data = wcf_data_list.content[x][findTextInArray(wcf_data_list, "LTF/ MTF  #")]
                 var wcf_data = wcf_data_list.content[x][findTextInArray(wcf_data_list, "WCF #")]
                 var date_data = wcf_data_list.content[x][findTextInArray(wcf_data_list, "ARRIVAL DATE")]
                 var time_data = wcf_data_list.content[x][findTextInArray(wcf_data_list, "ARRIVAL TIME")]
@@ -799,10 +798,24 @@ document.addEventListener('DOMContentLoaded', async function() {
                 var datePortion = date_data.split("T")[0];
                 var timePortion = time_data.split("T")[1];
                 var datetime = new Date(datePortion + "T" + timePortion);
+
+                var mtf = "";
+                var ltf = "";
+                if((wcf_data_list.content[x][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                    mtf = wcf_data_list.content[x][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                }else{
+                    ltf = wcf_data_list.content[x][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                    for(let y = 1; y < ltf_data_list.content.length; y++){
+                        if(ltf == ltf_data_list.content[y][findTextInArray(ltf_data_list, "LTF #")]){
+                            mtf = ltf_data_list.content[y][findTextInArray(ltf_data_list, "MTF #")];
+                        }
+                    }
+                }
+
                 if (hauling_date >= report_from && hauling_date <= report_to) {
                     filteredData.push({
                     wcf_data,
-                    mtf_ltf_data,
+                    mtf,
                     hauling_date,
                     date_data,
                     time_data,
@@ -828,7 +841,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 var data = `
                     <tr>
                         <td>${item.wcf_data}</td>
-                        <td>${item.mtf_ltf_data}</td>
+                        <td>${item.mtf}</td>
                         <td>${date_decoder(item.hauling_date)}</td>
                         <td>${date_decoder(item.date_data)}</td>
                         <td>${time_decoder(item.time_data)}</td>

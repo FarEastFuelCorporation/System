@@ -578,7 +578,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${findClientName(tpf_data_list.content[j][findTextInArray(tpf_data_list, "CLIENT ID")])}</td>
                             <td>${findWasteCode(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
                             <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
-                            <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "WEIGHT")]} kg.</td>
+                            <td>${item.weight} kg.</td>
                             <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                             <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                             <td>${status}</td>
@@ -640,7 +640,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${findClientName(tpf_data_list.content[j][findTextInArray(tpf_data_list, "CLIENT ID")])}</td>
                             <td>${findWasteCode(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
                             <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
-                            <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "WEIGHT")]} kg.</td>
+                            <td>${item.weight} kg.</td>
                             <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                             <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                             <td>${status}</td>
