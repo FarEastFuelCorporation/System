@@ -162,107 +162,131 @@
                         <h4 style="margin: 0; color: white;">Download</h4>
                     </button>
                 </div>
-                <div style="position: absolute; top: 0; right: 0;">
-                    <div id="report_tab">
+                <input type="hidden" id="page_number" value="1">
+                <div id="report_tab_container" style="position: absolute; top: 0; right: 0;">
+                    <div id="report_tab1" class="report_tab">
                         <img src="../images/logo.png" alt="logo" style="height: 50px;">
                         <img src="../images/logo_name2.png" alt="logo" style="height: 50px; margin-top: 10px;"><hr>
-                        <h1 style="text-align: center; font-weight: bold; font-size: 32px;">WEEKLY REPORT</h1>
-                        <h1 style="text-align: center; font-weight: bold;">DISPATCHING</h1>
-                        <h1 style="text-align: center; font-weight: bold;">LOGISTICS DEPARTMENT</h1>
-                        <h3 id="date_covered" style="text-align: center;"></h3><br>
-                        <table>
-                            <thead id="report_head">
-                                <tr>
-                                    <th>LTF #</td>
-                                    <th>MTF #</td>
-                                    <th>HAULING DATE</th>
-                                    <th>DEPARTURE DATE</th>
-                                    <th>DEPARTURE TIME</th>
-                                    <th>CLIENT</th>
-                                    <th>TYPE OF WASTE</th>
-                                    <th>TYPE OF VEHICLE</th>
-                                    <th>PLATE #</th>
-                                </tr>
-                            </thead>
-                            <tbody id="report_body"></tbody>
-                        </table>
-                        <style>
-                            #report_tab
-                            {
-                                width: 1056px;
-                                height: 816px;
-                                border: 3px solid black;
-                                background-color: white;
-                                z-index: 4;
-                                position: relative;
-                                padding: 38px;
-                            }
-                            
-                            #report_tab h1
-                            {
-                                font-size: 18px;
-                                margin: 0;
-                            }
-        
-                            #report_tab h2
-                            {
-                                font-size: 16px;
-                                margin: 0;
-                            }
-        
-                            #report_tab h3
-                            {
-                                font-size: 14px;
-                                margin: 0;
-                            }
-        
-                            #report_tab h4
-                            {
-                                font-size: 12px;
-                                margin: 0;
-                            }
-        
-                            #report_tab h5
-                            {
-                                font-size: 10px;
-                                margin: 0;
-                            }
-        
-                            #report_tab table
-                            {
-                                width: 100%;
-                                border: 1px solid black;
-                            }
-        
-                            #report_tab #report_head tr,
-                            #report_tab #report_body tr
-                            {
-                                width: 100%;
-                                display: grid;
-                                grid-template-columns: 1fr 1fr 1fr 1fr 1fr 3fr 2fr 1fr 1fr;
-                            }
-        
-                            #report_tab #report_head tr th
-                            {
-                                text-align: center;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                border: 1px solid black;
-                                font-size: 12px;
-                            }
-        
-                            #report_tab #report_body tr td
-                            {
-                                text-align: center;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                border: 1px solid black;
-                                font-size: 10px;
-                            }
-                        </style>
+                        <div style="position: relative;">
+                            <h1 style="text-align: center; font-weight: bold; font-size: 32px;">WEEKLY REPORT</h1>
+                            <h1 style="text-align: center; font-weight: bold;">DISPATCHING</h1>
+                            <h1 style="text-align: center; font-weight: bold;">LOGISTICS DEPARTMENT</h1>
+                            <h3 id="date_covered" style="text-align: center;"></h3><br>
+                            <div style="display: flex; position: absolute; right: 0; top: 0;">
+                                <h6 id="page_counter1" style="margin-right: 5px;"></h6>
+                                <h6 style="margin-right: 5px;">of</h6>
+                                <h6 id="page_max_counter"></h6>
+                            </div>
+                        </div>
+                        <div id="table_info">
+                            <table>
+                                <thead id="report_head">
+                                    <tr>
+                                        <th>LTF #</td>
+                                        <th>MTF #</td>
+                                        <th>HAULING DATE</th>
+                                        <th>DEPARTURE DATE</th>
+                                        <th>DEPARTURE TIME</th>
+                                        <th>CLIENT</th>
+                                        <th>TYPE OF WASTE</th>
+                                        <th>TYPE OF VEHICLE</th>
+                                        <th>PLATE #</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="report_body"></tbody>
+                            </table>
+                        </div>
                     </div>
+                    <style>
+                        .report_tab
+                        {
+                            width: 1056px;
+                            height: 816px;
+                            border: 3px solid black;
+                            background-color: white;
+                            z-index: 4;
+                            position: relative;
+                            padding: 38px;
+                        }
+                        
+                        .report_tab h1
+                        {
+                            font-size: 18px;
+                            margin: 0;
+                        }
+    
+                        .report_tab h2
+                        {
+                            font-size: 16px;
+                            margin: 0;
+                        }
+    
+                        .report_tab h3
+                        {
+                            font-size: 14px;
+                            margin: 0;
+                        }
+    
+                        .report_tab h4
+                        {
+                            font-size: 12px;
+                            margin: 0;
+                        }
+    
+                        .report_tab h5
+                        {
+                            font-size: 10px;
+                            margin: 0;
+                        }
+    
+                        .report_tab table
+                        {
+                            width: 100%;
+                        }
+    
+                        .report_tab #report_head tr,
+                        .report_tab tbody tr
+                        {
+                            width: 100%;
+                            display: grid;
+                            grid-template-columns: 1fr 1fr 1fr 3fr 2fr;
+                        }
+    
+                        .report_tab #report_head tr th
+                        {
+                            text-align: center;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            border-top: 1px solid black;
+                            border-bottom: 1px solid black;
+                            border-right: 1px solid black;
+                            font-size: 12px;
+                        }
+    
+                        .report_tab #report_head tr th:first-child
+                        {
+                            border: 1px solid black;
+                        }
+    
+                        .report_tab tbody tr td
+                        {
+                            text-align: center;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            border-bottom: 1px solid black;
+                            border-right: 1px solid black;
+                            font-size: 10px;
+                        }
+    
+                        .report_tab tbody tr td:first-child
+                        {
+                            border-bottom: 1px solid black;
+                            border-right: 1px solid black;
+                            border-left: 1px solid black;
+                        }
+                    </style>
                 </div>
             </div>
             <!-- dashboard -->
@@ -313,69 +337,6 @@
                 </div><br>
                 <h2>VEHICLE SUMMARY</h2>
                 <div class="cards3" id="vehicle_type_container">
-                    <!-- <div class="card">
-                        <div class="card-content">
-                            <div class="number" id="ten_wheeler_wing_van"></div>
-                            <div class="card-name">10 Wheeler<br>Wing Van</div>
-                        </div>
-                        <div class="icon-box">
-                            <i class="fa-solid fa-truck-moving"></i>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-content">
-                            <div class="number" id="ten_wheeler_dump_truck"></div>
-                            <div class="card-name">10 Wheeler<br>Dump Truck</div>
-                        </div>
-                        <div class="icon-box">
-                            <i class="fa-solid fa-truck-moving"></i>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-content">
-                            <div class="number" id="ten_wheeler_tanker"></div>
-                            <div class="card-name">10 Wheeler<br>Tanker</div>
-                        </div>
-                        <div class="icon-box">
-                            <i class="fa-solid fa-truck-moving"></i>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-content">
-                            <div class="number" id="ten_wheeler_boom_truck"></div>
-                            <div class="card-name">10 Wheeler<br>Boom Truck</div>
-                        </div>
-                        <div class="icon-box">
-                            <i class="fa-solid fa-truck-moving"></i>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-content">
-                            <div class="number" id="six_wheeler_vaccum_truck"></div>
-                            <div class="card-name">6 Wheeler<br>Vaccum Truck</div>
-                        </div>
-                        <div class="icon-box">
-                            <i class="fa-solid fa-truck-moving"></i>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-content">
-                            <div class="number" id="six_wheeler_vaccum_truck"></div>
-                            <div class="card-name">6 Wheeler<br>Closed Van</div>
-                        </div>
-                        <div class="icon-box">
-                            <i class="fa-solid fa-truck-moving"></i>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-content">
-                            <div class="number" id="six_wheeler_vaccum_truck"></div>
-                            <div class="card-name">4 Wheeler<br>Closed Van</div>
-                        </div>
-                        <div class="icon-box">
-                            <i class="fa-solid fa-truck-moving"></i>
-                        </div>
-                    </div> -->
                 </div>
                 <div class="cards2">
                     <div class="card">

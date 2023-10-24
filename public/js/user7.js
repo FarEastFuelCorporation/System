@@ -1315,18 +1315,20 @@ document.addEventListener('DOMContentLoaded', async function() {
         const generate_report_tab = document.getElementById("generate_report_tab");
         const report_date_from = document.getElementById("report_date_from");
         const report_date_to = document.getElementById("report_date_to");
-        const date_covered = document.getElementById("date_covered");
-        const report_body = document.getElementById("report_body");
-
+        let currentPageHeight = 16;
+        
         generate_report_button.addEventListener("click", () => {
             generate_report_tab.style.display = "block"
         })
         close_report_button.addEventListener("click", () => {
             generate_report_tab.style.display = "none"
         })
-
+        
         report_generate_button.addEventListener("click", () => {
             const filteredData = [];
+            const pageHeight = 500;
+            const dataHeight = 16; // Adjust this value based on your content
+        
             for(let x = 1; x < ltf_data_list.content.length; x++){
                 var hauling_date = new Date(ltf_data_list.content[x][findTextInArray(ltf_data_list, "HAULING DATE")])
                 var mtf_data = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")]
@@ -1361,12 +1363,14 @@ document.addEventListener('DOMContentLoaded', async function() {
             // Sort the data by hauling date and time
             filteredData.sort((a, b) => a.datetime - b.datetime);
         
-            // Clear the existing table content
-            report_body.innerHTML = "";
-        
             // Render the sorted data
             filteredData.forEach((item) => {
-            var data = `
+                const page_number = document.getElementById("page_number");
+                const report_tab_container = document.querySelector(`#report_tab_container`);
+                const report_tab = document.querySelector(`#report_tab${page_number.value}`);
+                const report_body = report_tab.querySelector("tbody");
+                
+                var data = `
                 <tr>
                     <td>${item.ltf_data}</td>
                     <td>${item.mtf_data}</td>
@@ -1378,14 +1382,77 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <td>${item.type_of_vehicle_data}</td>
                     <td>${item.plate_no_data}</td>
                 </tr>
-            `;
-            report_body.insertAdjacentHTML("beforeend", data);
-            });
+                `;
         
-            date_covered.innerText = `${date_decoder(report_from)} - ${date_decoder(report_to)}`;
+                const page_max_counter = document.querySelectorAll("#page_max_counter");
+                page_max_counter.forEach((counter) => {
+                    counter.innerText = `${page_number.value}`;
+                    console.log(`of ${page_number.value}`)
+                })
+        
+                // Check if adding this data exceeds the current page height
+                if (currentPageHeight + dataHeight > pageHeight) {
+                    // If it exceeds, add a page break
+                    report_body.insertAdjacentHTML("beforeend", "<div style='page-break-before: always;'></div>");
+                    currentPageHeight = 0; // Reset the current page height
+                    page_number.value = parseInt(page_number.value) + 1;
+                    report_tab_container.insertAdjacentHTML("beforeend", 
+                    `
+                    <div id="report_tab${page_number.value}" class="report_tab">
+                        <img src="../images/logo.png" alt="logo" style="height: 50px;">
+                        <img src="../images/logo_name2.png" alt="logo" style="height: 50px; margin-top: 10px;"><hr>
+                        <div style="position: relative;">
+                            <h1 style="text-align: center; font-weight: bold; font-size: 32px;">WEEKLY REPORT</h1>
+                            <h1 style="text-align: center; font-weight: bold;">RECEIVING</h1>
+                            <h1 style="text-align: center; font-weight: bold;">LOGISTICS DEPARTMENT</h1>
+                            <h3 id="date_covered" style="text-align: center;"></h3><br>
+                            <div style="display: flex; position: absolute; right: 0; top: 0;">
+                                <h6 id="page_counter${page_number.value}" style="margin-right: 5px;"></h6>
+                                <h6 style="margin-right: 5px;">of</h6>
+                                <h6 id="page_max_counter"></h6>
+                            </div>
+                        </div>
+                        <div id="table_info">
+                            <table>
+                                <thead id="report_head">
+                                    <tr>
+                                        <th>MTF #</td>
+                                        <th>HAULING DATE</th>
+                                        <th>HAULING TIME</th>
+                                        <th>CLIENT</th>
+                                        <th>TYPE OF WASTE</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="report_body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                        `
+                    )
+                    const page_counter_new = document.querySelector(`#page_counter${page_number.value}`);
+                    page_counter_new.innerText = `Page ${page_number.value}`
+                    const page_max_counter = document.querySelectorAll("#page_max_counter");
+                    page_max_counter.forEach((counter) => {
+                        counter.innerText = `${page_number.value}`;
+                        console.log(`of ${page_number.value}`)
+                    })
+                }
+                const page_counter = document.getElementById("page_counter1");
+                page_counter.innerText = `Page 1`
+        
+                report_body.insertAdjacentHTML("beforeend", data);
+                currentPageHeight += dataHeight;
+        
+            });
+            
+            const date_covered = document.querySelectorAll("#date_covered");
+            date_covered.forEach((date) => {
+                date.innerText = `${date_decoder(report_from)} - ${date_decoder(report_to)}`;
+            })
             report_generate_button.style.display = "none";
             report_download_button.style.display = "block";
         });
+        
 
     } catch (error) {
         console.error('Error fetching data:', error);
