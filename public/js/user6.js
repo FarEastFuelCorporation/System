@@ -364,7 +364,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                         var client_id = "";
                         client_id = client_data_list.content[y][findTextInArray(client_data_list, "CLIENT ID")];
                         client_id_input.value = client_id;
-                        console.log(client_id_input.value)
                         for (let x = 1; x < qlf_data_list.content.length; x++) {
                             if (client_id == qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")] && qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")] !== "TRIP") {
                                 var data = `
@@ -2083,7 +2082,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 const page_max_counter = document.querySelectorAll("#page_max_counter");
                 page_max_counter.forEach((counter) => {
                     counter.innerText = `${page_number.value}`;
-                    console.log(`of ${page_number.value}`)
                 })
 
                 // Check if adding this data exceeds the current page height
@@ -2130,7 +2128,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     const page_max_counter = document.querySelectorAll("#page_max_counter");
                     page_max_counter.forEach((counter) => {
                         counter.innerText = `${page_number.value}`;
-                        console.log(`of ${page_number.value}`)
                     })
                 }
                 const page_counter = document.getElementById("page_counter1");

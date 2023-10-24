@@ -1315,7 +1315,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const generate_report_tab = document.getElementById("generate_report_tab");
         const report_date_from = document.getElementById("report_date_from");
         const report_date_to = document.getElementById("report_date_to");
-        let currentPageHeight = 16;
+        let currentPageHeight = 31;
         
         generate_report_button.addEventListener("click", () => {
             generate_report_tab.style.display = "block"
@@ -1327,7 +1327,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         report_generate_button.addEventListener("click", () => {
             const filteredData = [];
             const pageHeight = 500;
-            const dataHeight = 16; // Adjust this value based on your content
+            const dataHeight = 31; // Adjust this value based on your content
         
             for(let x = 1; x < ltf_data_list.content.length; x++){
                 var hauling_date = new Date(ltf_data_list.content[x][findTextInArray(ltf_data_list, "HAULING DATE")])
@@ -1387,7 +1387,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 const page_max_counter = document.querySelectorAll("#page_max_counter");
                 page_max_counter.forEach((counter) => {
                     counter.innerText = `${page_number.value}`;
-                    console.log(`of ${page_number.value}`)
                 })
         
                 // Check if adding this data exceeds the current page height
@@ -1416,11 +1415,15 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <table>
                                 <thead id="report_head">
                                     <tr>
+                                        <th>LTF #</td>
                                         <th>MTF #</td>
                                         <th>HAULING DATE</th>
-                                        <th>HAULING TIME</th>
+                                        <th>DEPARTURE DATE</th>
+                                        <th>DEPARTURE TIME</th>
                                         <th>CLIENT</th>
                                         <th>TYPE OF WASTE</th>
+                                        <th>TYPE OF VEHICLE</th>
+                                        <th>PLATE #</th>
                                     </tr>
                                 </thead>
                                 <tbody id="report_body"></tbody>
@@ -1434,7 +1437,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     const page_max_counter = document.querySelectorAll("#page_max_counter");
                     page_max_counter.forEach((counter) => {
                         counter.innerText = `${page_number.value}`;
-                        console.log(`of ${page_number.value}`)
                     })
                 }
                 const page_counter = document.getElementById("page_counter1");
