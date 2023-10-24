@@ -1134,10 +1134,19 @@
                 </div><br>
                 <div id="new_commission_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
                     <h2>NEW COMMISSION FORM</h2><br>
-                    <form  action="https://script.google.com/macros/s/AKfycbx_Qxgs9HtQPnbxcrwxxxdh9MlBM9ClrLdglzzALhsd2WNYkvXfcGJjdnh7qIX-dWXkDQ/exec" method="post">
+                    <form  action="https://script.google.com/macros/s/AKfycbyd1XvGtM63si5vKySftnjn_ahAqZqakHIv3_Hwbh-coJpeGiE5Sg8B0RQSRZNYpVW8/exec" method="post">
                         <input type="hidden" name="user" id="user">
                         <input type="hidden" name="commission_data_counter" id="commission_data_counter" value="1">
+                        <input type="hidden" name="client_id" id="client_id">
+                        <input type="hidden" name="waste_id" id="waste_id">
                         <div id="commission_list">
+                            <label for="mtf_form_no">
+                                <i class="fa-solid fa-list-ol"></i>
+                                CLF #
+                            </label><br>
+                            <div class="form">
+                                <input type="text" id="clf_form_no" autocomplete="off" name="clf_form_no" class="form-control" readonly><br>
+                            </div>
                             <div style="display: grid; grid-template-columns: 15% 25% 15% 25% 20%; gap: 20px; width: calc(100% - 60px);">
                                 <div class="wrapper">
                                     <label for="quotation_selection">
@@ -1154,7 +1163,7 @@
                                         Client
                                     </label><br>
                                     <div class="search_input" id="search_client">
-                                        <input type="text" name="client" id="client" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
+                                        <input type="text" name="client" id="client" autocomplete="off" class="form-control" required readonly placeholder="Type to Search Client Name...">
                                         <div class="autocom_box">
                                         </div>
                                         <div class="icon"><i class="fas fa-search"></i></div>

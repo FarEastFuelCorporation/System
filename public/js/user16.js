@@ -1602,6 +1602,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         })
 
         add_item_button_commission.addEventListener("click", addCommissionList)
+        remove_item_button_commission.addEventListener("click", removeCommissionList)
 
         function addCommissionList(){
             const commission_data_counter_commission = commission_form.querySelector("#commission_data_counter");
@@ -1609,7 +1610,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             commission_data_counter_commission.value = parseInt(commission_data_counter_commission.value) + 1;
             var commission_data = 
             `
-            <div style="display: grid; grid-template-columns: 15% 25% 15% 25% 20%; gap: 20px; width: calc(100% - 60px);">
+            <div id="commission${commission_data_counter_commission.value}" style="display: grid; grid-template-columns: 15% 25% 15% 25% 20%; gap: 20px; width: calc(100% - 60px);">
                 <div class="wrapper">
                 </div>
                 <div class="wrapper">
@@ -1629,7 +1630,86 @@ document.addEventListener('DOMContentLoaded', async function() {
             </div>
             `
             commission_list_commission.insertAdjacentHTML("beforeend", commission_data)
+            remove_item_button_commission.style.display = "block";
         }
+        function removeCommissionList(){
+            const commission_data_counter_commission = commission_form.querySelector("#commission_data_counter");
+            const commission = commission_form.querySelector(`#commission${commission_data_counter_commission.value}`);
+            commission.remove();
+            commission_data_counter_commission.value = parseInt(commission_data_counter_commission.value) - 1;
+            if(commission_data_counter_commission.value == 1){
+                remove_item_button_commission.style.display = "none"
+            }
+        }
+
+        // clf_data_list
+        // FORM GENERATOR
+        const clf_form_no = document.getElementById("clf_form_no");
+        var last_row = clf_data_list.content.length -1;
+        var data_info = clf_data_list.content[last_row][findTextInArray(clf_data_list, "CLF #")];
+        var data_counter;
+        if(last_row == 0){
+            data_counter = 0;
+        }
+        else{
+            data_counter = data_info.substring(9,12);
+        }
+        var year = new Date().getFullYear();
+        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        clf_form_no.value = `CLF${year}${month}${data_counter}`;
+
+        const quotation_selection = commission_form.querySelector("#quotation_selection");
+        const waste_name_selection = commission_form.querySelector("#waste_name_selection");
+        const client = commission_form.querySelector("#client");
+        const client_id_commission = commission_form.querySelector("#client_id");
+        const waste_id_commission = commission_form.querySelector("#waste_id");
+
+        var quotation_data = []
+        for(let x = 1; x < qlf_data_list.content.length; x++){
+            if (!quotation_data.includes(qlf_data_list.content[x][findTextInArray(qlf_data_list, "QUOTATION CODE")])) {
+                quotation_data.push(qlf_data_list.content[x][findTextInArray(qlf_data_list, "QUOTATION CODE")])
+            }
+        }
+        quotation_data.forEach((data) => {
+            quotation_selection.insertAdjacentHTML("beforeend",
+            `<option value="${data}">${data}</option>`
+            )
+        })
+
+        var vehicle_list = [];
+        for(let y = 1; y < vehicle_data_list.content.length; y++){
+            if (!vehicle_list.includes(vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")])) {
+                vehicle_list.push(vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")]);
+            }
+        }
+
+        var quotation_waste_data = []
+        quotation_selection.addEventListener("change", () => {
+            for(let x = 1; x < qlf_data_list.content.length; x++){
+                if(quotation_selection.value == qlf_data_list.content[x][findTextInArray(qlf_data_list, "QUOTATION CODE")]){
+                    client.value = findClientName(qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")])
+                    client_id_commission.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")]
+                    if(!vehicle_list.includes(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])){
+                        quotation_waste_data.push(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")])
+                    }
+                }
+            }
+            quotation_waste_data.forEach((data) => {
+                waste_name_selection.insertAdjacentHTML("beforeend",
+                `<option value="${data}">${data}</option>`
+                )
+            })
+        })
+
+        waste_name_selection.addEventListener("change", () => {
+            for(let x = 1; x < qlf_data_list.content.length; x++){
+                if(quotation_selection.value == qlf_data_list.content[x][findTextInArray(qlf_data_list, "QUOTATION CODE")] &&
+                    waste_name_selection.value == qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")]){
+                    waste_id_commission.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]
+                }
+            }
+        })
 
         // multi section
         // purchase_request_form
