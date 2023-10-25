@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         // purchasing_dashboard
         const purchasing_dashboard = document.querySelector("#purchasing_dashboard");
         const pending_list_container_purchasing = purchasing_dashboard.querySelector("#pending_list");
+        const history_list_container_purchasing = purchasing_dashboard.querySelector("#history_list");
         const pending_purchasing = purchasing_dashboard.querySelector("#pending");
         const requested_purchasing = purchasing_dashboard.querySelector("#requested");
         const approved_purchasing = purchasing_dashboard.querySelector("#approved");
@@ -64,31 +65,28 @@ document.addEventListener('DOMContentLoaded', async function() {
             var purchased = [];
             for (let i = 1; i < prf_data_list.content.length; i++) {
                 if (prf_data_list.content[i][findTextInArray(prf_data_list, "STATUS")] == "PENDING") {
-                    pending.push(prf_data_list.content[i][findTextInArray(prf_data_list, "PR #")]);
+                    pending.push(prf_data_list.content[i][findTextInArray(prf_data_list, "ITM #")]);
                 }
                 if (prf_data_list.content[i][findTextInArray(prf_data_list, "STATUS")] == "REQUESTED") {
-                    requested.push(prf_data_list.content[i][findTextInArray(prf_data_list, "PR #")]);
+                    requested.push(prf_data_list.content[i][findTextInArray(prf_data_list, "ITM #")]);
                 }
                 if (prf_data_list.content[i][findTextInArray(prf_data_list, "STATUS")] == "APPROVED") {
-                    approved.push(prf_data_list.content[i][findTextInArray(prf_data_list, "PR #")]);
+                    approved.push(prf_data_list.content[i][findTextInArray(prf_data_list, "ITM #")]);
                 }
                 if (prf_data_list.content[i][findTextInArray(prf_data_list, "STATUS")] == "RELEASED") {
-                    released.push(prf_data_list.content[i][findTextInArray(prf_data_list, "PR #")]);
+                    released.push(prf_data_list.content[i][findTextInArray(prf_data_list, "ITM #")]);
                 }
                 if (prf_data_list.content[i][findTextInArray(prf_data_list, "STATUS")] == "PURCHASED") {
-                    purchased.push(prf_data_list.content[i][findTextInArray(prf_data_list, "PR #")]);
+                    purchased.push(prf_data_list.content[i][findTextInArray(prf_data_list, "ITM #")]);
                 }
             }
     
             for (let i = 1; i < pof_data_list.content.length; i++) {
-                if (!prf_pr_transaction.includes(pof_data_list.content[i][findTextInArray(prf_data_list, "PR #")])) {
-                    prf_pr_transaction.push(pof_data_list.content[i][findTextInArray(prf_data_list, "PR #")]);
+                if (!prf_pr_transaction.includes(pof_data_list.content[i][findTextInArray(prf_data_list, "ITM #")])) {
+                    prf_pr_transaction.push(pof_data_list.content[i][findTextInArray(prf_data_list, "ITM #")]);
                 }
             }
-    
-            // Get elements from sf_transaction not included in sf_tpf_transaction
-            const pending_list_purchasing = prf_transaction.filter((element) => !prf_pr_transaction.includes(element));
-    
+        
             pending_purchasing.innerText = pending.length;
             requested_purchasing.innerText = requested.length;
             approved_purchasing.innerText = approved.length;
@@ -148,38 +146,304 @@ document.addEventListener('DOMContentLoaded', async function() {
             chart.render();  
 
             // pending_list
-            var data_value = "";
-            var data_value_counter = 1;
-            for(let x = 1; x < prf_data_list.content.length; x++){
-                var pr_data, date_time, quantity, unit, item, details, remarks, department, requisitioner;
-                pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")];
-                date_time = prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")];
-                quantity = prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")];
-                unit = prf_data_list.content[x][findTextInArray(prf_data_list, "UNIT")];
-                item = prf_data_list.content[x][findTextInArray(prf_data_list, "ITEM")];
-                details = prf_data_list.content[x][findTextInArray(prf_data_list, "DETAILS")];
-                remarks = prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")];
-                department = prf_data_list.content[x][findTextInArray(prf_data_list, "DEPARTMENT")];
-                requisitioner = prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")];
-                data_value += `
-                <tr>
-                    <td>${data_value_counter}</td>
-                    <td>${pr_data}</td>
-                    <td>${date_decoder(date_time)} /<br> ${time_decoder(date_time)}</td>
-                    <td>${quantity}</td>
-                    <td>${unit}</td>
-                    <td>${item}</td>
-                    <td>${details}</td>
-                    <td>${remarks}</td>
-                    <td>${department}</td>
-                    <td>${requisitioner}</td>
-                </tr>
-                `
-                data_value_counter += 1;
+            var pending_data_value = "";
+            var pending_data_value_counter = 1;
+            var requested_data_value = "";
+            var requested_data_value_counter = 1;
+            for(let x = 1; x < prf_data_list.content.length; x++){  
+                for(let y = 0; y < pending.length; y++){
+                    if(pending[y] == prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]){
+                        var pr_data, date_time, quantity, unit, item, details, remarks, department, status, requisitioner;
+                        pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")];
+                        date_time = prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")];
+                        quantity = prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")];
+                        unit = prf_data_list.content[x][findTextInArray(prf_data_list, "UNIT")];
+                        item = prf_data_list.content[x][findTextInArray(prf_data_list, "ITEM")];
+                        details = prf_data_list.content[x][findTextInArray(prf_data_list, "DETAILS")];
+                        remarks = prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")];
+                        department = prf_data_list.content[x][findTextInArray(prf_data_list, "DEPARTMENT")];
+                        status = prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")];
+                        requisitioner = prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")];
+                        pending_data_value += `
+                        <tr>
+                            <td>${pending_data_value_counter}</td>
+                            <td>${pr_data}</td>
+                            <td>${date_decoder(date_time)} /<br> ${time_decoder(date_time)}</td>
+                            <td>${quantity}</td>
+                            <td>${unit}</td>
+                            <td>${item}</td>
+                            <td>${details}</td>
+                            <td>${remarks}</td>
+                            <td>${department}</td>
+                            <td>${requisitioner}</td>
+                            <td>${status}</td>
+                        </tr>
+                        `
+                        pending_data_value_counter += 1;
+                    }
+                }
+                for(let y = 0; y < requested.length; y++){
+                    if(requested[y] == prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]){
+                        var pr_data, date_time, quantity, unit, item, details, remarks, department, status, requisitioner;
+                        pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")];
+                        date_time = prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")];
+                        quantity = prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")];
+                        unit = prf_data_list.content[x][findTextInArray(prf_data_list, "UNIT")];
+                        item = prf_data_list.content[x][findTextInArray(prf_data_list, "ITEM")];
+                        details = prf_data_list.content[x][findTextInArray(prf_data_list, "DETAILS")];
+                        remarks = prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")];
+                        department = prf_data_list.content[x][findTextInArray(prf_data_list, "DEPARTMENT")];
+                        status = prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")];
+                        requisitioner = prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")];
+                        requested_data_value += `
+                        <tr>
+                            <td>${requested_data_value_counter}</td>
+                            <td>${pr_data}</td>
+                            <td>${date_decoder(date_time)} /<br> ${time_decoder(date_time)}</td>
+                            <td>${quantity}</td>
+                            <td>${unit}</td>
+                            <td>${item}</td>
+                            <td>${details}</td>
+                            <td>${remarks}</td>
+                            <td>${department}</td>
+                            <td>${requisitioner}</td>
+                            <td>${status}</td>
+                        </tr>
+                        `
+                        requested_data_value_counter += 1;
+                    }
+                }
             }
-            pending_list_container_purchasing.innerHTML = data_value;
+            pending_list_container_purchasing.innerHTML = pending_data_value;
+            history_list_container_purchasing.innerHTML = requested_data_value;
         }
 
+        // pof_data_list
+        // FORM GENERATOR
+        const prf_form_no = document.getElementById("prf_form_no");
+        var last_row = pof_data_list.content.length -1;
+        var data_info = pof_data_list.content[last_row][findTextInArray(pof_data_list, "PRF #")];
+        var data_counter;
+        if(last_row == 0){
+            data_counter = 0;
+        }
+        else{
+            data_counter = data_info.substring(9,12);
+        }
+        var year = new Date().getFullYear();
+        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        prf_form_no.value = `PRF${year}${month}${data_counter}`;
+    
+        const purchase_order_form = document.getElementById("purchase_order_form");
+        const item_container_data = purchase_order_form.querySelector("#item_container_data");
+        const total_amount_input = purchase_order_form.querySelector("#total_amount");
+        const add_item_button = purchase_order_form.querySelector("#add_item_button");
+        const remove_item_button = purchase_order_form.querySelector("#remove_item_button");
+        
+        function addItem(){
+            const item_counter = purchase_order_form.querySelector("#item_counter");
+            var template =
+            `
+            <div id="item_container" style="display: grid; grid-template-columns: 4fr 1fr; gap: 20px; gap: 20px;">
+                <div>
+                    <div style="display: grid; grid-template-columns: 1fr 2fr .5fr .5fr; gap: 20px;">
+                        <div>
+                            <label for="itm_form_no">
+                                <i class="fa-solid fa-list-ol"></i>
+                                ITM #
+                            </label><br>
+                            <div>
+                                <input type="text" id="itm_form_no" name="itm_form_no${item_counter.value}" class="form-control" required autocomplete="off">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="item">
+                                <i class="fa-solid fa-list-ol"></i>
+                                Item
+                            </label><br>
+                            <div>
+                                <input type="text" id="item" name="item${item_counter.value}" class="form-control" required autocomplete="off">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="quantity">
+                                <i class="fa-solid fa-list-ol"></i>
+                                Qty
+                            </label><br>
+                            <div>
+                                <div>
+                                    <input type="number" id="quantity" name="quantity${item_counter.value}" class="form-control" required autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="unit">
+                                <i class="fa-solid fa-list-ol"></i>
+                                Unit
+                            </label><br>
+                            <div>
+                                <div>
+                                    <input type="text" id="unit" name="unit${item_counter.value}" class="form-control" required autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 20px;">
+                        <div>
+                            <label for="details">
+                                <i class="fa-solid fa-list-ol"></i>
+                                Details
+                            </label><br>
+                            <div>
+                                <div>
+                                    <input type="text" id="details" name="details${item_counter.value}" class="form-control" required autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="remarks">
+                                <i class="fa-solid fa-list-ol"></i>
+                                Remarks
+                            </label><br>
+                            <div>
+                                <div>
+                                    <input type="text" id="remarks" name="remarks${item_counter.value}" class="form-control" required autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="department">
+                                <i class="fa-solid fa-list-ol"></i>
+                                Department
+                            </label><br>
+                            <div>
+                                <div>
+                                    <input type="text" id="department" name="department${item_counter.value}" class="form-control" required autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="requisitioner">
+                                <i class="fa-solid fa-list-ol"></i>
+                                Requisitioner
+                            </label><br>
+                            <div>
+                                <div>
+                                    <input type="text" id="requisitioner" name="requisitioner${item_counter.value}" class="form-control" required autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div>
+                        <label for="unit_cost">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Unit Cost
+                        </label><br>
+                        <div>
+                            <div>
+                                <input type="number" id="unit_cost" name="unit_cost${item_counter.value}" class="form-control" required autocomplete="off" value="0">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="amount">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Amount
+                        </label><br>
+                        <div>
+                            <div>
+                                <input type="number" id="amount" name="amount${item_counter.value}" class="form-control" required autocomplete="off" value="0">
+                            </div>
+                        </div>
+                    </div>
+                </div><hr>
+            </div>
+            `
+            item_container_data.insertAdjacentHTML("beforeend", template)
+
+            autoFind();
+        }
+
+        addItem()
+
+        add_item_button.addEventListener("click", () => {
+            const item_counter = purchase_order_form.querySelector("#item_counter");
+            item_counter.value = parseInt(item_counter.value) + 1;
+            remove_item_button.style.display = "block"
+            addItem();
+        })
+        remove_item_button.addEventListener("click", () => {
+            const item_containers = purchase_order_form.querySelectorAll("#item_container");
+            const item_counter = purchase_order_form.querySelector("#item_counter");
+            item_counter.value = parseInt(item_counter.value) - 1;
+            
+            item_containers[item_counter.value].remove()
+
+            if(item_counter.value == 1){
+                remove_item_button.style.display = "none"
+            }
+        })
+
+        function autoFind(){
+            const item_containers = purchase_order_form.querySelectorAll("#item_container");
+            item_containers.forEach((item) => {
+                const itm_form_no = item.querySelector("#itm_form_no")
+                const item_input = item.querySelector("#item")
+                const quantity_input = item.querySelector("#quantity")
+                const unit_input = item.querySelector("#unit")
+                const details = item.querySelector("#details")
+                const remarks_input = item.querySelector("#remarks")
+                const departmentt_input = item.querySelector("#department")
+                const requisitioner_input = item.querySelector("#requisitioner")
+                const unit_cost_input = item.querySelector("#unit_cost")
+                const amount_input = item.querySelector("#amount")
+    
+                itm_form_no.addEventListener("keyup", () => {
+                    console.log("pass")
+                    for(let x = 1; x < prf_data_list.content.length; x++){
+                        var itm_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")];
+                        var item_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITEM")];
+                        var quantity_data = prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")];
+                        var unit_data = prf_data_list.content[x][findTextInArray(prf_data_list, "UNIT")];
+                        var details_data = prf_data_list.content[x][findTextInArray(prf_data_list, "DETAILS")];
+                        var remarks_data = prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")];
+                        var department_data = prf_data_list.content[x][findTextInArray(prf_data_list, "DEPARTMENT")];
+                        var requisitioner_data = prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")];
+                        if(itm_form_no.value == itm_data){
+                            item_input.value = item_data;
+                            quantity_input.value = quantity_data;
+                            unit_input.value = unit_data;
+                            details.value = details_data;
+                            remarks_input.value = remarks_data;
+                            departmentt_input.value = department_data;
+                            requisitioner_input.value = requisitioner_data;
+                        }else{
+                            item_input.value = "";
+                            quantity_input.value = "";
+                            unit_input.value = "";
+                            details.value = "";
+                            remarks_input.value = "";
+                            departmentt_input.value = "";
+                            requisitioner_input.value = "";
+                        }
+                    }
+                })
+                unit_cost_input.addEventListener("keyup", () => {
+                    const unit_cost_inputs = document.querySelectorAll("#unit_cost")
+                    amount_input.value = parseFloat(unit_cost_input.value) * parseFloat(quantity_input.value)
+                    
+                    var amount_data = 0;
+                    unit_cost_inputs.forEach((data) => {
+                        console.log("pass")
+                        amount_data += parseFloat(data.value);
+                        total_amount_input.value = amount_data;
+                    })
+                })
+            })
+        }
 
         // // incident_history_list
         // var incident_history_data_value = "";

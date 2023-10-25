@@ -548,7 +548,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <i class="fa-solid fa-gears"></i>
                                         Machine
                                     </label><br>
-                                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px">
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 20px">
                                         <div>
                                             <label for="tpf_form_no">
                                                 <i class="fa-solid fa-gears"></i>
@@ -573,9 +573,17 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <input type="number" autocomplete="off" name="weight3" id="weight3" step="0.01" class="form-control" placeholder="Input Weight">
                                             <input type="hidden" name="machine3" value="Rotary 3">
                                         </div>
+                                        <div>
+                                            <label for="tpf_form_no">
+                                                <i class="fa-solid fa-gears"></i>
+                                                Furnace
+                                            </label><br>
+                                            <input type="number" autocomplete="off" name="weight4" id="weight4" step="0.01" class="form-control" placeholder="Input Weight">
+                                            <input type="hidden" name="machine4" value="Furnace">
+                                        </div>
                                     </div><br>
                                     `
-                                    machine_counter.value = 3
+                                    machine_counter.value = 4
                                 }
                                 else{
                                     machine_counter.value = 1
@@ -654,7 +662,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <i class="fa-solid fa-gears"></i>
                                         Machine
                                     </label><br>
-                                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px">
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 20px">
                                         <div>
                                             <label for="tpf_form_no">
                                                 <i class="fa-solid fa-gears"></i>
@@ -679,9 +687,17 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <input type="number" autocomplete="off" name="weight3" id="weight3" step="0.01" class="form-control" placeholder="Input Weight">
                                             <input type="hidden" name="machine3" value="Rotary 3">
                                         </div>
+                                        <div>
+                                            <label for="tpf_form_no">
+                                                <i class="fa-solid fa-gears"></i>
+                                                Furnace
+                                            </label><br>
+                                            <input type="number" autocomplete="off" name="weight4" id="weight4" step="0.01" class="form-control" placeholder="Input Weight">
+                                            <input type="hidden" name="machine4" value="Furnace">
+                                        </div>
                                     </div><br>
                                     `
-                                    machine_counter.value = 3
+                                    machine_counter.value = 4
                                 }
                                 wcf_form_no.value = wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")];
                                 client.value = wcf_data_list.content[a][findTextInArray(wcf_data_list, "CLIENT ID")];
