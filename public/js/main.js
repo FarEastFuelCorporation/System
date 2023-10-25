@@ -549,7 +549,7 @@ function customValidation3() {
   const fund_allocations = document.querySelectorAll(`.fund_allocation`);
   let validationFailed = false;
   if (fund_source.value !== "BANK" && fund_source.value !== "OTHERS") {
-    if (fund_amount.value > fund_source_amount.value) {
+    if (parseFloat(fund_amount.value) > parseFloat(fund_source_amount.value)) {
       alert('Invalid Transaction! Fund Amount is Greater than Fund Source Amount.');
       validationFailed = true; // Set the flag to indicate validation failure
     }
