@@ -740,7 +740,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const result_remarks = document.getElementById("result_remarks");
         const table_data = document.getElementById("table_data");
         const table_head_data = document.getElementById("table_head_data");
-        
+
         var certification_date = "";
         var certification_day = "";
         var certification_day_ordinal;
@@ -782,6 +782,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "SF #")] == wcf_data_list.content[y][findTextInArray(wcf_data_list, "WCF #")])
                                         pull_out_form = wcf_data_list.content[y][findTextInArray(wcf_data_list, "PULL OUT FORM #")]
                                     }
+                                    const type_of_weight = document.getElementById("type_of_weight");
+                                    var cod_weight = 0;
+                                    if(type_of_weight.value == "CLIENT WEIGHT"){
+                                        cod_weight = findClientWeight(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")])
+                                    }
+                                    else if(type_of_weight.value == "FEFC WEIGHT"){
+                                        cod_weight = item.weight
+                                    }
                                     table_data_counter += 1;
                                     if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023015"){
                                         table_data_value +=
@@ -790,7 +798,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                                             <td>TS ${pull_out_form}</td>
-                                            <td style="font-weight: bold">${formatNumber(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WEIGHT")])} kgs.</td>
+                                            <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                                         </tr>
@@ -815,7 +823,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
                                         <input type="hidden" value="TS ${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
-                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WEIGHT")]}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                        <input type="hidden" value="${cod_weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
@@ -828,7 +836,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                                             <td>${pull_out_form}</td>
-                                            <td style="font-weight: bold">${formatNumber(item.weight)} kgs.</td>
+                                            <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                                         </tr>
@@ -853,7 +861,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
                                         <input type="hidden" value="${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
-                                        <input type="hidden" value="${item.weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                        <input type="hidden" value="${cod_weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
@@ -878,7 +886,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                 <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                                 <td>${new_waste_name}</td>
                                                 <td>${pull_out_form}</td>
-                                                <td style="font-weight: bold">${formatNumber(findClientWeight(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")]))} kgs.</td>
+                                                <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
                                                 <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                                 <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                                             </tr>
@@ -903,7 +911,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
                                             <input type="hidden" value="${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
                                             <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
-                                            <input type="hidden" value="${findClientWeight(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")])}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                            <input type="hidden" value="${cod_weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
                                             <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                             <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                             <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
@@ -955,7 +963,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                                             <td>GPF ${pull_out_form}</td>
-                                            <td style="font-weight: bold">${formatNumber(item.weight)} kgs.</td>
+                                            <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                                         </tr>
@@ -963,6 +971,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         table_head_data_value = 
                                         `
                                         <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                            <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>Gate Pass No.</th>
                                             <th>Quantity</th>
@@ -979,7 +988,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
                                         <input type="hidden" value="GPF ${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
-                                        <input type="hidden" value="${item.weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                        <input type="hidden" value="${cod_weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
@@ -992,7 +1001,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                                             <td>${pull_out_form}</td>
-                                            <td style="font-weight: bold">${formatNumber(item.weight)} kgs.</td>
+                                            <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                                         </tr>
@@ -1017,7 +1026,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
                                         <input type="hidden" value="${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
-                                        <input type="hidden" value="${item.weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                        <input type="hidden" value="${cod_weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
@@ -1030,7 +1039,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                                             <td>${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
-                                            <td style="font-weight: bold">${formatNumber(item.weight)} kgs.</td>
+                                            <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                                         </tr>
@@ -1055,7 +1064,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
                                         <input type="hidden" value="${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
-                                        <input type="hidden" value="${item.weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                        <input type="hidden" value="${cod_weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
@@ -1068,7 +1077,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                                             <td>${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
-                                            <td style="font-weight: bold">${formatNumber(item.weight)} kgs.</td>
+                                            <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                                         </tr>
@@ -1093,7 +1102,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
                                         <input type="hidden" value="${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
-                                        <input type="hidden" value="${item.weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                        <input type="hidden" value="${cod_weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
@@ -1153,6 +1162,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "SF #")] == wcf_data_list.content[y][findTextInArray(wcf_data_list, "WCF #")])
                                         pull_out_form = wcf_data_list.content[y][findTextInArray(wcf_data_list, "PULL OUT FORM #")]
                                     }
+                                    const type_of_weight = document.getElementById("type_of_weight");
+                                    var cod_weight = 0;
+                                    if(type_of_weight.value == "CLIENT WEIGHT"){
+                                        cod_weight = findClientWeight(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")])
+                                    }
+                                    else if(type_of_weight.value == "FEFC WEIGHT"){
+                                        cod_weight = item.weight
+                                    }
                                     table_data_counter += 1;
                                     if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023015"){
                                         table_data_value +=
@@ -1161,7 +1178,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                                             <td>TS ${pull_out_form}</td>
-                                            <td style="font-weight: bold">${formatNumber(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WEIGHT")])} kgs.</td>
+                                            <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                                         </tr>
@@ -1186,7 +1203,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
                                         <input type="hidden" value="TS ${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
-                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WEIGHT")]}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                        <input type="hidden" value="${cod_weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
@@ -1199,7 +1216,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                                             <td>${pull_out_form}</td>
-                                            <td style="font-weight: bold">${formatNumber(item.weight)} kgs.</td>
+                                            <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                                         </tr>
@@ -1224,7 +1241,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
                                         <input type="hidden" value="${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
-                                        <input type="hidden" value="${item.weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                        <input type="hidden" value="${cod_weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
@@ -1249,7 +1266,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                 <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                                 <td>${new_waste_name}</td>
                                                 <td>${pull_out_form}</td>
-                                                <td style="font-weight: bold">${formatNumber(findClientWeight(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")]))} kgs.</td>
+                                                <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
                                                 <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                                 <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                                             </tr>
@@ -1274,7 +1291,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
                                             <input type="hidden" value="${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
                                             <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
-                                            <input type="hidden" value="${findClientWeight(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")])}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                            <input type="hidden" value="${cod_weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
                                             <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                             <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                             <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
@@ -1326,7 +1343,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                                             <td>GPF ${pull_out_form}</td>
-                                            <td style="font-weight: bold">${formatNumber(item.weight)} kgs.</td>
+                                            <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                                         </tr>
@@ -1334,6 +1351,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         table_head_data_value = 
                                         `
                                         <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                            <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>Gate Pass No.</th>
                                             <th>Quantity</th>
@@ -1350,7 +1368,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
                                         <input type="hidden" value="GPF ${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
-                                        <input type="hidden" value="${item.weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                        <input type="hidden" value="${cod_weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
@@ -1363,7 +1381,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                                             <td>${pull_out_form}</td>
-                                            <td style="font-weight: bold">${formatNumber(item.weight)} kgs.</td>
+                                            <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                                         </tr>
@@ -1388,7 +1406,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
                                         <input type="hidden" value="${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
-                                        <input type="hidden" value="${item.weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                        <input type="hidden" value="${cod_weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
@@ -1401,7 +1419,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                                             <td>${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
-                                            <td style="font-weight: bold">${formatNumber(item.weight)} kgs.</td>
+                                            <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                                         </tr>
@@ -1426,7 +1444,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
                                         <input type="hidden" value="${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
-                                        <input type="hidden" value="${item.weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                        <input type="hidden" value="${cod_weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
@@ -1439,7 +1457,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                                             <td>${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
-                                            <td style="font-weight: bold">${formatNumber(item.weight)} kgs.</td>
+                                            <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                                         </tr>
@@ -1464,7 +1482,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
                                         <input type="hidden" value="${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
-                                        <input type="hidden" value="${item.weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                        <input type="hidden" value="${cod_weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
@@ -1525,6 +1543,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "SF #")] == wcf_data_list.content[y][findTextInArray(wcf_data_list, "WCF #")])
                                         pull_out_form = wcf_data_list.content[y][findTextInArray(wcf_data_list, "PULL OUT FORM #")]
                                     }
+                                    const type_of_weight = document.getElementById("type_of_weight");
+                                    var cod_weight = 0;
+                                    if(type_of_weight.value == "CLIENT WEIGHT"){
+                                        cod_weight = findClientWeight(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")])
+                                    }
+                                    else if(type_of_weight.value == "FEFC WEIGHT"){
+                                        cod_weight = item.weight
+                                    }
                                     table_data_counter += 1;
                                     if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023015"){
                                         table_data_value +=
@@ -1533,7 +1559,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                                             <td>TS ${pull_out_form}</td>
-                                            <td style="font-weight: bold">${formatNumber(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WEIGHT")])} kgs.</td>
+                                            <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                                         </tr>
@@ -1558,7 +1584,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
                                         <input type="hidden" value="TS ${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
-                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WEIGHT")]}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                        <input type="hidden" value="${cod_weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
@@ -1571,7 +1597,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                                             <td>${pull_out_form}</td>
-                                            <td style="font-weight: bold">${formatNumber(item.weight)} kgs.</td>
+                                            <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                                         </tr>
@@ -1596,7 +1622,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
                                         <input type="hidden" value="${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
-                                        <input type="hidden" value="${item.weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                        <input type="hidden" value="${cod_weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
@@ -1621,7 +1647,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                 <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                                 <td>${new_waste_name}</td>
                                                 <td>${pull_out_form}</td>
-                                                <td style="font-weight: bold">${formatNumber(findClientWeight(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")]))} kgs.</td>
+                                                <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
                                                 <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                                 <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                                             </tr>
@@ -1646,7 +1672,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
                                             <input type="hidden" value="${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
                                             <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
-                                            <input type="hidden" value="${findClientWeight(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")])}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                            <input type="hidden" value="${cod_weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
                                             <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                             <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                             <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
@@ -1698,7 +1724,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                                             <td>GPF ${pull_out_form}</td>
-                                            <td style="font-weight: bold">${formatNumber(item.weight)} kgs.</td>
+                                            <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                                         </tr>
@@ -1706,6 +1732,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         table_head_data_value = 
                                         `
                                         <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                            <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>Gate Pass No.</th>
                                             <th>Quantity</th>
@@ -1722,7 +1749,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
                                         <input type="hidden" value="GPF ${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
-                                        <input type="hidden" value="${item.weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                        <input type="hidden" value="${cod_weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
@@ -1735,7 +1762,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                                             <td>${pull_out_form}</td>
-                                            <td style="font-weight: bold">${formatNumber(item.weight)} kgs.</td>
+                                            <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                                         </tr>
@@ -1760,7 +1787,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
                                         <input type="hidden" value="${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
-                                        <input type="hidden" value="${item.weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                        <input type="hidden" value="${cod_weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
@@ -1773,7 +1800,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                                             <td>${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
-                                            <td style="font-weight: bold">${formatNumber(item.weight)} kgs.</td>
+                                            <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                                         </tr>
@@ -1798,7 +1825,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
                                         <input type="hidden" value="${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
-                                        <input type="hidden" value="${item.weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                        <input type="hidden" value="${cod_weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
@@ -1811,7 +1838,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                                             <td>${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
-                                            <td style="font-weight: bold">${formatNumber(item.weight)} kgs.</td>
+                                            <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
                                         </tr>
@@ -1836,7 +1863,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
                                         <input type="hidden" value="${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
-                                        <input type="hidden" value="${item.weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                        <input type="hidden" value="${cod_weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
@@ -1929,6 +1956,19 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </select>
                     </div>
                 </div>
+                <div>
+                    <label for="type_of_weight">
+                    <i class="fa-solid fa-scale-balanced"></i>
+                        Type of Weight
+                    </label><br>
+                    <div class="form">
+                        <select name="type_of_weight" id="type_of_weight" class="form-control">
+                            <option value="">SELECT WEIGHT</option>
+                            <option value="CLIENT WEIGHT">CLIENT WEIGHT</option>
+                            <option value="FEFC WEIGHT">FEFC WEIGHT</option>
+                        </select>
+                    </div>
+                </div>
                 `
                 what_to_print.style.display = "none";
                 client_container.style.display = "grid";    
@@ -1977,7 +2017,20 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <option value="12">DECEMBER</option>
                         </select>
                     </div>
+                </div>
+                <div>
+                    <label for="type_of_weight">
+                    <i class="fa-solid fa-scale-balanced"></i>
+                        Type of Weight
+                    </label><br>
+                    <div class="form">
+                        <select name="type_of_weight" id="type_of_weight" class="form-control">
+                            <option value="">SELECT WEIGHT</option>
+                            <option value="CLIENT WEIGHT">CLIENT WEIGHT</option>
+                            <option value="FEFC WEIGHT">FEFC WEIGHT</option>
+                        </select>
                     </div>
+                </div>
                 `
                 what_to_print.style.display = "none";
                 client_container.style.display = "grid";    
@@ -2011,6 +2064,19 @@ document.addEventListener('DOMContentLoaded', async function() {
                     </label><br>
                     <div class="form">
                         <input type="date" id="date_to" autocomplete="off" name="date_to" class="form-control"><br>
+                    </div>
+                </div>
+                <div>
+                    <label for="type_of_weight">
+                    <i class="fa-solid fa-scale-balanced"></i>
+                        Type of Weight
+                    </label><br>
+                    <div class="form">
+                        <select name="type_of_weight" id="type_of_weight" class="form-control">
+                            <option value="">SELECT WEIGHT</option>
+                            <option value="CLIENT WEIGHT">CLIENT WEIGHT</option>
+                            <option value="FEFC WEIGHT">FEFC WEIGHT</option>
+                        </select>
                     </div>
                 </div>
                 `

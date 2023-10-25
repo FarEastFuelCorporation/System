@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             const currentMonthIndex = currentDate.getMonth();
             
             return months[currentMonthIndex];
-        }        
+        }
         month_filter.value = getCurrentMonthName();
         month_filter.addEventListener("change", generatePending)
         generatePending();
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             var data_value_counter = 1;
             for(let x = 1; x < prf_data_list.content.length; x++){
                 var pr_data, date_time, quantity, unit, item, details, remarks, department, requisitioner;
-                pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "PR #")];
+                pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")];
                 date_time = prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")];
                 quantity = prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")];
                 unit = prf_data_list.content[x][findTextInArray(prf_data_list, "UNIT")];
