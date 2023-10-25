@@ -72,14 +72,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         const user_sidebar_officer = document.getElementById("user_sidebar_officer");
         const user_sidebar_department = document.getElementById("user_sidebar_department");
         const users = document.querySelectorAll("#user");
-        const prf_user = document.getElementById("prf_user");
-        const prf_department = document.getElementById("prf_department");
-        const irf_user = document.getElementById("irf_user");
+        const departments = document.querySelectorAll("department");
 
         users.forEach(user => {user.value = username_data_list.content[6][findTextInArray(username_data_list, "NAME")]})
-        prf_user.value = username_data_list.content[6][findTextInArray(username_data_list, "NAME")];
-        prf_department.value = username_data_list.content[6][findTextInArray(username_data_list, "DEPARTMENT")];
-        irf_user.value = username_data_list.content[6][findTextInArray(username_data_list, "NAME")];
+        departments.forEach(user => {user.value = username_data_list.content[6][findTextInArray(username_data_list, "DEPARTMENT")]})
         user_sidebar.innerHTML = `<u>${username_data_list.content[6][findTextInArray(username_data_list, "NAME")]}</u>`;
         user_sidebar_officer.innerText = username_data_list.content[6][findTextInArray(username_data_list, "SECTIONS")];
         user_sidebar_department.innerText = username_data_list.content[6][findTextInArray(username_data_list, "DEPARTMENT")];

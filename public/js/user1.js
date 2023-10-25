@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const ltf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxBLMvyNDsT9_dlVO4Qc31dI4ErcymUHbzKimOpCZHgbJxip2XxCl7Wk3hJyqcdtrxU/exec');
         const wcf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyBFTBuFZ4PkvwmPi_3Pp_v74DCSEK2VpNy6janIGgaAK-P22wazmmShOKn6iwFbrQn/exec');
         const qlf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyFU_skru2tnyEiv8I5HkpRCXbUlQb5vlJUm8Le0nZBCvfZeFkQPd2Naljs5CZY41I17w/exec');
+        const prf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxZctLub-6PuQGykx298syeH7Qm__S37uqQrVFYsHVtv-Qk8M2oSkRIPIMVT_1WexqRZA/exec');
+        const pof_response_promise = fetch('https://script.google.com/macros/s/AKfycby9i2KfOZ_uF7-JUPX8qpXg7Jewmw6oU3EfUTpXiwnRRB91_qIW3xAVNy5SZBN1YhVzzg/exec');
 
         const [
             username_response,
@@ -22,6 +24,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             ltf_response,
             wcf_response,
             qlf_response,
+            prf_response,
+            pof_response,
         ] = await Promise.all([
             username_response_promise,
             employee_response_promise,
@@ -33,6 +37,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             ltf_response_promise,
             wcf_response_promise,
             qlf_response_promise,
+            prf_response_promise,
+            pof_response_promise,
         ]);
 
         const username_data_list  = await username_response.json();
@@ -45,15 +51,19 @@ document.addEventListener('DOMContentLoaded', async function() {
         const ltf_data_list  = await ltf_response.json();
         const wcf_data_list  = await wcf_response.json();
         const qlf_data_list  = await qlf_response.json();
+        const prf_data_list  = await prf_response.json();
+        const pof_data_list  = await pof_response.json();
 
         // Code that depends on the fetched data
         // username_data_list
         const user_sidebar = document.getElementById("user_sidebar");
         const user_sidebar_officer = document.getElementById("user_sidebar_officer");
         const user_sidebar_department = document.getElementById("user_sidebar_department");
-        const user = document.getElementById("user");
+        const users = document.querySelectorAll("#user");
+        const departments = document.querySelectorAll("#department");
 
-        user.value = username_data_list.content[1][findTextInArray(username_data_list, "NAME")];
+        users.forEach(user => {user.value = username_data_list.content[1][findTextInArray(username_data_list, "NAME")]})
+        departments.forEach(user => {user.value = username_data_list.content[1][findTextInArray(username_data_list, "DEPARTMENT")]})
         user_sidebar.innerHTML = `<u>${username_data_list.content[1][findTextInArray(username_data_list, "NAME")]}</u>`;
         user_sidebar_officer.innerText = username_data_list.content[1][findTextInArray(username_data_list, "SECTIONS")];
         user_sidebar_department.innerText = username_data_list.content[1][findTextInArray(username_data_list, "DEPARTMENT")];
@@ -709,6 +719,161 @@ document.addEventListener('DOMContentLoaded', async function() {
         data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
         wcf_form_no.value = `WCF${year}${month}${data_counter}`;
     
+        // multi section
+        // purchase_request_form
+        const purchase_request_form = document.querySelector("#purchase_request_form");
+        const add_item_button = purchase_request_form.querySelector("#add_item_button");
+        const remove_item_button = purchase_request_form.querySelector("#remove_item_button");
+        const purchase_request_form_button = purchase_request_form.querySelector("#purchase_request_form_button");
+        const purchase_request_list = purchase_request_form.querySelector("#purchase_request_list");
+        const form_tab = purchase_request_form.querySelector("#form_tab");
+        var prf_counter = purchase_request_form.querySelector("#prf_counter");
+        var prf_form_no = [];
+        
+        function prf_generator() {
+            var last_row = prf_data_list.content.length -1;        
+            var data_info = prf_data_list.content[last_row][findTextInArray(prf_data_list, "PR #")];
+            var data_counter = data_info.substring(9,12) || 0;
+            var year = new Date().getFullYear();
+            var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        
+            for (let y = 1; y <= prf_counter.value; y++) {
+                prf_form_no[y] = document.querySelector(`#prf_form_no${y}`);
+                prf_form_no[y].value = `PR${year}${month}${((parseInt(data_counter) + y).toString().padStart(3,"0"))}`;
+            }
+        }
+        
+        prf_generator()
+        
+        add_item_button.addEventListener("click", () => {
+            const prf_item_container = purchase_request_form.querySelector("#prf_item_container");
+            prf_counter.value = parseInt(prf_counter.value) + 1; // Increment the counter for the next item
+            const itemHTML = `
+            <div id="prf_item">
+                <div>
+                    <div>
+                        <label for="prf_form_no${prf_counter.value}">
+                            <i class="fa-solid fa-list-ol"></i>
+                            PR #
+                        </label><br>
+                        <div class="form">
+                            <input type="text" id="prf_form_no${prf_counter.value}" name="prf_form_no${prf_counter.value}" autocomplete="off" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="item${prf_counter.value}">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Item ${prf_counter.value}
+                        </label>
+                        <div>
+                            <input type="text" id="item${prf_counter.value}" name="item${prf_counter.value}" autocomplete="off" class="form-control" required placeholder="Item Name">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="quantity${prf_counter.value}">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Quantity
+                        </label>
+                        <div>
+                            <input type="number" id="quantity${prf_counter.value}" name="quantity${prf_counter.value}" autocomplete="off" class="form-control" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="unit${prf_counter.value}">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Unit
+                        </label>
+                        <div>
+                            <input type="text" id="unit${prf_counter.value}" name="unit${prf_counter.value}" autocomplete="off" class="form-control" required placeholder="ex. kg/pc/box/set">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <label for="details${prf_counter.value}">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Details
+                        </label>
+                        <div>
+                            <input type="text" id="details${prf_counter.value}" name="details${prf_counter.value}" autocomplete="off" class="form-control" required  placeholder="Brand/Unit/Specifications">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="remarks1">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Remarks
+                        </label>
+                        <div>
+                            <input type="text" id="remarks${prf_counter.value}" name="remarks${prf_counter.value}" autocomplete="off" class="form-control" required placeholder="Where to use">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+            prf_item_container.insertAdjacentHTML("beforeend", itemHTML);
+
+            // Call the prf_generator function after adding a new item
+            prf_generator();
+
+            if (prf_counter.value > 1) {
+                remove_item_button.style.display = "block";
+            }
+        });
+        
+        remove_item_button.addEventListener("click", () => {
+            const lastItem = purchase_request_form.querySelector("#prf_item_container").lastElementChild;
+            if (lastItem) {
+                lastItem.remove();
+                prf_counter.value = parseInt(prf_counter.value) - 1;
+
+                // Call the prf_generator function after removing an item
+                prf_generator();
+
+                if (prf_counter.value <= 1) {
+                    remove_item_button.style.display = "none";
+                }
+            }
+        });
+
+        var purchase_request_data_value = "";
+        var purchase_request_data_value_counter = 1;
+        for(let x = 1; x < prf_data_list.content.length; x++){
+            var status = "PENDING";
+            var duration = "PENDING";
+            for(let y = 1; y < pof_data_list.content.length; y++){
+                if(prf_data_list.content[x][findTextInArray(prf_data_list, "PR #")] == (pof_data_list.content[y][findTextInArray(pof_data_list, "PR #")])){
+                    status = "REQUESTED"
+                }
+            }
+            purchase_request_data_value += `
+            <tr>
+                <td>${purchase_request_data_value_counter}</td>
+                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "PR #")]}</td>
+                <td>${date_decoder(prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")])}/<br>${time_decoder(prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")])}</td>
+                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "ITEM")]}</td>
+                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")]}</td>
+                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "UNIT")]}</td>
+                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "DETAILS")]}</td>
+                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")]}</td>
+                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")]}</td>
+                <td>${status}</td>
+                <td>${duration}</td>
+            </tr>
+            `
+            purchase_request_data_value_counter += 1;
+        }
+        purchase_request_list.innerHTML = purchase_request_data_value;
+
+
+        purchase_request_form_button.addEventListener("click", () => {
+            if(form_tab.style.display == "block"){
+                form_tab.style.display = "none";
+            }
+            else{
+                form_tab.style.display = "block";
+            }
+        })
+
         function findEmployeeName(employee_id){
             var employee_name = "";
             for(let c = 1; c < employee_data_list.content.length; c++){

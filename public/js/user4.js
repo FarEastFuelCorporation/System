@@ -2322,7 +2322,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             report_download_button.style.display = "block";
         });
 
-
     } catch (error) {
         console.error('Error fetching data:', error);
     }

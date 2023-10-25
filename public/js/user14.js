@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             irf_response_promise,
         ]);
 
-        const username_data  = await username_response.json();
+        const username_data_list  = await username_response.json();
         const prf_data_list  = await prf_response.json();
         const pof_data_list  = await pof_response.json();
         const irf_data_list  = await irf_response.json();
@@ -26,14 +26,13 @@ document.addEventListener('DOMContentLoaded', async function() {
         // username_data3
         const user_sidebar = document.getElementById("user_sidebar");
         const user_sidebar_officer = document.getElementById("user_sidebar_officer");
-        const user = document.getElementById("user");
-        const irf_user = document.getElementById("irf_user");
+        const user_sidebar_department = document.getElementById("user_sidebar_department");
+        const users = document.querySelectorAll("#user");
 
-        user.value = username_data.content[14][3];
-        irf_user.value = username_data.content[14][3];
-        user_sidebar.innerHTML = `<u>${username_data.content[14][3]}</u>`;
-        user_sidebar_officer.innerText = username_data.content[14][4];
-        
+        users.forEach(user => {user.value = username_data_list.content[14][findTextInArray(username_data_list, "NAME")]})
+        user_sidebar.innerHTML = `<u>${username_data_list.content[14][findTextInArray(username_data_list, "NAME")]}</u>`;
+        user_sidebar_officer.innerText = username_data_list.content[14][findTextInArray(username_data_list, "SECTIONS")];
+        user_sidebar_department.innerText = username_data_list.content[14][findTextInArray(username_data_list, "DEPARTMENT")];
 
         // purchasing_dashboard
         const purchasing_dashboard = document.querySelector("#purchasing_dashboard");
@@ -43,18 +42,18 @@ document.addEventListener('DOMContentLoaded', async function() {
         const requested_purchasing = purchasing_dashboard.querySelector("#requested");
         const approved_purchasing = purchasing_dashboard.querySelector("#approved");
         const purchased_purchasing = purchasing_dashboard.querySelector("#purchased");
-        let prf_transaction_treatment = []; // Variable containing existing elements
-        let prf_pr_transaction_treatment = []; // Variable containing existing elements
+        let prf_transaction = []; // Variable containing existing elements
+        let prf_pr_transaction = []; // Variable containing existing elements
         
         for (let i = 1; i < prf_data_list.content.length; i++) {
-            if (!prf_transaction_treatment.includes(prf_data_list.content[i][1])) {
-                prf_transaction_treatment.push(prf_data_list.content[i][1]);
+            if (!prf_transaction.includes(prf_data_list.content[i][findTextInArray(prf_data_list, "PR #")])) {
+                prf_transaction.push(prf_data_list.content[i][findTextInArray(prf_data_list, "PR #")]);
             }
         }
 
         for (let i = 1; i < pof_data_list.content.length; i++) {
-            if (!prf_pr_transaction_treatment.includes(pof_data_list.content[i][2])) {
-                prf_pr_transaction_treatment.push(pof_data_list.content[i][2]);
+            if (!prf_pr_transaction.includes(pof_data_list.content[i][findTextInArray(prf_data_list, "PR #")])) {
+                prf_pr_transaction.push(pof_data_list.content[i][findTextInArray(prf_data_list, "PR #")]);
             }
         }
 
