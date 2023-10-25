@@ -542,23 +542,23 @@ function customValidation2() {
 
 function customValidation3() {
   const data_counter = document.getElementById('data_counter');
-  const fund_amount = document.getElementById(`fund_amount${data_counter.value}`);
-  const fund_source_amount = document.getElementById(`fund_source_amount${data_counter.value}`);
-  const fund_source = document.getElementById(`fund_source${data_counter.value}`);
   const fund_sources = document.querySelectorAll(`.fund_source`);
+  const fund_source_amounts = document.querySelectorAll(`.fund_source_amount`);
+  const fund_amounts = document.querySelectorAll(`.fund_amount`);
   const fund_allocations = document.querySelectorAll(`.fund_allocation`);
   let validationFailed = false;
-  if (fund_source.value !== "BANK" && fund_source.value !== "OTHERS") {
-    if (parseFloat(fund_amount.value) > parseFloat(fund_source_amount.value)) {
-      alert('Invalid Transaction! Fund Amount is Greater than Fund Source Amount.');
-      validationFailed = true; // Set the flag to indicate validation failure
-    }
-  }
+
   
   fund_sources.forEach((fund_source, i) => {
     if (fund_source.value == "OTHERS" && fund_allocations[i].value == "OTHERS") {
       alert('Invalid Transaction!');
       validationFailed = true; // Set the flag to indicate validation failure
+    }
+    if (fund_source.value !== "BANK" && fund_source.value !== "OTHERS") {
+      if (parseFloat(fund_amounts[i].value) > parseFloat(fund_source_amounts[i].value)) {
+        alert('Invalid Transaction! Fund Amount is Greater than Fund Source Amount.');
+        validationFailed = true; // Set the flag to indicate validation failure
+      }
     }
   });
   return !validationFailed;
@@ -731,7 +731,6 @@ function getNumberOfDays(month, year, cutoffPeriod) {
   const oneDay = 24 * 60 * 60 * 1000; // One day in milliseconds
   const daysDifference = Math.round((endDate - startDate) / oneDay);
 
-  console.log(daysDifference + 1)
   return daysDifference + 1; // Include both the start and end days
 }
 

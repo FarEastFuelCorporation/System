@@ -1088,7 +1088,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         })
 
         remove_item_button2_ftf_ap_accounting.addEventListener("click", () => {
-            const item_data = document.querySelector(`.data${data_counter_ap_accounting.value}`)
+            const item_data = document.querySelector(`#data_container${data_counter_ap_accounting.value}`)
             item_data.remove()
             data_counter_ap_accounting.value = parseInt(data_counter_ap_accounting.value) - 1;
         })
@@ -1096,82 +1096,84 @@ document.addEventListener('DOMContentLoaded', async function() {
         function addNewData(){            
             var data = 
             `
-            <div class="d-flex gap-4" id="data" class="data${data_counter_ap_accounting.value}">
-                <div style="width: 30%;">
-                    <div>
-                        <label for="fund_source${data_counter_ap_accounting.value}">
-                            Fund Source
-                        </label><br>
-                        <select name="fund_source${data_counter_ap_accounting.value}" id="fund_source${data_counter_ap_accounting.value}" class="form-control fund_source" required>
-                            <option value="">SELECT FUND SOURCE</option>
-                            <option value="SOURCE OF FUND">SOURCE OF FUND</option>
-                            <option value="TRUCKING FUND">TRUCKING FUND</option>
-                            <option value="HAULING FUND">HAULING FUND</option>
-                            <option value="DIESEL FUND">DIESEL FUND</option>
-                            <option value="GASOLINE FUND">GASOLINE FUND</option>
-                            <option value="SIR RUEL'S FUND">SIR RUEL'S FUND</option>
-                            <option value="SCRAP SALES">SCRAP SALES</option>
-                            <option value="MOLD RUNNER SALES">MOLD RUNNER SALES</option>
-                            <option value="TRUCK SCALE COLLECTION">TRUCK SCALE COLLECTION</option>
-                            <option value="HOUSE COLLECTION">HOUSE COLLECTION</option>
-                            <option value="REPRESENTATION FUND">REPRESENTATION FUND</option>
-                            <option value="OTHERS">OTHERS</option>
-                        </select>
+            <div id="data_container${data_counter_ap_accounting.value}">
+                <div class="d-flex gap-4" id="data"">
+                    <div style="width: 30%;">
+                        <div>
+                            <label for="fund_source${data_counter_ap_accounting.value}">
+                                Fund Source
+                            </label><br>
+                            <select name="fund_source${data_counter_ap_accounting.value}" id="fund_source${data_counter_ap_accounting.value}" class="form-control fund_source" required>
+                                <option value="">SELECT FUND SOURCE</option>
+                                <option value="SOURCE OF FUND">SOURCE OF FUND</option>
+                                <option value="TRUCKING FUND">TRUCKING FUND</option>
+                                <option value="HAULING FUND">HAULING FUND</option>
+                                <option value="DIESEL FUND">DIESEL FUND</option>
+                                <option value="GASOLINE FUND">GASOLINE FUND</option>
+                                <option value="SIR RUEL'S FUND">SIR RUEL'S FUND</option>
+                                <option value="SCRAP SALES">SCRAP SALES</option>
+                                <option value="MOLD RUNNER SALES">MOLD RUNNER SALES</option>
+                                <option value="TRUCK SCALE COLLECTION">TRUCK SCALE COLLECTION</option>
+                                <option value="HOUSE COLLECTION">HOUSE COLLECTION</option>
+                                <option value="REPRESENTATION FUND">REPRESENTATION FUND</option>
+                                <option value="OTHERS">OTHERS</option>
+                            </select>
+                        </div>
+                        <div id="fund_source_amount_container${data_counter_ap_accounting.value}">
+                            <label for="fund_source_amount${data_counter_ap_accounting.value}">
+                                Fund Source Amount
+                            </label><br>
+                            <input type="text" id="fund_source_amount${data_counter_ap_accounting.value}" name="fund_source_amount${data_counter_ap_accounting.value}" class="form-control fund_source_amount" autocomplete="off" readonly>
+                        </div>
+                        <div id="fund_source_other_details_container${data_counter_ap_accounting.value}" style="display: none">
+                            <label for="fund_source_other_details${data_counter_ap_accounting.value}">
+                                Fund Source Input
+                            </label><br>
+                            <input type="text" id="fund_source_other_details${data_counter_ap_accounting.value}" name="fund_source_other_details${data_counter_ap_accounting.value}" class="form-control"  autocomplete="off" placeholder="Input Fund Allocation"><br>
+                        </div>
                     </div>
-                    <div id="fund_source_amount_container${data_counter_ap_accounting.value}">
-                        <label for="fund_source_amount${data_counter_ap_accounting.value}">
-                            Fund Source Amount
-                        </label><br>
-                        <input type="text" id="fund_source_amount${data_counter_ap_accounting.value}" name="fund_source_amount${data_counter_ap_accounting.value}" class="form-control" autocomplete="off" readonly>
+                    <div style="width: 30%;">
+                        <div>
+                            <label for="fund_allocation${data_counter_ap_accounting.value}">
+                                Fund Allocation
+                            </label><br>
+                            <select name="fund_allocation${data_counter_ap_accounting.value}" id="fund_allocation${data_counter_ap_accounting.value}" class="form-control fund_allocation" required>
+                                <option value="">SELECT FUND ALLOCATION</option>
+                                <option value="BANK">BANK</option>
+                                <option value="SOURCE OF FUND">SOURCE OF FUND</option>
+                                <option value="TRUCKING FUND">TRUCKING FUND</option>
+                                <option value="HAULING FUND">HAULING FUND</option>
+                                <option value="DIESEL FUND">DIESEL FUND</option>
+                                <option value="GASOLINE FUND">GASOLINE FUND</option>
+                                <option value="SIR RUEL'S FUND">SIR RUEL'S FUND</option>
+                                <option value="SCRAP SALES">SCRAP SALES</option>
+                                <option value="MOLD RUNNER SALES">MOLD RUNNER SALES</option>
+                                <option value="TRUCK SCALE COLLECTION">TRUCK SCALE COLLECTION</option>
+                                <option value="HOUSE COLLECTION">HOUSE COLLECTION</option>
+                                <option value="REPRESENTATION FUND">REPRESENTATION FUND</option>
+                                <option value="OTHERS">OTHERS</option>
+                            </select>
+                        </div>
+                        <div id="fund_allocation_amount_container${data_counter_ap_accounting.value}">
+                            <label for="fund_allocation_amount${data_counter_ap_accounting.value}">
+                                Fund Allocation Amount
+                            </label><br>
+                            <input type="text" id="fund_allocation_amount${data_counter_ap_accounting.value}" name="fund_allocation_amount${data_counter_ap_accounting.value}" class="form-control" autocomplete="off" readonly>
+                        </div>
+                        <div id="fund_allocation_other_details_container${data_counter_ap_accounting.value}" style="display: none">
+                            <label for="fund_allocation_other_details${data_counter_ap_accounting.value}">
+                                Fund Allocation Input
+                            </label><br>
+                            <input type="text" id="fund_allocation_other_details${data_counter_ap_accounting.value}" name="fund_allocation_other_details${data_counter_ap_accounting.value}" class="form-control"  autocomplete="off" placeholder="Input Fund Allocation"><br>
+                        </div>
                     </div>
-                    <div id="fund_source_other_details_container${data_counter_ap_accounting.value}" style="display: none">
-                        <label for="fund_source_other_details${data_counter_ap_accounting.value}">
-                            Fund Source Input
-                        </label><br>
-                        <input type="text" id="fund_source_other_details${data_counter_ap_accounting.value}" name="fund_source_other_details${data_counter_ap_accounting.value}" class="form-control"  autocomplete="off" placeholder="Input Fund Allocation"><br>
-                    </div>
-                </div>
-                <div style="width: 30%;">
-                    <div>
-                        <label for="fund_allocation${data_counter_ap_accounting.value}">
-                            Fund Allocation
-                        </label><br>
-                        <select name="fund_allocation${data_counter_ap_accounting.value}" id="fund_allocation${data_counter_ap_accounting.value}" class="form-control fund_allocation" required>
-                            <option value="">SELECT FUND ALLOCATION</option>
-                            <option value="BANK">BANK</option>
-                            <option value="SOURCE OF FUND">SOURCE OF FUND</option>
-                            <option value="TRUCKING FUND">TRUCKING FUND</option>
-                            <option value="HAULING FUND">HAULING FUND</option>
-                            <option value="DIESEL FUND">DIESEL FUND</option>
-                            <option value="GASOLINE FUND">GASOLINE FUND</option>
-                            <option value="SIR RUEL'S FUND">SIR RUEL'S FUND</option>
-                            <option value="SCRAP SALES">SCRAP SALES</option>
-                            <option value="MOLD RUNNER SALES">MOLD RUNNER SALES</option>
-                            <option value="TRUCK SCALE COLLECTION">TRUCK SCALE COLLECTION</option>
-                            <option value="HOUSE COLLECTION">HOUSE COLLECTION</option>
-                            <option value="REPRESENTATION FUND">REPRESENTATION FUND</option>
-                            <option value="OTHERS">OTHERS</option>
-                        </select>
-                    </div>
-                    <div id="fund_allocation_amount_container${data_counter_ap_accounting.value}">
-                        <label for="fund_allocation_amount${data_counter_ap_accounting.value}">
-                            Fund Allocation Amount
-                        </label><br>
-                        <input type="text" id="fund_allocation_amount${data_counter_ap_accounting.value}" name="fund_allocation_amount${data_counter_ap_accounting.value}" class="form-control" autocomplete="off" readonly>
-                    </div>
-                    <div id="fund_allocation_other_details_container${data_counter_ap_accounting.value}" style="display: none">
-                        <label for="fund_allocation_other_details${data_counter_ap_accounting.value}">
-                            Fund Allocation Input
-                        </label><br>
-                        <input type="text" id="fund_allocation_other_details${data_counter_ap_accounting.value}" name="fund_allocation_other_details${data_counter_ap_accounting.value}" class="form-control"  autocomplete="off" placeholder="Input Fund Allocation"><br>
-                    </div>
-                </div>
-                <div style="width: 20%;">
-                    <div>
-                        <label for="fund_amount${data_counter_ap_accounting.value}">
-                            Fund Amount
-                        </label><br>
-                        <input type="number" id="fund_amount${data_counter_ap_accounting.value}" name="fund_amount${data_counter_ap_accounting.value}" class="form-control"  autocomplete="off" placeholder="Input Fund Amount" required value="0"><br>    
+                    <div style="width: 20%;">
+                        <div>
+                            <label for="fund_amount${data_counter_ap_accounting.value}">
+                                Fund Amount
+                            </label><br>
+                            <input type="number" id="fund_amount${data_counter_ap_accounting.value}" name="fund_amount${data_counter_ap_accounting.value}" class="form-control fund_amount"  autocomplete="off" placeholder="Input Fund Amount" required value="0"><br>    
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1307,7 +1309,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     additional_representation_fund += source5;
                     break;
             }
-            console.log("pass")
             source3.value = fundAmount.toFixed(2);
             source3.style.display = "flex";
         }
@@ -1438,7 +1439,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     additional_representation_fund += parseFloat(source5);
                     break;
             }
-            console.log("pass")
             source3.value = fundAmount.toFixed(2);
             source3.style.display = "flex";
         }
