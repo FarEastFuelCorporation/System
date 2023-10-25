@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 legend: {
                     show: true,
                     position: "left", // Set the legend position to "left"
-                    fontSize: '30px', // Increase legend font size as needed
+                    fontSize: '25px', // Increase legend font size as needed
                     formatter: function (seriesName, opts) {
                         // Here, you should use the correct variable to get the series value
                         var seriesValue = opts.w.globals.series[opts.seriesIndex];
@@ -856,8 +856,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "DETAILS")]}</td>
                 <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")]}</td>
                 <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")]}</td>
-                <td>${status}</td>
-                <td>${duration}</td>
+                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")]}</td>
             </tr>
             `
             purchase_request_data_value_counter += 1;

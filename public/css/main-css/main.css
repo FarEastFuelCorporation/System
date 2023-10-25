@@ -446,7 +446,10 @@ nav {
 .apexcharts-legend {
   top: 50% !important;
   transform: translateY(-50%);
-  height: 120px;
+  height: 200px;
+  width: 275px;
+  display: flex;
+  justify-content: center !important;
 }
 
 /* main starts here */

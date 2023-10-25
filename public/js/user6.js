@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const user_sidebar_officer = document.getElementById("user_sidebar_officer");
         const user_sidebar_department = document.getElementById("user_sidebar_department");
         const users = document.querySelectorAll("#user");
-        const departments = document.querySelectorAll("department");
+        const departments = document.querySelectorAll("#department");
 
         users.forEach(user => {user.value = username_data_list.content[6][findTextInArray(username_data_list, "NAME")]})
         departments.forEach(user => {user.value = username_data_list.content[6][findTextInArray(username_data_list, "DEPARTMENT")]})
@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 legend: {
                     show: true,
                     position: "left", // Set the legend position to "left"
-                    fontSize: '30px', // Increase legend font size as needed
+                    fontSize: '25px', // Increase legend font size as needed
                     formatter: function (seriesName, opts) {
                         // Here, you should use the correct variable to get the series value
                         var seriesValue = opts.w.globals.series[opts.seriesIndex];

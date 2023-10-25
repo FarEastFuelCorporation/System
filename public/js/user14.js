@@ -36,57 +36,150 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         // purchasing_dashboard
         const purchasing_dashboard = document.querySelector("#purchasing_dashboard");
-        const ordered_transactions_purchasing = purchasing_dashboard.querySelector("#ordered_transactions");
         const pending_list_container_purchasing = purchasing_dashboard.querySelector("#pending_list");
         const pending_purchasing = purchasing_dashboard.querySelector("#pending");
         const requested_purchasing = purchasing_dashboard.querySelector("#requested");
         const approved_purchasing = purchasing_dashboard.querySelector("#approved");
+        const released_purchasing = purchasing_dashboard.querySelector("#released");
         const purchased_purchasing = purchasing_dashboard.querySelector("#purchased");
+        const month_filter = document.getElementById("month_filter");
+
         let prf_transaction = []; // Variable containing existing elements
         let prf_pr_transaction = []; // Variable containing existing elements
-        
-        for (let i = 1; i < prf_data_list.content.length; i++) {
-            if (!prf_transaction.includes(prf_data_list.content[i][findTextInArray(prf_data_list, "PR #")])) {
-                prf_transaction.push(prf_data_list.content[i][findTextInArray(prf_data_list, "PR #")]);
+        function getCurrentMonthName() {
+            const months = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
+            const currentDate = new Date();
+            const currentMonthIndex = currentDate.getMonth();
+            
+            return months[currentMonthIndex];
+        }        
+        month_filter.value = getCurrentMonthName();
+        month_filter.addEventListener("change", generatePending)
+        generatePending();
+        function generatePending(){
+            var pending = [];
+            var requested = [];
+            var approved = [];
+            var released = [];
+            var purchased = [];
+            for (let i = 1; i < prf_data_list.content.length; i++) {
+                if (prf_data_list.content[i][findTextInArray(prf_data_list, "STATUS")] == "PENDING") {
+                    pending.push(prf_data_list.content[i][findTextInArray(prf_data_list, "PR #")]);
+                }
+                if (prf_data_list.content[i][findTextInArray(prf_data_list, "STATUS")] == "REQUESTED") {
+                    requested.push(prf_data_list.content[i][findTextInArray(prf_data_list, "PR #")]);
+                }
+                if (prf_data_list.content[i][findTextInArray(prf_data_list, "STATUS")] == "APPROVED") {
+                    approved.push(prf_data_list.content[i][findTextInArray(prf_data_list, "PR #")]);
+                }
+                if (prf_data_list.content[i][findTextInArray(prf_data_list, "STATUS")] == "RELEASED") {
+                    released.push(prf_data_list.content[i][findTextInArray(prf_data_list, "PR #")]);
+                }
+                if (prf_data_list.content[i][findTextInArray(prf_data_list, "STATUS")] == "PURCHASED") {
+                    purchased.push(prf_data_list.content[i][findTextInArray(prf_data_list, "PR #")]);
+                }
             }
-        }
-
-        for (let i = 1; i < pof_data_list.content.length; i++) {
-            if (!prf_pr_transaction.includes(pof_data_list.content[i][findTextInArray(prf_data_list, "PR #")])) {
-                prf_pr_transaction.push(pof_data_list.content[i][findTextInArray(prf_data_list, "PR #")]);
+    
+            for (let i = 1; i < pof_data_list.content.length; i++) {
+                if (!prf_pr_transaction.includes(pof_data_list.content[i][findTextInArray(prf_data_list, "PR #")])) {
+                    prf_pr_transaction.push(pof_data_list.content[i][findTextInArray(prf_data_list, "PR #")]);
+                }
             }
+    
+            // Get elements from sf_transaction not included in sf_tpf_transaction
+            const pending_list_purchasing = prf_transaction.filter((element) => !prf_pr_transaction.includes(element));
+    
+            pending_purchasing.innerText = pending.length;
+            requested_purchasing.innerText = requested.length;
+            approved_purchasing.innerText = approved.length;
+            released_purchasing.innerText = released.length;
+            purchased_purchasing.innerText = purchased.length;
+    
+            var options = {
+                series: [pending.length, requested.length, approved.length, released.length, purchased.length],
+                chart: {
+                    width: 500, // Set the desired width
+                    height: 550, // Set the desired height
+                    type: 'pie',
+                },
+                plotOptions: {
+                    pie: {
+                        startAngle: 0,
+                        endAngle: 360
+                    }
+                },
+                dataLabels: {
+                    enabled: false, // Disable data labels inside the pie chart
+                },
+                fill: {
+                    type: 'gradient', // Use solid fill type
+                },
+                legend: {
+                    show: true,
+                    position: "left", // Set the legend position to "left"
+                    fontSize: '20px', // Increase legend font size as needed
+                    formatter: function (seriesName, opts) {
+                        // Here, you should use the correct variable to get the series value
+                        var seriesValue = opts.w.globals.series[opts.seriesIndex];
+                        var totalValue = opts.w.globals.series.reduce((acc, val) => acc + val, 0);
+                        var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
+                        return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
+                    },
+                    labels: {
+                        useSeriesColors: false, // Use custom color
+                    },
+                },
+                labels: ["Pending", "Requested", "Approved", "Released", "Purchased"],
+                colors: ["#dc3545", "#ffc107","#0dcaf0", "#0d6efd", "#198754"], // Specify solid colors here
+                responsive: [{
+                    breakpoint: 480,
+                    options: {
+                        chart: {
+                            width: 200
+                        },
+                    }
+                }]
+            };
+            const pieChart = document.querySelector("#pieChart");
+            while (pieChart.firstChild) {
+                pieChart.removeChild(pieChart.firstChild);
+            }
+            var chart = new ApexCharts(pieChart, options);
+            chart.render();  
+
+            // pending_list
+            var data_value = "";
+            var data_value_counter = 1;
+            for(let x = 1; x < prf_data_list.content.length; x++){
+                var pr_data, date_time, quantity, unit, item, details, remarks, department, requisitioner;
+                pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "PR #")];
+                date_time = prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")];
+                quantity = prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")];
+                unit = prf_data_list.content[x][findTextInArray(prf_data_list, "UNIT")];
+                item = prf_data_list.content[x][findTextInArray(prf_data_list, "ITEM")];
+                details = prf_data_list.content[x][findTextInArray(prf_data_list, "DETAILS")];
+                remarks = prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")];
+                department = prf_data_list.content[x][findTextInArray(prf_data_list, "DEPARTMENT")];
+                requisitioner = prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")];
+                data_value += `
+                <tr>
+                    <td>${data_value_counter}</td>
+                    <td>${pr_data}</td>
+                    <td>${date_decoder(date_time)} /<br> ${time_decoder(date_time)}</td>
+                    <td>${quantity}</td>
+                    <td>${unit}</td>
+                    <td>${item}</td>
+                    <td>${details}</td>
+                    <td>${remarks}</td>
+                    <td>${department}</td>
+                    <td>${requisitioner}</td>
+                </tr>
+                `
+                data_value_counter += 1;
+            }
+            pending_list_container_purchasing.innerHTML = data_value;
         }
 
-        // Get elements from sf_transaction not included in sf_tpf_transaction
-        const pending_list_purchasing = prf_transaction_treatment.filter((element) => !prf_pr_transaction_treatment.includes(element));
-
-        ordered_transactions_purchasing.innerText = prf_transaction_treatment.length;
-        pending_purchasing.innerText = pending_list_purchasing.length;
-        requested_purchasing.innerText = 0;
-        approved_purchasing.innerText = 0;
-        purchased_purchasing.innerText = 0;
-
-        // pending_list
-        var data_value = "";
-        var data_value_counter = 1;
-        for(let x = 1; x < prf_data_list.content.length; x++){
-            data_value += `
-            <tr>
-                <td>${data_value_counter}</td>
-                <td>${prf_data_list.content[x][1]}</td>
-                <td>${date_decoder(prf_data_list.content[x][0])} /<br> ${time_decoder(prf_data_list.content[x][0])}</td>
-                <td>${prf_data_list.content[x][3]}</td>
-                <td>${prf_data_list.content[x][4]}</td>
-                <td>${prf_data_list.content[x][2]}</td>
-                <td>${prf_data_list.content[x][5]}</td>
-                <td>${prf_data_list.content[x][6]}</td>
-                <td>${prf_data_list.content[x][7]}</td>
-                <td>${prf_data_list.content[x][8]}</td>
-            </tr>
-            `
-            data_value_counter += 1;
-        }
-        pending_list_container_purchasing.innerHTML = data_value;
 
         // // incident_history_list
         // var incident_history_data_value = "";
