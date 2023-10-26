@@ -72,14 +72,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         const user_sidebar_officer = document.getElementById("user_sidebar_officer");
         const user_sidebar_department = document.getElementById("user_sidebar_department");
         const users = document.querySelectorAll("#user");
-        const prf_user = document.getElementById("prf_user");
-        const prf_department = document.getElementById("prf_department");
-        const irf_user = document.getElementById("irf_user");
+        const departments = document.querySelectorAll("#department");
 
         users.forEach(user => {user.value = username_data_list.content[16][findTextInArray(username_data_list, "NAME")]})
-        prf_user.value = username_data_list.content[16][findTextInArray(username_data_list, "NAME")];
-        prf_department.value = username_data_list.content[16][findTextInArray(username_data_list, "DEPARTMENT")];
-        irf_user.value = username_data_list.content[16][findTextInArray(username_data_list, "NAME")];
+        departments.forEach(user => {user.value = username_data_list.content[16][findTextInArray(username_data_list, "DEPARTMENT")]})
         user_sidebar.innerHTML = `<u>${username_data_list.content[16][findTextInArray(username_data_list, "NAME")]}</u>`;
         user_sidebar_officer.innerText = username_data_list.content[16][findTextInArray(username_data_list, "SECTIONS")];
         user_sidebar_department.innerText = username_data_list.content[16][findTextInArray(username_data_list, "DEPARTMENT")];
@@ -247,7 +243,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 legend: {
                     show: true,
                     position: "left", // Set the legend position to "left"
-                    fontSize: '30px', // Increase legend font size as needed
+                    fontSize: '25px', // Increase legend font size as needed
                     formatter: function (seriesName, opts) {
                         // Here, you should use the correct variable to get the series value
                         var seriesValue = opts.w.globals.series[opts.seriesIndex];
@@ -1724,14 +1720,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         
         function prf_generator() {
             var last_row = prf_data_list.content.length -1;        
-            var data_info = prf_data_list.content[last_row][findTextInArray(prf_data_list, "PR #")];
+            var data_info = prf_data_list.content[last_row][findTextInArray(prf_data_list, "ITM #")];
             var data_counter = data_info.substring(9,12) || 0;
             var year = new Date().getFullYear();
             var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
         
             for (let y = 1; y <= prf_counter.value; y++) {
                 prf_form_no[y] = document.querySelector(`#prf_form_no${y}`);
-                prf_form_no[y].value = `PR${year}${month}${((parseInt(data_counter) + y).toString().padStart(3,"0"))}`;
+                prf_form_no[y].value = `ITM${year}${month}${((parseInt(data_counter) + y).toString().padStart(3,"0"))}`;
             }
         }
         
@@ -1746,7 +1742,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <div>
                         <label for="prf_form_no${prf_counter.value}">
                             <i class="fa-solid fa-list-ol"></i>
-                            PR #
+                            ITM #
                         </label><br>
                         <div class="form">
                             <input type="text" id="prf_form_no${prf_counter.value}" name="prf_form_no${prf_counter.value}" autocomplete="off" class="form-control" readonly>
@@ -1833,14 +1829,14 @@ document.addEventListener('DOMContentLoaded', async function() {
             var status = "PENDING";
             var duration = "PENDING";
             for(let y = 1; y < pof_data_list.content.length; y++){
-                if(prf_data_list.content[x][findTextInArray(prf_data_list, "PR #")] == (pof_data_list.content[y][findTextInArray(pof_data_list, "PR #")])){
+                if(prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")] == (pof_data_list.content[y][findTextInArray(pof_data_list, "ITM #")])){
                     status = "REQUESTED"
                 }
             }
             purchase_request_data_value += `
             <tr>
                 <td>${purchase_request_data_value_counter}</td>
-                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "PR #")]}</td>
+                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]}</td>
                 <td>${date_decoder(prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")])}/<br>${time_decoder(prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")])}</td>
                 <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "ITEM")]}</td>
                 <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")]}</td>
@@ -1848,8 +1844,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "DETAILS")]}</td>
                 <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")]}</td>
                 <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")]}</td>
-                <td>${status}</td>
-                <td>${duration}</td>
+                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")]}</td>
             </tr>
             `
             purchase_request_data_value_counter += 1;
