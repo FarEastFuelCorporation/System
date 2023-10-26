@@ -64,13 +64,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         const user_sidebar_officer = document.getElementById("user_sidebar_officer");
         const user_sidebar_department = document.getElementById("user_sidebar_department");
         const users = document.querySelectorAll("#user");
-        const prf_user = document.getElementById("prf_user");
-        const prf_department = document.getElementById("prf_department");
+        const departments = document.querySelectorAll("#department");
         const irf_user = document.getElementById("irf_user");
 
         users.forEach(user => {user.value = username_data_list.content[18][findTextInArray(username_data_list, "NAME")]})
-        prf_user.value = username_data_list.content[18][findTextInArray(username_data_list, "NAME")];
-        prf_department.value = username_data_list.content[18][findTextInArray(username_data_list, "DEPARTMENT")];
+        departments.forEach(user => {user.value = username_data_list.content[18][findTextInArray(username_data_list, "DEPARTMENT")]})
         irf_user.value = username_data_list.content[18][findTextInArray(username_data_list, "NAME")];
         user_sidebar.innerHTML = `<u>${username_data_list.content[18][findTextInArray(username_data_list, "NAME")]}</u>`;
         user_sidebar_officer.innerText = username_data_list.content[18][findTextInArray(username_data_list, "SECTIONS")];
@@ -612,12 +610,6 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         // multi section
         // purchase_request_form
-        const today = new Date();
-        const today_year = today.getFullYear();
-        const today_month = today.getMonth()+1;
-        if(today_month.toString().length == 1){
-            month_new = `0${today_month}`
-        }
         const purchase_request_form = document.querySelector("#purchase_request_form");
         const add_item_button = purchase_request_form.querySelector("#add_item_button");
         const remove_item_button = purchase_request_form.querySelector("#remove_item_button");
@@ -627,30 +619,20 @@ document.addEventListener('DOMContentLoaded', async function() {
         var prf_counter = purchase_request_form.querySelector("#prf_counter");
         var prf_form_no = [];
         
-        // function prf_generator() {
-        //     var data_content = 0;
-        //     var data_info;
-        //     var data_last_3digit = 0;
-        //     var prf_code_year_month;
-        //     prf_code_year_month = `PR${today_year}${month_new}`;
+        function prf_generator() {
+            var last_row = prf_data_list.content.length -1;        
+            var data_info = prf_data_list.content[last_row][findTextInArray(prf_data_list, "ITM #")];
+            var data_counter = data_info.substring(9,12) || 0;
+            var year = new Date().getFullYear();
+            var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
         
-        //     for (let x = 1; x < prf_data_list.content.length; x++) {
-        //         data_info = prf_data_list.content[x][findTextInArray(prf_data_list, "PR #")];
+            for (let y = 1; y <= prf_counter.value; y++) {
+                prf_form_no[y] = document.querySelector(`#prf_form_no${y}`);
+                prf_form_no[y].value = `ITM${year}${month}${((parseInt(data_counter) + y).toString().padStart(3,"0"))}`;
+            }
+        }
         
-        //         if (data_info.includes(prf_code_year_month) == true) {
-        //             data_last_3digit = data_info.slice(8);
-        //         }
-        //     }
-        
-        //     data_content = parseInt(data_last_3digit);
-        
-        //     for (let y = 1; y <= prf_counter.value; y++) {
-        //         prf_form_no[y] = document.querySelector(`#prf_form_no${y}`);
-        //         prf_form_no[y].value = `${prf_code_year_month}${String(parseInt(data_content) + y).padStart(3,"0")}`;
-        //     }
-        // }
-        
-        // prf_generator()
+        prf_generator()
         
         add_item_button.addEventListener("click", () => {
             const prf_item_container = purchase_request_form.querySelector("#prf_item_container");
@@ -661,7 +643,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <div>
                         <label for="prf_form_no${prf_counter.value}">
                             <i class="fa-solid fa-list-ol"></i>
-                            PR #
+                            ITM #
                         </label><br>
                         <div class="form">
                             <input type="text" id="prf_form_no${prf_counter.value}" name="prf_form_no${prf_counter.value}" autocomplete="off" class="form-control" readonly>
@@ -748,14 +730,14 @@ document.addEventListener('DOMContentLoaded', async function() {
             var status = "PENDING";
             var duration = "PENDING";
             for(let y = 1; y < pof_data_list.content.length; y++){
-                if(prf_data_list.content[x][findTextInArray(prf_data_list, "PR #")] == (pof_data_list.content[y][findTextInArray(pof_data_list, "PR #")])){
+                if(prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")] == (pof_data_list.content[y][findTextInArray(pof_data_list, "ITM #")])){
                     status = "REQUESTED"
                 }
             }
             purchase_request_data_value += `
             <tr>
                 <td>${purchase_request_data_value_counter}</td>
-                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "PR #")]}</td>
+                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]}</td>
                 <td>${date_decoder(prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")])}/<br>${time_decoder(prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")])}</td>
                 <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "ITEM")]}</td>
                 <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")]}</td>
@@ -763,8 +745,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "DETAILS")]}</td>
                 <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")]}</td>
                 <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")]}</td>
-                <td>${status}</td>
-                <td>${duration}</td>
+                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")]}</td>
             </tr>
             `
             purchase_request_data_value_counter += 1;
@@ -781,200 +762,200 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         })
                 
-        // incident report form
-        const irf_form_no = document.getElementById("irf_form_no"); 
-        var irf_code_year_month;
-        irf_code_year_month = `IRF${today_year}${today_month}`;
+        // // incident report form
+        // const irf_form_no = document.getElementById("irf_form_no"); 
+        // var irf_code_year_month;
+        // irf_code_year_month = `IRF${today_year}${today_month}`;
         
-        var data_content = 1;
-        var data_info;
-        var data_last_3digit = 0;
+        // var data_content = 1;
+        // var data_info;
+        // var data_last_3digit = 0;
     
-        for(x=1; x<irf_data_list.content.length; x++){
-            data_info = irf_data_list.content[x][findTextInArray(irf_data_list, "IRF #")];
+        // for(x=1; x<irf_data_list.content.length; x++){
+        //     data_info = irf_data_list.content[x][findTextInArray(irf_data_list, "IRF #")];
             
-            if(data_info.includes(irf_code_year_month) == true){
-                data_last_3digit = data_info.slice(9)
-            }
-        }
+        //     if(data_info.includes(irf_code_year_month) == true){
+        //         data_last_3digit = data_info.slice(9)
+        //     }
+        // }
 
-        data_content = parseInt(data_last_3digit) +1
+        // data_content = parseInt(data_last_3digit) +1
     
-        if(data_content.toString().length == 1){
-            data_counter = `00${data_content}`;
-        }
-        else if(data_content.toString().length == 2){
-            data_counter = `0${data_content}`;
-        }
-        else if(data_content.toString().length == 3){
-            data_counter = `${data_content}`;
-        }
+        // if(data_content.toString().length == 1){
+        //     data_counter = `00${data_content}`;
+        // }
+        // else if(data_content.toString().length == 2){
+        //     data_counter = `0${data_content}`;
+        // }
+        // else if(data_content.toString().length == 3){
+        //     data_counter = `${data_content}`;
+        // }
     
-        irf_form_no.value = `${irf_code_year_month}${data_counter}`
+        // irf_form_no.value = `${irf_code_year_month}${data_counter}`
 
-        const incident_report_form = document.querySelector("#incident_report_form");
-        const person_involved_containers = incident_report_form.querySelector("#person_involved_containers");
-        const irf_counter_incident_report_form = incident_report_form.querySelector("#irf_counter");
-        const add_tf_button_incident_report_form = incident_report_form.querySelector("#add_tf_button");
-        const remove_tf_button_incident_report_form = incident_report_form.querySelector("#add_tf_button");
-        const form_tab_incident_report_form = incident_report_form.querySelector("#form_tab");
-        const incident_report_form_button_incident_report_form = incident_report_form.querySelector("#incident_report_form_button");
-        const incident_history_list_incident_report_form = incident_report_form.querySelector("#incident_history_list");
-        var employee_name = [];
-        var employee_department = [];
-        var employee_designation = [];
-        for(let x = 1; x < employee_data_list.content.length; x++){
-            if(employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE STATUS")] == "ACTIVE"){
-                var gender = employee_data_list.content[x][findTextInArray(employee_data_list, "GENDER")];
-                if(gender == "MALE"){
-                    var full_name = `${employee_data_list.content[x][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[x][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[x][findTextInArray(employee_data_list, "MIDDLE NAME")]} ${employee_data_list.content[x][findTextInArray(employee_data_list, "AFFIX")]}`
-                    employee_name.push(full_name);
-                    employee_department.push(employee_data_list.content[x][findTextInArray(employee_data_list, "DEPARTMENT")]);
-                    employee_designation.push(employee_data_list.content[x][findTextInArray(employee_data_list, "DESIGNATION")]);
-                }
-                else{
-                    var full_name = `${employee_data_list.content[x][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[x][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[x][findTextInArray(employee_data_list, "MIDDLE NAME")]} - ${employee_data_list.content[x][findTextInArray(employee_data_list, "SPOUSE NAME")]}`
-                    employee_name.push(full_name);
-                    employee_department.push(employee_data_list.content[x][findTextInArray(employee_data_list, "DEPARTMENT")]);
-                    employee_designation.push(employee_data_list.content[x][findTextInArray(employee_data_list, "DESIGNATION")]);
-                }
-            }
-        }
-        function addPersonInvolved(){
-            const person_involved_container = person_involved_containers.querySelector(`#person_involved_container${irf_counter_incident_report_form.value}`);
-            var search_wrapper2 = person_involved_container.querySelector(`#search_irf_client${irf_counter_incident_report_form.value}`);
-            var irf_department = person_involved_container.querySelector(`#irf_department${irf_counter_incident_report_form.value}`);
-            var irf_designation = person_involved_container.querySelector(`#irf_designation${irf_counter_incident_report_form.value}`);
-            var irf_client = search_wrapper2.querySelector(`#irf_client${irf_counter_incident_report_form.value}`);
-            var sugg_box2 = search_wrapper2.querySelector(".autocom_box");
-            irf_client.onkeyup = (e) => {
-                let user_data = e.target.value;
-                let empty_array = [];
-                if (user_data) {
-                    empty_array = employee_name.filter((data) => {
-                        return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
-                    });
-                    empty_array = empty_array.map((data) => {
-                        return '<li>' + data + '</li>';
-                    });
-                    search_wrapper2.classList.add("active");
-                    show_suggestions2(empty_array);
-                } else {
-                    search_wrapper2.classList.remove("active");
-                }
-            };
-            sugg_box2.addEventListener("click", (e) => {
-                if (e.target.tagName === "LI") {
-                    select2(e.target.innerHTML);
-                }
-            });
-            function select2(element) {
-                let select_user_data = element;
-                search_wrapper2.classList.remove("active");
-                irf_client.value = select_user_data;
-                irf_department.value = employee_department[findTextInArray2(employee_name, select_user_data)];
-                employee_department.splice(findTextInArray2(employee_name, select_user_data), 1);
-                irf_designation.value = employee_designation[findTextInArray2(employee_name, select_user_data)];
-                employee_designation.splice(findTextInArray2(employee_name, select_user_data), 1);
-                employee_name = employee_name.filter(item => item !== select_user_data);
-            }
-            function show_suggestions2(list) {
-                let list_data;
-                if (!list.length) {
-                    user_value = irf_client.value;
-                    list_data = '<li>' + user_value + '</li>';
-                } else {
-                    list_data = list.join("");
-                }
-                sugg_box2.innerHTML = list_data;
-            }
-        }
-        addPersonInvolved();
-        add_tf_button_incident_report_form.addEventListener("click", () => {
-            irf_counter_incident_report_form.value = parseInt(irf_counter_incident_report_form.value) + 1;
-            var data = `
-            <div id="person_involved_container${irf_counter_incident_report_form.value}" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
-                <div class="wrapper">
-                    <label for="irf_client${irf_counter_incident_report_form.value}">
-                        <i class="fa-solid fa-user"></i>
-                        Person Involved
-                    </label><br>
-                    <div class="search_input" id="search_irf_client${irf_counter_incident_report_form.value}">
-                        <input type="text" name="irf_client${irf_counter_incident_report_form.value}" id="irf_client${irf_counter_incident_report_form.value}" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
-                        <div class="autocom_box">
-                        </div>
-                        <div class="icon"><i class="fas fa-search"></i></div>
-                    </div>
-                </div>
-                <div>
-                    <label for="irf_department${irf_counter_incident_report_form.value}">
-                        <i class="fa-solid fa-building-user"></i>
-                        Department
-                    </label><br>
-                    <input type="text" id="irf_department${irf_counter_incident_report_form.value}" autocomplete="off" name="irf_department${irf_counter_incident_report_form.value}" class="form-control" required readonly placeholder="Input Department..." style="height: 55px !important;">    
-                </div>
-                <div>
-                    <label for="irf_designation${irf_counter_incident_report_form.value}">
-                        <i class="fa-solid fa-id-card"></i>
-                        Designation
-                    </label><br>
-                    <input type="text" id="irf_designation${irf_counter_incident_report_form.value}" autocomplete="off" name="irf_designation${irf_counter_incident_report_form.value}" class="form-control" required readonly placeholder="Input Designation..." style="height: 55px !important;">   
-                </div>
-            </div>
-            `
-            person_involved_containers.insertAdjacentHTML("beforeend", data);
-            remove_tf_button_incident_report_form.style.display = "block";
-            addPersonInvolved();
-        })
-        // incident_history_list
-        var incident_history_data_value = "";
-        var incident_history_data_value_counter = 1;
+        // const incident_report_form = document.querySelector("#incident_report_form");
+        // const person_involved_containers = incident_report_form.querySelector("#person_involved_containers");
+        // const irf_counter_incident_report_form = incident_report_form.querySelector("#irf_counter");
+        // const add_tf_button_incident_report_form = incident_report_form.querySelector("#add_tf_button");
+        // const remove_tf_button_incident_report_form = incident_report_form.querySelector("#add_tf_button");
+        // const form_tab_incident_report_form = incident_report_form.querySelector("#form_tab");
+        // const incident_report_form_button_incident_report_form = incident_report_form.querySelector("#incident_report_form_button");
+        // const incident_history_list_incident_report_form = incident_report_form.querySelector("#incident_history_list");
+        // var employee_name = [];
+        // var employee_department = [];
+        // var employee_designation = [];
+        // for(let x = 1; x < employee_data_list.content.length; x++){
+        //     if(employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE STATUS")] == "ACTIVE"){
+        //         var gender = employee_data_list.content[x][findTextInArray(employee_data_list, "GENDER")];
+        //         if(gender == "MALE"){
+        //             var full_name = `${employee_data_list.content[x][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[x][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[x][findTextInArray(employee_data_list, "MIDDLE NAME")]} ${employee_data_list.content[x][findTextInArray(employee_data_list, "AFFIX")]}`
+        //             employee_name.push(full_name);
+        //             employee_department.push(employee_data_list.content[x][findTextInArray(employee_data_list, "DEPARTMENT")]);
+        //             employee_designation.push(employee_data_list.content[x][findTextInArray(employee_data_list, "DESIGNATION")]);
+        //         }
+        //         else{
+        //             var full_name = `${employee_data_list.content[x][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[x][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[x][findTextInArray(employee_data_list, "MIDDLE NAME")]} - ${employee_data_list.content[x][findTextInArray(employee_data_list, "SPOUSE NAME")]}`
+        //             employee_name.push(full_name);
+        //             employee_department.push(employee_data_list.content[x][findTextInArray(employee_data_list, "DEPARTMENT")]);
+        //             employee_designation.push(employee_data_list.content[x][findTextInArray(employee_data_list, "DESIGNATION")]);
+        //         }
+        //     }
+        // }
+        // function addPersonInvolved(){
+        //     const person_involved_container = person_involved_containers.querySelector(`#person_involved_container${irf_counter_incident_report_form.value}`);
+        //     var search_wrapper2 = person_involved_container.querySelector(`#search_irf_client${irf_counter_incident_report_form.value}`);
+        //     var irf_department = person_involved_container.querySelector(`#irf_department${irf_counter_incident_report_form.value}`);
+        //     var irf_designation = person_involved_container.querySelector(`#irf_designation${irf_counter_incident_report_form.value}`);
+        //     var irf_client = search_wrapper2.querySelector(`#irf_client${irf_counter_incident_report_form.value}`);
+        //     var sugg_box2 = search_wrapper2.querySelector(".autocom_box");
+        //     irf_client.onkeyup = (e) => {
+        //         let user_data = e.target.value;
+        //         let empty_array = [];
+        //         if (user_data) {
+        //             empty_array = employee_name.filter((data) => {
+        //                 return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
+        //             });
+        //             empty_array = empty_array.map((data) => {
+        //                 return '<li>' + data + '</li>';
+        //             });
+        //             search_wrapper2.classList.add("active");
+        //             show_suggestions2(empty_array);
+        //         } else {
+        //             search_wrapper2.classList.remove("active");
+        //         }
+        //     };
+        //     sugg_box2.addEventListener("click", (e) => {
+        //         if (e.target.tagName === "LI") {
+        //             select2(e.target.innerHTML);
+        //         }
+        //     });
+        //     function select2(element) {
+        //         let select_user_data = element;
+        //         search_wrapper2.classList.remove("active");
+        //         irf_client.value = select_user_data;
+        //         irf_department.value = employee_department[findTextInArray2(employee_name, select_user_data)];
+        //         employee_department.splice(findTextInArray2(employee_name, select_user_data), 1);
+        //         irf_designation.value = employee_designation[findTextInArray2(employee_name, select_user_data)];
+        //         employee_designation.splice(findTextInArray2(employee_name, select_user_data), 1);
+        //         employee_name = employee_name.filter(item => item !== select_user_data);
+        //     }
+        //     function show_suggestions2(list) {
+        //         let list_data;
+        //         if (!list.length) {
+        //             user_value = irf_client.value;
+        //             list_data = '<li>' + user_value + '</li>';
+        //         } else {
+        //             list_data = list.join("");
+        //         }
+        //         sugg_box2.innerHTML = list_data;
+        //     }
+        // }
+        // addPersonInvolved();
+        // add_tf_button_incident_report_form.addEventListener("click", () => {
+        //     irf_counter_incident_report_form.value = parseInt(irf_counter_incident_report_form.value) + 1;
+        //     var data = `
+        //     <div id="person_involved_container${irf_counter_incident_report_form.value}" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+        //         <div class="wrapper">
+        //             <label for="irf_client${irf_counter_incident_report_form.value}">
+        //                 <i class="fa-solid fa-user"></i>
+        //                 Person Involved
+        //             </label><br>
+        //             <div class="search_input" id="search_irf_client${irf_counter_incident_report_form.value}">
+        //                 <input type="text" name="irf_client${irf_counter_incident_report_form.value}" id="irf_client${irf_counter_incident_report_form.value}" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
+        //                 <div class="autocom_box">
+        //                 </div>
+        //                 <div class="icon"><i class="fas fa-search"></i></div>
+        //             </div>
+        //         </div>
+        //         <div>
+        //             <label for="irf_department${irf_counter_incident_report_form.value}">
+        //                 <i class="fa-solid fa-building-user"></i>
+        //                 Department
+        //             </label><br>
+        //             <input type="text" id="irf_department${irf_counter_incident_report_form.value}" autocomplete="off" name="irf_department${irf_counter_incident_report_form.value}" class="form-control" required readonly placeholder="Input Department..." style="height: 55px !important;">    
+        //         </div>
+        //         <div>
+        //             <label for="irf_designation${irf_counter_incident_report_form.value}">
+        //                 <i class="fa-solid fa-id-card"></i>
+        //                 Designation
+        //             </label><br>
+        //             <input type="text" id="irf_designation${irf_counter_incident_report_form.value}" autocomplete="off" name="irf_designation${irf_counter_incident_report_form.value}" class="form-control" required readonly placeholder="Input Designation..." style="height: 55px !important;">   
+        //         </div>
+        //     </div>
+        //     `
+        //     person_involved_containers.insertAdjacentHTML("beforeend", data);
+        //     remove_tf_button_incident_report_form.style.display = "block";
+        //     addPersonInvolved();
+        // })
+        // // incident_history_list
+        // var incident_history_data_value = "";
+        // var incident_history_data_value_counter = 1;
 
-        for(let x = 1; x < irf_data_list.content.length; x++){
-            const resultArray = (irf_data_list.content[x][findTextInArray(irf_data_list, "PERSON INVOLVE")]).split(" || ");
-            var data_value2 = [];
-            for(let z = 0; z < resultArray.length; z++){
-                for(let y = 1; y < employee_data_list.content.length; y++){
-                    if(employee_data_list.content[y][findTextInArray(employee_data_list, "EMPLOYEE ID")] == resultArray[z]){
-                        var gender = employee_data_list.content[y][findTextInArray(employee_data_list, "GENDER")];
-                        if(gender == "MALE"){
-                            var full_name = `${employee_data_list.content[y][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[y][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[y][findTextInArray(employee_data_list, "MIDDLE NAME")]} ${employee_data_list.content[y][findTextInArray(employee_data_list, "AFFIX")]}`
-                            data_value2.push(full_name);
-                        }
-                        else{
-                            var full_name = `${employee_data_list.content[y][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[y][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[y][findTextInArray(employee_data_list, "MIDDLE NAME")]} - ${employee_data_list.content[y][findTextInArray(employee_data_list, "SPOUSE NAME")]}`
-                            data_value2.push(full_name);
-                        }
-                    }
-                }
-            }
-            const concatenatedString = data_value2.join(" || ")
-            incident_history_data_value += `
-            <tr>
-                <td>${incident_history_data_value_counter}</td>
-                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "IRF #")]}</td>
-                <td>${date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "DATE OF INCIDENT")])} /<br> ${time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "TIME OF INCIDENT")])}</td>
-                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "DEPARTMENT")]}</td>
-                <td>${concatenatedString}</td>
-                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "DESIGNATION")]}</td>
-                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "LOCATION")]}</td>
-                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "INCIDENT DETAILS")]}</td>
-                <td>${date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "DATE OF REPORT")])} /<br> ${time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "TIME OF REPORT")])}</td>
-                <td>${calculateTravelTime(date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "DATE OF INCIDENT")]),time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "TIME OF INCIDENT")]),date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "DATE OF REPORT")]),time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "TIME OF REPORT")]))}</td>
-            </tr>
-            `
-            incident_history_data_value_counter += 1;
-        }
-        incident_history_list_incident_report_form.innerHTML = incident_history_data_value
+        // for(let x = 1; x < irf_data_list.content.length; x++){
+        //     const resultArray = (irf_data_list.content[x][findTextInArray(irf_data_list, "PERSON INVOLVE")]).split(" || ");
+        //     var data_value2 = [];
+        //     for(let z = 0; z < resultArray.length; z++){
+        //         for(let y = 1; y < employee_data_list.content.length; y++){
+        //             if(employee_data_list.content[y][findTextInArray(employee_data_list, "EMPLOYEE ID")] == resultArray[z]){
+        //                 var gender = employee_data_list.content[y][findTextInArray(employee_data_list, "GENDER")];
+        //                 if(gender == "MALE"){
+        //                     var full_name = `${employee_data_list.content[y][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[y][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[y][findTextInArray(employee_data_list, "MIDDLE NAME")]} ${employee_data_list.content[y][findTextInArray(employee_data_list, "AFFIX")]}`
+        //                     data_value2.push(full_name);
+        //                 }
+        //                 else{
+        //                     var full_name = `${employee_data_list.content[y][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[y][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[y][findTextInArray(employee_data_list, "MIDDLE NAME")]} - ${employee_data_list.content[y][findTextInArray(employee_data_list, "SPOUSE NAME")]}`
+        //                     data_value2.push(full_name);
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     const concatenatedString = data_value2.join(" || ")
+        //     incident_history_data_value += `
+        //     <tr>
+        //         <td>${incident_history_data_value_counter}</td>
+        //         <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "IRF #")]}</td>
+        //         <td>${date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "DATE OF INCIDENT")])} /<br> ${time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "TIME OF INCIDENT")])}</td>
+        //         <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "DEPARTMENT")]}</td>
+        //         <td>${concatenatedString}</td>
+        //         <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "DESIGNATION")]}</td>
+        //         <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "LOCATION")]}</td>
+        //         <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "INCIDENT DETAILS")]}</td>
+        //         <td>${date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "DATE OF REPORT")])} /<br> ${time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "TIME OF REPORT")])}</td>
+        //         <td>${calculateTravelTime(date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "DATE OF INCIDENT")]),time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "TIME OF INCIDENT")]),date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "DATE OF REPORT")]),time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "TIME OF REPORT")]))}</td>
+        //     </tr>
+        //     `
+        //     incident_history_data_value_counter += 1;
+        // }
+        // incident_history_list_incident_report_form.innerHTML = incident_history_data_value
 
-        incident_report_form_button_incident_report_form.addEventListener("click", () => {
-            if(form_tab_incident_report_form.style.display == "block"){
-                form_tab_incident_report_form.style.display = "none";
-            }
-            else{
-                form_tab_incident_report_form.style.display = "block";
-            }
-        })        
+        // incident_report_form_button_incident_report_form.addEventListener("click", () => {
+        //     if(form_tab_incident_report_form.style.display == "block"){
+        //         form_tab_incident_report_form.style.display = "none";
+        //     }
+        //     else{
+        //         form_tab_incident_report_form.style.display = "block";
+        //     }
+        // })        
 
         function findEmployeeName(employee_id){
             var employee_name = "";

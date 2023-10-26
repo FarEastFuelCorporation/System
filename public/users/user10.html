@@ -62,6 +62,12 @@
                 <li>
                     <a href="#">
                         <i class="fas fa-th-large"></i>
+                        Collection Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-th-large"></i>
                         Safety Officer Dashboard
                     </a>
                 </li>
@@ -411,7 +417,7 @@
             </section>
             <!-- billing_dashboard -->
             <section id="billing_dashboard">
-                <h2>DASHBOARD</h2><br>
+                <h2>BILLING DASHBOARD</h2><br>
                 <h2>BILLING SUMMARY</h2>
                 <div>
                     <div class="cards">
@@ -439,39 +445,14 @@
                                 <div class="card-name">Billed Transaction</div>
                             </div>
                             <div class="icon-box">
-                                <i class="fa-solid fa-money-bill-wave"></i>
+                                <i class="fa-solid fa-clipboard-check"></i>
+                            </div>
+                        </div>
+                        <div style="position: relative;">
+                            <div id="pieChart3" style="position: absolute; margin-top: -40px;">
                             </div>
                         </div>
                     </div><br>
-                    <!-- <div class="cards">
-                        <div class="card">
-                            <div class="card-content">
-                                <div class="number" id="total2"></div>
-                                <div class="card-name">Billed Amount</div>
-                            </div>
-                            <div class="icon-box">
-                                <i class="fa-solid fa-receipt"></i>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-content">
-                                <div class="number" id="sorted2"></div>
-                                <div class="card-name">Unbilled Amount</div>
-                            </div>
-                            <div class="icon-box">
-                                <i class="fa-solid fa-money-check"></i>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-content">
-                                <div class="number" id="unsorted2"></div>
-                                <div class="card-name">Total Amount</div>
-                            </div>
-                            <div class="icon-box">
-                                <i class="fa-solid fa-sack-dollar"></i>
-                            </div>
-                        </div>
-                    </div><br> -->
                     <h2>PENDING TRANSACTION LIST</h2>
                     <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
                         <div class="list">
@@ -479,13 +460,16 @@
                                 <thead style="position: sticky; top: 0; background-color: black;">
                                     <th>#</th>
                                     <th>COD #</th>
-                                    <th>DATE OF CERTIFICATION</th>
+                                    <th>MTF #</th>
+                                    <th>HAULING<br>DATE</th>
+                                    <th>CERTIFICATION<br>DATE/TIME</th>
                                     <th>CLIENT</th>
                                     <th>WASTE CODE</th>
                                     <th>WASTE DESCRIPTION</th>
                                     <th>WEIGHT</th>
+                                    <th>SUBMITTED BY</th>
                                 </thead>
-                                <tbody id="unsorted_list">
+                                <tbody id="pending_list">
 
                                 </tbody>
                             </table>
@@ -493,7 +477,96 @@
                         </div>
                     </div>
                 </div>
-            </section>  
+            </section>     
+            <!-- collection_dashboard -->
+            <section id="collection_dashboard">
+                <h2>COLLECTION DASHBOARD</h2><br>
+                <h2>COLLECTION SUMMARY</h2>
+                <div>
+                    <div class="cards">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="billed_counter"></div>
+                                <div class="card-name">Billed Transaction</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-clipboard-check"></i>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="pending_counter"></div>
+                                <div class="card-name">Pending Transaction</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-clipboard-list"></i>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="collected_counter"></div>
+                                <div class="card-name">Collection</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-sack-dollar"></i>
+                            </div>
+                        </div>
+                        <div style="position: relative;">
+                            <div id="pieChart2" style="position: absolute; margin-top: 40px;">
+                            </div>
+                        </div>
+                    </div><br>
+                    <div class="cards">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="billed_counter_amount"></div>
+                                <div class="card-name">Billed Amount</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-clipboard-check"></i>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="pending_counter_amount"></div>
+                                <div class="card-name">Pending Amount</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-clipboard-list"></i>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="collected_counter_amount"></div>
+                                <div class="card-name">Collected Amount</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-sack-dollar"></i>
+                            </div>
+                        </div>
+                    </div><br>
+                    <h2>PENDING TRANSACTION LIST</h2>
+                    <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
+                        <div class="list">
+                            <table>
+                                <thead style="position: sticky; top: 0; background-color: black;">
+                                    <th>#</th>
+                                    <th>BPF #</th>
+                                    <th>MTF #</th>
+                                    <th>HAULING<br>DATE</th>
+                                    <th>BILLING<br>DATE/TIME</th>
+                                    <th>CLIENT</th>
+                                    <th>AMOUNT</th>
+                                </thead>
+                                <tbody id="pending_list">
+
+                                </tbody>
+                            </table>
+                            <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                        </div>
+                    </div>
+                </div>
+            </section>   
             <!-- safety_dashboard --> 
             <section class="safety" id="safety_dashboard">
                 <h2>DASHBOARD</h2><br>
@@ -583,9 +656,9 @@
                     </label><br>
                 </div>
                 <div id="form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
-                    <form action="https://script.google.com/macros/s/AKfycbw4wpqb5yFlzKY6ortaVZppEAgYqm5G_otQl5I-3fGzPjiEAVKVOEv93mAFLeUbneTlAA/exec" method="post">
-                        <input type="hidden" name="prf_user" id="prf_user">
-                        <input type="hidden" name="prf_department" id="prf_department">
+                    <form action="https://script.google.com/macros/s/AKfycbw3Ha41j9YB84r5-snBPEqogfqKZLsnstAuM0Ae79PgPTmLv14VufRa5NJ5rl0ed8UWzg/exec" method="post">
+                        <input type="hidden" name="user" id="user">
+                        <input type="hidden" name="department" id="department">
                         <input type="hidden" name="prf_counter" id="prf_counter" value="1">
                         <div id="prf_item_container">
                             <div id="prf_item1">
@@ -593,7 +666,7 @@
                                     <div>
                                         <label for="prf_form_no1">
                                             <i class="fa-solid fa-list-ol"></i>
-                                            PR #
+                                            ITM #
                                         </label><br>
                                         <div class="form">
                                             <input type="text" id="prf_form_no1" name="prf_form_no1" autocomplete="off" class="form-control" readonly>
@@ -669,12 +742,12 @@
                         </div> 
                     </form>
                 </div>
-                <div class="table" style="max-height: 70vh; align-items: start; overflow-y: scroll;">                            
+                <div class="table style="max-height: 70vh; align-items: start; overflow-y: scroll;">                            
                     <div class="list">
                         <table>
                             <thead style="position: sticky; top: 0; background-color: black;">
                                 <th>#</th>
-                                <th>PR #</th>
+                                <th>ITM #</th>
                                 <th>REQUEST<br>DATE/TIME</th>
                                 <th>ITEM</th>
                                 <th>QTY</th>
@@ -683,10 +756,9 @@
                                 <th>REMARKS</th>
                                 <th>SUBMITTED<br>BY</th>
                                 <th>STATUS</th>
-                                <th>DURATION<br>REPORT</th>
                             </thead>
                             <tbody id="purchase_request_list">
-
+    
                             </tbody>
                         </table>
                         <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>

@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const tpf_response_promise = fetch('https://script.google.com/macros/s/AKfycbwbKss2XtW5lylCrUe8IC-ZA4ffA5CM5tY6kqIja9t80NXJw2nB8RBOJFWbXQz0hWMadw/exec');
         const cod_response_promise = fetch('https://script.google.com/macros/s/AKfycbzgiOuXizUVviCsLVfihqYN9HJ3pyNr7ElHoCl3JGkbtQnChnm2U42yQuLd4UMH0ci5/exec');
         const bpf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyux0GBj9tk6quRz46IkXa0VemEDAi-v2iEHx7C_6OFi416ERkv_BFtKqBmbw-bxaaiFQ/exec');
+        const ctf_response_promise = fetch('https://script.google.com/macros/s/AKfycbx1baTJSEL1piW4QrLRRuqIw0FW1kvz37Zo3NaMfJivPZUZObrkuDlcSZaa8GDUw9Td/exec');
         const irf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzTmhNOz5cXeKitSXAriUJ_FEahAQugYEKIRwDuFt9tjhj2AtPKEf2H4yTMmZ1igpUxlQ/exec');
         const prf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxZctLub-6PuQGykx298syeH7Qm__S37uqQrVFYsHVtv-Qk8M2oSkRIPIMVT_1WexqRZA/exec');
         const pof_response_promise = fetch('https://script.google.com/macros/s/AKfycby9i2KfOZ_uF7-JUPX8qpXg7Jewmw6oU3EfUTpXiwnRRB91_qIW3xAVNy5SZBN1YhVzzg/exec');
@@ -37,6 +38,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             tpf_response,
             cod_response,
             bpf_response,
+            ctf_response,
             irf_response,
             prf_response,
             pof_response,
@@ -58,6 +60,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             tpf_response_promise,
             cod_response_promise,
             bpf_response_promise,
+            ctf_response_promise,
             irf_response_promise,
             prf_response_promise,
             pof_response_promise,
@@ -80,6 +83,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const tpf_data_list  = await tpf_response.json();
         const cod_data_list  = await cod_response.json();
         const bpf_data_list  = await bpf_response.json();
+        const ctf_data_list  = await ctf_response.json();
         const irf_data_list  = await irf_response.json();
         const prf_data_list  = await prf_response.json();
         const pof_data_list  = await pof_response.json();
@@ -106,6 +110,29 @@ document.addEventListener('DOMContentLoaded', async function() {
         const pending_marketing = document.getElementById("pending");
         const received_marketing = document.getElementById("received");
         const pending_list_marketing = document.getElementById("pending_list");
+        // billing
+        const billing_dashboard = document.querySelector("#billing_dashboard");
+        const certified_counter_billing = billing_dashboard.querySelector("#certified_counter");
+        const pending_counter_billing = billing_dashboard.querySelector("#pending_counter");
+        const billed_counter_billing = billing_dashboard.querySelector("#billed_counter");
+        const pending_list_billing = billing_dashboard.querySelector("#pending_list");
+        let sf_transaction_billing = []; 
+        let sf_tpf_transaction_billing = [];
+        // collection
+        const collection_dashboard = document.querySelector("#collection_dashboard");
+        const billed_counter_collection = collection_dashboard.querySelector("#billed_counter");
+        const pending_counter_collection = collection_dashboard.querySelector("#pending_counter");
+        const collected_counter_collection = collection_dashboard.querySelector("#collected_counter");
+        const billed_counter_amount_collection = collection_dashboard.querySelector("#billed_counter_amount");
+        const pending_counter_amount_collection = collection_dashboard.querySelector("#pending_counter_amount");
+        const collected_counter_amount_collection = collection_dashboard.querySelector("#collected_counter_amount");
+        const pending_list_collection = collection_dashboard.querySelector("#pending_list");
+        let bpf_transaction_collection = []; 
+        let bpf_ctf_transaction_collection = []; 
+        let bpf_transaction_amount_collection = 0; 
+        let bpf_ctf_transaction_amount_collection = 0; 
+
+
         const month_filter = document.getElementById("month_filter");
         function getCurrentMonthName() {
             const months = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
@@ -118,6 +145,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         month_filter.addEventListener("change", generatePending)
         generatePending();
         function generatePending(){
+            // marketing
             var for_logistics_pending_counter_marketing = 0;
             var for_logistics_on_haul_counter_marketing = 0;
             var for_logistics_received_counter_marketing = 0;
@@ -240,7 +268,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             on_hauling_marketing.innerText = for_logistics_on_haul_counter_marketing;
             pending_marketing.innerText = for_logistics_pending_counter_marketing + for_receiving_pending_counter_marketing;
             received_marketing.innerText = for_logistics_received_counter_marketing + for_receiving_received_counter_marketing;
-    
+            
+            // marketing 
             var options = {
                 series: [for_logistics_pending_counter_marketing + for_receiving_pending_counter_marketing, for_logistics_on_haul_counter_marketing, for_logistics_received_counter_marketing + for_receiving_received_counter_marketing],
                 chart: {
@@ -292,6 +321,338 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             var chart = new ApexCharts(pieChart, options);
             chart.render();
+
+            // billing
+            sf_transaction_billing = [];
+            sf_tpf_transaction_billing = [];
+            for (let i = 1; i < cod_data_list.content.length; i++) {
+                if (!sf_transaction_billing.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]) &&
+                month_filter.value == formatMonth(cod_data_list.content[i][findTextInArray(cod_data_list, "HAULING DATE")])) {
+                    sf_transaction_billing.push(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]);
+                }
+                else if (!sf_transaction_billing.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]) &&
+                month_filter.value == "ALL") {
+                    sf_transaction_billing.push(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]);
+                }
+            }
+    
+            for (let i = 1; i < bpf_data_list.content.length; i++) {
+                if (!sf_tpf_transaction_billing.includes(bpf_data_list.content[i][findTextInArray(bpf_data_list, "COD #")]) &&
+                month_filter.value == formatMonth(bpf_data_list.content[i][findTextInArray(bpf_data_list, "HAULING DATE")])) {
+                    sf_tpf_transaction_billing.push(bpf_data_list.content[i][findTextInArray(bpf_data_list, "COD #")]);
+                }
+                else if (!sf_tpf_transaction_billing.includes(bpf_data_list.content[i][findTextInArray(bpf_data_list, "COD #")]) &&
+                month_filter.value == "ALL") {
+                    sf_tpf_transaction_billing.push(bpf_data_list.content[i][findTextInArray(bpf_data_list, "COD #")]);
+                }
+            }
+
+            // collection
+            bpf_transaction_collection = [];
+            bpf_ctf_transaction_collection = [];
+            bpf_transaction_amount_collection = 0;
+            bpf_ctf_transaction_amount_collection = 0;
+            for (let i = 1; i < bpf_data_list.content.length; i++) {
+                if (!bpf_transaction_collection.includes(bpf_data_list.content[i][findTextInArray(bpf_data_list, "BPF #")]) &&
+                month_filter.value == formatMonth(bpf_data_list.content[i][findTextInArray(bpf_data_list, "HAULING DATE")])) {
+                    bpf_transaction_collection.push(bpf_data_list.content[i][findTextInArray(bpf_data_list, "BPF #")]);
+                    bpf_transaction_amount_collection += bpf_data_list.content[i][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")];
+                }
+                else if (!bpf_transaction_collection.includes(bpf_data_list.content[i][findTextInArray(bpf_data_list, "BPF #")]) &&
+                month_filter.value == "ALL") {
+                    bpf_transaction_collection.push(bpf_data_list.content[i][findTextInArray(bpf_data_list, "BPF #")]);
+                    bpf_transaction_amount_collection += bpf_data_list.content[i][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")];
+                }
+            }
+    
+            for (let i = 1; i < ctf_data_list.content.length; i++) {
+                if (!bpf_ctf_transaction_collection.includes(ctf_data_list.content[i][findTextInArray(ctf_data_list, "BPF #")]) &&
+                month_filter.value == formatMonth(ctf_data_list.content[i][findTextInArray(ctf_data_list, "HAULING DATE")])) {
+                    bpf_ctf_transaction_collection.push(ctf_data_list.content[i][findTextInArray(ctf_data_list, "BPF #")]);
+                    bpf_ctf_transaction_amount_collection += ctf_data_list.content[i][findTextInArray(ctf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")];
+                }
+                else if (!bpf_ctf_transaction_collection.includes(ctf_data_list.content[i][findTextInArray(ctf_data_list, "BPF #")]) &&
+                month_filter.value == "ALL") {
+                    bpf_ctf_transaction_collection.push(ctf_data_list.content[i][findTextInArray(ctf_data_list, "BPF #")]);
+                    bpf_ctf_transaction_amount_collection += ctf_data_list.content[i][findTextInArray(ctf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")];
+                }
+            }
+    
+            // billing
+            const pending_billing = sf_transaction_billing.filter((element) => !sf_tpf_transaction_billing.includes(element));
+    
+            certified_counter_billing.innerText = sf_transaction_billing.length;
+            pending_counter_billing.innerText = sf_transaction_billing.length - sf_tpf_transaction_billing.length;
+            billed_counter_billing.innerText = sf_tpf_transaction_billing.length;
+
+            // collection
+            const pending_collection = bpf_transaction_collection.filter((element) => !bpf_ctf_transaction_collection.includes(element));
+    
+            billed_counter_collection.innerText = bpf_transaction_collection.length;
+            pending_counter_collection.innerText = bpf_transaction_collection.length - bpf_ctf_transaction_collection.length;
+            collected_counter_collection.innerText = bpf_ctf_transaction_collection.length;
+            billed_counter_amount_collection.innerText = formatNumber(bpf_transaction_amount_collection);
+            pending_counter_amount_collection.innerText = formatNumber(bpf_transaction_amount_collection - bpf_ctf_transaction_amount_collection);
+            collected_counter_amount_collection.innerText = formatNumber(bpf_ctf_transaction_amount_collection);
+            
+            // billing
+            var options = {
+                series: [sf_transaction_billing.length - sf_tpf_transaction_billing.length, sf_tpf_transaction_billing.length],
+                chart: {
+                    width: 500, // Set the desired width
+                    height: 550, // Set the desired height
+                    type: 'pie',
+                },
+                plotOptions: {
+                    pie: {
+                        startAngle: 0,
+                        endAngle: 360
+                    }
+                },
+                dataLabels: {
+                    enabled: false, // Disable data labels inside the pie chart
+                },
+                fill: {
+                    type: 'gradient', // Use solid fill type
+                },
+                legend: {
+                    show: true,
+                    position: "left", // Set the legend position to "left"
+                    fontSize: '25px', // Increase legend font size as needed
+                    formatter: function (seriesName, opts) {
+                        // Here, you should use the correct variable to get the series value
+                        var seriesValue = opts.w.globals.series[opts.seriesIndex];
+                        var totalValue = opts.w.globals.series.reduce((acc, val) => acc + val, 0);
+                        var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
+                        return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
+                    },
+                    labels: {
+                        useSeriesColors: false, // Use custom color
+                    },
+                },
+                labels: ["Pending", "Billed"],
+                colors: ["#dc3545", "#198754"], // Specify solid colors here
+                responsive: [{
+                    breakpoint: 480,
+                    options: {
+                        chart: {
+                            width: 200
+                        },
+                    }
+                }]
+            };
+            const pieChart3 = document.querySelector("#pieChart3");
+            while (pieChart3.firstChild) {
+                pieChart3.removeChild(pieChart3.firstChild);
+            }
+            var chart = new ApexCharts(pieChart3, options);
+            chart.render();
+            
+            // collection
+            var options = {
+                series: [bpf_transaction_collection.length - bpf_ctf_transaction_collection.length, bpf_ctf_transaction_collection.length],
+                chart: {
+                    width: 500, // Set the desired width
+                    height: 550, // Set the desired height
+                    type: 'pie',
+                },
+                plotOptions: {
+                    pie: {
+                        startAngle: 0,
+                        endAngle: 360
+                    }
+                },
+                dataLabels: {
+                    enabled: false, // Disable data labels inside the pie chart
+                },
+                fill: {
+                    type: 'gradient', // Use solid fill type
+                },
+                legend: {
+                    show: true,
+                    position: "left", // Set the legend position to "left"
+                    fontSize: '30px', // Increase legend font size as needed
+                    formatter: function (seriesName, opts) {
+                        // Here, you should use the correct variable to get the series value
+                        var seriesValue = opts.w.globals.series[opts.seriesIndex];
+                        var totalValue = opts.w.globals.series.reduce((acc, val) => acc + val, 0);
+                        var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
+                        return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
+                    },
+                    labels: {
+                        useSeriesColors: false, // Use custom color
+                    },
+                },
+                labels: ["Pending", "Collected"],
+                colors: ["#dc3545", "#198754"], // Specify solid colors here
+                responsive: [{
+                    breakpoint: 480,
+                    options: {
+                        chart: {
+                            width: 200
+                        },
+                    }
+                }]
+            };
+            const pieChart2 = document.querySelector("#pieChart2");
+            while (pieChart2.firstChild) {
+                pieChart2.removeChild(pieChart2.firstChild);
+            }
+            var chart = new ApexCharts(pieChart2, options);
+            chart.render();
+            
+            // billing
+            var data_value = "";
+            var data_value_counter = 1;
+            for(let i = 0; i < pending_billing.length; i++){
+                for(let j = 1; j < cod_data_list.content.length; j++){
+                    if(pending_billing[i] == cod_data_list.content[j][findTextInArray(cod_data_list, "COD #")] &&
+                    month_filter.value == formatMonth(cod_data_list.content[j][findTextInArray(cod_data_list, "HAULING DATE")])){
+                        var mtf = "";
+                        var ltf = "";
+                        for(let k = 1; k < wcf_data_list.content.length; k++){
+                            if(cod_data_list.content[j][findTextInArray(cod_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                                if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                    mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                }else{
+                                    ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                    for(let x = 1; x < ltf_data_list.content.length; x++){
+                                        if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                            mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                            break
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        data_value +=`
+                        <tr>
+                            <td>${data_value_counter}</td>
+                            <td>${cod_data_list.content[j][findTextInArray(cod_data_list, "COD #")]}</td>
+                            <td>${mtf}</td>
+                            <td>${date_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "HAULING DATE")])}</td>
+                            <td>${date_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "ACTUAL COMPLETION DATE")])} /<br>${time_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "ACTUAL COMPLETION TIME")])}</td>
+                            <td>${findClientName(cod_data_list.content[j][findTextInArray(cod_data_list, "CLIENT ID")])}</td>
+                            <td>${findWasteCode(cod_data_list.content[j][findTextInArray(cod_data_list, "WASTE ID")])}</td>
+                            <td>${findWasteName(cod_data_list.content[j][findTextInArray(cod_data_list, "CLIENT ID")], cod_data_list.content[j][findTextInArray(cod_data_list, "WASTE ID")])}</td>
+                            <td>${cod_data_list.content[j][findTextInArray(cod_data_list, "WEIGHT")]}</td>
+                            <td>${cod_data_list.content[j][findTextInArray(cod_data_list, "SUBMITTED BY")]}</td>
+                        </tr>
+                        `
+                        data_value_counter += 1;
+                    }
+                    else if(pending_billing[i] == cod_data_list.content[j][findTextInArray(cod_data_list, "COD #")] &&
+                    month_filter.value == "ALL"){
+                        var mtf = "";
+                        var ltf = "";
+                        for(let k = 1; k < wcf_data_list.content.length; k++){
+                            if(cod_data_list.content[j][findTextInArray(cod_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                                if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                    mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                }else{
+                                    ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                    for(let x = 1; x < ltf_data_list.content.length; x++){
+                                        if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                            mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                            break
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        data_value +=`
+                        <tr>
+                            <td>${data_value_counter}</td>
+                            <td>${cod_data_list.content[j][findTextInArray(cod_data_list, "COD #")]}</td>
+                            <td>${mtf}</td>
+                            <td>${date_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "HAULING DATE")])}</td>
+                            <td>${date_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "ACTUAL COMPLETION DATE")])} /<br>${time_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "ACTUAL COMPLETION TIME")])}</td>
+                            <td>${findClientName(cod_data_list.content[j][findTextInArray(cod_data_list, "CLIENT ID")])}</td>
+                            <td>${findWasteCode(cod_data_list.content[j][findTextInArray(cod_data_list, "WASTE ID")])}</td>
+                            <td>${findWasteName(cod_data_list.content[j][findTextInArray(cod_data_list, "CLIENT ID")], cod_data_list.content[j][findTextInArray(cod_data_list, "WASTE ID")])}</td>
+                            <td>${cod_data_list.content[j][findTextInArray(cod_data_list, "WEIGHT")]}</td>
+                            <td>${cod_data_list.content[j][findTextInArray(cod_data_list, "SUBMITTED BY")]}</td>
+                        </tr>
+                        `
+                        data_value_counter += 1;
+                    }
+                }
+            }
+            pending_list_billing.innerHTML = data_value;            
+            
+            // collection
+            var data_value_collection = "";
+            var data_value_counter_collection = 1;
+            for(let i = 0; i < pending_collection.length; i++){
+                for(let j = 1; j < bpf_data_list.content.length; j++){
+                    if(pending_collection[i] == bpf_data_list.content[j][findTextInArray(bpf_data_list, "BPF #")] &&
+                    month_filter.value == formatMonth(bpf_data_list.content[j][findTextInArray(bpf_data_list, "HAULING DATE")])){
+                        var mtf = "";
+                        var ltf = "";
+                        for(let k = 1; k < wcf_data_list.content.length; k++){
+                            if(bpf_data_list.content[j][findTextInArray(bpf_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                                if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                    mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                }else{
+                                    ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                    for(let x = 1; x < ltf_data_list.content.length; x++){
+                                        if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                            mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                            break
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        data_value_collection +=`
+                        <tr>
+                            <td>${data_value_counter}</td>
+                            <td>${bpf_data_list.content[j][findTextInArray(bpf_data_list, "BPF #")]}</td>
+                            <td>${mtf}</td>
+                            <td>${date_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "HAULING DATE")])}</td>
+                            <td>${date_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "CREATED AT")])} /<br>${time_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "CREATED AT")])}</td>
+                            <td>${findClientName(bpf_data_list.content[j][findTextInArray(bpf_data_list, "CLIENT ID")])}</td>
+                            <td>${formatNumber(bpf_data_list.content[j][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")])}</td>
+                        </tr>
+                        `
+                        data_value_counter_collection += 1;
+                    }
+                    else if(pending_collection[i] == bpf_data_list.content[j][findTextInArray(bpf_data_list, "BPF #")] &&
+                    month_filter.value == "ALL"){
+                        var mtf = "";
+                        var ltf = "";
+                        for(let k = 1; k < wcf_data_list.content.length; k++){
+                            if(bpf_data_list.content[j][findTextInArray(bpf_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                                if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                    mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                }else{
+                                    ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                    for(let x = 1; x < ltf_data_list.content.length; x++){
+                                        if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                            mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                            break
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        data_value_collection +=`
+                        <tr>
+                            <td>${data_value_counter}</td>
+                            <td>${bpf_data_list.content[j][findTextInArray(bpf_data_list, "BPF #")]}</td>
+                            <td>${mtf}</td>
+                            <td>${date_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "HAULING DATE")])}</td>
+                            <td>${date_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "CREATED AT")])} /<br>${time_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "CREATED AT")])}</td>
+                            <td>${findClientName(bpf_data_list.content[j][findTextInArray(bpf_data_list, "CLIENT ID")])}</td>
+                            <td>${formatNumber(bpf_data_list.content[j][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")])}</td>
+                        </tr>
+                        `
+                        data_value_counter_collection += 1;
+                    }
+                }
+            }
+            pending_list_collection.innerHTML = data_value_collection;            
+
         }
 
         // ap_accounting_dashboard
@@ -537,6 +898,160 @@ document.addEventListener('DOMContentLoaded', async function() {
             `
         }
         transfer_history_list_ap_accounting.innerHTML = data;
+
+                // multi section
+        // purchase_request_form
+        const purchase_request_form = document.querySelector("#purchase_request_form");
+        const add_item_button = purchase_request_form.querySelector("#add_item_button");
+        const remove_item_button = purchase_request_form.querySelector("#remove_item_button");
+        const purchase_request_form_button = purchase_request_form.querySelector("#purchase_request_form_button");
+        const purchase_request_list = purchase_request_form.querySelector("#purchase_request_list");
+        const form_tab = purchase_request_form.querySelector("#form_tab");
+        var prf_counter = purchase_request_form.querySelector("#prf_counter");
+        var prf_form_no = [];
+        
+        function prf_generator() {
+            var last_row = prf_data_list.content.length -1;        
+            var data_info = prf_data_list.content[last_row][findTextInArray(prf_data_list, "ITM #")];
+            var data_counter = data_info.substring(9,12) || 0;
+            var year = new Date().getFullYear();
+            var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        
+            for (let y = 1; y <= prf_counter.value; y++) {
+                prf_form_no[y] = document.querySelector(`#prf_form_no${y}`);
+                prf_form_no[y].value = `ITM${year}${month}${((parseInt(data_counter) + y).toString().padStart(3,"0"))}`;
+            }
+        }
+        
+        prf_generator()
+        
+        add_item_button.addEventListener("click", () => {
+            const prf_item_container = purchase_request_form.querySelector("#prf_item_container");
+            prf_counter.value = parseInt(prf_counter.value) + 1; // Increment the counter for the next item
+            const itemHTML = `
+            <div id="prf_item">
+                <div>
+                    <div>
+                        <label for="prf_form_no${prf_counter.value}">
+                            <i class="fa-solid fa-list-ol"></i>
+                            ITM #
+                        </label><br>
+                        <div class="form">
+                            <input type="text" id="prf_form_no${prf_counter.value}" name="prf_form_no${prf_counter.value}" autocomplete="off" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="item${prf_counter.value}">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Item ${prf_counter.value}
+                        </label>
+                        <div>
+                            <input type="text" id="item${prf_counter.value}" name="item${prf_counter.value}" autocomplete="off" class="form-control" required placeholder="Item Name">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="quantity${prf_counter.value}">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Quantity
+                        </label>
+                        <div>
+                            <input type="number" id="quantity${prf_counter.value}" name="quantity${prf_counter.value}" autocomplete="off" class="form-control" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="unit${prf_counter.value}">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Unit
+                        </label>
+                        <div>
+                            <input type="text" id="unit${prf_counter.value}" name="unit${prf_counter.value}" autocomplete="off" class="form-control" required placeholder="ex. kg/pc/box/set">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <label for="details${prf_counter.value}">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Details
+                        </label>
+                        <div>
+                            <input type="text" id="details${prf_counter.value}" name="details${prf_counter.value}" autocomplete="off" class="form-control" required  placeholder="Brand/Unit/Specifications">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="remarks1">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Remarks
+                        </label>
+                        <div>
+                            <input type="text" id="remarks${prf_counter.value}" name="remarks${prf_counter.value}" autocomplete="off" class="form-control" required placeholder="Where to use">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+            prf_item_container.insertAdjacentHTML("beforeend", itemHTML);
+
+            // Call the prf_generator function after adding a new item
+            prf_generator();
+
+            if (prf_counter.value > 1) {
+                remove_item_button.style.display = "block";
+            }
+        });
+        
+        remove_item_button.addEventListener("click", () => {
+            const lastItem = purchase_request_form.querySelector("#prf_item_container").lastElementChild;
+            if (lastItem) {
+                lastItem.remove();
+                prf_counter.value = parseInt(prf_counter.value) - 1;
+
+                // Call the prf_generator function after removing an item
+                prf_generator();
+
+                if (prf_counter.value <= 1) {
+                    remove_item_button.style.display = "none";
+                }
+            }
+        });
+
+        var purchase_request_data_value = "";
+        var purchase_request_data_value_counter = 1;
+        for(let x = 1; x < prf_data_list.content.length; x++){
+            var status = "PENDING";
+            var duration = "PENDING";
+            for(let y = 1; y < pof_data_list.content.length; y++){
+                if(prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")] == (pof_data_list.content[y][findTextInArray(pof_data_list, "ITM #")])){
+                    status = "REQUESTED"
+                }
+            }
+            purchase_request_data_value += `
+            <tr>
+                <td>${purchase_request_data_value_counter}</td>
+                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]}</td>
+                <td>${date_decoder(prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")])}/<br>${time_decoder(prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")])}</td>
+                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "ITEM")]}</td>
+                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")]}</td>
+                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "UNIT")]}</td>
+                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "DETAILS")]}</td>
+                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")]}</td>
+                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")]}</td>
+                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")]}</td>
+            </tr>
+            `
+            purchase_request_data_value_counter += 1;
+        }
+        purchase_request_list.innerHTML = purchase_request_data_value;
+
+
+        purchase_request_form_button.addEventListener("click", () => {
+            if(form_tab.style.display == "block"){
+                form_tab.style.display = "none";
+            }
+            else{
+                form_tab.style.display = "block";
+            }
+        })
         
         function findEmployeeName(employee_id){
             var employee_name = "";

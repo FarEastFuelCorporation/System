@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             const currentMonthIndex = currentDate.getMonth();
             
             return months[currentMonthIndex];
-        }        
+        }
         month_filter.value = getCurrentMonthName();
         month_filter.addEventListener("change", generatePending)
         generatePending();
