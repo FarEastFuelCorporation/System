@@ -130,8 +130,18 @@ document.addEventListener('DOMContentLoaded', async function() {
         let bpf_transaction_collection = []; 
         let bpf_ctf_transaction_collection = []; 
         let bpf_transaction_amount_collection = 0; 
-        let bpf_ctf_transaction_amount_collection = 0; 
-
+        let bpf_ctf_transaction_amount_collection = 0;
+        // purchasing_dashboard
+        const purchasing_dashboard = document.querySelector("#purchasing_dashboard");
+        const pending_list_container_purchasing = purchasing_dashboard.querySelector("#pending_list");
+        const history_list_container_purchasing = purchasing_dashboard.querySelector("#history_list");
+        const pending_purchasing = purchasing_dashboard.querySelector("#pending");
+        const requested_purchasing = purchasing_dashboard.querySelector("#requested");
+        const approved_purchasing = purchasing_dashboard.querySelector("#approved");
+        const released_purchasing = purchasing_dashboard.querySelector("#released");
+        const purchased_purchasing = purchasing_dashboard.querySelector("#purchased");
+        let prf_transaction = []; // Variable containing existing elements
+        let prf_pr_transaction = []; // Variable containing existing elements
 
         const month_filter = document.getElementById("month_filter");
         function getCurrentMonthName() {
@@ -653,6 +663,166 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             pending_list_collection.innerHTML = data_value_collection;            
 
+            // purchasing
+            var pending = [];
+            var requested = [];
+            var approved = [];
+            var released = [];
+            var purchased = [];
+            for (let i = 1; i < prf_data_list.content.length; i++) {
+                if (prf_data_list.content[i][findTextInArray(prf_data_list, "STATUS")] == "PENDING") {
+                    pending.push(prf_data_list.content[i][findTextInArray(prf_data_list, "ITM #")]);
+                }
+                if (prf_data_list.content[i][findTextInArray(prf_data_list, "STATUS")] == "REQUESTED") {
+                    requested.push(prf_data_list.content[i][findTextInArray(prf_data_list, "ITM #")]);
+                }
+                if (prf_data_list.content[i][findTextInArray(prf_data_list, "STATUS")] == "APPROVED") {
+                    approved.push(prf_data_list.content[i][findTextInArray(prf_data_list, "ITM #")]);
+                }
+                if (prf_data_list.content[i][findTextInArray(prf_data_list, "STATUS")] == "RELEASED") {
+                    released.push(prf_data_list.content[i][findTextInArray(prf_data_list, "ITM #")]);
+                }
+                if (prf_data_list.content[i][findTextInArray(prf_data_list, "STATUS")] == "PURCHASED") {
+                    purchased.push(prf_data_list.content[i][findTextInArray(prf_data_list, "ITM #")]);
+                }
+            }
+    
+            for (let i = 1; i < pof_data_list.content.length; i++) {
+                if (!prf_pr_transaction.includes(pof_data_list.content[i][findTextInArray(prf_data_list, "ITM #")])) {
+                    prf_pr_transaction.push(pof_data_list.content[i][findTextInArray(prf_data_list, "ITM #")]);
+                }
+            }
+        
+            pending_purchasing.innerText = pending.length;
+            requested_purchasing.innerText = requested.length;
+            approved_purchasing.innerText = approved.length;
+            released_purchasing.innerText = released.length;
+            purchased_purchasing.innerText = purchased.length;
+    
+            var options = {
+                series: [pending.length, requested.length, approved.length, released.length, purchased.length],
+                chart: {
+                    width: 500, // Set the desired width
+                    height: 550, // Set the desired height
+                    type: 'pie',
+                },
+                plotOptions: {
+                    pie: {
+                        startAngle: 0,
+                        endAngle: 360
+                    }
+                },
+                dataLabels: {
+                    enabled: false, // Disable data labels inside the pie chart
+                },
+                fill: {
+                    type: 'gradient', // Use solid fill type
+                },
+                legend: {
+                    show: true,
+                    position: "left", // Set the legend position to "left"
+                    fontSize: '20px', // Increase legend font size as needed
+                    formatter: function (seriesName, opts) {
+                        // Here, you should use the correct variable to get the series value
+                        var seriesValue = opts.w.globals.series[opts.seriesIndex];
+                        var totalValue = opts.w.globals.series.reduce((acc, val) => acc + val, 0);
+                        var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
+                        return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
+                    },
+                    labels: {
+                        useSeriesColors: false, // Use custom color
+                    },
+                },
+                labels: ["Pending", "Requested", "Approved", "Released", "Purchased"],
+                colors: ["#dc3545", "#ffc107","#0dcaf0", "#0d6efd", "#198754"], // Specify solid colors here
+                responsive: [{
+                    breakpoint: 480,
+                    options: {
+                        chart: {
+                            width: 200
+                        },
+                    }
+                }]
+            };
+            const pieChart4 = document.querySelector("#pieChart4");
+            while (pieChart4.firstChild) {
+                pieChart4.removeChild(pieChart4.firstChild);
+            }
+            var chart = new ApexCharts(pieChart4, options);
+            chart.render();  
+
+            // pending_list
+            var pending_data_value = "";
+            var pending_data_value_counter = 1;
+            var requested_data_value = "";
+            var requested_data_value_counter = 1;
+            for(let x = 1; x < prf_data_list.content.length; x++){  
+                for(let y = 0; y < pending.length; y++){
+                    if(pending[y] == prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]){
+                        var pr_data, date_time, quantity, unit, item, details, remarks, department, status, requisitioner;
+                        pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")];
+                        date_time = prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")];
+                        quantity = prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")];
+                        unit = prf_data_list.content[x][findTextInArray(prf_data_list, "UNIT")];
+                        item = prf_data_list.content[x][findTextInArray(prf_data_list, "ITEM")];
+                        details = prf_data_list.content[x][findTextInArray(prf_data_list, "DETAILS")];
+                        remarks = prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")];
+                        department = prf_data_list.content[x][findTextInArray(prf_data_list, "DEPARTMENT")];
+                        status = prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")];
+                        requisitioner = prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")];
+                        pending_data_value += `
+                        <tr>
+                            <td>${pending_data_value_counter}</td>
+                            <td>${pr_data}</td>
+                            <td>${date_decoder(date_time)} /<br> ${time_decoder(date_time)}</td>
+                            <td>${quantity}</td>
+                            <td>${unit}</td>
+                            <td>${item}</td>
+                            <td>${details}</td>
+                            <td>${remarks}</td>
+                            <td>${department}</td>
+                            <td>${requisitioner}</td>
+                            <td>${status}</td>
+                        </tr>
+                        `
+                        pending_data_value_counter += 1;
+                    }
+                }
+                for(let y = 0; y < requested.length; y++){
+                    if(requested[y] == prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]){
+                        var pr_data, date_time, quantity, unit, item, details, remarks, department, status, requisitioner;
+                        pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")];
+                        date_time = prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")];
+                        quantity = prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")];
+                        unit = prf_data_list.content[x][findTextInArray(prf_data_list, "UNIT")];
+                        item = prf_data_list.content[x][findTextInArray(prf_data_list, "ITEM")];
+                        details = prf_data_list.content[x][findTextInArray(prf_data_list, "DETAILS")];
+                        remarks = prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")];
+                        department = prf_data_list.content[x][findTextInArray(prf_data_list, "DEPARTMENT")];
+                        status = prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")];
+                        requisitioner = prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")];
+                        requested_data_value += `
+                        <tr>
+                            <td>${requested_data_value_counter}</td>
+                            <td>${pr_data}</td>
+                            <td>${date_decoder(date_time)} /<br> ${time_decoder(date_time)}</td>
+                            <td>${quantity}</td>
+                            <td>${unit}</td>
+                            <td>${item}</td>
+                            <td>${details}</td>
+                            <td>${remarks}</td>
+                            <td>${department}</td>
+                            <td>${requisitioner}</td>
+                            <td>${status}</td>
+                        </tr>
+                        `
+                        requested_data_value_counter += 1;
+                    }
+                }
+            }
+            pending_list_container_purchasing.innerHTML = pending_data_value;
+            history_list_container_purchasing.innerHTML = requested_data_value;
+
         }
 
         // ap_accounting_dashboard
@@ -899,7 +1069,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
         transfer_history_list_ap_accounting.innerHTML = data;
 
-                // multi section
+        // multi section
         // purchase_request_form
         const purchase_request_form = document.querySelector("#purchase_request_form");
         const add_item_button = purchase_request_form.querySelector("#add_item_button");

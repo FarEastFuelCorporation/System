@@ -43,10 +43,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         const approved_purchasing = purchasing_dashboard.querySelector("#approved");
         const released_purchasing = purchasing_dashboard.querySelector("#released");
         const purchased_purchasing = purchasing_dashboard.querySelector("#purchased");
-        const month_filter = document.getElementById("month_filter");
-
         let prf_transaction = []; // Variable containing existing elements
         let prf_pr_transaction = []; // Variable containing existing elements
+        
+        const month_filter = document.getElementById("month_filter");
         function getCurrentMonthName() {
             const months = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
             const currentDate = new Date();

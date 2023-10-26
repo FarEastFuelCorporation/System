@@ -73,6 +73,12 @@
                 </li>
                 <li>
                     <a href="#">
+                        <i class="fas fa-th-large"></i>
+                        Purchasing Officer Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
                         <i class="fa-solid fa-cart-shopping"></i>
                         Purchase Requests
                     </a>
@@ -645,6 +651,110 @@
                     </div>
                 </div><br>
             </section>
+            <!-- purchasing_dashboard -->
+            <section class="purchasing" id="purchasing_dashboard">
+                <h2>DASHBOARD</h2><br>
+                <h2>PURCHASE REQUEST SUMMARY</h2>
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="pending"></div>
+                            <div class="card-name">Pending</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-clipboard-list"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="requested"></div>
+                            <div class="card-name">Requested</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-file-circle-exclamation"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="approved"></div>
+                            <div class="card-name">Approved</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-file-circle-check"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="released"></div>
+                            <div class="card-name">Released</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-money-bill-wave"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="purchased"></div>
+                            <div class="card-name">Purchased</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
+                    </div>
+                    <div style="position: relative;">
+                        <div id="pieChart4" style="position: absolute; margin-top: -40px;">
+                        </div>
+                    </div>
+                </div><br>
+                <h2>PENDING TRANSACTION</h2>
+                <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
+                    <div class="list">
+                        <table>
+                            <thead style="position: sticky; top: 0; background-color: black;">
+                                <th>#</th>
+                                <th>ITM #</th>
+                                <th>ORDER<br>DATE/TIME</th>
+                                <th>QUANTITY</th>
+                                <th>UNITS</th>
+                                <th>ITEM</th>
+                                <th>DETAILS</th>
+                                <th>REMARKS</th>
+                                <th>DEPARTMENT</th>
+                                <th>REQUISITIONER</th>
+                                <th>STATUS</th>
+                            </thead>
+                            <tbody id="pending_list">
+
+                            </tbody>
+                        </table>
+                        <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
+                </div><br>
+                <h2>TRANSACTION HISTORY</h2>
+                <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
+                    <div class="list">
+                        <table>
+                            <thead style="position: sticky; top: 0; background-color: black;">
+                                <th>#</th>
+                                <th>ITM #</th>
+                                <th>ORDER<br>DATE/TIME</th>
+                                <th>QUANTITY</th>
+                                <th>UNITS</th>
+                                <th>ITEM</th>
+                                <th>DETAILS</th>
+                                <th>REMARKS</th>
+                                <th>DEPARTMENT</th>
+                                <th>REQUISITIONER</th>
+                                <th>STATUS</th>
+                            </thead>
+                            <tbody id="history_list">
+
+                            </tbody>
+                        </table>
+                        <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
+                </div><br>
+            </section>
             <!-- purchase_request_form -->
             <section class="marketing" id="purchase_request_form">
                 <h2>PURCHASE REQUESTS</h2>
@@ -656,7 +766,7 @@
                     </label><br>
                 </div>
                 <div id="form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
-                    <form action="https://script.google.com/macros/s/AKfycbw3Ha41j9YB84r5-snBPEqogfqKZLsnstAuM0Ae79PgPTmLv14VufRa5NJ5rl0ed8UWzg/exec" method="post">
+                    <form action="https://script.google.com/macros/s/AKfycbxi30lvC_N0zF6nXUDt9vgGJZEuERdNLYFy4ozdaqrtnwTszhuYJCJOA2EP1hV6D8wXBg/exec" method="post">
                         <input type="hidden" name="user" id="user">
                         <input type="hidden" name="department" id="department">
                         <input type="hidden" name="prf_counter" id="prf_counter" value="1">
