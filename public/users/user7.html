@@ -738,8 +738,8 @@
                     </div>
                 </div><br>
             </section>
-                        <!-- purchase_request_form -->
-            <section class="logistic" id="purchase_request_form">
+            <!-- purchase_request_form -->
+            <section class="marketing" id="purchase_request_form">
                 <h2>PURCHASE REQUESTS</h2>
                 <div>
                     <label class="d-flex gap-3">
@@ -749,9 +749,9 @@
                     </label><br>
                 </div>
                 <div id="form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
-                    <form action="https://script.google.com/macros/s/AKfycbw4wpqb5yFlzKY6ortaVZppEAgYqm5G_otQl5I-3fGzPjiEAVKVOEv93mAFLeUbneTlAA/exec" method="post">
-                        <input type="hidden" name="prf_user" id="prf_user">
-                        <input type="hidden" name="prf_department" id="prf_department">
+                    <form action="https://script.google.com/macros/s/AKfycbxi30lvC_N0zF6nXUDt9vgGJZEuERdNLYFy4ozdaqrtnwTszhuYJCJOA2EP1hV6D8wXBg/exec" method="post">
+                        <input type="hidden" name="user" id="user">
+                        <input type="hidden" name="department" id="department">
                         <input type="hidden" name="prf_counter" id="prf_counter" value="1">
                         <div id="prf_item_container">
                             <div id="prf_item1">
@@ -759,7 +759,7 @@
                                     <div>
                                         <label for="prf_form_no1">
                                             <i class="fa-solid fa-list-ol"></i>
-                                            PR #
+                                            ITM #
                                         </label><br>
                                         <div class="form">
                                             <input type="text" id="prf_form_no1" name="prf_form_no1" autocomplete="off" class="form-control" readonly>
@@ -840,7 +840,7 @@
                         <table>
                             <thead style="position: sticky; top: 0; background-color: black;">
                                 <th>#</th>
-                                <th>PR #</th>
+                                <th>ITM #</th>
                                 <th>REQUEST<br>DATE/TIME</th>
                                 <th>ITEM</th>
                                 <th>QTY</th>
@@ -849,10 +849,9 @@
                                 <th>REMARKS</th>
                                 <th>SUBMITTED<br>BY</th>
                                 <th>STATUS</th>
-                                <th>DURATION<br>REPORT</th>
                             </thead>
                             <tbody id="purchase_request_list">
-
+    
                             </tbody>
                         </table>
                         <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>

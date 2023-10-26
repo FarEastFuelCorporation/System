@@ -937,17 +937,16 @@ document.addEventListener('DOMContentLoaded', async function() {
         
         function prf_generator() {
             var last_row = prf_data_list.content.length -1;        
-            var data_info = prf_data_list.content[last_row][findTextInArray(prf_data_list, "PR #")];
+            var data_info = prf_data_list.content[last_row][findTextInArray(prf_data_list, "ITM #")];
             var data_counter = data_info.substring(9,12) || 0;
             var year = new Date().getFullYear();
             var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
         
             for (let y = 1; y <= prf_counter.value; y++) {
                 prf_form_no[y] = document.querySelector(`#prf_form_no${y}`);
-                prf_form_no[y].value = `PR${year}${month}${((parseInt(data_counter) + y).toString().padStart(3,"0"))}`;
+                prf_form_no[y].value = `ITM${year}${month}${((parseInt(data_counter) + y).toString().padStart(3,"0"))}`;
             }
         }
-        
         
         prf_generator()
         
@@ -960,7 +959,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <div>
                         <label for="prf_form_no${prf_counter.value}">
                             <i class="fa-solid fa-list-ol"></i>
-                            PR #
+                            ITM #
                         </label><br>
                         <div class="form">
                             <input type="text" id="prf_form_no${prf_counter.value}" name="prf_form_no${prf_counter.value}" autocomplete="off" class="form-control" readonly>
@@ -1047,14 +1046,14 @@ document.addEventListener('DOMContentLoaded', async function() {
             var status = "PENDING";
             var duration = "PENDING";
             for(let y = 1; y < pof_data_list.content.length; y++){
-                if(prf_data_list.content[x][findTextInArray(prf_data_list, "PR #")] == (pof_data_list.content[y][findTextInArray(pof_data_list, "PR #")])){
+                if(prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")] == (pof_data_list.content[y][findTextInArray(pof_data_list, "ITM #")])){
                     status = "REQUESTED"
                 }
             }
             purchase_request_data_value += `
             <tr>
                 <td>${purchase_request_data_value_counter}</td>
-                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "PR #")]}</td>
+                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]}</td>
                 <td>${date_decoder(prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")])}/<br>${time_decoder(prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")])}</td>
                 <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "ITEM")]}</td>
                 <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")]}</td>
@@ -1062,8 +1061,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "DETAILS")]}</td>
                 <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")]}</td>
                 <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")]}</td>
-                <td>${status}</td>
-                <td>${duration}</td>
+                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")]}</td>
             </tr>
             `
             purchase_request_data_value_counter += 1;
@@ -1079,6 +1077,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 form_tab.style.display = "block";
             }
         })
+
                 
         // incident report form
         const irf_form_no = document.getElementById("irf_form_no");
