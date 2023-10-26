@@ -842,6 +842,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <div class="search_input">
                         <select name="unit${list_counter_quotation_form.value}" id="unit${list_counter_quotation_form.value}" required class="form-control" style="height: 55px;">
                             <option value="">SELECT</option>
+                            <option value="Pc">PIECES</option>
                             <option value="Kg">KILOGRAMS</option>
                             <option value="L">LITERS</option>
                             <option value="DRUM">DRUM</option>
@@ -1171,6 +1172,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <div class="search_input">
                         <select name="unit${list_counter_quotation_form2.value}" id="unit${list_counter_quotation_form2.value}" required class="form-control" style="height: 55px;">
                             <option value="">SELECT</option>
+                            <option value="Pc">PIECES</option>
                             <option value="Kg">KILOGRAMS</option>
                             <option value="L">LITERS</option>
                             <option value="DRUM">DRUM</option>
@@ -1332,6 +1334,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <div class="search_input">
                         <select name="unit${list_counter_quotation_form2.value}" id="unit${list_counter_quotation_form2.value}" required class="form-control" style="height: 55px;">
                             <option value="">SELECT</option>
+                            <option value="Pc">PIECES</option>
                             <option value="Kg">KILOGRAMS</option>
                             <option value="L">LITERS</option>
                             <option value="DRUM">DRUM</option>
