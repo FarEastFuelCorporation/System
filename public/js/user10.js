@@ -776,6 +776,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                         department = prf_data_list.content[x][findTextInArray(prf_data_list, "DEPARTMENT")];
                         status = prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")];
                         requisitioner = prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")];
+                        for(let z = 1; z < pof_data_list.content.length; z++){
+                            if(pr_data == pof_data_list.content[z][findTextInArray(pof_data_list, "ITM #")]){
+                                amount = pof_data_list.content[z][findTextInArray(pof_data_list, "AMOUNT")]
+                            }
+                        }
                         pending_data_value += `
                         <tr>
                             <td>${pending_data_value_counter}</td>
@@ -796,7 +801,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
                 for(let y = 0; y < requested.length; y++){
                     if(requested[y] == prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]){
-                        var pr_data, date_time, quantity, unit, item, details, remarks, department, status, requisitioner;
+                        var pr_data, date_time, quantity, unit, item, details, remarks, department, status, amount, requisitioner;
                         pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")];
                         date_time = prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")];
                         quantity = prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")];
@@ -807,6 +812,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                         department = prf_data_list.content[x][findTextInArray(prf_data_list, "DEPARTMENT")];
                         status = prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")];
                         requisitioner = prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")];
+                        for(let z = 1; z < pof_data_list.content.length; z++){
+                            if(pr_data == pof_data_list.content[z][findTextInArray(pof_data_list, "ITM #")]){
+                                amount = pof_data_list.content[z][findTextInArray(pof_data_list, "AMOUNT")]
+                            }
+                        }
                         requested_data_value += `
                         <tr>
                             <td>${requested_data_value_counter}</td>
@@ -819,6 +829,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${remarks}</td>
                             <td>${department}</td>
                             <td>${requisitioner}</td>
+                            <td>${amount}</td>
                             <td>${status}</td>
                         </tr>
                         `
@@ -827,7 +838,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
                 for(let y = 0; y < approved.length; y++){
                     if(approved[y] == prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]){
-                        var pr_data, date_time, quantity, unit, item, details, remarks, department, status, requisitioner;
+                        var pr_data, date_time, quantity, unit, item, details, remarks, department, status, amount, requisitioner;
                         pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")];
                         date_time = prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")];
                         quantity = prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")];
@@ -838,6 +849,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                         department = prf_data_list.content[x][findTextInArray(prf_data_list, "DEPARTMENT")];
                         status = prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")];
                         requisitioner = prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")];
+                        for(let z = 1; z < pof_data_list.content.length; z++){
+                            if(pr_data == pof_data_list.content[z][findTextInArray(pof_data_list, "ITM #")]){
+                                amount = pof_data_list.content[z][findTextInArray(pof_data_list, "AMOUNT")]
+                            }
+                        }
                         approved_data_value += `
                         <tr>
                             <td>${approved_data_value_counter}</td>
@@ -850,6 +866,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${remarks}</td>
                             <td>${department}</td>
                             <td>${requisitioner}</td>
+                            <td>${amount}</td>
                             <td>${status}</td>
                         </tr>
                         `
@@ -858,7 +875,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
                 for(let y = 0; y < released.length; y++){
                     if(released[y] == prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]){
-                        var pr_data, date_time, quantity, unit, item, details, remarks, department, status, requisitioner;
+                        var pr_data, date_time, quantity, unit, item, details, remarks, department, status, amount, requisitioner;
                         pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")];
                         date_time = prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")];
                         quantity = prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")];
@@ -869,6 +886,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                         department = prf_data_list.content[x][findTextInArray(prf_data_list, "DEPARTMENT")];
                         status = prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")];
                         requisitioner = prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")];
+                        for(let z = 1; z < pof_data_list.content.length; z++){
+                            if(pr_data == pof_data_list.content[z][findTextInArray(pof_data_list, "ITM #")]){
+                                amount = pof_data_list.content[z][findTextInArray(pof_data_list, "AMOUNT")]
+                            }
+                        }
                         released_data_value += `
                         <tr>
                             <td>${released_data_value_counter}</td>
@@ -881,6 +903,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${remarks}</td>
                             <td>${department}</td>
                             <td>${requisitioner}</td>
+                            <td>${amount}</td>
                             <td>${status}</td>
                         </tr>
                         `
@@ -889,7 +912,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
                 for(let y = 0; y < purchased.length; y++){
                     if(purchased[y] == prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]){
-                        var pr_data, date_time, quantity, unit, item, details, remarks, department, status, requisitioner;
+                        var pr_data, date_time, quantity, unit, item, details, remarks, department, status, amount, requisitioner;
                         pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")];
                         date_time = prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")];
                         quantity = prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")];
@@ -900,6 +923,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                         department = prf_data_list.content[x][findTextInArray(prf_data_list, "DEPARTMENT")];
                         status = prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")];
                         requisitioner = prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")];
+                        for(let z = 1; z < pof_data_list.content.length; z++){
+                            if(pr_data == pof_data_list.content[z][findTextInArray(pof_data_list, "ITM #")]){
+                                amount = pof_data_list.content[z][findTextInArray(pof_data_list, "AMOUNT")]
+                            }
+                        }
                         purchased_data_value += `
                         <tr>
                             <td>${purchased_data_value_counter}</td>
@@ -912,6 +940,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${remarks}</td>
                             <td>${department}</td>
                             <td>${requisitioner}</td>
+                            <td>${amount}</td>
                             <td>${status}</td>
                         </tr>
                         `
