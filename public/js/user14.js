@@ -543,7 +543,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                         var remarks_data = prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")];
                         var department_data = prf_data_list.content[x][findTextInArray(prf_data_list, "DEPARTMENT")];
                         var requisitioner_data = prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")];
+                        console.log(itm_form_no.value)
+                        console.log(itm_data)
                         if(itm_form_no.value == itm_data){
+                            console.log("pass2")
                             item_input.value = item_data;
                             quantity_input.value = quantity_data;
                             unit_input.value = unit_data;
@@ -551,6 +554,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             remarks_input.value = remarks_data;
                             departmentt_input.value = department_data;
                             requisitioner_input.value = requisitioner_data;
+                            break
                         }else{
                             item_input.value = "";
                             quantity_input.value = "";
