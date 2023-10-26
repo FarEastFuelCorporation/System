@@ -100,6 +100,199 @@ document.addEventListener('DOMContentLoaded', async function() {
         user_sidebar_officer.innerText = username_data_list.content[10][findTextInArray(username_data_list, "SECTIONS")];
         user_sidebar_department.innerText = username_data_list.content[10][findTextInArray(username_data_list, "DEPARTMENT")];
 
+        // marketing_dashboard
+        const booked_transactions_marketing = document.getElementById("booked_transactions");
+        const on_hauling_marketing = document.getElementById("on_hauling");
+        const pending_marketing = document.getElementById("pending");
+        const received_marketing = document.getElementById("received");
+        const pending_list_marketing = document.getElementById("pending_list");
+        const month_filter = document.getElementById("month_filter");
+        function getCurrentMonthName() {
+            const months = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
+            const currentDate = new Date();
+            const currentMonthIndex = currentDate.getMonth();
+            
+            return months[currentMonthIndex];
+        }
+        month_filter.value = getCurrentMonthName();
+        month_filter.addEventListener("change", generatePending)
+        generatePending();
+        function generatePending(){
+            var for_logistics_pending_counter_marketing = 0;
+            var for_logistics_on_haul_counter_marketing = 0;
+            var for_logistics_received_counter_marketing = 0;
+            var for_receiving_pending_counter_marketing = 0;
+            var for_receiving_received_counter_marketing = 0;    
+            var data_value_counter = 1;
+            var data_value = "";
+            for(let j = mtf_data_list.content.length - 1; j >= 1; j--){
+                var status = "PENDING";
+                var vehicle = "";
+                // for logistics
+                if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")] == "LOGISTICS" &&
+                month_filter.value == formatMonth(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])){
+                    vehicle = mtf_data_list.content[j][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")];
+                    for(let k = 1; k < ltf_data_list.content.length; k++){
+                        if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")] == ltf_data_list.content[k][findTextInArray(ltf_data_list, "MTF #")]){
+                            status = "ON HAULING";
+                            for_logistics_on_haul_counter_marketing += 1;
+                            for_logistics_pending_counter_marketing -= 1;
+                            for(let m = 1; m < wcf_data_list.content.length; m++){
+                                if(ltf_data_list.content[k][findTextInArray(ltf_data_list, "LTF #")] == wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
+                                    status = "RECEIVED";
+                                    for_logistics_received_counter_marketing += 1;
+                                    for_logistics_on_haul_counter_marketing -= 1;
+                                }
+                            }
+                        }
+                    }
+                    for_logistics_pending_counter_marketing += 1;
+                }
+                else if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")] == "LOGISTICS" &&
+                month_filter.value == "ALL"){
+                    vehicle = mtf_data_list.content[j][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")];
+                    for(let k = 1; k < ltf_data_list.content.length; k++){
+                        if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")] == ltf_data_list.content[k][findTextInArray(ltf_data_list, "MTF #")]){
+                            status = "ON HAULING";
+                            for_logistics_on_haul_counter_marketing += 1;
+                            for_logistics_pending_counter_marketing -= 1;
+                            for(let m = 1; m < wcf_data_list.content.length; m++){
+                                if(ltf_data_list.content[k][findTextInArray(ltf_data_list, "LTF #")] == wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
+                                    status = "RECEIVED";
+                                    for_logistics_received_counter_marketing += 1;
+                                    for_logistics_on_haul_counter_marketing -= 1;
+                                }
+                            }
+                        }
+                    }
+                    for_logistics_pending_counter_marketing += 1;
+                }
+                // for receiving
+                else if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")] == "RECEIVING" &&
+                month_filter.value == formatMonth(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])){
+                    vehicle = "PROVIDED BY CLIENT";
+                    for(let m = 1; m < wcf_data_list.content.length; m++){
+                        if((wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).slice(0,3) == "MTF"){
+                            if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")] == wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
+                                status = "RECEIVED";
+                                for_receiving_received_counter_marketing += 1;
+                                for_receiving_pending_counter_marketing -= 1;
+                            }
+                        }
+                    }
+                    for_receiving_pending_counter_marketing += 1;
+                }
+                else if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")] == "RECEIVING" &&
+                month_filter.value == "ALL"){
+                    vehicle = "PROVIDED BY CLIENT";
+                    for(let m = 1; m < wcf_data_list.content.length; m++){
+                        if((wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).slice(0,3) == "MTF"){
+                            if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")] == wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
+                                status = "RECEIVED";
+                                for_receiving_received_counter_marketing += 1;
+                                for_receiving_pending_counter_marketing -= 1;
+                            }
+                        }
+                    }
+                    for_receiving_pending_counter_marketing += 1;
+                }
+                if(month_filter.value == formatMonth(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])){
+                    data_value +=`
+                    <tr>
+                        <td>${data_value_counter}</td>
+                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")]}</td>
+                        <td>${date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])} /<br> ${time_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING TIME")])}</td>
+                        <td>${findClientName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")])}</td>
+                        <td>${findWasteCode(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")])}</td>
+                        <td>${findWasteName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")], (mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")]))}</td>
+                        <td>${vehicle}</td>
+                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")]}</td>
+                        <td>${status}</td>
+                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "REMARKS")]}</td>
+                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMITTED BY")]}</td>
+                    </tr>
+                    `
+                    
+                    data_value_counter += 1;
+                    pending_list_marketing.innerHTML = data_value;
+                }
+                else if(month_filter.value == "ALL"){
+                    data_value +=`
+                    <tr>
+                        <td>${data_value_counter}</td>
+                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")]}</td>
+                        <td>${date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])} /<br> ${time_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING TIME")])}</td>
+                        <td>${findClientName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")])}</td>
+                        <td>${findWasteCode(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")])}</td>
+                        <td>${findWasteName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")], (mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")]))}</td>
+                        <td>${vehicle}</td>
+                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")]}</td>
+                        <td>${status}</td>
+                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "REMARKS")]}</td>
+                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMITTED BY")]}</td>
+                    </tr>
+                    `
+                    data_value_counter += 1;
+                    pending_list_marketing.innerHTML = data_value;
+                }
+            }
+            booked_transactions_marketing.innerText = for_logistics_on_haul_counter_marketing + for_logistics_pending_counter_marketing + for_receiving_pending_counter_marketing + for_logistics_received_counter_marketing + for_receiving_received_counter_marketing;
+            on_hauling_marketing.innerText = for_logistics_on_haul_counter_marketing;
+            pending_marketing.innerText = for_logistics_pending_counter_marketing + for_receiving_pending_counter_marketing;
+            received_marketing.innerText = for_logistics_received_counter_marketing + for_receiving_received_counter_marketing;
+    
+            var options = {
+                series: [for_logistics_pending_counter_marketing + for_receiving_pending_counter_marketing, for_logistics_on_haul_counter_marketing, for_logistics_received_counter_marketing + for_receiving_received_counter_marketing],
+                chart: {
+                    width: 500, // Set the desired width
+                    height: 550, // Set the desired height
+                    type: 'pie',
+                },
+                plotOptions: {
+                    pie: {
+                        startAngle: 0,
+                        endAngle: 360
+                    }
+                },
+                dataLabels: {
+                    enabled: false, // Disable data labels inside the pie chart
+                },
+                fill: {
+                    type: 'gradient', // Use solid fill type
+                },
+                legend: {
+                    show: true,
+                    position: "left", // Set the legend position to "left"
+                    fontSize: '25px', // Increase legend font size as needed
+                    formatter: function (seriesName, opts) {
+                        // Here, you should use the correct variable to get the series value
+                        var seriesValue = opts.w.globals.series[opts.seriesIndex];
+                        var totalValue = opts.w.globals.series.reduce((acc, val) => acc + val, 0);
+                        var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
+                        return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
+                    },
+                    labels: {
+                        useSeriesColors: false, // Use custom color
+                    },
+                },
+                labels: ["Pending", "Ongoing", "Received"],
+                colors: ["#dc3545", "#c3c3c3", "#198754"], // Specify solid colors here
+                responsive: [{
+                    breakpoint: 480,
+                    options: {
+                        chart: {
+                            width: 200
+                        },
+                    }
+                }]
+            };
+            const pieChart = document.querySelector("#pieChart");
+            while (pieChart.firstChild) {
+                pieChart.removeChild(pieChart.firstChild);
+            }
+            var chart = new ApexCharts(pieChart, options);
+            chart.render();
+        }
 
         // ap_accounting_dashboard
         const ap_accounting_dashboard = document.querySelector("#accounting_head_dashboard");
@@ -344,547 +537,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             `
         }
         transfer_history_list_ap_accounting.innerHTML = data;
-
-        // marketing_dashboard
-        const booked_transactions_marketing = document.getElementById("booked_transactions");
-        const on_hauling_marketing = document.getElementById("on_hauling");
-        const pending_marketing = document.getElementById("pending");
-        const received_marketing = document.getElementById("received");
-        const pending_list_marketing = document.getElementById("pending_list");
-        const for_logistics_pending_marketing = document.getElementById("for_logistics_pending");
-        const for_logistics_on_haul_marketing = document.getElementById("for_logistics_on_haul");
-        const for_logistics_received_marketing = document.getElementById("for_logistics_received");
-        const for_receiving_pending_marketing = document.getElementById("for_receiving_pending");
-        const for_receiving_received_marketing = document.getElementById("for_receiving_received");
-        var for_logistics_pending_counter_marketing = 0;
-        var for_logistics_on_haul_counter_marketing = 0;
-        var for_logistics_received_counter_marketing = 0;
-        var for_receiving_pending_counter_marketing = 0;
-        var for_receiving_received_counter_marketing = 0;
-        var mtf_transaction_marketing = []; // Variable containing existing elements
-        var mtf_ltf_transaction_marketing = []; // Variable containing existing elements
-        var mtf_transaction_logistic_transaction_marketing = []; // Variable containing existing elements
-        var mtf_transaction_receiving_transaction_marketing = []; // Variable containing existing elements
-        var ltf_transaction_marketing = []; // Variable containing existing elements
-        var ltf_wcf_transaction_marketing = []; // Variable containing existing elements
         
-        for (let i = 1; i < mtf_data_list.content.length; i++) {
-            if (!mtf_transaction_marketing.includes(mtf_data_list.content[i][findTextInArray(mtf_data_list, "MTF #")])) {
-                mtf_transaction_marketing.push(mtf_data_list.content[i][findTextInArray(mtf_data_list, "MTF #")]);
-            }
-            if(mtf_data_list.content[i][findTextInArray(mtf_data_list, "SUBMIT TO")] == "LOGISTICS"){
-                if (!mtf_transaction_logistic_transaction_marketing.includes(mtf_data_list.content[i][findTextInArray(mtf_data_list, "MTF #")])) {
-                    mtf_transaction_logistic_transaction_marketing.push(mtf_data_list.content[i][findTextInArray(mtf_data_list, "MTF #")]);
-                }
-            }
-            if(mtf_data_list.content[i][findTextInArray(mtf_data_list, "SUBMIT TO")] == "RECEIVING"){
-                if (!mtf_transaction_receiving_transaction_marketing.includes(mtf_data_list.content[i][findTextInArray(mtf_data_list, "MTF #")])) {
-                    mtf_transaction_receiving_transaction_marketing.push(mtf_data_list.content[i][findTextInArray(mtf_data_list, "MTF #")]);
-                }
-            }
-        }
-        for (let i = 1; i < ltf_data_list.content.length; i++) {
-            if (!mtf_ltf_transaction_marketing.includes(ltf_data_list.content[i][findTextInArray(ltf_data_list, "MTF #")])) {
-                mtf_ltf_transaction_marketing.push(ltf_data_list.content[i][findTextInArray(ltf_data_list, "MTF #")]);
-            }
-            if (!ltf_transaction_marketing.includes(ltf_data_list.content[i][findTextInArray(ltf_data_list, "LTF #")])) {
-                ltf_transaction_marketing.push(ltf_data_list.content[i][findTextInArray(ltf_data_list, "LTF #")]);
-            }
-        }
-
-        for (let i = 1; i < wcf_data_list.content.length; i++) {
-            if (!ltf_wcf_transaction_marketing.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "LTF #")])) {
-                ltf_wcf_transaction_marketing.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "LTF #")]);
-            }
-        }
-
-        booked_transactions_marketing.innerText = mtf_transaction_marketing.length;
-
-        var data_value = "";
-        var data_value_counter = 1;
-        for(let j = 1; j < mtf_data_list.content.length; j++){
-            var status = "PENDING";
-            // for logistics
-            if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")] == "LOGISTICS"){
-                for(let k = 1; k < ltf_data_list.content.length; k++){
-                    if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")] == ltf_data_list.content[k][findTextInArray(ltf_data_list, "MTF #")]){
-                        status = "ON HAULING";
-                        for_logistics_on_haul_counter_marketing += 1;
-                        for_logistics_pending_counter_marketing -= 1;
-                        for(let m = 1; m < wcf_data_list.content.length; m++){
-                            if(ltf_data_list.content[k][findTextInArray(ltf_data_list, "LTF #")] == wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
-                                status = "RECEIVED";
-                                for_logistics_received_counter_marketing += 1;
-                                for_logistics_on_haul_counter_marketing -= 1;
-                            }
-                        }
-                    }
-                }
-                for_logistics_pending_counter_marketing += 1;
-            }
-            // for receiving
-            else if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")] == "RECEIVING"){
-                for(let m = 1; m < wcf_data_list.content.length; m++){
-                    if((wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).slice(0,3) == "MTF"){
-                        if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")] == wcf_data_list.content[m][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
-                            status = "RECEIVED";
-                            for_receiving_received_counter_marketing += 1;
-                            for_receiving_pending_counter_marketing -= 1;
-                        }
-                    }
-                }
-                for_receiving_pending_counter_marketing += 1;
-            }
-            data_value +=`
-            <tr>
-                <td>${data_value_counter}</td>
-                <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")]}</td>
-                <td>${date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])} /<br> ${time_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING TIME")])}</td>
-                <td>${findClientName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")])}</td>
-                <td>${findWasteCode(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")])}</td>
-                <td>${findWasteName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")], (mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")]))}</td>
-                <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")]}</td>
-                <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")]}</td>
-                <td>${status}</td>
-            </tr>
-            `
-            data_value_counter += 1;
-        }
-        pending_list_marketing.innerHTML = data_value;
-
-        for_logistics_pending_marketing.innerText = for_logistics_pending_counter_marketing;
-        for_logistics_on_haul_marketing.innerText = for_logistics_on_haul_counter_marketing;
-        for_logistics_received_marketing.innerText = for_logistics_received_counter_marketing;
-        for_receiving_pending_marketing.innerText = for_receiving_pending_counter_marketing;
-        for_receiving_received_marketing.innerText = for_receiving_received_counter_marketing;
-        on_hauling_marketing.innerText = for_logistics_on_haul_counter_marketing;
-        pending_marketing.innerText = for_logistics_pending_counter_marketing + for_receiving_pending_counter_marketing;
-        received_marketing.innerText = for_logistics_received_counter_marketing + for_receiving_received_counter_marketing;
-
-        // billing_dashboard
-        const certified_counter_billing = document.querySelector("#billing_dashboard #certified_counter");
-        const pending_counter_billing = document.querySelector("#billing_dashboard #pending_counter");
-        const billed_counter_billing = document.querySelector("#billing_dashboard #billed_counter");
-        const unsorted_list_billing = document.querySelector("#billing_dashboard #unsorted_list");
-        var sf_tpf_transaction_counter_billing = 0;
-        var sf_transaction_counter_billing = 0;
-        let sf_transaction_billing = []; // Variable containing existing elements
-        let sf_tpf_transaction_billing = []; // Variable containing existing elements
-
-        for (let i = 1; i < cod_data_list.content.length; i++) {
-            if (!sf_transaction_billing.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")])) {
-                sf_transaction_billing.push(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]);
-                sf_transaction_counter_billing += 1
-            }
-        }
-
-        for (let i = 1; i < bpf_data_list.content.length; i++) {
-            if (!sf_tpf_transaction_billing.includes(bpf_data_list.content[i][findTextInArray(bpf_data_list, "COD #")])) {
-                sf_tpf_transaction_billing.push(bpf_data_list.content[i][findTextInArray(bpf_data_list, "COD #")]);
-                sf_tpf_transaction_counter_billing += 1
-            }
-        }
-
-        // Get elements from sf_transaction not included in sf_tpf_transaction
-        const newElements_billing = sf_transaction_billing.filter((element) => !sf_tpf_transaction_billing.includes(element));
-
-        certified_counter_billing.innerText = sf_transaction_counter_billing;
-        pending_counter_billing.innerText = sf_transaction_counter_billing - sf_tpf_transaction_counter_billing;
-        billed_counter_billing.innerText = sf_tpf_transaction_counter_billing;
-        var data_value = "";
-        var data_value_counter = 1;
-        for(let i = 0; i < newElements_billing.length; i++){
-            for(let j = 1; j < cod_data_list.content.length; j++){
-                if(newElements_billing[i] == cod_data_list.content[j][findTextInArray(cod_data_list, "COD #")]){
-                    data_value +=`
-                    <tr>
-                        <td>${data_value_counter}</td>
-                        <td>${cod_data_list.content[j][findTextInArray(cod_data_list, "COD #")]}</td>
-                        <td>${date_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "DATE OF CERTIFICATION")])}</td>
-                        <td>${findClientName(cod_data_list.content[j][findTextInArray(cod_data_list, "CLIENT ID")])}</td>
-                        <td>${findWasteCode(cod_data_list.content[j][findTextInArray(cod_data_list, "WASTE ID")])}</td>
-                        <td>${findWasteName(cod_data_list.content[j][findTextInArray(cod_data_list, "CLIENT ID")], cod_data_list.content[j][findTextInArray(cod_data_list, "WASTE ID")])}</td>
-                        <td>${cod_data_list.content[j][findTextInArray(cod_data_list, "WEIGHT")]}</td>
-                    </tr>
-                    `
-                    data_value_counter += 1;
-                }
-            }
-        }
-        unsorted_list_billing.innerHTML = data_value;            
-
-        // multi section
-        // purchase_request_form
-        const today = new Date();
-        const today_year = today.getFullYear();
-        const today_month = today.getMonth()+1;
-        const purchase_request_form = document.querySelector("#purchase_request_form");
-        const add_item_button = purchase_request_form.querySelector("#add_item_button");
-        const remove_item_button = purchase_request_form.querySelector("#remove_item_button");
-        const purchase_request_form_button = purchase_request_form.querySelector("#purchase_request_form_button");
-        const purchase_request_list = purchase_request_form.querySelector("#purchase_request_list");
-        const form_tab = purchase_request_form.querySelector("#form_tab");
-        var prf_counter = purchase_request_form.querySelector("#prf_counter");
-        var prf_form_no = [];
-        
-        var month_new;
-        var code_year_month;
-        var data_counter;
-        
-        // FORM GENERATOR
-        if(today_month.toString().length == 1){
-            month_new = `0${today_month}`
-        }
-
-        function prf_generator() {
-            var data_content = 0;
-            var data_info;
-            var data_last_3digit = 0;
-            var prf_code_year_month;
-            prf_code_year_month = `PR${today_year}${month_new}`;
-        
-            for (let x = 1; x < prf_data_list.content.length; x++) {
-                data_info = prf_data_list.content[x][findTextInArray(prf_data_list, "PR #")];
-        
-                if (data_info.includes(prf_code_year_month) == true) {
-                    data_last_3digit = data_info.slice(8);
-                }
-            }
-        
-            data_content = parseInt(data_last_3digit);
-        
-            for (let y = 1; y <= prf_counter.value; y++) {
-                prf_form_no[y] = document.querySelector(`#prf_form_no${y}`);
-                prf_form_no[y].value = `${prf_code_year_month}${String(parseInt(data_content) + y).padStart(3,"0")}`;
-            }
-        }
-        
-        prf_generator()
-        
-        add_item_button.addEventListener("click", () => {
-            const prf_item_container = purchase_request_form.querySelector("#prf_item_container");
-            prf_counter.value = parseInt(prf_counter.value) + 1; // Increment the counter for the next item
-            const itemHTML = `
-            <div id="prf_item">
-                <div>
-                    <div>
-                        <label for="prf_form_no${prf_counter.value}">
-                            <i class="fa-solid fa-list-ol"></i>
-                            PR #
-                        </label><br>
-                        <div class="form">
-                            <input type="text" id="prf_form_no${prf_counter.value}" name="prf_form_no${prf_counter.value}" autocomplete="off" class="form-control" readonly>
-                        </div>
-                    </div>
-                    <div>
-                        <label for="item${prf_counter.value}">
-                            <i class="fa-solid fa-list-ol"></i>
-                            Item ${prf_counter.value}
-                        </label>
-                        <div>
-                            <input type="text" id="item${prf_counter.value}" name="item${prf_counter.value}" autocomplete="off" class="form-control" required placeholder="Item Name">
-                        </div>
-                    </div>
-                    <div>
-                        <label for="quantity${prf_counter.value}">
-                            <i class="fa-solid fa-list-ol"></i>
-                            Quantity
-                        </label>
-                        <div>
-                            <input type="number" id="quantity${prf_counter.value}" name="quantity${prf_counter.value}" autocomplete="off" class="form-control" required>
-                        </div>
-                    </div>
-                    <div>
-                        <label for="unit${prf_counter.value}">
-                            <i class="fa-solid fa-list-ol"></i>
-                            Unit
-                        </label>
-                        <div>
-                            <input type="text" id="unit${prf_counter.value}" name="unit${prf_counter.value}" autocomplete="off" class="form-control" required placeholder="ex. kg/pc/box/set">
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div>
-                        <label for="details${prf_counter.value}">
-                            <i class="fa-solid fa-list-ol"></i>
-                            Details
-                        </label>
-                        <div>
-                            <input type="text" id="details${prf_counter.value}" name="details${prf_counter.value}" autocomplete="off" class="form-control" required  placeholder="Brand/Unit/Specifications">
-                        </div>
-                    </div>
-                    <div>
-                        <label for="remarks1">
-                            <i class="fa-solid fa-list-ol"></i>
-                            Remarks
-                        </label>
-                        <div>
-                            <input type="text" id="remarks${prf_counter.value}" name="remarks${prf_counter.value}" autocomplete="off" class="form-control" required placeholder="Where to use">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            `;
-            prf_item_container.insertAdjacentHTML("beforeend", itemHTML);
-
-            // Call the prf_generator function after adding a new item
-            prf_generator();
-
-            if (prf_counter.value > 1) {
-                remove_item_button.style.display = "block";
-            }
-        });
-        
-        remove_item_button.addEventListener("click", () => {
-            const lastItem = purchase_request_form.querySelector("#prf_item_container").lastElementChild;
-            if (lastItem) {
-                lastItem.remove();
-                prf_counter.value = parseInt(prf_counter.value) - 1;
-
-                // Call the prf_generator function after removing an item
-                prf_generator();
-
-                if (prf_counter.value <= 1) {
-                    remove_item_button.style.display = "none";
-                }
-            }
-        });
-
-        var purchase_request_data_value = "";
-        var purchase_request_data_value_counter = 1;
-        for(let x = 1; x < prf_data_list.content.length; x++){
-            var status = "PENDING";
-            var duration = "PENDING";
-            for(let y = 1; y < pof_data_list.content.length; y++){
-                if(prf_data_list.content[x][findTextInArray(prf_data_list, "PR #")] == (pof_data_list.content[y][findTextInArray(pof_data_list, "PR #")])){
-                    status = "REQUESTED"
-                }
-            }
-            purchase_request_data_value += `
-            <tr>
-                <td>${purchase_request_data_value_counter}</td>
-                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "PR #")]}</td>
-                <td>${date_decoder(prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")])}/<br>${time_decoder(prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")])}</td>
-                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "ITEM")]}</td>
-                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")]}</td>
-                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "UNIT")]}</td>
-                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "DETAILS")]}</td>
-                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")]}</td>
-                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")]}</td>
-                <td>${status}</td>
-                <td>${duration}</td>
-            </tr>
-            `
-            purchase_request_data_value_counter += 1;
-        }
-        purchase_request_list.innerHTML = purchase_request_data_value;
-
-
-        purchase_request_form_button.addEventListener("click", () => {
-            if(form_tab.style.display == "block"){
-                form_tab.style.display = "none";
-            }
-            else{
-                form_tab.style.display = "block";
-            }
-        })
-
-        // incident report form
-        const irf_form_no = document.getElementById("irf_form_no"); 
-        var irf_code_year_month;
-        irf_code_year_month = `IRF${today_year}${month_new}`;
-        
-        var data_content = 1;
-        var data_info;
-        var data_last_3digit = 0;
-    
-        for(x=1; x<irf_data_list.content.length; x++){
-            data_info = irf_data_list.content[x][findTextInArray(irf_data_list, "IRF #")];
-            
-            if(data_info.includes(irf_code_year_month) == true){
-                data_last_3digit = data_info.slice(9)
-            }
-        }
-
-        data_content = parseInt(data_last_3digit) +1
-    
-        if(data_content.toString().length == 1){
-            data_counter = `00${data_content}`;
-        }
-        else if(data_content.toString().length == 2){
-            data_counter = `0${data_content}`;
-        }
-        else if(data_content.toString().length == 3){
-            data_counter = `${data_content}`;
-        }
-    
-        irf_form_no.value = `${irf_code_year_month}${data_counter}`
-
-        const incident_report_form = document.querySelector("#incident_report_form");
-        const person_involved_containers = incident_report_form.querySelector("#person_involved_containers");
-        const irf_counter_incident_report_form = incident_report_form.querySelector("#irf_counter");
-        const add_tf_button_incident_report_form = incident_report_form.querySelector("#add_tf_button");
-        const remove_tf_button_incident_report_form = incident_report_form.querySelector("#add_tf_button");
-        const form_tab_incident_report_form = incident_report_form.querySelector("#form_tab");
-        const incident_report_form_button_incident_report_form = incident_report_form.querySelector("#incident_report_form_button");
-        const incident_history_list_incident_report_form = incident_report_form.querySelector("#incident_history_list");
-        var employee_name = [];
-        var employee_department = [];
-        var employee_designation = [];
-        for(let x = 1; x < employee_data_list.content.length; x++){
-            if(employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE STATUS")] == "ACTIVE"){
-                var gender = employee_data_list.content[x][findTextInArray(employee_data_list, "GENDER")];
-                if(gender == "MALE"){
-                    var full_name = `${employee_data_list.content[x][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[x][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[x][findTextInArray(employee_data_list, "MIDDLE NAME")]} ${employee_data_list.content[x][findTextInArray(employee_data_list, "AFFIX")]}`
-                    employee_name.push(full_name);
-                    employee_department.push(employee_data_list.content[x][findTextInArray(employee_data_list, "DEPARTMENT")]);
-                    employee_designation.push(employee_data_list.content[x][findTextInArray(employee_data_list, "DESIGNATION")]);
-                }
-                else{
-                    var full_name = `${employee_data_list.content[x][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[x][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[x][findTextInArray(employee_data_list, "MIDDLE NAME")]} - ${employee_data_list.content[x][findTextInArray(employee_data_list, "SPOUSE NAME")]}`
-                    employee_name.push(full_name);
-                    employee_department.push(employee_data_list.content[x][findTextInArray(employee_data_list, "DEPARTMENT")]);
-                    employee_designation.push(employee_data_list.content[x][findTextInArray(employee_data_list, "DESIGNATION")]);
-                }
-            }
-        }
-        function addPersonInvolved(){
-            const person_involved_container = person_involved_containers.querySelector(`#person_involved_container${irf_counter_incident_report_form.value}`);
-            var search_wrapper2 = person_involved_container.querySelector(`#search_irf_client${irf_counter_incident_report_form.value}`);
-            var irf_department = person_involved_container.querySelector(`#irf_department${irf_counter_incident_report_form.value}`);
-            var irf_designation = person_involved_container.querySelector(`#irf_designation${irf_counter_incident_report_form.value}`);
-            var irf_client = search_wrapper2.querySelector(`#irf_client${irf_counter_incident_report_form.value}`);
-            var sugg_box2 = search_wrapper2.querySelector(".autocom_box");
-            irf_client.onkeyup = (e) => {
-                let user_data = e.target.value;
-                let empty_array = [];
-                if (user_data) {
-                    empty_array = employee_name.filter((data) => {
-                        return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
-                    });
-                    empty_array = empty_array.map((data) => {
-                        return '<li>' + data + '</li>';
-                    });
-                    search_wrapper2.classList.add("active");
-                    show_suggestions2(empty_array);
-                } else {
-                    search_wrapper2.classList.remove("active");
-                }
-            };
-            sugg_box2.addEventListener("click", (e) => {
-                if (e.target.tagName === "LI") {
-                    select2(e.target.innerHTML);
-                }
-            });
-            function select2(element) {
-                let select_user_data = element;
-                search_wrapper2.classList.remove("active");
-                irf_client.value = select_user_data;
-                irf_department.value = employee_department[findTextInArray2(employee_name, select_user_data)];
-                employee_department.splice(findTextInArray2(employee_name, select_user_data), 1);
-                irf_designation.value = employee_designation[findTextInArray2(employee_name, select_user_data)];
-                employee_designation.splice(findTextInArray2(employee_name, select_user_data), 1);
-                employee_name = employee_name.filter(item => item !== select_user_data);
-            }
-            function show_suggestions2(list) {
-                let list_data;
-                if (!list.length) {
-                    user_value = irf_client.value;
-                    list_data = '<li>' + user_value + '</li>';
-                } else {
-                    list_data = list.join("");
-                }
-                sugg_box2.innerHTML = list_data;
-            }
-        }
-        addPersonInvolved();
-        add_tf_button_incident_report_form.addEventListener("click", () => {
-            irf_counter_incident_report_form.value = parseInt(irf_counter_incident_report_form.value) + 1;
-            var data = `
-            <div id="person_involved_container${irf_counter_incident_report_form.value}" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
-                <div class="wrapper">
-                    <label for="irf_client${irf_counter_incident_report_form.value}">
-                        <i class="fa-solid fa-user"></i>
-                        Person Involved
-                    </label><br>
-                    <div class="search_input" id="search_irf_client${irf_counter_incident_report_form.value}">
-                        <input type="text" name="irf_client${irf_counter_incident_report_form.value}" id="irf_client${irf_counter_incident_report_form.value}" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
-                        <div class="autocom_box">
-                        </div>
-                        <div class="icon"><i class="fas fa-search"></i></div>
-                    </div>
-                </div>
-                <div>
-                    <label for="irf_department${irf_counter_incident_report_form.value}">
-                        <i class="fa-solid fa-building-user"></i>
-                        Department
-                    </label><br>
-                    <input type="text" id="irf_department${irf_counter_incident_report_form.value}" autocomplete="off" name="irf_department${irf_counter_incident_report_form.value}" class="form-control" required readonly placeholder="Input Department..." style="height: 55px !important;">    
-                </div>
-                <div>
-                    <label for="irf_designation${irf_counter_incident_report_form.value}">
-                        <i class="fa-solid fa-id-card"></i>
-                        Designation
-                    </label><br>
-                    <input type="text" id="irf_designation${irf_counter_incident_report_form.value}" autocomplete="off" name="irf_designation${irf_counter_incident_report_form.value}" class="form-control" required readonly placeholder="Input Designation..." style="height: 55px !important;">   
-                </div>
-            </div>
-            `
-            person_involved_containers.insertAdjacentHTML("beforeend", data);
-            remove_tf_button_incident_report_form.style.display = "block";
-            addPersonInvolved();
-        })
-        // incident_history_list
-        var incident_history_data_value = "";
-        var incident_history_data_value_counter = 1;
-
-        for(let x = 1; x < irf_data_list.content.length; x++){
-            const resultArray = (irf_data_list.content[x][findTextInArray(irf_data_list, "PERSON INVOLVE")]).split(" || ");
-            var data_value2 = [];
-            for(let z = 0; z < resultArray.length; z++){
-                for(let y = 1; y < employee_data_list.content.length; y++){
-                    if(employee_data_list.content[y][findTextInArray(employee_data_list, "EMPLOYEE ID")] == resultArray[z]){
-                        var gender = employee_data_list.content[y][findTextInArray(employee_data_list, "GENDER")];
-                        if(gender == "MALE"){
-                            var full_name = `${employee_data_list.content[y][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[y][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[y][findTextInArray(employee_data_list, "MIDDLE NAME")]} ${employee_data_list.content[y][findTextInArray(employee_data_list, "AFFIX")]}`
-                            data_value2.push(full_name);
-                        }
-                        else{
-                            var full_name = `${employee_data_list.content[y][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[y][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[y][findTextInArray(employee_data_list, "MIDDLE NAME")]} - ${employee_data_list.content[y][findTextInArray(employee_data_list, "SPOUSE NAME")]}`
-                            data_value2.push(full_name);
-                        }
-                    }
-                }
-            }
-            const concatenatedString = data_value2.join(" || ")
-            incident_history_data_value += `
-            <tr>
-                <td>${incident_history_data_value_counter}</td>
-                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "IRF #")]}</td>
-                <td>${date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "DATE OF INCIDENT")])} /<br> ${time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "TIME OF INCIDENT")])}</td>
-                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "DEPARTMENT")]}</td>
-                <td>${concatenatedString}</td>
-                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "DESIGNATION")]}</td>
-                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "LOCATION")]}</td>
-                <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "INCIDENT DETAILS")]}</td>
-                <td>${date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "DATE OF REPORT")])} /<br> ${time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "TIME OF REPORT")])}</td>
-                <td>${calculateTravelTime(date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "DATE OF INCIDENT")]),time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "TIME OF INCIDENT")]),date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "DATE OF REPORT")]),time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "TIME OF REPORT")]))}</td>
-            </tr>
-            `
-            incident_history_data_value_counter += 1;
-        }
-        incident_history_list_incident_report_form.innerHTML = incident_history_data_value
-
-        incident_report_form_button_incident_report_form.addEventListener("click", () => {
-            if(form_tab_incident_report_form.style.display == "block"){
-                form_tab_incident_report_form.style.display = "none";
-            }
-            else{
-                form_tab_incident_report_form.style.display = "block";
-            }
-        })
-    
         function findEmployeeName(employee_id){
             var employee_name = "";
             for(let c = 1; c < employee_data_list.content.length; c++){
@@ -917,21 +570,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         function findWasteCode(waste_id){
             var waste_code = "";
             for(let c = 1; c < type_of_waste_data_list.content.length; c++){
-                if(waste_id == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
+                if(waste_id.substring(0, 8) == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
                     waste_code = (type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")]).substring(0, 4);
-                    break
-                }
-                else{
-                    waste_code = waste_id;
-                }
-            }
-            return waste_code
-        }
-        function findWasteCode2(waste_id){
-            var waste_code = "";
-            for(let c = 1; c < type_of_waste_data_list.content.length; c++){
-                if(waste_id == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
-                    waste_code = (type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")]);
                     break
                 }
                 else{
