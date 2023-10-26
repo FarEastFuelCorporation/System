@@ -756,6 +756,12 @@ document.addEventListener('DOMContentLoaded', async function() {
             var pending_data_value_counter = 1;
             var requested_data_value = "";
             var requested_data_value_counter = 1;
+            var approved_data_value = "";
+            var approved_data_value_counter = 1;
+            var released_data_value = "";
+            var released_data_value_counter = 1;
+            var purchased_data_value = "";
+            var purchased_data_value_counter = 1;
             for(let x = 1; x < prf_data_list.content.length; x++){  
                 for(let y = 0; y < pending.length; y++){
                     if(pending[y] == prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]){
@@ -819,10 +825,105 @@ document.addEventListener('DOMContentLoaded', async function() {
                         requested_data_value_counter += 1;
                     }
                 }
+                for(let y = 0; y < approved.length; y++){
+                    if(approved[y] == prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]){
+                        var pr_data, date_time, quantity, unit, item, details, remarks, department, status, requisitioner;
+                        pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")];
+                        date_time = prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")];
+                        quantity = prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")];
+                        unit = prf_data_list.content[x][findTextInArray(prf_data_list, "UNIT")];
+                        item = prf_data_list.content[x][findTextInArray(prf_data_list, "ITEM")];
+                        details = prf_data_list.content[x][findTextInArray(prf_data_list, "DETAILS")];
+                        remarks = prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")];
+                        department = prf_data_list.content[x][findTextInArray(prf_data_list, "DEPARTMENT")];
+                        status = prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")];
+                        requisitioner = prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")];
+                        approved_data_value += `
+                        <tr>
+                            <td>${approved_data_value_counter}</td>
+                            <td>${pr_data}</td>
+                            <td>${date_decoder(date_time)} /<br> ${time_decoder(date_time)}</td>
+                            <td>${quantity}</td>
+                            <td>${unit}</td>
+                            <td>${item}</td>
+                            <td>${details}</td>
+                            <td>${remarks}</td>
+                            <td>${department}</td>
+                            <td>${requisitioner}</td>
+                            <td>${status}</td>
+                        </tr>
+                        `
+                        approved_data_value_counter += 1;
+                    }
+                }
+                for(let y = 0; y < released.length; y++){
+                    if(released[y] == prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]){
+                        var pr_data, date_time, quantity, unit, item, details, remarks, department, status, requisitioner;
+                        pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")];
+                        date_time = prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")];
+                        quantity = prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")];
+                        unit = prf_data_list.content[x][findTextInArray(prf_data_list, "UNIT")];
+                        item = prf_data_list.content[x][findTextInArray(prf_data_list, "ITEM")];
+                        details = prf_data_list.content[x][findTextInArray(prf_data_list, "DETAILS")];
+                        remarks = prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")];
+                        department = prf_data_list.content[x][findTextInArray(prf_data_list, "DEPARTMENT")];
+                        status = prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")];
+                        requisitioner = prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")];
+                        released_data_value += `
+                        <tr>
+                            <td>${released_data_value_counter}</td>
+                            <td>${pr_data}</td>
+                            <td>${date_decoder(date_time)} /<br> ${time_decoder(date_time)}</td>
+                            <td>${quantity}</td>
+                            <td>${unit}</td>
+                            <td>${item}</td>
+                            <td>${details}</td>
+                            <td>${remarks}</td>
+                            <td>${department}</td>
+                            <td>${requisitioner}</td>
+                            <td>${status}</td>
+                        </tr>
+                        `
+                        released_data_value_counter += 1;
+                    }
+                }
+                for(let y = 0; y < purchased.length; y++){
+                    if(purchased[y] == prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]){
+                        var pr_data, date_time, quantity, unit, item, details, remarks, department, status, requisitioner;
+                        pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")];
+                        date_time = prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")];
+                        quantity = prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")];
+                        unit = prf_data_list.content[x][findTextInArray(prf_data_list, "UNIT")];
+                        item = prf_data_list.content[x][findTextInArray(prf_data_list, "ITEM")];
+                        details = prf_data_list.content[x][findTextInArray(prf_data_list, "DETAILS")];
+                        remarks = prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")];
+                        department = prf_data_list.content[x][findTextInArray(prf_data_list, "DEPARTMENT")];
+                        status = prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")];
+                        requisitioner = prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")];
+                        purchased_data_value += `
+                        <tr>
+                            <td>${purchased_data_value_counter}</td>
+                            <td>${pr_data}</td>
+                            <td>${date_decoder(date_time)} /<br> ${time_decoder(date_time)}</td>
+                            <td>${quantity}</td>
+                            <td>${unit}</td>
+                            <td>${item}</td>
+                            <td>${details}</td>
+                            <td>${remarks}</td>
+                            <td>${department}</td>
+                            <td>${requisitioner}</td>
+                            <td>${status}</td>
+                        </tr>
+                        `
+                        purchased_data_value_counter += 1;
+                    }
+                }
             }
-            pending_list_container_purchasing.innerHTML = pending_data_value;
-            history_list_container_purchasing.innerHTML = requested_data_value;
-
+            pending_list_container_purchasing.insertAdjacentHTML("beforeend", pending_data_value);
+            history_list_container_purchasing.insertAdjacentHTML("beforeend", requested_data_value);
+            history_list_container_purchasing.insertAdjacentHTML("beforeend", approved_data_value);
+            history_list_container_purchasing.insertAdjacentHTML("beforeend", released_data_value);
+            history_list_container_purchasing.insertAdjacentHTML("beforeend", purchased_data_value);
 
             const ap_accounting_dashboard = document.querySelector("#accounting_head_dashboard");
             const purchase_request_list_ap_accounting = ap_accounting_dashboard.querySelector("#purchase_request_list");
@@ -849,18 +950,18 @@ document.addEventListener('DOMContentLoaded', async function() {
                             }
                         }
                         button = `
-                        <form action="https://script.google.com/macros/s/AKfycbzXyB8-q3Atk0La9n5jUE4ytEK4zIZgPzkLTyQvFN9lYBeqynrI11WbCMUIOpxKUrg0/exec" method="post">
+                        <form action="https://script.google.com/macros/s/AKfycbxVr2F7Q_1Jbj0JQqVVkDm1Vd_t3rLLboSgbVXDrRkpAiDmW1W0Zbg3rYp-HQj1ojJr/exec" method="post">
                             <input type="hidden" name="itm_form_no" id="itm_form_no" value="${pr_data}">
-                            <input type="hidden" name="timestamp" id="timestamp" value="${date_decoder(new Date())}">
+                            <input type="hidden" name="timestamp" id="timestamp" value="${new Date()}">
                             <button type="submit" style="background-color: transparent !important; padding:0; color: #198754; border: none">
                                 <i class="fa-solid fa-thumbs-up"></i>
                             </button>
                         </form>
                         `
                         button2 = `
-                        <form action="https://script.google.com/macros/s/AKfycbzgeJmqqC808gCoFIftOl1HG2tLPS1_rc2CEre1v0ZnIDuynTyaKOOuJ8E-Fpo400LVkw/exec" method="post">
+                        <form action="https://script.google.com/macros/s/AKfycbx5SYw9DIYhoeFs656bTN-5G8qCcbrWnH5saJzZEeptNXL04S-dFQgbu10ecNU-s2hu2w/exec" method="post">
                         <input type="hidden" name="itm_form_no" id="itm_form_no" value="${pr_data}">
-                        <input type="hidden" name="timestamp" id="timestamp" value="${date_decoder(new Date())}">
+                        <input type="hidden" name="timestamp" id="timestamp" value="${new Date()}">
                         <button type="submit" style="background-color: transparent !important; padding:0; color: #dc3545; border: none">
                                 <i class="fa-solid fa-thumbs-down"></i>
                             </button>
@@ -909,7 +1010,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const representation_fund_ap_accounting = ap_accounting_dashboard.querySelector("#representation_fund");
         const request_history_list_ap_accounting = ap_accounting_dashboard.querySelector("#request_history_list");
         const transfer_history_list_ap_accounting = ap_accounting_dashboard.querySelector("#transfer_history_list");
-        
+        const purchase_request_history_container_accounting = ap_accounting_dashboard.querySelector("#purchase_request_history");
+
         var source_of_fund = 0;
         var trucking_fund = 0;
         var hauling_fund = 0;
@@ -1082,6 +1184,156 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
         request_history_list_ap_accounting.innerHTML = data;
 
+        var pending = [];
+        var requested = [];
+        var approved = [];
+        var released = [];
+        var purchased = [];
+        for (let i = 1; i < prf_data_list.content.length; i++) {
+            if (prf_data_list.content[i][findTextInArray(prf_data_list, "STATUS")] == "PENDING") {
+                pending.push(prf_data_list.content[i][findTextInArray(prf_data_list, "ITM #")]);
+            }
+            if (prf_data_list.content[i][findTextInArray(prf_data_list, "STATUS")] == "REQUESTED") {
+                requested.push(prf_data_list.content[i][findTextInArray(prf_data_list, "ITM #")]);
+            }
+            if (prf_data_list.content[i][findTextInArray(prf_data_list, "STATUS")] == "APPROVED") {
+                approved.push(prf_data_list.content[i][findTextInArray(prf_data_list, "ITM #")]);
+            }
+            if (prf_data_list.content[i][findTextInArray(prf_data_list, "STATUS")] == "RELEASED") {
+                released.push(prf_data_list.content[i][findTextInArray(prf_data_list, "ITM #")]);
+            }
+            if (prf_data_list.content[i][findTextInArray(prf_data_list, "STATUS")] == "PURCHASED") {
+                purchased.push(prf_data_list.content[i][findTextInArray(prf_data_list, "ITM #")]);
+            }
+        }
+
+        for (let i = 1; i < pof_data_list.content.length; i++) {
+            if (!prf_pr_transaction.includes(pof_data_list.content[i][findTextInArray(prf_data_list, "ITM #")])) {
+                prf_pr_transaction.push(pof_data_list.content[i][findTextInArray(prf_data_list, "ITM #")]);
+            }
+        }
+        // pending_list
+        var approved_data_value = "";
+        var approved_data_value_counter = 1;
+        var released_data_value = "";
+        var released_data_value_counter = 1;
+        var purchased_data_value = "";
+        var purchased_data_value_counter = 1;
+        for(let x = 1; x < prf_data_list.content.length; x++){  
+            for(let y = 0; y < approved.length; y++){
+                if(approved[y] == prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]){
+                    var pr_data, date_time, quantity, unit, item, details, remarks, department, status, requisitioner;
+                    pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")];
+                    date_time = prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")];
+                    quantity = prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")];
+                    unit = prf_data_list.content[x][findTextInArray(prf_data_list, "UNIT")];
+                    item = prf_data_list.content[x][findTextInArray(prf_data_list, "ITEM")];
+                    details = prf_data_list.content[x][findTextInArray(prf_data_list, "DETAILS")];
+                    remarks = prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")];
+                    department = prf_data_list.content[x][findTextInArray(prf_data_list, "DEPARTMENT")];
+                    status = prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")];
+                    requisitioner = prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")];
+                    for(let z = 1; z < pof_data_list.content.length; z++){
+                        if(pr_data == pof_data_list.content[x][findTextInArray(pof_data_list, "ITM #")]){
+                            amount = pof_data_list.content[x][findTextInArray(pof_data_list, "AMOUNT")]
+                        }
+                    }                    
+                    approved_data_value += `
+                    <tr>
+                        <td>${approved_data_value_counter}</td>
+                        <td>${pr_data}</td>
+                        <td>${date_decoder(date_time)} /<br> ${time_decoder(date_time)}</td>
+                        <td>${quantity}</td>
+                        <td>${unit}</td>
+                        <td>${item}</td>
+                        <td>${details}</td>
+                        <td>${remarks}</td>
+                        <td>${department}</td>
+                        <td>${requisitioner}</td>
+                        <td>${amount}</td>
+                        <td>${status}</td>
+                    </tr>
+                    `
+                    approved_data_value_counter += 1;
+                }
+            }
+            for(let y = 0; y < released.length; y++){
+                if(released[y] == prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]){
+                    var pr_data, date_time, quantity, unit, item, details, remarks, department, status, requisitioner;
+                    pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")];
+                    date_time = prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")];
+                    quantity = prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")];
+                    unit = prf_data_list.content[x][findTextInArray(prf_data_list, "UNIT")];
+                    item = prf_data_list.content[x][findTextInArray(prf_data_list, "ITEM")];
+                    details = prf_data_list.content[x][findTextInArray(prf_data_list, "DETAILS")];
+                    remarks = prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")];
+                    department = prf_data_list.content[x][findTextInArray(prf_data_list, "DEPARTMENT")];
+                    status = prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")];
+                    requisitioner = prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")];
+                    for(let z = 1; z < pof_data_list.content.length; z++){
+                        if(pr_data == pof_data_list.content[x][findTextInArray(pof_data_list, "ITM #")]){
+                            amount = pof_data_list.content[x][findTextInArray(pof_data_list, "AMOUNT")]
+                        }
+                    }                    released_data_value += `
+                    <tr>
+                        <td>${released_data_value_counter}</td>
+                        <td>${pr_data}</td>
+                        <td>${date_decoder(date_time)} /<br> ${time_decoder(date_time)}</td>
+                        <td>${quantity}</td>
+                        <td>${unit}</td>
+                        <td>${item}</td>
+                        <td>${details}</td>
+                        <td>${remarks}</td>
+                        <td>${department}</td>
+                        <td>${requisitioner}</td>
+                        <td>${amount}</td>
+                        <td>${status}</td>
+                    </tr>
+                    `
+                    released_data_value_counter += 1;
+                }
+            }
+            for(let y = 0; y < purchased.length; y++){
+                if(purchased[y] == prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]){
+                    var pr_data, date_time, quantity, unit, item, details, remarks, department, status, requisitioner;
+                    pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")];
+                    date_time = prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")];
+                    quantity = prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")];
+                    unit = prf_data_list.content[x][findTextInArray(prf_data_list, "UNIT")];
+                    item = prf_data_list.content[x][findTextInArray(prf_data_list, "ITEM")];
+                    details = prf_data_list.content[x][findTextInArray(prf_data_list, "DETAILS")];
+                    remarks = prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")];
+                    department = prf_data_list.content[x][findTextInArray(prf_data_list, "DEPARTMENT")];
+                    status = prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")];
+                    requisitioner = prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")];
+                    for(let z = 1; z < pof_data_list.content.length; z++){
+                        if(pr_data == pof_data_list.content[x][findTextInArray(pof_data_list, "ITM #")]){
+                            amount = pof_data_list.content[x][findTextInArray(pof_data_list, "AMOUNT")]
+                        }
+                    }                    purchased_data_value += `
+                    <tr>
+                        <td>${purchased_data_value_counter}</td>
+                        <td>${pr_data}</td>
+                        <td>${date_decoder(date_time)} /<br> ${time_decoder(date_time)}</td>
+                        <td>${quantity}</td>
+                        <td>${unit}</td>
+                        <td>${item}</td>
+                        <td>${details}</td>
+                        <td>${remarks}</td>
+                        <td>${department}</td>
+                        <td>${requisitioner}</td>
+                        <td>${amount}</td>
+                        <td>${status}</td>
+                    </tr>
+                    `
+                    purchased_data_value_counter += 1;
+                }
+            }
+        }
+        purchase_request_history_container_accounting.insertAdjacentHTML("beforeend", approved_data_value);
+        purchase_request_history_container_accounting.insertAdjacentHTML("beforeend", released_data_value);
+        purchase_request_history_container_accounting.insertAdjacentHTML("beforeend", purchased_data_value);
+
         const amount_tab_buttons = document.querySelectorAll("#amount_tab_button");
         const amount_tab = document.getElementById("amount_tab");
         const frf_no =  amount_tab.querySelector("#frf_no");
@@ -1120,7 +1372,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         var data = "";
         var data_value_counter = 0;
-        for(let x = 1; x < ftf_data_list.content.length; x++){
+        for(let x = ftf_data_list.content.length - 1; x > 1; x--){
             data_value_counter += 1;
             data += `
             <tr>
