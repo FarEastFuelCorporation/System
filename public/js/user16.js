@@ -1663,6 +1663,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const client = commission_form.querySelector("#client");
         const client_id_commission = commission_form.querySelector("#client_id");
         const waste_id_commission = commission_form.querySelector("#waste_id");
+        const clf_list_commission = commission_form.querySelector("#clf_list");
 
         var quotation_data = []
         for(let x = 1; x < qlf_data_list.content.length; x++){
@@ -1709,6 +1710,27 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         })
+
+        // clf_list
+        var clf_data_value_counter = 1;
+        var clf_data_value = "";
+        for(let x = 1; x < clf_data_list.content.length; x++){
+            clf_data_value += 
+            `
+            <tr>
+                <td>${clf_data_value_counter}</td>
+                <td>${clf_data_list.content[x][findTextInArray(clf_data_list, "CLF #")]}</td>
+                <td>${clf_data_list.content[x][findTextInArray(clf_data_list, "QUOTATION CODE")]}</td>
+                <td>${findClientName(clf_data_list.content[x][findTextInArray(clf_data_list, "CLIENT ID")])}</td>
+                <td>${clf_data_list.content[x][findTextInArray(clf_data_list, "WASTE NAME")]}</td>
+                <td>${clf_data_list.content[x][findTextInArray(clf_data_list, "AGENT NAME")]}</td>
+                <td>${clf_data_list.content[x][findTextInArray(clf_data_list, "COMMISION PRICE")]}</td>
+                <td>${clf_data_list.content[x][findTextInArray(clf_data_list, "SUBMITTED BY")]}</td>
+            </tr>
+            `
+            clf_data_value_counter += 1;
+        }
+        clf_list_commission.insertAdjacentHTML("beforeend", clf_data_value)
 
         // multi section
         // purchase_request_form
