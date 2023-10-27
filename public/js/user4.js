@@ -353,7 +353,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             pending_certification.sort((a, b) => a.date - b.date);
             finish_certification.sort((a, b) => a.date - b.date);
-
             treated_counter_certification.innerText = tpf_certification.length;
             pending_counter_certification.innerText = pending_certification.length;
             certified_counter_certification.innerText = finish_certification.length;
@@ -2294,7 +2293,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             
             // Sort the data by hauling date and time
             filteredData.sort((a, b) => a.datetime - b.datetime);
-            console.log(filteredData)
         
             // Render the sorted data
             filteredData.forEach((item) => {

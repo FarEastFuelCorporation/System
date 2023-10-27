@@ -82,6 +82,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             for (let i = 1; i < wcf_data_list.content.length; i++) {
                 if(wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] !== "SORTING" &&
                 wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] !== "WAREHOUSE" &&
+                wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] !== "ACCOUNTING" &&
                 month_filter.value == formatMonth(wcf_data_list.content[i][findTextInArray(wcf_data_list, "HAULING DATE")])){
                     if (!wcf_transaction_sorting.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")])) {
                         wcf_transaction_sorting.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]);
@@ -89,6 +90,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
                 else if(wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] !== "SORTING" &&
                 wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] !== "WAREHOUSE" &&
+                wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] !== "ACCOUNTING" &&
                 month_filter.value == "ALL"){
                     if (!wcf_transaction_sorting.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")])) {
                         wcf_transaction_sorting.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]);
@@ -460,14 +462,18 @@ document.addEventListener('DOMContentLoaded', async function() {
 
             // FORM GENERATOR
             // tpf_data_list
-            const tpf_form_no = document.getElementById("tpf_form_no");
-            var last_row = tpf_data_list.content.length -1;        
-            var data_info = tpf_data_list.content[last_row][findTextInArray(tpf_data_list, "TPF #")];
-            var data_counter = data_info.substring(9,12);
-            var year = new Date().getFullYear();
-            var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
-            data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-            tpf_form_no.value = `TPF${year}${month}${data_counter}`;
+            const tpf_form_no = document.getElementById("tpf_form_no");  
+            for(let x = tpf_data_list.content.length -1; x >= 1; x--){
+                var data_info = tpf_data_list.content[x][findTextInArray(tpf_data_list, "TPF #")];
+                if(data_info.substring(0,3) == "TPF"){
+                    var data_counter = data_info.substring(9,12);
+                    var year = new Date().getFullYear();
+                    var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+                    data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+                    tpf_form_no.value = `TPF${year}${month}${data_counter}`
+                    break;
+                }
+            }
 
             // sf_data_list
             const wcf_form_no = document.getElementById("wcf_form_no");
