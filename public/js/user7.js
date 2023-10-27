@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const user_sidebar_officer = document.getElementById("user_sidebar_officer");
         const user_sidebar_department = document.getElementById("user_sidebar_department");
         const users = document.querySelectorAll("#user");
+        const departments = document.querySelectorAll("#department");
 
         users.forEach(user => {user.value = username_data_list.content[7][findTextInArray(username_data_list, "NAME")]})
         departments.forEach(user => {user.value = username_data_list.content[1][findTextInArray(username_data_list, "DEPARTMENT")]})
