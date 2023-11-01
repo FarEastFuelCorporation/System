@@ -259,8 +259,7 @@ nav {
   top: 0;
   left: 0;
   height: 50px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   margin-right: 5px;
   margin-top: 5px;
   border: 1px solid #ffbf00;
@@ -748,8 +747,7 @@ section h2 {
 #waste_collection_form form .items {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  -moz-column-gap: 20px;
-       column-gap: 20px;
+  column-gap: 20px;
   width: 100%;
 }
 
@@ -936,8 +934,7 @@ section h2 {
 #sorting_form form .items_header {
   display: grid;
   grid-template-columns: 7fr 3fr;
-  -moz-column-gap: 20px;
-       column-gap: 20px;
+  column-gap: 20px;
   width: 100%;
   padding-bottom: 20px;
   border-bottom: 3px dashed red;
@@ -1136,8 +1133,7 @@ section h2 {
 #treatment_process_form form .items_header {
   display: grid;
   grid-template-columns: 7fr 3fr;
-  -moz-column-gap: 20px;
-       column-gap: 20px;
+  column-gap: 20px;
   width: 100%;
   padding-bottom: 20px;
   border-bottom: 3px dashed purple;
@@ -1656,8 +1652,7 @@ section h2 {
 .marketing form .items {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  -moz-column-gap: 20px;
-       column-gap: 20px;
+  column-gap: 20px;
   width: 100%;
 }
 
@@ -1888,8 +1883,7 @@ section h2 {
 .logistic form .items {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  -moz-column-gap: 20px;
-       column-gap: 20px;
+  column-gap: 20px;
   width: 100%;
 }
 
@@ -2680,8 +2674,7 @@ input:disabled {
 #disposal_warehouse form .items {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  -moz-column-gap: 20px;
-       column-gap: 20px;
+  column-gap: 20px;
   width: 100%;
 }
 
@@ -2970,8 +2963,7 @@ input:disabled {
 .purchasing form .items {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  -moz-column-gap: 20px;
-       column-gap: 20px;
+  column-gap: 20px;
   width: 100%;
 }
 
@@ -3268,8 +3260,7 @@ input:disabled {
 .ap_accounting form .items {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  -moz-column-gap: 20px;
-       column-gap: 20px;
+  column-gap: 20px;
   width: 100%;
 }
 
@@ -3353,8 +3344,7 @@ input:disabled {
 .ap_accounting #liquidation_list {
   display: grid;
   grid-template-columns: 50% 20%;
-  -moz-column-gap: 20px;
-       column-gap: 20px;
+  column-gap: 20px;
 }
 
 .ap_accounting #budget_form,
@@ -3375,8 +3365,7 @@ input:disabled {
 }
 
 #purchase_request_form form #prf_item_container > div {
-  -moz-column-gap: 20px;
-       column-gap: 20px;
+  column-gap: 20px;
   padding: 20px 0;
   border-bottom: 1px solid red;
 }
@@ -3384,15 +3373,13 @@ input:disabled {
 #purchase_request_form form #prf_item_container > div > div:first-child {
   display: grid;
   grid-template-columns: 15% calc(55% - 60px) 15% 15%;
-  -moz-column-gap: 20px;
-       column-gap: 20px;
+  column-gap: 20px;
 }
 
 #purchase_request_form form #prf_item_container > div > div:nth-child(2) {
   display: grid;
   grid-template-columns: repeat(2, calc((100% - 20px) / 2));
-  -moz-column-gap: 20px;
-       column-gap: 20px;
+  column-gap: 20px;
 }
 
 /* Responsive starts here */
