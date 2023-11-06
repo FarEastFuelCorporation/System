@@ -573,9 +573,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                     var amount_data = 0;
                     unit_cost_inputs.forEach((data) => {
                         console.log("pass")
-                        amount_data += parseFloat(data.value);
-                        total_amount_input.value = amount_data;
+                        amount_data += parseFloat(data.value) * parseFloat(quantity_input.value);
                     })
+                    total_amount_input.value = amount_data;
                 })
             })
         }
