@@ -68,6 +68,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         var wcf_transaction_sorting = []; // Variable containing existing elements
         var wcf_sf_transaction_sorting = []; // Variable containing existing elements
         var sf_transaction_sorting = []; // Variable containing existing elements
+        var pending_sorting;
+        var done_sorting_sorting;
         
         function getCurrentMonthName() {
             const months = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
@@ -115,8 +117,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
     
             // Get elements from wcf_transaction not included in wcf_sf_transaction
-            const pending_sorting = wcf_transaction_sorting.filter((element) => !wcf_sf_transaction_sorting.includes(element));
-            const done_sorting_sorting = wcf_transaction_sorting.filter((element) => wcf_sf_transaction_sorting.includes(element));
+            pending_sorting = wcf_transaction_sorting.filter((element) => !wcf_sf_transaction_sorting.includes(element));
+            done_sorting_sorting = wcf_transaction_sorting.filter((element) => wcf_sf_transaction_sorting.includes(element));
             total_sorting.innerText = wcf_transaction_sorting.length;
             unsorted_sorting.innerText = wcf_transaction_sorting.length - wcf_sf_transaction_sorting.length;
             sorted_sorting.innerText = wcf_sf_transaction_sorting.length;
@@ -428,7 +430,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             sorted_items_list_sorting.innerHTML = data_value_done;    
         }
-        const pending_sorting = wcf_transaction_sorting.filter((element) => !wcf_sf_transaction_sorting.includes(element));
 
         // FORM GENERATOR    
         const sf_form_nos = [];
