@@ -1021,121 +1021,129 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             purchase_request_list_ap_accounting.innerHTML = requested_data_value;
 
+
+            // ap_accounting_dashboard
+            const source_of_fund_ap_accounting = ap_accounting_dashboard.querySelector("#source_of_fund");
+            const trucking_fund_ap_accounting = ap_accounting_dashboard.querySelector("#trucking_fund");
+            const hauling_fund_ap_accounting = ap_accounting_dashboard.querySelector("#hauling_fund");
+            const diesel_fund_ap_accounting = ap_accounting_dashboard.querySelector("#diesel_fund");
+            const gasoline_fund_ap_accounting = ap_accounting_dashboard.querySelector("#gasoline_fund");
+            const sir_ruels_fund_ap_accounting = ap_accounting_dashboard.querySelector("#sir_ruels_fund");
+            const scrap_sales_ap_accounting = ap_accounting_dashboard.querySelector("#scrap_sales");
+            const mold_runner_sales_ap_accounting = ap_accounting_dashboard.querySelector("#mold_runner_sales");
+            const truck_scale_collection_ap_accounting = ap_accounting_dashboard.querySelector("#truck_scale_collection");
+            const house_collection_ap_accounting = ap_accounting_dashboard.querySelector("#house_collection");
+            const representation_fund_ap_accounting = ap_accounting_dashboard.querySelector("#representation_fund");
+
+            var source_of_fund = 0;
+            var trucking_fund = 0;
+            var hauling_fund = 0;
+            var diesel_fund = 0;
+            var gasoline_fund = 0;
+            var sir_ruels_fund = 0;
+            var scrap_sales = 0;
+            var mold_runner_sales = 0;
+            var truck_scale_collection = 0;
+            var house_collection = 0;
+            var representation_fund = 0;
+
+            var type_of_funds = ["SOURCE OF FUND", "HAULING FUND", "TRUCKING FUND", "DIESEL FUND", "GASOLINE FUND", "SIR RUEL'S FUND", "SCRAP SALES", "MOLD RUNNER SALES", "TRUCK SCALE COLLECTION", "HOUSE COLLECTION", "REPRESENTATION FUND"]
+
+            for (let i = 1; i < ftf_data_list.content.length; i++) {
+                // fund_source
+                if(!type_of_funds.includes(ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")]) &&
+                month_filter.value == formatMonth(ftf_data_list.content[i][findTextInArray(ftf_data_list, "CREATED AT")])){
+                    console.log(formatMonth(ftf_data_list.content[i][findTextInArray(ftf_data_list, "CREATED AT")]))
+                    if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "SOURCE OF FUND") {
+                        source_of_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                    }
+                    else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "HAULING FUND") {
+                        hauling_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                    }
+                    else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "TRUCKING FUND") {
+                        trucking_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                    }
+                    else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "DIESEL FUND") {
+                        diesel_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                    }
+                    else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "GASOLINE FUND") {
+                        gasoline_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                    }
+                    else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "SIR RUEL'S FUND") {
+                        sir_ruels_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                    }
+                    else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "SCRAP SALES") {
+                        scrap_sales += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                    }
+                    else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "MOLD RUNNER SALES") {
+                        mold_runner_sales += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                    }
+                    else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "TRUCK SCALE COLLECTION") {
+                        truck_scale_collection += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                    }
+                    else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "HOUSE COLLECTION") {
+                        house_collection += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                    }
+                    else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "REPRESENTATION FUND") {
+                        representation_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                    }
+                }
+                // fund_allocation
+                if (!type_of_funds.includes(ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")]) &&
+                    (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")].includes("RETURN"))) {
+                    if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "SOURCE OF FUND") {
+                        source_of_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                    }
+                    else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "HAULING FUND") {
+                        hauling_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                    }
+                    else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "TRUCKING FUND") {
+                        trucking_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                    }
+                    else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "DIESEL FUND") {
+                        diesel_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                    }
+                    else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "GASOLINE FUND") {
+                        gasoline_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                    }
+                    else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "SIR RUEL'S FUND") {
+                        sir_ruels_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                    }
+                    else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "SCRAP SALES") {
+                        scrap_sales -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                    }
+                    else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "MOLD RUNNER SALES") {
+                        mold_runner_sales -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                    }
+                    else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "TRUCK SCALE COLLECTION") {
+                        truck_scale_collection -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                    }
+                    else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "HOUSE COLLECTION") {
+                        house_collection -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                    }
+                    else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "REPRESENTATION FUND") {
+                        representation_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                    }
+                }
+            }
+            
+            source_of_fund_ap_accounting.innerText = formatNumber(source_of_fund);
+            trucking_fund_ap_accounting.innerText = formatNumber(trucking_fund);
+            hauling_fund_ap_accounting.innerText = formatNumber(hauling_fund);
+            diesel_fund_ap_accounting.innerText = formatNumber(diesel_fund);
+            gasoline_fund_ap_accounting.innerText = formatNumber(gasoline_fund);
+            sir_ruels_fund_ap_accounting.innerText = formatNumber(sir_ruels_fund);
+            scrap_sales_ap_accounting.innerText = formatNumber(scrap_sales);
+            mold_runner_sales_ap_accounting.innerText = formatNumber(mold_runner_sales);
+            truck_scale_collection_ap_accounting.innerText = formatNumber(truck_scale_collection);
+            house_collection_ap_accounting.innerText = formatNumber(house_collection);
+            representation_fund_ap_accounting.innerText = formatNumber(representation_fund);
         }
-
-        // ap_accounting_dashboard
+        
         const ap_accounting_dashboard = document.querySelector("#accounting_head_dashboard");
-
-        const source_of_fund_ap_accounting = ap_accounting_dashboard.querySelector("#source_of_fund");
-        const trucking_fund_ap_accounting = ap_accounting_dashboard.querySelector("#trucking_fund");
-        const hauling_fund_ap_accounting = ap_accounting_dashboard.querySelector("#hauling_fund");
-        const diesel_fund_ap_accounting = ap_accounting_dashboard.querySelector("#diesel_fund");
-        const gasoline_fund_ap_accounting = ap_accounting_dashboard.querySelector("#gasoline_fund");
-        const sir_ruels_fund_ap_accounting = ap_accounting_dashboard.querySelector("#sir_ruels_fund");
-        const scrap_sales_ap_accounting = ap_accounting_dashboard.querySelector("#scrap_sales");
-        const mold_runner_sales_ap_accounting = ap_accounting_dashboard.querySelector("#mold_runner_sales");
-        const truck_scale_collection_ap_accounting = ap_accounting_dashboard.querySelector("#truck_scale_collection");
-        const house_collection_ap_accounting = ap_accounting_dashboard.querySelector("#house_collection");
-        const representation_fund_ap_accounting = ap_accounting_dashboard.querySelector("#representation_fund");
         const request_history_list_ap_accounting = ap_accounting_dashboard.querySelector("#request_history_list");
         const transfer_history_list_ap_accounting = ap_accounting_dashboard.querySelector("#transfer_history_list");
         const purchase_request_history_container_accounting = ap_accounting_dashboard.querySelector("#purchase_request_history");
-
-        var source_of_fund = 0;
-        var trucking_fund = 0;
-        var hauling_fund = 0;
-        var diesel_fund = 0;
-        var gasoline_fund = 0;
-        var sir_ruels_fund = 0;
-        var scrap_sales = 0;
-        var mold_runner_sales = 0;
-        var truck_scale_collection = 0;
-        var house_collection = 0;
-        var representation_fund = 0;
-
-        for (let i = 1; i < ftf_data_list.content.length; i++) {
-            // fund_source
-            if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "SOURCE OF FUND") {
-                source_of_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "HAULING FUND") {
-                hauling_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "TRUCKING FUND") {
-                trucking_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "DIESEL FUND") {
-                diesel_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "GASOLINE FUND") {
-                gasoline_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "SIR RUEL'S FUND") {
-                sir_ruels_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "SCRAP SALES") {
-                scrap_sales -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "MOLD RUNNER SALES") {
-                mold_runner_sales -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "TRUCK SCALE COLLECTION") {
-                truck_scale_collection -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "HOUSE COLLECTION") {
-                house_collection -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "REPRESENTATION FUND") {
-                representation_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            // fund_allocation
-            if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "SOURCE OF FUND") {
-                source_of_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "HAULING FUND") {
-                hauling_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "TRUCKING FUND") {
-                trucking_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "DIESEL FUND") {
-                diesel_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "GASOLINE FUND") {
-                gasoline_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "SIR RUEL'S FUND") {
-                sir_ruels_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "SCRAP SALES") {
-                scrap_sales += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "MOLD RUNNER SALES") {
-                mold_runner_sales += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "TRUCK SCALE COLLECTION") {
-                truck_scale_collection += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "HOUSE COLLECTION") {
-                house_collection += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-            else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "REPRESENTATION FUND") {
-                representation_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
-            }
-        }
-        
-        source_of_fund_ap_accounting.innerText = formatNumber(source_of_fund);
-        trucking_fund_ap_accounting.innerText = formatNumber(trucking_fund);
-        hauling_fund_ap_accounting.innerText = formatNumber(hauling_fund);
-        diesel_fund_ap_accounting.innerText = formatNumber(diesel_fund);
-        gasoline_fund_ap_accounting.innerText = formatNumber(gasoline_fund);
-        sir_ruels_fund_ap_accounting.innerText = formatNumber(sir_ruels_fund);
-        scrap_sales_ap_accounting.innerText = formatNumber(scrap_sales);
-        mold_runner_sales_ap_accounting.innerText = formatNumber(mold_runner_sales);
-        truck_scale_collection_ap_accounting.innerText = formatNumber(truck_scale_collection);
-        house_collection_ap_accounting.innerText = formatNumber(house_collection);
-        representation_fund_ap_accounting.innerText = formatNumber(representation_fund);
-        
         // pending_list
         var data = "";
         var data_value_counter = 0;
