@@ -516,7 +516,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
             pending_list_certification.innerHTML = data_value;
-    
+            
             var data_value = "";
             var data_value_counter = 1;
             const finished = [];
@@ -1139,6 +1139,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 const year_covered = document.getElementById("year_covered");
                 const month_covered = document.getElementById("month_covered");    
                 for (const item of pending_certification){
+                    console.log(item)
                     for (let x = 1; x < tpf_data_list.content.length; x++) {
                         if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TPF #")] == item.tpfNumber){
                             if (!done.includes(item.tpfNumber) && input_box.value === findClientName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")])) {
