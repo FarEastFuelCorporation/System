@@ -502,6 +502,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         function generate(){
             const search_cod_form_no = billing_process_form.querySelector("#search_cod_form_no");
             const service_invoice_no = billing_process_form.querySelector("#service_invoice_no");
+            const type_of_form = billing_process_form.querySelector("#type_of_form");
             var non_vatable = 0;
             var vatable = 0;
             var credits = 0;
@@ -528,7 +529,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     break
                 }
             }
-            if(client == "C2023036"){
+            if(type_of_form.value == "By COD (Multiple Transaction)"){
                 for(let x = 1; x < cod_data_list.content.length; x++){
                     var client_name = "";
                     var address = "";
@@ -569,7 +570,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                     }
                     for(let a = 1; a < wcf_data_list.content.length; a++){
-                        if(cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")]){
+                        if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")] &&
+                            cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")]){
                             if((wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).substring(0,3) == "MTF"){
                                 for(let b = 1; b < mtf_data_list.content.length; b++){
                                     if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "MTF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
@@ -581,6 +583,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                 transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
                                                 transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
                                                 term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS DAYS")]
+                                                break
                                             }
                                         }
                                     }
@@ -599,6 +602,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                         transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
                                                         transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
                                                         term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS DAYS")]
+                                                        break
                                                     }
                                                 }
                                             }
@@ -610,8 +614,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     var data = "";
                     var data3 = "";
-                    if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")] &&
-                    type_of_form.value == "By COD"){
+                    if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]){
                         // && vat_calculation == "CHARGE"
                         bpf_form_no_container.innerText = bpf_form_no.value;
                         date_made_container.innerText = date_decoder(new Date());
@@ -669,8 +672,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                 }
                 for(let y = 0; y < wcf_transaction.length; y++){
-                    if(search_cod_form_no.value == cod_transaction[y] &&
-                        type_of_form.value == "By COD"){
+                    if(search_cod_form_no.value == cod_transaction[y]){
                         for(let x = 1; x < cod_data_list.content.length; x++){
                             if(wcf_transaction[y] == cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")]){
                                 date_of_certification_transportation = date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]);
@@ -748,7 +750,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     table_data.insertAdjacentHTML("beforeend", data5);
                 }
             }
-            else if(client == "C2023016"){
+            else if(type_of_form.value == "By COD (Single Transaction)"){
                 for(let x = 1; x < cod_data_list.content.length; x++){
                     var client_name = "";
                     var address = "";
@@ -789,7 +791,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                     }
                     for(let a = 1; a < wcf_data_list.content.length; a++){
-                        if(cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")]){
+                        if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")] &&
+                        cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")]){
                             if((wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).substring(0,3) == "MTF"){
                                 for(let b = 1; b < mtf_data_list.content.length; b++){
                                     if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "MTF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
@@ -830,8 +833,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     var data = "";
                     var data3 = "";
-                    if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")] &&
-                    type_of_form.value == "By COD"){
+                    if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]){
                         // && vat_calculation == "CHARGE"
                         bpf_form_no_container.innerText = bpf_form_no.value;
                         date_made_container.innerText = date_decoder(new Date());
@@ -889,8 +891,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                 }
                 for(let y = 0; y < wcf_transaction.length; y++){
-                    if(search_cod_form_no.value == cod_transaction[y] &&
-                        type_of_form.value == "By COD"){
+                    if(search_cod_form_no.value == cod_transaction[y]){
                         for(let x = 1; x < cod_data_list.content.length; x++){
                             if(wcf_transaction[y] == cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")]){
                                 date_of_certification_transportation = date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]);
@@ -1051,8 +1052,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     var data = "";
                     var data3 = "";
-                    if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")] &&
-                    type_of_form.value == "By COD"){
+                    if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]){
                         // && vat_calculation == "CHARGE"
                         bpf_form_no_container.innerText = bpf_form_no.value;
                         date_made_container.innerText = date_decoder(new Date());
@@ -1110,8 +1110,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                 }
                 for(let y = 0; y < wcf_transaction.length; y++){
-                    if(search_cod_form_no.value == cod_transaction[y] &&
-                        type_of_form.value == "By COD"){
+                    if(search_cod_form_no.value == cod_transaction[y]){
                         for(let x = 1; x < cod_data_list.content.length; x++){
                             if(wcf_transaction[y] == cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")]){
                                 date_of_certification_transportation = date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]);
@@ -1268,7 +1267,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 // client_container.style.display = "grid";    
                 type_of_form_list.innerHTML = data_content;
             }
-            else if(type_of_form.value == "By COD"){
+            else if(type_of_form.value == "By COD (Single Transaction)" || type_of_form.value == "By COD (Multiple Transaction)"){
                 data_content = 
                 `
                 <div>
