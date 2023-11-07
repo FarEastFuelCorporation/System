@@ -348,7 +348,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td>${status}</td>
                         </tr>
                     `
-                    
                     data_value_counter += 1;
                     pending_list_marketing.innerHTML = data_value;
                 }
