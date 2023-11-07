@@ -763,12 +763,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                         if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TPF #")] == item.tpfNumber){
                             if (!done.includes(item.tpfNumber) && input_box.value === findClientName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")])) {
                             done.push(item.tpfNumber)
-                            year = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getFullYear();
-                            month = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getMonth() + 1;
+                            year = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])).getFullYear();
+                            month = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])).getMonth() + 1;
+                            cert_month = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getMonth() + 1;
                             certification_date = tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")];
                             certification_day = new Date(certification_date).getDate();
                             certification_day_ordinal = convertToOrdinal(certification_day);
-                            certification_month = convertToMonthName(month);
+                            certification_month = convertToMonthName(cert_month);
                             if (waste_description.value == findWasteName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")], tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")]) &&
                                 year_covered.value == year &&
                                 month_covered.value == month) {
@@ -1034,7 +1035,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     else if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023014"){
                                         table_data_value +=
                                         `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 80px 160px 100px;">
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                                             <td>${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
@@ -1045,7 +1046,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         `;
                                         table_head_data_value = 
                                         `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 80px 160px 100px;">
                                             <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>Waste Code</th>
@@ -1125,7 +1126,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     table_data.innerHTML = table_data_value;
                                     table_head_data.innerHTML = table_head_data_value;
                                     certification.innerHTML = `${certification_day}`;
-                                    certification2.innerHTML = `${certification_day_ordinal} s`;
+                                    certification2.innerHTML = `${certification_day_ordinal}`;
                                     certification3.innerHTML = ` day of ${certification_month} ${year}`;
                                     result_remarks.innerHTML = "";
                                 }
@@ -1415,7 +1416,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     else if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023014"){
                                         table_data_value +=
                                         `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 80px 160px 100px;">
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                                             <td>${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
@@ -1426,7 +1427,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         `;
                                         table_head_data_value = 
                                         `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 80px 160px 100px;">
                                             <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>Waste Code</th>
@@ -1506,7 +1507,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     table_data.innerHTML = table_data_value;
                                     table_head_data.innerHTML = table_head_data_value;
                                     certification.innerHTML = `${certification_day}`;
-                                    certification2.innerHTML = `${certification_day_ordinal} `;
+                                    certification2.innerHTML = `${certification_day_ordinal}`;
                                     certification3.innerHTML = ` day of ${certification_month} ${year}`;
                                     result_remarks.innerHTML = "";
                                 }
@@ -1796,7 +1797,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     else if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023014"){
                                         table_data_value +=
                                         `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 80px 160px 100px;">
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                                             <td>${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
@@ -1807,7 +1808,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         `;
                                         table_head_data_value = 
                                         `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 80px 160px 100px;">
                                             <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>Waste Code</th>
@@ -1887,7 +1888,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     table_data.innerHTML = table_data_value;
                                     table_head_data.innerHTML = table_head_data_value;
                                     certification.innerHTML = `${certification_day}`;
-                                    certification2.innerHTML = `${certification_day_ordinal} `;
+                                    certification2.innerHTML = `${certification_day_ordinal}`;
                                     certification3.innerHTML = ` day of ${certification_month} ${year}`;
                                     result_remarks.innerHTML = "";
                                 }
