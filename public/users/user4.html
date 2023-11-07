@@ -370,6 +370,7 @@
                 <h2>DESTRUCTION FORM</h2><br>
                 <form id="form_id" method="post" action="https://script.google.com/macros/s/AKfycbxy13OPdnqPWWYzW1FmLQntrCeoJ6x5DVVbRaFemygIiK0kFewittHxecBM2xrcmeD8_g/exec">
                     <input type="hidden" name="user" id="user">
+                    <input type="hidden" name="company" id="company">
                     <div id="table_data_input_value">
                     </div>
                     <div class="cod_form">
@@ -717,8 +718,9 @@
         function convertToPDFandDownload() {
             const element = document.getElementById('what_to_print');
             const cod_form_no = document.getElementById('cod_form_no').value;
+            const company = document.getElementById('company').value;
             const opt = {
-                filename: `${cod_form_no}`,
+                filename: `${cod_form_no} - ${company}`,
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 10 },
                 jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
@@ -749,8 +751,10 @@
         function convertToPDF() {
             const element = document.getElementById('what_to_print');
             const cod_form_no = document.getElementById('cod_form_no').value;
+            const company = document.getElementById('company').value;
+            console.log(company)
             const opt = {
-                filename: `${cod_form_no}`,
+                filename: `${cod_form_no} - ${company}`,
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 2 },
                 jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }

@@ -1209,7 +1209,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             convertToPDFandDownload_button.style.display = "block";
             convertToPDF_button.style.display = "block";
             what_to_print.style.display = "block";
-            what_to_print2.style.display = "block";
+            // what_to_print2.style.display = "block";
             
         }
 

@@ -739,6 +739,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const result_remarks = document.getElementById("result_remarks");
         const table_data = document.getElementById("table_data");
         const table_head_data = document.getElementById("table_head_data");
+        const company = document.getElementById("company");
 
         var certification_date = "";
         var certification_day = "";
@@ -1109,6 +1110,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         `
                                     }
                                     table_company.innerHTML = findClientName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")]);
+                                    company.value = findClientName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")]);
                                     table_data_input_value.innerHTML = table_data_input;
                                     for (let y = 1; y < client_data_list.content.length; y++) {
                                         if (input_box.value == client_data_list.content[y][findTextInArray(client_data_list, "CLIENT NAME")]) {
@@ -1490,6 +1492,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         `
                                     }
                                     table_company.innerHTML = findClientName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")]);
+                                    company.value = findClientName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")]);
                                     table_data_input_value.innerHTML = table_data_input;
                                     for (let y = 1; y < client_data_list.content.length; y++) {
                                         if (input_box.value == client_data_list.content[y][findTextInArray(client_data_list, "CLIENT NAME")]) {
@@ -1871,6 +1874,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         `
                                     }
                                     table_company.innerHTML = findClientName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")]);
+                                    company.value = findClientName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")]);
                                     table_data_input_value.innerHTML = table_data_input;
                                     for (let y = 1; y < client_data_list.content.length; y++) {
                                         if (input_box.value == client_data_list.content[y][findTextInArray(client_data_list, "CLIENT NAME")]) {
