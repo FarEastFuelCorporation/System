@@ -368,6 +368,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 type_of_waste.insertAdjacentHTML("beforeend", data)
                             }
                         }
+                        var opt_data = `
+                        <option value="ASSORTED WASTE">ASSORTED WASTE</option>
+                        `
+                        type_of_waste.insertAdjacentHTML("beforeend", opt_data)
                     }
                 }              
             }

@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             const currentMonthIndex = currentDate.getMonth();
             
             return months[currentMonthIndex];
-        }        
+        }
         month_filter.value = getCurrentMonthName();
         month_filter.addEventListener("change", generatePending)
         generatePending();
@@ -368,6 +368,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 type_of_waste.insertAdjacentHTML("beforeend", data)
                             }
                         }
+                        var opt_data = `
+                        <option value="ASSORTED WASTE">ASSORTED WASTE</option>
+                        `
+                        type_of_waste.insertAdjacentHTML("beforeend", opt_data)
                     }
                 }              
             }
