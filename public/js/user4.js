@@ -2034,15 +2034,15 @@ document.addEventListener('DOMContentLoaded', async function() {
                     </label><br>
                     <div>
                         <input type="text" id="waste_description" autocomplete="off" name="waste_description" class="form-control"><br>
-                        </div>
-                        </div>
-                        <div>
-                        <label for="year_covered">
+                    </div>
+                </div>
+                <div>
+                    <label for="year_covered">
                         <i class="fa-solid fa-list-ol"></i>
                         Year Covered
                     </label><br>
                     <div class="form">
-                    <input type="text" autocomplete="off" name="year_covered" id="year_covered" class="form-control"><br>
+                        <input type="text" autocomplete="off" name="year_covered" id="year_covered" class="form-control"><br>
                     </div>
                 </div>
                 <div>
