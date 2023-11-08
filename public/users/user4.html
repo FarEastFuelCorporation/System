@@ -779,18 +779,18 @@
             const company = document.getElementById('company').value;
             const type_of_cod = document.getElementById('type_of_cod');
             const waste_description = document.getElementById('waste_description');
-            var filename_data = "";
-            if(type_of_cod == "By Waste Description"){
-                filename_data = `${cod_form_no} - ${company} - ${waste_description.value}`
-            }
-            console.log(filename_data)
+            // var filename_data = "";
+            // if(type_of_cod == "By Waste Description"){
+            //     filename_data = `${cod_form_no} - ${company} - ${waste_description.value}`
+            // }
+            // console.log(filename_data)
             const opt = {
-                filename: filename_data,
+                filename: `${cod_form_no} - ${company} - ${waste_description.value}`,
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 10 },
                 jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
             };
-
+            
             const marginTop = 32.5; // Top margin in mm
             const marginBottom = 0; // Bottom margin in mm
 
@@ -819,13 +819,13 @@
             const company = document.getElementById('company').value;
             const type_of_cod = document.getElementById('type_of_cod');
             const waste_description = document.getElementById('waste_description');
-            var filename_data = "";
-            if(type_of_cod == "By Waste Description"){
-                filename_data = `${cod_form_no} - ${company} - ${waste_description.value}`
-            }
-            console.log(filename_data)
+            // var filename_data = "";
+            // if(type_of_cod == "By Waste Description"){
+            //     filename_data = `${cod_form_no} - ${company} - ${waste_description.value}`
+            // }
+            // console.log(filename_data)
             const opt = {
-                filename: filename_data,
+                filename: `${cod_form_no} - ${company} - ${waste_description.value}`,
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 2 },
                 jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
