@@ -777,8 +777,15 @@
             const element = document.getElementById('what_to_print');
             const cod_form_no = document.getElementById('cod_form_no').value;
             const company = document.getElementById('company').value;
+            const type_of_cod = document.getElementById('type_of_cod');
+            const waste_description = document.getElementById('waste_description');
+            var filename_data = "";
+            if(type_of_cod == "By Waste Description"){
+                filename_data = `${cod_form_no} - ${company} - ${waste_description.value}`
+            }
+            console.log(filename_data)
             const opt = {
-                filename: `${cod_form_no} - ${company}`,
+                filename: filename_data,
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 10 },
                 jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
@@ -810,9 +817,15 @@
             const element = document.getElementById('what_to_print');
             const cod_form_no = document.getElementById('cod_form_no').value;
             const company = document.getElementById('company').value;
-            console.log(company)
+            const type_of_cod = document.getElementById('type_of_cod');
+            const waste_description = document.getElementById('waste_description');
+            var filename_data = "";
+            if(type_of_cod == "By Waste Description"){
+                filename_data = `${cod_form_no} - ${company} - ${waste_description.value}`
+            }
+            console.log(filename_data)
             const opt = {
-                filename: `${cod_form_no} - ${company}`,
+                filename: filename_data,
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 2 },
                 jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
@@ -838,7 +851,6 @@
 
                 promises.push(promise);
             }
-
             Promise.all(promises)
                 .then(() => {
                 element.style.transform = 'none';
