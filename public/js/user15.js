@@ -337,8 +337,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
 
         // approved_purchased_request_list
-        var requested_data_value = "";
-        var requested_data_value_counter = 1;
+        var approved_data_value = "";
+        var approved_data_value_counter = 1;
         for(let x = 1; x < prf_data_list.content.length; x++){  
             for(let y = 0; y < approved.length; y++){
                 if(approved[y] == prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]){
@@ -378,9 +378,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                     // </form>
                     // `
 
-                    requested_data_value += `
+                    approved_data_value += `
                     <tr>
-                        <td>${requested_data_value_counter}</td>
+                        <td>${approved_data_value_counter}</td>
                         <td>${pr_data}</td>
                         <td>${date_decoder(date_time)} /<br> ${time_decoder(date_time)}</td>
                         <td>${quantity}</td>
@@ -395,11 +395,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td>${button}</td>
                     </tr>
                     `
-                    requested_data_value_counter += 1;
+                    approved_data_value_counter += 1;
                 }
             }
         }
-        approved_purchased_request_list_container_purchasing.innerHTML = requested_data_value;
+        approved_purchased_request_list_container_purchasing.innerHTML = approved_data_value;
 
         
         // purchase_request_history

@@ -74,6 +74,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const users = document.querySelectorAll("#user");
         const departments = document.querySelectorAll("#department");
 
+        const user_name = username_data_list.content[6][findTextInArray(username_data_list, "NAME")];
         users.forEach(user => {user.value = username_data_list.content[6][findTextInArray(username_data_list, "NAME")]})
         departments.forEach(user => {user.value = username_data_list.content[6][findTextInArray(username_data_list, "DEPARTMENT")]})
         user_sidebar.innerHTML = `<u>${username_data_list.content[6][findTextInArray(username_data_list, "NAME")]}</u>`;
@@ -1962,28 +1963,23 @@ document.addEventListener('DOMContentLoaded', async function() {
         var purchase_request_data_value = "";
         var purchase_request_data_value_counter = 1;
         for(let x = 1; x < prf_data_list.content.length; x++){
-            var status = "PENDING";
-            var duration = "PENDING";
-            for(let y = 1; y < pof_data_list.content.length; y++){
-                if(prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")] == (pof_data_list.content[y][findTextInArray(pof_data_list, "ITM #")])){
-                    status = "REQUESTED"
-                }
+            if(prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")] == user_name){
+                purchase_request_data_value += `
+                <tr>
+                    <td>${purchase_request_data_value_counter}</td>
+                    <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]}</td>
+                    <td>${date_decoder(prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")])}/<br>${time_decoder(prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")])}</td>
+                    <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "ITEM")]}</td>
+                    <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")]}</td>
+                    <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "UNIT")]}</td>
+                    <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "DETAILS")]}</td>
+                    <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")]}</td>
+                    <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")]}</td>
+                    <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")]}</td>
+                </tr>
+                `
+                purchase_request_data_value_counter += 1;
             }
-            purchase_request_data_value += `
-            <tr>
-                <td>${purchase_request_data_value_counter}</td>
-                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]}</td>
-                <td>${date_decoder(prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")])}/<br>${time_decoder(prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")])}</td>
-                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "ITEM")]}</td>
-                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")]}</td>
-                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "UNIT")]}</td>
-                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "DETAILS")]}</td>
-                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")]}</td>
-                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")]}</td>
-                <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")]}</td>
-            </tr>
-            `
-            purchase_request_data_value_counter += 1;
         }
         purchase_request_list.innerHTML = purchase_request_data_value;
 
