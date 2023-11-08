@@ -123,7 +123,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             unsorted_sorting.innerText = wcf_transaction_sorting.length - wcf_sf_transaction_sorting.length;
             sorted_sorting.innerText = wcf_sf_transaction_sorting.length;
             sorted_items_sorting.innerText = sf_transaction_sorting.length;
-    
             var options = {
                 series: [wcf_transaction_sorting.length - wcf_sf_transaction_sorting.length, wcf_sf_transaction_sorting.length],
                 chart: {
@@ -469,6 +468,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const weights = document.getElementById("weights");
         const buttons = document.getElementById("buttons");
         const hauling_date = document.getElementById("hauling_date");
+        const mtf_form_no = document.getElementById("mtf_form_no");
         
         search_sf_wcf_form_no_button.addEventListener("click", () => {
             var data_value_text;
@@ -476,7 +476,21 @@ document.addEventListener('DOMContentLoaded', async function() {
                 if(search_sf_wcf_form_no.value == wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")]){
                     for(let b = 0; b < pending_sorting.length; b++){
                         if(search_sf_wcf_form_no.value == pending_sorting[b]){
+                            var mtf = "";
+                            var ltf = "";
+                            if((wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                mtf = wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                            }else{
+                                ltf = wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                for(let x = 1; x < ltf_data_list.content.length; x++){
+                                    if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                        mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                        break
+                                    }
+                                }
+                            }
                             data_value_text = `
+                            
                             WCF #: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")]}<br>
                             CLIENT: ${findClientName(wcf_data_list.content[a][findTextInArray(wcf_data_list, "CLIENT ID")])}<br>
                             WASTE CODE: ${findWasteCode(wcf_data_list.content[a][findTextInArray(wcf_data_list, "WASTE ID")])}<br>
@@ -497,6 +511,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                             sf_wcf_client.value = wcf_data_list.content[a][findTextInArray(wcf_data_list, "CLIENT ID")];
                             batch_weight.value = wcf_data_list.content[a][findTextInArray(wcf_data_list, "NET WEIGHT")];
                             hauling_date.value = date_decoder(wcf_data_list.content[a][findTextInArray(wcf_data_list, "HAULING DATE")]);
+                            mtf_form_no.value = mtf;
+                            console.log(mtf)
+                            console.log(mtf_form_no.value)
                             batch_weight_list.style.display = "grid";
                             additional_item1.style.display = "grid";
                             completion.style.display = "grid";

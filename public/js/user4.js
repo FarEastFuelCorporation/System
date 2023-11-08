@@ -848,6 +848,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const table_data = document.getElementById("table_data");
         const table_head_data = document.getElementById("table_head_data");
         const company = document.getElementById("company");
+        const certification_text = document.getElementById("certification_text");
 
         var certification_date = "";
         var certification_day = "";
@@ -893,12 +894,16 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     }
                                     const type_of_weight = document.getElementById("type_of_weight");
                                     var cod_weight = 0;
+                                    var total_cod_weight = 0;
                                     if(type_of_weight.value == "CLIENT WEIGHT"){
                                         cod_weight = findClientWeight(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")])
+                                        total_cod_weight += findClientWeight(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")])
                                     }
                                     else if(type_of_weight.value == "FEFC WEIGHT"){
                                         cod_weight = item.weight
+                                        total_cod_weight += item.weight
                                     }
+                                    certification_text.innerHTML = `A Total of <b>${formatNumber(total_cod_weight)} Kgs.</b> That is/are transported by <b>FAR EAST FUEL CORPORATION</b> to our TSD facility located at No. 888 Purok 5, Irabagon St., Barangay Anyatam, San Ildefonso, Bulacan with <b>TSD No. OL-TR-R3-14-000152.</b>`
                                     table_data_counter += 1;
                                     if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023015"){
                                         table_data_value +=
@@ -1274,12 +1279,16 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     }
                                     const type_of_weight = document.getElementById("type_of_weight");
                                     var cod_weight = 0;
+                                    var total_cod_weight = 0;
                                     if(type_of_weight.value == "CLIENT WEIGHT"){
                                         cod_weight = findClientWeight(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")])
+                                        total_cod_weight += findClientWeight(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")])
                                     }
                                     else if(type_of_weight.value == "FEFC WEIGHT"){
                                         cod_weight = item.weight
+                                        total_cod_weight += item.weight
                                     }
+                                    certification_text.innerHTML = `A Total of <b>${formatNumber(total_cod_weight)} Kgs.</b> That is/are transported by <b>FAR EAST FUEL CORPORATION</b> to our TSD facility located at No. 888 Purok 5, Irabagon St., Barangay Anyatam, San Ildefonso, Bulacan with <b>TSD No. OL-TR-R3-14-000152.</b>`
                                     table_data_counter += 1;
                                     if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023015"){
                                         table_data_value +=
@@ -1656,12 +1665,16 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     }
                                     const type_of_weight = document.getElementById("type_of_weight");
                                     var cod_weight = 0;
+                                    var total_cod_weight = 0;
                                     if(type_of_weight.value == "CLIENT WEIGHT"){
                                         cod_weight = findClientWeight(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")])
+                                        total_cod_weight += findClientWeight(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")])
                                     }
                                     else if(type_of_weight.value == "FEFC WEIGHT"){
                                         cod_weight = item.weight
+                                        total_cod_weight += item.weight
                                     }
+                                    certification_text.innerHTML = `A Total of <b>${formatNumber(total_cod_weight)} Kgs.</b> That is/are transported by <b>FAR EAST FUEL CORPORATION</b> to our TSD facility located at No. 888 Purok 5, Irabagon St., Barangay Anyatam, San Ildefonso, Bulacan with <b>TSD No. OL-TR-R3-14-000152.</b>`
                                     table_data_counter += 1;
                                     if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023015"){
                                         table_data_value +=

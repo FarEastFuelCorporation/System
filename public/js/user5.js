@@ -622,10 +622,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                         si_client_name_container.innerText = client_name;
                         address_container.innerText = address;
                         si_address_container.innerText = address;
-                        tin_id_container.innerText = "008-648-866-000";
+                        tin_id_container.innerText = "";
                         nature_of_business_container.innerText = nature_of_business;
-                        si_tin_nature_of_business_container.innerText = `008-648-866-000 / ${nature_of_business}`;
-                        si_tin_nature_of_business_container.innerText = `008-648-866-000 / ${nature_of_business}`;
+                        si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
+                        si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                         si_date_container.innerText = date_of_certification;
                         data = `
                         <tr>
@@ -841,10 +841,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                         si_client_name_container.innerText = client_name;
                         address_container.innerText = address;
                         si_address_container.innerText = address;
-                        tin_id_container.innerText = "008-648-866-000";
+                        tin_id_container.innerText = "";
                         nature_of_business_container.innerText = nature_of_business;
-                        si_tin_nature_of_business_container.innerText = `008-648-866-000 / ${nature_of_business}`;
-                        si_tin_nature_of_business_container.innerText = `008-648-866-000 / ${nature_of_business}`;
+                        si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
+                        si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                         si_date_container.innerText = date_of_certification;
                         data = `
                         <tr>
@@ -1060,10 +1060,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                         si_client_name_container.innerText = client_name;
                         address_container.innerText = address;
                         si_address_container.innerText = address;
-                        tin_id_container.innerText = "008-648-866-000";
+                        tin_id_container.innerText = "";
                         nature_of_business_container.innerText = nature_of_business;
-                        si_tin_nature_of_business_container.innerText = `008-648-866-000 / ${nature_of_business}`;
-                        si_tin_nature_of_business_container.innerText = `008-648-866-000 / ${nature_of_business}`;
+                        si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
+                        si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                         si_date_container.innerText = date_of_certification;
                         data = `
                         <tr>
