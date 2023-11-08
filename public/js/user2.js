@@ -82,6 +82,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         month_filter.addEventListener("change", generatePending)
         generatePending();
         function generatePending(){
+            wcf_transaction_sorting = [];
+            wcf_sf_transaction_sorting = [];
+            sf_transaction_sorting = [];  
             for (let i = 1; i < wcf_data_list.content.length; i++) {
                 if(wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] == "SORTING"){
                     if (!wcf_transaction_sorting.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]) &&
@@ -480,7 +483,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                             var ltf = "";
                             if((wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
                                 mtf = wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
-                            }else{
+                            }
+                            else{
                                 ltf = wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
                                 for(let x = 1; x < ltf_data_list.content.length; x++){
                                     if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){

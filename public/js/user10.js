@@ -95,10 +95,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         const user_sidebar = document.getElementById("user_sidebar");
         const user_sidebar_officer = document.getElementById("user_sidebar_officer");
         const user_sidebar_department = document.getElementById("user_sidebar_department");
-        // const users = document.querySelectorAll("#user");
+        const users = document.querySelectorAll("#user");
         const irf_user = document.getElementById("irf_user");
-
+        
         // users.forEach(user => {user.value = username_data_list.content[10][findTextInArray(username_data_list, "NAME")]})
+        const user_name = username_data_list.content[10][findTextInArray(username_data_list, "NAME")];
+        users.forEach(user => {user.value = username_data_list.content[10][findTextInArray(username_data_list, "NAME")]})
         irf_user.value = username_data_list.content[10][findTextInArray(username_data_list, "NAME")];
         user_sidebar.innerHTML = `<u>${username_data_list.content[10][findTextInArray(username_data_list, "NAME")]}</u>`;
         user_sidebar_officer.innerText = username_data_list.content[10][findTextInArray(username_data_list, "SECTIONS")];
@@ -1084,18 +1086,20 @@ document.addEventListener('DOMContentLoaded', async function() {
                             }
                         }
                         button = `
-                        <form action="https://script.google.com/macros/s/AKfycbxVr2F7Q_1Jbj0JQqVVkDm1Vd_t3rLLboSgbVXDrRkpAiDmW1W0Zbg3rYp-HQj1ojJr/exec" method="post">
+                        <form action="https://script.google.com/macros/s/AKfycbwSvMfLEk_Wi-5YCJA_XkVaVHnzEf_9xpnYqdtrjvQff7jorizN6c8jK2bUhp7wz4Sp/exec" method="post">
                             <input type="hidden" name="itm_form_no" id="itm_form_no" value="${pr_data}">
                             <input type="hidden" name="timestamp" id="timestamp" value="${new Date()}">
+                            <input type="hidden" name="user" id="user" value="${user_name}">
                             <button type="submit" style="background-color: transparent !important; padding:0; color: #198754; border: none">
                                 <i class="fa-solid fa-thumbs-up"></i>
                             </button>
                         </form>
                         `
                         button2 = `
-                        <form action="https://script.google.com/macros/s/AKfycbx5SYw9DIYhoeFs656bTN-5G8qCcbrWnH5saJzZEeptNXL04S-dFQgbu10ecNU-s2hu2w/exec" method="post">
+                        <form action="https://script.google.com/macros/s/AKfycbyuxk3trEn7iLal32AHo28NCXPAJTy_z6rn4zrStAvJjkdcobPVp_TAov33ajOUxWg4HA/exec" method="post">
                         <input type="hidden" name="itm_form_no" id="itm_form_no" value="${pr_data}">
                         <input type="hidden" name="timestamp" id="timestamp" value="${new Date()}">
+                        <input type="hidden" name="user" id="user" value="${user_name}">
                         <button type="submit" style="background-color: transparent !important; padding:0; color: #dc3545; border: none">
                                 <i class="fa-solid fa-thumbs-down"></i>
                             </button>
