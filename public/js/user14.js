@@ -44,6 +44,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const approved_purchasing = purchasing_dashboard.querySelector("#approved");
         const released_purchasing = purchasing_dashboard.querySelector("#released");
         const purchased_purchasing = purchasing_dashboard.querySelector("#purchased");
+        const received_purchasing = purchasing_dashboard.querySelector("#received");
         let prf_transaction = []; // Variable containing existing elements
         let prf_pr_transaction = []; // Variable containing existing elements
         
@@ -64,6 +65,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             var approved = [];
             var released = [];
             var purchased = [];
+            var received = [];
             for (let i = 1; i < prf_data_list.content.length; i++) {
                 if (prf_data_list.content[i][findTextInArray(prf_data_list, "STATUS")] == "PENDING") {
                     pending.push(prf_data_list.content[i][findTextInArray(prf_data_list, "ITM #")]);
@@ -80,6 +82,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 if (prf_data_list.content[i][findTextInArray(prf_data_list, "STATUS")] == "PURCHASED") {
                     purchased.push(prf_data_list.content[i][findTextInArray(prf_data_list, "ITM #")]);
                 }
+                if (prf_data_list.content[i][findTextInArray(prf_data_list, "STATUS")] == "RECEIVED") {
+                    received.push(prf_data_list.content[i][findTextInArray(prf_data_list, "ITM #")]);
+                }
             }
     
             for (let i = 1; i < pof_data_list.content.length; i++) {
@@ -93,9 +98,10 @@ document.addEventListener('DOMContentLoaded', async function() {
             approved_purchasing.innerText = approved.length;
             released_purchasing.innerText = released.length;
             purchased_purchasing.innerText = purchased.length;
+            received_purchasing.innerText = received.length;
     
             var options = {
-                series: [pending.length, requested.length, approved.length, released.length, purchased.length],
+                series: [pending.length, requested.length, approved.length, released.length, purchased.length, received.length],
                 chart: {
                     width: 500, // Set the desired width
                     height: 550, // Set the desired height
@@ -128,8 +134,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                         useSeriesColors: false, // Use custom color
                     },
                 },
-                labels: ["Pending", "Requested", "Approved", "Released", "Purchased"],
-                colors: ["#dc3545", "#ffc107","#0dcaf0", "#0d6efd", "#198754"], // Specify solid colors here
+                labels: ["Pending", "Requested", "Approved", "Released", "Purchased", "Received"],
+                colors: ["#dc3545", "#ffc107", "#fd7e14", "#0dcaf0", "#0d6efd", "#198754"], // Specify solid colors here
                 responsive: [{
                     breakpoint: 480,
                     options: {
@@ -157,6 +163,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             var released_data_value_counter = 1;
             var purchased_data_value = "";
             var purchased_data_value_counter = 1;
+            var received_data_value = "";
+            var received_data_value_counter = 1;
             for(let x = 1; x < prf_data_list.content.length; x++){  
                 for(let y = 0; y < pending.length; y++){
                     if(pending[y] == prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]){
@@ -305,6 +313,43 @@ document.addEventListener('DOMContentLoaded', async function() {
                         purchased_data_value_counter += 1;
                     }
                 }
+                for(let y = 0; y < received.length; y++){
+                    if(received[y] == prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]){
+                        var pr_data, date_time, quantity, unit, item, details, remarks, department, status, amount, requisitioner;
+                        pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")];
+                        date_time = prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")];
+                        quantity = prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")];
+                        unit = prf_data_list.content[x][findTextInArray(prf_data_list, "UNIT")];
+                        item = prf_data_list.content[x][findTextInArray(prf_data_list, "ITEM")];
+                        details = prf_data_list.content[x][findTextInArray(prf_data_list, "DETAILS")];
+                        remarks = prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")];
+                        department = prf_data_list.content[x][findTextInArray(prf_data_list, "DEPARTMENT")];
+                        status = prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")];
+                        requisitioner = prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")];
+                        for(let z = 1; z < pof_data_list.content.length; z++){
+                            if(pr_data == pof_data_list.content[z][findTextInArray(pof_data_list, "ITM #")]){
+                                amount = pof_data_list.content[z][findTextInArray(pof_data_list, "AMOUNT")]
+                            }
+                        }
+                        received_data_value += `
+                        <tr>
+                            <td>${received_data_value_counter}</td>
+                            <td>${pr_data}</td>
+                            <td>${date_decoder(date_time)} /<br> ${time_decoder(date_time)}</td>
+                            <td>${quantity}</td>
+                            <td>${unit}</td>
+                            <td>${item}</td>
+                            <td>${details}</td>
+                            <td>${remarks}</td>
+                            <td>${department}</td>
+                            <td>${requisitioner}</td>
+                            <td>${amount}</td>
+                            <td>${status}</td>
+                        </tr>
+                        `
+                        received_data_value_counter += 1;
+                    }
+                }
             }
 
             for(let x = 1; x < prf_data_list.content.length; x++){  
@@ -373,6 +418,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             history_list_container_purchasing.insertAdjacentHTML("beforeend", approved_data_value);
             history_list_container_purchasing.insertAdjacentHTML("beforeend", requested_data_value);
             history_list_container_purchasing.insertAdjacentHTML("beforeend", purchased_data_value);
+            history_list_container_purchasing.insertAdjacentHTML("beforeend", received_data_value);
         }
 
         // pof_data_list
