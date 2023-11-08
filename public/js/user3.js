@@ -79,6 +79,13 @@ document.addEventListener('DOMContentLoaded', async function() {
         function generatePending(){
             pending_treatment_sf = [];
             pending_treatment_wcf = [];
+            wcf_transaction_sorting = [];
+            wcf_tpf_transaction_sorting = [];
+            sf_transaction_treatment = [];
+            tpf_transaction_treatment = [];
+            sf_tpf_transaction_treatment = [];
+            sf_tpf_wcf_transaction_treatment = [];
+    
             for (let i = 1; i < wcf_data_list.content.length; i++) {
                 if(wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] !== "SORTING" &&
                 wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] !== "WAREHOUSE" &&
@@ -152,7 +159,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             pending_treatment_wcf = wcf_transaction_sorting.filter((element) => !wcf_tpf_transaction_sorting.includes(element));
             const finished_treatment = sf_transaction_treatment.filter((element) => sf_tpf_transaction_treatment.includes(element));
             const filtered_pending_treatment_wcf = wcf_tpf_transaction_sorting.filter(element => !sf_tpf_wcf_transaction_treatment.includes(element));
-
+            console.log(sf_transaction_treatment)
+            console.log(sf_tpf_transaction_treatment)
             // pending_list
             total_counter_treatment.innerText = tpf_transaction_treatment.length;
             pending_counter_treatment.innerText = pending_treatment_sf.length + pending_treatment_wcf.length;
@@ -492,6 +500,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             const completion = document.getElementById("completion");
             const buttons = document.getElementById("buttons");
             const machine_counter = document.getElementById("machine_counter");
+            const mtf_form_no = document.getElementById("mtf_form_no");
 
             search_sf_form_no_button.addEventListener("click", () => {
                 var data_value;
@@ -499,6 +508,26 @@ document.addEventListener('DOMContentLoaded', async function() {
                     for(let b=0; b<=pending_treatment_sf.length; b++){
                         if(search_sf_form_no.value == sf_data_list.content[a][findTextInArray(sf_data_list, "SF #")]){
                             if(search_sf_form_no.value == pending_treatment_sf[b]){
+                                var mtf = "";
+                                var ltf = "";
+                                for(let c = 1; c < wcf_data_list.content.length; c++){
+                                    if(wcf_data_list.content[c][findTextInArray(wcf_data_list, "WCF #")] == sf_data_list.content[a][findTextInArray(sf_data_list, "WCF #")]){
+                                        if((wcf_data_list.content[c][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                            mtf = wcf_data_list.content[c][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                        }
+                                        else{
+                                            ltf = wcf_data_list.content[c][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                            for(let x = 1; x < ltf_data_list.content.length; x++){
+                                                if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                                    mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                                    break
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                console.log(mtf)
+                                mtf_form_no.value = mtf;
                                 data_value = `
                                 SF #: ${sf_data_list.content[a][findTextInArray(sf_data_list, "SF #")]}<br>
                                 WCF #: ${sf_data_list.content[a][findTextInArray(sf_data_list, "WCF #")]}<br>
@@ -615,6 +644,22 @@ document.addEventListener('DOMContentLoaded', async function() {
                     for(let b=0; b<=pending_treatment_wcf.length; b++){
                         if(search_sf_form_no.value == wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")]){
                             if(search_sf_form_no.value == pending_treatment_wcf[b]){
+                                var mtf = "";
+                                var ltf = "";
+                                if((wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                    mtf = wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                }
+                                else{
+                                    ltf = wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                    for(let x = 1; x < ltf_data_list.content.length; x++){
+                                        if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                            mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                            break
+                                        }
+                                    }
+                                }
+                                console.log(mtf)
+                                mtf_form_no.value = mtf;
                                 data_value = `
                                 WCF #: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")]}<br>
                                 CLIENT: ${findClientName(wcf_data_list.content[a][findTextInArray(wcf_data_list, "CLIENT ID")])}<br>

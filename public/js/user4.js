@@ -864,6 +864,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             var table_head_data_value = "";
             var table_data_input = "";
             var table_data_counter = 0;
+            var total_cod_weight = 0;
             if(type_of_cod.value == "By Waste Description"){
                 const waste_description = document.getElementById("waste_description");
                 const year_covered = document.getElementById("year_covered");
@@ -894,7 +895,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     }
                                     const type_of_weight = document.getElementById("type_of_weight");
                                     var cod_weight = 0;
-                                    var total_cod_weight = 0;
                                     if(type_of_weight.value == "CLIENT WEIGHT"){
                                         cod_weight = findClientWeight(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")])
                                         total_cod_weight += findClientWeight(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")])
@@ -1279,7 +1279,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     }
                                     const type_of_weight = document.getElementById("type_of_weight");
                                     var cod_weight = 0;
-                                    var total_cod_weight = 0;
                                     if(type_of_weight.value == "CLIENT WEIGHT"){
                                         cod_weight = findClientWeight(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")])
                                         total_cod_weight += findClientWeight(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")])
@@ -1665,7 +1664,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     }
                                     const type_of_weight = document.getElementById("type_of_weight");
                                     var cod_weight = 0;
-                                    var total_cod_weight = 0;
                                     if(type_of_weight.value == "CLIENT WEIGHT"){
                                         cod_weight = findClientWeight(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")])
                                         total_cod_weight += findClientWeight(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")])
