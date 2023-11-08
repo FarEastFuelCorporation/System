@@ -778,14 +778,13 @@
             const cod_form_no = document.getElementById('cod_form_no').value;
             const company = document.getElementById('company').value;
             const type_of_cod = document.getElementById('type_of_cod');
-            const waste_description = document.getElementById('waste_description');
-            // var filename_data = "";
-            // if(type_of_cod == "By Waste Description"){
-            //     filename_data = `${cod_form_no} - ${company} - ${waste_description.value}`
-            // }
-            // console.log(filename_data)
+            const waste_description = document.getElementById('waste_description').value;
+            const year_covered = document.getElementById('year_covered').value;
+            const month_covered = document.getElementById('month_covered').value;
+            var month_name = monthNumberToName(month_covered);
+            
             const opt = {
-                filename: `${cod_form_no} - ${company} - ${waste_description.value}`,
+                filename: `${cod_form_no} - ${company} - ${year_covered} ${month_name} - ${waste_description}`,
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 10 },
                 jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
@@ -818,14 +817,13 @@
             const cod_form_no = document.getElementById('cod_form_no').value;
             const company = document.getElementById('company').value;
             const type_of_cod = document.getElementById('type_of_cod');
-            const waste_description = document.getElementById('waste_description');
-            // var filename_data = "";
-            // if(type_of_cod == "By Waste Description"){
-            //     filename_data = `${cod_form_no} - ${company} - ${waste_description.value}`
-            // }
-            // console.log(filename_data)
+            const waste_description = document.getElementById('waste_description').value;
+            const year_covered = document.getElementById('year_covered').value;
+            const month_covered = document.getElementById('month_covered').value;
+            var month_name = monthNumberToName(month_covered);
+
             const opt = {
-                filename: `${cod_form_no} - ${company} - ${waste_description.value}`,
+                filename: `${cod_form_no} - ${company} - ${year_covered} ${month_name} - ${waste_description}`,
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 2 },
                 jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
@@ -911,6 +909,18 @@
                     });
                 });
             })
+        }
+        function monthNumberToName(monthNumber) {
+            const monthNames = [
+                "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
+                "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"
+            ];
+
+            if (monthNumber >= 1 && monthNumber <= 12) {
+                return monthNames[monthNumber - 1];
+            } else {
+                return "Invalid Month";
+            }
         }
     </script>
 </body>
