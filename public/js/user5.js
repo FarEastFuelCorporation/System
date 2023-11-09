@@ -81,11 +81,17 @@ document.addEventListener('DOMContentLoaded', async function() {
         const billed_counter_amount_collection = collection_dashboard.querySelector("#billed_counter_amount");
         const pending_counter_amount_collection = collection_dashboard.querySelector("#pending_counter_amount");
         const collected_counter_amount_collection = collection_dashboard.querySelector("#collected_counter_amount");
-        const pending_list_collection = collection_dashboard.querySelector("#pending_list");
-        let bpf_transaction_collection = []; 
-        let bpf_ctf_transaction_collection = []; 
-        let bpf_transaction_amount_collection = 0; 
-        let bpf_ctf_transaction_amount_collection = 0; 
+        const pending_list_collection = collection_dashboard.querySelector("#pending_list");   
+        // collection_dashboard
+        let bpf_transaction_collection = {};
+        let bpf_ctf_transaction_collection = {};
+        let bpf_transaction_collection_date = {};
+        let bpf_ctf_transaction_collection_date = {};
+        let bpf_collection = [];
+        let pending_collection = [];
+        let finish_collection = [];
+        let bpf_transaction_amount_collection = 0
+        let bpf_ctf_transaction_amount_collection = 0
         const month_filter = document.querySelector("#month_filter");
         function getCurrentMonthName() {
             const months = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
@@ -124,51 +130,118 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
 
             // collection
-            bpf_transaction_collection = [];
-            bpf_ctf_transaction_collection = [];
-            bpf_transaction_amount_collection = 0;
-            bpf_ctf_transaction_amount_collection = 0;
+            bpf_transaction_collection = {};
+            bpf_ctf_transaction_collection = {};
+            bpf_transaction_collection_date = {};
+            bpf_ctf_transaction_collection_date = {};
+            bpf_collection = [];
+            pending_collection = [];
+            finish_collection = [];
+            bpf_transaction_amount_collection = 0
+            bpf_ctf_transaction_amount_collection = 0
             for (let i = 1; i < bpf_data_list.content.length; i++) {
-                if (!bpf_transaction_collection.includes(bpf_data_list.content[i][findTextInArray(bpf_data_list, "BPF #")]) &&
-                month_filter.value == formatMonth(bpf_data_list.content[i][findTextInArray(bpf_data_list, "HAULING DATE")])) {
-                    bpf_transaction_collection.push(bpf_data_list.content[i][findTextInArray(bpf_data_list, "BPF #")]);
-                    bpf_transaction_amount_collection += bpf_data_list.content[i][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")];
+                const bpfNumber = bpf_data_list.content[i][findTextInArray(bpf_data_list, "BPF #")];
+                const haulingDate = new Date(bpf_data_list.content[i][findTextInArray(bpf_data_list, "HAULING DATE")]);
+
+                if (month_filter.value === formatMonth(haulingDate)) {
+                    const amount = bpf_data_list.content[i][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")];
+                    
+                    // Check if the bpfNumber already exists in the object
+                    if (bpf_transaction_collection[bpfNumber]) {
+                        // If it exists, add the amount to the existing value
+                        bpf_transaction_collection[bpfNumber] += amount;
+                    } else {
+                        // If it doesn't exist, create a new entry with the amount
+                        bpf_transaction_collection[bpfNumber] = amount;
+                    }
+                    bpf_transaction_collection_date[bpfNumber] = haulingDate;
+                    if(!bpf_collection.includes(bpf_data_list.content[i][findTextInArray(bpf_data_list, "BPF #")])){
+                        bpf_collection.push(bpf_data_list.content[i][findTextInArray(bpf_data_list, "BPF #")])
+                    }
                 }
-                else if (!bpf_transaction_collection.includes(bpf_data_list.content[i][findTextInArray(bpf_data_list, "BPF #")]) &&
-                month_filter.value == "ALL") {
-                    bpf_transaction_collection.push(bpf_data_list.content[i][findTextInArray(bpf_data_list, "BPF #")]);
-                    bpf_transaction_amount_collection += bpf_data_list.content[i][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")];
+                else if (month_filter.value === "ALL") {
+                    const amount = bpf_data_list.content[i][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")];
+                    
+                    // Check if the bpfNumber already exists in the object
+                    if (bpf_transaction_collection[bpfNumber]) {
+                        // If it exists, add the amount to the existing value
+                        bpf_transaction_collection[bpfNumber] += amount;
+                    } else {
+                        // If it doesn't exist, create a new entry with the amount
+                        bpf_transaction_collection[bpfNumber] = amount;
+                    }
+                    bpf_transaction_collection_date[bpfNumber] = haulingDate;
+                    if(!bpf_collection.includes(bpf_data_list.content[i][findTextInArray(bpf_data_list, "BPF #")])){
+                        bpf_collection.push(bpf_data_list.content[i][findTextInArray(bpf_data_list, "BPF #")])
+                    }
                 }
             }
-    
             for (let i = 1; i < ctf_data_list.content.length; i++) {
-                if (!bpf_ctf_transaction_collection.includes(ctf_data_list.content[i][findTextInArray(ctf_data_list, "BPF #")]) &&
-                month_filter.value == formatMonth(ctf_data_list.content[i][findTextInArray(ctf_data_list, "HAULING DATE")])) {
-                    bpf_ctf_transaction_collection.push(ctf_data_list.content[i][findTextInArray(ctf_data_list, "BPF #")]);
-                    bpf_ctf_transaction_amount_collection += ctf_data_list.content[i][findTextInArray(ctf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")];
+                const bpfNumber = ctf_data_list.content[i][findTextInArray(ctf_data_list, "BPF #")];
+                const haulingDate = new Date(ctf_data_list.content[i][findTextInArray(ctf_data_list, "HAULING DATE")]);
+                
+                if (month_filter.value === formatMonth(haulingDate)) {
+                    const amount = ctf_data_list.content[i][findTextInArray(ctf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")];
+                    
+                    // Check if the bpfNumber already exists in the object
+                    if (bpf_ctf_transaction_collection[bpfNumber]) {
+                        // If it exists, add the amount to the existing value
+                        bpf_ctf_transaction_collection[bpfNumber] += amount;
+                    } else {
+                        // If it doesn't exist, create a new entry with the amount
+                        bpf_ctf_transaction_collection[bpfNumber] = amount;
+                    }
+                    bpf_ctf_transaction_collection_date[tpfbpfNumberNumber] = haulingDate;
                 }
-                else if (!bpf_ctf_transaction_collection.includes(ctf_data_list.content[i][findTextInArray(ctf_data_list, "BPF #")]) &&
-                month_filter.value == "ALL") {
-                    bpf_ctf_transaction_collection.push(ctf_data_list.content[i][findTextInArray(ctf_data_list, "BPF #")]);
-                    bpf_ctf_transaction_amount_collection += ctf_data_list.content[i][findTextInArray(ctf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")];
+                else if (month_filter.value === "ALL") {
+                    const amount = ctf_data_list.content[i][findTextInArray(ctf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")];
+                    
+                    // Check if the bpfNumber already exists in the object
+                    if (bpf_ctf_transaction_collection[bpfNumber]) {
+                        // If it exists, add the amount to the existing value
+                        bpf_ctf_transaction_collection[bpfNumber] += amount;
+                    } else {
+                        // If it doesn't exist, create a new entry with the amount
+                        bpf_ctf_transaction_collection[bpfNumber] = amount;
+                    }
+                    bpf_ctf_transaction_collection_date[bpfNumber] = haulingDate;
                 }
             }
-    
+
+            for (const key in bpf_transaction_collection) {     
+                // Check if the key exists in bpf_ctf_transaction_collection
+                if (bpf_ctf_transaction_collection[key]) {
+                    // If it exists in bpf_ctf_transaction_collection, add both "tpf #" and weight to finish_collection
+                    finish_collection.push({ bpfNumber: key, amount: bpf_ctf_transaction_collection[key], date: bpf_ctf_transaction_collection_date[key]});
+                } else {
+                    // If it doesn't exist in bpf_ctf_transaction_billing, add both "tpf #" and weight to pending_collection
+                    pending_collection.push({ bpfNumber: key, amount: bpf_transaction_collection[key], date: bpf_transaction_collection_date[key]});
+                }
+            }
+            pending_collection.sort((a, b) => a.date - b.date);
+            finish_collection.sort((a, b) => a.date - b.date);
+            // console.log(bpf_transaction_collection)
+            console.log(pending_collection)
+            pending_collection.forEach((data) => {
+                bpf_transaction_amount_collection += data.amount;
+            })
+            finish_collection.forEach((data) => {
+                bpf_ctf_transaction_amount_collection += data.amount;
+            })
+
             // billing
             const pending_billing = sf_transaction_billing.filter((element) => !sf_tpf_transaction_billing.includes(element));
-    
             certified_counter_billing.innerText = sf_transaction_billing.length;
             pending_counter_billing.innerText = sf_transaction_billing.length - sf_tpf_transaction_billing.length;
             billed_counter_billing.innerText = sf_tpf_transaction_billing.length;
 
             // collection
-            const pending_collection = bpf_transaction_collection.filter((element) => !bpf_ctf_transaction_collection.includes(element));
-    
-            billed_counter_collection.innerText = bpf_transaction_collection.length;
-            pending_counter_collection.innerText = bpf_transaction_collection.length - bpf_ctf_transaction_collection.length;
-            collected_counter_collection.innerText = bpf_ctf_transaction_collection.length;
-            billed_counter_amount_collection.innerText = formatNumber(bpf_transaction_amount_collection);
-            pending_counter_amount_collection.innerText = formatNumber(bpf_transaction_amount_collection - bpf_ctf_transaction_amount_collection);
+            // const pending_collection = bpf_transaction_collection.filter((element) => !bpf_ctf_transaction_collection.includes(element));
+            billed_counter_collection.innerText = pending_collection.length + finish_collection.length;
+            pending_counter_collection.innerText = pending_collection.length;
+            collected_counter_collection.innerText = finish_collection.length;
+            billed_counter_amount_collection.innerText = formatNumber(bpf_transaction_amount_collection + bpf_ctf_transaction_amount_collection);
+            pending_counter_amount_collection.innerText = formatNumber(bpf_transaction_amount_collection);
             collected_counter_amount_collection.innerText = formatNumber(bpf_ctf_transaction_amount_collection);
             
             // billing
@@ -226,7 +299,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             
             // collection
             var options = {
-                series: [bpf_transaction_collection.length - bpf_ctf_transaction_collection.length, bpf_ctf_transaction_collection.length],
+                series: [pending_collection.length, finish_collection.length],
                 chart: {
                     width: 500, // Set the desired width
                     height: 550, // Set the desired height
@@ -247,7 +320,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 legend: {
                     show: true,
                     position: "left", // Set the legend position to "left"
-                    fontSize: '30px', // Increase legend font size as needed
+                    fontSize: '25px', // Increase legend font size as needed
                     formatter: function (seriesName, opts) {
                         // Here, you should use the correct variable to get the series value
                         var seriesValue = opts.w.globals.series[opts.seriesIndex];
@@ -354,14 +427,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                 }
             }
-            pending_list_billing.innerHTML = data_value;            
-            console.log(pending_collection)
+            pending_list_billing.innerHTML = data_value;
             // collection
             var data_value_collection = "";
             var data_value_counter_collection = 1;
-            for(let i = 0; i < pending_collection.length; i++){
+            for (const item of pending_collection){
                 for(let j = 1; j < bpf_data_list.content.length; j++){
-                    if(pending_collection[i] == bpf_data_list.content[j][findTextInArray(bpf_data_list, "BPF #")] &&
+                    if(item.bpfNumber == bpf_data_list.content[j][findTextInArray(bpf_data_list, "BPF #")] &&
                     month_filter.value == formatMonth(bpf_data_list.content[j][findTextInArray(bpf_data_list, "HAULING DATE")])){
                         var mtf = "";
                         var ltf = "";
@@ -382,10 +454,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                         data_value_collection +=`
                         <tr>
-                            <td>${data_value_counter}</td>
+                            <td>${data_value_counter_collection}</td>
                             <td>${bpf_data_list.content[j][findTextInArray(bpf_data_list, "BPF #")]}</td>
                             <td>${mtf}</td>
                             <td>${date_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "HAULING DATE")])}</td>
+                            <td>${bpf_data_list.content[j][findTextInArray(bpf_data_list, "SERVICE INVOICE #")]}</td>
                             <td>${date_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "CREATED AT")])} /<br>${time_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "CREATED AT")])}</td>
                             <td>${findClientName(bpf_data_list.content[j][findTextInArray(bpf_data_list, "CLIENT ID")])}</td>
                             <td>${formatNumber(bpf_data_list.content[j][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")])}</td>
@@ -393,7 +466,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         `
                         data_value_counter_collection += 1;
                     }
-                    else if(pending_collection[i] == bpf_data_list.content[j][findTextInArray(bpf_data_list, "BPF #")] &&
+                    else if(item.bpfNumber == bpf_data_list.content[j][findTextInArray(bpf_data_list, "BPF #")] &&
                     month_filter.value == "ALL"){
                         var mtf = "";
                         var ltf = "";
@@ -414,10 +487,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                         data_value_collection +=`
                         <tr>
-                            <td>${data_value_counter}</td>
+                            <td>${data_value_counter_collection}</td>
                             <td>${bpf_data_list.content[j][findTextInArray(bpf_data_list, "BPF #")]}</td>
                             <td>${mtf}</td>
                             <td>${date_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "HAULING DATE")])}</td>
+                            <td>${bpf_data_list.content[j][findTextInArray(bpf_data_list, "SERVICE INVOICE #")]}</td>
                             <td>${date_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "CREATED AT")])} /<br>${time_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "CREATED AT")])}</td>
                             <td>${findClientName(bpf_data_list.content[j][findTextInArray(bpf_data_list, "CLIENT ID")])}</td>
                             <td>${formatNumber(bpf_data_list.content[j][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")])}</td>
@@ -1036,7 +1110,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     const hauling_date = billing_process_form.querySelector(`#hauling_date${s}`);
                     const total_vat_in = billing_process_form.querySelector(`#total_vat_in${s}`);
                     const total_vat_ex = billing_process_form.querySelector(`#total_vat_ex${s}`);
-                    console.log(search_cod_form_no )
                     for(let x = 1; x < cod_data_list.content.length; x++){
                         if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]){
                             client = cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")]
@@ -1298,7 +1371,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     table_data_info = [];
                     const search_cod_form_no = billing_process_form.querySelector(`#search_cod_form_no${s}`);
                     const service_invoice_no = billing_process_form.querySelector(`#service_invoice_no${s}`);
-                    console.log(search_cod_form_no )
                     for(let x = 1; x < cod_data_list.content.length; x++){
                         if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]){
                             client = cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")]
@@ -1594,6 +1666,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                 type_of_form_list.innerHTML = data_content;
                 generate_button.addEventListener("click", generate)
                 add_item_button.style.display = "block"
+            }
+            else{
+                data_content = ``
+                type_of_form_list.innerHTML = data_content;
+                generate_button.addEventListener("click", generate)
+                add_item_button.style.display = "none"
             }
         })
 
