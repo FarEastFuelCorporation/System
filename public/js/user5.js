@@ -355,7 +355,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
             pending_list_billing.innerHTML = data_value;            
-            
+            console.log(pending_collection)
             // collection
             var data_value_collection = "";
             var data_value_counter_collection = 1;
@@ -479,11 +479,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         const si_terms_container = billing_process_form.querySelector("#si_terms_container");
         const what_to_print = billing_process_form.querySelector("#what_to_print");
         const what_to_print2 = billing_process_form.querySelector("#what_to_print2");
-        const wcf_form_no = billing_process_form.querySelector("#wcf_form_no");
         const client_id = billing_process_form.querySelector("#client");
-        const hauling_date = billing_process_form.querySelector("#hauling_date");
-        const total_vat_in = billing_process_form.querySelector("#total_vat_in");
-        const total_vat_ex = billing_process_form.querySelector("#total_vat_ex");
+        const wcf_form_no = billing_process_form.querySelector("#wcf_form_no1");
+        const hauling_date = billing_process_form.querySelector("#hauling_date1");
+        const total_vat_in = billing_process_form.querySelector("#total_vat_in1");
+        const total_vat_ex = billing_process_form.querySelector("#total_vat_ex1");
         const billing_date = billing_process_form.querySelector("#billing_date");
         const terms = billing_process_form.querySelector("#terms");
         const cod_counter = document.getElementById("cod_counter");
@@ -502,8 +502,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         }
         function generate(){
-            const search_cod_form_no = billing_process_form.querySelector("#search_cod_form_no");
-            const service_invoice_no = billing_process_form.querySelector("#service_invoice_no");
+            const search_cod_form_no = billing_process_form.querySelector("#search_cod_form_no1");
+            const service_invoice_no = billing_process_form.querySelector("#service_invoice_no1");
             const type_of_form = billing_process_form.querySelector("#type_of_form");
             var non_vatable = 0;
             var vatable = 0;
@@ -752,6 +752,27 @@ document.addEventListener('DOMContentLoaded', async function() {
                     `
                     table_data.insertAdjacentHTML("beforeend", data5);
                 }
+                non_vatable_container.innerText = formatNumber(non_vatable);
+                vatable_container.innerText = formatNumber(vatable);
+                total_vat_ex.value = formatNumber(vatable);
+                vat_container.innerText = formatNumber((parseFloat(vatable))*.12);
+                total_amount_payable_container.innerText = formatNumber(non_vatable + vatable + (parseFloat(vatable))*.12);
+                total_vat_in.value = formatNumber(non_vatable + vatable + (parseFloat(vatable))*.12);
+                credits_container.innerText = formatNumber(credits);
+                total_amount_due_container.innerText = formatNumber((non_vatable + vatable + (parseFloat(vatable))*.12) - parseFloat(credits));
+                due_date_container.innerHTML = `${term} days<br>from the date received`;
+                total_amount_container.innerText = formatNumber((non_vatable + vatable) - parseFloat(credits));
+                si_vat_ex_container.innerText = formatNumber((parseFloat(si_total_amount))/1.12);
+                si_vat_container.innerText = formatNumber((parseFloat(si_total_amount)) - ((parseFloat(si_total_amount))/1.12));
+                si_credits_container.innerText = formatNumber(si_credits);
+                si_total_amount_container.innerText = formatNumber(si_total_amount);
+                si_total_sales_container.innerText = formatNumber(si_total_amount);
+                si_terms_container.innerText = `${term} Days Term`;
+                terms.value = term;
+                convertToPDFandDownload_button.style.display = "block";
+                convertToPDF_button.style.display = "block";
+                what_to_print.style.display = "block";
+                // what_to_print2.style.display = "block";
             }
             else if(type_of_form.value == "By COD (Multiple Transaction)"){
                 for(let x = 1; x < cod_data_list.content.length; x++){
@@ -982,12 +1003,39 @@ document.addEventListener('DOMContentLoaded', async function() {
                     `
                     table_data.insertAdjacentHTML("beforeend", data5);
                 }
+                non_vatable_container.innerText = formatNumber(non_vatable);
+                vatable_container.innerText = formatNumber(vatable);
+                total_vat_ex.value = formatNumber(vatable);
+                vat_container.innerText = formatNumber((parseFloat(vatable))*.12);
+                total_amount_payable_container.innerText = formatNumber(non_vatable + vatable + (parseFloat(vatable))*.12);
+                total_vat_in.value = formatNumber(non_vatable + vatable + (parseFloat(vatable))*.12);
+                credits_container.innerText = formatNumber(credits);
+                total_amount_due_container.innerText = formatNumber((non_vatable + vatable + (parseFloat(vatable))*.12) - parseFloat(credits));
+                due_date_container.innerHTML = `${term} days<br>from the date received`;
+                total_amount_container.innerText = formatNumber((non_vatable + vatable) - parseFloat(credits));
+                si_vat_ex_container.innerText = formatNumber((parseFloat(si_total_amount))/1.12);
+                si_vat_container.innerText = formatNumber((parseFloat(si_total_amount)) - ((parseFloat(si_total_amount))/1.12));
+                si_credits_container.innerText = formatNumber(si_credits);
+                si_total_amount_container.innerText = formatNumber(si_total_amount);
+                si_total_sales_container.innerText = formatNumber(si_total_amount);
+                si_terms_container.innerText = `${term} Days Term`;
+                terms.value = term;
+                convertToPDFandDownload_button.style.display = "block";
+                convertToPDF_button.style.display = "block";
+                what_to_print.style.display = "block";
+                // what_to_print2.style.display = "block";
             }
             else if(type_of_form.value == "By Multiple COD (Single Transaction)"){
                 for(let s = 1; s <= cod_counter.value; s++){
+                    var individual_non_vatable = 0;
+                    var individual_vatable = 0;    
                     table_data_info = [];
                     const search_cod_form_no = billing_process_form.querySelector(`#search_cod_form_no${s}`);
                     const service_invoice_no = billing_process_form.querySelector(`#service_invoice_no${s}`);
+                    const wcf_form_no = billing_process_form.querySelector(`#wcf_form_no${s}`);
+                    const hauling_date = billing_process_form.querySelector(`#hauling_date${s}`);
+                    const total_vat_in = billing_process_form.querySelector(`#total_vat_in${s}`);
+                    const total_vat_ex = billing_process_form.querySelector(`#total_vat_ex${s}`);
                     console.log(search_cod_form_no )
                     for(let x = 1; x < cod_data_list.content.length; x++){
                         if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]){
@@ -1113,12 +1161,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                             var si_amount = 0;
                             if(vat_calculation == "VAT EXCLUSIVE"){
                                 vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                individual_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
                                 si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
                                 si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
                                 si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
                             }
                             else{
                                 non_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                individual_non_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
                                 si_unit_price = parseFloat(unit_price);
                                 si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
                                 si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
@@ -1166,12 +1216,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                             var si_amount = 0;
                             if(transportation_calculation == "VAT EXCLUSIVE"){
                                 vatable += parseFloat(transportation_fee);
+                                individual_vatable += parseFloat(transportation_fee);
                                 si_unit_price = parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12);
                                 si_amount = (1 * (parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12)));
                                 si_total_amount += (1 * (parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12)));
                             }
                             else{
                                 non_vatable += parseFloat(transportation_fee);
+                                individual_non_vatable += parseFloat(transportation_fee);
                                 si_unit_price = parseFloat(transportation_fee);
                                 si_amount = (1 * (parseFloat(transportation_fee)));
                                 si_total_amount += (1 * (parseFloat(transportation_fee)));
@@ -1200,6 +1252,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                     for(let x = 0; x < si_table_data_info.length; x++){
                         si_table_data.insertAdjacentHTML("beforeend", si_table_data_info[x])
                     }
+                    total_vat_ex.value = formatNumber(individual_vatable);
+                    total_vat_in.value = formatNumber(individual_non_vatable + individual_vatable + (parseFloat(individual_vatable))*.12);
                 }
                 si_table_data.insertAdjacentHTML("beforeend", si_table_data_transportation[0])
                 for(let x = 0; x < 20 - table_counter; x++){
@@ -1219,6 +1273,25 @@ document.addEventListener('DOMContentLoaded', async function() {
                     `
                     table_data.insertAdjacentHTML("beforeend", data5);
                 }
+                non_vatable_container.innerText = formatNumber(non_vatable);
+                vatable_container.innerText = formatNumber(vatable);
+                vat_container.innerText = formatNumber((parseFloat(vatable))*.12);
+                total_amount_payable_container.innerText = formatNumber(non_vatable + vatable + (parseFloat(vatable))*.12);
+                credits_container.innerText = formatNumber(credits);
+                total_amount_due_container.innerText = formatNumber((non_vatable + vatable + (parseFloat(vatable))*.12) - parseFloat(credits));
+                due_date_container.innerHTML = `${term} days<br>from the date received`;
+                total_amount_container.innerText = formatNumber((non_vatable + vatable) - parseFloat(credits));
+                si_vat_ex_container.innerText = formatNumber((parseFloat(si_total_amount))/1.12);
+                si_vat_container.innerText = formatNumber((parseFloat(si_total_amount)) - ((parseFloat(si_total_amount))/1.12));
+                si_credits_container.innerText = formatNumber(si_credits);
+                si_total_amount_container.innerText = formatNumber(si_total_amount);
+                si_total_sales_container.innerText = formatNumber(si_total_amount);
+                si_terms_container.innerText = `${term} Days Term`;
+                terms.value = term;
+                convertToPDFandDownload_button.style.display = "block";
+                convertToPDF_button.style.display = "block";
+                what_to_print.style.display = "block";
+                // what_to_print2.style.display = "block";
             }
             else if(type_of_form.value == "By Multiple COD (Multiple Transaction)"){
                 for(let s = 1; s <= cod_counter.value; s++){
@@ -1455,31 +1528,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                     `
                     table_data.insertAdjacentHTML("beforeend", data5);
                 }
-            }
-            non_vatable_container.innerText = formatNumber(non_vatable);
-            vatable_container.innerText = formatNumber(vatable);
-            total_vat_ex.value = formatNumber(vatable);
-            vat_container.innerText = formatNumber((parseFloat(vatable))*.12);
-            total_amount_payable_container.innerText = formatNumber(non_vatable + vatable + (parseFloat(vatable))*.12);
-            total_vat_in.value = formatNumber(non_vatable + vatable + (parseFloat(vatable))*.12);
-            credits_container.innerText = formatNumber(credits);
-            total_amount_due_container.innerText = formatNumber((non_vatable + vatable + (parseFloat(vatable))*.12) - parseFloat(credits));
-            due_date_container.innerHTML = `${term} days<br>from the date received`;
-            total_amount_container.innerText = formatNumber((non_vatable + vatable) - parseFloat(credits));
-            si_vat_ex_container.innerText = formatNumber((parseFloat(si_total_amount))/1.12);
-            si_vat_container.innerText = formatNumber((parseFloat(si_total_amount)) - ((parseFloat(si_total_amount))/1.12));
-            si_credits_container.innerText = formatNumber(si_credits);
-            si_total_amount_container.innerText = formatNumber(si_total_amount);
-            si_total_sales_container.innerText = formatNumber(si_total_amount);
-            si_terms_container.innerText = `${term} Days Term`;
-            terms.value = term;
-            convertToPDFandDownload_button.style.display = "block";
-            convertToPDF_button.style.display = "block";
-            what_to_print.style.display = "block";
-            // what_to_print2.style.display = "block";
-            
+            }            
         }
 
+        const form_id = document.getElementById("form_id");
         const type_of_form = document.getElementById("type_of_form");
         const type_of_form_list = document.getElementById("type_of_form_list");
         const bpf_form = document.getElementById("bpf_form");
@@ -1492,22 +1544,22 @@ document.addEventListener('DOMContentLoaded', async function() {
                 data_content = 
                 `
                 <div>
-                    <label for="search_cod_form_no">
+                    <label for="search_cod_form_no1">
                         Search COD #
                     </label><br>
                     <div class="bpf_form">
                         <div class="form">
-                            <input type="text" id="search_cod_form_no" autocomplete="off" name="search_cod_form_no" class="form-control"><br>
+                            <input type="text" id="search_cod_form_no1" autocomplete="off" name="search_cod_form_no1" class="form-control"><br>
                         </div>
                     </div>
                 </div>
                 <div>
-                    <label for="service_invoice_no">
+                    <label for="service_invoice_no1">
                         Service Invoice #
                     </label><br>
                     <div class="bpf_form">
                         <div class="form">
-                            <input type="text" id="service_invoice_no" autocomplete="off" name="service_invoice_no" class="form-control"><br>
+                            <input type="text" id="service_invoice_no1" autocomplete="off" name="service_invoice_no1" class="form-control"><br>
                         </div>
                     </div>
                 </div>
@@ -1524,7 +1576,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     </label><br>
                     <div class="bpf_form">
                         <div class="form">
-                            <input type="text" id="search_cod_form_no1" autocomplete="off" name="search_cod_form_no" class="form-control">
+                            <input type="text" id="search_cod_form_no1" autocomplete="off" name="search_cod_form_no1" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -1534,7 +1586,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     </label><br>
                     <div class="bpf_form">
                         <div class="form">
-                            <input type="text" id="service_invoice_no1" autocomplete="off" name="service_invoice_no" class="form-control">
+                            <input type="text" id="service_invoice_no1" autocomplete="off" name="service_invoice_no1" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -1547,6 +1599,14 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         function addCOD () {
             cod_counter.value = parseInt(cod_counter.value) + 1;
+            var additional_data =
+            `
+                <input type="hidden" name="wcf_form_no${cod_counter.value}" id="wcf_form_no${cod_counter.value}">
+                <input type="hidden" name="hauling_date${cod_counter.value}" id="hauling_date${cod_counter.value}">
+                <input type="hidden" name="total_vat_in${cod_counter.value}" id="total_vat_in${cod_counter.value}">
+                <input type="hidden" name="total_vat_ex${cod_counter.value}" id="total_vat_ex${cod_counter.value}">
+            `
+            form_id.insertAdjacentHTML("afterbegin", additional_data)
             var data_content = 
             `
             <div>
@@ -1555,7 +1615,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 </label><br>
                 <div class="bpf_form">
                     <div class="form">
-                        <input type="text" id="search_cod_form_no${cod_counter.value}" autocomplete="off" name="search_cod_form_no" class="form-control">
+                        <input type="text" id="search_cod_form_no${cod_counter.value}" autocomplete="off" name="search_cod_form_no${cod_counter.value}" class="form-control">
                     </div>
                 </div>
             </div>
@@ -1565,7 +1625,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 </label><br>
                 <div class="bpf_form">
                     <div class="form">
-                        <input type="text" id="service_invoice_no${cod_counter.value}" autocomplete="off" name="service_invoice_no" class="form-control">
+                        <input type="text" id="service_invoice_no${cod_counter.value}" autocomplete="off" name="service_invoice_no${cod_counter.value}" class="form-control">
                     </div>
                 </div>
             </div>
