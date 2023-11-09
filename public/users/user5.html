@@ -408,7 +408,7 @@
             </section>     
             <section id="billing_process_form">
                 <h2>BILLING PROCESS FORM</h2><br>
-                <form id="form_id" action="https://script.google.com/macros/s/AKfycbyFaz_pKx6-xCPBm9c13MT6HPwAsRddpskzFa67YIebsQ0Ectv0h-7bX7wWQp3vm0G_Zw/exec" method="post">
+                <form id="form_id" action="https://script.google.com/macros/s/AKfycbyFaz_pKx6-xCPBm9c13MT6HPwAsRddpskzFa67YIebsQ0Ectv0h-7bX7wWQp3vm0G_Zw/exec" method="post" style="position: relative;">
                     <input type="hidden" name="user" id="user">
                     <input type="hidden" name="wcf_form_no" id="wcf_form_no">
                     <input type="hidden" name="client" id="client">
@@ -417,6 +417,7 @@
                     <input type="hidden" name="total_vat_ex" id="total_vat_ex">
                     <input type="hidden" name="billing_date" id="billing_date">
                     <input type="hidden" name="terms" id="terms">
+                    <input type="hidden" name="cod_counter" id="cod_counter" value="1">
                     <div class="bpf_form">
                         <div>
                             <label for="bpf_form_no">
@@ -439,11 +440,23 @@
                         <option value="">Select</option>
                         <option value="By COD (Single Transaction)">By COD (Single Transaction)</option>
                         <option value="By COD (Multiple Transaction)">By COD (Multiple Transaction)</option>
+                        <option value="By Multiple COD (Single Transaction)">By Multiple COD (Single Transaction)</option>
+                        <option value="By Multiple COD (Multiple Transaction)">By Multiple COD (Multiple Transaction)</option>
                     </select><br>
-                    <div id="type_of_form_list" style="display: flex; gap: 20px;">
+                    <div class="add_item" style="position: absolute; left: 450px; margin-top: 25px;">
+                        <div class="item_buttons">
+                            <button type="button" id="add_item_button" class="form-control">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                            <button type="button" id="remove_item_button" class="form-control">
+                                <i class="fa-solid fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="type_of_form_list" style="display: grid; grid-template-columns: 200px 200px; gap: 20px;">
 
                     </div>
-                    <div class="buttons">
+                    <div class="buttons" style="margin-top: 20px;">
                         <button type="button" id="generate_button" class="form-control form" style="max-width: max-content !important;">
                             Generate Billing Statement
                         </button>

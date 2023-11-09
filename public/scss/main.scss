@@ -1670,6 +1670,27 @@ section h2
     display: none;
 }
 
+#billing_process_form form #add_item_button {
+    max-width: 60px !important;
+    background-color: cyan;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    border-radius: 60px;
+    text-align: center;
+    display: none;
+}
+
+#billing_process_form form #remove_item_button {
+    max-width: 60px !important;
+    background-color: cyan;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    border-radius: 60px;
+    text-align: center;
+    display: none;
+}
 
 /* marketing dashboard section starts here */
 .marketing .cards
