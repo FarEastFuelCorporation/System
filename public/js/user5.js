@@ -1681,7 +1681,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     var client_name = "";
                     var address = "";
                     var nature_of_business = "";
-                    date_of_certification = date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]);
                     for(let c = 1; c < client_data_list.content.length; c++){
                         if(cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")] == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")]){
                             client_name = client_data_list.content[c][findTextInArray(client_data_list, "BILLER NAME")];
@@ -1773,6 +1772,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         nature_of_business_container.innerText = nature_of_business;
                         si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                         si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
+                        date_of_certification = date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]);
                         si_date_container.innerText = date_of_certification;
                         data = `
                         <tr>
@@ -1967,7 +1967,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                         var client_name = "";
                         var address = "";
                         var nature_of_business = "";
-                        date_of_certification = date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]);
                         for(let c = 1; c < client_data_list.content.length; c++){
                             if(cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")] == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")]){
                                 client_name = client_data_list.content[c][findTextInArray(client_data_list, "BILLER NAME")];
@@ -2052,13 +2051,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                             bpf_form_no_container.innerText = bpf_form_no.value;
                             date_made_container.innerText = date_decoder(new Date());
                             client_name_container.innerHTML = client_name;
-                            si_client_name_container.innerText = clniet_name;
+                            si_client_name_container.innerText = client_name;
                             address_container.innerText = address;
                             si_address_container.innerText = address;
                             tin_id_container.innerText = "";
                             nature_of_business_container.innerText = nature_of_business;
                             si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                             si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
+                            date_of_certification = date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]);
                             si_date_container.innerText = date_of_certification;
                             if(cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")] == "CARDBOARDS"){
                                 is_transportation = false
@@ -2138,6 +2138,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                             table_counter += 1;
                             si_table_data_info.push(data3);
                         }
+                        console.log(date_of_certification)
+
                     }
                     if(is_transportation == true){
                         for(let y = 0; y < wcf_transaction.length; y++){
@@ -2149,6 +2151,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 }
                                 var data2 = "";
                                 var data4 = "";
+                                console.log(date_of_certification)
                                 data2 = `
                                 <tr>
                                     <td>${date_of_certification}</td>
