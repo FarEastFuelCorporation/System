@@ -1230,6 +1230,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             if(client_data_list.content[y][findTextInArray(client_data_list, "CLIENT ID")] == "C2023018"){
                                                 table_company_address.innerHTML = `${client_data_list.content[y][findTextInArray(client_data_list, "ADDRESS")]} <br><h4 style="font-weight: bold">OL-GR-R4A-34-000594</h4>`;
                                             }
+                                            else if(client_data_list.content[y][findTextInArray(client_data_list, "CLIENT ID")] == "C2023026"){
+                                                table_company_address.innerHTML = `A subsidiary of San Miguel Corporation <br> Polo Brewery`;
+                                            }
                                             else{
                                                 table_company_address.innerHTML = client_data_list.content[y][findTextInArray(client_data_list, "ADDRESS")];
                                             }
