@@ -783,9 +783,10 @@
             const year_covered = document.getElementById('year_covered').value;
             const month_covered = document.getElementById('month_covered').value;
             var month_name = monthNumberToName(month_covered);
-            
+            let modifiedCompanyName = company.replace(/\./g, '');
+
             const opt = {
-                filename: `${cod_form_no} - ${company} - ${year_covered} ${month_name} - ${waste_description}`,
+                filename: `${cod_form_no} - ${modifiedCompanyName} - ${year_covered} ${month_name} - ${waste_description}.pdf`,
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 10 },
                 jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
@@ -822,9 +823,10 @@
             const year_covered = document.getElementById('year_covered').value;
             const month_covered = document.getElementById('month_covered').value;
             var month_name = monthNumberToName(month_covered);
+            let modifiedCompanyName = company.replace(/\./g, '');
 
             const opt = {
-                filename: `${cod_form_no} - ${company} - ${year_covered} ${month_name} - ${waste_description}`,
+                filename: `${cod_form_no} - ${modifiedCompanyName} - ${year_covered} ${month_name} - ${waste_description}`,
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 2 },
                 jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }

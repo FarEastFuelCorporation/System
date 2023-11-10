@@ -575,6 +575,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                 cod_transaction.push(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]);
             }
         }
+        console.log(wcf_transaction)
+        console.log(cod_transaction)
         function generate(){
             const search_cod_form_no = billing_process_form.querySelector("#search_cod_form_no1");
             const service_invoice_no = billing_process_form.querySelector("#service_invoice_no1");
@@ -1604,6 +1606,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             else if(type_of_form.value == "By Date (Single Transaction)"){
                 const search_date = document.getElementById("search_date1");
                 const client_input = document.getElementById("client_input");
+                var cod_no;
                 console.log(date_decoder(new Date(search_date.value)))
                 var client_id = "";
                 for(let c = 1; c < client_data_list.content.length; c++){
@@ -1614,13 +1617,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
                 console.log(client_id)
                 for(let x = 1; x < cod_data_list.content.length; x++){
-                    console.log(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")])
                     if(date_decoder(new Date(search_date.value)) == date_decoder(new Date(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")])) &&
                     client_id == cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")]){
                         client = cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")]
                         wcf_form_no.value = cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")]
                         client_id.value = cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")]
                         hauling_date.value = date_decoder(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")])
+                        cod_no = cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]
                         break
                     }
                 }
@@ -1664,6 +1667,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             waste_name = cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")];
                         }
                     }
+                    // MTF202310214
                     for(let a = 1; a < wcf_data_list.content.length; a++){
                         if(wcf_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")] &&
                         cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")]){
@@ -1673,6 +1677,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         for(let c = 1; c < qlf_data_list.content.length; c++){
                                             if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "CLIENT ID")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")] &&
                                             mtf_data_list.content[b][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
+                                                console.log(mtf_data_list.content[b][findTextInArray(mtf_data_list, "CLIENT ID")])
                                                 transportation_vehicle = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]
                                                 transportation_unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
                                                 transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
@@ -1687,6 +1692,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             else if((wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).substring(0,3) == "LTF"){
                                 for(let d = 1; d < ltf_data_list.content.length; d++){
                                     if(ltf_data_list.content[d][findTextInArray(ltf_data_list, "LTF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
+                                        console.log("pass2")
                                         for(let b = 1; b < mtf_data_list.content.length; b++){
                                             if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "MTF #")] == ltf_data_list.content[d][findTextInArray(ltf_data_list, "MTF #")]){
                                                 for(let c = 1; c < qlf_data_list.content.length; c++){
@@ -1766,60 +1772,60 @@ document.addEventListener('DOMContentLoaded', async function() {
                         si_table_data_info.push(data3);
                     }
                 }
-                // for(let y = 0; y < wcf_transaction.length; y++){
-                //     if(search_cod_form_no.value == cod_transaction[y]){
-                //         for(let x = 1; x < cod_data_list.content.length; x++){
-                //             if(wcf_transaction[y] == cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")]){
-                //                 date_of_certification_transportation = date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]);
-                //             }
-                //         }
-                //         var data2 = "";
-                //         var data4 = "";
-                //         data2 = `
-                //         <tr>
-                //             <td>${date_of_certification_transportation}</td>
-                //             <td></td>
-                //             <td>${service_invoice_no.value}</td>
-                //             <td style="font-size: 10px !important; padding-top: 2px">TRANS. FEE ${transportation_vehicle}</td>
-                //             <td>${1}</td>
-                //             <td>${transportation_unit}</td>
-                //             <td style="text-align: right; padding-right: 5px">${formatNumber(transportation_fee)}</td>
-                //             <td style="text-align: right; padding-right: 5px">${formatNumber(transportation_fee)}</td>
-                //             <td style="font-size: 10px !important">${transportation_calculation}</td>
-                //         </tr>
-                //         `
-                //         table_data_transportation.push(data2);
-                //         var si_unit_price = 0;
-                //         var si_amount = 0;
-                //         if(transportation_calculation == "VAT EXCLUSIVE"){
-                //             vatable += parseFloat(transportation_fee);
-                //             si_unit_price = parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12);
-                //             si_amount = (1 * (parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12)));
-                //             si_total_amount += (1 * (parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12)));
-                //         }
-                //         else{
-                //             non_vatable += parseFloat(transportation_fee);
-                //             si_unit_price = parseFloat(transportation_fee);
-                //             si_amount = (1 * (parseFloat(transportation_fee)));
-                //             si_total_amount += (1 * (parseFloat(transportation_fee)));
-                //         }
-                //         data4 = `
-                //         <tr>
-                //             <td>${data4_counter}</td>
-                //             <td class="amount">${1}</td>
-                //             <td>${transportation_unit}</td>
-                //             <td>${date_of_certification_transportation}</td>
-                //             <td style="font-size: 10px !important; padding-top: 5px !important;">TRANS. FEE ${transportation_vehicle}</td>
-                //             <td class="amount">${formatNumber(si_unit_price)}</td>
-                //             <td class="amount">${formatNumber(si_amount)}</td>
-                //         </tr>
-                //         `
-                //         data4_counter += 2;
-                //         table_counter += 1;
-                //         si_table_data_transportation.push(data4);
-                //         break
-                //     }
-                // }
+                for(let y = 0; y < wcf_transaction.length; y++){
+                    if(cod_no == cod_transaction[y]){
+                        for(let x = 1; x < cod_data_list.content.length; x++){
+                            if(wcf_transaction[y] == cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")]){
+                                date_of_certification_transportation = date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]);
+                            }
+                        }
+                        var data2 = "";
+                        var data4 = "";
+                        data2 = `
+                        <tr>
+                            <td>${date_of_certification}</td>
+                            <td></td>
+                            <td>${service_invoice_no.value}</td>
+                            <td style="font-size: 10px !important; padding-top: 2px">TRANS. FEE ${transportation_vehicle}</td>
+                            <td>${1}</td>
+                            <td>${transportation_unit}</td>
+                            <td style="text-align: right; padding-right: 5px">${formatNumber(transportation_fee)}</td>
+                            <td style="text-align: right; padding-right: 5px">${formatNumber(transportation_fee)}</td>
+                            <td style="font-size: 10px !important">${transportation_calculation}</td>
+                        </tr>
+                        `
+                        table_data_transportation.push(data2);
+                        var si_unit_price = 0;
+                        var si_amount = 0;
+                        if(transportation_calculation == "VAT EXCLUSIVE"){
+                            vatable += parseFloat(transportation_fee);
+                            si_unit_price = parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12);
+                            si_amount = (1 * (parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12)));
+                            si_total_amount += (1 * (parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12)));
+                        }
+                        else{
+                            non_vatable += parseFloat(transportation_fee);
+                            si_unit_price = parseFloat(transportation_fee);
+                            si_amount = (1 * (parseFloat(transportation_fee)));
+                            si_total_amount += (1 * (parseFloat(transportation_fee)));
+                        }
+                        data4 = `
+                        <tr>
+                            <td>${data4_counter}</td>
+                            <td class="amount">${1}</td>
+                            <td>${transportation_unit}</td>
+                            <td>${date_of_certification}</td>
+                            <td style="font-size: 10px !important; padding-top: 5px !important;">TRANS. FEE ${transportation_vehicle}</td>
+                            <td class="amount">${formatNumber(si_unit_price)}</td>
+                            <td class="amount">${formatNumber(si_amount)}</td>
+                        </tr>
+                        `
+                        data4_counter += 2;
+                        table_counter += 1;
+                        si_table_data_transportation.push(data4);
+                        break
+                    }
+                }
                 for(let x = 0; x < table_data_info.length; x++){
                     table_data.insertAdjacentHTML("beforeend", table_data_info[x])
                 }
