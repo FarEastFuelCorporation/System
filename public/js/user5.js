@@ -220,8 +220,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             pending_collection.sort((a, b) => a.date - b.date);
             finish_collection.sort((a, b) => a.date - b.date);
-            // console.log(bpf_transaction_collection)
-            console.log(pending_collection)
             pending_collection.forEach((data) => {
                 bpf_transaction_amount_collection += data.amount;
             })
@@ -575,8 +573,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 cod_transaction.push(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]);
             }
         }
-        console.log(wcf_transaction)
-        console.log(cod_transaction)
         function generate(){
             const search_cod_form_no = billing_process_form.querySelector("#search_cod_form_no1");
             const service_invoice_no = billing_process_form.querySelector("#service_invoice_no1");
@@ -596,7 +592,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             var data3_counter = 1;
             var data4_counter = 2;
             var table_counter = 0;
-            var client = ""
+            var client = "";
             billing_date.value = date_decoder(new Date());
             if(type_of_form.value == "By COD (Single Transaction)"){
                 for(let x = 1; x < cod_data_list.content.length; x++){
@@ -1607,7 +1603,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 const search_date = document.getElementById("search_date1");
                 const client_input = document.getElementById("client_input");
                 var cod_no;
-                console.log(date_decoder(new Date(search_date.value)))
                 var client_id = "";
                 for(let c = 1; c < client_data_list.content.length; c++){
                     if(client_input.value == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT NAME")]){
@@ -1615,7 +1610,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                         break
                     }
                 }
-                console.log(client_id)
                 for(let x = 1; x < cod_data_list.content.length; x++){
                     if(date_decoder(new Date(search_date.value)) == date_decoder(new Date(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")])) &&
                     client_id == cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")]){
@@ -1667,7 +1661,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                             waste_name = cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")];
                         }
                     }
-                    // MTF202310214
                     for(let a = 1; a < wcf_data_list.content.length; a++){
                         if(wcf_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")] &&
                         cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")]){
@@ -1677,7 +1670,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         for(let c = 1; c < qlf_data_list.content.length; c++){
                                             if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "CLIENT ID")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")] &&
                                             mtf_data_list.content[b][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
-                                                console.log(mtf_data_list.content[b][findTextInArray(mtf_data_list, "CLIENT ID")])
                                                 transportation_vehicle = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]
                                                 transportation_unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
                                                 transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
@@ -1692,7 +1684,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                             else if((wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).substring(0,3) == "LTF"){
                                 for(let d = 1; d < ltf_data_list.content.length; d++){
                                     if(ltf_data_list.content[d][findTextInArray(ltf_data_list, "LTF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
-                                        console.log("pass2")
                                         for(let b = 1; b < mtf_data_list.content.length; b++){
                                             if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "MTF #")] == ltf_data_list.content[d][findTextInArray(ltf_data_list, "MTF #")]){
                                                 for(let c = 1; c < qlf_data_list.content.length; c++){
@@ -1744,18 +1735,36 @@ document.addEventListener('DOMContentLoaded', async function() {
                         table_data_info.push(data);
                         var si_unit_price = 0;
                         var si_amount = 0;
-                        if(vat_calculation == "VAT EXCLUSIVE"){
-                            vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                            si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
-                            si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
-                            si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                        if(mode == "CHARGE"){
+                            if(vat_calculation == "VAT EXCLUSIVE"){
+                                vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
+                                si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                                si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                            }
+                            else{
+                                non_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                si_unit_price = parseFloat(unit_price);
+                                si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                            }
                         }
-                        else{
-                            non_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                            si_unit_price = parseFloat(unit_price);
-                            si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                            si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                        }                    
+                        else if(mode == "BUYING"){
+                            if(vat_calculation == "VAT EXCLUSIVE"){
+                                credits += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                si_credits += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
+                                si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                                si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                            }
+                            else{
+                                credits += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                si_credits += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                si_unit_price = parseFloat(unit_price);
+                                si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                            }
+                        }
                         data3 = `
                         <tr>
                             <td>${data3_counter}</td>
