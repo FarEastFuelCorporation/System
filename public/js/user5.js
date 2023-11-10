@@ -1326,6 +1326,21 @@ document.addEventListener('DOMContentLoaded', async function() {
                         table_data.insertAdjacentHTML("beforeend", table_data_info[x])
                     }
                     table_data.insertAdjacentHTML("beforeend", table_data_transportation[0])
+                    var space = 
+                    `
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    `
+                    table_data.insertAdjacentHTML("beforeend", space)
                     for(let x = 0; x < si_table_data_info.length; x++){
                         si_table_data.insertAdjacentHTML("beforeend", si_table_data_info[x])
                     }
@@ -1582,6 +1597,21 @@ document.addEventListener('DOMContentLoaded', async function() {
                         table_data.insertAdjacentHTML("beforeend", table_data_info[x])
                         table_data.insertAdjacentHTML("beforeend", table_data_transportation[x])
                     }
+                    var space = 
+                    `
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    `
+                    table_data.insertAdjacentHTML("beforeend", space)
                     for(let x = 0; x < si_table_data_info.length; x++){
                         si_table_data.insertAdjacentHTML("beforeend", si_table_data_info[x])
                         si_table_data.insertAdjacentHTML("beforeend", si_table_data_transportation[x])
@@ -2022,7 +2052,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             bpf_form_no_container.innerText = bpf_form_no.value;
                             date_made_container.innerText = date_decoder(new Date());
                             client_name_container.innerHTML = client_name;
-                            si_client_name_container.innerText = client_name;
+                            si_client_name_container.innerText = clniet_name;
                             address_container.innerText = address;
                             si_address_container.innerText = address;
                             tin_id_container.innerText = "";
@@ -2033,20 +2063,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                             if(cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")] == "CARDBOARDS"){
                                 is_transportation = false
                             }
-                            data = `
-                            <tr>
-                                <td>${date_of_certification}</td>
-                                <td></td>
-                                <td>${service_invoice_no.value}</td>
-                                <td style="font-size: 10px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
-                                <td>${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
-                                <td>${unit}</td>
-                                <td style="text-align: right; padding-right: 5px">${formatNumber(unit_price)}</td>
-                                <td style="text-align: right; padding-right: 5px">${formatNumber(parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price))}</td>
-                                <td style="font-size: 10px !important">${vat_calculation}</td>
-                            </tr>
-                            `
-                            table_data_info.push(data);
                             var si_unit_price = 0;
                             var si_amount = 0;
                             if(mode == "CHARGE"){
@@ -2062,6 +2078,20 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
                                     si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
                                 }
+                                data = `
+                                <tr>
+                                    <td>${date_of_certification}</td>
+                                    <td></td>
+                                    <td>${service_invoice_no.value}</td>
+                                    <td style="font-size: 10px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
+                                    <td>${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
+                                    <td>${unit}</td>
+                                    <td style="text-align: right; padding-right: 5px">${formatNumber(unit_price)}</td>
+                                    <td style="text-align: right; padding-right: 5px">${formatNumber(parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price))}</td>
+                                    <td style="font-size: 10px !important">${vat_calculation}</td>
+                                </tr>
+                                `
+                                table_data_info.push(data);
                             }
                             else if(mode == "BUYING"){
                                 if(vat_calculation == "VAT EXCLUSIVE"){
@@ -2078,6 +2108,20 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
                                     si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
                                 }
+                                data = `
+                                <tr style="color: #dc3545;">
+                                    <td>${date_of_certification}</td>
+                                    <td></td>
+                                    <td>${service_invoice_no.value}</td>
+                                    <td style="font-size: 10px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
+                                    <td>${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
+                                    <td>${unit}</td>
+                                    <td style="text-align: right; padding-right: 5px">${formatNumber(unit_price)}</td>
+                                    <td style="text-align: right; padding-right: 5px">${formatNumber(parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price))}</td>
+                                    <td style="font-size: 10px !important">${vat_calculation}</td>
+                                </tr>
+                                `
+                                table_data_info.push(data);
                             }
                             data3 = `
                             <tr>
