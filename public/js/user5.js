@@ -577,6 +577,11 @@ document.addEventListener('DOMContentLoaded', async function() {
             const search_cod_form_no = billing_process_form.querySelector("#search_cod_form_no1");
             const service_invoice_no = billing_process_form.querySelector("#service_invoice_no1");
             const type_of_form = billing_process_form.querySelector("#type_of_form");
+            table_data.innerHTML = ""
+            table_data_info = [];
+            table_data_transportation = [];
+            si_table_data_info = [];
+            si_table_data_transportation = [];
             var non_vatable = 0;
             var vatable = 0;
             var credits = 0;
@@ -847,6 +852,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 // what_to_print2.style.display = "block";
             }
             else if(type_of_form.value == "By COD (Multiple Transaction)"){
+
                 for(let x = 1; x < cod_data_list.content.length; x++){
                     if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]){
                         client = cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")]
@@ -1598,21 +1604,40 @@ document.addEventListener('DOMContentLoaded', async function() {
                     `
                     table_data.insertAdjacentHTML("beforeend", data5);
                 }
+                non_vatable_container.innerText = formatNumber(non_vatable);
+                vatable_container.innerText = formatNumber(vatable);
+                vat_container.innerText = formatNumber((parseFloat(vatable))*.12);
+                total_amount_payable_container.innerText = formatNumber(non_vatable + vatable + (parseFloat(vatable))*.12);
+                credits_container.innerText = formatNumber(credits);
+                total_amount_due_container.innerText = formatNumber((non_vatable + vatable + (parseFloat(vatable))*.12) - parseFloat(credits));
+                due_date_container.innerHTML = `${term} days<br>from the date received`;
+                total_amount_container.innerText = formatNumber((non_vatable + vatable) - parseFloat(credits));
+                si_vat_ex_container.innerText = formatNumber((parseFloat(si_total_amount))/1.12);
+                si_vat_container.innerText = formatNumber((parseFloat(si_total_amount)) - ((parseFloat(si_total_amount))/1.12));
+                si_credits_container.innerText = formatNumber(si_credits);
+                si_total_amount_container.innerText = formatNumber(si_total_amount);
+                si_total_sales_container.innerText = formatNumber(si_total_amount);
+                si_terms_container.innerText = `${term} Days Term`;
+                terms.value = term;
+                convertToPDFandDownload_button.style.display = "block";
+                convertToPDF_button.style.display = "block";
+                what_to_print.style.display = "block";
+                // what_to_print2.style.display = "block";
             }
             else if(type_of_form.value == "By Date (Single Transaction)"){
                 const search_date = document.getElementById("search_date1");
                 const client_input = document.getElementById("client_input");
                 var cod_no;
-                var client_id = "";
+                var client_id_input = "";
                 for(let c = 1; c < client_data_list.content.length; c++){
                     if(client_input.value == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT NAME")]){
-                        client_id = client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")];
+                        client_id_input = client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")];
                         break
                     }
                 }
                 for(let x = 1; x < cod_data_list.content.length; x++){
                     if(date_decoder(new Date(search_date.value)) == date_decoder(new Date(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")])) &&
-                    client_id == cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")]){
+                    client_id_input == cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")]){
                         client = cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")]
                         wcf_form_no.value = cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")]
                         client_id.value = cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")]
@@ -1882,6 +1907,315 @@ document.addEventListener('DOMContentLoaded', async function() {
                 what_to_print.style.display = "block";
                 // what_to_print2.style.display = "block";
             }
+            else if(type_of_form.value == "By Date (Multiple Transaction)"){
+                for(let s = 1; s <= cod_counter.value; s++){
+                    table_data_info = [];
+                    const client_input = document.getElementById("client_input");
+                    const search_date = billing_process_form.querySelector(`#search_date${s}`);
+                    const service_invoice_no = billing_process_form.querySelector(`#service_invoice_no${s}`);
+                    var is_transportation = true;
+                    var cod_no;
+                    var client_id_input = "";
+                    for(let c = 1; c < client_data_list.content.length; c++){
+                        if(client_input.value == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT NAME")]){
+                            client_id_input = client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")];
+                            break
+                        }
+                    }
+                    for(let x = 1; x < cod_data_list.content.length; x++){
+                        if(date_decoder(new Date(search_date.value)) == date_decoder(new Date(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")])) &&
+                        client_id_input == cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")]){
+                            client = cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")]
+                            wcf_form_no.value = cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")]
+                            client_id.value = cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")]
+                            hauling_date.value = date_decoder(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")])
+                            cod_no = cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]
+                            break
+                        }
+                    }
+                    for(let x = 1; x < cod_data_list.content.length; x++){
+                        var client_name = "";
+                        var address = "";
+                        var nature_of_business = "";
+                        date_of_certification = date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]);
+                        for(let c = 1; c < client_data_list.content.length; c++){
+                            if(cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")] == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")]){
+                                client_name = client_data_list.content[c][findTextInArray(client_data_list, "BILLER NAME")];
+                                address = client_data_list.content[c][findTextInArray(client_data_list, "BILLER ADDRESS")];
+                                // nature_of_business = client_data_list.content[c][findTextInArray(client_data_list, "NATURE OF BUSINESS")];
+                                break
+                            }
+                        }
+                        var waste_code = "";
+                        for(let c = 1; c < type_of_waste_data_list.content.length; c++){
+                            if(cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE ID")] == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
+                                waste_code = (type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")]).substring(0, 4);
+                                break
+                            }
+                        }
+                        var waste_name = "";
+                        var mode = "";
+                        var unit = "";
+                        var unit_price = "";
+                        var vat_calculation = "";
+                        for(let c = 1; c < qlf_data_list.content.length; c++){
+                            if(cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")] &&
+                            cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE ID")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
+                                waste_name = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE NAME")];
+                                mode = qlf_data_list.content[c][findTextInArray(qlf_data_list, "MODE")];
+                                unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")];
+                                unit_price = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")];
+                                vat_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")];
+                                break
+                            }
+                            else{
+                                waste_name = cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")];
+                            }
+                        }
+                        for(let a = 1; a < wcf_data_list.content.length; a++){
+                            if(wcf_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")] &&
+                            cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")]){
+                                if((wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).substring(0,3) == "MTF"){
+                                    for(let b = 1; b < mtf_data_list.content.length; b++){
+                                        if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "MTF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
+                                            for(let c = 1; c < qlf_data_list.content.length; c++){
+                                                if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "CLIENT ID")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")] &&
+                                                mtf_data_list.content[b][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
+                                                    transportation_vehicle = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]
+                                                    transportation_unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
+                                                    transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
+                                                    transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
+                                                    term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS DAYS")]
+                                                    break
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                else if((wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).substring(0,3) == "LTF"){
+                                    for(let d = 1; d < ltf_data_list.content.length; d++){
+                                        if(ltf_data_list.content[d][findTextInArray(ltf_data_list, "LTF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
+                                            for(let b = 1; b < mtf_data_list.content.length; b++){
+                                                if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "MTF #")] == ltf_data_list.content[d][findTextInArray(ltf_data_list, "MTF #")]){
+                                                    for(let c = 1; c < qlf_data_list.content.length; c++){
+                                                        if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "CLIENT ID")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")] &&
+                                                        mtf_data_list.content[b][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
+                                                            transportation_vehicle = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]
+                                                            transportation_unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
+                                                            transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
+                                                            transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
+                                                            term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS DAYS")]
+                                                            break
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        var data = "";
+                        var data3 = "";
+                        if(wcf_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")]){
+                            // && vat_calculation == "CHARGE"
+                            bpf_form_no_container.innerText = bpf_form_no.value;
+                            date_made_container.innerText = date_decoder(new Date());
+                            client_name_container.innerHTML = client_name;
+                            si_client_name_container.innerText = client_name;
+                            address_container.innerText = address;
+                            si_address_container.innerText = address;
+                            tin_id_container.innerText = "";
+                            nature_of_business_container.innerText = nature_of_business;
+                            si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
+                            si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
+                            si_date_container.innerText = date_of_certification;
+                            if(cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")] == "CARDBOARDS"){
+                                is_transportation = false
+                            }
+                            data = `
+                            <tr>
+                                <td>${date_of_certification}</td>
+                                <td></td>
+                                <td>${service_invoice_no.value}</td>
+                                <td style="font-size: 10px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
+                                <td>${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
+                                <td>${unit}</td>
+                                <td style="text-align: right; padding-right: 5px">${formatNumber(unit_price)}</td>
+                                <td style="text-align: right; padding-right: 5px">${formatNumber(parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price))}</td>
+                                <td style="font-size: 10px !important">${vat_calculation}</td>
+                            </tr>
+                            `
+                            table_data_info.push(data);
+                            var si_unit_price = 0;
+                            var si_amount = 0;
+                            if(mode == "CHARGE"){
+                                if(vat_calculation == "VAT EXCLUSIVE"){
+                                    vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                    si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
+                                    si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                                    si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                                }
+                                else{
+                                    non_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                    si_unit_price = parseFloat(unit_price);
+                                    si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                    si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                }
+                            }
+                            else if(mode == "BUYING"){
+                                if(vat_calculation == "VAT EXCLUSIVE"){
+                                    credits += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                    si_credits += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                    si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
+                                    si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                                    si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                                }
+                                else{
+                                    credits += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                    si_credits += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                    si_unit_price = parseFloat(unit_price);
+                                    si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                    si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                }
+                            }
+                            data3 = `
+                            <tr>
+                                <td>${data3_counter}</td>
+                                <td class="amount">${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
+                                <td>${unit}</td>
+                                <td>${date_of_certification}</td>
+                                <td style="font-size: 10px !important; padding-top: 5px !important;">${waste_name}</td>
+                                <td class="amount">${formatNumber(si_unit_price)}</td>
+                                <td class="amount">${formatNumber(si_amount)}</td>
+                            </tr>
+                            `
+                            data3_counter += 2;
+                            table_counter += 1;
+                            si_table_data_info.push(data3);
+                        }
+                    }
+                    if(is_transportation == true){
+                        for(let y = 0; y < wcf_transaction.length; y++){
+                            if(cod_no == cod_transaction[y]){
+                                for(let x = 1; x < cod_data_list.content.length; x++){
+                                    if(wcf_transaction[y] == cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")]){
+                                        date_of_certification_transportation = date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]);
+                                    }
+                                }
+                                var data2 = "";
+                                var data4 = "";
+                                data2 = `
+                                <tr>
+                                    <td>${date_of_certification}</td>
+                                    <td></td>
+                                    <td>${service_invoice_no.value}</td>
+                                    <td style="font-size: 10px !important; padding-top: 2px">TRANS. FEE ${transportation_vehicle}</td>
+                                    <td>${1}</td>
+                                    <td>${transportation_unit}</td>
+                                    <td style="text-align: right; padding-right: 5px">${formatNumber(transportation_fee)}</td>
+                                    <td style="text-align: right; padding-right: 5px">${formatNumber(transportation_fee)}</td>
+                                    <td style="font-size: 10px !important">${transportation_calculation}</td>
+                                </tr>
+                                `
+                                table_data_transportation.push(data2);
+                                var si_unit_price = 0;
+                                var si_amount = 0;
+                                if(transportation_calculation == "VAT EXCLUSIVE"){
+                                    vatable += parseFloat(transportation_fee);
+                                    si_unit_price = parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12);
+                                    si_amount = (1 * (parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12)));
+                                    si_total_amount += (1 * (parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12)));
+                                }
+                                else{
+                                    non_vatable += parseFloat(transportation_fee);
+                                    si_unit_price = parseFloat(transportation_fee);
+                                    si_amount = (1 * (parseFloat(transportation_fee)));
+                                    si_total_amount += (1 * (parseFloat(transportation_fee)));
+                                }
+                                data4 = `
+                                <tr>
+                                    <td>${data4_counter}</td>
+                                    <td class="amount">${1}</td>
+                                    <td>${transportation_unit}</td>
+                                    <td>${date_of_certification}</td>
+                                    <td style="font-size: 10px !important; padding-top: 5px !important;">TRANS. FEE ${transportation_vehicle}</td>
+                                    <td class="amount">${formatNumber(si_unit_price)}</td>
+                                    <td class="amount">${formatNumber(si_amount)}</td>
+                                </tr>
+                                `
+                                data4_counter += 2;
+                                table_counter += 1;
+                                si_table_data_transportation.push(data4);
+                                break
+                            }
+                        }
+                    }
+                    for(let x = 0; x < table_data_info.length; x++){
+                        table_data.insertAdjacentHTML("beforeend", table_data_info[x])
+                    }
+                    if(is_transportation == true){
+                        table_data.insertAdjacentHTML("beforeend", table_data_transportation[0])
+                    }
+                    var space = 
+                    `
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    `
+                    table_data.insertAdjacentHTML("beforeend", space)
+                    for(let x = 0; x < si_table_data_info.length; x++){
+                        si_table_data.insertAdjacentHTML("beforeend", si_table_data_info[x])
+                    }
+                }
+                for(let x = 0; x < 20 - table_counter; x++){
+                    var data5 = "";
+                    data5 = `
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    `
+                    table_data.insertAdjacentHTML("beforeend", data5);
+                }
+                si_table_data.insertAdjacentHTML("beforeend", si_table_data_transportation[0])
+                non_vatable_container.innerText = formatNumber(non_vatable);
+                vatable_container.innerText = formatNumber(vatable);
+                total_vat_ex.value = formatNumber(vatable);
+                vat_container.innerText = formatNumber((parseFloat(vatable))*.12);
+                total_amount_payable_container.innerText = formatNumber(non_vatable + vatable + (parseFloat(vatable))*.12);
+                total_vat_in.value = formatNumber(non_vatable + vatable + (parseFloat(vatable))*.12);
+                credits_container.innerText = formatNumber(credits);
+                total_amount_due_container.innerText = formatNumber((non_vatable + vatable + (parseFloat(vatable))*.12) - parseFloat(credits));
+                due_date_container.innerHTML = `${term} days<br>from the date received`;
+                total_amount_container.innerText = formatNumber((non_vatable + vatable) - parseFloat(credits));
+                si_vat_ex_container.innerText = formatNumber((parseFloat(si_total_amount))/1.12);
+                si_vat_container.innerText = formatNumber((parseFloat(si_total_amount)) - ((parseFloat(si_total_amount))/1.12));
+                si_credits_container.innerText = formatNumber(si_credits);
+                si_total_amount_container.innerText = formatNumber(si_total_amount);
+                si_total_sales_container.innerText = formatNumber(si_total_amount);
+                si_terms_container.innerText = `${term} Days Term`;
+                terms.value = term;
+                convertToPDFandDownload_button.style.display = "block";
+                convertToPDF_button.style.display = "block";
+                what_to_print.style.display = "block";
+                // what_to_print2.style.display = "block";
+            }
         }
 
         const form_id = document.getElementById("form_id");
@@ -1903,7 +2237,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </label><br>
                         <div class="bpf_form">
                             <div class="form">
-                                <input type="text" id="search_cod_form_no1" autocomplete="off" name="search_cod_form_no1" class="form-control"><br>
+                                <input type="text" id="search_cod_form_no1" autocomplete="off" name="search_cod_form_no1" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -1913,7 +2247,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </label><br>
                         <div class="bpf_form">
                             <div class="form">
-                                <input type="text" id="service_invoice_no1" autocomplete="off" name="service_invoice_no1" class="form-control"><br>
+                                <input type="text" id="service_invoice_no1" autocomplete="off" name="service_invoice_no1" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -1928,12 +2262,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                 `
                 <div style="display: grid; grid-template-columns: 200px 200px; gap: 20px;">
                     <div>
-                        <label for="search_date1">
-                            Date
+                        <label for="search_cod_form_no1">
+                            Search COD #
                         </label><br>
                         <div class="bpf_form">
                             <div class="form">
-                                <input type="text" id="search_date1" autocomplete="off" name="search_date1" class="form-control">
+                                <input type="text" id="search_cod_form_no1" autocomplete="off" name="search_cod_form_no1" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -2008,7 +2342,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             Client
                         </label>
                         <div class="search_input" id="cod_search_client">
-                            <input type="text" name="client" id="client" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
+                            <input type="text" name="client_input" id="client_input" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
                             <div class="autocom_box">
                             </div>
                             <div class="icon"><i class="fas fa-search"></i></div>
@@ -2086,22 +2420,22 @@ document.addEventListener('DOMContentLoaded', async function() {
                 `
                 <div style="display: grid; grid-template-columns: 200px 200px; gap: 20px;">
                     <div>
-                        <label for="search_date1">
+                        <label for="search_date${cod_counter.value}">
                             Date
                         </label><br>
                         <div class="bpf_form">
                             <div class="form">
-                                <input type="date" id="search_date1" autocomplete="off" name="search_date1" class="form-control">
+                                <input type="date" id="search_date${cod_counter.value}" autocomplete="off" name="search_date${cod_counter.value}" class="form-control">
                             </div>
                         </div>
                     </div>
                     <div>
-                        <label for="service_invoice_no1">
+                        <label for="service_invoice_no${cod_counter.value}">
                             Service Invoice #
                         </label><br>
                         <div class="bpf_form">
                             <div class="form">
-                                <input type="text" id="service_invoice_no1" autocomplete="off" name="service_invoice_no1" class="form-control">
+                                <input type="text" id="service_invoice_no${cod_counter.value}" autocomplete="off" name="service_invoice_no${cod_counter.value}" class="form-control">
                             </div>
                         </div>
                     </div>
