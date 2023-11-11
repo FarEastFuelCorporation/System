@@ -657,6 +657,44 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
 
         // supplier_list_section
+        // supplier_data_list
+        const supplier_id = document.getElementById("supplier_id");
+        const today = new Date();
+        const today_year = today.getFullYear();
+        const today_month = today.getMonth()+1;
+        var code_year_month;
+        var data_counter;
+        
+        // FORM GENERATOR
+        
+        code_year_month = `S${today_year}`;
+        
+        var data_content = 1;
+        var data_info;
+        var data_last_3digit = 0;
+        
+        for(x=1; x<supplier_data_list.content.length; x++){
+            data_info = supplier_data_list.content[x][findTextInArray(supplier_data_list, "SUPPLIER ID")];
+            
+            if(data_info.includes(code_year_month) == true){
+                data_last_3digit = data_info.slice(5)
+            }
+        }
+        
+        data_content = parseInt(data_last_3digit) +1
+        
+        if(data_content.toString().length == 1){
+            data_counter = `00${data_content}`;
+        }
+        else if(data_content.toString().length == 2){
+            data_counter = `0${data_content}`;
+        }
+        else if(data_content.toString().length == 3){
+            data_counter = `${data_content}`;
+        }
+        
+        supplier_id.value = `${code_year_month}${data_counter}`
+
         const supplier_list = document.getElementById("supplier_list")
         var supplier_data_list_value = "";
         var data_value_counter = 1;
