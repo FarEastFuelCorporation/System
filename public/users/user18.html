@@ -56,6 +56,12 @@
                 <li>
                     <a href="#">
                         <i class="fa-solid fa-clipboard-list"></i>
+                        Supplies Transaction
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-warehouse"></i>
                         Warehouse Inventory
                     </a>
                 </li>
@@ -215,6 +221,234 @@
             <section id="disposal_warehouse">
                 <div class="section_container">
                     <h2>DISPOSAL WAREHOUSE</h2><br>
+                    <form id="form_id" action="https://script.google.com/macros/s/AKfycbxDyq1gKHeGUyDin6kZPZi6IxKeeiJkxsqg4pdWRNZA1o1fVjG-ncUWQZAhHo6oIqNd6g/exec" method="post">
+                        <input type="hidden" name="user" id="user">
+                        <input type="hidden" name="hauling_date" id="hauling_date">
+                        <input type="hidden" name="arrival_date" id="arrival_date">
+                        <input type="hidden" name="item_counter" id="item_counter" value="1">
+                        <div class="mtf_form">
+                            <div>
+                                <label for="wtf_form_no">
+                                    <i class="fa-solid fa-list-ol"></i>
+                                    WTF #
+                                </label><br>
+                                <div style="display: flex; gap: 20px;">
+                                    <div class="form">
+                                        <input type="text" id="wtf_form_no" autocomplete="off" name="wtf_form_no" class="form-control" required readonly><br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mtf_form">
+                            <div>
+                                <label for="wcf_form_no">
+                                    <i class="fa-solid fa-list-ol"></i>
+                                    WCF #
+                                </label><br>
+                                <div style="display: flex; gap: 20px;">
+                                    <div class="form">
+                                        <input type="text" id="wcf_form_no" autocomplete="off" name="wcf_form_no" class="form-control"><br>
+                                    </div>
+                                    <div>
+                                        <button id="search_wcf_form_no_button" class="form-control" type="button">
+                                            <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
+                                        </button>
+                                    </div>
+                                    <div>
+                                        <button id="clear_wcf_form_no_button" type="reset" class="form-control">
+                                            <i class="fa-solid fa-rectangle-xmark" style="color: #ffffff;"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="search_wcf_result">
+
+                        </div>
+                        <div id="warehouse_data" style="display: none;">
+                            <div style="display: flex; gap: 20px;">
+                                <div class="form">
+                                    <label for="gate_pass">
+                                        <i class="fa-solid fa-table-list"></i>
+                                        Gate Pass
+                                    </label>
+                                    <input type="text" id="gate_pass" name="gate_pass" class="form-control" autocomplete="off" required style="height: 55px;">
+                                </div>
+                                <div class="wrapper">
+                                    <label for="client">
+                                        <i class="fa-solid fa-user"></i>
+                                        Client
+                                    </label><br>
+                                    <div class="search_input" id="search_client">
+                                        <input type="text" name="client" id="client" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name..." style="width: 800px;">
+                                        <div class="autocom_box">
+                                        </div>
+                                        <div class="icon"><i class="fas fa-search"></i></div>
+                                    </div>
+                                </div>
+                            </div><br>
+                            <div id="item_container">
+                                <div id="items1" style="display: flex; gap: 20px;">
+                                    <div class="form">
+                                        <label for="warehouse_no1">
+                                            <i class="fa-solid fa-table-list"></i>
+                                            Warehouse #
+                                        </label>
+                                        <select name="warehouse_no1" id="warehouse_no1" class="form-control" required>
+                                            <option value="">SELECT</option>
+                                            <option value="WAREHOUSE 1">WAREHOUSE 1</option>
+                                            <option value="WAREHOUSE 2">WAREHOUSE 2</option>
+                                            <option value="WAREHOUSE 3">WAREHOUSE 3</option>
+                                            <option value="WAREHOUSE A">WAREHOUSE A</option>
+                                            <option value="WAREHOUSE B">WAREHOUSE B</option>
+                                            <option value="WAREHOUSE C">WAREHOUSE C</option>
+                                        </select>
+                                    </div>
+                                    <div class="form">
+                                        <label for="area1">
+                                            <i class="fa-solid fa-table-list"></i>
+                                            Area
+                                        </label>
+                                        <select name="area1" id="area1" class="form-control" required>
+                                            <option value="">SELECT</option>
+                                            <option value="A">A</option>
+                                            <option value="B">B</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                            <option value="E">E</option>
+                                            <option value="F">F</option>
+                                            <option value="G">G</option>
+                                            <option value="H">H</option>
+                                            <option value="I">I</option>
+                                            <option value="J">J</option>
+                                            <option value="K">K</option>
+                                            <option value="L">L</option>
+                                            <option value="M">M</option>
+                                            <option value="N">N</option>
+                                            <option value="O">O</option>
+                                            <option value="P">P</option>
+                                            <option value="Q">Q</option>
+                                            <option value="R">R</option>
+                                            <option value="S">S</option>
+                                            <option value="T">T</option>
+                                            <option value="U">U</option>
+                                            <option value="V">V</option>
+                                            <option value="W">W</option>
+                                            <option value="X">X</option>
+                                            <option value="Y">Y</option>
+                                            <option value="Z">Z</option>
+                                            <option value="AA">AA</option>
+                                            <option value="AB">AB</option>
+                                            <option value="AC">AC</option>
+                                            <option value="AD">AD</option>
+                                            <option value="AE">AE</option>
+                                            <option value="AF">AF</option>
+                                        </select>
+                                    </div>
+                                    <div class="form">
+                                        <label for="section1">
+                                            <i class="fa-solid fa-table-list"></i>
+                                            Section
+                                        </label>
+                                        <select name="section1" id="section1" class="form-control" required>
+                                            <option value="">SELECT</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>                                    
+                                        </select>
+                                    </div>
+                                    <div class="form">
+                                        <label for="level1">
+                                            <i class="fa-solid fa-table-list"></i>
+                                            Level
+                                        </label>
+                                        <select name="level1" id="level1" class="form-control" required>
+                                            <option value="">SELECT</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>                                 
+                                        </select>
+                                    </div>
+                                    <div class="form">
+                                        <label for="pallet1">
+                                            <i class="fa-solid fa-table-list"></i>
+                                            Pallet #
+                                        </label>
+                                        <input type="number" name="pallet1" id="pallet1" class="form-control" step="1" autocomplete="off" required style="width: 100px;">
+                                    </div>
+                                    <div class="form">
+                                        <label for="steam1">
+                                            <i class="fa-solid fa-table-list"></i>
+                                            Steam #
+                                        </label>
+                                        <input type="text" name="steam1" id="steam1" class="form-control" autocomplete="off" required style="width: 110px;">
+                                    </div>
+                                    <div class="form">
+                                        <label for="quantity1">
+                                            <i class="fa-solid fa-table-list"></i>
+                                            Qty #
+                                        </label>
+                                        <input type="number" name="quantity1" id="quantity1" class="form-control" step="1" autocomplete="off" required style="width: 100px;">
+                                    </div>
+                                    <div class="form">
+                                        <label for="unit1">
+                                            <i class="fa-solid fa-table-list"></i>
+                                            Unit
+                                        </label>
+                                        <select name="unit1" id="unit1" class="form-control" required>
+                                            <option value="">SELECT</option>
+                                            <option value="PC">PC</option>
+                                            <option value="CASE">CASE</option>
+                                            <option value="JUMBO">JUMBO</option>                             
+                                            <option value="POLYSACK">POLYSACK</option>                             
+                                        </select>
+                                    </div>
+                                    <div class="form">
+                                        <label for="description1">
+                                            <i class="fa-solid fa-table-list"></i>
+                                            Description #
+                                        </label>
+                                        <input type="text" name="description1" id="description1" class="form-control" autocomplete="off" required style="width: 250px;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="add_item">
+                                <div class="item_buttons">
+                                    <button type="button" id="remove_item_button" class="form-control">
+                                        <i class="fa-solid fa-minus"></i>
+                                    </button>
+                                    <button type="button" id="add_item_button" class="form-control">
+                                        <i class="fa-solid fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="buttons" id="buttons">
+                                <button type="submit" id="submit_btn" class="form-control" >
+                                    Submit
+                                </button>
+                                <button type="reset" id="reset" class="form-control" >
+                                    Clear
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+            <!-- supplies_transaction -->
+            <section id="supplies_transaction">
+                <div class="section_container">
+                    <h2>SUPPLIES TRANSACTIONS</h2><br>
                     <form id="form_id" action="https://script.google.com/macros/s/AKfycbxDyq1gKHeGUyDin6kZPZi6IxKeeiJkxsqg4pdWRNZA1o1fVjG-ncUWQZAhHo6oIqNd6g/exec" method="post">
                         <input type="hidden" name="user" id="user">
                         <input type="hidden" name="hauling_date" id="hauling_date">

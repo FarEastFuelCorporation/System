@@ -1,23 +1,27 @@
 document.addEventListener('DOMContentLoaded', async function() {
     try {
         const username_response_promise = fetch('https://script.google.com/macros/s/AKfycbwmA97K4sdfq6dhzSsp14JU9KgQrFgSARNZbvSfiU7vuH8oEipt6TmcFo_o-jCI0kiQ/exec');
+        const supplier_list_response_promise = fetch('https://script.google.com/macros/s/AKfycbx4b5_3pU4WmzId9E8dDHWQy4tZO2AiNUvNqDhFGuccx89OyEAT6KrGCEDvGZM9SF90/exec');
         const prf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxZctLub-6PuQGykx298syeH7Qm__S37uqQrVFYsHVtv-Qk8M2oSkRIPIMVT_1WexqRZA/exec');
         const pof_response_promise = fetch('https://script.google.com/macros/s/AKfycbzqVTd17rQV4G2nAWPDBoc2RNftAq92WL5DRsayPw98taWmzUIvhX9ppc27euLXjUe7PA/exec');
         const irf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzTmhNOz5cXeKitSXAriUJ_FEahAQugYEKIRwDuFt9tjhj2AtPKEf2H4yTMmZ1igpUxlQ/exec');
 
         const [
             username_response,
+            supplier_list_response,
             prf_response,
             pof_response,
             irf_response,
         ] = await Promise.all([
             username_response_promise,
+            supplier_list_response_promise,
             prf_response_promise,
             pof_response_promise,
             irf_response_promise,
         ]);
 
         const username_data_list  = await username_response.json();
+        const supplier_data_list  = await supplier_list_response.json();
         const prf_data_list  = await prf_response.json();
         const pof_data_list  = await pof_response.json();
         const irf_data_list  = await irf_response.json();
@@ -150,7 +154,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 pieChart.removeChild(pieChart.firstChild);
             }
             var chart = new ApexCharts(pieChart, options);
-            chart.render();  
+            chart.render();
 
             // pending_list
             var pending_data_value = "";
@@ -651,6 +655,73 @@ document.addEventListener('DOMContentLoaded', async function() {
                 })
             })
         }
+
+        // supplier_list_section
+        const supplier_list = document.getElementById("supplier_list")
+        var supplier_data_list_value = "";
+        var data_value_counter = 1;
+        for(let x = 1; x < supplier_data_list.content.length; x++){
+            supplier_data_list_value += `
+            <tr>
+                <td>${data_value_counter}</td>
+                <td>${supplier_data_list.content[x][findTextInArray(supplier_data_list, "SUPPLIER ID")]}</td>
+                <td>${supplier_data_list.content[x][findTextInArray(supplier_data_list, "SUPPLIER")]}</td>
+                <td>${supplier_data_list.content[x][findTextInArray(supplier_data_list, "CONTACT PERSON")]}</td>
+                <td>${supplier_data_list.content[x][findTextInArray(supplier_data_list, "CONTACT NUMBER")]}</td>
+                <td>${supplier_data_list.content[x][findTextInArray(supplier_data_list, "TIN #")]}</td>
+                <td>${supplier_data_list.content[x][findTextInArray(supplier_data_list, "ADDRESS")]}</td>
+            </tr>
+            `
+            data_value_counter += 1;
+        }
+        supplier_list.innerHTML = supplier_data_list_value;
+        
+        const supplier_list_section = document.querySelector("#supplier_list_section");
+        const new_supplier_form_tab_supplier_list_section = supplier_list_section.querySelector("#new_supplier_form_tab");
+        const new_supplier_button_supplier_list_section = supplier_list_section.querySelector("#new_supplier_button");
+        const update_record_button_supplier_list_section = supplier_list_section.querySelector("#update_record_button");
+        const suppler_form_tab_supplier_list_section = supplier_list_section.querySelector("#update_supplier_form_tab");
+        const search_supplier_id_button_update_supplier_form = suppler_form_tab_supplier_list_section.querySelector("#search_supplier_id_button");
+        const search_supplier_id_update_supplier_form = suppler_form_tab_supplier_list_section.querySelector("#supplier_id");
+        const supplier_name_update_supplier_form = suppler_form_tab_supplier_list_section.querySelector("#supplier_name");
+        const contact_person_update_supplier_form = suppler_form_tab_supplier_list_section.querySelector("#contact_person");
+        const contact_number_update_supplier_form = suppler_form_tab_supplier_list_section.querySelector("#contact_number");
+        const tin_no_update_supplier_form = suppler_form_tab_supplier_list_section.querySelector("#tin_no");
+        const address_update_supplier_form = suppler_form_tab_supplier_list_section.querySelector("#address");
+        const timestamp_update_supplier_form = suppler_form_tab_supplier_list_section.querySelector("#timestamp");
+        const update_supplier_form_tab_container = suppler_form_tab_supplier_list_section.querySelector("#update_supplier_form_tab_container");
+
+        new_supplier_button_supplier_list_section.addEventListener("click", () => {
+            if(new_supplier_form_tab_supplier_list_section.style.display == "block"){
+                new_supplier_form_tab_supplier_list_section.style.display = "none";
+            }
+            else{
+                new_supplier_form_tab_supplier_list_section.style.display = "block";
+                suppler_form_tab_supplier_list_section.style.display = "none";
+            }
+        })
+        update_record_button_supplier_list_section.addEventListener("click", () => {
+            if(suppler_form_tab_supplier_list_section.style.display == "block"){
+                suppler_form_tab_supplier_list_section.style.display = "none";
+            }
+            else{
+                suppler_form_tab_supplier_list_section.style.display = "block";
+                new_supplier_form_tab_supplier_list_section.style.display = "none";
+            }
+        })
+        search_supplier_id_button_update_supplier_form.addEventListener("click", () => {
+            for(let x = 1; x < supplier_data_list.content.length; x++){
+                if(search_supplier_id_update_supplier_form.value == supplier_data_list.content[x][findTextInArray(supplier_data_list, "SUPPLIER ID")]){
+                    supplier_name_update_supplier_form.value = supplier_data_list.content[x][findTextInArray(supplier_data_list, "SUPPLIER")];
+                    contact_person_update_supplier_form.value = supplier_data_list.content[x][findTextInArray(supplier_data_list, "CONTACT PERSON")];
+                    contact_number_update_supplier_form.value = supplier_data_list.content[x][findTextInArray(supplier_data_list, "CONTACT NUMBER")];
+                    tin_no_update_supplier_form.value = supplier_data_list.content[x][findTextInArray(supplier_data_list, "TIN #")];
+                    address_update_supplier_form.value = supplier_data_list.content[x][findTextInArray(supplier_data_list, "ADDRESS")];
+                    timestamp_update_supplier_form.value = supplier_data_list.content[x][findTextInArray(supplier_data_list, "CREATED AT")];
+                    update_supplier_form_tab_container.style.display = "block"
+                }
+            }
+        })
 
         // // incident_history_list
         // var incident_history_data_value = "";
