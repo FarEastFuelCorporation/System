@@ -448,7 +448,7 @@
             <!-- supplies_transaction -->
             <section id="supplies_transaction">
                 <div class="section_container">
-                    <h2>SUPPLIES TRANSACTIONS</h2><br>
+                    <h2>SUPPLIES TRANSACTION</h2><br>
                     <form id="form_id" action="https://script.google.com/macros/s/AKfycbxDyq1gKHeGUyDin6kZPZi6IxKeeiJkxsqg4pdWRNZA1o1fVjG-ncUWQZAhHo6oIqNd6g/exec" method="post">
                         <input type="hidden" name="user" id="user">
                         <input type="hidden" name="hauling_date" id="hauling_date">
@@ -456,44 +456,18 @@
                         <input type="hidden" name="item_counter" id="item_counter" value="1">
                         <div class="mtf_form">
                             <div>
-                                <label for="wtf_form_no">
+                                <label for="stf_form_no">
                                     <i class="fa-solid fa-list-ol"></i>
-                                    WTF #
+                                    STF #
                                 </label><br>
                                 <div style="display: flex; gap: 20px;">
                                     <div class="form">
-                                        <input type="text" id="wtf_form_no" autocomplete="off" name="wtf_form_no" class="form-control" required readonly><br>
+                                        <input type="text" id="stf_form_no" autocomplete="off" name="stf_form_no" class="form-control" required readonly><br>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="mtf_form">
-                            <div>
-                                <label for="wcf_form_no">
-                                    <i class="fa-solid fa-list-ol"></i>
-                                    WCF #
-                                </label><br>
-                                <div style="display: flex; gap: 20px;">
-                                    <div class="form">
-                                        <input type="text" id="wcf_form_no" autocomplete="off" name="wcf_form_no" class="form-control"><br>
-                                    </div>
-                                    <div>
-                                        <button id="search_wcf_form_no_button" class="form-control" type="button">
-                                            <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
-                                        </button>
-                                    </div>
-                                    <div>
-                                        <button id="clear_wcf_form_no_button" type="reset" class="form-control">
-                                            <i class="fa-solid fa-rectangle-xmark" style="color: #ffffff;"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="search_wcf_result">
-
-                        </div>
-                        <div id="warehouse_data" style="display: none;">
+                        <div id="warehouse_data">
                             <div style="display: flex; gap: 20px;">
                                 <div class="form">
                                     <label for="gate_pass">
@@ -518,24 +492,20 @@
                             <div id="item_container">
                                 <div id="items1" style="display: flex; gap: 20px;">
                                     <div class="form">
-                                        <label for="warehouse_no1">
+                                        <label for="storage_type">
                                             <i class="fa-solid fa-table-list"></i>
-                                            Warehouse #
+                                            Storage Type
                                         </label>
-                                        <select name="warehouse_no1" id="warehouse_no1" class="form-control" required>
+                                        <select name="storage_type" id="storage_type" class="form-control" required>
                                             <option value="">SELECT</option>
-                                            <option value="WAREHOUSE 1">WAREHOUSE 1</option>
-                                            <option value="WAREHOUSE 2">WAREHOUSE 2</option>
-                                            <option value="WAREHOUSE 3">WAREHOUSE 3</option>
-                                            <option value="WAREHOUSE A">WAREHOUSE A</option>
-                                            <option value="WAREHOUSE B">WAREHOUSE B</option>
-                                            <option value="WAREHOUSE C">WAREHOUSE C</option>
+                                            <option value="RACK">RACK</option>
+                                            <option value="PALLET">PALLET</option>
                                         </select>
                                     </div>
                                     <div class="form">
                                         <label for="area1">
                                             <i class="fa-solid fa-table-list"></i>
-                                            Area
+                                            Rack
                                         </label>
                                         <select name="area1" id="area1" class="form-control" required>
                                             <option value="">SELECT</option>
@@ -556,42 +526,6 @@
                                             <option value="O">O</option>
                                             <option value="P">P</option>
                                             <option value="Q">Q</option>
-                                            <option value="R">R</option>
-                                            <option value="S">S</option>
-                                            <option value="T">T</option>
-                                            <option value="U">U</option>
-                                            <option value="V">V</option>
-                                            <option value="W">W</option>
-                                            <option value="X">X</option>
-                                            <option value="Y">Y</option>
-                                            <option value="Z">Z</option>
-                                            <option value="AA">AA</option>
-                                            <option value="AB">AB</option>
-                                            <option value="AC">AC</option>
-                                            <option value="AD">AD</option>
-                                            <option value="AE">AE</option>
-                                            <option value="AF">AF</option>
-                                        </select>
-                                    </div>
-                                    <div class="form">
-                                        <label for="section1">
-                                            <i class="fa-solid fa-table-list"></i>
-                                            Section
-                                        </label>
-                                        <select name="section1" id="section1" class="form-control" required>
-                                            <option value="">SELECT</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
-                                            <option value="7">7</option>
-                                            <option value="8">8</option>
-                                            <option value="9">9</option>
-                                            <option value="10">10</option>
-                                            <option value="11">11</option>
-                                            <option value="12">12</option>                                    
                                         </select>
                                     </div>
                                     <div class="form">
@@ -605,22 +539,11 @@
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="4">4</option>
-                                            <option value="5">5</option>                                 
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
                                         </select>
-                                    </div>
-                                    <div class="form">
-                                        <label for="pallet1">
-                                            <i class="fa-solid fa-table-list"></i>
-                                            Pallet #
-                                        </label>
-                                        <input type="number" name="pallet1" id="pallet1" class="form-control" step="1" autocomplete="off" required style="width: 100px;">
-                                    </div>
-                                    <div class="form">
-                                        <label for="steam1">
-                                            <i class="fa-solid fa-table-list"></i>
-                                            Steam #
-                                        </label>
-                                        <input type="text" name="steam1" id="steam1" class="form-control" autocomplete="off" required style="width: 110px;">
                                     </div>
                                     <div class="form">
                                         <label for="quantity1">

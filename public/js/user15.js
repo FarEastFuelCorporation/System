@@ -1356,7 +1356,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <label for="fund_allocation_other_details${data_counter_ap_accounting.value}">
                                 Fund Allocation Input
                             </label><br>
-                            <input type="text" id="fund_allocation_other_details${data_counter_ap_accounting.value}" name="fund_allocation_other_details${data_counter_ap_accounting.value}" class="form-control"  autocomplete="off" placeholder="Input Fund Allocation"><br>
+                            <input type="text" id="fund_allocation_other_details${data_counter_ap_accounting.value}" name="fund_allocation_other_details${data_counter_ap_accounting.value}" class="form-control"  autocomplete="off" placeholder="Input Fund Allocation">
                         </div>
                     </div>
                     <div style="width: 20%;">
@@ -1364,7 +1364,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <label for="fund_amount${data_counter_ap_accounting.value}">
                                 Fund Amount
                             </label><br>
-                            <input type="number" id="fund_amount${data_counter_ap_accounting.value}" name="fund_amount${data_counter_ap_accounting.value}" class="form-control fund_amount"  autocomplete="off" placeholder="Input Fund Amount" required value="0"><br>    
+                            <input type="number" id="fund_amount${data_counter_ap_accounting.value}" name="fund_amount${data_counter_ap_accounting.value}" class="form-control fund_amount"  autocomplete="off" placeholder="Input Fund Amount" required value="0"
+                        </div>
+                        <div>
+                            <label for="transaction_date${data_counter_ap_accounting.value}">
+                                Transaction Date
+                            </label><br>
+                            <input type="date" id="transaction_date${data_counter_ap_accounting.value}" name="transaction_date${data_counter_ap_accounting.value}" class="form-control fund_amount"  autocomplete="off" placeholder="Input Fund Amount" required value="0"> 
                         </div>
                     </div>
                 </div>
@@ -1754,19 +1760,25 @@ document.addEventListener('DOMContentLoaded', async function() {
         function generateData(fund_source = "ALL", fund_allocation = "ALL"){
             var data = "";
             var data_value_counter = 0;
+            var transaction_date
             for(let x = ftf_data_list.content.length -1; x >= 1 ; x--){
+                if(ftf_data_list.content[x][findTextInArray(ftf_data_list, "DATE")] == ""){
+                    transaction_date = ftf_data_list.content[x][findTextInArray(ftf_data_list, "CREATED AT")]
+                }else{
+                    transaction_date = ftf_data_list.content[x][findTextInArray(ftf_data_list, "DATE")]
+                }
                 if(fund_source == "ALL" && fund_allocation == "ALL"){
                     data_value_counter += 1;
                     data += `
                     <tr>
                         <td>${data_value_counter}</td>
-                        <td>${ftf_data_list.content[x][0]}</td>
-                        <td>${date_decoder(ftf_data_list.content[x][6])} / ${time_decoder2(ftf_data_list.content[x][6])}</td>
-                        <td>${ftf_data_list.content[x][1]}</td>
-                        <td>${ftf_data_list.content[x][2]}</td>
-                        <td>${formatNumber(ftf_data_list.content[x][3])}</td>
-                        <td>${ftf_data_list.content[x][5]}</td>
-                        <td>${ftf_data_list.content[x][4]}</td>
+                        <td>${ftf_data_list.content[x][findTextInArray(ftf_data_list, "FTF # / FORM #")]}</td>
+                        <td>${date_decoder(transaction_date)}</td>
+                        <td>${ftf_data_list.content[x][findTextInArray(ftf_data_list, "FUND SOURCE")]}</td>
+                        <td>${ftf_data_list.content[x][findTextInArray(ftf_data_list, "FUND ALLOCATION")]}</td>
+                        <td>${formatNumber(ftf_data_list.content[x][findTextInArray(ftf_data_list, "AMOUNT")])}</td>
+                        <td>${ftf_data_list.content[x][findTextInArray(ftf_data_list, "SUBMITTED BY")]}</td>
+                        <td>${ftf_data_list.content[x][findTextInArray(ftf_data_list, "REMARKS")]}</td>
                     </tr>
                     `
                 }
@@ -1776,13 +1788,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                         data += `
                         <tr>
                             <td>${data_value_counter}</td>
-                            <td>${ftf_data_list.content[x][0]}</td>
-                            <td>${date_decoder(ftf_data_list.content[x][6])} / ${time_decoder2(ftf_data_list.content[x][6])}</td>
-                            <td>${ftf_data_list.content[x][1]}</td>
-                            <td>${ftf_data_list.content[x][2]}</td>
-                            <td>${formatNumber(ftf_data_list.content[x][3])}</td>
-                            <td>${ftf_data_list.content[x][5]}</td>
-                            <td>${ftf_data_list.content[x][4]}</td>
+                            <td>${ftf_data_list.content[x][findTextInArray(ftf_data_list, "FTF # / FORM #")]}</td>
+                            <td>${date_decoder(transaction_date)}</td>
+                            <td>${ftf_data_list.content[x][findTextInArray(ftf_data_list, "FUND SOURCE")]}</td>
+                            <td>${ftf_data_list.content[x][findTextInArray(ftf_data_list, "FUND ALLOCATION")]}</td>
+                            <td>${formatNumber(ftf_data_list.content[x][findTextInArray(ftf_data_list, "AMOUNT")])}</td>
+                            <td>${ftf_data_list.content[x][findTextInArray(ftf_data_list, "SUBMITTED BY")]}</td>
+                            <td>${ftf_data_list.content[x][findTextInArray(ftf_data_list, "REMARKS")]}</td>
                         </tr>
                         `
                     }
@@ -1793,13 +1805,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                         data += `
                         <tr>
                             <td>${data_value_counter}</td>
-                            <td>${ftf_data_list.content[x][0]}</td>
-                            <td>${date_decoder(ftf_data_list.content[x][6])} / ${time_decoder2(ftf_data_list.content[x][6])}</td>
-                            <td>${ftf_data_list.content[x][1]}</td>
-                            <td>${ftf_data_list.content[x][2]}</td>
-                            <td>${formatNumber(ftf_data_list.content[x][3])}</td>
-                            <td>${ftf_data_list.content[x][5]}</td>
-                            <td>${ftf_data_list.content[x][4]}</td>
+                            <td>${ftf_data_list.content[x][findTextInArray(ftf_data_list, "FTF # / FORM #")]}</td>
+                            <td>${date_decoder(transaction_date)}</td>
+                            <td>${ftf_data_list.content[x][findTextInArray(ftf_data_list, "FUND SOURCE")]}</td>
+                            <td>${ftf_data_list.content[x][findTextInArray(ftf_data_list, "FUND ALLOCATION")]}</td>
+                            <td>${formatNumber(ftf_data_list.content[x][findTextInArray(ftf_data_list, "AMOUNT")])}</td>
+                            <td>${ftf_data_list.content[x][findTextInArray(ftf_data_list, "SUBMITTED BY")]}</td>
+                            <td>${ftf_data_list.content[x][findTextInArray(ftf_data_list, "REMARKS")]}</td>
                         </tr>
                         `
                     }

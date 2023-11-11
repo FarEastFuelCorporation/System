@@ -1162,7 +1162,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 // fund_source
                 if(!type_of_funds.includes(ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")]) &&
                 month_filter.value == formatMonth(ftf_data_list.content[i][findTextInArray(ftf_data_list, "CREATED AT")])){
-                    console.log(formatMonth(ftf_data_list.content[i][findTextInArray(ftf_data_list, "CREATED AT")]))
                     if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "SOURCE OF FUND") {
                         source_of_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
                     }
@@ -1503,7 +1502,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     if(input_value.value == frf_data_list.content[x][0]){
                         frf_no.value = frf_data_list.content[x][0]
                         fund_allocation.value = frf_data_list.content[x][1]
-                        console.log("🚀 ~ file: user10.js:283 ~ amount_tab_button.addEventListener ~ fund_allocation.value:", fund_allocation.value)
                         fund_amount.value = frf_data_list.content[x][2]
                         purpose.value = frf_data_list.content[x][3]
                         submitted_by.value = frf_data_list.content[x][5]
