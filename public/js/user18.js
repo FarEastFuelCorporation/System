@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const prf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxZctLub-6PuQGykx298syeH7Qm__S37uqQrVFYsHVtv-Qk8M2oSkRIPIMVT_1WexqRZA/exec');
         const pof_response_promise = fetch('https://script.google.com/macros/s/AKfycby9i2KfOZ_uF7-JUPX8qpXg7Jewmw6oU3EfUTpXiwnRRB91_qIW3xAVNy5SZBN1YhVzzg/exec');
         const irf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzTmhNOz5cXeKitSXAriUJ_FEahAQugYEKIRwDuFt9tjhj2AtPKEf2H4yTMmZ1igpUxlQ/exec');
+        const iid_response_promise = fetch('https://script.google.com/macros/s/AKfycbyaV_cnq0bfOWPgDTfyrit-nCAMwyI5Vw1xlx47RNSoSEBd8PyMw3-0UeNlojqBKgk/exec');
 
         const [
             username_response,
@@ -30,6 +31,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             prf_response,
             pof_response,
             irf_response,
+            iid_response,
         ] = await Promise.all([
             username_response_promise,
             client_list_response_promise,
@@ -45,6 +47,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             prf_response_promise,
             pof_response_promise,
             irf_response_promise,
+            iid_response_promise,
         ]);
 
         const username_data_list  = await username_response.json();
@@ -61,6 +64,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const prf_data_list  = await prf_response.json();
         const pof_data_list  = await pof_response.json();
         const irf_data_list  = await irf_response.json();
+        const iid_data_list  = await iid_response.json();
 
         // Code that depends on the fetched data
         // username_data_list3
@@ -322,23 +326,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
         data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
         wtf_form_no.value = `WTF${year}${month}${data_counter}`;
-
-        // FORM GENERATOR
-        // stf_data_list
-        const stf_form_no = document.getElementById("stf_form_no");
-        var last_row = stf_data_list.content.length -1;
-        var data_info = stf_data_list.content[last_row][findTextInArray(stf_data_list, "STF #")];
-        var data_counter;
-        if(last_row == 0){
-            data_counter = 0;
-        }
-        else{
-            data_counter = data_info.substring(9,12);
-        }
-        var year = new Date().getFullYear();
-        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
-        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-        stf_form_no.value = `STF${year}${month}${data_counter}`;
 
         const disposal_warehouse = document.querySelector("#disposal_warehouse");
         const wcf_form_no_warehouse = disposal_warehouse.querySelector("#wcf_form_no");
@@ -629,6 +616,226 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             warehouse_inventory_list.insertAdjacentHTML("beforeend", inventory_data)
         }
+
+        // supplies_transaction
+        // FORM GENERATOR
+        // stf_data_list
+        // const stf_form_no = document.getElementById("stf_form_no");
+        // var last_row = stf_data_list.content.length -1;
+        // var data_info = stf_data_list.content[last_row][findTextInArray(stf_data_list, "STF #")];
+        // var data_counter;
+        // if(last_row == 0){
+        //     data_counter = 0;
+        // }
+        // else{
+        //     data_counter = data_info.substring(9,12);
+        // }
+        // var year = new Date().getFullYear();
+        // var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        // data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        // stf_form_no.value = `STF${year}${month}${data_counter}`;
+
+        // const supplies_transaction = document.querySelector("#supplies_transaction");
+        // const withdrawal_form_button = supplies_transaction.querySelector("#withdrawal_form_button");
+        // const form_tab_supplies_transaction = supplies_transaction.querySelector("#form_tab");
+
+        // withdrawal_form_button.addEventListener("click", () => {
+        //     if(form_tab_supplies_transaction.style.display == "none"){
+        //         form_tab_supplies_transaction.style.display = "block"
+        //     } else{
+        //         form_tab_supplies_transaction.style.display = "none"
+        //     }
+        // })
+
+        // supplies_inventory
+        // FORM GENERATOR
+        // iid_data_list
+        const iid_form_no = document.getElementById("iid_form_no");
+        var last_row = iid_data_list.content.length -1;
+        var data_info = iid_data_list.content[last_row][findTextInArray(iid_data_list, "IID #")];
+        var data_counter;
+        if(last_row == 0){
+            data_counter = 0;
+        }
+        else{
+            data_counter = data_info.slice(-4);
+        }
+        data_counter = (parseInt(data_counter) +1).toString().padStart(4, "0");
+        iid_form_no.value = `IID${data_counter}`;
+
+        const supplies_inventory = document.querySelector("#supplies_inventory");
+        const new_item_form_button = supplies_inventory.querySelector("#new_item_form_button");
+        const form_tab_supplies_inventory = supplies_inventory.querySelector("#form_tab");
+        const storage_type = supplies_inventory.querySelector("#storage_type");
+        const item_detail = supplies_inventory.querySelector("#item_detail");
+        const supplies_inventory_list = supplies_inventory.querySelector("#supplies_inventory_list");
+
+        new_item_form_button.addEventListener("click", () => {
+            if(form_tab_supplies_inventory.style.display == "none"){
+                form_tab_supplies_inventory.style.display = "block"
+            } else{
+                form_tab_supplies_inventory.style.display = "none"
+            }
+        })
+
+        storage_type.addEventListener("change", () => {
+            if(storage_type.value == "RACK"){
+                var data =
+                `
+                <div class="form">
+                    <label for="area1">
+                        <i class="fa-solid fa-table-list"></i>
+                        Rack
+                    </label>
+                    <select name="area1" id="area1" class="form-control" required>
+                        <option value="">SELECT</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                        <option value="F">F</option>
+                        <option value="G">G</option>
+                        <option value="H">H</option>
+                        <option value="I">I</option>
+                        <option value="J">J</option>
+                        <option value="K">K</option>
+                        <option value="L">L</option>
+                        <option value="M">M</option>
+                        <option value="N">N</option>
+                        <option value="O">O</option>
+                        <option value="P">P</option>
+                        <option value="Q">Q</option>
+                    </select>
+                </div>
+                <div class="form">
+                    <label for="level1">
+                        <i class="fa-solid fa-table-list"></i>
+                        Level
+                    </label>
+                    <select name="level1" id="level1" class="form-control" required>
+                        <option value="">SELECT</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                    </select>
+                </div>
+                <div class="form">
+                    <label for="item1">
+                        <i class="fa-solid fa-table-list"></i>
+                        Item
+                    </label>
+                    <input type="text" name="item1" id="item1" class="form-control" autocomplete="off" required style="width: 250px;">
+                </div>
+                <div class="form">
+                    <label for="description1">
+                        <i class="fa-solid fa-table-list"></i>
+                        Description
+                    </label>
+                    <input type="text" name="description1" id="description1" class="form-control" autocomplete="off" required style="width: 250px;">
+                </div>
+                <div class="form">
+                    <label for="unit1">
+                        <i class="fa-solid fa-table-list"></i>
+                        Unit
+                    </label>
+                    <input type="text" id="unit1" name="unit1" autocomplete="off" class="form-control" required placeholder="ex. kg/pc/box/set">
+                </div>
+                <div class="form">
+                    <label for="quantity1">
+                        <i class="fa-solid fa-table-list"></i>
+                        Quantity
+                    </label>
+                    <input type="number" id="quantity1" name="quantity1" autocomplete="off" class="form-control" required style="width: 100px">
+                </div>
+                <div class="form">
+                    <label for="amount1">
+                        <i class="fa-solid fa-table-list"></i>
+                        Price/Unit
+                    </label>
+                    <input type="number" id="amount1" name="amount1" autocomplete="off" class="form-control" required placeholder="Amount" style="width: 150px">
+                </div>
+                `
+                item_detail.innerHTML = data
+            }
+            else if(storage_type.value == "PALLET"){
+                var data =
+                `
+                <div class="form">
+                    <label for="area1">
+                        <i class="fa-solid fa-table-list"></i>
+                        Pallet #
+                    </label>
+                    <input type="number" name="area1" id="area1" class="form-control" step="1" autocomplete="off" required style="width: 100px;">
+                </div>
+                <input type="hidden" name="level1" id="level1" class="form-control" step="1" autocomplete="off" required style="width: 100px;" value="1">
+                <div class="form">
+                    <label for="unit1">
+                        <i class="fa-solid fa-table-list"></i>
+                        Unit
+                    </label>
+                    <input type="text" id="unit1" name="unit1" autocomplete="off" class="form-control" required placeholder="ex. kg/pc/box/set">
+                </div>
+                <div class="form">
+                    <label for="item1">
+                        <i class="fa-solid fa-table-list"></i>
+                        Item
+                    </label>
+                    <input type="text" name="item1" id="item1" class="form-control" autocomplete="off" required style="width: 250px;">
+                </div>
+                <div class="form">
+                    <label for="description1">
+                        <i class="fa-solid fa-table-list"></i>
+                        Description
+                    </label>
+                    <input type="text" name="description1" id="description1" class="form-control" autocomplete="off" required style="width: 250px;">
+                </div>
+                `
+                item_detail.innerHTML = data
+            }
+            else{
+                item_detail.innerHTML = ""
+            }
+        })
+
+        for(let x = 1; x < iid_data_list.content.length; x++){
+            var quantity = 0
+            var iid_no = iid_data_list.content[x][findTextInArray(iid_data_list, "IID #")]
+            for(let y = 1; y < stf_data_list.content.length; y++){
+                if(iid_no == stf_data_list.content[y][findTextInArray(stf_data_list, "IID #")]){
+                    if(stf_data_list.content[y][findTextInArray(stf_data_list, "TRANSACTION")] == "RE-STOCK"){
+                        quantity += stf_data_list.content[y][findTextInArray(stf_data_list, "QUANTITY")]
+                    }
+                    else if(stf_data_list.content[y][findTextInArray(stf_data_list, "TRANSACTION")] == "WITHDRAW"){
+                        quantity -= stf_data_list.content[y][findTextInArray(stf_data_list, "QUANTITY")]
+                    }
+                }
+            }
+            var table_data_counter = 1;
+            var table_data_supplies_inventory =
+            `
+            <tr>
+                <td>${table_data_counter}</td>
+                <td>${iid_data_list.content[x][findTextInArray(iid_data_list, "IID #")]}</td>
+                <td>${iid_data_list.content[x][findTextInArray(iid_data_list, "STORAGE TYPE")]}</td>
+                <td>${iid_data_list.content[x][findTextInArray(iid_data_list, "RACK/ PALLET")]}</td>
+                <td>${iid_data_list.content[x][findTextInArray(iid_data_list, "LEVEL")]}</td>
+                <td>${iid_data_list.content[x][findTextInArray(iid_data_list, "ITEM")]}</td>
+                <td>${iid_data_list.content[x][findTextInArray(iid_data_list, "UNIT")]}</td>
+                <td>${quantity}</td>
+                <td>${iid_data_list.content[x][findTextInArray(iid_data_list, "DESCRIPTION")]}</td>
+                <td>${iid_data_list.content[x][findTextInArray(iid_data_list, "SUBMITTED BY")]}</td>
+            </tr>
+            `
+            table_data_counter += 1;
+            supplies_inventory_list.insertAdjacentHTML("beforeend", table_data_supplies_inventory)
+        }
+
 
         // multi section
         // purchase_request_form
