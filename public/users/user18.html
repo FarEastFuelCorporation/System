@@ -59,12 +59,12 @@
                         Warehouse Inventory
                     </a>
                 </li>
-                <!-- <li>
+                <li>
                     <a href="#">
                         <i class="fa-solid fa-clipboard-list"></i>
                         Supplies Transaction
                     </a>
-                </li> -->
+                </li>
                 <li>
                     <a href="#">
                         <i class="fa-solid fa-warehouse"></i>
@@ -215,6 +215,21 @@
                                 <th>BATCH WEIGHT</th>
                             </thead>
                             <tbody id="disposal_warehouse_pending_list">
+
+                            </tbody>
+                        </table>
+                        <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
+                </div><br>
+                <h2>WITHDRAWAL PENDING TRANSACTIONS</h2>
+                <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
+                    <div class="list">
+                        <table>
+                            <thead style="position: sticky; top: 0; background-color: black;">
+                                <th>#</th>
+                                <th>WSF #</th>
+                            </thead>
+                            <tbody id="withdrawal_pending_list">
 
                             </tbody>
                         </table>
@@ -497,7 +512,7 @@
                 </div>
             </section>
             <!-- supplies_transaction -->
-            <!-- <section id="supplies_transaction">
+            <section id="supplies_transaction">
                 <h2>SUPPLIES TRANSACTION</h2><br>
                 <div>
                     <label class="d-flex gap-3">
@@ -522,38 +537,25 @@
                             <div>
                                 <label for="search_sf_wcf_form_no">
                                     <i class="fa-solid fa-list-ol"></i>
-                                    Search WCF #
+                                    Search WSF #
                                 </label>
                                 <div class="sf_form" style="display: flex; gap: 20px;">
                                     <div class="form">
-                                        <input type="text" id="search_sf_wcf_form_no" autocomplete="off" name="search_sf_wcf_form_no" class="form-control">
+                                        <input type="text" id="search_wsf_form_no" autocomplete="off" name="search_sf_wcf_form_no" class="form-control">
                                     </div>
-                                    <button id="search_sf_wcf_form_no_button" class="form-control" type="button" style="height: 60px; width: 60px;">
+                                    <button id="search_wsf_form_no_button" class="form-control" type="button" style="height: 60px; width: 60px;">
                                         <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
                                     </button>
-                                    <button id="clear_sf_wcf_form_no_button" type="button" class="form-control" style="height: 60px; width: 60px;">
+                                    <button id="clear_wsf_form_no_button" type="button" class="form-control" style="height: 60px; width: 60px;">
                                         <i class="fa-solid fa-rectangle-xmark" style="color: #ffffff;"></i>
                                     </button>
                                 </div>
                             </div>
                             <div id="item_container">
-                                <div id="items1" style="display: flex; gap: 20px;">
-                                    <div class="form">
-                                        <label for="storage_type">
-                                            <i class="fa-solid fa-table-list"></i>
-                                            Storage Type
-                                        </label>
-                                        <select name="storage_type" id="storage_type" class="form-control" required>
-                                            <option value="">SELECT</option>
-                                            <option value="RACK">RACK</option>
-                                            <option value="PALLET">PALLET</option>
-                                        </select>
-                                    </div>
-                                    <div id="item_detail" style="display: flex; gap: 20px;"></div>
-                                </div>
+
                             </div>
                         </div>
-                        <div class="add_item pt-3">
+                        <div class="add_item pt-3" style="display: none;">
                             <div class="item_buttons">
                                 <button type="button" id="remove_item_button" class="form-control">
                                     <i class="fa-solid fa-minus"></i>
@@ -574,7 +576,7 @@
                     </form>
                 </div>
                 <div class="section_container">
-                    <div style="display: flex; gap: 20px;">
+                    <!-- <div style="display: flex; gap: 20px;">
                         <select name="filter_option" id="filter_option" class="form-control" style="width: auto; border: 3px solid #198754;">
                             <option value="">SELECT</option>
                             <option value="WTF #">WTF #</option>
@@ -588,7 +590,7 @@
                         <button id="search_filter_options" class="form-control" type="button" style="width: auto; background-color: #198754;">
                             <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
                         </button>
-                    </div>
+                    </div> -->
                     <div class="table" style="max-height: 80vh; align-items: start; overflow-y: scroll;">                            
                         <div class="list">
                             <table>
@@ -612,7 +614,7 @@
                         </div>
                     </div><br>
                 </div>
-            </section> -->
+            </section>
             <!-- supplies_inventory -->
             <section id="supplies_inventory">
                 <h2>SUPPLIES INVENTORY</h2><br>

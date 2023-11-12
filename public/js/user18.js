@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const pof_response_promise = fetch('https://script.google.com/macros/s/AKfycby9i2KfOZ_uF7-JUPX8qpXg7Jewmw6oU3EfUTpXiwnRRB91_qIW3xAVNy5SZBN1YhVzzg/exec');
         const irf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzTmhNOz5cXeKitSXAriUJ_FEahAQugYEKIRwDuFt9tjhj2AtPKEf2H4yTMmZ1igpUxlQ/exec');
         const iid_response_promise = fetch('https://script.google.com/macros/s/AKfycbyaV_cnq0bfOWPgDTfyrit-nCAMwyI5Vw1xlx47RNSoSEBd8PyMw3-0UeNlojqBKgk/exec');
+        const wsf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxNmSYTrW2BWirX6dk1DKzJ0F2HmMlkNkdmGGZFoRIt5rW88RjqaUXMh41k_qM8pwjb/exec');
 
         const [
             username_response,
@@ -32,6 +33,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             pof_response,
             irf_response,
             iid_response,
+            wsf_response,
         ] = await Promise.all([
             username_response_promise,
             client_list_response_promise,
@@ -48,6 +50,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             pof_response_promise,
             irf_response_promise,
             iid_response_promise,
+            wsf_response_promise,
         ]);
 
         const username_data_list  = await username_response.json();
@@ -65,6 +68,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const pof_data_list  = await pof_response.json();
         const irf_data_list  = await irf_response.json();
         const iid_data_list  = await iid_response.json();
+        const wsf_data_list  = await wsf_response.json();
 
         // Code that depends on the fetched data
         // username_data_list3
@@ -620,32 +624,32 @@ document.addEventListener('DOMContentLoaded', async function() {
         // supplies_transaction
         // FORM GENERATOR
         // stf_data_list
-        // const stf_form_no = document.getElementById("stf_form_no");
-        // var last_row = stf_data_list.content.length -1;
-        // var data_info = stf_data_list.content[last_row][findTextInArray(stf_data_list, "STF #")];
-        // var data_counter;
-        // if(last_row == 0){
-        //     data_counter = 0;
-        // }
-        // else{
-        //     data_counter = data_info.substring(9,12);
-        // }
-        // var year = new Date().getFullYear();
-        // var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
-        // data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-        // stf_form_no.value = `STF${year}${month}${data_counter}`;
+        const stf_form_no = document.getElementById("stf_form_no");
+        var last_row = stf_data_list.content.length -1;
+        var data_info = stf_data_list.content[last_row][findTextInArray(stf_data_list, "STF #")];
+        var data_counter;
+        if(last_row == 0){
+            data_counter = 0;
+        }
+        else{
+            data_counter = data_info.substring(9,12);
+        }
+        var year = new Date().getFullYear();
+        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        stf_form_no.value = `STF${year}${month}${data_counter}`;
 
-        // const supplies_transaction = document.querySelector("#supplies_transaction");
-        // const withdrawal_form_button = supplies_transaction.querySelector("#withdrawal_form_button");
-        // const form_tab_supplies_transaction = supplies_transaction.querySelector("#form_tab");
+        const supplies_transaction = document.querySelector("#supplies_transaction");
+        const withdrawal_form_button = supplies_transaction.querySelector("#withdrawal_form_button");
+        const form_tab_supplies_transaction = supplies_transaction.querySelector("#form_tab");
 
-        // withdrawal_form_button.addEventListener("click", () => {
-        //     if(form_tab_supplies_transaction.style.display == "none"){
-        //         form_tab_supplies_transaction.style.display = "block"
-        //     } else{
-        //         form_tab_supplies_transaction.style.display = "none"
-        //     }
-        // })
+        withdrawal_form_button.addEventListener("click", () => {
+            if(form_tab_supplies_transaction.style.display == "none"){
+                form_tab_supplies_transaction.style.display = "block"
+            } else{
+                form_tab_supplies_transaction.style.display = "none"
+            }
+        })
 
         // supplies_inventory
         // FORM GENERATOR
