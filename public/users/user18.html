@@ -624,10 +624,12 @@
                     </label><br>
                 </div>
                 <div id="form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
-                    <form action="https://script.google.com/macros/s/AKfycbylJczj1oQ7E3tzIiXOwLyWfbIWAubaw03ZTkr4G_JiFfmXRPF7xwwThtxE2VZcHsyH0A/exec" method="post">
+                    <form action="https://script.google.com/macros/s/AKfycbwZbrwX9OHRGu8_UqTszfWLhPMAacGieQqBki_xvtmODlIUnMIEZu_aU6QzxS-Zcwa3TA/exec" method="post">
+                        <h2>NEW ITEM FORM</h2>
                         <input type="hidden" name="user" id="user">
-                        <div>
-                            <div>
+                        <input type="hidden" name="inventory_counter" id="inventory_counter" value="0">
+                        <div id="transaction_container">
+                            <div style="display: none;">
                                 <label for="iid_form_no">
                                     <i class="fa-solid fa-list-ol"></i>
                                     IID #
@@ -637,23 +639,10 @@
                                 </div>
                             </div><br>
                             <div id="item_container">
-                                <div id="items1" style="display: flex; gap: 20px;">
-                                    <div class="form">
-                                        <label for="storage_type">
-                                            <i class="fa-solid fa-table-list"></i>
-                                            Storage Type
-                                        </label>
-                                        <select name="storage_type" id="storage_type" class="form-control" required>
-                                            <option value="">SELECT</option>
-                                            <option value="RACK">RACK</option>
-                                            <option value="PALLET">PALLET</option>
-                                        </select>
-                                    </div>
-                                    <div id="item_detail" style="display: flex; gap: 20px;"></div>
-                                </div>
+
                             </div>
                         </div>
-                        <div class="add_item pt-3" style="display: none;">
+                        <div class="add_item pt-3">
                             <div class="item_buttons">
                                 <button type="button" id="remove_item_button" class="form-control">
                                     <i class="fa-solid fa-minus"></i>
@@ -674,7 +663,7 @@
                     </form>
                 </div>
                 <div class="section_container">
-                    <div style="display: flex; gap: 20px;">
+                    <!-- <div style="display: flex; gap: 20px;">
                         <select name="filter_option" id="filter_option" class="form-control" style="width: auto; border: 3px solid #198754;">
                             <option value="">SELECT</option>
                             <option value="WTF #">WTF #</option>
@@ -688,7 +677,7 @@
                         <button id="search_filter_options" class="form-control" type="button" style="width: auto; background-color: #198754;">
                             <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
                         </button>
-                    </div>
+                    </div> -->
                     <div class="table" style="max-height: 80vh; align-items: start; overflow-y: scroll;">                            
                         <div class="list">
                             <table>
@@ -699,9 +688,10 @@
                                     <th>RACK/<BR>PALLET</th>
                                     <th>LEVEL</th>
                                     <th>ITEM</th>
+                                    <th>DESCRIPTION</th>
                                     <th>UNIT</th>
                                     <th>QUANTITY</th>
-                                    <th>DESCRIPTION</th>
+                                    <th>INVENTORY<br>VALUE</th>
                                     <th>SUBMITTED BY</th>
                                 </thead>
                                 <tbody id="supplies_inventory_list">

@@ -666,9 +666,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         const supplies_inventory = document.querySelector("#supplies_inventory");
         const new_item_form_button = supplies_inventory.querySelector("#new_item_form_button");
         const form_tab_supplies_inventory = supplies_inventory.querySelector("#form_tab");
-        const storage_type = supplies_inventory.querySelector("#storage_type");
-        const item_detail = supplies_inventory.querySelector("#item_detail");
         const supplies_inventory_list = supplies_inventory.querySelector("#supplies_inventory_list");
+        const add_item_button_supplies_inventory = supplies_inventory.querySelector("#add_item_button");
+        const remove_item_button_supplies_inventory = supplies_inventory.querySelector("#remove_item_button");
 
         new_item_form_button.addEventListener("click", () => {
             if(form_tab_supplies_inventory.style.display == "none"){
@@ -678,141 +678,216 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         })
 
-        storage_type.addEventListener("change", () => {
-            if(storage_type.value == "RACK"){
-                var data =
-                `
-                <div class="form">
-                    <label for="area1">
-                        <i class="fa-solid fa-table-list"></i>
-                        Rack
-                    </label>
-                    <select name="area1" id="area1" class="form-control" required>
-                        <option value="">SELECT</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                        <option value="D">D</option>
-                        <option value="E">E</option>
-                        <option value="F">F</option>
-                        <option value="G">G</option>
-                        <option value="H">H</option>
-                        <option value="I">I</option>
-                        <option value="J">J</option>
-                        <option value="K">K</option>
-                        <option value="L">L</option>
-                        <option value="M">M</option>
-                        <option value="N">N</option>
-                        <option value="O">O</option>
-                        <option value="P">P</option>
-                        <option value="Q">Q</option>
-                    </select>
-                </div>
-                <div class="form">
-                    <label for="level1">
-                        <i class="fa-solid fa-table-list"></i>
-                        Level
-                    </label>
-                    <select name="level1" id="level1" class="form-control" required>
-                        <option value="">SELECT</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                    </select>
-                </div>
-                <div class="form">
-                    <label for="item1">
-                        <i class="fa-solid fa-table-list"></i>
-                        Item
-                    </label>
-                    <input type="text" name="item1" id="item1" class="form-control" autocomplete="off" required style="width: 250px;">
-                </div>
-                <div class="form">
-                    <label for="description1">
-                        <i class="fa-solid fa-table-list"></i>
-                        Description
-                    </label>
-                    <input type="text" name="description1" id="description1" class="form-control" autocomplete="off" required style="width: 250px;">
-                </div>
-                <div class="form">
-                    <label for="unit1">
-                        <i class="fa-solid fa-table-list"></i>
-                        Unit
-                    </label>
-                    <input type="text" id="unit1" name="unit1" autocomplete="off" class="form-control" required placeholder="ex. kg/pc/box/set">
-                </div>
-                <div class="form">
-                    <label for="quantity1">
-                        <i class="fa-solid fa-table-list"></i>
-                        Quantity
-                    </label>
-                    <input type="number" id="quantity1" name="quantity1" autocomplete="off" class="form-control" required style="width: 100px">
-                </div>
-                <div class="form">
-                    <label for="amount1">
-                        <i class="fa-solid fa-table-list"></i>
-                        Price/Unit
-                    </label>
-                    <input type="number" id="amount1" name="amount1" autocomplete="off" class="form-control" required placeholder="Amount" style="width: 150px">
-                </div>
-                `
-                item_detail.innerHTML = data
+        add_item_button_supplies_inventory.addEventListener("click", () => {
+            const inventory_counter = supplies_inventory.querySelector("#inventory_counter");
+            addTransaction()
+            if(inventory_counter.value > 1){
+                remove_item_button_supplies_inventory.style.display = "block"
             }
-            else if(storage_type.value == "PALLET"){
-                var data =
-                `
-                <div class="form">
-                    <label for="area1">
-                        <i class="fa-solid fa-table-list"></i>
-                        Pallet #
-                    </label>
-                    <input type="number" name="area1" id="area1" class="form-control" step="1" autocomplete="off" required style="width: 100px;">
-                </div>
-                <input type="hidden" name="level1" id="level1" class="form-control" step="1" autocomplete="off" required style="width: 100px;" value="1">
-                <div class="form">
-                    <label for="unit1">
-                        <i class="fa-solid fa-table-list"></i>
-                        Unit
-                    </label>
-                    <input type="text" id="unit1" name="unit1" autocomplete="off" class="form-control" required placeholder="ex. kg/pc/box/set">
-                </div>
-                <div class="form">
-                    <label for="item1">
-                        <i class="fa-solid fa-table-list"></i>
-                        Item
-                    </label>
-                    <input type="text" name="item1" id="item1" class="form-control" autocomplete="off" required style="width: 250px;">
-                </div>
-                <div class="form">
-                    <label for="description1">
-                        <i class="fa-solid fa-table-list"></i>
-                        Description
-                    </label>
-                    <input type="text" name="description1" id="description1" class="form-control" autocomplete="off" required style="width: 250px;">
-                </div>
-                `
-                item_detail.innerHTML = data
-            }
-            else{
-                item_detail.innerHTML = ""
+        })
+        remove_item_button_supplies_inventory.addEventListener("click", () => {
+            const inventory_counter = supplies_inventory.querySelector("#inventory_counter");
+            const item = supplies_inventory.querySelector(`#items${inventory_counter.value}`);
+            inventory_counter.value = parseInt(inventory_counter.value) - 1;
+            item.remove();
+            if(inventory_counter.value == 1){
+                remove_item_button_supplies_inventory.style.display = "none"
             }
         })
 
+        function addTransaction(){
+            const item_container = supplies_inventory.querySelector("#item_container");
+            const inventory_counter = supplies_inventory.querySelector("#inventory_counter");
+            inventory_counter.value = parseInt(inventory_counter.value) + 1
+            var transaction_data = 
+            `
+            <div id="items${inventory_counter.value}" style="display: flex; gap: 20px;">
+                <div class="form">
+                    <label for="storage_type${inventory_counter.value}">
+                        <i class="fa-solid fa-table-list"></i>
+                        Storage Type
+                    </label>
+                    <select name="storage_type${inventory_counter.value}" id="storage_type${inventory_counter.value}" class="form-control" required>
+                        <option value="">SELECT</option>
+                        <option value="RACK">RACK</option>
+                        <option value="PALLET">PALLET</option>
+                    </select>
+                </div>
+                <div id="item_detail${inventory_counter.value}" style="display: flex; gap: 20px;">
+                </div>
+            </div>
+            `
+            item_container.insertAdjacentHTML("beforeend", transaction_data)
+            
+            const storage_type = supplies_inventory.querySelector(`#storage_type${inventory_counter.value}`);
+            const item_detail = supplies_inventory.querySelector(`#item_detail${inventory_counter.value}`);
+
+            storage_type.addEventListener("change", () => {
+                if(storage_type.value == "RACK"){
+                    var data =
+                    `
+                    <div class="form">
+                        <label for="area${inventory_counter.value}">
+                            <i class="fa-solid fa-table-list"></i>
+                            Rack
+                        </label>
+                        <select name="area${inventory_counter.value}" id="area${inventory_counter.value}" class="form-control" required>
+                            <option value="">SELECT</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                            <option value="F">F</option>
+                            <option value="G">G</option>
+                            <option value="H">H</option>
+                            <option value="I">I</option>
+                            <option value="J">J</option>
+                            <option value="K">K</option>
+                            <option value="L">L</option>
+                            <option value="M">M</option>
+                            <option value="N">N</option>
+                            <option value="O">O</option>
+                            <option value="P">P</option>
+                            <option value="Q">Q</option>
+                        </select>
+                    </div>
+                    <div class="form">
+                        <label for="level${inventory_counter.value}">
+                            <i class="fa-solid fa-table-list"></i>
+                            Level
+                        </label>
+                        <select name="level${inventory_counter.value}" id="level${inventory_counter.value}" class="form-control" required>
+                            <option value="">SELECT</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                        </select>
+                    </div>
+                    <div class="form">
+                        <label for="item${inventory_counter.value}">
+                            <i class="fa-solid fa-table-list"></i>
+                            Item
+                        </label>
+                        <input type="text" name="item${inventory_counter.value}" id="item${inventory_counter.value}" class="form-control" autocomplete="off" required style="width: 250px;">
+                    </div>
+                    <div class="form">
+                        <label for="description${inventory_counter.value}">
+                            <i class="fa-solid fa-table-list"></i>
+                            Description
+                        </label>
+                        <input type="text" name="description${inventory_counter.value}" id="description${inventory_counter.value}" class="form-control" autocomplete="off" required style="width: 250px;">
+                    </div>
+                    <div class="form">
+                        <label for="unit${inventory_counter.value}">
+                            <i class="fa-solid fa-table-list"></i>
+                            Unit
+                        </label>
+                        <input type="text" id="unit${inventory_counter.value}" name="unit${inventory_counter.value}" autocomplete="off" class="form-control" required placeholder="ex. kg/pc/box/set">
+                    </div>
+                    <div class="form">
+                        <label for="quantity${inventory_counter.value}">
+                            <i class="fa-solid fa-table-list"></i>
+                            Quantity
+                        </label>
+                        <input type="number" id="quantity${inventory_counter.value}" name="quantity${inventory_counter.value}" autocomplete="off" class="form-control" required style="width: 100px">
+                    </div>
+                    <div class="form">
+                        <label for="amount${inventory_counter.value}">
+                            <i class="fa-solid fa-table-list"></i>
+                            Price/Unit
+                        </label>
+                        <input type="number" id="amount${inventory_counter.value}" name="amount${inventory_counter.value}" autocomplete="off" class="form-control" required placeholder="Amount" style="width: 150px">
+                    </div>
+                    `
+                    item_detail.innerHTML = data
+                }
+                else if(storage_type.value == "PALLET"){
+                    var data =
+                    `
+                    <div class="form">
+                        <label for="area${inventory_counter.value}">
+                            <i class="fa-solid fa-table-list"></i>
+                            Pallet #
+                        </label>
+                        <input type="number" name="area${inventory_counter.value}" id="area${inventory_counter.value}" class="form-control" step="1" autocomplete="off" required style="width: 100px;">
+                    </div>
+                    <div class="form">
+                        <label for="level${inventory_counter.value}">
+                            <i class="fa-solid fa-table-list"></i>
+                            Level
+                        </label>
+                        <input type="number" name="level${inventory_counter.value}" id="level${inventory_counter.value}" class="form-control" step="1" autocomplete="off" required readonly style="width: 100px;" value="1">
+                    </div>
+                    <div class="form">
+                        <label for="item${inventory_counter.value}">
+                            <i class="fa-solid fa-table-list"></i>
+                            Item
+                        </label>
+                        <input type="text" name="item${inventory_counter.value}" id="item${inventory_counter.value}" class="form-control" autocomplete="off" required style="width: 250px;">
+                    </div>
+                    <div class="form">
+                        <label for="description${inventory_counter.value}">
+                            <i class="fa-solid fa-table-list"></i>
+                            Description
+                        </label>
+                        <input type="text" name="description${inventory_counter.value}" id="description${inventory_counter.value}" class="form-control" autocomplete="off" required style="width: 250px;">
+                    </div>
+                    <div class="form">
+                        <label for="unit${inventory_counter.value}">
+                            <i class="fa-solid fa-table-list"></i>
+                            Unit
+                        </label>
+                        <input type="text" id="unit${inventory_counter.value}" name="unit${inventory_counter.value}" autocomplete="off" class="form-control" required placeholder="ex. kg/pc/box/set">
+                    </div>
+                    <div class="form">
+                        <label for="quantity${inventory_counter.value}">
+                            <i class="fa-solid fa-table-list"></i>
+                            Quantity
+                        </label>
+                        <input type="number" id="quantity${inventory_counter.value}" name="quantity${inventory_counter.value}" autocomplete="off" class="form-control" required style="width: 100px">
+                    </div>
+                    <div class="form">
+                        <label for="amount${inventory_counter.value}">
+                            <i class="fa-solid fa-table-list"></i>
+                            Price/Unit
+                        </label>
+                        <input type="number" id="amount${inventory_counter.value}" name="amount${inventory_counter.value}" autocomplete="off" class="form-control" required placeholder="Amount" style="width: 150px">
+                    </div>
+                    `
+                    item_detail.innerHTML = data
+                }
+                else{
+                    item_detail.innerHTML = ""
+                }
+            })
+        }
+
+        addTransaction()
+
+
         for(let x = 1; x < iid_data_list.content.length; x++){
             var quantity = 0
+            var total_amount = 0
             var iid_no = iid_data_list.content[x][findTextInArray(iid_data_list, "IID #")]
             for(let y = 1; y < stf_data_list.content.length; y++){
                 if(iid_no == stf_data_list.content[y][findTextInArray(stf_data_list, "IID #")]){
                     if(stf_data_list.content[y][findTextInArray(stf_data_list, "TRANSACTION")] == "RE-STOCK"){
-                        quantity += stf_data_list.content[y][findTextInArray(stf_data_list, "QUANTITY")]
+                        quantity += stf_data_list.content[y][findTextInArray(stf_data_list, "QUANTITY")];
+                        total_amount += (stf_data_list.content[y][findTextInArray(stf_data_list, "QUANTITY")] * stf_data_list.content[y][findTextInArray(stf_data_list, "AMOUNT")]);
                     }
                     else if(stf_data_list.content[y][findTextInArray(stf_data_list, "TRANSACTION")] == "WITHDRAW"){
-                        quantity -= stf_data_list.content[y][findTextInArray(stf_data_list, "QUANTITY")]
+                        quantity -= stf_data_list.content[y][findTextInArray(stf_data_list, "QUANTITY")];
+                        total_amount -= (stf_data_list.content[y][findTextInArray(stf_data_list, "QUANTITY")] * stf_data_list.content[y][findTextInArray(stf_data_list, "AMOUNT")]);
+                    }
+                    else if(stf_data_list.content[y][findTextInArray(stf_data_list, "TRANSACTION")] == "NEW ITEM"){
+                        quantity += stf_data_list.content[y][findTextInArray(stf_data_list, "QUANTITY")];
+                        total_amount += (stf_data_list.content[y][findTextInArray(stf_data_list, "QUANTITY")] * stf_data_list.content[y][findTextInArray(stf_data_list, "AMOUNT")]);
                     }
                 }
             }
@@ -826,9 +901,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <td>${iid_data_list.content[x][findTextInArray(iid_data_list, "RACK/ PALLET")]}</td>
                 <td>${iid_data_list.content[x][findTextInArray(iid_data_list, "LEVEL")]}</td>
                 <td>${iid_data_list.content[x][findTextInArray(iid_data_list, "ITEM")]}</td>
+                <td>${iid_data_list.content[x][findTextInArray(iid_data_list, "DESCRIPTION")]}</td>
                 <td>${iid_data_list.content[x][findTextInArray(iid_data_list, "UNIT")]}</td>
                 <td>${quantity}</td>
-                <td>${iid_data_list.content[x][findTextInArray(iid_data_list, "DESCRIPTION")]}</td>
+                <td>${formatNumber(total_amount)}</td>
                 <td>${iid_data_list.content[x][findTextInArray(iid_data_list, "SUBMITTED BY")]}</td>
             </tr>
             `
