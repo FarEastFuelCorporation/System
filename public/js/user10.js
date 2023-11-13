@@ -139,6 +139,139 @@ document.addEventListener('DOMContentLoaded', async function() {
         let bpf_ctf_transaction_collection = []; 
         let bpf_transaction_amount_collection = 0; 
         let bpf_ctf_transaction_amount_collection = 0;
+        // ap_accounting_dashboard
+        const ap_accounting_dashboard = document.querySelector("#ap_accounting_dashboard");
+
+        const source_of_fund_ap_accounting = ap_accounting_dashboard.querySelector("#source_of_fund");
+        const trucking_fund_ap_accounting = ap_accounting_dashboard.querySelector("#trucking_fund");
+        const hauling_fund_ap_accounting = ap_accounting_dashboard.querySelector("#hauling_fund");
+        const diesel_fund_ap_accounting = ap_accounting_dashboard.querySelector("#diesel_fund");
+        const gasoline_fund_ap_accounting = ap_accounting_dashboard.querySelector("#gasoline_fund");
+        const sir_ruels_fund_ap_accounting = ap_accounting_dashboard.querySelector("#sir_ruels_fund");
+        const scrap_sales_ap_accounting = ap_accounting_dashboard.querySelector("#scrap_sales");
+        const mold_runner_sales_ap_accounting = ap_accounting_dashboard.querySelector("#mold_runner_sales");
+        const truck_scale_collection_ap_accounting = ap_accounting_dashboard.querySelector("#truck_scale_collection");
+        const house_collection_ap_accounting = ap_accounting_dashboard.querySelector("#house_collection");
+        const representation_fund_ap_accounting = ap_accounting_dashboard.querySelector("#representation_fund");
+        const purchase_request_fund_ap_accounting = ap_accounting_dashboard.querySelector("#purchase_request_fund");
+
+        var source_of_fund = 0;
+        var trucking_fund = 0;
+        var hauling_fund = 0;
+        var diesel_fund = 0;
+        var gasoline_fund = 0;
+        var sir_ruels_fund = 0;
+        var scrap_sales = 0;
+        var mold_runner_sales = 0;
+        var truck_scale_collection = 0;
+        var house_collection = 0;
+        var representation_fund = 0;
+        var purchase_request_fund = 0;   
+        
+        function updateAmount(){
+            source_of_fund = 0;
+            trucking_fund = 0;
+            hauling_fund = 0;
+            diesel_fund = 0;
+            gasoline_fund = 0;
+            sir_ruels_fund = 0;
+            scrap_sales = 0;
+            mold_runner_sales = 0;
+            truck_scale_collection = 0;
+            house_collection = 0;
+            representation_fund = 0;
+            purchase_request_fund = 0;
+            for (let i = 1; i < ftf_data_list.content.length; i++) {
+                // fund_source
+                if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "SOURCE OF FUND") {
+                    source_of_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "HAULING FUND") {
+                    hauling_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "TRUCKING FUND") {
+                    trucking_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "DIESEL FUND") {
+                    diesel_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "GASOLINE FUND") {
+                    gasoline_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "SIR RUEL'S FUND") {
+                    sir_ruels_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "SCRAP SALES") {
+                    scrap_sales -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "MOLD RUNNER SALES") {
+                    mold_runner_sales -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "TRUCK SCALE COLLECTION") {
+                    truck_scale_collection -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "HOUSE COLLECTION") {
+                    house_collection -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "REPRESENTATION FUND") {
+                    representation_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "PURCHASE REQUEST FUND") {
+                    purchase_request_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                // fund_allocation
+                if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "SOURCE OF FUND") {
+                    source_of_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "HAULING FUND") {
+                    hauling_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "TRUCKING FUND") {
+                    trucking_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "DIESEL FUND") {
+                    diesel_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "GASOLINE FUND") {
+                    gasoline_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "SIR RUEL'S FUND") {
+                    sir_ruels_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "SCRAP SALES") {
+                    scrap_sales += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "MOLD RUNNER SALES") {
+                    mold_runner_sales += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "TRUCK SCALE COLLECTION") {
+                    truck_scale_collection += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "HOUSE COLLECTION") {
+                    house_collection += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "REPRESENTATION FUND") {
+                    representation_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "PURCHASE REQUEST FUND") {
+                    purchase_request_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+            }
+        }
+        updateAmount();
+        source_of_fund_ap_accounting.innerText = formatNumber(source_of_fund);
+        trucking_fund_ap_accounting.innerText = formatNumber(trucking_fund);
+        hauling_fund_ap_accounting.innerText = formatNumber(hauling_fund);
+        diesel_fund_ap_accounting.innerText = formatNumber(diesel_fund);
+        gasoline_fund_ap_accounting.innerText = formatNumber(gasoline_fund);
+        sir_ruels_fund_ap_accounting.innerText = formatNumber(sir_ruels_fund);
+        scrap_sales_ap_accounting.innerText = formatNumber(scrap_sales);
+        mold_runner_sales_ap_accounting.innerText = formatNumber(mold_runner_sales);
+        truck_scale_collection_ap_accounting.innerText = formatNumber(truck_scale_collection);
+        house_collection_ap_accounting.innerText = formatNumber(house_collection);
+        representation_fund_ap_accounting.innerText = formatNumber(representation_fund);
+        purchase_request_fund_ap_accounting.innerText = formatNumber(purchase_request_fund);
+
         // purchasing_dashboard
         const purchasing_dashboard = document.querySelector("#purchasing_dashboard");
         const pending_list_container_purchasing = purchasing_dashboard.querySelector("#pending_list");
@@ -1062,14 +1195,16 @@ document.addEventListener('DOMContentLoaded', async function() {
             history_list_container_purchasing.insertAdjacentHTML("beforeend", purchased_data_value);
 
             const ap_accounting_head_dashboard = document.querySelector("#accounting_head_dashboard");
-            const purchase_request_list_ap_accounting = ap_accounting_head_dashboard.querySelector("#purchase_request_list");
+            const purchase_request_list_ap_accounting_head = ap_accounting_head_dashboard.querySelector("#purchase_request_list");
+            const fund_source_pr_ap_accounting_head = ap_accounting_head_dashboard.querySelector("#fund_source_pr");
+
             // purchase_request
             var requested_data_value = "";
             var requested_data_value_counter = 1;
             for(let x = 1; x < prf_data_list.content.length; x++){  
                 for(let y = 0; y < requested.length; y++){
                     if(requested[y] == prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]){
-                        var pr_data, date_time, quantity, unit, item, details, remarks, department, status, amount, requisitioner, button, button2;
+                        var pr_no, pr_data, date_time, quantity, unit, item, details, remarks, department, status, amount, requisitioner, button, button2;
                         pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")];
                         date_time = prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")];
                         quantity = prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")];
@@ -1081,15 +1216,19 @@ document.addEventListener('DOMContentLoaded', async function() {
                         status = prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")];
                         requisitioner = prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")];
                         for(let z = 1; z < pof_data_list.content.length; z++){
-                            if(pr_data == pof_data_list.content[x][findTextInArray(pof_data_list, "ITM #")]){
-                                amount = pof_data_list.content[x][findTextInArray(pof_data_list, "AMOUNT")]
+                            if(pr_data == pof_data_list.content[z][findTextInArray(pof_data_list, "ITM #")]){
+                                amount = pof_data_list.content[z][findTextInArray(pof_data_list, "AMOUNT")]
+                                pr_no = pof_data_list.content[z][findTextInArray(pof_data_list, "PRF #")]
                             }
                         }
                         button = `
-                        <form action="https://script.google.com/macros/s/AKfycbwSvMfLEk_Wi-5YCJA_XkVaVHnzEf_9xpnYqdtrjvQff7jorizN6c8jK2bUhp7wz4Sp/exec" method="post">
+                        <form action="https://script.google.com/macros/s/AKfycbx1bbqYXGtjtQhK0njEnlkSv02_Bn2cEABwMKUiM6xVz9pp82FG_a61t5nZTa42dhG0/exec" method="post">
+                            <input type="hidden" name="pr_form_no" id="pr_form_no" value="${pr_no}">
                             <input type="hidden" name="itm_form_no" id="itm_form_no" value="${pr_data}">
                             <input type="hidden" name="timestamp" id="timestamp" value="${new Date()}">
                             <input type="hidden" name="user" id="user" value="${user_name}">
+                            <input type="hidden" name="pr_amount" id="pr_amount" value="${amount}">
+                            <input type="hidden" name="source" id="source">
                             <button type="submit" style="background-color: transparent !important; padding:0; color: #198754; border: none">
                                 <i class="fa-solid fa-thumbs-up"></i>
                             </button>
@@ -1097,18 +1236,18 @@ document.addEventListener('DOMContentLoaded', async function() {
                         `
                         button2 = `
                         <form action="https://script.google.com/macros/s/AKfycbyuxk3trEn7iLal32AHo28NCXPAJTy_z6rn4zrStAvJjkdcobPVp_TAov33ajOUxWg4HA/exec" method="post">
-                        <input type="hidden" name="itm_form_no" id="itm_form_no" value="${pr_data}">
-                        <input type="hidden" name="timestamp" id="timestamp" value="${new Date()}">
-                        <input type="hidden" name="user" id="user" value="${user_name}">
-                        <button type="submit" style="background-color: transparent !important; padding:0; color: #dc3545; border: none">
+                            <input type="hidden" name="itm_form_no" id="itm_form_no" value="${pr_data}">
+                            <input type="hidden" name="timestamp" id="timestamp" value="${new Date()}">
+                            <input type="hidden" name="user" id="user" value="${user_name}">
+                            <button type="button" style="background-color: transparent !important; padding:0; color: #dc3545; border: none">
                                 <i class="fa-solid fa-thumbs-down"></i>
                             </button>
                         </form>
                         `
-
                         requested_data_value += `
                         <tr>
                             <td>${requested_data_value_counter}</td>
+                            <td>${pr_no}</td>
                             <td>${pr_data}</td>
                             <td>${date_decoder(date_time)} /<br> ${time_decoder(date_time)}</td>
                             <td>${quantity}</td>
@@ -1128,8 +1267,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                 }
             }
-            purchase_request_list_ap_accounting.innerHTML = requested_data_value;
+            purchase_request_list_ap_accounting_head.innerHTML = requested_data_value;
 
+            fund_source_pr_ap_accounting_head.addEventListener("change", () => {
+                const source = document.querySelectorAll("#source")
+                source.forEach((data) => {
+                    data.value = fund_source_pr_ap_accounting_head.value
+                })
+            })
 
             // ap_accounting_head_dashboard
             const source_of_fund_ap_accounting = ap_accounting_head_dashboard.querySelector("#source_of_fund");
@@ -1143,6 +1288,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             const truck_scale_collection_ap_accounting = ap_accounting_head_dashboard.querySelector("#truck_scale_collection");
             const house_collection_ap_accounting = ap_accounting_head_dashboard.querySelector("#house_collection");
             const representation_fund_ap_accounting = ap_accounting_head_dashboard.querySelector("#representation_fund");
+            const purchase_request_fund_ap_accounting = ap_accounting_head_dashboard.querySelector("#purchase_request_fund");
 
             var source_of_fund = 0;
             var trucking_fund = 0;
@@ -1155,8 +1301,9 @@ document.addEventListener('DOMContentLoaded', async function() {
             var truck_scale_collection = 0;
             var house_collection = 0;
             var representation_fund = 0;
+            var purchase_request_fund = 0;
 
-            var type_of_funds = ["SOURCE OF FUND", "HAULING FUND", "TRUCKING FUND", "DIESEL FUND", "GASOLINE FUND", "SIR RUEL'S FUND", "SCRAP SALES", "MOLD RUNNER SALES", "TRUCK SCALE COLLECTION", "HOUSE COLLECTION", "REPRESENTATION FUND"]
+            var type_of_funds = ["SOURCE OF FUND", "HAULING FUND", "TRUCKING FUND", "DIESEL FUND", "GASOLINE FUND", "SIR RUEL'S FUND", "SCRAP SALES", "MOLD RUNNER SALES", "TRUCK SCALE COLLECTION", "HOUSE COLLECTION", "REPRESENTATION FUND", "PURCHASE REQUEST FUND"]
 
             for (let i = 1; i < ftf_data_list.content.length; i++) {
                 // fund_source
@@ -1195,6 +1342,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                     else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "REPRESENTATION FUND") {
                         representation_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
                     }
+                    else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "PURCHASE REQUEST FUND") {
+                        purchase_request_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                    }
                 }
                 // fund_allocation
                 if (!type_of_funds.includes(ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")]) &&
@@ -1232,6 +1382,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                     else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "REPRESENTATION FUND") {
                         representation_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
                     }
+                    else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "PURCHASE REQUEST FUND") {
+                        purchase_request_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                    }
                 }
             }
             
@@ -1246,6 +1399,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             truck_scale_collection_ap_accounting.innerText = formatNumber(truck_scale_collection);
             house_collection_ap_accounting.innerText = formatNumber(house_collection);
             representation_fund_ap_accounting.innerText = formatNumber(representation_fund);
+            purchase_request_fund_ap_accounting.innerText = formatNumber(purchase_request_fund);
         }
         
         const ap_accounting_head_dashboard = document.querySelector("#accounting_head_dashboard");
@@ -1516,17 +1670,22 @@ document.addEventListener('DOMContentLoaded', async function() {
         var data = "";
         var data_value_counter = 0;
         for(let x = ftf_data_list.content.length - 1; x > 1; x--){
+            if(ftf_data_list.content[x][findTextInArray(ftf_data_list, "DATE")] == ""){
+                transaction_date = ftf_data_list.content[x][findTextInArray(ftf_data_list, "CREATED AT")]
+            }else{
+                transaction_date = ftf_data_list.content[x][findTextInArray(ftf_data_list, "DATE")]
+            }
             data_value_counter += 1;
             data += `
             <tr>
                 <td>${data_value_counter}</td>
-                <td>${ftf_data_list.content[x][0]}</td>
-                <td>${date_decoder(ftf_data_list.content[x][6])} / ${time_decoder2(ftf_data_list.content[x][6])}</td>
-                <td>${ftf_data_list.content[x][1]}</td>
-                <td>${ftf_data_list.content[x][2]}</td>
-                <td>${formatNumber(ftf_data_list.content[x][3])}</td>
-                <td>${ftf_data_list.content[x][5]}</td>
-                <td>${ftf_data_list.content[x][4]}</td>
+                <td>${ftf_data_list.content[x][findTextInArray(ftf_data_list, "FTF # / FORM #")]}</td>
+                <td>${date_decoder(transaction_date)}</td>
+                <td>${ftf_data_list.content[x][findTextInArray(ftf_data_list, "FUND SOURCE")]}</td>
+                <td>${ftf_data_list.content[x][findTextInArray(ftf_data_list, "FUND ALLOCATION")]}</td>
+                <td>${formatNumber(ftf_data_list.content[x][findTextInArray(ftf_data_list, "AMOUNT")])}</td>
+                <td>${ftf_data_list.content[x][findTextInArray(ftf_data_list, "SUBMITTED BY")]}</td>
+                <td>${ftf_data_list.content[x][findTextInArray(ftf_data_list, "REMARKS")]}</td>
             </tr>
             `
         }

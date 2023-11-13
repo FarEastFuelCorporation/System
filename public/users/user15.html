@@ -220,15 +220,19 @@
                         </div>
                     </div>
                 </div><br>
-                <h2>APPROVED PURCHASE REQUEST</h2>
+                <div style="display: flex; justify-content: space-between;">
+                    <h2>APPROVED PURCHASE REQUEST</h2>
+                    <input type="text" class="form-control" name="pcv_no_pr_input" id="pcv_no_pr_input" style="width: fit-content; border: 3px solid #198754;" placeholder="Input PCV # for Released PR">
+                </div>
                 <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
                     <div class="list">
                         <table>
                             <thead style="position: sticky; top: 0; background-color: black;">
                                 <th>#</th>
+                                <th>PRF #</th>
                                 <th>ITM #</th>
                                 <th>ORDER<br>DATE/TIME</th>
-                                <th>QUANTITY</th>
+                                <th>QTY</th>
                                 <th>UNITS</th>
                                 <th>ITEM</th>
                                 <th>DETAILS</th>
@@ -252,6 +256,7 @@
                         <table>
                             <thead style="position: sticky; top: 0; background-color: black;">
                                 <th>#</th>
+                                <th>PRF #</th>
                                 <th>ITM #</th>
                                 <th>REQUEST<br>DATE/TIME</th>
                                 <th>ITEM</th>
@@ -941,7 +946,8 @@
                                                 <option value="MOLD RUNNER SALES">MOLD RUNNER SALES</option>
                                                 <option value="TRUCK SCALE COLLECTION">TRUCK SCALE COLLECTION</option>
                                                 <option value="HOUSE COLLECTION">HOUSE COLLECTION</option>
-                                                <option value="REPRESENTATION FUND">REPRESENTATION FUND</option>        
+                                                <option value="REPRESENTATION FUND">REPRESENTATION FUND</option>
+                                                <option value="PURCHASE REQUEST FUND">PURCHASE REQUEST FUND</option>        
                                             </select>
                                         </th>
                                         <th style="position: relative;">FUND ALLOCATION<i class="fa-solid fa-filter ms-1" id="filter_fund_allocation"></i>
@@ -957,7 +963,7 @@
                                                 <option value="MOLD RUNNER SALES">MOLD RUNNER SALES</option>
                                                 <option value="TRUCK SCALE COLLECTION">TRUCK SCALE COLLECTION</option>
                                                 <option value="HOUSE COLLECTION">HOUSE COLLECTION</option>
-                                                <option value="REPRESENTATION FUND">REPRESENTATION FUND</option>        
+                                                <option value="REPRESENTATION FUND">REPRESENTATION FUND</option>
                                             </select>
                                         </th>
                                         <th>FUND AMOUNT</th>

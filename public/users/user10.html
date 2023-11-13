@@ -260,13 +260,39 @@
                             <i class="fa-solid fa-hand-holding-dollar"></i>
                         </div>
                     </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="purchase_request_fund"></div>
+                            <div class="card-name">Purchase Request Fund</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
+                    </div>
                 </div><br>
-                <h2>PURCHASE REQUEST APPROVAL</h2>
+                <div style="display: flex; justify-content: space-between;">
+                    <h2>PURCHASE REQUEST APPROVAL</h2>
+                    <select name="fund_source_pr" id="fund_source_pr" class="form-control fund_source" required style="width: fit-content; border: 3px solid #198754;">
+                        <option value="">SELECT FUND SOURCE</option>
+                        <option value="SOURCE OF FUND">SOURCE OF FUND</option>
+                        <option value="TRUCKING FUND">TRUCKING FUND</option>
+                        <option value="HAULING FUND">HAULING FUND</option>
+                        <option value="DIESEL FUND">DIESEL FUND</option>
+                        <option value="GASOLINE FUND">GASOLINE FUND</option>
+                        <option value="SIR RUEL'S FUND">SIR RUEL'S FUND</option>
+                        <option value="SCRAP SALES">SCRAP SALES</option>
+                        <option value="MOLD RUNNER SALES">MOLD RUNNER SALES</option>
+                        <option value="TRUCK SCALE COLLECTION">TRUCK SCALE COLLECTION</option>
+                        <option value="HOUSE COLLECTION">HOUSE COLLECTION</option>
+                        <option value="REPRESENTATION FUND">REPRESENTATION FUND</option>
+                    </select>                    
+                </div>
                 <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
                     <div class="list">
                         <table>
                             <thead style="position: sticky; top: 0; background-color: black;">
                                 <th>#</th>
+                                <th>PRF #</th>
                                 <th>ITM #</th>
                                 <th>REQUEST<br>DATE/TIME</th>
                                 <th>ITEM</th>
@@ -691,7 +717,7 @@
             </section>   
             <!-- ap_accounting_dashboard -->
             <section class="ap_accounting" id="ap_accounting_dashboard">
-                <h2>DASHBOARD</h2><br>
+                <h2>AP - FINANCE DASHBOARD</h2><br>
                 <h2>FUND SUMMARY</h2>
                 <div class="cards">
                     <div class="card">
@@ -795,77 +821,14 @@
                             <i class="fa-solid fa-hand-holding-dollar"></i>
                         </div>
                     </div>
-                </div><br>
-                <h2>APPROVED PURCHASE REQUEST</h2>
-                <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
-                    <div class="list">
-                        <table>
-                            <thead style="position: sticky; top: 0; background-color: black;">
-                                <th>#</th>
-                                <th>ITM #</th>
-                                <th>ORDER<br>DATE/TIME</th>
-                                <th>QUANTITY</th>
-                                <th>UNITS</th>
-                                <th>ITEM</th>
-                                <th>DETAILS</th>
-                                <th>REMARKS</th>
-                                <th>DEPARTMENT</th>
-                                <th>REQUISITIONER</th>
-                                <th>AMOUNT</th>
-                                <th>STATUS</th>
-                                <th></th>
-                            </thead>
-                            <tbody id="approved_purchased_request_list">
-
-                            </tbody>
-                        </table>
-                        <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
-                    </div>
-                </div><br>
-                <h2>PURCHASE REQUEST HISTORY</h2>
-                <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
-                    <div class="list">
-                        <table>
-                            <thead style="position: sticky; top: 0; background-color: black;">
-                                <th>#</th>
-                                <th>ITM #</th>
-                                <th>REQUEST<br>DATE/TIME</th>
-                                <th>ITEM</th>
-                                <th>QTY</th>
-                                <th>UNIT</th>
-                                <th>DETAILS</th>
-                                <th>REMARKS</th>
-                                <th>DEPARTMENT</th>
-                                <th>REQUISITIONER</th>
-                                <th>AMOUNT</th>
-                                <th>STATUS</th>
-                            </thead>
-                            <tbody id="purchase_request_history">
-
-                            </tbody>
-                        </table>
-                        <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
-                    </div>
-                </div><br>
-                <h2>PENDING TRIP BUDGET LIST</h2>
-                <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
-                    <div class="list">
-                        <table>
-                            <thead style="position: sticky; top: 0; background-color: black;">
-                                <th>#</th>
-                                <th>LTF #</th>
-                                <th>HAULING<br>DATE/TIME</th>
-                                <th>CLIENT</th>
-                                <th>WASTE DESCRIPTION</th>
-                                <th>TYPE OF VEHICLE</th>
-                                <th>PLATE #</th>
-                                <th>REMARKS</th>
-                            </thead>
-                            <tbody id="pending_list">
-
-                            </tbody>
-                        </table>
-                        <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="purchase_request_fund"></div>
+                            <div class="card-name">Purchase Request Fund</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
                     </div>
                 </div><br>
             </section>

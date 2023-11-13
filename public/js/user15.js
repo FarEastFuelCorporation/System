@@ -86,6 +86,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const purchase_request_fund_ap_accounting = ap_accounting_dashboard.querySelector("#purchase_request_fund");
         const approved_purchased_request_list_container_purchasing = ap_accounting_dashboard.querySelector("#approved_purchased_request_list");
         const history_list_container_purchasing = ap_accounting_dashboard.querySelector("#purchase_request_history");
+        const pcv_no_pr_input_purchasing = ap_accounting_dashboard.querySelector("#pcv_no_pr_input");
 
         var source_of_fund = 0;
         var trucking_fund = 0;
@@ -354,7 +355,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         for(let x = 1; x < prf_data_list.content.length; x++){  
             for(let y = 0; y < approved.length; y++){
                 if(approved[y] == prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]){
-                    var pr_data, date_time, quantity, unit, item, details, remarks, department, status, amount, requisitioner, button, button2;
+                    var pr_no, pr_data, date_time, quantity, unit, item, details, remarks, department, status, amount, requisitioner, button, button2;
                     pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")];
                     date_time = prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")];
                     quantity = prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")];
@@ -366,15 +367,19 @@ document.addEventListener('DOMContentLoaded', async function() {
                     status = prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")];
                     requisitioner = prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")];
                     for(let z = 1; z < pof_data_list.content.length; z++){
-                        if(pr_data == pof_data_list.content[x][findTextInArray(pof_data_list, "ITM #")]){
-                            amount = pof_data_list.content[x][findTextInArray(pof_data_list, "AMOUNT")]
+                        if(pr_data == pof_data_list.content[z][findTextInArray(pof_data_list, "ITM #")]){
+                            amount = pof_data_list.content[z][findTextInArray(pof_data_list, "AMOUNT")]
+                            pr_no = pof_data_list.content[z][findTextInArray(pof_data_list, "PRF #")]
                         }
                     }
                     button = `
-                    <form action="https://script.google.com/macros/s/AKfycbz9pbVOpNnfj82sjhAmpjveIvxxknMfUVnXPLoTOPiqd2arB5AyFDhBCZvMRpXicPPE3A/exec" method="post">
+                    <form action="https://script.google.com/macros/s/AKfycbyQQEonqcAsX19cNv_fHNqyB8U5RttkF-2xdGcPuclqJkEckUbrSrXbFfFFOdzhDZW_pQ/exec" method="post">
+                        <input type="hidden" name="pr_form_no" id="pr_form_no" value="${pr_no}">
                         <input type="hidden" name="itm_form_no" id="itm_form_no" value="${pr_data}">
                         <input type="hidden" name="timestamp" id="timestamp" value="${new Date()}">
                         <input type="hidden" name="user" id="user" value="${user_name}">
+                        <input type="hidden" name="pr_amount" id="pr_amount" value="${amount}">
+                        <input type="hidden" name="pcv_no_pr" id="pcv_no_pr">
                         <button type="submit" style="background-color: transparent !important; padding:0; color: #198754; border: none">
                             <i class="fa-solid fa-hand-holding-dollar"></i>
                         </button>
@@ -393,6 +398,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     approved_data_value += `
                     <tr>
                         <td>${approved_data_value_counter}</td>
+                        <td>${pr_no}</td>
                         <td>${pr_data}</td>
                         <td>${date_decoder(date_time)} /<br> ${time_decoder(date_time)}</td>
                         <td>${quantity}</td>
@@ -413,6 +419,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
         approved_purchased_request_list_container_purchasing.innerHTML = approved_data_value;
 
+        pcv_no_pr_input_purchasing.addEventListener("change", () => {
+            const pcv_no_pr = document.querySelectorAll("#pcv_no_pr")
+            pcv_no_pr.forEach((data) => {
+                data.value = pcv_no_pr_input_purchasing.value
+            })
+        })
         
         // purchase_request_history
         var released_data_value = "";
@@ -422,7 +434,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         for(let x = 1; x < prf_data_list.content.length; x++){  
             for(let y = 0; y < released.length; y++){
                 if(released[y] == prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]){
-                    var pr_data, date_time, quantity, unit, item, details, remarks, department, status, amount, requisitioner;
+                    var pr_no, pr_data, date_time, quantity, unit, item, details, remarks, department, status, amount, requisitioner;
                     pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")];
                     date_time = prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")];
                     quantity = prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")];
@@ -436,11 +448,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                     for(let z = 1; z < pof_data_list.content.length; z++){
                         if(pr_data == pof_data_list.content[z][findTextInArray(pof_data_list, "ITM #")]){
                             amount = pof_data_list.content[z][findTextInArray(pof_data_list, "AMOUNT")]
+                            pr_no = pof_data_list.content[z][findTextInArray(pof_data_list, "PRF #")]
                         }
                     }
                     released_data_value += `
                     <tr>
                         <td>${released_data_value_counter}</td>
+                        <td>${pr_no}</td>
                         <td>${pr_data}</td>
                         <td>${date_decoder(date_time)} /<br> ${time_decoder(date_time)}</td>
                         <td>${quantity}</td>
@@ -459,7 +473,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             for(let y = 0; y < purchased.length; y++){
                 if(purchased[y] == prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]){
-                    var pr_data, date_time, quantity, unit, item, details, remarks, department, status, amount, requisitioner;
+                    var pr_no, pr_data, date_time, quantity, unit, item, details, remarks, department, status, amount, requisitioner;
                     pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")];
                     date_time = prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")];
                     quantity = prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")];
@@ -473,11 +487,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                     for(let z = 1; z < pof_data_list.content.length; z++){
                         if(pr_data == pof_data_list.content[z][findTextInArray(pof_data_list, "ITM #")]){
                             amount = pof_data_list.content[z][findTextInArray(pof_data_list, "AMOUNT")]
+                            pr_no = pof_data_list.content[z][findTextInArray(pof_data_list, "PRF #")]
                         }
                     }
                     purchased_data_value += `
                     <tr>
                         <td>${purchased_data_value_counter}</td>
+                        <td>${pr_no}</td>
                         <td>${pr_data}</td>
                         <td>${date_decoder(date_time)} /<br> ${time_decoder(date_time)}</td>
                         <td>${quantity}</td>

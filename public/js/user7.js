@@ -483,17 +483,25 @@ document.addEventListener('DOMContentLoaded', async function() {
         const search_wrapper2 = document.getElementById("search_driver");
         const input_box2 = search_wrapper2.querySelector("input");
         const sugg_box2 = search_wrapper2.querySelector(".autocom_box");
-        var data_value = [];
-
-        for (x = 1; x < client_data_list.content.length; x++) {
-            data_value.push(client_data_list.content[x][1]);
+        var driver_data = [];
+        for(let x = 1; x < employee_data_list.content.length; x++){
+            if(employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE STATUS")] == "ACTIVE"){
+                var gender = employee_data_list.content[x][findTextInArray(employee_data_list, "GENDER")];
+                if(gender == "MALE"){
+                    var full_name = `${employee_data_list.content[x][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[x][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[x][findTextInArray(employee_data_list, "MIDDLE NAME")]} ${employee_data_list.content[x][findTextInArray(employee_data_list, "AFFIX")]}`
+                    driver_data.push(full_name);
+                }
+                else{
+                    var full_name = `${employee_data_list.content[x][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[x][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[x][findTextInArray(employee_data_list, "MIDDLE NAME")]} - ${employee_data_list.content[x][findTextInArray(employee_data_list, "SPOUSE NAME")]}`
+                    driver_data.push(full_name);
+                }
+            }
         }
-
         input_box2.onkeyup = (e) => {
             let user_data = e.target.value;
             let empty_array = [];
             if (user_data) {
-                empty_array = data_value.filter((data) => {
+                empty_array = driver_data.filter((data) => {
                     return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
                 });
                 empty_array = empty_array.map((data) => {
