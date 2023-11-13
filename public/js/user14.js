@@ -524,7 +524,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 Item
                             </label><br>
                             <div>
-                                <input type="text" id="item" name="item${item_counter.value}" class="form-control" required autocomplete="off">
+                                <input type="text" id="item" name="item${item_counter.value}" class="form-control" required readonly autocomplete="off">
                             </div>
                         </div>
                         <div>
@@ -534,7 +534,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             </label><br>
                             <div>
                                 <div>
-                                    <input type="number" id="quantity" name="quantity${item_counter.value}" class="form-control" required autocomplete="off">
+                                    <input type="number" id="quantity" name="quantity${item_counter.value}" class="form-control" required readonly autocomplete="off">
                                 </div>
                             </div>
                         </div>
@@ -545,7 +545,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             </label><br>
                             <div>
                                 <div>
-                                    <input type="text" id="unit" name="unit${item_counter.value}" class="form-control" required autocomplete="off">
+                                    <input type="text" id="unit" name="unit${item_counter.value}" class="form-control" required readonly autocomplete="off">
                                 </div>
                             </div>
                         </div>
@@ -558,7 +558,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             </label><br>
                             <div>
                                 <div>
-                                    <input type="text" id="details" name="details${item_counter.value}" class="form-control" required autocomplete="off">
+                                    <input type="text" id="details" name="details${item_counter.value}" class="form-control" required readonly autocomplete="off">
                                 </div>
                             </div>
                         </div>
@@ -569,7 +569,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             </label><br>
                             <div>
                                 <div>
-                                    <input type="text" id="remarks" name="remarks${item_counter.value}" class="form-control" required autocomplete="off">
+                                    <input type="text" id="remarks" name="remarks${item_counter.value}" class="form-control" required readonly autocomplete="off">
                                 </div>
                             </div>
                         </div>
@@ -580,7 +580,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             </label><br>
                             <div>
                                 <div>
-                                    <input type="text" id="department" name="department${item_counter.value}" class="form-control" required autocomplete="off">
+                                    <input type="text" id="department" name="department${item_counter.value}" class="form-control" required readonly autocomplete="off">
                                 </div>
                             </div>
                         </div>
@@ -591,7 +591,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             </label><br>
                             <div>
                                 <div>
-                                    <input type="text" id="requisitioner" name="requisitioner${item_counter.value}" class="form-control" required autocomplete="off">
+                                    <input type="text" id="requisitioner" name="requisitioner${item_counter.value}" class="form-control" required readonly autocomplete="off">
                                 </div>
                             </div>
                         </div>
@@ -616,7 +616,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </label><br>
                         <div>
                             <div>
-                                <input type="number" id="amount" name="amount${item_counter.value}" class="form-control" required autocomplete="off" value="0">
+                                <input type="number" id="amount" name="amount${item_counter.value}" class="form-control" required readonly autocomplete="off" value="0">
                             </div>
                         </div>
                     </div>
@@ -693,13 +693,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                 })
                 unit_cost_input.addEventListener("keyup", () => {
-                    const unit_cost_inputs = document.querySelectorAll("#unit_cost")
+                    var amount_data = 0;
+                    const amount_inputs = document.querySelectorAll("#amount")
                     amount_input.value = parseFloat(unit_cost_input.value) * parseFloat(quantity_input.value)
                     
-                    var amount_data = 0;
-                    unit_cost_inputs.forEach((data) => {
+                    amount_inputs.forEach((data) => {
                         console.log("pass")
-                        amount_data += parseFloat(data.value) * parseFloat(quantity_input.value);
+                        amount_data += parseFloat(data.value);
                     })
                     total_amount_input.value = amount_data;
                 })
