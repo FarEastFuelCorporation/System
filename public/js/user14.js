@@ -448,6 +448,60 @@ document.addEventListener('DOMContentLoaded', async function() {
         const add_item_button = purchase_order_form.querySelector("#add_item_button");
         const remove_item_button = purchase_order_form.querySelector("#remove_item_button");
         
+        // supplier_data_list
+        const search_wrapper2 = document.getElementById("search_supplier_name");
+        const input_box2 = search_wrapper2.querySelector("input");
+        const sugg_box2 = search_wrapper2.querySelector(".autocom_box");
+        const address = purchase_order_form.querySelector("#address");
+        var data_value = [];
+        var data_value_address = [];
+
+        for (x = 1; x < supplier_data_list.content.length; x++) {
+            data_value.push(supplier_data_list.content[x][findTextInArray(supplier_data_list, "SUPPLIER")]);
+            data_value_address.push(supplier_data_list.content[x][findTextInArray(supplier_data_list, "ADDRESS")]);
+        }
+        input_box2.onkeyup = (e) => {
+            let user_data = e.target.value;
+            let empty_array = [];
+            if (user_data) {
+                empty_array = data_value.filter((data) => {
+                    return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
+                });
+                empty_array = empty_array.map((data) => {
+                    return '<li>' + data + '</li>';
+                });
+                search_wrapper2.classList.add("active");
+                show_suggestions2(empty_array);
+            } else {
+                search_wrapper2.classList.remove("active");
+            }
+        };
+        sugg_box2.addEventListener("click", (e) => {
+            if (e.target.tagName === "LI") {
+                select2(e.target.innerHTML);
+            }
+        });
+        function select2(element) {
+            let select_user_data = element;
+            input_box2.value = select_user_data;
+            search_wrapper2.classList.remove("active");
+            for(let x = 1; x < supplier_data_list.content.length; x++){
+                if(select_user_data == supplier_data_list.content[x][findTextInArray(supplier_data_list, "SUPPLIER")]){
+                    address.value = supplier_data_list.content[x][findTextInArray(supplier_data_list, "ADDRESS")]
+                }
+            }
+        }
+        function show_suggestions2(list) {
+            let list_data;
+            if (!list.length) {
+                user_value = input_box2.value;
+                list_data = '<li>' + user_value + '</li>';
+            } else {
+                list_data = list.join("");
+            }
+            sugg_box2.innerHTML = list_data;
+        }
+
         function addItem(){
             const item_counter = purchase_order_form.querySelector("#item_counter");
             var template =
@@ -609,7 +663,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 const amount_input = item.querySelector("#amount")
     
                 itm_form_no.addEventListener("keyup", () => {
-                    console.log("pass")
                     for(let x = 1; x < prf_data_list.content.length; x++){
                         var itm_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")];
                         var item_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITEM")];
@@ -619,10 +672,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         var remarks_data = prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")];
                         var department_data = prf_data_list.content[x][findTextInArray(prf_data_list, "DEPARTMENT")];
                         var requisitioner_data = prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")];
-                        console.log(itm_form_no.value)
-                        console.log(itm_data)
                         if(itm_form_no.value == itm_data){
-                            console.log("pass2")
                             item_input.value = item_data;
                             quantity_input.value = quantity_data;
                             unit_input.value = unit_data;

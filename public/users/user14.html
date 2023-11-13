@@ -257,12 +257,17 @@
                         </div>
                         <div id="item_header" style="display: grid; grid-template-columns: 2fr 2fr .5fr 1fr; gap: 20px;">
                             <div>
-                                <label for="vendor">
-                                    <i class="fa-solid fa-list-ol"></i>
-                                    Vendor
-                                </label><br>
-                                <div>
-                                    <input type="text" id="vendor" name="vendor" class="form-control" required autocomplete="off">
+                                <div class="wrapper">
+                                    <label for="vendor">
+                                        <i class="fa-solid fa-id-card"></i>
+                                        Vendor
+                                    </label><br>
+                                    <div class="search_input" id="search_supplier_name">
+                                        <input type="text" autocomplete="off" name="vendor" id="vendor" class="form-control" required placeholder="Type to Search Driver Name...">
+                                        <div class="autocom_box">
+                                        </div>
+                                        <div class="icon"><i class="fas fa-search"></i></div>
+                                    </div>
                                 </div>
                             </div>
                             <div>
@@ -271,7 +276,7 @@
                                     Address
                                 </label><br>
                                 <div>
-                                    <input type="text" id="address" name="address" class="form-control" required autocomplete="off">
+                                    <input type="text" id="address" name="address" class="form-control" required readonly autocomplete="off">
                                 </div>
                             </div>
                             <div>

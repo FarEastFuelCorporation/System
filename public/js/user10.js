@@ -1061,8 +1061,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             history_list_container_purchasing.insertAdjacentHTML("beforeend", released_data_value);
             history_list_container_purchasing.insertAdjacentHTML("beforeend", purchased_data_value);
 
-            const ap_accounting_dashboard = document.querySelector("#accounting_head_dashboard");
-            const purchase_request_list_ap_accounting = ap_accounting_dashboard.querySelector("#purchase_request_list");
+            const ap_accounting_head_dashboard = document.querySelector("#accounting_head_dashboard");
+            const purchase_request_list_ap_accounting = ap_accounting_head_dashboard.querySelector("#purchase_request_list");
             // purchase_request
             var requested_data_value = "";
             var requested_data_value_counter = 1;
@@ -1131,18 +1131,18 @@ document.addEventListener('DOMContentLoaded', async function() {
             purchase_request_list_ap_accounting.innerHTML = requested_data_value;
 
 
-            // ap_accounting_dashboard
-            const source_of_fund_ap_accounting = ap_accounting_dashboard.querySelector("#source_of_fund");
-            const trucking_fund_ap_accounting = ap_accounting_dashboard.querySelector("#trucking_fund");
-            const hauling_fund_ap_accounting = ap_accounting_dashboard.querySelector("#hauling_fund");
-            const diesel_fund_ap_accounting = ap_accounting_dashboard.querySelector("#diesel_fund");
-            const gasoline_fund_ap_accounting = ap_accounting_dashboard.querySelector("#gasoline_fund");
-            const sir_ruels_fund_ap_accounting = ap_accounting_dashboard.querySelector("#sir_ruels_fund");
-            const scrap_sales_ap_accounting = ap_accounting_dashboard.querySelector("#scrap_sales");
-            const mold_runner_sales_ap_accounting = ap_accounting_dashboard.querySelector("#mold_runner_sales");
-            const truck_scale_collection_ap_accounting = ap_accounting_dashboard.querySelector("#truck_scale_collection");
-            const house_collection_ap_accounting = ap_accounting_dashboard.querySelector("#house_collection");
-            const representation_fund_ap_accounting = ap_accounting_dashboard.querySelector("#representation_fund");
+            // ap_accounting_head_dashboard
+            const source_of_fund_ap_accounting = ap_accounting_head_dashboard.querySelector("#source_of_fund");
+            const trucking_fund_ap_accounting = ap_accounting_head_dashboard.querySelector("#trucking_fund");
+            const hauling_fund_ap_accounting = ap_accounting_head_dashboard.querySelector("#hauling_fund");
+            const diesel_fund_ap_accounting = ap_accounting_head_dashboard.querySelector("#diesel_fund");
+            const gasoline_fund_ap_accounting = ap_accounting_head_dashboard.querySelector("#gasoline_fund");
+            const sir_ruels_fund_ap_accounting = ap_accounting_head_dashboard.querySelector("#sir_ruels_fund");
+            const scrap_sales_ap_accounting = ap_accounting_head_dashboard.querySelector("#scrap_sales");
+            const mold_runner_sales_ap_accounting = ap_accounting_head_dashboard.querySelector("#mold_runner_sales");
+            const truck_scale_collection_ap_accounting = ap_accounting_head_dashboard.querySelector("#truck_scale_collection");
+            const house_collection_ap_accounting = ap_accounting_head_dashboard.querySelector("#house_collection");
+            const representation_fund_ap_accounting = ap_accounting_head_dashboard.querySelector("#representation_fund");
 
             var source_of_fund = 0;
             var trucking_fund = 0;
@@ -1248,10 +1248,10 @@ document.addEventListener('DOMContentLoaded', async function() {
             representation_fund_ap_accounting.innerText = formatNumber(representation_fund);
         }
         
-        const ap_accounting_dashboard = document.querySelector("#accounting_head_dashboard");
-        const request_history_list_ap_accounting = ap_accounting_dashboard.querySelector("#request_history_list");
-        const transfer_history_list_ap_accounting = ap_accounting_dashboard.querySelector("#transfer_history_list");
-        const purchase_request_history_container_accounting = ap_accounting_dashboard.querySelector("#purchase_request_history");
+        const ap_accounting_head_dashboard = document.querySelector("#accounting_head_dashboard");
+        const request_history_list_ap_accounting = ap_accounting_head_dashboard.querySelector("#request_history_list");
+        const transfer_history_list_ap_accounting = ap_accounting_head_dashboard.querySelector("#transfer_history_list");
+        const purchase_request_history_container_accounting = ap_accounting_head_dashboard.querySelector("#purchase_request_history");
         // pending_list
         var data = "";
         var data_value_counter = 0;
@@ -1351,7 +1351,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 purchased.push(prf_data_list.content[i][findTextInArray(prf_data_list, "ITM #")]);
             }
         }
-
         for (let i = 1; i < pof_data_list.content.length; i++) {
             if (!prf_pr_transaction.includes(pof_data_list.content[i][findTextInArray(prf_data_list, "ITM #")])) {
                 prf_pr_transaction.push(pof_data_list.content[i][findTextInArray(prf_data_list, "ITM #")]);
