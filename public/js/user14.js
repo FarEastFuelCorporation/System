@@ -478,7 +478,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         };
         sugg_box2.addEventListener("click", (e) => {
             if (e.target.tagName === "LI") {
-                select2(e.target.innerHTML);
+                select2(e.target.innerText);
             }
         });
         function select2(element) {
