@@ -547,7 +547,6 @@ function customValidation3() {
   const fund_amounts = document.querySelectorAll(`.fund_amount`);
   const fund_allocations = document.querySelectorAll(`.fund_allocation`);
   let validationFailed = false;
-  
   fund_sources.forEach((fund_source, i) => {
     if (fund_source.value == "OTHERS" && fund_allocations[i].value == "OTHERS") {
       alert('Invalid Transaction!');
@@ -555,8 +554,6 @@ function customValidation3() {
     }
     if (fund_source.value !== "BANK" && fund_source.value !== "OTHERS") {
       if (parseFloat(fund_amounts[i].value) > parseFloat(fund_source_amounts[i].value)) {
-        console.log(parseFloat(fund_amounts[i].value))
-        console.log(parseFloat(fund_source_amounts[i].value))
         alert('Invalid Transaction! Fund Amount is Greater than Fund Source Amount.');
         validationFailed = true; // Set the flag to indicate validation failure
       }
