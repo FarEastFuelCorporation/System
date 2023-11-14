@@ -1338,6 +1338,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "HOUSE COLLECTION") {
                         house_collection += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                        console.log(house_collection)
+                        console.log(ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")])
                     }
                     else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "REPRESENTATION FUND") {
                         representation_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
@@ -1348,7 +1350,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
                 // fund_allocation
                 if (!type_of_funds.includes(ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")]) &&
-                    (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")].includes("RETURN"))) {
+                    (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")].includes("RETURN")) &&
+                    month_filter.value == formatMonth(ftf_data_list.content[i][findTextInArray(ftf_data_list, "CREATED AT")])
+                    ) {
                     if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "SOURCE OF FUND") {
                         source_of_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
                     }
@@ -1378,6 +1382,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "HOUSE COLLECTION") {
                         house_collection -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                        console.log(house_collection)
+                        console.log(ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")])
                     }
                     else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "REPRESENTATION FUND") {
                         representation_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
