@@ -170,10 +170,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                 }
             }
-            // const pending_billing = sf_transaction_billing;
             const pending_billing = sf_transaction_billing.filter((element) => !sf_tpf_transaction_billing.includes(element));;
-            console.log(sf_transaction_billing)
-            console.log(sf_transaction_billing)
+
             // collection
             bpf_transaction_collection = {};
             bpf_ctf_transaction_collection = {};
