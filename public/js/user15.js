@@ -1404,7 +1404,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div><hr>
             `
             fund_transfer_form_buttons_ap_accounting.insertAdjacentHTML("beforebegin", data);
             updateFunction ();
