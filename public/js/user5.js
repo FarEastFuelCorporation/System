@@ -107,8 +107,15 @@ document.addEventListener('DOMContentLoaded', async function() {
             // billing
             sf_transaction_billing = [];
             sf_tpf_transaction_billing = [];
-            var mtf_list = []
+            var mtf_cod_list = [];
+            var mtf_bpf_list = [];
+            var done_cod = [];
             for (let i = 1; i < cod_data_list.content.length; i++) {
+                for (let x = 1; x < bpf_data_list.content.length; x++) {
+                    if(!done_cod.includes(bpf_data_list.content[x][findTextInArray(bpf_data_list, "COD #")])){
+                        done_cod.push(bpf_data_list.content[x][findTextInArray(bpf_data_list, "COD #")])
+                    }
+                }
                 var mtf = "";
                 var ltf = "";
                 for(let k = 1; k < wcf_data_list.content.length; k++){
@@ -126,38 +133,44 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                     }
                 }
-                if (month_filter.value == formatMonth(cod_data_list.content[i][findTextInArray(cod_data_list, "HAULING DATE")])) {
-                    if(!sf_transaction_billing.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")])){
-                        sf_transaction_billing.push(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]);
+                if(!done_cod.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")])){
+                    if (month_filter.value == formatMonth(cod_data_list.content[i][findTextInArray(cod_data_list, "HAULING DATE")])) {
+                        if(!sf_transaction_billing.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")])){
+                            sf_transaction_billing.push(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]);
+                        }
+                        if(!mtf_cod_list.includes(mtf)){
+                            mtf_cod_list.push(mtf)
+                        }
                     }
-                    if(!mtf_list.includes(mtf)){
-                        mtf_list.push(mtf)
+                    else if (month_filter.value == "ALL") {
+                        if(!sf_transaction_billing.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")])){
+                            sf_transaction_billing.push(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]);
+                        }
+                        if(!mtf_cod_list.includes(mtf)){
+                            mtf_cod_list.push(mtf)
+                        }
                     }
                 }
-                else if (month_filter.value == "ALL") {
-                    if(!sf_transaction_billing.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")])){
-                        sf_transaction_billing.push(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]);
+                else{
+                    if (month_filter.value == formatMonth(cod_data_list.content[i][findTextInArray(cod_data_list, "HAULING DATE")])) {
+                        if(!sf_transaction_billing.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")])){
+                            sf_transaction_billing.push(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]);
+                        }
+                        if(!mtf_bpf_list.includes(mtf)){
+                            mtf_bpf_list.push(mtf)
+                        }
                     }
-                    if(!mtf_list.includes(mtf)){
-                        mtf_list.push(mtf)
+                    else if (month_filter.value == "ALL") {
+                        if(!sf_transaction_billing.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")])){
+                            sf_transaction_billing.push(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]);
+                        }
+                        if(!mtf_bpf_list.includes(mtf)){
+                            mtf_bpf_list.push(mtf)
+                        }
                     }
-                }
-            }
-    
-            for (let i = 1; i < bpf_data_list.content.length; i++) {
-                if (!sf_tpf_transaction_billing.includes(bpf_data_list.content[i][findTextInArray(bpf_data_list, "COD #")]) &&
-                month_filter.value == formatMonth(bpf_data_list.content[i][findTextInArray(bpf_data_list, "HAULING DATE")])) {
-                    sf_tpf_transaction_billing.push(bpf_data_list.content[i][findTextInArray(bpf_data_list, "COD #")]);
-                }
-                else if (!sf_tpf_transaction_billing.includes(bpf_data_list.content[i][findTextInArray(bpf_data_list, "COD #")]) &&
-                month_filter.value == "ALL") {
-                    sf_tpf_transaction_billing.push(bpf_data_list.content[i][findTextInArray(bpf_data_list, "COD #")]);
                 }
             }
             const pending_billing = sf_tpf_transaction_billing.filter((element) => !sf_transaction_billing.includes(element));
-            console.log(pending_billing)
-            console.log(sf_transaction_billing)
-            console.log(sf_tpf_transaction_billing)
             // collection
             bpf_transaction_collection = {};
             bpf_ctf_transaction_collection = {};
@@ -482,9 +495,9 @@ document.addEventListener('DOMContentLoaded', async function() {
             pending_list_collection.innerHTML = data_value_collection;         
             
             // billing
-            certified_counter_billing.innerText = mtf_list.length;
-            pending_counter_billing.innerText = sf_transaction_billing.length - sf_tpf_transaction_billing.length;
-            billed_counter_billing.innerText = sf_tpf_transaction_billing.length;
+            certified_counter_billing.innerText = mtf_cod_list.length + mtf_bpf_list.length;
+            pending_counter_billing.innerText = mtf_cod_list.length;
+            billed_counter_billing.innerText = mtf_bpf_list.length;
 
             // collection
             // const pending_collection = bpf_transaction_collection.filter((element) => !bpf_ctf_transaction_collection.includes(element));
