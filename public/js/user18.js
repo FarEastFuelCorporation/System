@@ -13,9 +13,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         const qlf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyFU_skru2tnyEiv8I5HkpRCXbUlQb5vlJUm8Le0nZBCvfZeFkQPd2Naljs5CZY41I17w/exec');
         const prf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxZctLub-6PuQGykx298syeH7Qm__S37uqQrVFYsHVtv-Qk8M2oSkRIPIMVT_1WexqRZA/exec');
         const pof_response_promise = fetch('https://script.google.com/macros/s/AKfycby9i2KfOZ_uF7-JUPX8qpXg7Jewmw6oU3EfUTpXiwnRRB91_qIW3xAVNy5SZBN1YhVzzg/exec');
-        const irf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzTmhNOz5cXeKitSXAriUJ_FEahAQugYEKIRwDuFt9tjhj2AtPKEf2H4yTMmZ1igpUxlQ/exec');
         const iid_response_promise = fetch('https://script.google.com/macros/s/AKfycbyaV_cnq0bfOWPgDTfyrit-nCAMwyI5Vw1xlx47RNSoSEBd8PyMw3-0UeNlojqBKgk/exec');
         const wsf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxNmSYTrW2BWirX6dk1DKzJ0F2HmMlkNkdmGGZFoRIt5rW88RjqaUXMh41k_qM8pwjb/exec');
+        const irf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzTmhNOz5cXeKitSXAriUJ_FEahAQugYEKIRwDuFt9tjhj2AtPKEf2H4yTMmZ1igpUxlQ/exec');
 
         const [
             username_response,
@@ -31,9 +31,9 @@ document.addEventListener('DOMContentLoaded', async function() {
             qlf_response,
             prf_response,
             pof_response,
-            irf_response,
             iid_response,
             wsf_response,
+            irf_response,
         ] = await Promise.all([
             username_response_promise,
             client_list_response_promise,
@@ -48,9 +48,9 @@ document.addEventListener('DOMContentLoaded', async function() {
             qlf_response_promise,
             prf_response_promise,
             pof_response_promise,
-            irf_response_promise,
             iid_response_promise,
             wsf_response_promise,
+            irf_response_promise,
         ]);
 
         const username_data_list  = await username_response.json();
@@ -66,9 +66,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         const qlf_data_list  = await qlf_response.json();
         const prf_data_list  = await prf_response.json();
         const pof_data_list  = await pof_response.json();
-        const irf_data_list  = await irf_response.json();
         const iid_data_list  = await iid_response.json();
         const wsf_data_list  = await wsf_response.json();
+        const irf_data_list  = await irf_response.json();
 
         // Code that depends on the fetched data
         // username_data_list3

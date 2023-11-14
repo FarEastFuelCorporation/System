@@ -440,9 +440,9 @@
             <!-- LOGISTICS TRAVEL FORM -->
             <section class="logistic" id="logistics_travel_form">
                 <h2>LOGISTICS TRAVEL FORM</h2><br>
-                <form id="form_id" action="https://script.google.com/macros/s/AKfycbyEuTmtd-U47koc6fTQp6zMRq51h1wHi3vSEIHxdJelD-nq4ToYg38UQp0GAlkNf6T7/exec" method="post">
+                <form id="form_id" action="https://script.google.com/macros/s/AKfycbxoTl4vfPp5FGzgzTfE5RE_P1tuZWTblqzDpNmb6GF5TO2D9321Hw04YO8kMwJAOLLl/exec" method="post">
                     <input type="hidden" name="user" id="user">
-                    <input type="hidden" name="mtf_form_no" id="mtf_form_no">
+                    <input type="text" name="mtf_form_no" id="mtf_form_no">
                     <input type="hidden" name="client" id="client">
                     <input type="hidden" name="type_of_waste" id="type_of_waste">
                     <input type="hidden" name="hauling_date" id="hauling_date">
@@ -875,20 +875,26 @@
                     </label><br>
                 </div>
                 <div id="form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
-                    <form action="https://script.google.com/macros/s/AKfycbylJczj1oQ7E3tzIiXOwLyWfbIWAubaw03ZTkr4G_JiFfmXRPF7xwwThtxE2VZcHsyH0A/exec" method="post">
+                    <form action="https://script.google.com/macros/s/AKfycbzbi8ofhv1X-Tng2WllOJb_Bdbam8CuhyETWyJY4G56vTzVnFdQxxEI0QNZnjhNMo__/exec" method="post">
                         <input type="hidden" name="user" id="user">
+                        <input type="hidden" name="iid_counter" id="iid_counter" value="0">
                         <div>
-                            <div>
-                                <label for="stf_form_no">
-                                    <i class="fa-solid fa-list-ol"></i>
-                                    WSF #
-                                </label><br>
-                                <div class="form">
-                                    <input type="text" id="wsf_form_no" name="wsf_form_no" autocomplete="off" class="form-control" readonly>
-                                </div>
-                            </div><br>
+                            <label for="wsf_form_no">
+                                <i class="fa-solid fa-list-ol"></i>
+                                WSF #
+                            </label><br>
+                            <div class="form">
+                                <input type="text" id="wsf_form_no" name="wsf_form_no" autocomplete="off" class="form-control" readonly>
+                            </div>
+                        </div><br>
+                        <div id="purpose_container">
+                            <label for="purpose">
+                                <i class="fa-solid fa-list-ol"></i>
+                                Purpose
+                            </label>
                         </div>
-                        <div class="add_item pt-3" style="display: none;">
+                        <input type="text" id="purpose" name="purpose" autocomplete="off" class="form-control" required placeholder="ex. kg/pc/box/set">
+                        <div class="add_item pt-3" style="position: absolute; top: 50px; right: 300px;">
                             <div class="item_buttons">
                                 <button type="button" id="remove_item_button" class="form-control">
                                     <i class="fa-solid fa-minus"></i>
@@ -934,9 +940,9 @@
                                     <th>RACK/<BR>PALLET</th>
                                     <th>LEVEL</th>
                                     <th>ITEM</th>
-                                    <th>UNIT</th>
-                                    <th>QUANTITY</th>
                                     <th>DESCRIPTION</th>
+                                    <th>UNIT</th>
+                                    <th>AVAILABLE<br>STOCK</th>
                                     <th>SUBMITTED BY</th>
                                 </thead>
                                 <tbody id="supplies_inventory_list">

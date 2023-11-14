@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const ltf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxBLMvyNDsT9_dlVO4Qc31dI4ErcymUHbzKimOpCZHgbJxip2XxCl7Wk3hJyqcdtrxU/exec');
         const wcf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyBFTBuFZ4PkvwmPi_3Pp_v74DCSEK2VpNy6janIGgaAK-P22wazmmShOKn6iwFbrQn/exec');
         const sf_response_promise = fetch('https://script.google.com/macros/s/AKfycby9b2VCfXc0ifkwBXJRi2UVUwgZIj9F4FTOdZa_SYKZdsTwbVtAzAXzNMFeklE35bg1/exec');
+        const stf_response_promise = fetch('https://script.google.com/macros/s/AKfycbytp1dpaOC_8sf0YsO2U2iJRiUjk791Pg-nA0zVYmxyE9zd0pc8Hlfu4P_-KalUyNLgDw/exec');
         const qlf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyFU_skru2tnyEiv8I5HkpRCXbUlQb5vlJUm8Le0nZBCvfZeFkQPd2Naljs5CZY41I17w/exec');
         const prf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxZctLub-6PuQGykx298syeH7Qm__S37uqQrVFYsHVtv-Qk8M2oSkRIPIMVT_1WexqRZA/exec');
         const pof_response_promise = fetch('https://script.google.com/macros/s/AKfycby9i2KfOZ_uF7-JUPX8qpXg7Jewmw6oU3EfUTpXiwnRRB91_qIW3xAVNy5SZBN1YhVzzg/exec');
@@ -28,6 +29,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             ltf_response,
             wcf_response,
             sf_response,
+            stf_response,
             qlf_response,
             prf_response,
             pof_response,
@@ -45,6 +47,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             ltf_response_promise,
             wcf_response_promise,
             sf_response_promise,
+            stf_response_promise,
             qlf_response_promise,
             prf_response_promise,
             pof_response_promise,
@@ -63,6 +66,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const ltf_data_list  = await ltf_response.json();
         const wcf_data_list  = await wcf_response.json();
         const sf_data_list  = await sf_response.json();
+        const stf_data_list  = await stf_response.json();
         const qlf_data_list  = await qlf_response.json();
         const prf_data_list  = await prf_response.json();
         const pof_data_list  = await pof_response.json();
@@ -1133,6 +1137,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         const supplies_warehouse = document.querySelector("#supplies_warehouse");
         const withdrawal_form_button = supplies_warehouse.querySelector("#withdrawal_form_button");
         const form_tab_supplies_transaction = supplies_warehouse.querySelector("#form_tab");
+        const add_item_button_supplies_warehouse = supplies_warehouse.querySelector("#add_item_button");
+        const remove_item_button_supplies_warehouse = supplies_warehouse.querySelector("#remove_item_button");
+        const purpose_container_supplies_warehouse = supplies_warehouse.querySelector("#purpose_container");
 
         withdrawal_form_button.addEventListener("click", () => {
             if(form_tab_supplies_transaction.style.display == "none"){
@@ -1141,7 +1148,115 @@ document.addEventListener('DOMContentLoaded', async function() {
                 form_tab_supplies_transaction.style.display = "none"
             }
         })
+        addIIDItem()
+        add_item_button_supplies_warehouse.addEventListener("click", () => {
+            addIIDItem()
+            remove_item_button_supplies_warehouse.style.display = "block"
+        })
+        remove_item_button_supplies_warehouse.addEventListener("click", () => {
+            const iid_counter = document.getElementById("iid_counter");
+            const iid_container = document.querySelector(`#iid_container${iid_counter.value}`)
+            iid_container.remove();
+            if(iid_counter.value == 1){
+                remove_item_button_supplies_warehouse.style.display = "none"
+            }
+            iid_counter.value = parseInt(iid_counter.value) - 1;
+        })
 
+        var iid_no_array = [];
+        var iid_item_array = [];
+        for(let x = 1; x < iid_data_list.content.length; x++){
+            var quantity = 0
+            var total_amount = 0
+            var iid_no = iid_data_list.content[x][findTextInArray(iid_data_list, "IID #")]
+            for(let y = 1; y < stf_data_list.content.length; y++){
+                if(iid_no == stf_data_list.content[y][findTextInArray(stf_data_list, "IID #")]){
+                    if(stf_data_list.content[y][findTextInArray(stf_data_list, "TRANSACTION")] == "RE-STOCK"){
+                        quantity += stf_data_list.content[y][findTextInArray(stf_data_list, "QUANTITY")];
+                        total_amount += (stf_data_list.content[y][findTextInArray(stf_data_list, "QUANTITY")] * stf_data_list.content[y][findTextInArray(stf_data_list, "AMOUNT")]);
+                    }
+                    else if(stf_data_list.content[y][findTextInArray(stf_data_list, "TRANSACTION")] == "WITHDRAW"){
+                        quantity -= stf_data_list.content[y][findTextInArray(stf_data_list, "QUANTITY")];
+                        total_amount -= (stf_data_list.content[y][findTextInArray(stf_data_list, "QUANTITY")] * stf_data_list.content[y][findTextInArray(stf_data_list, "AMOUNT")]);
+                    }
+                    else if(stf_data_list.content[y][findTextInArray(stf_data_list, "TRANSACTION")] == "NEW ITEM"){
+                        quantity += stf_data_list.content[y][findTextInArray(stf_data_list, "QUANTITY")];
+                        total_amount += (stf_data_list.content[y][findTextInArray(stf_data_list, "QUANTITY")] * stf_data_list.content[y][findTextInArray(stf_data_list, "AMOUNT")]);
+                    }
+                }
+            }
+            var table_data_counter = 1;
+            var table_data_supplies_inventory =
+            `
+            <tr>
+                <td>${table_data_counter}</td>
+                <td>${iid_data_list.content[x][findTextInArray(iid_data_list, "IID #")]}</td>
+                <td>${iid_data_list.content[x][findTextInArray(iid_data_list, "STORAGE TYPE")]}</td>
+                <td>${iid_data_list.content[x][findTextInArray(iid_data_list, "RACK/ PALLET")]}</td>
+                <td>${iid_data_list.content[x][findTextInArray(iid_data_list, "LEVEL")]}</td>
+                <td>${iid_data_list.content[x][findTextInArray(iid_data_list, "ITEM")]}</td>
+                <td>${iid_data_list.content[x][findTextInArray(iid_data_list, "DESCRIPTION")]}</td>
+                <td>${iid_data_list.content[x][findTextInArray(iid_data_list, "UNIT")]}</td>
+                <td>${quantity}</td>
+                <td>${iid_data_list.content[x][findTextInArray(iid_data_list, "SUBMITTED BY")]}</td>
+            </tr>
+            `
+            table_data_counter += 1;
+            iid_no_array.push(iid_data_list.content[x][findTextInArray(iid_data_list, "IID #")])
+            iid_item_array.push(iid_data_list.content[x][findTextInArray(iid_data_list, "ITEM")])
+            supplies_inventory_list.insertAdjacentHTML("beforeend", table_data_supplies_inventory)
+        }
+
+        function addIIDItem(){
+            const iid_counter = document.getElementById("iid_counter");
+            iid_counter.value = parseInt(iid_counter.value) + 1;
+            var iid_data = 
+            `
+            <div id="iid_container${iid_counter.value}" class="iid_container" style="display: flex; gap: 20px;">
+                <div id="iid_form_no">
+                    <label for="iid_form_no${iid_counter.value}">
+                        <i class="fa-solid fa-list-ol"></i>
+                        IID #
+                    </label><br>
+                    <div class="form">
+                        <input type="text" id="iid_form_no${iid_counter.value}" name="iid_form_no${iid_counter.value}" autocomplete="off" class="form-control">
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px">
+                    <div>
+                        <label for="item${iid_counter.value}">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Item
+                        </label>
+                        <input type="text" id="item${iid_counter.value}" name="item${iid_counter.value}" autocomplete="off" class="form-control" required readonly placeholder="Autofind">
+                    </div>
+                    <div>
+                        <label for="quantity${iid_counter.value}">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Quantity
+                        </label>
+                        <input type="text" id="quantity" name="quantity${iid_counter.value}" autocomplete="off" class="form-control" required placeholder="Input Quantity">
+                    </div>
+                </div>
+            </div><hr>
+            `
+            purpose_container_supplies_warehouse.insertAdjacentHTML("beforebegin", iid_data)
+
+            const iid_form_no = supplies_warehouse.querySelector(`#iid_form_no${iid_counter.value}`);
+            const item = supplies_warehouse.querySelector(`#item${iid_counter.value}`);
+            iid_form_no.addEventListener("keyup", () => {
+                for(let x = 0; x < iid_no_array.length; x++){
+
+                    if(iid_form_no.value == iid_no_array[x]){
+                        item.value = iid_item_array[x]
+                        break
+                    }
+                    else{
+                        item.value = "No Item Found"
+                    }
+                }
+            })
+        }
                 
         // incident report form
         const irf_form_no = document.getElementById("irf_form_no");
