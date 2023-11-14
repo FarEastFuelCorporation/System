@@ -575,25 +575,67 @@ document.addEventListener('DOMContentLoaded', async function() {
             // billing
             sf_transaction_billing = [];
             sf_tpf_transaction_billing = [];
+            var mtf_cod_list = [];
+            var mtf_bpf_list = [];
+            var done_cod = [];
             for (let i = 1; i < cod_data_list.content.length; i++) {
-                if (!sf_transaction_billing.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]) &&
-                month_filter.value == formatMonth(cod_data_list.content[i][findTextInArray(cod_data_list, "HAULING DATE")])) {
-                    sf_transaction_billing.push(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]);
+                for (let x = 1; x < bpf_data_list.content.length; x++) {
+                    if(!done_cod.includes(bpf_data_list.content[x][findTextInArray(bpf_data_list, "COD #")])){
+                        done_cod.push(bpf_data_list.content[x][findTextInArray(bpf_data_list, "COD #")])
+                    }
                 }
-                else if (!sf_transaction_billing.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]) &&
-                month_filter.value == "ALL") {
-                    sf_transaction_billing.push(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]);
+                var mtf = "";
+                var ltf = "";
+                for(let k = 1; k < wcf_data_list.content.length; k++){
+                    if(cod_data_list.content[i][findTextInArray(cod_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                        if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                            mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                        }else{
+                            ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                            for(let x = 1; x < ltf_data_list.content.length; x++){
+                                if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                    mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                    break
+                                }
+                            }
+                        }
+                    }
                 }
-            }
-    
-            for (let i = 1; i < bpf_data_list.content.length; i++) {
-                if (!sf_tpf_transaction_billing.includes(bpf_data_list.content[i][findTextInArray(bpf_data_list, "COD #")]) &&
-                month_filter.value == formatMonth(bpf_data_list.content[i][findTextInArray(bpf_data_list, "HAULING DATE")])) {
-                    sf_tpf_transaction_billing.push(bpf_data_list.content[i][findTextInArray(bpf_data_list, "COD #")]);
+                if(!done_cod.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")])){
+                    if (month_filter.value == formatMonth(cod_data_list.content[i][findTextInArray(cod_data_list, "HAULING DATE")])) {
+                        if(!sf_transaction_billing.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")])){
+                            sf_transaction_billing.push(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]);
+                        }
+                        if(!mtf_cod_list.includes(mtf)){
+                            mtf_cod_list.push(mtf)
+                        }
+                    }
+                    else if (month_filter.value == "ALL") {
+                        if(!sf_transaction_billing.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")])){
+                            sf_transaction_billing.push(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]);
+                        }
+                        if(!mtf_cod_list.includes(mtf)){
+                            mtf_cod_list.push(mtf)
+                        }
+                    }
                 }
-                else if (!sf_tpf_transaction_billing.includes(bpf_data_list.content[i][findTextInArray(bpf_data_list, "COD #")]) &&
-                month_filter.value == "ALL") {
-                    sf_tpf_transaction_billing.push(bpf_data_list.content[i][findTextInArray(bpf_data_list, "COD #")]);
+                else{
+                    if (month_filter.value == formatMonth(cod_data_list.content[i][findTextInArray(cod_data_list, "HAULING DATE")])) {
+                        if(!sf_tpf_transaction_billing.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")])){
+                            sf_tpf_transaction_billing.push(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]);
+                        }
+                        if(!mtf_bpf_list.includes(mtf)){
+                            mtf_bpf_list.push(mtf)
+                        }
+                    }
+                    else if (month_filter.value == "ALL") {
+                        if(!sf_tpf_transaction_billing.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")])){
+                            sf_tpf_transaction_billing.push(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]);
+                        }
+                        if(!mtf_bpf_list.includes(mtf)){
+                            mtf_bpf_list.push(mtf)
+                        }
+                    }
                 }
             }
 
@@ -629,12 +671,12 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
     
             // billing
-            const pending_billing = sf_transaction_billing.filter((element) => !sf_tpf_transaction_billing.includes(element));
+            const pending_billing = sf_transaction_billing.filter((element) => !sf_tpf_transaction_billing.includes(element));;
     
-            certified_counter_billing.innerText = sf_transaction_billing.length;
-            pending_counter_billing.innerText = sf_transaction_billing.length - sf_tpf_transaction_billing.length;
-            billed_counter_billing.innerText = sf_tpf_transaction_billing.length;
-
+            certified_counter_billing.innerText = mtf_cod_list.length + mtf_bpf_list.length;
+            pending_counter_billing.innerText = mtf_cod_list.length;
+            billed_counter_billing.innerText = mtf_bpf_list.length;
+            
             // collection
             const pending_collection = bpf_transaction_collection.filter((element) => !bpf_ctf_transaction_collection.includes(element));
     
@@ -647,7 +689,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             
             // billing
             var options = {
-                series: [sf_transaction_billing.length - sf_tpf_transaction_billing.length, sf_tpf_transaction_billing.length],
+                series: [mtf_cod_list.length, mtf_bpf_list.length],
                 chart: {
                     width: 500, // Set the desired width
                     height: 550, // Set the desired height
@@ -758,23 +800,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 for(let j = 1; j < cod_data_list.content.length; j++){
                     if(pending_billing[i] == cod_data_list.content[j][findTextInArray(cod_data_list, "COD #")] &&
                     month_filter.value == formatMonth(cod_data_list.content[j][findTextInArray(cod_data_list, "HAULING DATE")])){
-                        var mtf = "";
-                        var ltf = "";
-                        for(let k = 1; k < wcf_data_list.content.length; k++){
-                            if(cod_data_list.content[j][findTextInArray(cod_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
-                                if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
-                                    mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
-                                }else{
-                                    ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
-                                    for(let x = 1; x < ltf_data_list.content.length; x++){
-                                        if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
-                                            mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
-                                            break
-                                        }
-                                    }
-                                }
-                            }
-                        }
                         data_value +=`
                         <tr>
                             <td>${data_value_counter}</td>
@@ -784,7 +809,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${date_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "ACTUAL COMPLETION DATE")])} /<br>${time_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "ACTUAL COMPLETION TIME")])}</td>
                             <td>${findClientName(cod_data_list.content[j][findTextInArray(cod_data_list, "CLIENT ID")])}</td>
                             <td>${findWasteCode(cod_data_list.content[j][findTextInArray(cod_data_list, "WASTE ID")])}</td>
-                            <td>${findWasteName(cod_data_list.content[j][findTextInArray(cod_data_list, "CLIENT ID")], cod_data_list.content[j][findTextInArray(cod_data_list, "WASTE ID")])}</td>
+                            <td>${cod_data_list.content[j][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
                             <td>${cod_data_list.content[j][findTextInArray(cod_data_list, "WEIGHT")]}</td>
                             <td>${cod_data_list.content[j][findTextInArray(cod_data_list, "SUBMITTED BY")]}</td>
                         </tr>
@@ -793,23 +818,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     else if(pending_billing[i] == cod_data_list.content[j][findTextInArray(cod_data_list, "COD #")] &&
                     month_filter.value == "ALL"){
-                        var mtf = "";
-                        var ltf = "";
-                        for(let k = 1; k < wcf_data_list.content.length; k++){
-                            if(cod_data_list.content[j][findTextInArray(cod_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
-                                if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
-                                    mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
-                                }else{
-                                    ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
-                                    for(let x = 1; x < ltf_data_list.content.length; x++){
-                                        if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
-                                            mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
-                                            break
-                                        }
-                                    }
-                                }
-                            }
-                        }
                         data_value +=`
                         <tr>
                             <td>${data_value_counter}</td>
@@ -819,7 +827,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${date_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "ACTUAL COMPLETION DATE")])} /<br>${time_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "ACTUAL COMPLETION TIME")])}</td>
                             <td>${findClientName(cod_data_list.content[j][findTextInArray(cod_data_list, "CLIENT ID")])}</td>
                             <td>${findWasteCode(cod_data_list.content[j][findTextInArray(cod_data_list, "WASTE ID")])}</td>
-                            <td>${findWasteName(cod_data_list.content[j][findTextInArray(cod_data_list, "CLIENT ID")], cod_data_list.content[j][findTextInArray(cod_data_list, "WASTE ID")])}</td>
+                            <td>${cod_data_list.content[j][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
                             <td>${cod_data_list.content[j][findTextInArray(cod_data_list, "WEIGHT")]}</td>
                             <td>${cod_data_list.content[j][findTextInArray(cod_data_list, "SUBMITTED BY")]}</td>
                         </tr>
@@ -828,7 +836,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                 }
             }
-            pending_list_billing.innerHTML = data_value;            
+            pending_list_billing.innerHTML = data_value;          
             
             // collection
             var data_value_collection = "";
