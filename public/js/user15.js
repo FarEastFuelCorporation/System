@@ -1317,7 +1317,15 @@ document.addEventListener('DOMContentLoaded', async function() {
             var data = 
             `
             <div id="data_container${data_counter_ap_accounting.value}">
-                <div class="d-flex gap-4" id="data"">
+                <div class="d-flex gap-4" id="data">
+                    <div style="width: 10%;">
+                        <div>
+                            <label for="transaction_date${data_counter_ap_accounting.value}">
+                                Transaction Date
+                            </label><br>
+                            <input type="date" id="transaction_date${data_counter_ap_accounting.value}" name="transaction_date${data_counter_ap_accounting.value}" class="form-control fund_amount"  autocomplete="off" placeholder="Input Fund Amount" required value="0"> 
+                        </div>
+                    </div>
                     <div style="width: 30%;">
                         <div>
                             <label for="fund_source${data_counter_ap_accounting.value}">
@@ -1387,18 +1395,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <input type="text" id="fund_allocation_other_details${data_counter_ap_accounting.value}" name="fund_allocation_other_details${data_counter_ap_accounting.value}" class="form-control"  autocomplete="off" placeholder="Input Fund Allocation">
                         </div>
                     </div>
-                    <div style="width: 20%;">
+                    <div style="width: 15%;">
                         <div>
                             <label for="fund_amount${data_counter_ap_accounting.value}">
                                 Fund Amount
                             </label><br>
-                            <input type="number" id="fund_amount${data_counter_ap_accounting.value}" name="fund_amount${data_counter_ap_accounting.value}" class="form-control fund_amount"  autocomplete="off" placeholder="Input Fund Amount" required value="0"
-                        </div>
-                        <div>
-                            <label for="transaction_date${data_counter_ap_accounting.value}">
-                                Transaction Date
-                            </label><br>
-                            <input type="date" id="transaction_date${data_counter_ap_accounting.value}" name="transaction_date${data_counter_ap_accounting.value}" class="form-control fund_amount"  autocomplete="off" placeholder="Input Fund Amount" required value="0"> 
+                            <input type="number" id="fund_amount${data_counter_ap_accounting.value}" name="fund_amount${data_counter_ap_accounting.value}" class="form-control fund_amount"  autocomplete="off" placeholder="Input Fund Amount" required value="0">
                         </div>
                     </div>
                 </div>

@@ -224,6 +224,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <tr>
                             <td>${data_value_counter}</td>
                             <td>${ltf_data_list.content[j][findTextInArray(ltf_data_list, "LTF #")]}</td>
+                            <td>${ltf_data_list.content[j][findTextInArray(ltf_data_list, "MTF #")]}</td>
                             <td>${date_decoder(ltf_data_list.content[j][findTextInArray(ltf_data_list, "HAULING DATE")])} /<br> ${time_decoder(ltf_data_list.content[j][findTextInArray(ltf_data_list, "HAULING TIME")])}</td>
                             <td>${findClientName(ltf_data_list.content[j][findTextInArray(ltf_data_list, "CLIENT ID")])}</td>
                             <td>${findWasteCode(ltf_data_list.content[j][findTextInArray(ltf_data_list, "WASTE ID")])}</td>
@@ -241,6 +242,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <tr>
                             <td>${data_value_counter}</td>
                             <td>${ltf_data_list.content[j][findTextInArray(ltf_data_list, "LTF #")]}</td>
+                            <td>${ltf_data_list.content[j][findTextInArray(ltf_data_list, "MTF #")]}</td>
                             <td>${date_decoder(ltf_data_list.content[j][findTextInArray(ltf_data_list, "HAULING DATE")])} /<br> ${time_decoder(ltf_data_list.content[j][findTextInArray(ltf_data_list, "HAULING TIME")])}</td>
                             <td>${findClientName(ltf_data_list.content[j][findTextInArray(ltf_data_list, "CLIENT ID")])}</td>
                             <td>${findWasteCode(ltf_data_list.content[j][findTextInArray(ltf_data_list, "WASTE ID")])}</td>
@@ -262,6 +264,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <tr>
                             <td>${data_value_counter}</td>
                             <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")]}</td>
+                            <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")]}</td>
                             <td>${date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])} /<br> ${time_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING TIME")])}</td>
                             <td>${findClientName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")])}</td>
                             <td>${findWasteCode(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")])}</td>
@@ -278,6 +281,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         data_value +=`
                         <tr>
                             <td>${data_value_counter}</td>
+                            <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")]}</td>
                             <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")]}</td>
                             <td>${date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])} /<br> ${time_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING TIME")])}</td>
                             <td>${findClientName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")])}</td>
@@ -438,6 +442,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
 
         const wcf_data2 = document.getElementById("wcf_data2");
+        const mtf_form_no = document.getElementById("mtf_form_no");
         const ltf_form_no = document.getElementById("ltf_form_no");
         const client = document.getElementById("client");
         const client_id = document.getElementById("client_id");
@@ -455,6 +460,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const ptt = document.getElementById("ptt");
         const manifest = document.getElementById("manifest");
         const type_of_vehicle_container = document.getElementById("type_of_vehicle_container");
+        const process = document.getElementById("process");
         
         search_ltf_form_no_button.addEventListener("click", () => {
             var data_value;
@@ -497,6 +503,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             REMARKS: ${ltf_data_list.content[z][findTextInArray(ltf_data_list, "REMARKS")]}<br>
                             SUBMITTED BY: ${ltf_data_list.content[z][findTextInArray(ltf_data_list, "SUBMITTED BY")]}<br>
                             `
+                            mtf_form_no.value = ltf_data_list.content[z][findTextInArray(ltf_data_list, "MTF #")];
                             ltf_form_no.value = ltf_data_list.content[z][findTextInArray(ltf_data_list, "LTF #")];
                             client_id.value = ltf_data_list.content[z][findTextInArray(ltf_data_list, "CLIENT ID")];
                             waste_description.value = ltf_data_list.content[z][findTextInArray(ltf_data_list, "WASTE ID")];
@@ -534,6 +541,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             pull_out_value = mtf_data_list.content[z][findTextInArray(mtf_data_list, "PULL OUT FORM #")]
                             ptt_value = mtf_data_list.content[z][findTextInArray(mtf_data_list, "PTT #")]
                             manifest_value = mtf_data_list.content[z][findTextInArray(mtf_data_list, "MANIFEST #")]
+                            mtf_form_no.value = mtf_data_list.content[z][findTextInArray(mtf_data_list, "MTF #")];
                             ltf_form_no.value = mtf_data_list.content[z][findTextInArray(mtf_data_list, "MTF #")];
                             client_id.value = mtf_data_list.content[z][findTextInArray(mtf_data_list, "CLIENT ID")];
                             waste_description.value = mtf_data_list.content[z][findTextInArray(mtf_data_list, "WASTE ID")];

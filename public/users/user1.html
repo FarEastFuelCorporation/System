@@ -323,6 +323,7 @@
                         <thead style="position: sticky; top: 0; background-color: black;">
                             <th>#</th>
                             <th>LTF / MTF #</th>
+                            <th>MTF #</th>
                             <th>HAULING<br>DATE/TIME</th>
                             <th>CLIENT</th>
                             <th>WASTE<br>CODE</th>
@@ -367,8 +368,10 @@
         <!-- WASTE COLLECTION FORM -->
         <section id="waste_collection_form">
             <h2>WASTE COLLECTION FORM</h2><br>
-            <form id="form_id" action="https://script.google.com/macros/s/AKfycby5ifz_4s5VhmNHEspLWX6kE97iaBaevUi7BB6O5IIwtqbYZowsnunwrgA3k1tsLVUO/exec" method="post">
+            <form id="form_id" action="https://script.google.com/macros/s/AKfycbxvd4plnGZKI99IM7AZpdbTgh3rz7WMmvt43KhgKv5sN_qOm2c4u20MtCNivJBbWZyZ/exec" method="post">
                 <input type="hidden" name="user" id="user">
+                <input type="hidden" name="mtf_form_no" id="mtf_form_no">
+                <input type="hidden" name="process" id="process">
                 <input type="hidden" name="ltf_form_no" id="ltf_form_no">
                 <input type="hidden" name="waste_description" id="waste_description">
                 <input type="hidden" name="driver_id" id="driver_id">
