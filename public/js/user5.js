@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                 }
             }
-            const pending_billing = sf_tpf_transaction_billing.filter((element) => !sf_transaction_billing.includes(element));
+            const pending_billing = sf_transaction_billing;
             // collection
             bpf_transaction_collection = {};
             bpf_ctf_transaction_collection = {};
@@ -268,112 +268,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             finish_collection.forEach((data) => {
                 bpf_ctf_transaction_amount_collection += data.amount;
             })
-            
-            // billing
-            var options = {
-                series: [sf_transaction_billing.length - sf_tpf_transaction_billing.length, sf_tpf_transaction_billing.length],
-                chart: {
-                    width: 500, // Set the desired width
-                    height: 550, // Set the desired height
-                    type: 'pie',
-                },
-                plotOptions: {
-                    pie: {
-                        startAngle: 0,
-                        endAngle: 360
-                    }
-                },
-                dataLabels: {
-                    enabled: false, // Disable data labels inside the pie chart
-                },
-                fill: {
-                    type: 'gradient', // Use solid fill type
-                },
-                legend: {
-                    show: true,
-                    position: "left", // Set the legend position to "left"
-                    fontSize: '25px', // Increase legend font size as needed
-                    formatter: function (seriesName, opts) {
-                        // Here, you should use the correct variable to get the series value
-                        var seriesValue = opts.w.globals.series[opts.seriesIndex];
-                        var totalValue = opts.w.globals.series.reduce((acc, val) => acc + val, 0);
-                        var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
-                        return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
-                    },
-                    labels: {
-                        useSeriesColors: false, // Use custom color
-                    },
-                },
-                labels: ["Pending", "Billed"],
-                colors: ["#dc3545", "#198754"], // Specify solid colors here
-                responsive: [{
-                    breakpoint: 480,
-                    options: {
-                        chart: {
-                            width: 200
-                        },
-                    }
-                }]
-            };
-            const pieChart = document.querySelector("#pieChart");
-            while (pieChart.firstChild) {
-                pieChart.removeChild(pieChart.firstChild);
-            }
-            var chart = new ApexCharts(pieChart, options);
-            chart.render();
-            
-            // collection
-            var options = {
-                series: [pending_collection.length, finish_collection.length],
-                chart: {
-                    width: 500, // Set the desired width
-                    height: 550, // Set the desired height
-                    type: 'pie',
-                },
-                plotOptions: {
-                    pie: {
-                        startAngle: 0,
-                        endAngle: 360
-                    }
-                },
-                dataLabels: {
-                    enabled: false, // Disable data labels inside the pie chart
-                },
-                fill: {
-                    type: 'gradient', // Use solid fill type
-                },
-                legend: {
-                    show: true,
-                    position: "left", // Set the legend position to "left"
-                    fontSize: '25px', // Increase legend font size as needed
-                    formatter: function (seriesName, opts) {
-                        // Here, you should use the correct variable to get the series value
-                        var seriesValue = opts.w.globals.series[opts.seriesIndex];
-                        var totalValue = opts.w.globals.series.reduce((acc, val) => acc + val, 0);
-                        var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
-                        return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
-                    },
-                    labels: {
-                        useSeriesColors: false, // Use custom color
-                    },
-                },
-                labels: ["Pending", "Collected"],
-                colors: ["#dc3545", "#198754"], // Specify solid colors here
-                responsive: [{
-                    breakpoint: 480,
-                    options: {
-                        chart: {
-                            width: 200
-                        },
-                    }
-                }]
-            };
-            const pieChart2 = document.querySelector("#pieChart2");
-            while (pieChart2.firstChild) {
-                pieChart2.removeChild(pieChart2.firstChild);
-            }
-            var chart = new ApexCharts(pieChart2, options);
-            chart.render();
             
             // billing
             var data_value = "";
@@ -507,6 +401,112 @@ document.addEventListener('DOMContentLoaded', async function() {
             billed_counter_amount_collection.innerText = formatNumber(bpf_transaction_amount_collection + bpf_ctf_transaction_amount_collection);
             pending_counter_amount_collection.innerText = formatNumber(bpf_transaction_amount_collection);
             collected_counter_amount_collection.innerText = formatNumber(bpf_ctf_transaction_amount_collection);
+                        
+            // billing
+            var options = {
+                series: [mtf_cod_list.length, mtf_bpf_list.length],
+                chart: {
+                    width: 500, // Set the desired width
+                    height: 550, // Set the desired height
+                    type: 'pie',
+                },
+                plotOptions: {
+                    pie: {
+                        startAngle: 0,
+                        endAngle: 360
+                    }
+                },
+                dataLabels: {
+                    enabled: false, // Disable data labels inside the pie chart
+                },
+                fill: {
+                    type: 'gradient', // Use solid fill type
+                },
+                legend: {
+                    show: true,
+                    position: "left", // Set the legend position to "left"
+                    fontSize: '25px', // Increase legend font size as needed
+                    formatter: function (seriesName, opts) {
+                        // Here, you should use the correct variable to get the series value
+                        var seriesValue = opts.w.globals.series[opts.seriesIndex];
+                        var totalValue = opts.w.globals.series.reduce((acc, val) => acc + val, 0);
+                        var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
+                        return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
+                    },
+                    labels: {
+                        useSeriesColors: false, // Use custom color
+                    },
+                },
+                labels: ["Pending", "Billed"],
+                colors: ["#dc3545", "#198754"], // Specify solid colors here
+                responsive: [{
+                    breakpoint: 480,
+                    options: {
+                        chart: {
+                            width: 200
+                        },
+                    }
+                }]
+            };
+            const pieChart = document.querySelector("#pieChart");
+            while (pieChart.firstChild) {
+                pieChart.removeChild(pieChart.firstChild);
+            }
+            var chart = new ApexCharts(pieChart, options);
+            chart.render();
+            
+            // collection
+            var options = {
+                series: [pending_collection.length, finish_collection.length],
+                chart: {
+                    width: 500, // Set the desired width
+                    height: 550, // Set the desired height
+                    type: 'pie',
+                },
+                plotOptions: {
+                    pie: {
+                        startAngle: 0,
+                        endAngle: 360
+                    }
+                },
+                dataLabels: {
+                    enabled: false, // Disable data labels inside the pie chart
+                },
+                fill: {
+                    type: 'gradient', // Use solid fill type
+                },
+                legend: {
+                    show: true,
+                    position: "left", // Set the legend position to "left"
+                    fontSize: '25px', // Increase legend font size as needed
+                    formatter: function (seriesName, opts) {
+                        // Here, you should use the correct variable to get the series value
+                        var seriesValue = opts.w.globals.series[opts.seriesIndex];
+                        var totalValue = opts.w.globals.series.reduce((acc, val) => acc + val, 0);
+                        var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
+                        return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
+                    },
+                    labels: {
+                        useSeriesColors: false, // Use custom color
+                    },
+                },
+                labels: ["Pending", "Collected"],
+                colors: ["#dc3545", "#198754"], // Specify solid colors here
+                responsive: [{
+                    breakpoint: 480,
+                    options: {
+                        chart: {
+                            width: 200
+                        },
+                    }
+                }]
+            };
+            const pieChart2 = document.querySelector("#pieChart2");
+            while (pieChart2.firstChild) {
+                pieChart2.removeChild(pieChart2.firstChild);
+            }
+            var chart = new ApexCharts(pieChart2, options);
+            chart.render();
         }
 
         // bpf_data_list
