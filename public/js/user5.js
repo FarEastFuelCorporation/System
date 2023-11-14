@@ -314,6 +314,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
             pending_list_billing.innerHTML = data_value;
+            
             // collection
             var data_value_collection = "";
             var data_value_counter_collection = 1;
