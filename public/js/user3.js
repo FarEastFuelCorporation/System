@@ -159,12 +159,11 @@ document.addEventListener('DOMContentLoaded', async function() {
             pending_treatment_wcf = wcf_transaction_sorting.filter((element) => !wcf_tpf_transaction_sorting.includes(element));
             const finished_treatment = sf_transaction_treatment.filter((element) => sf_tpf_transaction_treatment.includes(element));
             const filtered_pending_treatment_wcf = wcf_tpf_transaction_sorting.filter(element => !sf_tpf_wcf_transaction_treatment.includes(element));
-            console.log(sf_transaction_treatment)
-            console.log(sf_tpf_transaction_treatment)
+            
             // pending_list
-            total_counter_treatment.innerText = tpf_transaction_treatment.length;
+            total_counter_treatment.innerText = pending_treatment_sf.length + pending_treatment_wcf.length + finished_treatment.length;
             pending_counter_treatment.innerText = pending_treatment_sf.length + pending_treatment_wcf.length;
-            treated_counter_treatment.innerText = sf_tpf_transaction_treatment.length + filtered_pending_treatment_wcf.length;
+            treated_counter_treatment.innerText = finished_treatment.length;
 
             var options = {
                 series: [pending_treatment_sf.length + pending_treatment_wcf.length, sf_tpf_transaction_treatment.length + filtered_pending_treatment_wcf.length],

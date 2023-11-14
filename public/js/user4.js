@@ -873,18 +873,35 @@ document.addEventListener('DOMContentLoaded', async function() {
                     for (let x = 1; x < tpf_data_list.content.length; x++) {
                         if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TPF #")] == item.tpfNumber){
                             if (!done.includes(item.tpfNumber) && input_box.value === findClientName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")])) {
-                            done.push(item.tpfNumber)
-                            year = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])).getFullYear();
-                            month = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])).getMonth() + 1;
-                            cert_month = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getMonth() + 1;
-                            certification_date = tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")];
-                            certification_day = new Date(certification_date).getDate();
-                            certification_day_ordinal = convertToOrdinal(certification_day);
-                            certification_month = convertToMonthName(cert_month);
-                            if (waste_description.value == findWasteName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")], tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")]) &&
-                                year_covered.value == year &&
-                                month_covered.value == month) {
-                                var pull_out_form = ""
+                                var mtf = "";
+                                var ltf = "";
+                                for(let k = 1; k < wcf_data_list.content.length; k++){
+                                    if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                                        if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                            mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                        }else{
+                                            ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                            for(let x = 1; x < ltf_data_list.content.length; x++){
+                                                if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                                    mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                                    break
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                done.push(item.tpfNumber)
+                                year = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])).getFullYear();
+                                month = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])).getMonth() + 1;
+                                cert_month = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getMonth() + 1;
+                                certification_date = tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")];
+                                certification_day = new Date(certification_date).getDate();
+                                certification_day_ordinal = convertToOrdinal(certification_day);
+                                certification_month = convertToMonthName(cert_month);
+                                if (waste_description.value == findWasteName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")], tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")]) &&
+                                    year_covered.value == year &&
+                                    month_covered.value == month) {
+                                    var pull_out_form = ""
                                     for(let y = 1; y < sf_data_list.content.length; y++){
                                         if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "SF #")] == sf_data_list.content[y][findTextInArray(sf_data_list, "SF #")])
                                         pull_out_form = sf_data_list.content[y][findTextInArray(sf_data_list, "FORM #")]
@@ -941,6 +958,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
                                         `
                                     }
                                     else if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023026"){
@@ -979,6 +997,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
                                         `
                                     }
                                     else if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023018"){
@@ -1029,6 +1048,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                             <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                             <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                            <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
                                             `
                                         }
                                         else{
@@ -1106,6 +1126,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
                                         `
                                     }
                                     else if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023036"){
@@ -1144,6 +1165,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
                                         `
                                     }
                                     else if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023014"){
@@ -1182,6 +1204,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
                                         `
                                     }
                                     else{
@@ -1220,6 +1243,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
                                         `
                                     }
                                     table_company.innerHTML = findClientName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")]);
@@ -1261,13 +1285,30 @@ document.addEventListener('DOMContentLoaded', async function() {
                     for (let x = 1; x < tpf_data_list.content.length; x++) {
                         if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TPF #")] == item.tpfNumber){
                             if (!done.includes(item.tpfNumber) && input_box.value === findClientName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")])) {
-                            done.push(item.tpfNumber)
-                            year = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getFullYear();
-                            month = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getMonth() + 1;
-                            certification_date = tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")];
-                            certification_day = new Date(certification_date).getDate();
-                            certification_day_ordinal = convertToOrdinal(certification_day);
-                            certification_month = convertToMonthName(month);
+                                var mtf = "";
+                                var ltf = "";
+                                for(let k = 1; k < wcf_data_list.content.length; k++){
+                                    if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                                        if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                            mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                        }else{
+                                            ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                            for(let x = 1; x < ltf_data_list.content.length; x++){
+                                                if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                                    mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                                    break
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                done.push(item.tpfNumber)
+                                year = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getFullYear();
+                                month = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getMonth() + 1;
+                                certification_date = tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")];
+                                certification_day = new Date(certification_date).getDate();
+                                certification_day_ordinal = convertToOrdinal(certification_day);
+                                certification_month = convertToMonthName(month);
                                 if (waste_description.value == certification_day &&
                                     year_covered.value == year &&
                                     month_covered.value == month) {
@@ -1328,6 +1369,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
                                         `
                                     }
                                     else if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023026"){
@@ -1366,6 +1408,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
                                         `
                                     }
                                     else if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023018"){
@@ -1416,6 +1459,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                             <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                             <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                            <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
                                             `
                                         }
                                         else{
@@ -1454,6 +1498,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                             <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                             <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                            <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
+                                            <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
                                             `
                                         }
                                     }
@@ -1493,6 +1539,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
                                         `
                                     }
                                     else if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023036"){
@@ -1531,6 +1578,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
                                         `
                                     }
                                     else if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023014"){
@@ -1569,6 +1617,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
                                         `
                                     }
                                     else{
@@ -1607,6 +1656,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
                                         `
                                     }
                                     table_company.innerHTML = findClientName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")]);
@@ -1645,18 +1695,35 @@ document.addEventListener('DOMContentLoaded', async function() {
                     for (let x = 1; x < tpf_data_list.content.length; x++) {
                         if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TPF #")] == item.tpfNumber){
                             if (!done.includes(item.tpfNumber) && input_box.value === findClientName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")])) {
-                            done.push(item.tpfNumber)
-                            year = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getFullYear();
-                            month = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getMonth() + 1;
-                            certification_date = tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")];
-                            hauling_date = new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")]);
-                            certification_day = new Date(certification_date).getDate();
-                            certification_day_ordinal = convertToOrdinal(certification_day);
-                            certification_month = convertToMonthName(month);
-                            if (waste_description.value == findWasteName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")], tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")]) &&
-                                new Date(date_from).setHours(0) <= hauling_date &&
-                                new Date(date_to).setHours(0) >= hauling_date) {
-                                var pull_out_form = ""
+                                var mtf = "";
+                                var ltf = "";
+                                for(let k = 1; k < wcf_data_list.content.length; k++){
+                                    if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                                        if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                            mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                        }else{
+                                            ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                            for(let x = 1; x < ltf_data_list.content.length; x++){
+                                                if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                                    mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                                    break
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                done.push(item.tpfNumber)
+                                year = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getFullYear();
+                                month = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getMonth() + 1;
+                                certification_date = tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")];
+                                hauling_date = new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")]);
+                                certification_day = new Date(certification_date).getDate();
+                                certification_day_ordinal = convertToOrdinal(certification_day);
+                                certification_month = convertToMonthName(month);
+                                if (waste_description.value == findWasteName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")], tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")]) &&
+                                    new Date(date_from).setHours(0) <= hauling_date &&
+                                    new Date(date_to).setHours(0) >= hauling_date) {
+                                    var pull_out_form = ""
                                     for(let y = 1; y < sf_data_list.content.length; y++){
                                         if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "SF #")] == sf_data_list.content[y][findTextInArray(sf_data_list, "SF #")])
                                         pull_out_form = sf_data_list.content[y][findTextInArray(sf_data_list, "FORM #")]
@@ -1713,6 +1780,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
                                         `
                                     }
                                     else if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023026"){
@@ -1751,6 +1819,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
                                         `
                                     }
                                     else if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023018"){
@@ -1801,6 +1870,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                             <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                             <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                            <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
                                             `
                                         }
                                         else{
@@ -1878,6 +1948,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
                                         `
                                     }
                                     else if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023036"){
@@ -1916,6 +1987,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
                                         `
                                     }
                                     else if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023014"){
@@ -1954,6 +2026,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
                                         `
                                     }
                                     else{
@@ -1992,6 +2065,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                         <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
                                         `
                                     }
                                     table_company.innerHTML = findClientName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")]);
