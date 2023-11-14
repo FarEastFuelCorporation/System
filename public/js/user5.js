@@ -153,16 +153,16 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
                 else{
                     if (month_filter.value == formatMonth(cod_data_list.content[i][findTextInArray(cod_data_list, "HAULING DATE")])) {
-                        if(!sf_transaction_billing.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")])){
-                            sf_transaction_billing.push(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]);
+                        if(!sf_tpf_transaction_billing.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")])){
+                            sf_tpf_transaction_billing.push(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]);
                         }
                         if(!mtf_bpf_list.includes(mtf)){
                             mtf_bpf_list.push(mtf)
                         }
                     }
                     else if (month_filter.value == "ALL") {
-                        if(!sf_transaction_billing.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")])){
-                            sf_transaction_billing.push(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]);
+                        if(!sf_tpf_transaction_billing.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")])){
+                            sf_tpf_transaction_billing.push(cod_data_list.content[i][findTextInArray(cod_data_list, "COD #")]);
                         }
                         if(!mtf_bpf_list.includes(mtf)){
                             mtf_bpf_list.push(mtf)
@@ -170,7 +170,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                 }
             }
-            const pending_billing = sf_transaction_billing;
+            // const pending_billing = sf_transaction_billing;
+            const pending_billing = sf_transaction_billing.filter((element) => !sf_tpf_transaction_billing.includes(element));;
+            console.log(sf_transaction_billing)
+            console.log(sf_transaction_billing)
             // collection
             bpf_transaction_collection = {};
             bpf_ctf_transaction_collection = {};
