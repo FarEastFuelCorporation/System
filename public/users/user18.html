@@ -517,13 +517,14 @@
                 <div>
                     <label class="d-flex gap-3">
                         <button type="button" id="withdrawal_form_button" class="form-control fw-bold fs-3 bg-success text-white" style="width: 50%;">
-                            WITHDRAWAL FORM
+                            RELEASING FORM
                         </button>
                     </label>
                 </div><br>
                 <div id="form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
-                    <form action="https://script.google.com/macros/s/AKfycbylJczj1oQ7E3tzIiXOwLyWfbIWAubaw03ZTkr4G_JiFfmXRPF7xwwThtxE2VZcHsyH0A/exec" method="post">
+                    <form action="https://script.google.com/macros/s/AKfycbxz7liNGsSst5WXOF2e-GY9eXP0QJUS6VXffEMStQct_0nC9bOPrn6VrdFRJ70Wqs54/exec" method="post">
                         <input type="hidden" name="user" id="user">
+                        <input type="hidden" name="iid_counter" id="iid_counter" value="0">
                         <div>
                             <div>
                                 <label for="stf_form_no">
@@ -541,7 +542,7 @@
                                 </label>
                                 <div class="sf_form" style="display: flex; gap: 20px;">
                                     <div class="form">
-                                        <input type="text" id="search_wsf_form_no" autocomplete="off" name="search_sf_wcf_form_no" class="form-control">
+                                        <input type="text" id="search_wsf_form_no" autocomplete="off" name="search_wsf_form_no" class="form-control">
                                     </div>
                                     <button id="search_wsf_form_no_button" class="form-control" type="button" style="height: 60px; width: 60px;">
                                         <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
@@ -551,18 +552,20 @@
                                     </button>
                                 </div>
                             </div>
-                            <div id="item_container">
-
-                            </div>
                         </div>
-                        <div class="add_item pt-3" style="display: none;">
-                            <div class="item_buttons">
-                                <button type="button" id="remove_item_button" class="form-control">
-                                    <i class="fa-solid fa-minus"></i>
-                                </button>
-                                <button type="button" id="add_item_button" class="form-control">
-                                    <i class="fa-solid fa-plus"></i>
-                                </button>
+                        <div id="item_container">
+
+                        </div>
+                        <div id="pick_up_by_container" class="wrapper" style="display: none;">
+                            <label for="pick_up_by">
+                                <i class="fa-solid fa-list-ol"></i>
+                                Pick-Up By
+                            </label><br>
+                            <div class="search_input" id="search_employee">
+                                <input type="text" autocomplete="off" name="pick_up_by" id="pick_up_by" class="form-control" required placeholder="Type to Search Employee Name...">
+                                <div class="autocom_box">
+                                </div>
+                                <div class="icon"><i class="fas fa-search"></i></div>
                             </div>
                         </div>
                         <div class="buttons">
@@ -591,7 +594,8 @@
                             <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
                         </button>
                     </div> -->
-                    <div class="table" style="max-height: 80vh; align-items: start; overflow-y: scroll;">                            
+                    <h2>PENDING WITHDRAWAL TRANSACTIONS</h2>
+                    <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
                         <div class="list">
                             <table>
                                 <thead style="position: sticky; top: 0; background-color: black;">
@@ -611,6 +615,30 @@
                             <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
                         </div>
                     </div><br>
+                    <h2>TRANSACTION HISTORY</h2>
+                    <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
+                        <div class="list">
+                            <table>
+                                <thead style="position: sticky; top: 0; background-color: black;">
+                                    <th>#</th>
+                                    <th>TRANSACTION</th>
+                                    <th>STF #</th>
+                                    <th>PRF #/<br>WSF #</th>
+                                    <th>IID #</th>
+                                    <th>ITEM</th>
+                                    <th>QUANTITY</th>
+                                    <th>PURPOSE</th>
+                                    <th>DEPARTMENT</th>
+                                    <th>SUBMITTED BY</th>
+                                    <th>PICK-UP BY</th>
+                                </thead>
+                                <tbody id="transaction_history_list">
+    
+                                </tbody>
+                            </table>
+                            <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                        </div>
+                    </div><br>
                 </div>
             </section>
             <!-- supplies_inventory -->
@@ -624,7 +652,7 @@
                     </label><br>
                 </div>
                 <div id="form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
-                    <form action="https://script.google.com/macros/s/AKfycbwZbrwX9OHRGu8_UqTszfWLhPMAacGieQqBki_xvtmODlIUnMIEZu_aU6QzxS-Zcwa3TA/exec" method="post">
+                    <form action="https://script.google.com/macros/s/AKfycbyaEYJhRzNZvV4A9vkSMwEbW27jIpPOOYhEc4lfPpQY6HwQ-lbVfRV1-zxQUHf8H1MPcQ/exec" method="post">
                         <h2>NEW ITEM FORM</h2>
                         <input type="hidden" name="user" id="user">
                         <input type="hidden" name="inventory_counter" id="inventory_counter" value="0">
@@ -691,6 +719,7 @@
                                     <th>DESCRIPTION</th>
                                     <th>UNIT</th>
                                     <th>QUANTITY</th>
+                                    <th>AMOUNT/<br>UNIT</th>
                                     <th>INVENTORY<br>VALUE</th>
                                     <th>SUBMITTED BY</th>
                                 </thead>

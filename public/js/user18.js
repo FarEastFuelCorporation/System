@@ -643,8 +643,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         const withdrawal_form_button = supplies_transaction.querySelector("#withdrawal_form_button");
         const form_tab_supplies_transaction = supplies_transaction.querySelector("#form_tab");
         const supplies_transaction_list = supplies_transaction.querySelector("#supplies_transaction_list");
-        const add_item_button_supplies_transaction = supplies_transaction.querySelector("#add_item_button");
-        const remove_item_button_supplies_transaction = supplies_transaction.querySelector("#remove_item_button");
+        const search_wsf_form_no_supplies_transaction = supplies_transaction.querySelector("#search_wsf_form_no");
+        const search_wsf_form_no_button_supplies_transaction = supplies_transaction.querySelector("#search_wsf_form_no_button");
+        const item_container_supplies_transaction = supplies_transaction.querySelector("#item_container");
+        const pick_up_by_container_supplies_transaction = supplies_transaction.querySelector("#pick_up_by_container");
+        const transaction_history_list_supplies_transaction = supplies_transaction.querySelector("#transaction_history_list");
 
         withdrawal_form_button.addEventListener("click", () => {
             if(form_tab_supplies_transaction.style.display == "none"){
@@ -652,33 +655,214 @@ document.addEventListener('DOMContentLoaded', async function() {
             } else{
                 form_tab_supplies_transaction.style.display = "none"
             }
-        })        
+        })
 
+        var done_transactions = [];
+        for(let y = 1; y < stf_data_list.content.length; y++){
+            if(!done_transactions.includes(stf_data_list.content[y][findTextInArray(stf_data_list, "PRF # / WSF #")])){
+                done_transactions.push(stf_data_list.content[y][findTextInArray(stf_data_list, "PRF # / WSF #")])
+            }
+        }
+
+        // supplies_transaction_list
         var table_data_counter = 1;
         for(let x = 1; x < wsf_data_list.content.length; x++){
+            if(!done_transactions.includes(wsf_data_list.content[x][findTextInArray(wsf_data_list, "WSF #")])){
+                var quantity = 0
+                var total_amount = 0
+                var item_name
+                for(let y = 1; y < iid_data_list.content.length; y++){
+                    if(wsf_data_list.content[x][findTextInArray(wsf_data_list, "IID #")] == iid_data_list.content[y][findTextInArray(iid_data_list, "IID #")]){
+                        item_name = iid_data_list.content[y][findTextInArray(iid_data_list, "ITEM")];
+                    }
+                }
+                var table_data_supplies_transaction =
+                `
+                <tr>
+                    <td>${table_data_counter}</td>
+                    <td>${wsf_data_list.content[x][findTextInArray(wsf_data_list, "WSF #")]}</td>
+                    <td>${wsf_data_list.content[x][findTextInArray(wsf_data_list, "IID #")]}</td>
+                    <td>${item_name}</td>
+                    <td>${wsf_data_list.content[x][findTextInArray(wsf_data_list, "QUANTITY")]}</td>
+                    <td>${wsf_data_list.content[x][findTextInArray(wsf_data_list, "PURPOSE")]}</td>
+                    <td>${wsf_data_list.content[x][findTextInArray(wsf_data_list, "DEPARTMENT")]}</td>
+                    <td>${wsf_data_list.content[x][findTextInArray(wsf_data_list, "SUBMITTED BY")]}</td>
+                </tr>
+                `
+                table_data_counter += 1;
+                supplies_transaction_list.insertAdjacentHTML("beforeend", table_data_supplies_transaction)
+            }
+        }
+
+        // transaction_history_list
+        var table_data_counter = 1;
+        for(let x = 1; x < stf_data_list.content.length; x++){
             var quantity = 0
             var total_amount = 0
             var item_name
             for(let y = 1; y < iid_data_list.content.length; y++){
-                if(wsf_data_list.content[x][findTextInArray(wsf_data_list, "IID #")] == iid_data_list.content[y][findTextInArray(iid_data_list, "IID #")]){
+                if(stf_data_list.content[x][findTextInArray(stf_data_list, "IID #")] == iid_data_list.content[y][findTextInArray(iid_data_list, "IID #")]){
                     item_name = iid_data_list.content[y][findTextInArray(iid_data_list, "ITEM")];
+                }
+            }
+            var department, pick_up_by, submitted_by;
+            for(let y = 1; y < wsf_data_list.content.length; y++){
+                if(stf_data_list.content[x][findTextInArray(stf_data_list, "PRF # / WSF #")] == wsf_data_list.content[y][findTextInArray(wsf_data_list, "WSF #")]){
+                    department = wsf_data_list.content[y][findTextInArray(wsf_data_list, "DEPARTMENT")];
+                    pick_up_by = wsf_data_list.content[y][findTextInArray(wsf_data_list, "PICK UP BY")];
+                    submitted_by = wsf_data_list.content[y][findTextInArray(wsf_data_list, "SUBMITTED BY")];
+                }
+                else {
+                    department = "";
+                    pick_up_by = "";
+                    submitted_by = stf_data_list.content[x][findTextInArray(stf_data_list, "SUBMITTED BY")]
                 }
             }
             var table_data_supplies_transaction =
             `
             <tr>
                 <td>${table_data_counter}</td>
-                <td>${wsf_data_list.content[x][findTextInArray(wsf_data_list, "WSF #")]}</td>
-                <td>${wsf_data_list.content[x][findTextInArray(wsf_data_list, "IID #")]}</td>
+                <td>${stf_data_list.content[x][findTextInArray(stf_data_list, "TRANSACTION")]}</td>
+                <td>${stf_data_list.content[x][findTextInArray(stf_data_list, "STF #")]}</td>
+                <td>${stf_data_list.content[x][findTextInArray(stf_data_list, "PRF # / WSF #")]}</td>
+                <td>${stf_data_list.content[x][findTextInArray(stf_data_list, "IID #")]}</td>
                 <td>${item_name}</td>
-                <td>${wsf_data_list.content[x][findTextInArray(wsf_data_list, "QUANTITY")]}</td>
-                <td>${wsf_data_list.content[x][findTextInArray(wsf_data_list, "PURPOSE")]}</td>
-                <td>${wsf_data_list.content[x][findTextInArray(wsf_data_list, "DEPARTMENT")]}</td>
-                <td>${wsf_data_list.content[x][findTextInArray(wsf_data_list, "SUBMITTED BY")]}</td>
+                <td>${stf_data_list.content[x][findTextInArray(stf_data_list, "QUANTITY")]}</td>
+                <td>${stf_data_list.content[x][findTextInArray(stf_data_list, "PURPOSE")]}</td>
+                <td>${department}</td>
+                <td>${submitted_by}</td>
+                <td>${pick_up_by}</td>
             </tr>
             `
             table_data_counter += 1;
-            supplies_transaction_list.insertAdjacentHTML("beforeend", table_data_supplies_transaction)
+            transaction_history_list_supplies_transaction.insertAdjacentHTML("beforeend", table_data_supplies_transaction)
+        }
+
+        var iid_no_array = [];
+        var iid_item_array = [];
+        for(let x = 1; x < iid_data_list.content.length; x++){
+            iid_no_array.push(iid_data_list.content[x][findTextInArray(iid_data_list, "IID #")])
+            iid_item_array.push(iid_data_list.content[x][findTextInArray(iid_data_list, "ITEM")])
+        }
+
+        search_wsf_form_no_button_supplies_transaction.addEventListener("click", () => {
+            var purpose;
+            for(let x = 1; x < wsf_data_list.content.length; x++){
+                if(search_wsf_form_no_supplies_transaction.value == wsf_data_list.content[x][findTextInArray(wsf_data_list, "WSF #")]){
+                    // addIIDItem();
+                    const iid_counter = document.getElementById("iid_counter");
+                    iid_counter.value = parseInt(iid_counter.value) + 1;
+                    var item_name;
+                    purpose = wsf_data_list.content[x][findTextInArray(wsf_data_list, "PURPOSE")]
+                    for(let y = 0; y < iid_no_array.length; y++){
+                        if(wsf_data_list.content[x][findTextInArray(wsf_data_list, "IID #")] == iid_no_array[y]){
+                            item_name = iid_item_array[y]
+                            break
+                        }
+                    }
+                    var iid_data = 
+                    `
+                    
+                    <div id="iid_container${iid_counter.value}" class="iid_container" style="display: flex; gap: 20px;">
+                        <input type="hidden" name="amount" id="amount" value="">
+                        <div id="iid_form_no">
+                            <label for="iid_form_no${iid_counter.value}">
+                                <i class="fa-solid fa-list-ol"></i>
+                                IID #
+                            </label><br>
+                            <div class="form">
+                                <input type="text" id="iid_form_no${iid_counter.value}" name="iid_form_no${iid_counter.value}" autocomplete="off" required readonly class="form-control" value="${wsf_data_list.content[x][findTextInArray(wsf_data_list, "IID #")]}">
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px">
+                            <div>
+                                <label for="item${iid_counter.value}">
+                                    <i class="fa-solid fa-list-ol"></i>
+                                    Item
+                                </label>
+                                <input type="text" id="item${iid_counter.value}" name="item${iid_counter.value}" autocomplete="off" class="form-control" required readonly value="${item_name}">
+                            </div>
+                            <div>
+                                <label for="quantity${iid_counter.value}">
+                                    <i class="fa-solid fa-list-ol"></i>
+                                    Quantity
+                                </label>
+                                <input type="text" id="quantity" name="quantity${iid_counter.value}" autocomplete="off" class="form-control" required value="${wsf_data_list.content[x][findTextInArray(wsf_data_list, "QUANTITY")]}">
+                            </div>
+                        </div>
+                    </div><hr>
+                    `
+                    item_container_supplies_transaction.insertAdjacentHTML("beforeend", iid_data)
+                }
+            }
+            var purpose_data =
+            `
+            <div id="purpose_container">
+                <label for="purpose">
+                    <i class="fa-solid fa-list-ol"></i>
+                    Purpose
+                </label>
+            </div>
+            <input type="text" id="purpose" name="purpose" autocomplete="off" class="form-control" required value="${purpose}"><br>
+            `
+            item_container_supplies_transaction.insertAdjacentHTML("beforeend", purpose_data)
+            pick_up_by_container_supplies_transaction.style.display = "block";
+        })
+
+        var driver_data = [];
+        for(let x = 1; x < employee_data_list.content.length; x++){
+            if(employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE STATUS")] == "ACTIVE"){
+                var gender = employee_data_list.content[x][findTextInArray(employee_data_list, "GENDER")];
+                if(gender == "MALE"){
+                    var full_name = `${employee_data_list.content[x][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[x][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[x][findTextInArray(employee_data_list, "MIDDLE NAME")]} ${employee_data_list.content[x][findTextInArray(employee_data_list, "AFFIX")]}`
+                    driver_data.push(full_name);
+                }
+                else{
+                    var full_name = `${employee_data_list.content[x][findTextInArray(employee_data_list, "LAST NAME")]}, ${employee_data_list.content[x][findTextInArray(employee_data_list, "FIRST NAME")]} ${employee_data_list.content[x][findTextInArray(employee_data_list, "MIDDLE NAME")]} - ${employee_data_list.content[x][findTextInArray(employee_data_list, "SPOUSE NAME")]}`
+                    driver_data.push(full_name);
+                }
+            }
+        }
+
+        const search_wrapper2 = document.getElementById("search_employee");
+        const input_box2 = search_wrapper2.querySelector("input");
+        const sugg_box2 = search_wrapper2.querySelector(".autocom_box");
+
+        input_box2.onkeyup = (e) => {
+            let user_data = e.target.value;
+            let empty_array = [];
+            if (user_data) {
+                empty_array = driver_data.filter((data) => {
+                    return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
+                });
+                empty_array = empty_array.map((data) => {
+                    return '<li>' + data + '</li>';
+                });
+                search_wrapper2.classList.add("active");
+                show_suggestions2(empty_array);
+            } else {
+                search_wrapper2.classList.remove("active");
+            }
+        };
+        sugg_box2.addEventListener("click", (e) => {
+            if (e.target.tagName === "LI") {
+                select2(e.target.innerHTML);
+            }
+        });
+        function select2(element) {
+            let select_user_data = element;
+            input_box2.value = select_user_data;
+            search_wrapper2.classList.remove("active");
+        }
+        function show_suggestions2(list) {
+            let list_data;
+            if (!list.length) {
+                user_value = input_box2.value;
+                list_data = '<li>' + user_value + '</li>';
+            } else {
+                list_data = list.join("");
+            }
+            sugg_box2.innerHTML = list_data;
         }
 
         // supplies_inventory
@@ -909,19 +1093,20 @@ document.addEventListener('DOMContentLoaded', async function() {
             var quantity = 0
             var total_amount = 0
             var iid_no = iid_data_list.content[x][findTextInArray(iid_data_list, "IID #")]
+            var amount = iid_data_list.content[x][findTextInArray(iid_data_list, "AMOUNT/UNIT")]
             for(let y = 1; y < stf_data_list.content.length; y++){
                 if(iid_no == stf_data_list.content[y][findTextInArray(stf_data_list, "IID #")]){
                     if(stf_data_list.content[y][findTextInArray(stf_data_list, "TRANSACTION")] == "RE-STOCK"){
                         quantity += stf_data_list.content[y][findTextInArray(stf_data_list, "QUANTITY")];
-                        total_amount += (stf_data_list.content[y][findTextInArray(stf_data_list, "QUANTITY")] * stf_data_list.content[y][findTextInArray(stf_data_list, "AMOUNT")]);
+                        total_amount += (stf_data_list.content[y][findTextInArray(stf_data_list, "QUANTITY")] * amount);
                     }
-                    else if(stf_data_list.content[y][findTextInArray(stf_data_list, "TRANSACTION")] == "WITHDRAW"){
+                    else if(stf_data_list.content[y][findTextInArray(stf_data_list, "TRANSACTION")] == "WITHDRAWAL"){
                         quantity -= stf_data_list.content[y][findTextInArray(stf_data_list, "QUANTITY")];
-                        total_amount -= (stf_data_list.content[y][findTextInArray(stf_data_list, "QUANTITY")] * stf_data_list.content[y][findTextInArray(stf_data_list, "AMOUNT")]);
+                        total_amount -= (stf_data_list.content[y][findTextInArray(stf_data_list, "QUANTITY")] * amount);
                     }
                     else if(stf_data_list.content[y][findTextInArray(stf_data_list, "TRANSACTION")] == "NEW ITEM"){
                         quantity += stf_data_list.content[y][findTextInArray(stf_data_list, "QUANTITY")];
-                        total_amount += (stf_data_list.content[y][findTextInArray(stf_data_list, "QUANTITY")] * stf_data_list.content[y][findTextInArray(stf_data_list, "AMOUNT")]);
+                        total_amount += (stf_data_list.content[y][findTextInArray(stf_data_list, "QUANTITY")] * amount);
                     }
                 }
             }
@@ -937,6 +1122,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <td>${iid_data_list.content[x][findTextInArray(iid_data_list, "DESCRIPTION")]}</td>
                 <td>${iid_data_list.content[x][findTextInArray(iid_data_list, "UNIT")]}</td>
                 <td>${quantity}</td>
+                <td>${amount}</td>
                 <td>${formatNumber(total_amount)}</td>
                 <td>${iid_data_list.content[x][findTextInArray(iid_data_list, "SUBMITTED BY")]}</td>
             </tr>

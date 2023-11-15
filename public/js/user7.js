@@ -1219,7 +1219,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         IID #
                     </label><br>
                     <div class="form">
-                        <input type="text" id="iid_form_no${iid_counter.value}" name="iid_form_no${iid_counter.value}" autocomplete="off" class="form-control">
+                        <input type="text" id="iid_form_no${iid_counter.value}" name="iid_form_no${iid_counter.value}" required autocomplete="off" class="form-control">
                     </div>
                 </div>
                 <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px">
@@ -1482,6 +1482,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                     waste_name = (qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE NAME")]);
                     break
                 }
+                else{
+                    waste_name = waste_id
+                }
             }
             return waste_name
         }    
@@ -1579,11 +1582,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <img src="../images/logo.png" alt="logo" style="height: 50px;">
                         <img src="../images/logo_name2.png" alt="logo" style="height: 50px; margin-top: 10px;"><hr>
                         <div style="position: relative;">
-                            <h1 style="text-align: center; font-weight: bold; font-size: 32px;">WEEKLY REPORT</h1>
-                            <h1 style="text-align: center; font-weight: bold;">RECEIVING</h1>
-                            <h1 style="text-align: center; font-weight: bold;">LOGISTICS DEPARTMENT</h1>
-                            <h3 id="date_covered" style="text-align: center;"></h3><br>
-                            <div style="display: flex; position: absolute; right: 0; top: 0;">
+                        <h1 style="text-align: center; font-weight: bold; font-size: 32px;">WEEKLY REPORT</h1>
+                        <h1 style="text-align: center; font-weight: bold;">DISPATCHING</h1>
+                        <h1 style="text-align: center; font-weight: bold;">LOGISTICS DEPARTMENT</h1>
+                        <h3 id="date_covered" style="text-align: center;"></h3><br>
+                        <div style="display: flex; position: absolute; right: 0; top: 0;">
                                 <h6 id="page_counter${page_number.value}" style="margin-right: 5px;"></h6>
                                 <h6 style="margin-right: 5px;">of</h6>
                                 <h6 id="page_max_counter"></h6>
