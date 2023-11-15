@@ -1416,7 +1416,7 @@
                                     <input type="text" name="agent1" id="agent1" autocomplete="off" class="form-control" placeholder="Input Agent..." style="height: 55px;">
                                 </div>
                                 <div>
-                                    <label for="commission_rate1">
+                                    <label for="commission1">
                                         <i class="fa-solid fa-sack-dollar"></i>
                                         Commission
                                     </label><br>
@@ -1764,7 +1764,7 @@
                 const totalPages = Math.ceil(page.clientHeight / pageHeight);
 
                 const opt = {
-                    filename: `Logistics Report Receiving ${date_decoder(report_from)} - ${date_decoder(report_to)} Page ${i + 1} of ${pages.length}`,
+                    filename: `Marketing Transaction Report ${date_decoder(report_from)} - ${date_decoder(report_to)} Page ${i + 1} of ${pages.length}`,
                     image: { type: 'jpeg', quality: 1 },
                     html2canvas: { scale: 2 },
                     jsPDF: { unit: 'mm', format: 'letter', orientation: 'landscape' }

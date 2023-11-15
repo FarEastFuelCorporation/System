@@ -653,7 +653,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                 form_tab_supplies_transaction.style.display = "none"
             }
         })        
-        
+
+        var table_data_counter = 1;
         for(let x = 1; x < wsf_data_list.content.length; x++){
             var quantity = 0
             var total_amount = 0
@@ -663,8 +664,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     item_name = iid_data_list.content[y][findTextInArray(iid_data_list, "ITEM")];
                 }
             }
-            var table_data_counter = 1;
-            var table_data_supplies_inventory =
+            var table_data_supplies_transaction =
             `
             <tr>
                 <td>${table_data_counter}</td>
@@ -678,7 +678,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             </tr>
             `
             table_data_counter += 1;
-            supplies_transaction_list.insertAdjacentHTML("beforeend", table_data_supplies_inventory)
+            supplies_transaction_list.insertAdjacentHTML("beforeend", table_data_supplies_transaction)
         }
 
         // supplies_inventory
@@ -904,7 +904,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         addTransaction()
 
-
+        var table_data_counter = 1;
         for(let x = 1; x < iid_data_list.content.length; x++){
             var quantity = 0
             var total_amount = 0
@@ -925,7 +925,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                 }
             }
-            var table_data_counter = 1;
             var table_data_supplies_inventory =
             `
             <tr>

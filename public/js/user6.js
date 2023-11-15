@@ -2272,7 +2272,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             const pageHeight = 500;
             const dataHeight = 16; // Adjust this value based on your content
 
-            for(let x = 1; x < wcf_data_list.content.length; x++){
+            for(let x = 1; x < mtf_data_list.content.length; x++){
+
                 var hauling_date = new Date(mtf_data_list.content[x][findTextInArray(mtf_data_list, "HAULING DATE")])
                 var mtf_data = mtf_data_list.content[x][findTextInArray(mtf_data_list, "MTF #")]
                 var hauling_date_data = mtf_data_list.content[x][findTextInArray(mtf_data_list, "HAULING DATE")]
@@ -2284,6 +2285,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 var datePortion = hauling_date_data.split("T")[0];
                 var timePortion = hauling_time_data.split("T")[1];
                 var hauling_datetime = new Date(datePortion + "T" + timePortion);
+                console.log(hauling_date)
+                console.log(report_from)
+                console.log(report_to)
                 if (hauling_date >= report_from && hauling_date <= report_to) {
                     filteredData.push({
                     mtf_data,
@@ -2298,7 +2302,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             
             // Sort the data by hauling date and time
             filteredData.sort((a, b) => a.datetime - b.datetime);
-        
+            console.log(filteredData)
             // Render the sorted data
             filteredData.forEach((item) => {
                 const page_number = document.getElementById("page_number");
@@ -2333,11 +2337,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <img src="../images/logo.png" alt="logo" style="height: 50px;">
                         <img src="../images/logo_name2.png" alt="logo" style="height: 50px; margin-top: 10px;"><hr>
                         <div style="position: relative;">
-                            <h1 style="text-align: center; font-weight: bold; font-size: 32px;">WEEKLY REPORT</h1>
-                            <h1 style="text-align: center; font-weight: bold;">RECEIVING</h1>
-                            <h1 style="text-align: center; font-weight: bold;">LOGISTICS DEPARTMENT</h1>
-                            <h3 id="date_covered" style="text-align: center;"></h3><br>
-                            <div style="display: flex; position: absolute; right: 0; top: 0;">
+                        <h1 style="text-align: center; font-weight: bold; font-size: 32px;">WEEKLY REPORT</h1>
+                        <h1 style="text-align: center; font-weight: bold;">MARKETING TRANSACTION</h1>
+                        <h1 style="text-align: center; font-weight: bold;">MARKETING DEPARTMENT</h1>
+                        <h3 id="date_covered" style="text-align: center;"></h3><br>
+                        <div style="display: flex; position: absolute; right: 0; top: 0;">
                                 <h6 id="page_counter${page_number.value}" style="margin-right: 5px;"></h6>
                                 <h6 style="margin-right: 5px;">of</h6>
                                 <h6 id="page_max_counter"></h6>
