@@ -463,11 +463,15 @@ document.addEventListener('DOMContentLoaded', async function() {
                 const type_of_waste = document.getElementById("type_of_waste");
                 const type_of_vehicle = document.getElementById("type_of_vehicle");
                 const client_id_input = document.getElementById("client_id_input");
+                const search_client_id = document.querySelectorAll("#client_id");
                 for (let y = 1; y < client_data_list.content.length; y++) {
                     if (select_user_data == client_data_list.content[y][findTextInArray(client_data_list, "CLIENT NAME")]) {
                         var client_id = "";
                         client_id = client_data_list.content[y][findTextInArray(client_data_list, "CLIENT ID")];
                         client_id_input.value = client_id;
+                        search_client_id.forEach((data) => {
+                            data.value = client_data_list.content[y][findTextInArray(client_data_list, "CLIENT ID")]
+                        })
                         for (let x = 1; x < qlf_data_list.content.length; x++) {
                             if (client_id == qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")] && qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")] !== "TRIP") {
                                 var data = `
@@ -496,18 +500,23 @@ document.addEventListener('DOMContentLoaded', async function() {
         })
 
         var waste_name_list = [];
+        var waste_id_list = [];
         for (x = 1; x < type_of_waste_data_list.content.length; x++) {
             waste_name_list.push(type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "WASTE CODE")]);
+            waste_id_list.push(type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "WASTE ID")]);
         }
-
+        console.log(waste_name_list)
+        console.log(waste_id_list)
         function typeOfWaste(){
             const search_wrappers2 = document.querySelectorAll("#search_waste_code");
 
             search_wrappers2.forEach((search_wrapper) => {
-                const input_box = search_wrapper.querySelector("input");
+                const input_box = search_wrapper.querySelectorAll("input");
+                const input_box1 = input_box[0];
+                const input_box2 = input_box[1];
                 const sugg_box = search_wrapper.querySelector(".autocom_box");
         
-                input_box.onkeyup = (e) => {
+                input_box1.onkeyup = (e) => {
                     let user_data = e.target.value;
                     let empty_array = [];
                     if (user_data) {
@@ -532,7 +541,12 @@ document.addEventListener('DOMContentLoaded', async function() {
             
                 function select(element) {
                     let select_user_data = element;
-                    input_box.value = select_user_data;
+                    input_box1.value = select_user_data;
+                    waste_name_list.forEach((data, index) => {
+                        if(data == select_user_data){
+                            input_box2.value = waste_id_list[index];
+                        }
+                    })
                     search_wrapper.classList.remove("active");
                     mtf_data.style.display = "block";
                         
@@ -541,7 +555,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 function show_suggestions(list) {
                     let list_data;
                     if (!list.length) {
-                        user_value = input_box.value;
+                        user_value = input_box1.value;
                         list_data = '<li>' + user_value + '</li>';
                     } else {
                         list_data = list.join("");
@@ -929,6 +943,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <div class="wrapper">
                     <div class="search_input" id="search_waste_code">
                         <input type="text" name="waste_code${list_counter_quotation_form.value}" id="waste_code${list_counter_quotation_form.value}" autocomplete="off" class="form-control" required placeholder="Search">
+                        <input type="hidden" name="waste_id${list_counter_quotation_form.value}" id="waste_id${list_counter_quotation_form.value}" autocomplete="off" class="form-control" required placeholder="Search">
                         <div class="autocom_box">
                         </div>
                         <div class="icon"><i class="fas fa-search"></i></div>
@@ -1259,6 +1274,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <div class="wrapper">
                     <div class="search_input" id="search_waste_code">
                         <input type="text" name="waste_code${list_counter_quotation_form2.value}" id="waste_code${list_counter_quotation_form2.value}" autocomplete="off" class="form-control" required placeholder="Search">
+                        <input type="hidden" name="waste_id${list_counter_quotation_form.value}" id="waste_id${list_counter_quotation_form.value}" autocomplete="off" class="form-control" required placeholder="Search">
                         <div class="autocom_box">
                         </div>
                         <div class="icon"><i class="fas fa-search"></i></div>
@@ -1421,6 +1437,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <div class="wrapper">
                     <div class="search_input" id="search_waste_code">
                         <input type="text" name="waste_code${list_counter_quotation_form2.value}" id="waste_code${list_counter_quotation_form2.value}" autocomplete="off" class="form-control" required placeholder="Search">
+                        <input type="hidden" name="waste_id${list_counter_quotation_form.value}" id="waste_id${list_counter_quotation_form.value}" autocomplete="off" class="form-control" required placeholder="Search">
                         <div class="autocom_box">
                         </div>
                         <div class="icon"><i class="fas fa-search"></i></div>
@@ -2288,9 +2305,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 var datePortion = hauling_date_data.split("T")[0];
                 var timePortion = hauling_time_data.split("T")[1];
                 var hauling_datetime = new Date(datePortion + "T" + timePortion);
-                console.log(hauling_date)
-                console.log(report_from)
-                console.log(report_to)
                 if (hauling_date >= report_from && hauling_date <= report_to) {
                     filteredData.push({
                     mtf_data,
@@ -2305,7 +2319,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             
             // Sort the data by hauling date and time
             filteredData.sort((a, b) => a.datetime - b.datetime);
-            console.log(filteredData)
             // Render the sorted data
             filteredData.forEach((item) => {
                 const page_number = document.getElementById("page_number");

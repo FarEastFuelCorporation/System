@@ -751,7 +751,7 @@
                 </div><br>
                 <div id="new_quotation_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
                     <h2>NEW QUOTATION FORM</h2><br>
-                    <form  action="https://script.google.com/macros/s/AKfycbyut1NgCcimLWQVHGPYQ7U1TpFeVRvd1wbVykQ2X9wdKXDhbbOQlGhT7ZKex1hNFlrNFQ/exec" method="post">
+                    <form  action="https://script.google.com/macros/s/AKfycbybq-eNZP7SVU3iIzMMXA1WUDre6bam77tO7FJE9E-Edq7-WFlSNrjQ3jQsPdue4KktHQ/exec" method="post">
                         <input type="hidden" name="user" id="user">
                         <input type="hidden" name="client_id_input" id="client_id_input">
                         <div style="display: grid; grid-template-columns: 15% 20% 15% 50%; gap: 20px; width: calc(100% - 60px);">
@@ -794,6 +794,7 @@
                                     <div class="icon"><i class="fas fa-search"></i></div>
                                 </div>
                             </div>
+                            <input type="hidden" name="client_id" id="client_id" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
                         </div><br>
                         <div id="list_container">
                             <h4>QUOTATION DETAILS</h4>
@@ -806,6 +807,7 @@
                                     </label><br>
                                     <div class="search_input" id="search_waste_code">
                                         <input type="text" name="waste_code1" id="waste_code1" autocomplete="off" class="form-control" required placeholder="Search">
+                                        <input type="hidden" name="waste_id1" id="waste_id1" autocomplete="off" class="form-control" required placeholder="Search">
                                         <div class="autocom_box">
                                         </div>
                                         <div class="icon"><i class="fas fa-search"></i></div>
@@ -988,7 +990,7 @@
                 </div>
                 <div id="update_quotation_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #dc3545; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
                     <h2>UPDATE QUOTATION FORM</h2><br>
-                    <form action="https://script.google.com/macros/s/AKfycbyut1NgCcimLWQVHGPYQ7U1TpFeVRvd1wbVykQ2X9wdKXDhbbOQlGhT7ZKex1hNFlrNFQ/exec" method="post">
+                    <form action="https://script.google.com/macros/s/AKfycbybq-eNZP7SVU3iIzMMXA1WUDre6bam77tO7FJE9E-Edq7-WFlSNrjQ3jQsPdue4KktHQ/exec" method="post">
                         <input type="hidden" name="user" id="user">
                         <input type="hidden" name="timestamp" id="timestamp">
                         <div style="display: grid; grid-template-columns: 15% 20% 15% 50%; gap: 20px; width: calc(100% - 60px);">
@@ -1048,6 +1050,7 @@
                                     </label><br>
                                     <div class="search_input" id="search_waste_code">
                                         <input type="text" name="waste_code1" id="waste_code1" autocomplete="off" class="form-control" required placeholder="Search">
+                                        <input type="hidden" name="waste_id1" id="waste_id1" autocomplete="off" class="form-control" required placeholder="Search">
                                         <div class="autocom_box">
                                         </div>
                                         <div class="icon"><i class="fas fa-search"></i></div>
@@ -1341,6 +1344,7 @@
                                     </label><br>
                                     <div class="search_input" id="search_waste_code">
                                         <input type="text" name="waste_code1" id="waste_code1" autocomplete="off" class="form-control" required placeholder="Search">
+                                        <input type="hidden" name="waste_id1" id="waste_id1" autocomplete="off" class="form-control" required placeholder="Search">
                                         <div class="autocom_box">
                                         </div>
                                         <div class="icon"><i class="fas fa-search"></i></div>
