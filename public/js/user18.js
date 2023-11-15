@@ -642,6 +642,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         const supplies_transaction = document.querySelector("#supplies_transaction");
         const withdrawal_form_button = supplies_transaction.querySelector("#withdrawal_form_button");
         const form_tab_supplies_transaction = supplies_transaction.querySelector("#form_tab");
+        const supplies_transaction_list = supplies_transaction.querySelector("#supplies_transaction_list");
+        const add_item_button_supplies_transaction = supplies_transaction.querySelector("#add_item_button");
+        const remove_item_button_supplies_transaction = supplies_transaction.querySelector("#remove_item_button");
 
         withdrawal_form_button.addEventListener("click", () => {
             if(form_tab_supplies_transaction.style.display == "none"){
@@ -649,7 +652,34 @@ document.addEventListener('DOMContentLoaded', async function() {
             } else{
                 form_tab_supplies_transaction.style.display = "none"
             }
-        })
+        })        
+        
+        for(let x = 1; x < wsf_data_list.content.length; x++){
+            var quantity = 0
+            var total_amount = 0
+            var item_name
+            for(let y = 1; y < iid_data_list.content.length; y++){
+                if(wsf_data_list.content[x][findTextInArray(wsf_data_list, "IID #")] == iid_data_list.content[y][findTextInArray(iid_data_list, "IID #")]){
+                    item_name = iid_data_list.content[y][findTextInArray(iid_data_list, "ITEM")];
+                }
+            }
+            var table_data_counter = 1;
+            var table_data_supplies_inventory =
+            `
+            <tr>
+                <td>${table_data_counter}</td>
+                <td>${wsf_data_list.content[x][findTextInArray(wsf_data_list, "WSF #")]}</td>
+                <td>${wsf_data_list.content[x][findTextInArray(wsf_data_list, "IID #")]}</td>
+                <td>${item_name}</td>
+                <td>${wsf_data_list.content[x][findTextInArray(wsf_data_list, "QUANTITY")]}</td>
+                <td>${wsf_data_list.content[x][findTextInArray(wsf_data_list, "PURPOSE")]}</td>
+                <td>${wsf_data_list.content[x][findTextInArray(wsf_data_list, "DEPARTMENT")]}</td>
+                <td>${wsf_data_list.content[x][findTextInArray(wsf_data_list, "SUBMITTED BY")]}</td>
+            </tr>
+            `
+            table_data_counter += 1;
+            supplies_transaction_list.insertAdjacentHTML("beforeend", table_data_supplies_inventory)
+        }
 
         // supplies_inventory
         // FORM GENERATOR

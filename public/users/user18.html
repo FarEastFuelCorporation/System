@@ -513,14 +513,14 @@
             </section>
             <!-- supplies_transaction -->
             <section id="supplies_transaction">
-                <h2>SUPPLIES TRANSACTION</h2><br>
+                <h2>SUPPLIES TRANSACTION</h2>
                 <div>
                     <label class="d-flex gap-3">
                         <button type="button" id="withdrawal_form_button" class="form-control fw-bold fs-3 bg-success text-white" style="width: 50%;">
                             WITHDRAWAL FORM
                         </button>
-                    </label><br>
-                </div>
+                    </label>
+                </div><br>
                 <div id="form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
                     <form action="https://script.google.com/macros/s/AKfycbylJczj1oQ7E3tzIiXOwLyWfbIWAubaw03ZTkr4G_JiFfmXRPF7xwwThtxE2VZcHsyH0A/exec" method="post">
                         <input type="hidden" name="user" id="user">
@@ -596,17 +596,15 @@
                             <table>
                                 <thead style="position: sticky; top: 0; background-color: black;">
                                     <th>#</th>
+                                    <th>WSF #</th>
                                     <th>IID #</th>
-                                    <th>STORAGE TYPE</th>
-                                    <th>RACK/<BR>PALLET</th>
-                                    <th>LEVEL</th>
                                     <th>ITEM</th>
-                                    <th>UNIT</th>
                                     <th>QUANTITY</th>
-                                    <th>DESCRIPTION</th>
+                                    <th>PURPOSE</th>
+                                    <th>DEPARTMENT</th>
                                     <th>SUBMITTED BY</th>
                                 </thead>
-                                <tbody id="supplies_inventory_list">
+                                <tbody id="supplies_transaction_list">
     
                                 </tbody>
                             </table>
@@ -617,7 +615,7 @@
             </section>
             <!-- supplies_inventory -->
             <section id="supplies_inventory">
-                <h2>SUPPLIES INVENTORY</h2><br>
+                <h2>SUPPLIES INVENTORY</h2>
                 <div>
                     <label class="d-flex gap-3">
                         <button type="button" id="new_item_form_button" class="form-control fw-bold fs-3 bg-success text-white" style="width: 50%;">
