@@ -1469,7 +1469,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     break
                 }
                 else{
-                    waste_code = waste_id;
+                    waste_code = "N/A";
                 }
             }
             return waste_code
@@ -1487,7 +1487,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
             return waste_name
-        }    
+        } 
 
         const generate_report_button = document.getElementById("generate_report_button");
         const close_report_button = document.getElementById("close_report_button");

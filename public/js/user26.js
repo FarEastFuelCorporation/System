@@ -2234,7 +2234,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     break
                 }
                 else{
-                    waste_code = waste_id;
+                    waste_code = "N/A";
                 }
             }
             return waste_code
@@ -2246,6 +2246,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                     waste_id == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
                     waste_name = (qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE NAME")]);
                     break
+                }
+                else{
+                    waste_name = waste_id
                 }
             }
             return waste_name

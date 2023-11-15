@@ -65,6 +65,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         let tpf_transaction_treatment = []; // Variable containing existing elements
         let sf_tpf_transaction_treatment = []; // Variable containing existing elements
         let sf_tpf_wcf_transaction_treatment = []; // Variable containing existing elements
+        let done_list_tpf = []; // Variable containing existing elements
         
         function getCurrentMonthName() {
             const months = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
@@ -85,6 +86,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             tpf_transaction_treatment = [];
             sf_tpf_transaction_treatment = [];
             sf_tpf_wcf_transaction_treatment = [];
+            done_list_tpf = [];
     
             for (let i = 1; i < wcf_data_list.content.length; i++) {
                 if(wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] !== "SORTING" &&
@@ -153,20 +155,28 @@ document.addEventListener('DOMContentLoaded', async function() {
                 month_filter.value == "ALL") {
                     wcf_tpf_transaction_sorting.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")]);
                 }
+                if(month_filter.value == formatMonth(tpf_data_list.content[i][findTextInArray(tpf_data_list, "HAULING DATE")]) &&
+                !done_list_tpf.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")])){
+                    done_list_tpf.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")])
+                }
+                else if(month_filter.value == "ALL" &&
+                !done_list_tpf.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")])){
+                    done_list_tpf.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")])
+                }
             }
             
             pending_treatment_sf = sf_transaction_treatment.filter((element) => !sf_tpf_transaction_treatment.includes(element));
             pending_treatment_wcf = wcf_transaction_sorting.filter((element) => !wcf_tpf_transaction_sorting.includes(element));
             const finished_treatment = sf_transaction_treatment.filter((element) => sf_tpf_transaction_treatment.includes(element));
             const filtered_pending_treatment_wcf = wcf_tpf_transaction_sorting.filter(element => !sf_tpf_wcf_transaction_treatment.includes(element));
+
             
             // pending_list
-            total_counter_treatment.innerText = pending_treatment_sf.length + pending_treatment_wcf.length + finished_treatment.length;
+            total_counter_treatment.innerText = pending_treatment_sf.length + pending_treatment_wcf.length + done_list_tpf.length;
             pending_counter_treatment.innerText = pending_treatment_sf.length + pending_treatment_wcf.length;
-            treated_counter_treatment.innerText = finished_treatment.length;
-
+            treated_counter_treatment.innerText = done_list_tpf.length;
             var options = {
-                series: [pending_treatment_sf.length + pending_treatment_wcf.length, sf_tpf_transaction_treatment.length + filtered_pending_treatment_wcf.length],
+                series: [pending_treatment_sf.length + pending_treatment_wcf.length, done_list_tpf.length],
                 chart: {
                     width: 500, // Set the desired width
                     height: 550, // Set the desired height
@@ -525,7 +535,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         }
                                     }
                                 }
-                                console.log(mtf)
                                 mtf_form_no.value = mtf;
                                 data_value = `
                                 SF #: ${sf_data_list.content[a][findTextInArray(sf_data_list, "SF #")]}<br>
@@ -657,7 +666,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         }
                                     }
                                 }
-                                console.log(mtf)
                                 mtf_form_no.value = mtf;
                                 data_value = `
                                 WCF #: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")]}<br>
@@ -881,7 +889,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     break
                 }
                 else{
-                    waste_code = waste_id;
+                    waste_code = "N/A";
                 }
             }
             return waste_code
@@ -889,10 +897,13 @@ document.addEventListener('DOMContentLoaded', async function() {
         function findWasteName(client_id, waste_id){
             var waste_name = "";
             for(let c = 1; c < qlf_data_list.content.length; c++){
-                if(client_id == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")] && 
+                if(client_id == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")]&& 
                     waste_id == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
                     waste_name = (qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE NAME")]);
                     break
+                }
+                else{
+                    waste_name = waste_id
                 }
             }
             return waste_name

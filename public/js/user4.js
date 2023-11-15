@@ -89,6 +89,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         let tpf_certification = [];
         let pending_certification = [];
         let finish_certification = [];
+        let pending_list_tpf = [];
+        let done_list_cod = [];
         const month_filter = document.querySelector("#month_filter");
         function getCurrentMonthName() {
             const months = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
@@ -108,6 +110,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             tpf_certification = [];
             pending_certification = [];
             finish_certification = [];
+            pending_list_tpf = [];
+            done_list_cod = [];
             var for_hauling_marketing = 0;
             var for_receiving_marketing = 0;
             var for_warehousing_marketing = 0;
@@ -416,6 +420,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                         tpf_certification.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "TPF #")])
                     }
                 }
+                if(month_filter.value == formatMonth(tpf_data_list.content[i][findTextInArray(tpf_data_list, "HAULING DATE")]) &&
+                !pending_list_tpf.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")])){
+                    pending_list_tpf.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")])
+                }
+                else if(month_filter.value == "ALL" &&
+                !pending_list_tpf.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")])){
+                    pending_list_tpf.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")])
+                }
             }
             for (let i = 1; i < cod_data_list.content.length; i++) {
                 const tpfNumber = cod_data_list.content[i][findTextInArray(cod_data_list, "TPF #")];
@@ -447,6 +459,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     sf_tpf_transaction_certification_date[tpfNumber] = haulingDate;
                 }
+                if(month_filter.value == formatMonth(cod_data_list.content[i][findTextInArray(cod_data_list, "HAULING DATE")]) &&
+                !done_list_cod.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "WCF #")])){
+                    done_list_cod.push(cod_data_list.content[i][findTextInArray(cod_data_list, "WCF #")])
+                }
+                else if(month_filter.value == "ALL" &&
+                !done_list_cod.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "WCF #")])){
+                    done_list_cod.push(cod_data_list.content[i][findTextInArray(cod_data_list, "WCF #")])
+                }
             }
     
             for (const key in sf_transaction_certification) {     
@@ -461,11 +481,11 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             pending_certification.sort((a, b) => a.date - b.date);
             finish_certification.sort((a, b) => a.date - b.date);
-            treated_counter_certification.innerText = tpf_certification.length;
-            pending_counter_certification.innerText = pending_certification.length;
-            certified_counter_certification.innerText = finish_certification.length;
+            treated_counter_certification.innerText = pending_list_tpf.length;
+            pending_counter_certification.innerText = pending_list_tpf.length - done_list_cod.length;
+            certified_counter_certification.innerText = done_list_cod.length;
             var options = {
-                series: [pending_certification.length, finish_certification.length],
+                series: [pending_list_tpf.length - done_list_cod.length, done_list_cod.length],
                 chart: {
                     width: 500, // Set the desired width
                     height: 550, // Set the desired height
@@ -2398,7 +2418,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     break
                 }
                 else{
-                    waste_code = waste_id;
+                    waste_code = "N/A";
                 }
             }
             return waste_code
@@ -2410,6 +2430,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                     waste_id == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
                     waste_name = (qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE NAME")]);
                     break
+                }
+                else{
+                    waste_name = waste_id
                 }
             }
             return waste_name
