@@ -883,7 +883,7 @@
                 const totalPages = Math.ceil(page.clientHeight / pageHeight);
 
                 const opt = {
-                    filename: `Certification Report ${date_decoder(report_from)} - ${date_decoder(report_to)} Page ${i + 1} of ${pages.length}`,
+                    filename: `Certification Transaction Report ${date_decoder(report_from)} - ${date_decoder(report_to)} Page ${i + 1} of ${pages.length}`,
                     image: { type: 'jpeg', quality: 1 },
                     html2canvas: { scale: 2 },
                     jsPDF: { unit: 'mm', format: 'letter', orientation: 'landscape' }

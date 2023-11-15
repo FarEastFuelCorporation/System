@@ -1333,7 +1333,7 @@
                 const totalPages = Math.ceil(page.clientHeight / pageHeight);
 
                 const opt = {
-                    filename: `Logistics Report Receiving ${date_decoder(report_from)} - ${date_decoder(report_to)} Page ${i + 1} of ${pages.length}`,
+                    filename: `Billing transaction Report ${date_decoder(report_from)} - ${date_decoder(report_to)} Page ${i + 1} of ${pages.length}`,
                     image: { type: 'jpeg', quality: 1 },
                     html2canvas: { scale: 2 },
                     jsPDF: { unit: 'mm', format: 'letter', orientation: 'landscape' }

@@ -687,7 +687,6 @@
     <script src="../js/user1.js"></script>
     <script>
         function convertToPDF() {
-            const element = document.getElementById('report_tab1');
             const report_date_from = document.getElementById("report_date_from");
             const report_date_to = document.getElementById("report_date_to");
             var report_from = new Date(report_date_from.value)
@@ -703,7 +702,7 @@
                 const totalPages = Math.ceil(page.clientHeight / pageHeight);
 
                 const opt = {
-                    filename: `Logistics Report Receiving ${date_decoder(report_from)} - ${date_decoder(report_to)} Page ${i + 1} of ${pages.length}`,
+                    filename: `Logistics Receiving Transaction Report ${date_decoder(report_from)} - ${date_decoder(report_to)} Page ${i + 1} of ${pages.length}`,
                     image: { type: 'jpeg', quality: 1 },
                     html2canvas: { scale: 2 },
                     jsPDF: { unit: 'mm', format: 'letter', orientation: 'landscape' }
