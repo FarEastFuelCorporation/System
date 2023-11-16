@@ -27,6 +27,21 @@
         ::-webkit-scrollbar-thumb:hover {
         background: #dc3545; /* Color of the scrollbar handle on hover */
         }
+
+        .disabled {
+            pointer-events: none;
+            /* You can also add additional styles to visually indicate the disabled state */
+            opacity: 0.3; /* For example, reducing the opacity to visually show the disabled state */
+            cursor: default; /* Set the cursor to the default (usually an arrow) to indicate it's not clickable */
+        }
+
+        input:disabled {
+            /* Add your styles here for disabled input fields */
+            background-color: #fafafa !important; /* For example, changing the background color */
+            color: black; /* Changing the text color */
+            cursor: not-allowed; /* Changing the cursor to indicate it's not clickable */
+            /* Add any other styles you want to apply to disabled inputs */
+        }
     </style>
 </head>
 <body>
@@ -751,9 +766,17 @@
                 </div><br>
                 <div id="new_quotation_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
                     <h2>NEW QUOTATION FORM</h2><br>
-                    <form  action="https://script.google.com/macros/s/AKfycbyut1NgCcimLWQVHGPYQ7U1TpFeVRvd1wbVykQ2X9wdKXDhbbOQlGhT7ZKex1hNFlrNFQ/exec" method="post">
+                    <form  action="https://script.google.com/macros/s/AKfycbybq-eNZP7SVU3iIzMMXA1WUDre6bam77tO7FJE9E-Edq7-WFlSNrjQ3jQsPdue4KktHQ/exec" method="post">
                         <input type="hidden" name="user" id="user">
                         <input type="hidden" name="client_id_input" id="client_id_input">
+                        <div style="display: flex; gap: 20px;">
+                            <div>
+                                <input type="radio" name="is_there_moa" id="with_moa" value="WITH MOA" checked>With MOA
+                            </div>
+                            <div>
+                                <input type="radio" name="is_there_moa" id="without_moa" value="WITHOUT MOA">Without MOA
+                            </div>
+                        </div>
                         <div style="display: grid; grid-template-columns: 15% 20% 15% 50%; gap: 20px; width: calc(100% - 60px);">
                             <div class="wrapper">
                                 <label for="quotation_no">
@@ -764,13 +787,13 @@
                                     <input type="text" name="quotation_no" id="quotation_no" autocomplete="off" class="form-control" required placeholder="Type Quotation #" style="padding-right: 20px !important;">
                                 </div>
                             </div>
-                            <div class="wrapper">
+                            <div class="wrapper" id="validity_container">
                                 <label for="terms">
                                     <i class="fa-solid fa-calendar-days"></i>
                                     Valid Until (MOA End Date)
                                 </label><br>
                                 <div class="search_input">
-                                    <input type="date" name="validity" id="validity" autocomplete="off" class="form-control" required placeholder="Type Quotation #" style="padding-right: 20px !important;">
+                                    <input type="date" name="validity" id="validity" disabled autocomplete="off" class="form-control" required placeholder="Type Quotation #" style="padding-right: 20px !important;">
                                 </div>
                             </div>
                             <div class="wrapper">
@@ -794,6 +817,7 @@
                                     <div class="icon"><i class="fas fa-search"></i></div>
                                 </div>
                             </div>
+                            <input type="hidden" name="client_id" id="client_id" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
                         </div><br>
                         <div id="list_container">
                             <h4>QUOTATION DETAILS</h4>
@@ -806,6 +830,7 @@
                                     </label><br>
                                     <div class="search_input" id="search_waste_code">
                                         <input type="text" name="waste_code1" id="waste_code1" autocomplete="off" class="form-control" required placeholder="Search">
+                                        <input type="hidden" name="waste_id1" id="waste_id1" autocomplete="off" class="form-control" required placeholder="Search">
                                         <div class="autocom_box">
                                         </div>
                                         <div class="icon"><i class="fas fa-search"></i></div>
@@ -988,9 +1013,17 @@
                 </div>
                 <div id="update_quotation_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #dc3545; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
                     <h2>UPDATE QUOTATION FORM</h2><br>
-                    <form action="https://script.google.com/macros/s/AKfycbyut1NgCcimLWQVHGPYQ7U1TpFeVRvd1wbVykQ2X9wdKXDhbbOQlGhT7ZKex1hNFlrNFQ/exec" method="post">
+                    <form action="https://script.google.com/macros/s/AKfycbybq-eNZP7SVU3iIzMMXA1WUDre6bam77tO7FJE9E-Edq7-WFlSNrjQ3jQsPdue4KktHQ/exec" method="post">
                         <input type="hidden" name="user" id="user">
                         <input type="hidden" name="timestamp" id="timestamp">
+                        <div style="display: flex; gap: 20px;">
+                            <div>
+                                <input type="radio" name="is_there_moa" id="with_moa" value="WITH MOA" checked>With MOA
+                            </div>
+                            <div>
+                                <input type="radio" name="is_there_moa" id="without_moa" value="WITHOUT MOA">Without MOA
+                            </div>
+                        </div>
                         <div style="display: grid; grid-template-columns: 15% 20% 15% 50%; gap: 20px; width: calc(100% - 60px);">
                             <div class="wrapper">
                                 <label for="quotation_no">
@@ -1006,7 +1039,7 @@
                                     <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
                                 </button>
                             </div>
-                            <div class="wrapper display_input" style="display: none;">
+                            <div class="wrapper display_input" style="display: none;" id="validity_container">
                                 <label for="terms">
                                     <i class="fa-solid fa-calendar-days"></i>
                                     Valid Until (MOA End Date)
@@ -1048,6 +1081,7 @@
                                     </label><br>
                                     <div class="search_input" id="search_waste_code">
                                         <input type="text" name="waste_code1" id="waste_code1" autocomplete="off" class="form-control" required placeholder="Search">
+                                        <input type="hidden" name="waste_id1" id="waste_id1" autocomplete="off" class="form-control" required placeholder="Search">
                                         <div class="autocom_box">
                                         </div>
                                         <div class="icon"><i class="fas fa-search"></i></div>
@@ -1341,6 +1375,7 @@
                                     </label><br>
                                     <div class="search_input" id="search_waste_code">
                                         <input type="text" name="waste_code1" id="waste_code1" autocomplete="off" class="form-control" required placeholder="Search">
+                                        <input type="hidden" name="waste_id1" id="waste_id1" autocomplete="off" class="form-control" required placeholder="Search">
                                         <div class="autocom_box">
                                         </div>
                                         <div class="icon"><i class="fas fa-search"></i></div>

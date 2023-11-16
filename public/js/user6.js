@@ -505,8 +505,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             waste_name_list.push(type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "WASTE CODE")]);
             waste_id_list.push(type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "WASTE ID")]);
         }
-        console.log(waste_name_list)
-        console.log(waste_id_list)
+
         function typeOfWaste(){
             const search_wrappers2 = document.querySelectorAll("#search_waste_code");
 
@@ -819,6 +818,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         const tf_counter_quotation_form = new_quotation_form_tab.querySelector("#tf_counter");
         const add_tf_button_quotation_form = new_quotation_form_tab.querySelector("#add_tf_button");
         const remove_tf_button_quotation_form = new_quotation_form_tab.querySelector("#remove_tf_button");
+        const with_moa_quotation_form = new_quotation_form_tab.querySelector("#with_moa");
+        const without_moa_quotation_form = new_quotation_form_tab.querySelector("#without_moa");
+        const validity_quotation_form = new_quotation_form_tab.querySelector("#validity");
+        const validity_container_quotation_form = new_quotation_form_tab.querySelector("#validity_container");
+
         const search_quotation_no_button_quotation_form = update_quotation_form_tab.querySelector("#search_quotation_no_button");
         const search_quotation_no_button_container_quotation_form = update_quotation_form_tab.querySelector("#search_quotation_no_button_container");
         const display_input_quotation_form = update_quotation_form_tab.querySelectorAll(".display_input");
@@ -835,7 +839,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         const add_tf_button_quotation_form2 = update_quotation_form_tab.querySelector("#add_tf_button");
         const remove_tf_button_quotation_form2 = update_quotation_form_tab.querySelector("#remove_tf_button");
         const quotation_no_quotation_form2 = update_quotation_form_tab.querySelector("#quotation_no");
-        const validity_quotation_form2 = update_quotation_form_tab.querySelector("#validity");
         const timestamp_quotation_form2 = update_quotation_form_tab.querySelector("#timestamp");
         const terms_quotation_form2 = update_quotation_form_tab.querySelector("#terms");
         const client_quotation_form2 = update_quotation_form_tab.querySelector("#client");
@@ -845,6 +848,35 @@ document.addEventListener('DOMContentLoaded', async function() {
         const unit1_quotation_form2 = update_quotation_form_tab.querySelector("#unit1");
         const unit_price1_quotation_form2 = update_quotation_form_tab.querySelector("#unit_price1");
         const vat_calculation1_quotation_form2 = update_quotation_form_tab.querySelector("#vat_calculation1");
+        const with_moa_quotation_form2 = update_quotation_form_tab.querySelector("#with_moa");
+        const without_moa_quotation_form2 = update_quotation_form_tab.querySelector("#without_moa");
+        const validity_quotation_form2 = update_quotation_form_tab.querySelector("#validity");
+        const validity_container_quotation_form2 = update_quotation_form_tab.querySelector("#validity_container");
+
+        with_moa_quotation_form.addEventListener("click", () => {
+            if(with_moa_quotation_form.value == "WITH MOA"){
+                validity_quotation_form.classList.remove("disabled")
+                validity_container_quotation_form.classList.remove("disabled")
+            }
+        })
+        without_moa_quotation_form.addEventListener("click", () => {
+            if(without_moa_quotation_form.value == "WITHOUT MOA"){
+                validity_quotation_form.classList.add("disabled")
+                validity_container_quotation_form.classList.add("disabled")
+            }
+        })
+        with_moa_quotation_form2.addEventListener("click", () => {
+            if(with_moa_quotation_form2.value == "WITH MOA"){
+                validity_quotation_form2.classList.remove("disabled")
+                validity_container_quotation_form2.classList.remove("disabled")
+            }
+        })
+        without_moa_quotation_form2.addEventListener("click", () => {
+            if(without_moa_quotation_form2.value == "WITHOUT MOA"){
+                validity_quotation_form2.classList.add("disabled")
+                validity_container_quotation_form2.classList.add("disabled")
+            }
+        })
 
         function typeOfVehicleOption(){
             var type_of_vehicle = [];
