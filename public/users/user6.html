@@ -185,7 +185,7 @@
                     <button id="report_generate_button" class="form-control" style="background-color: #198754;">
                         <h4 style="margin: 0; color: white;">Generate</h4>
                     </button>
-                    <button onclick="convertToPDF()" id="report_download_button" class="form-control" style="background-color: #198754; display: none;">
+                    <button onclick="convertToPDF2()" id="report_download_button" class="form-control" style="background-color: #198754; display: none;">
                         <h4 style="margin: 0; color: white;">Download</h4>
                     </button>
                 </div>
@@ -468,6 +468,7 @@
                             </label><br>
                             <div class="search_input" id="search_client">
                                 <input type="text" name="client" id="client" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
+                                <input type="hidden" name="client_id_input" id="client_id_input" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
                                 <div class="autocom_box">
                                 </div>
                                 <div class="icon"><i class="fas fa-search"></i></div>
@@ -764,11 +765,10 @@
                         <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
                     </div>
                 </div><br>
-                <div id="new_quotation_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
+                <div id="new_quotation_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
                     <h2>NEW QUOTATION FORM</h2><br>
                     <form  action="https://script.google.com/macros/s/AKfycbybq-eNZP7SVU3iIzMMXA1WUDre6bam77tO7FJE9E-Edq7-WFlSNrjQ3jQsPdue4KktHQ/exec" method="post">
                         <input type="hidden" name="user" id="user">
-                        <input type="hidden" name="client_id_input" id="client_id_input">
                         <div style="display: flex; gap: 20px;">
                             <div>
                                 <input type="radio" name="is_there_moa" id="with_moa" value="WITH MOA" checked>With MOA
@@ -777,7 +777,7 @@
                                 <input type="radio" name="is_there_moa" id="without_moa" value="WITHOUT MOA">Without MOA
                             </div>
                         </div>
-                        <div style="display: grid; grid-template-columns: 15% 20% 15% 50%; gap: 20px; width: calc(100% - 60px);">
+                        <div style="display: grid; grid-template-columns: 10% 18% 15% 15% 42%; gap: 20px; width: calc(100% - 60px);">
                             <div class="wrapper">
                                 <label for="quotation_no">
                                     <i class="fa-solid fa-list-ol"></i>
@@ -793,16 +793,25 @@
                                     Valid Until (MOA End Date)
                                 </label><br>
                                 <div class="search_input">
-                                    <input type="date" name="validity" id="validity" disabled autocomplete="off" class="form-control" required placeholder="Type Quotation #" style="padding-right: 20px !important;">
+                                    <input type="date" name="validity" id="validity" autocomplete="off" class="form-control" required placeholder="Type Quotation #" style="padding-right: 20px !important;">
                                 </div>
                             </div>
                             <div class="wrapper">
                                 <label for="terms">
                                     <i class="fa-solid fa-calendar-days"></i>
-                                    Terms (Days)
+                                    Terms Charge
                                 </label><br>
                                 <div class="search_input">
-                                    <input type="number" name="terms" id="terms" autocomplete="off" class="form-control" required placeholder="Type Quotation #" style="padding-right: 20px !important;">
+                                    <input type="text" name="terms" id="terms" autocomplete="off" class="form-control" required placeholder="Input Terms (Charge)" style="padding-right: 20px !important;">
+                                </div>
+                            </div>
+                            <div class="wrapper">
+                                <label for="terms2">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                    Terms Buying
+                                </label><br>
+                                <div class="search_input">
+                                    <input type="text" name="terms2" id="terms2" autocomplete="off" class="form-control" required placeholder="Input Terms (Buying)" style="padding-right: 20px !important;">
                                 </div>
                             </div>
                             <div class="wrapper">
@@ -812,6 +821,7 @@
                                 </label><br>
                                 <div class="search_input" id="search_client">
                                     <input type="text" name="client" id="client" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
+                                    <input type="hidden" name="client_id_input" id="client_id_input" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
                                     <div class="autocom_box">
                                     </div>
                                     <div class="icon"><i class="fas fa-search"></i></div>
@@ -1001,14 +1011,688 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="buttons">
-                            <button type="submit" id="submit_btn" class="form-control">
+                        <div class="buttons" style="margin-top: 20px;">
+                            <button type="button" id="generate_button" class="form-control form text-white" style="max-width: max-content !important;">
+                                Generate Quotation
+                            </button>
+                            <button type="button" onclick="convertToPDFandDownload()" id="convertToPDFandDownload_button" class="form-control form text-white" style="display: none; max-width: fit-content !important;">
+                                Download and Submit
+                            </button>
+                            <button type="button" onclick="convertToPDF()" id="convertToPDF_button" class="form-control form text-white" style="display: none; max-width: content !important;">
+                                Download
+                            </button>
+                            <button type="submit" id="submit_button" class="form-control form text-white" style="display: none; max-width: content !important;">
                                 Submit
                             </button>
-                            <button type="reset" id="reset" class="form-control" >
-                                Clear
-                            </button>
-                        </div>    
+                        </div><br>
+                        <div class="what_to_print" id="what_to_print">
+                            <img src="../images/letterhead.jpg" id="background-image" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;">
+                            <div class="pdf_container">
+                                <div d-flex>
+                                    <div class="client_copy">
+                                        <h4 class="bold">CLIENT'S COPY</h4>
+                                    </div>
+                                    <div class="pdf_header">
+                                        <h4 class="bold">QUOTATION</h4>
+                                    </div>
+                                    <div class="billing_number">
+                                        <h4 class="italic">Quotation Number</h4>
+                                        <h4 id="qlf_form_no_container" class="bold"></h4>
+                                        <h4 class="italic">Date</h4>
+                                        <h4 id="date_made_container" class="bold"></h4>
+                                    </div>
+                                    <div class="customer_summary">
+                                        <div class="customer">
+                                            <div class="customer_header">
+                                                <h3 class="bold">MAIN OFFICE ADDRESS</h3>
+                                            </div>
+                                            <div class="customer_detail">
+                                                <h3 id="client_name_container" class="bold"></h3>
+                                                <h4 id="address_container"></h4>
+                                                <h4 id="tin_id_container"></h4>
+                                                <h4 id="nature_of_business_container"></h4>
+                                                <div id="contact_number_container" style="display: none;">
+                                                    <h4>Contact #:</h4><h4 id="contact_number" style="padding-left: 5px;"></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="account_summary">
+                                            <div class="account_summary_header">
+                                                <h3 class="bold">FIELD OFFICE ADDRESS</h3>
+                                            </div>
+                                            <div class="customer_detail">
+                                                <h3 id="client_name_container2" class="bold"></h3>
+                                                <h4 id="address_container2"></h4>
+                                                <h4 id="tin_id_container2"></h4>
+                                                <h4 id="nature_of_business_container2"></h4>
+                                                <div id="contact_number2_container" style="display: none;">
+                                                    <h4>Contact #:</h4><h4 id="contact_number2" style="padding-left: 5px;"></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><br><br>
+                                    <div class="scope">
+                                        <h3 class="bold">SCOPE OF WORK</h3>
+                                    </div>
+                                    <div class="scope_detail">
+                                        <h3>1. Collection, Transportation, Treatment, and Certification of Waste</h3>
+                                    </div>
+                                    <div class="account_details">
+                                        <div class="account_details_header">
+                                            <h3><b>DETAILS</b></h3>
+                                        </div>
+                                        <table class="account_details_detail">
+                                            <thead>
+                                                <tr>
+                                                    <th>Item</th>
+                                                    <th>Description</th>
+                                                    <th>Qty.</th>
+                                                    <th>Unit</th>
+                                                    <th>Unit Price</th>
+                                                    <th>Amount</th>
+                                                    <th>Mode </th>
+                                                    <th>Vat</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="table_data">
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="details" style="display: grid; grid-template-columns: 1fr 2fr;">
+                                        <div style="border: 1px solid black; padding: 5px;">
+                                            <h3 class="bold">QUOTATION VALIDITY:</h3>
+                                            <div style="display: flex; justify-content: center; align-items: center; height: 40px; border-top: 1px solid black;">
+                                                <h3 id="validity_input" class="bold">30 DAYS</h3>
+                                            </div>
+                                        </div>
+                                        <div style="border: 1px solid black; padding: 5px;">
+                                            <h3 class="bold">TERMS OF PAYMENT</h3>
+                                            <div style="display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid black;">
+                                                <div style="display: flex; flex-direction: column;">
+                                                    CHARGE: 
+                                                    <h3 id="charge_input" class="bold text-center"></h3>
+                                                </div>
+                                                <div style="display: flex; flex-direction: column; border-left: 1px solid black; padding-left: 5px;">
+                                                    BUYING; 
+                                                    <h3 id="buying_input" class="bold text-center"></h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="other_details">
+                                        <div style="border-bottom: 3px solid black;">
+                                            <h3 class="bold text-center">REQUIREMENTS</h3>
+                                        </div>
+                                        <div style="padding: 5px;">
+                                            <h3>1. Memorandum of Agreement, VAT Exemption Certificate (if applicable)</h3>
+                                            <h3>2. Copy of BIR Form 2303 and 2307</h3>
+                                        </div>
+                                    </div>
+                                    <div class="footer">
+                                        <div>
+                                            <div class="footer_header">
+                                                <h3>Prepared By:</h3>
+                                            </div>
+                                            <div class="assignatory">
+                                                <div>
+                                                    <h3 class="bold"><u id="marketing_user"></u></h3>
+                                                </div>
+                                                <div>
+                                                    <h4>Marketing Staff / CSR</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="footer_header">
+                                                <h3>Checked By:</h3>
+                                            </div>
+                                            <div class="assignatory">
+                                                <div>
+                                                    <h3 class="bold"><u>Daisy Cardinez</u></h3>
+                                                </div>
+                                                <div>
+                                                    <h4>Accounting Manager</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="footer_header">
+                                                <h3>Approved By:</h3>
+                                            </div>
+                                            <div class="assignatory">
+                                                <div>
+                                                    <h3 class="bold"><u>Ruel S. Mangaron</u></h3>
+                                                </div>
+                                                <div>
+                                                    <h4>President</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="footer_header">
+                                                <h3>Conformed By:</h3>
+                                            </div>
+                                            <div class="assignatory">
+                                            </div>
+                                        </div>
+                                    </div>`
+                                </div>
+                            </div>
+                            <style>
+                                #what_to_print 
+                                {
+                                    padding: 123px 38px 38px 76px;
+                                    position: relative;
+                                    background-size: cover;
+                                    width: 816px;
+                                    height: 1056px;
+                                    border: 3px solid black;
+                                    background-color: white;
+                                    /* display: none; */
+                                }
+    
+                                #what_to_print .pdf_container
+                                {
+                                    position: relative;
+                                    height: 889px;
+                                }
+    
+                                #what_to_print h1
+                                {
+                                    font-size: 18px;
+                                    margin: 0;
+                                }
+    
+                                #what_to_print h2
+                                {
+                                    font-size: 16px;
+                                    margin: 0;
+                                }
+    
+                                #what_to_print h3
+                                {
+                                    font-size: 14px;
+                                    margin: 0;
+                                }
+    
+                                #what_to_print h4
+                                {
+                                    font-size: 12px;
+                                    margin: 0;
+                                }
+    
+                                #what_to_print h5
+                                {
+                                    font-size: 10px;
+                                    margin: 0;
+                                }
+    
+                                #what_to_print .amount
+                                {
+                                    text-align: end;
+                                }
+    
+                                #what_to_print .none
+                                {
+                                color: white;
+                                }
+    
+                                #what_to_print .bold
+                                {
+                                font-weight: bold;
+                                }
+    
+                                #what_to_print .italic
+                                {
+                                font-style: italic;
+                                }
+    
+                                #what_to_print .grid2
+                                {
+                                    display: grid;
+                                    grid-template-columns: 2fr 1fr;
+                                }
+    
+                                #what_to_print .grid3
+                                {
+                                    display: grid;
+                                    grid-template-columns: 1fr 1fr;
+                                }
+    
+                                #what_to_print .client_copy
+                                {
+                                    position: absolute;
+                                    top: 0;
+                                    left: 0;
+                                    width: 227px;
+                                    height: 30px;
+                                    border: 2px solid black;
+                                    font-size: 12px;
+                                    font-weight: bold;
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                }
+    
+                                #what_to_print .billing_number
+                                {
+                                    position: absolute;
+                                    top: 0;
+                                    right: 0;
+                                    width: 120px;
+                                    text-align: center;
+                                }
+    
+                                #what_to_print .pdf_header
+                                {
+                                    position: absolute;
+                                    top: 0;
+                                    left: 230px;
+                                    width: calc(100% - 312px);
+                                    text-align: center;
+                                }
+    
+                                #what_to_print .customer_summary
+                                {
+                                    position: absolute;
+                                    top: 90px;
+                                    left: 0;
+                                    width: 100%;
+                                    display: flex;
+                                    align-items: start;
+                                    justify-content: start;
+                                    border: 3px solid black ;
+                                }
+    
+                                #what_to_print .customer
+                                {
+                                    width: 50%;
+                                    display: flex;
+                                    flex-direction: column;
+                                }
+    
+                                #what_to_print .account_summary
+                                {
+                                    width: 50%;
+                                    display: flex;
+                                    flex-direction: column;
+                                    border-left: 2px solid black ;
+                                    height: 104px;
+                                }
+    
+                                #what_to_print .customer_header,
+                                #what_to_print .account_summary_header
+                                {
+                                    text-align: center;
+                                    border-bottom: 1px solid black;
+                                    background-color: lightgray;
+                                }
+    
+                                #what_to_print .customer_detail
+                                {
+                                    padding: 5px;
+                                }
+    
+                                #what_to_print .account_summary_detail
+                                {
+                                    padding: 5px 20px;
+                                }
+
+                                #what_to_print .scope
+                                {
+                                    position: absolute;
+                                    top: 197px;
+                                    left: 0;
+                                    width: 100%;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    border: 3px solid black ;
+                                }
+
+                                #what_to_print .scope_detail
+                                {
+                                    position: absolute;
+                                    top: 216px;
+                                    left: 0;
+                                    width: 100%;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: start;
+                                    border: 3px solid black ;
+                                    padding-left: 5px;
+                                }
+    
+                                #what_to_print .payable
+                                {
+                                    border-bottom: 2px solid black;
+                                }
+    
+                                #what_to_print .account_details
+                                {
+                                    position: absolute;
+                                    top: 234px;
+                                    width: 100%;
+                                    display: flex;
+                                    flex-direction: column;
+                                    border: 1px solid black ;
+                                    max-height: 400px;
+                                    overflow: hidden;
+                                    border-bottom: 2px solid black;
+                                }
+    
+    
+                                #what_to_print .account_details_header
+                                {
+                                    width: 100%;
+                                    text-align: center;
+                                    border-top: 2px solid black;
+                                    border-bottom: 2px solid black;
+                                    border-left: 1px solid black;
+                                    border-right: 1px solid black;
+                                    background-color: lightgray;
+                                }
+    
+                                #what_to_print .account_details_detail
+                                {
+                                    width: 100%;
+                                    height: 425px;
+                                    position: relative;
+                                }
+    
+                                #what_to_print .account_details_detail thead
+                                {
+                                    overflow: hidden;
+                                    font-size: 12px !important;
+                                }
+
+                                #what_to_print .account_details_detail tbody
+                                {
+                                    overflow: hidden;
+                                    font-size: 11px !important;
+                                }
+    
+                                #what_to_print .account_details_detail thead tr,
+                                #what_to_print .account_details_detail tbody tr
+                                {
+                                    width: 100%;
+                                    display: grid;
+                                    grid-template-columns: .5fr 4fr .5fr 1fr 1fr 1fr 1.5fr 1.5fr !important;
+                                }
+    
+                                #what_to_print .account_details_detail th,
+                                #what_to_print .account_details_detail td
+                                {
+                                    width: 100%;
+                                    border-left: 1px solid black;
+                                    border-right: 1px solid black;
+                                    text-align: center;
+                                }
+    
+                                #what_to_print .account_details_detail tr
+                                {
+                                    width: 100%;
+                                    height: 18px;
+                                    border-bottom: 1px solid black;
+                                    text-align: center;
+                                }
+        
+                                #what_to_print .details
+                                {
+                                    position: absolute;
+                                    top: 650px;
+                                    width: 100%;
+                                    height: 70px;
+                                    display: grid;
+                                    grid-template-columns: 13fr 2fr 2fr;
+                                    border: 2px solid black ;
+                                    overflow: hidden;
+                                    font-size: 14px;
+                                }
+        
+                                #what_to_print .other_details
+                                {
+                                    position: absolute;
+                                    top: 720px;
+                                    width: 100%;
+                                    height: 65px;
+                                    border: 3px solid black !important;
+                                    overflow: hidden;
+                                    font-size: 14px;
+                                }
+                                    
+                                #what_to_print .footer
+                                {
+                                    margin-top: 750px;
+                                    display: grid;
+                                    grid-template-columns: 1fr 1fr 1fr 1fr;
+                                    border: 1px solid black ;
+                                }
+                                    
+                                #what_to_print .footer > div
+                                {
+                                    display: flex;
+                                    flex-direction: column;
+                                    text-align: center;
+                                }
+                                    
+                                #what_to_print .footer_header
+                                {
+                                    background-color: lightgray;
+                                    border: 1px solid black ;
+                                }
+    
+                                #what_to_print .assignatory
+                                {
+                                    display: flex;
+                                    flex-direction: column;
+                                    justify-content: end;
+                                    height: 60px;
+                                    border: 1px solid black ;
+                                }
+    
+                            </style>
+                        </div><br>   
                     </form>
                 </div>
                 <div id="update_quotation_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #dc3545; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
@@ -1064,6 +1748,7 @@
                                 </label><br>
                                 <div class="search_input" id="search_client">
                                     <input type="text" name="client" id="client" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
+                                    <input type="hidden" name="client_id_input" id="client_id_input" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
                                     <div class="autocom_box">
                                     </div>
                                     <div class="icon"><i class="fas fa-search"></i></div>
@@ -1259,6 +1944,7 @@
                                     </label><br>
                                     <div class="search_input" id="search_client">
                                         <input type="text" name="client" id="client" autocomplete="off" class="form-control" required readonly placeholder="Type to Search Client Name...">
+                                        <input type="hidden" name="client_id_input" id="client_id_input" autocomplete="off" class="form-control" required readonly placeholder="Type to Search Client Name...">
                                         <div class="autocom_box">
                                         </div>
                                         <div class="icon"><i class="fas fa-search"></i></div>
@@ -1358,6 +2044,7 @@
                                 </label><br>
                                 <div class="search_input" id="search_client">
                                     <input type="text" name="client" id="client" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
+                                    <input type="hidden" name="client_id_input" id="client_id_input" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
                                     <div class="autocom_box">
                                     </div>
                                     <div class="icon"><i class="fas fa-search"></i></div>
@@ -1782,7 +2469,84 @@
     <script src="../js/main.js"></script>
     <script src="../js/user6.js"></script>
     <script>
+        function convertToPDFandDownload() {
+            const element = document.getElementById('what_to_print');
+            const quotation_no = document.getElementById('quotation_no').value;
+            const client = document.getElementById('client').value;
+            let modifiedCompanyName = client.replace(/\./g, '');
+
+            const opt = {
+                filename: `${quotation_no} - ${client}`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 10 },
+                jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
+            };
+            
+            const marginTop = 32.5; // Top margin in mm
+            const marginBottom = 0; // Bottom margin in mm
+
+            // Set the page height to account for the top and bottom margins
+            const pageHeight = 279.4 - marginTop - marginBottom;
+
+            // Reset the element's transform style
+            element.style.transform = 'none';
+
+            // Generate the PDF with the adjusted options
+            html2pdf()
+                .set(opt)
+                .from(element)
+                .toContainer()
+                .then(() => {
+                    html2pdf().set(opt).from(element).save().then(() => {
+                        // Call the submit button click event immediately after the PDF is downloaded
+                        document.getElementById('submit_button').click();
+                    });
+                });
+        }
+
         function convertToPDF() {
+            const element = document.getElementById('what_to_print');
+            const quotation_no = document.getElementById('quotation_no').value;
+            const client = document.getElementById('client').value;
+            let modifiedCompanyName = client.replace(/\./g, '');
+
+            const opt = {
+                filename: `${quotation_no} - ${client}`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
+            };
+
+            const marginTop = 32.5; // Top margin in mm
+            const marginBottom = 0; // Bottom margin in mm
+            const pageHeight = 279.4; // Adjust the value based on your available space for each page
+
+            const totalPages = Math.ceil(element.clientHeight / pageHeight);
+
+            let promises = [];
+
+            for (let i = 0; i < totalPages; i++) {
+                const promise = html2pdf()
+                .set(opt)
+                .from(element)
+                .toContainer()
+                .then(() => {
+                    const newPosition = -pageHeight * (i + 1) - marginTop;
+                    element.style.transform = `translate(0, ${newPosition}px)`;
+                });
+
+                promises.push(promise);
+            }
+            Promise.all(promises)
+                .then(() => {
+                element.style.transform = 'none';
+                html2pdf().set(opt).from(element).save().then(() => {
+                    // Call the submit button click event immediately after the PDF is downloaded
+                });
+            });
+        }
+
+        function convertToPDF2() {
             const element = document.getElementById('report_tab1');
             const report_date_from = document.getElementById("report_date_from");
             const report_date_to = document.getElementById("report_date_to");
