@@ -1273,6 +1273,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             const ap_accounting_head_dashboard = document.querySelector("#accounting_head_dashboard");
             const purchase_request_list_ap_accounting_head = ap_accounting_head_dashboard.querySelector("#purchase_request_list");
             const fund_source_pr_ap_accounting_head = ap_accounting_head_dashboard.querySelector("#fund_source_pr");
+            const pr_counter_ap_accounting_head = ap_accounting_head_dashboard.querySelector("#pr_counter");
 
             // purchase_request
             var requested_data_value = "";
@@ -1339,6 +1340,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${button2}</td>
                         </tr>
                         `
+                        pr_counter_ap_accounting_head.innerHTML = `(${requested_data_value_counter})`
                         requested_data_value_counter += 1;
                     }
                 }
