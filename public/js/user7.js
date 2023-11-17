@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const employee_response_promise = fetch('https://script.google.com/macros/s/AKfycbwns5R6TA8U64ywbb9hwYu4LKurAjTM0Z18NYNZMt0Ft0m-_NUHYbYqblk_5KWugvt7lA/exec');
         const vehicle_response_promise = fetch('https://script.google.com/macros/s/AKfycbw-JCnctX1x1W1ogGbrkhNdIGd9q6bYjy_nvaYeoiaBf7HreB2a1tKJZaJHw2wu4wmpcA/exec');
         const vehicle_log_response_promise = fetch('https://script.google.com/macros/s/AKfycbwOVO1qi9ac0YojlrZUh-XMYMe_gAeO2bg_wU_lSRdBkLgmJKQuzQuq41lzvSOjKfzA/exec');
+        const vehicle_maintenance_response_promise = fetch('https://script.google.com/macros/s/AKfycbwB-vjJrQoSk9Q0L5DoLKFdaSPtENNC60VfpIWG8IuHHXC_Nq6HU0bKhmektlKMMPqa/exec');
         const mtf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzkzS4OVm3IfNl6KwOfLZq_uO3MnsXfu-oS5Su_1kxhfo1mMoKpYDm8a4RxWqsQh0qv/exec');
         const ltf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxBLMvyNDsT9_dlVO4Qc31dI4ErcymUHbzKimOpCZHgbJxip2XxCl7Wk3hJyqcdtrxU/exec');
         const wcf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyBFTBuFZ4PkvwmPi_3Pp_v74DCSEK2VpNy6janIGgaAK-P22wazmmShOKn6iwFbrQn/exec');
@@ -25,6 +26,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             employee_response,
             vehicle_response,
             vehicle_log_response,
+            vehicle_maintenance_response,
             mtf_response,
             ltf_response,
             wcf_response,
@@ -43,6 +45,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             employee_response_promise,
             vehicle_response_promise,
             vehicle_log_response_promise,
+            vehicle_maintenance_response_promise,
             mtf_response_promise,
             ltf_response_promise,
             wcf_response_promise,
@@ -62,6 +65,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const employee_data_list  = await employee_response.json();
         const vehicle_data_list  = await vehicle_response.json();
         const vehicle_log_data_list  = await vehicle_log_response.json();
+        const vmr_data_list  = await vehicle_maintenance_response.json();
         const mtf_data_list  = await mtf_response.json();
         const ltf_data_list  = await ltf_response.json();
         const wcf_data_list  = await wcf_response.json();
@@ -648,6 +652,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         });
 
         // vehicle_list_section 
+        const logistics_travel_form = document.querySelector("#logistics_travel_form");
         const total_vehicle_vehicle_list_section = document.querySelector("#total_vehicle");
         const available_vehicle_vehicle_list_section = document.querySelector("#available_vehicle");
         const on_hauling_vehicle_vehicle_list_section = document.querySelector("#on_hauling_vehicle");
@@ -675,7 +680,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         under_maintenance_vehicle_vehicle_list_section.innerHTML = under_maintenance_vehicle_counter_logistics;
         for_maintenance_vehicle_vehicle_list_section.innerHTML = for_maintenance_vehicle_counter_logistics;
         
-        const search_wrapper3 = document.getElementById("search_plate_no");
+        const search_wrapper3 = logistics_travel_form.querySelector("#search_plate_no");
         const input_box3 = search_wrapper3.querySelector("input");
         const sugg_box3 = search_wrapper3.querySelector(".autocom_box");
         input_box3.onkeyup = (e) => {
@@ -938,6 +943,76 @@ document.addEventListener('DOMContentLoaded', async function() {
         //         new_vehicle_tab.style.display = "none";
         //     }
         // })
+
+        // vmr_data_list
+        // FORM GENERATOR
+        const vmr_form_no = vehicle_maintenance_form.querySelector("#vmr_form_no");
+        var last_row = vmr_data_list.content.length -1;
+        var data_info = vmr_data_list.content[last_row][findTextInArray(vmr_data_list, "VMR #")];
+        var data_counter;
+        if(last_row == 0){
+            data_counter = 0;
+        }
+        else{
+            data_counter = data_info.substring(9,12);
+        }
+        var year = new Date().getFullYear();
+        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        vmr_form_no.value = `VMR${year}${month}${data_counter}`;
+
+        var plate_no_data = [];
+        for (x = 1; x < vehicle_data_list.content.length; x++) {
+            plate_no_data.push(vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "PLATE #")]);
+        }
+        
+        searchPlateNo()
+
+        function searchPlateNo(){
+            const search_wrapper3 = vehicle_maintenance_form.querySelector("#search_plate_no");
+            const input_box3 = search_wrapper3.querySelector("input");
+            const sugg_box3 = search_wrapper3.querySelector(".autocom_box");
+            input_box3.onkeyup = (e) => {
+                let user_data = e.target.value;
+                let empty_array = [];
+                if (user_data) {
+                    empty_array = plate_no_data.filter((data) => {
+                        return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
+                    });
+                    empty_array = empty_array.map((data) => {
+                        return '<li>' + data + '</li>';
+                    });
+                    search_wrapper3.classList.add("active");
+                    show_suggestions3(empty_array);
+                } else {
+                    search_wrapper3.classList.remove("active");
+                }
+            };
+        
+            sugg_box3.addEventListener("click", (e) => {
+                if (e.target.tagName === "LI") {
+                    select3(e.target.innerHTML);
+                }
+            });
+        
+            function select3(element) {
+                let select_user_data = element;
+                input_box3.value = select_user_data;
+                search_wrapper3.classList.remove("active");            
+            }
+        
+            function show_suggestions3(list) {
+                let list_data;
+                if (!list.length) {
+                    user_value = input_box3.value;
+                    list_data = '<li>' + user_value + '</li>';
+                } else {
+                    list_data = list.join("");
+                }
+                sugg_box3.innerHTML = list_data;
+            }     
+        }
+
 
         // multi section
         // purchase_request_form

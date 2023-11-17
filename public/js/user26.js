@@ -1653,7 +1653,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         });
         
-        tf_button_quotation_form2.addEventListener("click", () => {
+ 
             if(tf_value_quotation_form2.value == "false"){
                 tf_counter_quotation_form2.value = 1;
                 var data = `                        

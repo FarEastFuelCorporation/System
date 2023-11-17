@@ -516,8 +516,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                             batch_weight.value = wcf_data_list.content[a][findTextInArray(wcf_data_list, "NET WEIGHT")];
                             hauling_date.value = date_decoder(wcf_data_list.content[a][findTextInArray(wcf_data_list, "HAULING DATE")]);
                             mtf_form_no.value = mtf;
-                            console.log(mtf)
-                            console.log(mtf_form_no.value)
                             batch_weight_list.style.display = "grid";
                             additional_item1.style.display = "grid";
                             completion.style.display = "grid";

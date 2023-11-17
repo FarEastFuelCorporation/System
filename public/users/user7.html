@@ -707,13 +707,36 @@
                     </label><br>
                 </div>
                 <div id="vehicle_maintenance_tab"  style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
-                    <h2>VEHICLE MAINTENANCE FORM</h2><br>
-                    <form action="https://script.google.com/macros/s/AKfycbwtUd1A6MGvhh6axwd9DEiutRi0nePAv2sk5YFe49kH41KxWpy3JL3yFGvGbd7MLGMF/exec" method="post">
-                        <label for="plate_no">
+                    <h2>VEHICLE MAINTENANCE REQUEST</h2><br>
+                    <form action="https://script.google.com/macros/s/AKfycbzgHN6S4ujJvGHeKFPEBVq24gDlFLJqatapKDYR_0wVHuzaBNmWsoZAiyvnxjctOhRx/exec" method="post">
+                        <input type="hidden" name="user" id="user">
+                        <label for="vmr_form_no">
                             <i class="fa-regular fa-rectangle-list"></i>
-                            Plate #
+                            VMR #
                         </label><br>
-                        <input type="text" autocomplete="off" name="plate_no" id="plate_no" class="form-control form" required placeholder="Input Plate #..."><br>
+                        <input type="text" autocomplete="off" name="vmr_form_no" id="vmr_form_no" class="form-control form" required><br>
+                        <div class="wrapper">
+                            <label for="plate_no">
+                                <i class="fa-solid fa-truck"></i>
+                                Plate #
+                            </label><br>
+                            <div class="search_input" id="search_plate_no">
+                                <input type="text" autocomplete="off" name="plate_no" id="plate_no" class="form-control form" required placeholder="Type to Search Plate #...">
+                                <div class="autocom_box">
+                                </div>
+                                <div class="icon"><i class="fas fa-search"></i></div>
+                            </div>
+                        </div><br>
+                        <label for="details">
+                            <i class="fa-regular fa-rectangle-list"></i>
+                            Details For Repair
+                        </label><br>
+                        <input type="text" autocomplete="off" name="details" id="details" class="form-control" required placeholder="Input Details For Repair..."><br>
+                        <label for="requisitioner">
+                            <i class="fa-regular fa-rectangle-list"></i>
+                            Requisitioner
+                        </label><br>
+                        <input type="text" autocomplete="off" name="requisitioner" id="requisitioner" class="form-control" required placeholder="Input Requisitioner..."><br>
                         <div class="buttons">
                             <button type="submit" id="submit_btn" class="form-control" >
                                 Submit

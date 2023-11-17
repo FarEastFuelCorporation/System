@@ -777,7 +777,7 @@
                                 <input type="radio" name="is_there_moa" id="without_moa" value="WITHOUT MOA">Without MOA
                             </div>
                         </div>
-                        <div style="display: grid; grid-template-columns: 10% 18% 15% 15% 42%; gap: 20px; width: calc(100% - 60px);">
+                        <div style="display: grid; grid-template-columns: 10% 10% 15% 15% 15% 30%; gap: 20px; width: calc(100% - 60px);">
                             <div class="wrapper">
                                 <label for="quotation_no">
                                     <i class="fa-solid fa-list-ol"></i>
@@ -787,10 +787,19 @@
                                     <input type="text" name="quotation_no" id="quotation_no" autocomplete="off" class="form-control" required placeholder="Type Quotation #" style="padding-right: 20px !important;">
                                 </div>
                             </div>
+                            <div class="wrapper">
+                                <label for="revision_no">
+                                    <i class="fa-solid fa-list-ol"></i>
+                                    Revision #
+                                </label><br>
+                                <div class="search_input">
+                                    <input type="text" name="revision_no" id="revision_no" autocomplete="off" class="form-control" required placeholder="Type Revision #" style="padding-right: 20px !important;">
+                                </div>
+                            </div>
                             <div class="wrapper" id="validity_container">
                                 <label for="terms">
                                     <i class="fa-solid fa-calendar-days"></i>
-                                    Valid Until (MOA End Date)
+                                    MOA End Date
                                 </label><br>
                                 <div class="search_input">
                                     <input type="date" name="validity" id="validity" autocomplete="off" class="form-control" required placeholder="Type Quotation #" style="padding-right: 20px !important;">
@@ -1036,10 +1045,18 @@
                                         <h4 class="bold">QUOTATION</h4>
                                     </div>
                                     <div class="billing_number">
-                                        <h4 class="italic">Quotation Number</h4>
-                                        <h4 id="qlf_form_no_container" class="bold"></h4>
-                                        <h4 class="italic">Date</h4>
-                                        <h4 id="date_made_container" class="bold"></h4>
+                                        <div>
+                                            <h4 class="italic">Quotation Number</h4>
+                                            <h4 id="qlf_form_no_container" class="bold"></h4>
+                                            <h4 class="italic">Date</h4>
+                                            <h4 id="date_made_container" class="bold"></h4>
+                                        </div>
+                                        <div>
+                                            <h4 class="italic">Revision Number</h4>
+                                            <h4 id="qlf_form_no_container" class="bold"></h4>
+                                            <h4 class="italic">Valid Until</h4>
+                                            <h4 id="date_made_container" class="bold"></h4>
+                                        </div>
                                     </div>
                                     <div class="customer_summary">
                                         <div class="customer">
@@ -1479,7 +1496,7 @@
                                     position: absolute;
                                     top: 0;
                                     right: 0;
-                                    width: 120px;
+                                    width: 200px;
                                     text-align: center;
                                 }
     
@@ -1487,7 +1504,8 @@
                                 {
                                     position: absolute;
                                     top: 0;
-                                    left: 230px;
+                                    left: 50%;
+                                    transform: translateX(-50%);
                                     width: calc(100% - 312px);
                                     text-align: center;
                                 }
@@ -1726,7 +1744,7 @@
                             <div class="wrapper display_input" style="display: none;" id="validity_container">
                                 <label for="terms">
                                     <i class="fa-solid fa-calendar-days"></i>
-                                    Valid Until (MOA End Date)
+                                    MOA End Date
                                 </label><br>
                                 <div class="search_input">
                                     <input type="date" name="validity" id="validity" autocomplete="off" class="form-control" required placeholder="Type Quotation #" style="padding-right: 20px !important;">
@@ -2022,7 +2040,7 @@
                             <div class="wrapper display_input" style="display: none;">
                                 <label for="terms">
                                     <i class="fa-solid fa-calendar-days"></i>
-                                    Valid Until (MOA End Date)
+                                    MOA End Date
                                 </label><br>
                                 <div class="search_input">
                                     <input type="date" name="validity" id="validity" autocomplete="off" class="form-control" required placeholder="Type Quotation #" style="padding-right: 20px !important;">
