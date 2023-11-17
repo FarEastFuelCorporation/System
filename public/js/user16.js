@@ -462,7 +462,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 // type_of_waste_data_list
                 const type_of_waste = document.getElementById("type_of_waste");
                 const type_of_vehicle = document.getElementById("type_of_vehicle");
-                const client_id_input = document.getElementById("client_id_input");
+                const client_id_input = document.querySelectorAll("#client_id_input");
                 const search_client_id = document.querySelectorAll("#client_id");
                 for (let y = 1; y < client_data_list.content.length; y++) {
                     if (select_user_data == client_data_list.content[y][findTextInArray(client_data_list, "CLIENT NAME")]) {
@@ -470,7 +470,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                         client_id = client_data_list.content[y][findTextInArray(client_data_list, "CLIENT ID")];
                         client_id_input.value = client_id;
                         search_client_id.forEach((data) => {
-                            data.value = client_data_list.content[y][findTextInArray(client_data_list, "CLIENT ID")]
+                            data.value = client_id
+                        })
+                        client_id_input.forEach((data) => {
+                            data.value = client_id
                         })
                         for (let x = 1; x < qlf_data_list.content.length; x++) {
                             if (client_id == qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")] && qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")] !== "TRIP") {
@@ -822,6 +825,103 @@ document.addEventListener('DOMContentLoaded', async function() {
         const without_moa_quotation_form = new_quotation_form_tab.querySelector("#without_moa");
         const validity_quotation_form = new_quotation_form_tab.querySelector("#validity");
         const validity_container_quotation_form = new_quotation_form_tab.querySelector("#validity_container");
+        const generate_button_quotation_form = new_quotation_form_tab.querySelector("#generate_button");
+        const quotation_no_quotation_form = new_quotation_form_tab.querySelector("#quotation_no");
+        const qlf_form_no_container_quotation_form = new_quotation_form_tab.querySelector("#qlf_form_no_container");
+        const date_made_container_quotation_form = new_quotation_form_tab.querySelector("#date_made_container");
+        const client_id_input_quotation_form = new_quotation_form_tab.querySelector("#client_id_input");
+        const client_name_container_quotation_form = new_quotation_form_tab.querySelector("#client_name_container");
+        const address_container_quotation_form = new_quotation_form_tab.querySelector("#address_container");
+        const nature_of_business_container_quotation_form = new_quotation_form_tab.querySelector("#nature_of_business_container");
+        const contact_number_quotation_form = new_quotation_form_tab.querySelector("#contact_number");
+        const contact_number_container_quotation_form = new_quotation_form_tab.querySelector("#contact_number_container");
+        const client_name_container_quotation_form2 = new_quotation_form_tab.querySelector("#client_name_container2");
+        const address_container_quotation_form2 = new_quotation_form_tab.querySelector("#address_container2");
+        const contact_number2_container_quotation_form2 = new_quotation_form_tab.querySelector("#contact_number2_container");
+        const nature_of_business_container_quotation_form2 = new_quotation_form_tab.querySelector("#nature_of_business_container2");
+        const contact_number_quotation_form2 = new_quotation_form_tab.querySelector("#contact_number2");
+        const table_data_quotation_form = new_quotation_form_tab.querySelector("#table_data");
+        const validity_input_quotation_form = new_quotation_form_tab.querySelector("#validity_input");
+        const terms_quotation_form = new_quotation_form_tab.querySelector("#terms");
+        const terms2_quotation_form = new_quotation_form_tab.querySelector("#terms2");
+        const charge_input_quotation_form = new_quotation_form_tab.querySelector("#charge_input");
+        const buying_input_quotation_form = new_quotation_form_tab.querySelector("#buying_input");
+        const marketing_user_quotation_form = new_quotation_form_tab.querySelector("#marketing_user");
+        const user = new_quotation_form_tab.querySelector("#user");
+        const convertToPDFandDownload_button = new_quotation_form_tab.querySelector("#convertToPDFandDownload_button");
+        const convertToPDF_button = new_quotation_form_tab.querySelector("#convertToPDF_button");
+        const submit_button = new_quotation_form_tab.querySelector("#submit_button");
+
+        generate_button_quotation_form.addEventListener("click", () => {
+            qlf_form_no_container_quotation_form.innerText = quotation_no_quotation_form.value
+            date_made_container_quotation_form.innerText = date_decoder(new Date())
+            for(let x = 1; x < client_data_list.content.length; x++){
+                if(client_id_input_quotation_form.value == client_data_list.content[x][findTextInArray(client_data_list, "CLIENT ID")]){
+                    client_name_container_quotation_form.innerText = client_data_list.content[x][findTextInArray(client_data_list, "BILLER NAME")]
+                    address_container_quotation_form.innerText = client_data_list.content[x][findTextInArray(client_data_list, "BILLER ADDRESS")]
+                    nature_of_business_container_quotation_form.innerText = client_data_list.content[x][findTextInArray(client_data_list, "NATURE OF BUSINESS")]
+                    contact_number_quotation_form.innerText = client_data_list.content[x][findTextInArray(client_data_list, "BILLER CONTACT NUMBER")]
+                    client_name_container_quotation_form2.innerText = client_data_list.content[x][findTextInArray(client_data_list, "CLIENT NAME")]
+                    address_container_quotation_form2.innerText = client_data_list.content[x][findTextInArray(client_data_list, "ADDRESS")]
+                    nature_of_business_container_quotation_form2.innerText = client_data_list.content[x][findTextInArray(client_data_list, "NATURE OF BUSINESS")]
+                    contact_number_quotation_form2.innerText = client_data_list.content[x][findTextInArray(client_data_list, "CONTACT NUMBER")]
+                    contact_number_container_quotation_form.style.display = "flex";
+                    contact_number2_container_quotation_form2.style.display = "flex";
+                }
+            }
+            var counter = 1
+            var row = 0
+            for(let x = 0; x < list_counter_quotation_form.value; x++){
+                const waste_name = new_quotation_form_tab.querySelector(`#waste_name${x + 1}`);
+                const unit = new_quotation_form_tab.querySelector(`#unit${x + 1}`);
+                const unit_price = new_quotation_form_tab.querySelector(`#unit_price${x + 1}`);
+                const mode = new_quotation_form_tab.querySelector(`#mode${x + 1}`);
+                const vat_calculation = new_quotation_form_tab.querySelector(`#vat_calculation${x + 1}`);
+                var quantity = 0
+                const table_row = table_data_quotation_form.querySelectorAll("tr")[row];
+                table_row.querySelectorAll("td")[0].innerText = `${counter}`;
+                table_row.querySelectorAll("td")[1].innerText = waste_name.value.toUpperCase();
+                table_row.querySelectorAll("td")[3].innerText = `Per ${unit.value}s`;
+                table_row.querySelectorAll("td")[4].innerText = formatNumber(unit_price.value);
+                table_row.querySelectorAll("td")[5].innerText = formatNumber(unit_price.value * quantity);
+                table_row.querySelectorAll("td")[6].innerText = mode.value;
+                table_row.querySelectorAll("td")[7].innerText = vat_calculation.value;
+                row = row + 1;
+                counter = counter + 1;
+            }
+            for(let x = 0; x < tf_counter_quotation_form.value; x++){
+                const type_of_vehicle = new_quotation_form_tab.querySelector(`#type_of_vehicle${x + 1}`);
+                const transportation_fee = new_quotation_form_tab.querySelector(`#transportation_fee${x + 1}`);
+                const tf_unit = new_quotation_form_tab.querySelector(`#tf_unit${x + 1}`);
+                const tf_unit_price = new_quotation_form_tab.querySelector(`#tf_unit_price${x + 1}`);
+                const tf_mode = new_quotation_form_tab.querySelector(`#tf_mode${x + 1}`);
+                const tf_vat_calculation = new_quotation_form_tab.querySelector(`#tf_vat_calculation${x + 1}`);
+                var quantity = 0
+                const table_row = table_data_quotation_form.querySelectorAll("tr")[row];
+                table_row.querySelectorAll("td")[0].innerText = `${counter}`;
+                table_row.querySelectorAll("td")[1].innerText = `TRANSPORTATION FEE - ${type_of_vehicle.value}`;
+                table_row.querySelectorAll("td")[1].style.fontSize = `10px`;
+                table_row.querySelectorAll("td")[3].innerText = `Per ${tf_unit.value}s`;
+                table_row.querySelectorAll("td")[4].innerText = formatNumber(tf_unit_price.value);
+                table_row.querySelectorAll("td")[5].innerText = formatNumber(tf_unit_price.value * quantity);
+                table_row.querySelectorAll("td")[6].innerText = tf_mode.value;
+                table_row.querySelectorAll("td")[7].innerText = tf_vat_calculation.value;
+                row = row + 1;
+                const table_row2 = table_data_quotation_form.querySelectorAll("tr")[row];
+                table_row2.querySelectorAll("td")[1].innerText = `(AREA OH HAUL - ${transportation_fee.value})`;
+                row = row + 1;
+                counter = counter + 1;
+            }
+            // validity_input_quotation_form.innerText = `${validity_quotation_form.value} Days`;
+            charge_input_quotation_form.innerText = terms_quotation_form.value.toUpperCase();
+            buying_input_quotation_form.innerText = terms2_quotation_form.value.toUpperCase();
+            marketing_user_quotation_form.innerText = user.value.toLowerCase().replace(/\b\w/g, function (char) {
+                return char.toUpperCase();
+            });
+            convertToPDFandDownload_button.style.display = "block";
+            convertToPDF_button.style.display = "block";
+            submit_button.style.display = "block";
+        })
 
         const search_quotation_no_button_quotation_form = update_quotation_form_tab.querySelector("#search_quotation_no_button");
         const search_quotation_no_button_container_quotation_form = update_quotation_form_tab.querySelector("#search_quotation_no_button_container");
@@ -1230,6 +1330,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         });
+
+
 
         search_quotation_no_button_quotation_form.addEventListener("click", () => {
             search_quotation_no_button_container_quotation_form.style.display = "none";
