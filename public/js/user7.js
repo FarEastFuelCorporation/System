@@ -1013,6 +1013,35 @@ document.addEventListener('DOMContentLoaded', async function() {
             }     
         }
 
+        const vehicle_maintenance_request_list = vehicle_maintenance_form.querySelector("#vehicle_maintenance_request_list");
+        var data_value = "";
+        var data_value_counter = 1;
+        for(let x = 1; x < vmr_data_list.content.length; x++){
+            var type_of_vehicle
+            var vehicle
+            for(let y = 1; y < vehicle_data_list.content.length; y++){
+                if(vmr_data_list.content[x][findTextInArray(vmr_data_list, "PLATE #")] == vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "PLATE #")]){
+                    vehicle = vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "VEHICLE")]
+                    type_of_vehicle = vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")]
+                }
+            }
+            data_value +=`
+            <tr>
+                <td>${data_value_counter}</td>
+                <td>${vmr_data_list.content[x][findTextInArray(vmr_data_list, "VMR #")]}</td>
+                <td>${date_decoder(vmr_data_list.content[x][findTextInArray(vmr_data_list, "CREATED AT")])} /<br> ${time_decoder(vmr_data_list.content[x][findTextInArray(vmr_data_list, "CREATED AT")])}</td>
+                <td>${vmr_data_list.content[x][findTextInArray(vmr_data_list, "PLATE #")]}</td>
+                <td>${vehicle}</td>
+                <td>${type_of_vehicle}</td>
+                <td>${vmr_data_list.content[x][findTextInArray(vmr_data_list, "DETAILS")]}</td>
+                <td>${vmr_data_list.content[x][findTextInArray(vmr_data_list, "REQUISITIONER")]}</td>
+                <td>${vmr_data_list.content[x][findTextInArray(vmr_data_list, "SUBMITTED BY")]}</td>
+            </tr>
+            `
+            data_value_counter += 1;
+        }
+        vehicle_maintenance_request_list.innerHTML = data_value;
+
 
         // multi section
         // purchase_request_form
