@@ -362,16 +362,8 @@
         <!-- VEHICLE MAINTENANCE FORM -->
         <section id="waste_collection_form">
             <h2>VEHICLE MAINTENANCE FORM</h2><br>
-            <form id="form_id" action="https://script.google.com/macros/s/AKfycbzXfe2vsb49JXd1ZbMoNxBFitRgaRfNTV2dYKtiNgpxm3FiwITI8PpSi9FIFlCzfHZh/exec" method="post">
+            <form id="form_id" action="https://script.google.com/macros/s/AKfycbxECjQTqJQx7XJN_L7913FL6k7y7UOWhjdxr-1fq9UdounJntHW-dikM4zrXs8ZnYrWHw/exec" method="post">
                 <input type="hidden" name="user" id="user">
-                <input type="hidden" name="mtf_form_no" id="mtf_form_no">
-                <input type="hidden" name="process" id="process">
-                <input type="hidden" name="ltf_form_no" id="ltf_form_no">
-                <input type="hidden" name="waste_description" id="waste_description">
-                <input type="hidden" name="driver_id" id="driver_id">
-                <input type="hidden" name="client_id" id="client_id">
-                <input type="hidden" name="hauling_date" id="hauling_date">
-                <input type="hidden" name="status" id="status" value="AVAILABLE">
                 <div class="wcf_form">
                     <div>
                         <label for="wcf_form_no">
@@ -385,7 +377,7 @@
                 </div>
                 <div class="wcf_form">
                     <div>
-                        <label for="search_ltf_form_no">
+                        <label for="search_vmr_form_no">
                             <i class="fa-solid fa-list-ol"></i>
                             Search VMR #
                         </label>
@@ -406,139 +398,61 @@
                         </div>
                     </div>
                 </div>
-                <div id="search_ltf_result"></div>
-                <div id="wcf_data">
-                    <div class="plate_and_driver">
-                        <div class="wrapper">
-                            <label for="plate_no">
-                                <i class="fa-solid fa-truck"></i>
-                                Plate #
+                <div id="search_vmr_result"></div>
+                <div id="vmr_data" style="display: block;">
+                    <div>
+                        <label for="type_of_repair">
+                            <i class="fa-solid fa-wrench"></i>
+                            Type of Repair
+                        </label><br>
+                        <select name="type_of_repair" id="" class="form-control form" required>
+                            <option value="">SELECT</option>
+                            <option value="MECHANICAL">MECHANICAL</option>
+                            <option value="ELECTRICAL">ELECTRICAL</option>
+                        </select>
+                    </div><br>
+                    <div style="display: flex; gap: 20px;">
+                        <div>
+                            <label for="date_start">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                Date Start
                             </label><br>
-                            <div class="search_input" id="search_plate_no">
-                                <input type="text" autocomplete="off" name="plate_no" id="plate_no" class="form-control" required placeholder="Type to Search Plate #...">
-                                <div class="autocom_box">
-                                </div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
-                            </div>
-                        </div>                         
-                        <div class="wrapper">
-                            <label for="plate_no">
-                                <i class="fa-solid fa-truck"></i>
-                                Type of Vehicle
+                            <input type="date" id="date_start" name="date_start" class="form-control form" required autocomplete="off">
+                        </div>
+                        <div>
+                            <label for="date_finish">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                Date Finish
                             </label><br>
-                            <div id="type_of_vehicle_container">
-                            </div>
-                        </div>                         
-                        <div class="wrapper">
-                            <label for="driver">
-                                <i class="fa-solid fa-id-card"></i>
-                                Driver
-                            </label><br>
-                            <div class="search_input" id="search_driver">
-                                <input type="text" autocomplete="off" name="driver" id="driver" class="form-control" required placeholder="Type to Search Driver Name...">
-                                <div class="autocom_box">
-                                </div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
-                            </div>
+                            <input type="date" id="date_finish" name="date_finish" class="form-control form" required autocomplete="off">
                         </div>
                     </div><br>
-                    <div class="time_in_out">
-                        <div class="time_in">
-                            <label for="time_in">
-                                <i class="fa-solid fa-right-to-bracket"></i>
-                                IN - <br>Date and Time
-                            </label>
-                            <input type="date" autocomplete="off" name="date_in" id="date_in" class="form-control" required>
-                            <input type="time" autocomplete="off" name="time_in" id="time_in" class="form-control" required><br>  
-                        </div>
-                        <div class="time_out">
-                            <label for="time_out">
-                            <i class="fa-solid fa-right-from-bracket"></i>
-                                OUT - <br>Date and Time
-                            </label>
-                            <input type="date" autocomplete="off" name="date_out" id="date_out" class="form-control" required>
-                            <input type="time" autocomplete="off" name="time_out" id="time_out" class="form-control" required><br>
-                        </div>
+                    <div>
+                        <label for="repair">
+                            <i class="fa-solid fa-toolbox"></i>
+                            Repair Details
+                        </label><br>
+                        <input type="text" id="repair" name="repair" class="form-control" required placeholder="Input Repair Details" autocomplete="off">
+                    </div><br>
+                    <div>
+                        <label for="name_of_mechanic">
+                            <i class="fa-solid fa-toolbox"></i>
+                            Mechanic Name
+                        </label><br>
+                        <input type="text" id="name_of_mechanic" name="name_of_mechanic" class="form-control" required placeholder="Input Name of Mechanic" autocomplete="off">
+                    </div><br>
+                    <div>
+                        <label for="pr_no">
+                            <i class="fa-solid fa-toolbox"></i>
+                            Purchase Request #
+                        </label><br>
+                        <input type="text" id="pr_no" name="pr_no" class="form-control form" placeholder="Input PR # if there is" autocomplete="off">
                     </div>
-                    <div style="width: calc((100%)); display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
-                        <div>
-                            <label for="pull_out_form">
-                                <i class="fa-solid fa-file-invoice"></i>
-                                Pull Out Form #
-                            </label>
-                            <input type="text" autocomplete="off" name="pull_out_form" id="pull_out_form" class="form-control" placeholder="Type Pull Out Form #" required>
-                        </div>
-                        <div>
-                            <label for="ptt">
-                                <i class="fa-solid fa-file-invoice"></i>
-                                PTT #
-                            </label>
-                            <input type="text" autocomplete="off" name="ptt" id="ptt" class="form-control" placeholder="Type PTT #" required>
-                        </div>
-                        <div>
-                            <label for="manifest">
-                                <i class="fa-solid fa-file-invoice"></i>
-                                Manifest #
-                            </label>
-                            <input type="text" autocomplete="off" name="manifest" id="manifest" class="form-control" placeholder="Type Manifest #" required>
-                        </div>
-                    </div><br>
-                    <div style="width: calc((100%)); display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 20px;">
-                        <div>
-                            <label for="gross_weight">
-                                <i class="fa-solid fa-weight-scale"></i>
-                                Client Weight (Kg)
-                            </label>
-                            <input type="number" autocomplete="off" name="client_weight" id="client_weight" class="form-control" placeholder="Type Client Weight" required>
-                        </div>
-                        <div>
-                            <label for="submit_to">
-                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                Submit To
-                            </label><br>
-                            <select name="submit_to" id="submit_to" class="form-control" required>
-                                <option value="">SELECT</option>
-                                <option value="SORTING">SORTING</option>
-                                <option value="WAREHOUSE">WAREHOUSE</option>
-                                <option value="PYROLYSIS">PYROLYSIS</option>
-                                <option value="THERMAL GASIFIER">THERMAL GASIFIER</option>
-                                <option value="FURNACE">FURNACE</option>
-                                <option value="ACCOUNTING">ACCOUNTING</option>
-                            </select>
-                        </div>
-                    </div><br>
-                    <label for="gross_weight">
-                        <i class="fa-solid fa-weight-scale"></i>
-                        Truck Scaling
-                    </label>
-                    <div class="items">
-                        <div>
-                            <label for="gross_weight">Truck Scale #</label>
-                            <input type="text" autocomplete="off" name="truck_scale_no" id="truck_scale_no" class="form-control" placeholder="Type Truck Scale #" required>
-                        </div>
-                        <div>
-                            <label for="gross_weight">Gross Weight (Kg)</label>
-                            <input onkeyup="weight_calculator()" type="number" autocomplete="off" name="gross_weight" id="gross_weight" class="form-control" placeholder="Type Gross Weight" required>
-                        </div>
-                        <div>
-                            <label for="tare_weight">Tare Weight (Kg)</label>
-                            <input  onkeyup="weight_calculator()" type="number" autocomplete="off" name="tare_weight" id="tare_weight" class="form-control" placeholder="Type Gross Weight" required>
-                        </div>
-                        <div>
-                            <label for="net_weight">Net Weight (Kg)</label>
-                            <input type="number" autocomplete="off" name="net_weight" id="net_weight" class="form-control" placeholder="Auto Calculate" required readonly>
-                        </div>    
-                    </div><br>
-                    <label for="remarks">
-                        <i class="fa-brands fa-rocketchat"></i>
-                        Remarks
-                    </label><br>
-                    <input class="form-control" autocapitalize="words" autocomplete="off" name="remarks" id="remarks" type="text" placeholder="Type your Remarks"><br>
                     <div class="buttons">
                         <button type="submit" id="submit_btn" class="form-control" >
                             Submit
                         </button>
-                        <button type="reset" id="reset" class="form-control" >
+                        <button type="reset" id="reset" class="form-control">
                             Clear
                         </button>
                     </div>    

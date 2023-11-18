@@ -461,7 +461,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         const manifest = document.getElementById("manifest");
         const type_of_vehicle_container = document.getElementById("type_of_vehicle_container");
         const process = document.getElementById("process");
+        const direct_receiving_button = document.getElementById("direct_receiving_button");
         
+        var vehicle_choice = [];
         search_ltf_form_no_button.addEventListener("click", () => {
             var data_value;
             var pull_out_value = "";
@@ -553,7 +555,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     vehicle_list.push(vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")])
                                 }
                             }
-                            var vehicle_choice = [];
+                            vehicle_choice = [];
                             for(let x = 1; x < qlf_data_list.content.length; x++){
                                 if(mtf_data_list.content[z][findTextInArray(mtf_data_list, "CLIENT ID")] == qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")]){
                                     if(vehicle_list.includes(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])){
@@ -600,7 +602,63 @@ document.addEventListener('DOMContentLoaded', async function() {
             search_ltf_form_no.value = ``;
         })
 
-        
+        // direct_receiving_button.addEventListener("click", () => {
+        //     var type_of_vehicle_data = `
+        //     <select autocomplete="off" name="type_of_vehicle" id="type_of_vehicle" class="form-control" required style="height: 55px;">
+        //         <option value="">SELECT</option>
+        //         <option value="CLIENT VEHICLE">CLIENT VEHICLE</option>
+        //         ${vehicle_choice.map(choice => `<option value="${choice}">${choice}</option>`).join('')}
+        //     </select>
+        //     `
+        //     type_of_vehicle_container.insertAdjacentHTML("afterbegin", type_of_vehicle_data)
+        //     wcf_data.style.display = "block";
+
+
+        //     var additional_data = 
+        //     `
+        //     <div class="wrapper">
+        //         <label for="client">
+        //             <i class="fa-solid fa-user"></i>
+        //             Client
+        //         </label><br>
+        //         <div class="search_input" id="search_client">
+        //             <input type="text" name="client" id="client" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
+        //             <input type="hidden" name="client_id_input" id="client_id_input" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
+        //             <div class="autocom_box">
+        //             </div>
+        //             <div class="icon"><i class="fas fa-search"></i></div>
+        //         </div>
+        //     </div><br>
+        //     <div id="mtf_data">
+        //         <div class="date_time_weight" id="date_time_weight">
+        //             <div>
+        //                 <label for="hauling_date">
+        //                     <i class="fa-solid fa-right-to-bracket"></i>
+        //                     Hauling Date
+        //                 </label>
+        //                 <input type="date" autocomplete="off" name="hauling_date" id="hauling_date" class="form-control" required>
+        //             </div>
+        //             <div>
+        //                 <label for="hauling_time">
+        //                     <i class="fa-solid fa-right-from-bracket"></i>
+        //                     Hauling Time
+        //                 </label>
+        //                 <input type="time" autocomplete="off" name="hauling_time" id="hauling_time" class="form-control" required><br>
+        //             </div>
+        //             <div id="type_of_waste_container" class="wrapper">
+        //                 <label for="type_of_waste">
+        //                     <i class="fa-solid fa-trash-can"></i>
+        //                     Type of Waste
+        //                 </label><br>
+        //                 <select name="type_of_waste" id="type_of_waste" class="form-control">
+        //                     <option value="">SELECT</option>
+        //                 </select>
+        //             </div>
+        //         </div>
+        //     </div>
+        //     `
+        //     wcf_data.insertAdjacentHTML("afterbegin", additional_data)
+        // })
 
         // driver_data
         const search_wrapper2 = document.getElementById("search_driver");

@@ -101,6 +101,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         function generatePending(){
             pending_array = [];
             finish_array = [];
+            for (let i = 1; i < vmf_data_list.content.length; i++) {
+                if (!finish_array.includes(vmf_data_list.content[i][findTextInArray(vmf_data_list, "VMR #")])) {
+                    finish_array.push(vmf_data_list.content[i][findTextInArray(vmf_data_list, "VMR #")]);
+                }            
+            }
             for (let i = 1; i < vmr_data_list.content.length; i++) {
                 if (!finish_array.includes(vmr_data_list.content[i][findTextInArray(vmr_data_list, "VMR #")])) {
                     pending_array.push(vmr_data_list.content[i][findTextInArray(vmr_data_list, "VMR #")]);
@@ -165,30 +170,31 @@ document.addEventListener('DOMContentLoaded', async function() {
 
             var data_value = "";
             var data_value_counter = 1;
-
             for(let x = 1; x < vmr_data_list.content.length; x++){
-                var type_of_vehicle
-                var vehicle
-                for(let y = 1; y < vehicle_data_list.content.length; y++){
-                    if(vmr_data_list.content[x][findTextInArray(vmr_data_list, "PLATE #")] == vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "PLATE #")]){
-                        vehicle = vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "VEHICLE")]
-                        type_of_vehicle = vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")]
+                if(pending_array.includes(vmr_data_list.content[x][findTextInArray(vmr_data_list, "VMR #")])){
+                    var type_of_vehicle
+                    var vehicle
+                    for(let y = 1; y < vehicle_data_list.content.length; y++){
+                        if(vmr_data_list.content[x][findTextInArray(vmr_data_list, "PLATE #")] == vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "PLATE #")]){
+                            vehicle = vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "VEHICLE")]
+                            type_of_vehicle = vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")]
+                        }
                     }
+                    data_value +=`
+                    <tr>
+                        <td>${data_value_counter}</td>
+                        <td>${vmr_data_list.content[x][findTextInArray(vmr_data_list, "VMR #")]}</td>
+                        <td>${date_decoder(vmr_data_list.content[x][findTextInArray(vmr_data_list, "CREATED AT")])} /<br> ${time_decoder(vmr_data_list.content[x][findTextInArray(vmr_data_list, "CREATED AT")])}</td>
+                        <td>${vmr_data_list.content[x][findTextInArray(vmr_data_list, "PLATE #")]}</td>
+                        <td>${vehicle}</td>
+                        <td>${type_of_vehicle}</td>
+                        <td>${vmr_data_list.content[x][findTextInArray(vmr_data_list, "DETAILS")]}</td>
+                        <td>${vmr_data_list.content[x][findTextInArray(vmr_data_list, "REQUISITIONER")]}</td>
+                        <td>${vmr_data_list.content[x][findTextInArray(vmr_data_list, "SUBMITTED BY")]}</td>
+                    </tr>
+                    `
+                    data_value_counter += 1;
                 }
-                data_value +=`
-                <tr>
-                    <td>${data_value_counter}</td>
-                    <td>${vmr_data_list.content[x][findTextInArray(vmr_data_list, "VMR #")]}</td>
-                    <td>${date_decoder(vmr_data_list.content[x][findTextInArray(vmr_data_list, "CREATED AT")])} /<br> ${time_decoder(vmr_data_list.content[x][findTextInArray(vmr_data_list, "CREATED AT")])}</td>
-                    <td>${vmr_data_list.content[x][findTextInArray(vmr_data_list, "PLATE #")]}</td>
-                    <td>${vehicle}</td>
-                    <td>${type_of_vehicle}</td>
-                    <td>${vmr_data_list.content[x][findTextInArray(vmr_data_list, "DETAILS")]}</td>
-                    <td>${vmr_data_list.content[x][findTextInArray(vmr_data_list, "REQUISITIONER")]}</td>
-                    <td>${vmr_data_list.content[x][findTextInArray(vmr_data_list, "SUBMITTED BY")]}</td>
-                </tr>
-                `
-                data_value_counter += 1;
             }
             pending_list_receiving.innerHTML = data_value;
 
@@ -211,9 +217,50 @@ document.addEventListener('DOMContentLoaded', async function() {
         data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
         vmf_form_no.value = `VMF${year}${month}${data_counter}`;    
 
-        const search_vmr_form_no_button = dashboard_section.querySelector("#search_vmr_form_no_button");
+        const search_vmr_form_no_button = document.querySelector("#search_vmr_form_no_button");
+        const search_vmr_form_no = document.querySelector("#search_vmr_form_no");
+        const search_vmr_result = document.querySelector("#search_vmr_result");
+        const vmr_data = document.querySelector("#vmr_data");
 
-
+        var data_value;
+        search_vmr_form_no_button.addEventListener("click", () => {
+            for(let x = 1; x < vmr_data_list.content.length; x++){
+                if(search_vmr_form_no.value == vmr_data_list.content[x][findTextInArray(vmr_data_list, "VMR #")]){
+                    var type_of_vehicle
+                    var vehicle
+                    for(let y = 1; y < vehicle_data_list.content.length; y++){
+                        if(vmr_data_list.content[x][findTextInArray(vmr_data_list, "PLATE #")] == vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "PLATE #")]){
+                            vehicle = vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "VEHICLE")]
+                            type_of_vehicle = vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")]
+                        }
+                    }
+                    data_value = `
+                    VMR #: ${vmr_data_list.content[x][findTextInArray(vmr_data_list, "VMR #")]}<br>
+                    PLATE #: ${vmr_data_list.content[x][findTextInArray(vmr_data_list, "PLATE #")]}<br>
+                    VEHICLE: ${vehicle}<br>
+                    TYPE OF VEHICLE: ${type_of_vehicle}<br>
+                    DETAILS: ${vmr_data_list.content[x][findTextInArray(vmr_data_list, "DETAILS")]}<br>
+                    REQUISITIONER: ${vmr_data_list.content[x][findTextInArray(vmr_data_list, "REQUISITIONER")]}<br>
+                    SUBMITTED BY: ${vmr_data_list.content[x][findTextInArray(vmr_data_list, "SUBMITTED BY")]}<br>
+                    `
+                    vmr_data.style.display = "block"
+                }                        
+                if(data_value == undefined){
+                    search_vmr_result.innerHTML = `
+                    <div class="search_ltf_result">
+                    <h2>INFORMATION</h2>
+                    No Data Found
+                    </div><br>`            
+                }
+                else{
+                    search_vmr_result.innerHTML = `
+                    <div class="search_ltf_result">
+                    <h2>INFORMATION</h2>
+                    ${data_value}
+                    </div><br>`
+                }
+            }
+        })
 
         // multi section
         // purchase_request_form

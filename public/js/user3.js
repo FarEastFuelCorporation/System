@@ -519,7 +519,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             if(search_sf_form_no.value == pending_treatment_sf[b]){
                                 var mtf = "";
                                 var ltf = "";
-                                var process
+                                var process;
                                 for(let c = 1; c < wcf_data_list.content.length; c++){
                                     if(wcf_data_list.content[c][findTextInArray(wcf_data_list, "WCF #")] == sf_data_list.content[a][findTextInArray(sf_data_list, "WCF #")]){
                                         if((wcf_data_list.content[c][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
@@ -656,6 +656,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             if(search_sf_form_no.value == pending_treatment_wcf[b]){
                                 var mtf = "";
                                 var ltf = "";
+                                var process;
                                 if((wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
                                     mtf = wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
                                 }
@@ -668,6 +669,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         }
                                     }
                                 }
+                                process = wcf_data_list.content[a][findTextInArray(wcf_data_list, "SUBMIT TO")]
                                 mtf_form_no.value = mtf;
                                 data_value = `
                                 WCF #: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")]}<br>
@@ -681,7 +683,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 ARRIVAL TIME: ${time_decoder(wcf_data_list.content[a][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}<br>
                                 SUBMITTED BY: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "SUBMITTED BY")]}<br>
                                 `
-                                if(findTreatmentProcess(wcf_data_list.content[a][findTextInArray(wcf_data_list, "WASTE ID")]) == 'THERMAL DECOMPOSITION'){
+                                if(process == 'THERMAL GASIFIER'){
                                     machine_list.innerHTML = `
                                     <label for="tpf_form_no">
                                         <i class="fa-solid fa-gears"></i>
@@ -716,7 +718,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     `
                                     machine_counter.value = 3
                                 }
-                                else if(findTreatmentProcess(wcf_data_list.content[a][findTextInArray(wcf_data_list, "WASTE ID")]) == 'PYROLYSIS'){
+                                else if(process == 'ROTARY' || process == 'FURNACE'){
                                     machine_list.innerHTML = `
                                     <label for="tpf_form_no">
                                         <i class="fa-solid fa-gears"></i>
@@ -792,7 +794,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             });    
         }
-
 
 
         const additional_item2 = document.getElementById("additional_item2");
