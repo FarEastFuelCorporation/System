@@ -1,0 +1,147 @@
+<div id="generate_report_tab" style="display: none;">
+    <div style="position: absolute; height: 100%; width: 100%; backdrop-filter: blur(5px); z-index: 2;"></div>
+    <div style="position: absolute; padding: 20px; width: 500px; background-color: white; z-index: 2; top: 50%; left: 100px; transform: translate(0, -50%); border-radius: 20px; border: 3px solid #dc3545;">
+        <button id="close_report_button" style="border: none; position: absolute; right: 20px;">
+            <i class="fa-regular fa-rectangle-xmark" style="color: #ff0000;"></i>
+        </button>
+        <h2 style="font-weight: bold; margin: 0;">GENERATE REPORT</h2><br>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;" >
+            <div>
+                <label for="report_date_from">From</label>
+                <input type="date" id="report_date_from" class="form-control" style="border: 3px solid #dc3545;">
+            </div>
+            <div>
+                <label for="report_date_to">To</label>
+                <input type="date" id="report_date_to" class="form-control" style="border: 3px solid #dc3545;">
+            </div>
+        </div><br>
+        <button id="report_generate_button" class="form-control" style="background-color: #198754;">
+            <h4 style="margin: 0; color: white;">Generate</h4>
+        </button>
+        <button onclick="convertToPDF2()" id="report_download_button" class="form-control" style="background-color: #198754; display: none;">
+            <h4 style="margin: 0; color: white;">Download</h4>
+        </button>
+    </div>
+    <input type="hidden" id="page_number" value="1">
+    <div id="report_tab_container" style="position: absolute; top: 0; right: 0;">
+        <div id="report_tab1" class="report_tab">
+            <img src="../images/logo.png" alt="logo" style="height: 50px;">
+            <img src="../images/logo_name2.png" alt="logo" style="height: 50px; margin-top: 10px;"><hr>
+            <div style="position: relative;">
+                <h1 style="text-align: center; font-weight: bold; font-size: 32px;">WEEKLY REPORT</h1>
+                <h1 style="text-align: center; font-weight: bold;">MARKETING TRANSACTION</h1>
+                <h1 style="text-align: center; font-weight: bold;">MARKETING DEPARTMENT</h1>
+                <h3 id="date_covered" style="text-align: center;"></h3><br>
+                <div style="display: flex; position: absolute; right: 0; top: 0;">
+                    <h6 id="page_counter1" style="margin-right: 5px;"></h6>
+                    <h6 style="margin-right: 5px;">of</h6>
+                    <h6 id="page_max_counter"></h6>
+                </div>
+            </div>
+            <div id="table_info">
+                <table>
+                    <thead id="report_head">
+                        <tr>
+                            <th>MTF #</td>
+                            <th>HAULING DATE</th>
+                            <th>HAULING TIME</th>
+                            <th>CLIENT</th>
+                            <th>TYPE OF WASTE</th>
+                        </tr>
+                    </thead>
+                    <tbody id="report_body"></tbody>
+                </table>
+            </div>
+        </div>
+        <style>
+            .report_tab
+            {
+                width: 1056px;
+                height: 816px;
+                border: 3px solid black;
+                background-color: white;
+                z-index: 4;
+                position: relative;
+                padding: 38px;
+            }
+            
+            .report_tab h1
+            {
+                font-size: 18px;
+                margin: 0;
+            }
+
+            .report_tab h2
+            {
+                font-size: 16px;
+                margin: 0;
+            }
+
+            .report_tab h3
+            {
+                font-size: 14px;
+                margin: 0;
+            }
+
+            .report_tab h4
+            {
+                font-size: 12px;
+                margin: 0;
+            }
+
+            .report_tab h5
+            {
+                font-size: 10px;
+                margin: 0;
+            }
+
+            .report_tab table
+            {
+                width: 100%;
+            }
+
+            .report_tab #report_head tr,
+            .report_tab tbody tr
+            {
+                width: 100%;
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr 3fr 2fr;
+            }
+
+            .report_tab #report_head tr th
+            {
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-top: 1px solid black;
+                border-bottom: 1px solid black;
+                border-right: 1px solid black;
+                font-size: 12px;
+            }
+
+            .report_tab #report_head tr th:first-child
+            {
+                border: 1px solid black;
+            }
+
+            .report_tab tbody tr td
+            {
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-bottom: 1px solid black;
+                border-right: 1px solid black;
+                font-size: 10px;
+            }
+
+            .report_tab tbody tr td:first-child
+            {
+                border-bottom: 1px solid black;
+                border-right: 1px solid black;
+                border-left: 1px solid black;
+            }
+        </style>
+    </div>
+</div>

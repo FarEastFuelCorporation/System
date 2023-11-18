@@ -24,18 +24,18 @@ if (!fs.existsSync(userFolder)) {
     fs.mkdirSync(userFolder);
 }
 
-for (let x = 1; x <= 5; x++) {
-    const templatePath = path.join(templatesFolder, 'marketing.ejs');
-    const outputPath = path.join(userFolder, `user${x}.html`); // Use path.join to create the full path
-    const data = {
-        pageTitle: `User ${x}`,
-        title: 'Welcome to my site!',
-        content: `I am User ${x}.`,
-    };
+// Use path.join to create the full path for the EJS template
+const marketingTemplatePath = path.join(templatesFolder, 'page.ejs');
 
-    ejs.renderFile(templatePath, data, (err, html) => {
-        if (err) throw err;
-        fs.writeFileSync(outputPath, html);
-        console.log('HTML generated successfully for', outputPath);
-    });
-}
+// Data to pass to the EJS template
+const data = {
+    user: 'marketing',
+};
+
+// Pass data to the ejs.renderFile function
+ejs.renderFile(marketingTemplatePath, data, (err, html) => {
+    if (err) throw err;
+    const marketingOutputPath = path.join(userFolder, 'marketing.html');
+    fs.writeFileSync(marketingOutputPath, html);
+    console.log('HTML generated successfully for', marketingOutputPath);
+});
