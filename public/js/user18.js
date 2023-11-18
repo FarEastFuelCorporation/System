@@ -435,6 +435,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <div class="form">
                     <select name="unit${item_counter_warehouse.value}" id="unit${item_counter_warehouse.value}" class="form-control" required>
                         <option value="">SELECT</option>
+                        <option value="KG">KG</option>
                         <option value="PC">PC</option>
                         <option value="CASE">CASE</option>
                         <option value="JUMBO">JUMBO</option>

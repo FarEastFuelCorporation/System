@@ -19,17 +19,20 @@ document.addEventListener('DOMContentLoaded', async function() {
       submitButton.addEventListener("click", () => {
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
-  
+        
+        var number
         let user = null;
         for (let x = 1; x < username_data_list.content.length; x++) {
           if (username === username_data_list.content[x][findTextInArray(username_data_list, "USERNAME")] && password === username_data_list.content[x][findTextInArray(username_data_list, "PASSWORD")]) {
             user = username_data_list.content[x][findTextInArray(username_data_list, "ACCOUNT")];
+            number = x
             break;
           }
         }
   
         if (user) {
-          window.location.assign(`public/users/${user}.html`);
+          const queryParams = `?user=${number}`;
+          window.location.assign(`public/users/${user}.html${queryParams}`);
           console.log("authenticated");
           document.getElementById('error-message').innerText = '';
         } else {
