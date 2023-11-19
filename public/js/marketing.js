@@ -1034,6 +1034,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const charge_input_quotation_form = new_quotation_form_tab.querySelector("#charge_input");
         const buying_input_quotation_form = new_quotation_form_tab.querySelector("#buying_input");
         const marketing_user_quotation_form = new_quotation_form_tab.querySelector("#marketing_user");
+        const marketing_signature_quotation_form = new_quotation_form_tab.querySelector("#marketing_signature");
         const user = new_quotation_form_tab.querySelector("#user");
         const convertToPDFandDownload_button = new_quotation_form_tab.querySelector("#convertToPDFandDownload_button");
         const convertToPDF_button = new_quotation_form_tab.querySelector("#convertToPDF_button");
@@ -1042,6 +1043,19 @@ document.addEventListener('DOMContentLoaded', async function() {
         const revision_number_container_quotation_form = new_quotation_form_tab.querySelector("#revision_number_container");
         const valid_until_container_quotation_form = new_quotation_form_tab.querySelector("#valid_until_container");
 
+        marketing_user_quotation_form.innerText = user.value.toLowerCase().replace(/\b\w/g, function (char) {
+            return char.toUpperCase();
+        });
+        console.log(user.value)
+        if(user.value == "JEMINA CENTENO"){
+            marketing_signature_quotation_form.innerHTML = `<img src="../images/CENTENO_JEMINA.png" alt="">`;
+        }
+        else if(user.value == "JOVELYN SORIANO"){
+            marketing_signature_quotation_form.innerHTML = `<img src="../images/SORIANO_JOVELYN.png" alt="">`;
+        }
+        else if(user.value == "JOHONEY CANLAS"){
+            marketing_signature_quotation_form.innerHTML = `<img src="../images/CANLAS_JOHONEY.png" alt="">`;
+        }
 
         generate_button_quotation_form.addEventListener("click", () => {
             qlf_form_no_container_quotation_form.innerText = quotation_no_quotation_form.value;
@@ -1111,9 +1125,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             // validity_input_quotation_form.innerText = `${validity_quotation_form.value} Days`;
             charge_input_quotation_form.innerText = terms_quotation_form.value.toUpperCase();
             buying_input_quotation_form.innerText = terms2_quotation_form.value.toUpperCase();
-            marketing_user_quotation_form.innerText = user.value.toLowerCase().replace(/\b\w/g, function (char) {
-                return char.toUpperCase();
-            });
             convertToPDFandDownload_button.style.display = "block";
             convertToPDF_button.style.display = "block";
             submit_button.style.display = "block";
@@ -1236,7 +1247,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")]}</td>
                     <td>${formatNumber(qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT PRICE")])}</td>
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "VAT CALCULATION")]}</td>
-                    <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "TERMS DAYS")]}</td>
+                    <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "TERMS CHARGE")]}</td>
+                    <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "TERMS BUYING")]}</td>
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "SUBMITTED BY")]}</td>
                 </tr>
                 `
@@ -1255,7 +1267,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")]}</td>
                     <td>${formatNumber(qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT PRICE")])}</td>
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "VAT CALCULATION")]}</td>
-                    <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "TERMS DAYS")]}</td>
+                    <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "TERMS CHARGE")]}</td>
+                    <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "TERMS BUYING")]}</td>
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "SUBMITTED BY")]}</td>
                 </tr>
                 `

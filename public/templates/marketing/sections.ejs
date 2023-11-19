@@ -561,7 +561,8 @@
                     <th>UNIT</th>
                     <th>UNIT<br>PRICE</th>
                     <th>VAT<br>CALCULATION</th>
-                    <th>TERMS<br>DAYS</th>
+                    <th>TERMS<br>CHARGE</th>
+                    <th>TERMS<br>BUYING</th>
                     <th>SUBMITTED<br>BY</th>
                 </thead>
                 <tbody id="qlf_list">
@@ -1158,6 +1159,7 @@
                                 </div>
                                 <div class="assignatory">
                                     <div>
+                                        <div class="signature" id="marketing_signature"></div>
                                         <h3 class="bold"><u id="marketing_user"></u></h3>
                                     </div>
                                     <div>
@@ -1491,6 +1493,19 @@
                         display: grid;
                         grid-template-columns: 1fr 1fr 1fr 1fr;
                         border: 1px solid black ;
+                    }
+
+                    #what_to_print .signature
+                    {
+                        position: relative;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    #what_to_print .signature img
+                    {
+                        position: absolute;
+                        width: 100px;
                     }
                         
                     #what_to_print .footer > div
