@@ -403,44 +403,85 @@ document.addEventListener('DOMContentLoaded', async function() {
         var vehicle_type = [];
         var vehicle_count = {};
         var available_vehicle = [];
+        var unavailable_vehicle = [];
         var available_vehicle_type = [];
         var available_vehicle_count = {};
+        var updated_vehicle_count = {};
+
+        const vehicleDataObject = {};
+
+        for (let x = 1; x < vehicle_log_data_list.content.length; x++) {
+            const ltf_no = vehicle_log_data_list.content[x][findTextInArray(vehicle_log_data_list, "LTF #")];
+            const plateNumber = vehicle_log_data_list.content[x][findTextInArray(vehicle_log_data_list, "PLATE #")];
+            const status = vehicle_log_data_list.content[x][findTextInArray(vehicle_log_data_list, "STATUS")];
+        
+            // Extract the numeric part from ltf_no
+            const numericPart = parseInt(ltf_no.slice(3), 10);
+        
+            // Use the numeric part as the key
+            const key = numericPart;
+        
+            // Store the data in the object
+            vehicleDataObject[key] = {
+                ltf_no,
+                plateNumber,
+                status,
+            };
+        }
+        
+        // Now, vehicleDataObject contains the organized data with the numeric part of ltf_no as the key
+        
+        // Sort the keys in ascending order
+        const sortedKeys = Object.keys(vehicleDataObject).sort((a, b) => a - b);
+        
+        // Create a new object with sorted keys
+        const sortedVehicleDataObject = {};
+        sortedKeys.forEach(key => {
+            sortedVehicleDataObject[key] = vehicleDataObject[key];
+        });
+        
+        // Now, sortedVehicleDataObject contains the organized data with the numeric part of ltf_no as the key, sorted in ascending order
+        // console.log(sortedVehicleDataObject);
+
         for (let x = 1; x < vehicle_data_list.content.length; x++) {
         const vehicleType = vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")];
             if (!vehicle_type.includes(vehicleType)) {
                 vehicle_type.push(vehicleType);
                 vehicle_count[vehicleType] = 1;
+                updated_vehicle_count[vehicleType] = 1;
             } else {
                 vehicle_count[vehicleType]++;
+                updated_vehicle_count[vehicleType]++;
             }
-            available_vehicle.push(vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "PLATE #")])
         }
-        for (let y = 1; y < vehicle_log_data_list.content.length; y++) {
-            const plateStatus = vehicle_log_data_list.content[y][findTextInArray(vehicle_log_data_list, "STATUS")];
-            const plate = vehicle_log_data_list.content[y][findTextInArray(vehicle_log_data_list, "PLATE #")];
+
+        Object.values(sortedVehicleDataObject).forEach((data) => {
+            const plateStatus = data.status;
+            const plate = data.plateNumber;
             if (plateStatus === "AVAILABLE") {
-            available_vehicle.push(plate);
-            } else {
+                available_vehicle.push(plate);
+            } 
+            else {
                 // Remove the plate number from the available_vehicle array
                 const plateIndex = available_vehicle.indexOf(plate);
                 if (plateIndex !== -1) {
                     available_vehicle.splice(plateIndex, 1);
-                }
-            }
-        }
-        for (let x = 1; x < vehicle_data_list.content.length; x++) {
-            for(let y = 0; y < available_vehicle.length; y++){
-                if(vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "PLATE #")] == available_vehicle[y]){
-                    const vehicleType = vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")];
-                    if (!available_vehicle_type.includes(vehicleType)) {
-                        available_vehicle_type.push(vehicleType);
-                        available_vehicle_count[vehicleType] = 1;
-                    } else {
-                        available_vehicle_count[vehicleType]++;
+                    if(!unavailable_vehicle.includes(plate)){
+                        unavailable_vehicle.push(plate)
                     }
                 }
             }
-        }
+        });
+
+        unavailable_vehicle.forEach((plate_no) => {
+            for (let x = 1; x < vehicle_data_list.content.length; x++) {
+                if(plate_no == vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "PLATE #")]){
+                    const vehicleType = vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")];
+                    updated_vehicle_count[vehicleType]--;
+                }
+            }
+        })
+
         // Ascending order (default behavior)
         vehicle_type.sort();
 
@@ -449,12 +490,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             var count = 0;
             var actual_count = 0;
             count = vehicle_count[vehicle_type[x]]
-            if(available_vehicle_count[vehicle_type[x]] == undefined){
-                actual_count = 0
-            }
-            else{
-                actual_count = available_vehicle_count[vehicle_type[x]];
-            }
+            actual_count = updated_vehicle_count[vehicle_type[x]]
             vehicle_type_list += `
             <div class="card">
                 <div class="card-content">

@@ -17,7 +17,7 @@ if (!fs.existsSync(templatesFolder)) {
     fs.mkdirSync(templatesFolder);
 }
 
-const userFolder = path.join(publicFolder, 'user');
+const userFolder = path.join(publicFolder, 'users');
 
 // Create the user folder if it doesn't exist
 if (!fs.existsSync(userFolder)) {

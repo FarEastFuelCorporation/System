@@ -96,6 +96,23 @@ document.addEventListener('DOMContentLoaded', async function() {
         const finished_marketing = document.getElementById("finished");
         const pending_list_marketing = document.getElementById("pending_list");
         const month_filter = document.getElementById("month_filter");
+        const marketing_transaction_form = document.querySelector("#marketing_transaction_form");
+        const calendar_days = marketing_transaction_form.querySelector("#calendar_days");
+        const calendar_month = marketing_transaction_form.querySelector("#calendar_month");
+
+        var total_vehicle = [];
+        var vehicle_type = [];
+        for(let x = 1; x < vehicle_data_list.content.length; x++){
+            if(!vehicle_type.includes(vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "CODE")])){
+                vehicle_type.push(vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "CODE")])
+                total_vehicle[vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "CODE")]] = 1;
+            }
+            else{
+                total_vehicle[vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "CODE")]]++;
+            }
+        }
+        
+
         function getCurrentMonthName() {
             const months = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
             const currentDate = new Date();
@@ -105,8 +122,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
         month_filter.value = getCurrentMonthName();
         month_filter.addEventListener("change", generatePending)
+
         generatePending();
         function generatePending(){
+            generateCalendarDays(2023, monthNameToNumber(month_filter.value))
+            calendar_month.innerText = month_filter.value
             var for_hauling_marketing = 0;
             var for_receiving_marketing = 0;
             var for_warehousing_marketing = 0;
@@ -635,12 +655,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
         mtf_form_no.value = `MTF${year}${month}${data_counter}`;
 
-        const marketing_transaction_form = document.querySelector("#marketing_transaction_form");
         const waste_category = marketing_transaction_form.querySelector("#waste_category");
         const document_container = marketing_transaction_form.querySelector("#document_container");
         const submit_to = marketing_transaction_form.querySelector("#submit_to");
         const type_of_waste_container = marketing_transaction_form.querySelector("#type_of_waste_container");
-        vehicle_list
+        const marketing_transaction_button = marketing_transaction_form.querySelector("#marketing_transaction_button");
+        const form_tab_marketing_transaction_form = marketing_transaction_form.querySelector("#form_tab");
+        const close_button = marketing_transaction_form.querySelector("#close_button");
+        
         submit_to.addEventListener("change", () => {
             if(submit_to.value == "LOGISTICS"){
                 // type_of_waste_data_list
@@ -699,21 +721,21 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <i class="fa-solid fa-right-from-bracket"></i>
                         Pull Out Form #
                     </label>
-                    <input type="text" autocomplete="off" name="pull_out_form" id="pull_out_form" class="form-control" required value="N/A">
+                    <input type="text" autocomplete="off" name="pull_out_form" id="pull_out_form" class="form-control form" required value="N/A">
                 </div>
                 <div id="ptt_container">
                     <label for="ptt">
                         <i class="fa-solid fa-right-from-bracket"></i>
                         PTT #
                     </label>
-                    <input type="text" autocomplete="off" name="ptt" id="ptt" class="form-control" required>
+                    <input type="text" autocomplete="off" name="ptt" id="ptt" class="form-control form" required>
                 </div>
                 <div id="manifest_container">
                     <label for="manifest">
                         <i class="fa-solid fa-right-from-bracket"></i>
                         Manifest #
                     </label>
-                    <input type="text" autocomplete="off" name="manifest" id="manifest" class="form-control" required>
+                    <input type="text" autocomplete="off" name="manifest" id="manifest" class="form-control form" required>
                 </div>`
                 document_container.insertAdjacentHTML("afterbegin", data)
             }
@@ -727,21 +749,21 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <i class="fa-solid fa-right-from-bracket"></i>
                         Pull Out Form #
                     </label>
-                    <input type="text" autocomplete="off" name="pull_out_form" id="pull_out_form" class="form-control" required>
+                    <input type="text" autocomplete="off" name="pull_out_form" id="pull_out_form" class="form-control form" required>
                 </div>
                 <div id="ptt_container" style="display: none">
                     <label for="ptt">
                         <i class="fa-solid fa-right-from-bracket"></i>
                         PTT #
                     </label>
-                    <input type="text" autocomplete="off" name="ptt" id="ptt" class="form-control" required value="N/A">
+                    <input type="text" autocomplete="off" name="ptt" id="ptt" class="form-control form" required value="N/A">
                 </div>
                 <div id="manifest_container" style="display: none">
                     <label for="manifest">
                         <i class="fa-solid fa-right-from-bracket"></i>
                         Manifest #
                     </label>
-                    <input type="text" autocomplete="off" name="manifest" id="manifest" class="form-control" required value="N/A">
+                    <input type="text" autocomplete="off" name="manifest" id="manifest" class="form-control form" required value="N/A">
                 </div>`
                 document_container.insertAdjacentHTML("afterbegin", data2)
             }
@@ -751,6 +773,169 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         })
+
+        close_button.addEventListener("click", () => {
+            form_tab_marketing_transaction_form.style.display = "none";
+        })
+
+        function generateCalendarDays(year, month) {
+            const hauling_date = marketing_transaction_form.querySelector("#hauling_date");
+
+            calendar_days.innerHTML = '';
+            // Get the number of days in the month
+            var daysInMonth = new Date(year, month + 1, 0).getDate();
+        
+            // Get the first day of the month (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+            var firstDay = new Date(year, month, 1).getDay();
+        
+            // Initialize an array to store the day values
+            var dayValues = [];
+        
+            // Generate day values
+            for (var day = 1; day <= daysInMonth; day++) {
+                dayValues.push(day);
+            }
+        
+            // Generate the table rows
+            var rows = Math.ceil((daysInMonth + firstDay) / 7);
+        
+            for (var i = 0; i < rows; i++) {
+                var row = document.createElement("tr");
+        
+                for (var j = 0; j < 7; j++) {
+                    var cell = document.createElement("td");
+                    var index = i * 7 + j - firstDay;
+        
+                    if (index >= 0 && index < daysInMonth) {
+                        // Create a span for the day value
+                        var div_element = document.createElement("div");
+                        div_element.classList.add("td_header");
+        
+                        var daySpan = document.createElement("span");
+                        daySpan.textContent = dayValues[index];
+        
+                        // Add a class to the td element based on the date
+                        cell.classList.add("date-" + dayValues[index]);
+        
+                        // Create a button for booking
+                        var bookButton = document.createElement("button");
+                        bookButton.textContent = "Book";
+                        // Set class for the "Book" button
+                        bookButton.classList.add("form-control");
+                        bookButton.classList.add("book-button");
+
+                        // Create a div for "Available slot"
+                        var availableSlotDiv = document.createElement("div");
+                        availableSlotDiv.textContent = "Available Vehicles:";
+                        // Set class for the "Available slot" div
+                        availableSlotDiv.classList.add("available_slot");
+
+                        var total_vehicle_day = [];
+                        var vehicle_type_day = [];
+                        for(let x = 1; x < vehicle_data_list.content.length; x++){
+                            if(!vehicle_type_day.includes(vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "CODE")])){
+                                vehicle_type_day.push(vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "CODE")])
+                                total_vehicle_day[vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "CODE")]] = 1;
+                            }
+                            else{
+                                total_vehicle_day[vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "CODE")]]++;
+                            }
+                        }
+
+                        var date_format = year + '-' + (month + 1).toString().padStart(2, "0") + '-' + (dayValues[index]).toString().padStart(2, "0");
+                        
+                        var booked_vehicle_day = [];
+                        var booked_vehicle_type_day = [];
+                        var book_logistics = 0
+                        var book_receiving = 0
+                        for(let x = 1; x < mtf_data_list.content.length; x++){
+                            if(date_format == date_decoder2(mtf_data_list.content[x][findTextInArray(mtf_data_list, "HAULING DATE")])){
+                                if(mtf_data_list.content[x][findTextInArray(mtf_data_list, "SUBMIT TO")] == "LOGISTICS"){
+                                    var vehicle_code;
+                                    for(let y = 1; y < vehicle_data_list.content.length; y++){
+                                        if(vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")] == mtf_data_list.content[x][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")]){
+                                            vehicle_code = vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "CODE")]
+                                            break
+                                        }
+                                    }
+                                    if(!booked_vehicle_type_day.includes(vehicle_code)){
+                                        booked_vehicle_type_day.push(vehicle_code)
+                                        booked_vehicle_day[vehicle_code] = 1;
+                                    }
+                                    else{
+                                        booked_vehicle_day[vehicle_code]++;
+                                    }
+                                    book_logistics += 1;
+                                }
+                                else if(mtf_data_list.content[x][findTextInArray(mtf_data_list, "SUBMIT TO")] == "RECEIVING"){
+                                    book_receiving += 1;
+                                }
+                            }
+                        }
+                                
+                        // Create a div for "Booked slot"
+                        var bookSlotDiv = document.createElement("div");
+                        bookSlotDiv.innerHTML = `Booked Transactions:<b>${book_logistics + book_receiving}</b><br>Logistics:<b>${book_logistics}</b> - Receiving:<b>${book_receiving}</b>`;
+                        // Set class for the "Booked slot" div
+                        bookSlotDiv.classList.add("book_slot");
+
+                        var available_vehicle_div = document.createElement("div")
+                        available_vehicle_div.classList.add("available_vehicle_class");
+                        
+                        vehicle_type.forEach((data, index) => {
+                            var vehicle_div = document.createElement("div");
+                            vehicle_div.classList.add("vehicle_div");
+                            var actual_count = 0;
+                            if(total_vehicle[vehicle_type[index]] - booked_vehicle_day[vehicle_type[index]] < 0){
+                                actual_count = total_vehicle[vehicle_type[index]];
+                            }
+                            if(total_vehicle[vehicle_type[index]] - booked_vehicle_day[vehicle_type[index]] >= 0){
+                                actual_count = total_vehicle[vehicle_type[index]] - booked_vehicle_day[vehicle_type[index]];
+                            }
+                            else{
+                                actual_count = total_vehicle[vehicle_type[index]]
+                            }
+                            vehicle_div.textContent = `${data} : ${actual_count}/${total_vehicle[vehicle_type[index]]}`
+                            available_vehicle_div.appendChild(vehicle_div);
+                        })
+
+                        // Append the day value, the button, and the "Available slot" div to the cell
+                        div_element.appendChild(daySpan);
+                        div_element.appendChild(bookButton);
+                        cell.appendChild(div_element);
+                        cell.appendChild(bookSlotDiv);
+                        cell.appendChild(availableSlotDiv);
+                        cell.appendChild(available_vehicle_div);
+        
+                        // Add click event listener to the "Book" button
+                        bookButton.addEventListener("click", function (event) {
+                            // Get the date from the clicked button's parent td element
+                            var clickedDate = event.currentTarget.parentElement.querySelector('.td_header span').textContent;
+        
+                            // Format the date (assuming simple formatting for illustration purposes)
+                            var formattedDate = year + '-' + (month + 1).toString().padStart(2, "0") + '-' + clickedDate.toString().padStart(2, "0");
+        
+                            // Set the hauling_date input value
+                            hauling_date.value = formattedDate;
+        
+                            // Show the form
+                            form_tab_marketing_transaction_form.style.display = "block";
+                        });
+                    } else {
+                        // Set background color to gray for cells without a number
+                        cell.style.backgroundColor = 'gray';
+                    }
+        
+                    row.appendChild(cell);
+                }
+        
+                calendar_days.appendChild(row);
+            }
+        }
+        
+        
+        
+
 
         // client_list_section
         const client_list_section = document.querySelector("#client_list_section");
@@ -853,10 +1038,19 @@ document.addEventListener('DOMContentLoaded', async function() {
         const convertToPDFandDownload_button = new_quotation_form_tab.querySelector("#convertToPDFandDownload_button");
         const convertToPDF_button = new_quotation_form_tab.querySelector("#convertToPDF_button");
         const submit_button = new_quotation_form_tab.querySelector("#submit_button");
+        const revision_no_quotation_form = new_quotation_form_tab.querySelector("#revision_no");
+        const revision_number_container_quotation_form = new_quotation_form_tab.querySelector("#revision_number_container");
+        const valid_until_container_quotation_form = new_quotation_form_tab.querySelector("#valid_until_container");
+
 
         generate_button_quotation_form.addEventListener("click", () => {
-            qlf_form_no_container_quotation_form.innerText = quotation_no_quotation_form.value
-            date_made_container_quotation_form.innerText = date_decoder(new Date())
+            qlf_form_no_container_quotation_form.innerText = quotation_no_quotation_form.value;
+            var currentDate = new Date();
+            date_made_container_quotation_form.innerText = date_decoder(currentDate);
+            currentDate.setDate(currentDate.getDate() + 30);
+            valid_until_container_quotation_form.innerText = date_decoder(currentDate);
+            revision_number_container_quotation_form.innerText = revision_no_quotation_form.value;
+
             for(let x = 1; x < client_data_list.content.length; x++){
                 if(client_id_input_quotation_form.value == client_data_list.content[x][findTextInArray(client_data_list, "CLIENT ID")]){
                     client_name_container_quotation_form.innerText = client_data_list.content[x][findTextInArray(client_data_list, "BILLER NAME")]
@@ -1016,15 +1210,15 @@ document.addEventListener('DOMContentLoaded', async function() {
                 update_quotation_form_tab.style.display = "none";
             }
         })
-        update_quotation_button_quotation_form.addEventListener("click", () => {
-            if(update_quotation_form_tab.style.display == "block"){
-                update_quotation_form_tab.style.display = "none";
-            }
-            else{
-                update_quotation_form_tab.style.display = "block";
-                new_quotation_form_tab.style.display = "none";
-            }
-        })
+        // update_quotation_button_quotation_form.addEventListener("click", () => {
+        //     if(update_quotation_form_tab.style.display == "block"){
+        //         update_quotation_form_tab.style.display = "none";
+        //     }
+        //     else{
+        //         update_quotation_form_tab.style.display = "block";
+        //         new_quotation_form_tab.style.display = "none";
+        //     }
+        // })
         
         var qlf_data_value = "";
         var qlf_data_value_counter = 1;
@@ -2404,6 +2598,16 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             return waste_name
         }
+        function monthNameToNumber(monthName) {
+            const months = [
+                "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
+                "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"
+            ];
+        
+            const monthIndex = months.findIndex(month => month === monthName.toUpperCase());
+            return monthIndex;
+        }
+        
 
         const generate_report_button = document.getElementById("generate_report_button");
         const close_report_button = document.getElementById("close_report_button");
