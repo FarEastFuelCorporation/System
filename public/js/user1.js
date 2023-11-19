@@ -631,19 +631,21 @@ document.addEventListener('DOMContentLoaded', async function() {
         //     </div><br>
         //     <div id="mtf_data">
         //         <div class="date_time_weight" id="date_time_weight">
-        //             <div>
-        //                 <label for="hauling_date">
-        //                     <i class="fa-solid fa-right-to-bracket"></i>
-        //                     Hauling Date
-        //                 </label>
-        //                 <input type="date" autocomplete="off" name="hauling_date" id="hauling_date" class="form-control" required>
-        //             </div>
-        //             <div>
-        //                 <label for="hauling_time">
-        //                     <i class="fa-solid fa-right-from-bracket"></i>
-        //                     Hauling Time
-        //                 </label>
-        //                 <input type="time" autocomplete="off" name="hauling_time" id="hauling_time" class="form-control" required><br>
+        //             <div style="display: flex; gap: 20px">
+        //                 <div>
+        //                     <label for="hauling_date">
+        //                     <i class="fa-solid fa-calendar-days"></i>
+        //                         Hauling Date
+        //                     </label>
+        //                     <input type="date" autocomplete="off" name="hauling_date" id="hauling_date" class="form-control form" required>
+        //                 </div>
+        //                 <div>
+        //                     <label for="hauling_time">
+        //                     <i class="fa-regular fa-clock"></i>
+        //                         Hauling Time
+        //                     </label>
+        //                     <input type="time" autocomplete="off" name="hauling_time" id="hauling_time" class="form-control form" required><br>
+        //                 </div>
         //             </div>
         //             <div id="type_of_waste_container" class="wrapper">
         //                 <label for="type_of_waste">

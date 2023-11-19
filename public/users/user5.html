@@ -621,6 +621,7 @@
                                         </div>
                                         <div class="assignatory">
                                             <div>
+                                                <div class="signature" id="signature"></div>
                                                 <h3 class="bold"><u>Frank Florence Flores</u></h3>
                                             </div>
                                             <div>
@@ -835,7 +836,6 @@
                                 overflow: hidden;
                             }
 
-
                             #what_to_print .account_details_header
                             {
                                 width: 100%;
@@ -941,11 +941,26 @@
                                 flex-direction: column;
                                 text-align: center;
                             }
-                                
-                            #what_to_print .footer_header
+
+                                                        
+                            #what_to_print .footer > div
                             {
-                                background-color: lightgray;
-                                border: 1px solid black ;
+                                display: flex;
+                                flex-direction: column;
+                                text-align: center;
+                            }
+                                
+                            #what_to_print .signature
+                            {
+                                position: relative;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                            }
+                            #what_to_print .signature img
+                            {
+                                position: absolute;
+                                width: 100px;
                             }
 
                             #what_to_print .assignatory

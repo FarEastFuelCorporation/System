@@ -568,6 +568,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         const billing_date = billing_process_form.querySelector("#billing_date");
         const terms = billing_process_form.querySelector("#terms");
         const cod_counter = document.getElementById("cod_counter");
+        const signature = document.getElementById("signature");
+
+        signature.innerHTML = `<img src="../images/FLORES_FRANK.png" alt="">`;
 
         var table_data_info = [];
         let table_data_transportation = [];
