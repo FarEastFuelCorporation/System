@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const sf_response_promise = fetch('https://script.google.com/macros/s/AKfycby9b2VCfXc0ifkwBXJRi2UVUwgZIj9F4FTOdZa_SYKZdsTwbVtAzAXzNMFeklE35bg1/exec');
         const qlf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyFU_skru2tnyEiv8I5HkpRCXbUlQb5vlJUm8Le0nZBCvfZeFkQPd2Naljs5CZY41I17w/exec');
         const clf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxTthjFI5UO-6LgpCH7bcy7A-c59g83xfiRiWgeBpetpHrPU9TBY7pP-TabLCQXc0zlSQ/exec');
+        const ctf_response_promise = fetch('https://script.google.com/macros/s/AKfycby7B-ynU2Om6j9EZeGq4aROFUSMs7qjG3L7g54MSbwmbtzfAjimVJDavmUeJIy74YzDng/exec');
         const prf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxZctLub-6PuQGykx298syeH7Qm__S37uqQrVFYsHVtv-Qk8M2oSkRIPIMVT_1WexqRZA/exec');
         const pof_response_promise = fetch('https://script.google.com/macros/s/AKfycby9i2KfOZ_uF7-JUPX8qpXg7Jewmw6oU3EfUTpXiwnRRB91_qIW3xAVNy5SZBN1YhVzzg/exec');
         const irf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzTmhNOz5cXeKitSXAriUJ_FEahAQugYEKIRwDuFt9tjhj2AtPKEf2H4yTMmZ1igpUxlQ/exec');
@@ -29,6 +30,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             sf_response,
             qlf_response,
             clf_response,
+            ctf_response,
             prf_response,
             pof_response,
             irf_response,
@@ -45,6 +47,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             sf_response_promise,
             qlf_response_promise,
             clf_response_promise,
+            ctf_response_promise,
             prf_response_promise,
             pof_response_promise,
             irf_response_promise,
@@ -62,6 +65,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const sf_data_list  = await sf_response.json();
         const qlf_data_list  = await qlf_response.json();
         const clf_data_list  = await clf_response.json();
+        const ctf_data_list  = await ctf_response.json();
         const prf_data_list  = await prf_response.json();
         const pof_data_list  = await pof_response.json();
         const irf_data_list  = await irf_response.json();
@@ -934,9 +938,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
         
         
-        
-
-
         // client_list_section
         const client_list_section = document.querySelector("#client_list_section");
         const new_client_form_tab_client_list_section = client_list_section.querySelector("#new_client_form_tab");
@@ -2045,8 +2046,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         const commission_form = document.querySelector("#commission_form");
         const new_commission_button_commission = commission_form.querySelector("#new_commission_button");
         const update_commission_button_commission = commission_form.querySelector("#update_commission_button");
+        const commission_transaction_button_commission = commission_form.querySelector("#commission_transaction_button");
         const new_commission_form_tab_commission = commission_form.querySelector("#new_commission_form_tab");
         const update_commission_form_tab_commission = commission_form.querySelector("#update_commission_form_tab");
+        const commission_transaction_form_tab_commission = commission_form.querySelector("#commission_transaction_form_tab");
         const add_item_button_commission = commission_form.querySelector("#add_item_button");
         const remove_item_button_commission = commission_form.querySelector("#remove_item_button");
 
@@ -2057,6 +2060,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             else{
                 new_commission_form_tab_commission.style.display = "block";
                 update_commission_form_tab_commission.style.display = "none";
+                commission_transaction_form_tab_commission.style.display = "none";
             }
         })
         update_commission_button_commission.addEventListener("click", () => {
@@ -2066,6 +2070,17 @@ document.addEventListener('DOMContentLoaded', async function() {
             else{
                 update_commission_form_tab_commission.style.display = "block";
                 new_commission_form_tab_commission.style.display = "none";
+                commission_transaction_form_tab_commission.style.display = "none";
+            }
+        })
+        commission_transaction_button_commission.addEventListener("click", () => {
+            if(commission_transaction_form_tab_commission.style.display == "block"){
+                commission_transaction_form_tab_commission.style.display = "none";
+            }
+            else{
+                commission_transaction_form_tab_commission.style.display = "block";
+                new_commission_form_tab_commission.style.display = "none";
+                update_commission_form_tab_commission.style.display = "none";
             }
         })
 
@@ -2112,7 +2127,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         // clf_data_list
         // FORM GENERATOR
-        const clf_form_no = document.getElementById("clf_form_no");
+        const clf_form_no = commission_form.querySelector("#clf_form_no");
         var last_row = clf_data_list.content.length -1;
         var data_info = clf_data_list.content[last_row][findTextInArray(clf_data_list, "CLF #")];
         var data_counter;
@@ -2200,6 +2215,40 @@ document.addEventListener('DOMContentLoaded', async function() {
             clf_data_value_counter += 1;
         }
         clf_list_commission.insertAdjacentHTML("beforeend", clf_data_value)
+
+        // ctf_data_list
+        // FORM GENERATOR
+        // const ctf_form_no = commission_form.querySelector("#ctf_form_no");
+        // var last_row = ctf_data_list.content.length -1;
+        // var data_info = ctf_data_list.content[last_row][findTextInArray(ctf_data_list, "CTF #")];
+        // var data_counter;
+        // if(last_row == 0){
+        //     data_counter = 0;
+        // }
+        // else{
+        //     data_counter = data_info.substring(9,12);
+        // }
+        // var year = new Date().getFullYear();
+        // var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        // data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        // ctf_form_no.value = `CTF${year}${month}${data_counter}`;
+
+        const marketing_user_commission_form = commission_form.querySelector("#marketing_user");
+        const marketing_signature_commission_form = commission_form.querySelector("#marketing_signature");
+
+
+        marketing_user_commission_form.innerText = user.value.toLowerCase().replace(/\b\w/g, function (char) {
+            return char.toUpperCase();
+        });
+        if(user.value == "JEMINA CENTENO"){
+            marketing_signature_commission_form.innerHTML = `<img src="../images/CENTENO_JEMINA.png" alt="">`;
+        }
+        else if(user.value == "JOVELYN SORIANO"){
+            marketing_signature_commission_form.innerHTML = `<img src="../images/SORIANO_JOVELYN.png" alt="">`;
+        }
+        else if(user.value == "JOHONEY CANLAS"){
+            marketing_signature_commission_form.innerHTML = `<img src="../images/CANLAS_JOHONEY.png" alt="">`;
+        }
 
         // multi section
         // purchase_request_form
