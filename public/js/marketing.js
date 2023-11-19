@@ -1046,7 +1046,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         marketing_user_quotation_form.innerText = user.value.toLowerCase().replace(/\b\w/g, function (char) {
             return char.toUpperCase();
         });
-        console.log(user.value)
         if(user.value == "JEMINA CENTENO"){
             marketing_signature_quotation_form.innerHTML = `<img src="../images/CENTENO_JEMINA.png" alt="">`;
         }
