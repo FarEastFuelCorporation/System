@@ -2244,6 +2244,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         const marketing_signature_commission_form = commission_form.querySelector("#marketing_signature");
         const clf_pending_list_commission_form = commission_form.querySelector("#clf_pending_list");
         const generate_button_commission_form = commission_form.querySelector("#generate_button");
+        const search_bpf_form_no_commission_form = commission_form.querySelector("#search_bpf_form_no");
+        const commission_transaction_form_tab = commission_form.querySelector("#commission_transaction_form_tab");
+        const table_data_commission_form = commission_transaction_form_tab.querySelector("#table_data");
+        const ctf_form_no_container_commission_form = commission_transaction_form_tab.querySelector("#ctf_form_no_container");
+        const ctf_form_no_commission_form = commission_transaction_form_tab.querySelector("#ctf_form_no");
+        const client_name_container_commission_form = commission_transaction_form_tab.querySelector("#client_name_container");
 
 
         marketing_user_commission_form.innerText = user.value.toLowerCase().replace(/\b\w/g, function (char) {
@@ -2321,7 +2327,79 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
 
         generate_button_commission_form.addEventListener("click", () => {
-            
+            for(let y = 1; y < bpf_data_list.content.length; y++){
+                table_data_commission_form.innerHTML = "";
+                var bpf_no_bpf = bpf_data_list.content[y][findTextInArray(bpf_data_list, "BPF #")];
+                var cod_no_bpf = bpf_data_list.content[y][findTextInArray(bpf_data_list, "COD #")];
+                var hauling_date_bpf = bpf_data_list.content[y][findTextInArray(bpf_data_list, "HAULING DATE")];
+                var table_counter = 0;
+                if(search_bpf_form_no_commission_form.value == bpf_no_bpf){
+                    for(let z = 1; z < cod_data_list.content.length; z++){
+                        var cod_no_cod = cod_data_list.content[z][findTextInArray(cod_data_list, "COD #")];
+                        var waste_name_cod = cod_data_list.content[z][findTextInArray(cod_data_list, "WASTE NAME")];
+                        var weight_cod = cod_data_list.content[z][findTextInArray(cod_data_list, "WEIGHT")];
+                        if(cod_no_bpf == cod_no_cod){
+                            var client_id_cod = cod_data_list.content[z][findTextInArray(cod_data_list, "CLIENT ID")]
+                            var waste_id_cod = cod_data_list.content[z][findTextInArray(cod_data_list, "WASTE ID")]
+                            var quotation_no_clf, agent_name_clf, commission_price_clf;
+                            for(let x = 1; x < clf_data_list.content.length; x++){
+                                var client_id_clf = clf_data_list.content[x][findTextInArray(clf_data_list, "CLIENT ID")];
+                                var waste_id_clf = clf_data_list.content[x][findTextInArray(clf_data_list, "WASTE ID")];
+                                if(client_id_clf == client_id_cod && waste_id_clf == waste_id_cod){
+                                    quotation_no_clf = clf_data_list.content[x][findTextInArray(clf_data_list, "QUOTATION CODE")];
+                                    agent_name_clf = clf_data_list.content[x][findTextInArray(clf_data_list, "AGENT ID")];
+                                    commission_price_clf = clf_data_list.content[x][findTextInArray(clf_data_list, "COMMISSION PRICE")];
+                                    break
+                                }
+                            }
+                            var unit_qlf, vat_calculation_qlf;
+                            for(let x = 1; x < qlf_data_list.content.length; x++){
+                                var quotation_no_qlf = qlf_data_list.content[x][findTextInArray(qlf_data_list, "QUOTATION CODE")];
+                                if(quotation_no_clf == quotation_no_qlf){
+                                    unit_qlf = qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")];
+                                    vat_calculation_qlf = qlf_data_list.content[x][findTextInArray(qlf_data_list, "VAT CALCULATION")];
+                                    break
+                                }
+                            }
+                            data = `
+                            <tr>
+                                <td>${date_decoder2(hauling_date_bpf)}</td>
+                                <td></td>
+                                <td></td>
+                                <td style="font-size: 10px !important; padding-top: 2px;">${waste_name_cod}</td>
+                                <td>${formatNumber2(weight_cod)}</td>
+                                <td>${unit_qlf}</td>
+                                <td style="text-align: right; padding-right: 5px">${formatNumber(commission_price_clf)}</td>
+                                <td style="text-align: right; padding-right: 5px">${formatNumber(parseFloat(weight_cod) * parseFloat(commission_price_clf))}</td>
+                                <td style="font-size: 10px !important">${vat_calculation_qlf}</td>
+                            </tr>
+                            `
+                            table_data_commission_form.insertAdjacentHTML("beforeend", data);
+                            table_counter += 1;
+                        }
+                    }
+                    for(let x = 0; x < 20 - table_counter; x++){
+                        console.log("pass")
+                        var data5 = "";
+                        data5 = `
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        `
+                        table_data_commission_form.insertAdjacentHTML("beforeend", data5);
+                    }
+                    ctf_form_no_container_commission_form.innerText = ctf_form_no_commission_form.value
+                    client_name_container_commission_form.innerText = ""
+                }
+            }
         })
 
         // multi section
