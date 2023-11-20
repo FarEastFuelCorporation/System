@@ -569,6 +569,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const terms = billing_process_form.querySelector("#terms");
         const cod_counter = document.getElementById("cod_counter");
         const signature = document.getElementById("signature");
+        const submit_button = document.getElementById("submit_button");
 
         signature.innerHTML = `<img src="../images/FLORES_FRANK.png" alt="">`;
 
@@ -610,6 +611,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             var data4_counter = 2;
             var table_counter = 0;
             var client = "";
+            var quotation_no = "";
             billing_date.value = date_decoder(new Date());
             if(type_of_form.value == "By COD (Single Transaction)"){
                 for(let x = 1; x < cod_data_list.content.length; x++){
@@ -673,7 +675,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                 transportation_unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
                                                 transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
                                                 transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
-                                                term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS DAYS")]
+                                                term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS CHARGE")]
                                                 break
                                             }
                                         }
@@ -692,7 +694,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                         transportation_unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
                                                         transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
                                                         transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
-                                                        term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS DAYS")]
+                                                        term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS CHARGE")]
                                                         break
                                                     }
                                                 }
@@ -849,7 +851,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 total_vat_in.value = formatNumber(non_vatable + vatable + (parseFloat(vatable))*.12);
                 credits_container.innerText = formatNumber(credits);
                 total_amount_due_container.innerText = formatNumber((non_vatable + vatable + (parseFloat(vatable))*.12) - parseFloat(credits));
-                due_date_container.innerHTML = `${term} days<br>from the date received`;
+                due_date_container.innerHTML = `${parseInt(term)} days<br>from the date received`;
                 total_amount_container.innerText = formatNumber((non_vatable + vatable) - parseFloat(credits));
                 si_vat_ex_container.innerText = formatNumber((parseFloat(si_total_amount))/1.12);
                 si_vat_container.innerText = formatNumber((parseFloat(si_total_amount)) - ((parseFloat(si_total_amount))/1.12));
@@ -860,6 +862,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 terms.value = term;
                 convertToPDFandDownload_button.style.display = "block";
                 convertToPDF_button.style.display = "block";
+                submit_button.style.display = "block";
                 what_to_print.style.display = "block";
                 // what_to_print2.style.display = "block";
             }
@@ -907,6 +910,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")];
                             unit_price = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")];
                             vat_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")];
+                            quotation_no = qlf_data_list.content[c][findTextInArray(qlf_data_list, "QUOTATION CODE")]
                             break
                         }
                         else{
@@ -921,12 +925,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "MTF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
                                         for(let c = 1; c < qlf_data_list.content.length; c++){
                                             if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "CLIENT ID")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")] &&
-                                            mtf_data_list.content[b][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
+                                            mtf_data_list.content[b][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")] &&
+                                            quotation_no == qlf_data_list.content[c][findTextInArray(qlf_data_list, "QUOTATION CODE")]){
                                                 transportation_vehicle = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]
                                                 transportation_unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
                                                 transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
                                                 transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
-                                                term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS DAYS")]
+                                                term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS CHARGE")]
+                                                console.log(term)
                                                 break
                                             }
                                         }
@@ -940,12 +946,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "MTF #")] == ltf_data_list.content[d][findTextInArray(ltf_data_list, "MTF #")]){
                                                 for(let c = 1; c < qlf_data_list.content.length; c++){
                                                     if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "CLIENT ID")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")] &&
-                                                    mtf_data_list.content[b][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
+                                                    mtf_data_list.content[b][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")] &&
+                                                    quotation_no == qlf_data_list.content[c][findTextInArray(qlf_data_list, "QUOTATION CODE")]){
                                                         transportation_vehicle = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]
                                                         transportation_unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
                                                         transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
                                                         transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
-                                                        term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS DAYS")]
+                                                        term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS CHARGE")]
+                                                        console.log(term)
                                                         break
                                                     }
                                                 }
@@ -1066,6 +1074,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         data4_counter += 2;
                         table_counter += 1;
                         si_table_data_transportation.push(data4);
+
                     }
                 }
                 for(let x = 0; x < table_data_info.length; x++){
@@ -1101,7 +1110,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 total_vat_in.value = formatNumber(non_vatable + vatable + (parseFloat(vatable))*.12);
                 credits_container.innerText = formatNumber(credits);
                 total_amount_due_container.innerText = formatNumber((non_vatable + vatable + (parseFloat(vatable))*.12) - parseFloat(credits));
-                due_date_container.innerHTML = `${term} days<br>from the date received`;
+                due_date_container.innerHTML = `${parseInt(term)} days<br>from the date received`;
                 total_amount_container.innerText = formatNumber((non_vatable + vatable) - parseFloat(credits));
                 si_vat_ex_container.innerText = formatNumber((parseFloat(si_total_amount))/1.12);
                 si_vat_container.innerText = formatNumber((parseFloat(si_total_amount)) - ((parseFloat(si_total_amount))/1.12));
@@ -1113,6 +1122,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 convertToPDFandDownload_button.style.display = "block";
                 convertToPDF_button.style.display = "block";
                 what_to_print.style.display = "block";
+                submit_button.style.display = "block";
                 // what_to_print2.style.display = "block";
             }
             else if(type_of_form.value == "By Multiple COD (Single Transaction)"){
@@ -1187,7 +1197,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                     transportation_unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
                                                     transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
                                                     transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
-                                                    term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS DAYS")]
+                                                    term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS CHARGE")]
                                                     break
                                                 }
                                             }
@@ -1206,7 +1216,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                             transportation_unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
                                                             transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
                                                             transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
-                                                            term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS DAYS")]
+                                                            term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS CHARGE")]
                                                             break
                                                         }
                                                     }
@@ -1383,7 +1393,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 total_amount_payable_container.innerText = formatNumber(non_vatable + vatable + (parseFloat(vatable))*.12);
                 credits_container.innerText = formatNumber(credits);
                 total_amount_due_container.innerText = formatNumber((non_vatable + vatable + (parseFloat(vatable))*.12) - parseFloat(credits));
-                due_date_container.innerHTML = `${term} days<br>from the date received`;
+                due_date_container.innerHTML = `${parseInt(term)} days<br>from the date received`;
                 total_amount_container.innerText = formatNumber((non_vatable + vatable) - parseFloat(credits));
                 si_vat_ex_container.innerText = formatNumber((parseFloat(si_total_amount))/1.12);
                 si_vat_container.innerText = formatNumber((parseFloat(si_total_amount)) - ((parseFloat(si_total_amount))/1.12));
@@ -1395,6 +1405,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 convertToPDFandDownload_button.style.display = "block";
                 convertToPDF_button.style.display = "block";
                 what_to_print.style.display = "block";
+                submit_button.style.display = "block";
                 // what_to_print2.style.display = "block";
             }
             else if(type_of_form.value == "By Multiple COD (Multiple Transaction)"){
@@ -1463,7 +1474,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                     transportation_unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
                                                     transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
                                                     transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
-                                                    term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS DAYS")]
+                                                    term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS CHARGE")]
                                                     break
                                                 }
                                             }
@@ -1482,7 +1493,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                             transportation_unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
                                                             transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
                                                             transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
-                                                            term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS DAYS")]
+                                                            term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS CHARGE")]
                                                             break
                                                         }
                                                     }
@@ -1652,7 +1663,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 total_amount_payable_container.innerText = formatNumber(non_vatable + vatable + (parseFloat(vatable))*.12);
                 credits_container.innerText = formatNumber(credits);
                 total_amount_due_container.innerText = formatNumber((non_vatable + vatable + (parseFloat(vatable))*.12) - parseFloat(credits));
-                due_date_container.innerHTML = `${term} days<br>from the date received`;
+                due_date_container.innerHTML = `${parseInt(term)} days<br>from the date received`;
                 total_amount_container.innerText = formatNumber((non_vatable + vatable) - parseFloat(credits));
                 si_vat_ex_container.innerText = formatNumber((parseFloat(si_total_amount))/1.12);
                 si_vat_container.innerText = formatNumber((parseFloat(si_total_amount)) - ((parseFloat(si_total_amount))/1.12));
@@ -1663,6 +1674,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 terms.value = term;
                 convertToPDFandDownload_button.style.display = "block";
                 convertToPDF_button.style.display = "block";
+                submit_button.style.display = "block";
                 what_to_print.style.display = "block";
                 // what_to_print2.style.display = "block";
             }
@@ -1740,7 +1752,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                 transportation_unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
                                                 transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
                                                 transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
-                                                term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS DAYS")]
+                                                term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS CHARGE")]
                                                 break
                                             }
                                         }
@@ -1759,7 +1771,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                         transportation_unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
                                                         transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
                                                         transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
-                                                        term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS DAYS")]
+                                                        term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS CHARGE")]
                                                         break
                                                     }
                                                 }
@@ -1935,7 +1947,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 total_vat_in.value = formatNumber(non_vatable + vatable + (parseFloat(vatable))*.12);
                 credits_container.innerText = formatNumber(credits);
                 total_amount_due_container.innerText = formatNumber((non_vatable + vatable + (parseFloat(vatable))*.12) - parseFloat(credits));
-                due_date_container.innerHTML = `${term} days<br>from the date received`;
+                due_date_container.innerHTML = `${parseInt(term)} days<br>from the date received`;
                 total_amount_container.innerText = formatNumber((non_vatable + vatable) - parseFloat(credits));
                 si_vat_ex_container.innerText = formatNumber((parseFloat(si_total_amount))/1.12);
                 si_vat_container.innerText = formatNumber((parseFloat(si_total_amount)) - ((parseFloat(si_total_amount))/1.12));
@@ -1946,6 +1958,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 terms.value = term;
                 convertToPDFandDownload_button.style.display = "block";
                 convertToPDF_button.style.display = "block";
+                submit_button.style.display = "block";
                 what_to_print.style.display = "block";
                 // what_to_print2.style.display = "block";
             }
@@ -2026,7 +2039,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                     transportation_unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
                                                     transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
                                                     transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
-                                                    term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS DAYS")]
+                                                    term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS CHARGE")]
                                                     break
                                                 }
                                             }
@@ -2045,7 +2058,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                             transportation_unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
                                                             transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
                                                             transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
-                                                            term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS DAYS")]
+                                                            term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS CHARGE")]
                                                             break
                                                         }
                                                     }
@@ -2261,7 +2274,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 total_vat_in.value = formatNumber(non_vatable + vatable + (parseFloat(vatable))*.12);
                 credits_container.innerText = formatNumber(credits);
                 total_amount_due_container.innerText = formatNumber((non_vatable + vatable + (parseFloat(vatable))*.12) - parseFloat(credits));
-                due_date_container.innerHTML = `${term} days<br>from the date received`;
+                due_date_container.innerHTML = `${parseInt(term)} days<br>from the date received`;
                 total_amount_container.innerText = formatNumber((non_vatable + vatable) - parseFloat(credits));
                 si_vat_ex_container.innerText = formatNumber((parseFloat(si_total_amount))/1.12);
                 si_vat_container.innerText = formatNumber((parseFloat(si_total_amount)) - ((parseFloat(si_total_amount))/1.12));
@@ -2272,6 +2285,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 terms.value = term;
                 convertToPDFandDownload_button.style.display = "block";
                 convertToPDF_button.style.display = "block";
+                submit_button.style.display = "block";
                 what_to_print.style.display = "block";
                 // what_to_print2.style.display = "block";
             }

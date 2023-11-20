@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const ltf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxBLMvyNDsT9_dlVO4Qc31dI4ErcymUHbzKimOpCZHgbJxip2XxCl7Wk3hJyqcdtrxU/exec');
         const wcf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyBFTBuFZ4PkvwmPi_3Pp_v74DCSEK2VpNy6janIGgaAK-P22wazmmShOKn6iwFbrQn/exec');
         const sf_response_promise = fetch('https://script.google.com/macros/s/AKfycby9b2VCfXc0ifkwBXJRi2UVUwgZIj9F4FTOdZa_SYKZdsTwbVtAzAXzNMFeklE35bg1/exec');
+        const cod_response_promise = fetch('https://script.google.com/macros/s/AKfycbzgiOuXizUVviCsLVfihqYN9HJ3pyNr7ElHoCl3JGkbtQnChnm2U42yQuLd4UMH0ci5/exec');
+        const bpf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyux0GBj9tk6quRz46IkXa0VemEDAi-v2iEHx7C_6OFi416ERkv_BFtKqBmbw-bxaaiFQ/exec');
         const qlf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyFU_skru2tnyEiv8I5HkpRCXbUlQb5vlJUm8Le0nZBCvfZeFkQPd2Naljs5CZY41I17w/exec');
         const clf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxTthjFI5UO-6LgpCH7bcy7A-c59g83xfiRiWgeBpetpHrPU9TBY7pP-TabLCQXc0zlSQ/exec');
         const ctf_response_promise = fetch('https://script.google.com/macros/s/AKfycby7B-ynU2Om6j9EZeGq4aROFUSMs7qjG3L7g54MSbwmbtzfAjimVJDavmUeJIy74YzDng/exec');
@@ -28,6 +30,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             ltf_response,
             wcf_response,
             sf_response,
+            cod_response,
+            bpf_response,
             qlf_response,
             clf_response,
             ctf_response,
@@ -45,6 +49,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             ltf_response_promise,
             wcf_response_promise,
             sf_response_promise,
+            cod_response_promise,
+            bpf_response_promise,
             qlf_response_promise,
             clf_response_promise,
             ctf_response_promise,
@@ -63,6 +69,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const ltf_data_list  = await ltf_response.json();
         const wcf_data_list  = await wcf_response.json();
         const sf_data_list  = await sf_response.json();
+        const cod_data_list  = await cod_response.json();
+        const bpf_data_list  = await bpf_response.json();
         const qlf_data_list  = await qlf_response.json();
         const clf_data_list  = await clf_response.json();
         const ctf_data_list  = await ctf_response.json();
@@ -2205,10 +2213,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <td>${clf_data_value_counter}</td>
                 <td>${clf_data_list.content[x][findTextInArray(clf_data_list, "CLF #")]}</td>
                 <td>${clf_data_list.content[x][findTextInArray(clf_data_list, "QUOTATION CODE")]}</td>
+                <td>${findEmployeeName(clf_data_list.content[x][findTextInArray(clf_data_list, "AGENT ID")])}</td>
                 <td>${findClientName(clf_data_list.content[x][findTextInArray(clf_data_list, "CLIENT ID")])}</td>
                 <td>${clf_data_list.content[x][findTextInArray(clf_data_list, "WASTE NAME")]}</td>
-                <td>${clf_data_list.content[x][findTextInArray(clf_data_list, "AGENT NAME")]}</td>
-                <td>${clf_data_list.content[x][findTextInArray(clf_data_list, "COMMISION PRICE")]}</td>
+                <td>${clf_data_list.content[x][findTextInArray(clf_data_list, "COMMISSION PRICE")]}</td>
                 <td>${clf_data_list.content[x][findTextInArray(clf_data_list, "SUBMITTED BY")]}</td>
             </tr>
             `
@@ -2235,6 +2243,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         const marketing_user_commission_form = commission_form.querySelector("#marketing_user");
         const marketing_signature_commission_form = commission_form.querySelector("#marketing_signature");
+        const clf_pending_list_commission_form = commission_form.querySelector("#clf_pending_list");
 
 
         marketing_user_commission_form.innerText = user.value.toLowerCase().replace(/\b\w/g, function (char) {
@@ -2248,6 +2257,66 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
         else if(user.value == "JOHONEY CANLAS"){
             marketing_signature_commission_form.innerHTML = `<img src="../images/CANLAS_JOHONEY.png" alt="">`;
+        }
+
+        var bpf_data_counter = 1;
+        for(let x = 1; x < clf_data_list.content.length; x++){
+            var client_id_clf = clf_data_list.content[x][findTextInArray(clf_data_list, "CLIENT ID")];
+            var waste_id_clf = clf_data_list.content[x][findTextInArray(clf_data_list, "WASTE ID")];
+            var quotation_no_clf = clf_data_list.content[x][findTextInArray(clf_data_list, "QUOTATION CODE")];
+            var agent_name_clf = clf_data_list.content[x][findTextInArray(clf_data_list, "AGENT ID")];
+            var commission_price_clf = clf_data_list.content[x][findTextInArray(clf_data_list, "COMMISSION PRICE")];
+            for(let y = 1; y < bpf_data_list.content.length; y++){
+                var bpf_no_bpf = bpf_data_list.content[y][findTextInArray(bpf_data_list, "BPF #")];
+                var cod_no_bpf = bpf_data_list.content[y][findTextInArray(bpf_data_list, "COD #")];
+                var submitted_by_bpf = bpf_data_list.content[y][findTextInArray(bpf_data_list, "SUBMITTED BY")];
+                var client_id_cod, waste_id_cod;
+                for(let z = 1; z < cod_data_list.content.length; z++){
+                    var cod_no_cod = cod_data_list.content[z][findTextInArray(cod_data_list, "COD #")];
+                    var wcf_no_cod = cod_data_list.content[z][findTextInArray(cod_data_list, "WCF #")];
+                    var weight_cod = cod_data_list.content[z][findTextInArray(cod_data_list, "WEIGHT")];
+                    var mtf = "";
+                    var ltf = "";
+                    for(let k = 1; k < wcf_data_list.content.length; k++){
+                        if(wcf_no_cod == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                            if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                            }else{
+                                ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                for(let i = 1; i < ltf_data_list.content.length; i++){
+                                    if(ltf == ltf_data_list.content[i][findTextInArray(ltf_data_list, "LTF #")]){
+                                        mtf = ltf_data_list.content[i][findTextInArray(ltf_data_list, "MTF #")];
+                                        break
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if(cod_no_bpf == cod_no_cod){
+                        client_id_cod = cod_data_list.content[z][findTextInArray(cod_data_list, "CLIENT ID")]
+                        waste_id_cod = cod_data_list.content[z][findTextInArray(cod_data_list, "WASTE ID")]
+                        if(client_id_clf == client_id_cod && waste_id_clf == waste_id_cod){
+                            var data_value =
+                            `
+                            <tr>
+                                <td>${bpf_data_counter}</td>
+                                <td>${bpf_no_bpf}</td>
+                                <td>${mtf}</td>
+                                <td>${quotation_no_clf}</td>
+                                <td>${findEmployeeName(agent_name_clf)}</td>
+                                <td>${findClientName(client_id_clf)}</td>
+                                <td>${findWasteName(client_id_clf, waste_id_clf)}</td>
+                                <td>${formatNumber2(weight_cod)}</td>
+                                <td>${formatNumber(commission_price_clf)}</td>
+                                <td>${formatNumber(commission_price_clf * weight_cod)}</td>
+                                <td>${submitted_by_bpf}</td>
+                            </tr>
+                            `
+                            clf_pending_list_commission_form.insertAdjacentHTML("beforeend", data_value)
+                        }
+                    }
+                }
+            }
         }
 
         // multi section
