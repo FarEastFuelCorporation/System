@@ -456,14 +456,13 @@ document.addEventListener('DOMContentLoaded', async function() {
         
         client_id.value = `${code_year_month}${data_counter}`
 
-        var data_value = [];
-
-        for (x = 1; x < client_data_list.content.length; x++) {
-            data_value.push(client_data_list.content[x][1]);
-        }
         const search_wrappers = document.querySelectorAll("#search_client");
-
         search_wrappers.forEach((search_wrapper) => {
+            var data_value = [];
+    
+            for (x = 1; x < client_data_list.content.length; x++) {
+                data_value.push(client_data_list.content[x][1]);
+            }
             const input_box = search_wrapper.querySelector("input");
             const sugg_box = search_wrapper.querySelector(".autocom_box");
             input_box.onkeyup = (e) => {
@@ -2244,6 +2243,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const marketing_user_commission_form = commission_form.querySelector("#marketing_user");
         const marketing_signature_commission_form = commission_form.querySelector("#marketing_signature");
         const clf_pending_list_commission_form = commission_form.querySelector("#clf_pending_list");
+        const generate_button_commission_form = commission_form.querySelector("#generate_button");
 
 
         marketing_user_commission_form.innerText = user.value.toLowerCase().replace(/\b\w/g, function (char) {
@@ -2313,11 +2313,16 @@ document.addEventListener('DOMContentLoaded', async function() {
                             </tr>
                             `
                             clf_pending_list_commission_form.insertAdjacentHTML("beforeend", data_value)
+                            bpf_data_counter += 1;
                         }
                     }
                 }
             }
         }
+
+        generate_button_commission_form.addEventListener("click", () => {
+            
+        })
 
         // multi section
         // purchase_request_form
