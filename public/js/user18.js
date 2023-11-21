@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const vehicle_response_promise = fetch('https://script.google.com/macros/s/AKfycbw-JCnctX1x1W1ogGbrkhNdIGd9q6bYjy_nvaYeoiaBf7HreB2a1tKJZaJHw2wu4wmpcA/exec');
         const ltf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxBLMvyNDsT9_dlVO4Qc31dI4ErcymUHbzKimOpCZHgbJxip2XxCl7Wk3hJyqcdtrxU/exec');
         const wcf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyBFTBuFZ4PkvwmPi_3Pp_v74DCSEK2VpNy6janIGgaAK-P22wazmmShOKn6iwFbrQn/exec');
-        const wdf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyLziogBa7p5kKRuOrN0sYCTftYxy0s58ytVyE6Biek5hTjvAWbu3E3y7qbIaM5Dj1kqg/exec');
+        const wdf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzqTONQ_bC0F204KVgDsF42r4-51oMRbh57wQgUs8Tob8YxmdUC6lmUX6wZD0LFnrulYw/exec');
         const wtf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxYB-N38emc6GUCKuuy-gGVRHQm4NoYgRRayHf56BwjiAPwsBKZ0llHjLAsW7Vt3j9I/exec');
         const stf_response_promise = fetch('https://script.google.com/macros/s/AKfycbytp1dpaOC_8sf0YsO2U2iJRiUjk791Pg-nA0zVYmxyE9zd0pc8Hlfu4P_-KalUyNLgDw/exec');
         const qlf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyFU_skru2tnyEiv8I5HkpRCXbUlQb5vlJUm8Le0nZBCvfZeFkQPd2Naljs5CZY41I17w/exec');
@@ -529,8 +529,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         const disposal_form_button_warehouse_inventory = warehouse_inventory.querySelector("#disposal_form_button")
         const form_tab_warehouse_inventory = warehouse_inventory.querySelector("#form_tab")
         const search_wtf_form_no_warehouse_inventory = warehouse_inventory.querySelector("#search_wtf_form_no")
+        const search_wtf_result_warehouse_inventory = warehouse_inventory.querySelector("#search_wtf_result")
         const search_wtf_form_no_button_warehouse_inventory = warehouse_inventory.querySelector("#search_wtf_form_no_button")
         const item_container_warehouse_inventory = warehouse_inventory.querySelector("#item_container")
+        const mtf_form_no_warehouse_inventory = warehouse_inventory.querySelector("#mtf_form_no")
+        const wcf_form_no_warehouse_inventory = warehouse_inventory.querySelector("#wcf_form_no")
+        const hauling_date_warehouse_inventory = warehouse_inventory.querySelector("#hauling_date")
 
         // FORM GENERATOR
         // wdf_data_list
@@ -677,57 +681,68 @@ document.addEventListener('DOMContentLoaded', async function() {
         })
 
         search_wtf_form_no_button_warehouse_inventory.addEventListener("click", () => {
-            for(let x = 1; x < wtf_data_list.content.length; x++){
-                wtf_no_wtf = wtf_data_list.content[x][findTextInArray(wtf_data_list, "WTF #")]
+            var data_value_text;
+            for(let a = 1; a < wtf_data_list.content.length; a++){
+                wtf_no_wtf = wtf_data_list.content[a][findTextInArray(wtf_data_list, "WTF #")]
+                wcf_no_wtf = wtf_data_list.content[a][findTextInArray(wtf_data_list, "WCF #")]
                 if(search_wtf_form_no_warehouse_inventory.value == wtf_no_wtf){
-                    item_container_warehouse_inventory.style.display = "block"
+                    for(let b = 0; b < pending_wtf.length; b++){
+                        if(search_wtf_form_no_warehouse_inventory.value == pending_wtf[b]){
+                            var mtf, ltf, client_id, waste_id, truck_scale_no, hauling_date;
+                            for(let c = 1; c < wcf_data_list.content.length; c++){
+                                wcf_no_wcf = wcf_data_list.content[c][findTextInArray(wcf_data_list, "WCF #")]
+                                if(wcf_no_wtf == wcf_no_wcf){
+                                    if((wcf_data_list.content[c][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                        mtf = wcf_data_list.content[c][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                    }
+                                    else{
+                                        ltf = wcf_data_list.content[c][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                        for(let x = 1; x < ltf_data_list.content.length; x++){
+                                            if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                                mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                                break
+                                            }
+                                        }
+                                    }
+                                    client_id = wcf_data_list.content[c][findTextInArray(wcf_data_list, "CLIENT ID")];
+                                    client_id = wcf_data_list.content[c][findTextInArray(wcf_data_list, "CLIENT ID")];
+                                    waste_id = wcf_data_list.content[c][findTextInArray(wcf_data_list, "WASTE ID")];
+                                    truck_scale_no = wcf_data_list.content[c][findTextInArray(wcf_data_list, "TRUCK SCALE #")];
+                                    hauling_date = wcf_data_list.content[c][findTextInArray(wcf_data_list, "HAULING DATE")];
+                                }
+                            }
+                            data_value_text = 
+                            `
+                            WTF #: ${wtf_no_wtf}<br>
+                            CLIENT: ${findClientName(client_id)}<br>
+                            WASTE CODE: ${findWasteCode(waste_id)}<br>
+                            WASTE DESCRIPTION: ${findWasteName(client_id, waste_id)}<br>
+                            TRUCK SCALE #: ${truck_scale_no}<br>
+                            HAULING DATE: ${date_decoder(hauling_date)}<br>
+                            `
+                            mtf_form_no_warehouse_inventory.value = mtf;
+                            wcf_form_no_warehouse_inventory.value = wcf_no_wtf
+                            hauling_date_warehouse_inventory.value = date_decoder(hauling_date)
+                            item_container_warehouse_inventory.style.display = "block";
+                        }
+                    }
                 }
             }
-        })
-
-        // search_wtf_form_no_button_warehouse_inventory.addEventListener("click", () => {
-        //     for(b=0; b<=newElements_logistics.length; b++){
-        //         for(a=1; a < mtf_data_list.content.length; a++){
-        //             if(newElements_logistics[b] == mtf_data_list.content[a][findTextInArray(mtf_data_list, "MTF #")]){
-        //                 var data_value;
-        //                 if(search_mtf_form_no.value == mtf_data_list.content[a][findTextInArray(mtf_data_list, "MTF #")]){
-        //                     data_value =`
-        //                     MTF #: ${mtf_data_list.content[a][findTextInArray(mtf_data_list, "MTF #")]}<br>
-        //                     CLIENT: ${findClientName(mtf_data_list.content[a][findTextInArray(mtf_data_list, "CLIENT ID")])}<br>
-        //                     WASTE CODE: ${findWasteCode(mtf_data_list.content[a][findTextInArray(mtf_data_list, "WASTE ID")])}<br>
-        //                     WASTE DESCRIPTION: ${findWasteName(mtf_data_list.content[a][findTextInArray(mtf_data_list, "CLIENT ID")], mtf_data_list.content[a][findTextInArray(mtf_data_list, "WASTE ID")])}<br>
-        //                     HAULING DATE: ${date_decoder(mtf_data_list.content[a][findTextInArray(mtf_data_list, "HAULING DATE")])}<br>
-        //                     HAULING TIME: ${time_decoder(mtf_data_list.content[a][findTextInArray(mtf_data_list, "HAULING TIME")])}<br>
-        //                     TYPE OF VEHICLE: ${mtf_data_list.content[a][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")]}<br>
-        //                     REMARKS: ${mtf_data_list.content[a][findTextInArray(mtf_data_list, "REMARKS")]}<br>
-        //                     SUBMITTED BY: ${mtf_data_list.content[a][findTextInArray(mtf_data_list, "SUBMITTED BY")]}<br>
-        //                     `
-        //                     mtf_form_no.value = mtf_data_list.content[a][findTextInArray(mtf_data_list, "MTF #")];
-        //                     client.value = findClientName(mtf_data_list.content[a][findTextInArray(mtf_data_list, "CLIENT ID")]);
-        //                     type_of_waste.value = mtf_data_list.content[a][findTextInArray(mtf_data_list, "WASTE ID")];
-        //                     hauling_date.value = date_decoder(mtf_data_list.content[a][findTextInArray(mtf_data_list, "HAULING DATE")]);
-        //                     hauling_time.value = time_decoder(mtf_data_list.content[a][findTextInArray(mtf_data_list, "HAULING TIME")]);
-        //                     weight.value = mtf_data_list.content[a][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")];
-        //                     ltf_data.style.display = "block";
-        //                 }        
-        //                 if(data_value == undefined){
-        //                     search_mtf_result.innerHTML = `
-        //                     <div class="search_ltf_result">
-        //                     <h2>INFORMATION</h2>
-        //                     No Data Found
-        //                     </div><br>`            
-        //                 }
-        //                 else{
-        //                     search_mtf_result.innerHTML = `
-        //                     <div class="search_ltf_result">
-        //                     <h2>INFORMATION</h2>
-        //                     ${data_value}
-        //                     </div><br>`
-        //                 }
-        //             }  
-        //         }  
-        //     }  
-        // });
+            if(data_value_text == undefined){
+                search_wtf_result_warehouse_inventory.innerHTML = `
+                <div class="search_wtf_result">
+                <h2>INFORMATION</h2>
+                No Data Found
+                </div><br>`            
+            }
+            else{
+                search_wtf_result_warehouse_inventory.innerHTML = `
+                <div class="search_wtf_result">
+                <h2>INFORMATION</h2>
+                ${data_value_text}
+                </div><br>`
+            }
+        });
 
         // supplies_transaction
         // FORM GENERATOR
@@ -1645,25 +1660,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         function findWasteCode(waste_id){
             var waste_code = "";
             for(let c = 1; c < type_of_waste_data_list.content.length; c++){
-                if(waste_id == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
+                if(waste_id.substring(0, 8) == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
                     waste_code = (type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")]).substring(0, 4);
                     break
                 }
                 else{
-                    waste_code = waste_id;
-                }
-            }
-            return waste_code
-        }
-        function findWasteCode2(waste_id){
-            var waste_code = "";
-            for(let c = 1; c < type_of_waste_data_list.content.length; c++){
-                if(waste_id == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
-                    waste_code = (type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")]);
-                    break
-                }
-                else{
-                    waste_code = waste_id;
+                    waste_code = "N/A";
                 }
             }
             return waste_code

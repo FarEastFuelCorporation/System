@@ -1783,11 +1783,10 @@
     </div><br>
     <div id="new_commission_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
         <h2>NEW COMMISSION FORM</h2><br>
-        <form  action="https://script.google.com/macros/s/AKfycbyd1XvGtM63si5vKySftnjn_ahAqZqakHIv3_Hwbh-coJpeGiE5Sg8B0RQSRZNYpVW8/exec" method="post">
+        <form  action="https://script.google.com/macros/s/AKfycbyhry1V-SD62wV2PVKxM8Y1s9ykK8_2zeX9xIu8LpZOSD_K1krCdVIc49qRR8W8X1AD/exec" method="post">
             <input type="hidden" name="user" id="user">
             <input type="hidden" name="commission_data_counter" id="commission_data_counter" value="1">
             <input type="hidden" name="client_id" id="client_id">
-            <input type="hidden" name="waste_id" id="waste_id">
             <div id="commission_list">
                 <label for="mtf_form_no">
                     <i class="fa-solid fa-list-ol"></i>
@@ -1820,13 +1819,14 @@
                         </div>
                     </div>
                     <div class="wrapper">
-                        <label for="waste_name_selection">
+                        <label for="waste_name_selection1">
                             <i class="fa-solid fa-list-ol"></i>
                             Waste Name
                         </label><br>
-                        <select name="waste_name_selection" id="waste_name_selection" class="form-control" required style="height: 55px;">
+                        <select name="waste_name_selection1" id="waste_name_selection1" class="form-control" required style="height: 55px;">
                             <option value="SELECT">SELECT</option>
                         </select>
+                        <input type="hidden" name="waste_id1" id="waste_id1">
                     </div>
                     <div class="wrapper">
                         <label for="agent_name1">

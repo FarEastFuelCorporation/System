@@ -29,6 +29,7 @@
     </style>
 </head>
 <body>
+    <div class="spinner" id="spinner"></div>
     <div class="admin-container">
         <div class="topbar">
             <div class="logo">
@@ -476,10 +477,12 @@
                         </button>
                     </label>
                 </div><br>
-                <div id="form_tab" style="position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
-                    <form action="https://script.google.com/macros/s/AKfycbxz7liNGsSst5WXOF2e-GY9eXP0QJUS6VXffEMStQct_0nC9bOPrn6VrdFRJ70Wqs54/exec" method="post">
+                <div id="form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
+                    <form action="https://script.google.com/macros/s/AKfycbzD1y6zJDWP1ji-tNhuE6VjY2yOW4r9m3ugO6xVdMs5v8Sk05XGbFWTCVwj4-VXCDq-/exec" method="post">
                         <input type="hidden" name="user" id="user">
-                        <input type="hidden" name="iid_counter" id="iid_counter" value="0">
+                        <input type="hidden" name="mtf_form_no" id="mtf_form_no">
+                        <input type="hidden" name="wcf_form_no" id="wcf_form_no">
+                        <input type="hidden" name="hauling_date" id="hauling_date">
                         <div>
                             <div>
                                 <label for="wdf_form_no">
@@ -507,9 +510,9 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                        <div id="search_ltf_result"></div>
-                        <div id="item_container">
+                        </div><br>
+                        <div id="search_wtf_result"></div>
+                        <div id="item_container" style="display: none;">
                             <div class="time_out">
                                 <label for="time_out">
                                 <i class="fa-solid fa-right-from-bracket"></i>
@@ -517,6 +520,18 @@
                                 </label>
                                 <input type="date" autocomplete="off" name="date_out" id="date_out" class="form-control form" required>
                                 <input type="time" autocomplete="off" name="time_out" id="time_out" class="form-control form" required><br>
+                            </div>
+                            <div>
+                                <label for="submit_to">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    Submit To
+                                </label><br>
+                                <select name="submit_to" id="submit_to" class="form-control form" required>
+                                    <option value="">SELECT</option>
+                                    <option value="ROTARY">ROTARY</option>
+                                    <option value="FURNACE">FURNACE</option>
+                                    <option value="THERMAL GASIFIER">THERMAL GASIFIER</option>
+                                </select>
                             </div>
                         </div>
                         <div class="buttons">
@@ -545,7 +560,7 @@
                             <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
                         </button>
                     </div>
-                    <div class="table" style="max-height: 80vh; align-items: start; overflow-y: scroll;">                            
+                    <div class="table" style="max-height: 70vh; align-items: start; overflow-y: scroll;">                            
                         <div class="list">
                             <table>
                                 <thead style="position: sticky; top: 0; background-color: black;">

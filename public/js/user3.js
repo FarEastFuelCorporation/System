@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const ltf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxBLMvyNDsT9_dlVO4Qc31dI4ErcymUHbzKimOpCZHgbJxip2XxCl7Wk3hJyqcdtrxU/exec');
         const wcf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyBFTBuFZ4PkvwmPi_3Pp_v74DCSEK2VpNy6janIGgaAK-P22wazmmShOKn6iwFbrQn/exec');
         const sf_response_promise = fetch('https://script.google.com/macros/s/AKfycby9b2VCfXc0ifkwBXJRi2UVUwgZIj9F4FTOdZa_SYKZdsTwbVtAzAXzNMFeklE35bg1/exec');
+        const wdf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzqTONQ_bC0F204KVgDsF42r4-51oMRbh57wQgUs8Tob8YxmdUC6lmUX6wZD0LFnrulYw/exec');
         const tpf_response_promise = fetch('https://script.google.com/macros/s/AKfycbwbKss2XtW5lylCrUe8IC-ZA4ffA5CM5tY6kqIja9t80NXJw2nB8RBOJFWbXQz0hWMadw/exec');
         const qlf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyFU_skru2tnyEiv8I5HkpRCXbUlQb5vlJUm8Le0nZBCvfZeFkQPd2Naljs5CZY41I17w/exec');
 
@@ -16,6 +17,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             ltf_response,
             wcf_response,
             sf_response,
+            wdf_response,
             tpf_response,
             qlf_response,
         ] = await Promise.all([
@@ -25,6 +27,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             ltf_response_promise,
             wcf_response_promise,
             sf_response_promise,
+            wdf_response_promise,
             tpf_response_promise,
             qlf_response_promise,
         ]);
@@ -35,6 +38,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const ltf_data_list  = await ltf_response.json();
         const wcf_data_list  = await wcf_response.json();
         const sf_data_list  = await sf_response.json();
+        const wdf_data_list  = await wdf_response.json();
         const tpf_data_list  = await tpf_response.json();
         const qlf_data_list  = await qlf_response.json();
     
@@ -59,8 +63,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         const month_filter = document.getElementById("month_filter");
         let pending_treatment_sf = [];
         let pending_treatment_wcf = [];
+        let pending_treatment_wtf = [];
         let wcf_transaction_sorting = []; // Variable containing existing elements
         let wcf_tpf_transaction_sorting = []; // Variable containing existing elements
+        let wdf_transaction_sorting = []; // Variable containing existing elements
+        let wdf_tpf_transaction_sorting = []; // Variable containing existing elements
         let sf_transaction_treatment = []; // Variable containing existing elements
         let tpf_transaction_treatment = []; // Variable containing existing elements
         let sf_tpf_transaction_treatment = []; // Variable containing existing elements
@@ -80,103 +87,93 @@ document.addEventListener('DOMContentLoaded', async function() {
         function generatePending(){
             pending_treatment_sf = [];
             pending_treatment_wcf = [];
+            pending_treatment_wtf = [];
             wcf_transaction_sorting = [];
             wcf_tpf_transaction_sorting = [];
+            wdf_transaction_sorting = [];
+            wdf_tpf_transaction_sorting = [];
             sf_transaction_treatment = [];
             tpf_transaction_treatment = [];
             sf_tpf_transaction_treatment = [];
             sf_tpf_wcf_transaction_treatment = [];
             done_list_tpf = [];
     
+            // wcf to tpf
             for (let i = 1; i < wcf_data_list.content.length; i++) {
                 if(wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] !== "SORTING" &&
                 wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] !== "WAREHOUSE" &&
                 wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] !== "ACCOUNTING" &&
-                month_filter.value == formatMonth(wcf_data_list.content[i][findTextInArray(wcf_data_list, "HAULING DATE")])){
-                    if (!wcf_transaction_sorting.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")])) {
+                !wcf_transaction_sorting.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")])){
+                    if(month_filter.value == formatMonth(wcf_data_list.content[i][findTextInArray(wcf_data_list, "HAULING DATE")])){
                         wcf_transaction_sorting.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]);
                     }
-                }
-                else if(wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] !== "SORTING" &&
-                wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] !== "WAREHOUSE" &&
-                wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] !== "ACCOUNTING" &&
-                month_filter.value == "ALL"){
-                    if (!wcf_transaction_sorting.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")])) {
+                    else if(month_filter.value == "ALL"){
                         wcf_transaction_sorting.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]);
                     }
                 }
             }
+            // sf to tpf
             for (let i = 1; i < sf_data_list.content.length; i++) {
                 if(sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE ID")] !== "DISCREPANCY"){
                     if(sf_data_list.content[i][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")] !== "FOR STORAGE" &&
                     sf_data_list.content[i][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")] !== "RECYCLING" &&
                     sf_data_list.content[i][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")] !== "CRUSHING" &&
-                    month_filter.value == formatMonth(sf_data_list.content[i][findTextInArray(sf_data_list, "HAULING DATE")])){
-                        if (!sf_transaction_treatment.includes(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")])) {
+                    !sf_transaction_treatment.includes(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")])){
+                        if (month_filter.value == formatMonth(sf_data_list.content[i][findTextInArray(sf_data_list, "HAULING DATE")])) {
                             sf_transaction_treatment.push(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")]);
                         }
-                    }
-                }
-                else if(sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE ID")] !== "DISCREPANCY"){
-                    if(sf_data_list.content[i][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")] !== "FOR STORAGE" &&
-                    sf_data_list.content[i][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")] !== "RECYCLING" &&
-                    sf_data_list.content[i][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")] !== "CRUSHING" &&
-                    month_filter.value == "ALL"){
-                        if (!sf_transaction_treatment.includes(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")])) {
+                        else if (month_filter.value == "ALL") {
                             sf_transaction_treatment.push(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")]);
                         }
                     }
                 }
             }
+            // wdf to tpf
+            for (let i = 1; i < wdf_data_list.content.length; i++) {
+                if(!wdf_transaction_sorting.includes(wdf_data_list.content[i][findTextInArray(wdf_data_list, "WCF #")])){
+                    if(month_filter.value == formatMonth(wdf_data_list.content[i][findTextInArray(wdf_data_list, "HAULING DATE")])){
+                        wdf_transaction_sorting.push(wdf_data_list.content[i][findTextInArray(wdf_data_list, "WCF #")]);
+                    }
+                    else if(month_filter.value == "ALL"){
+                        wdf_transaction_sorting.push(wdf_data_list.content[i][findTextInArray(wdf_data_list, "WCF #")]);
+                    }
+                }
+            }
+            console.log(wdf_transaction_sorting)
             for (let i = 1; i < tpf_data_list.content.length; i++) {
-                if (!sf_tpf_transaction_treatment.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "SF #")]) &&
-                month_filter.value == formatMonth(tpf_data_list.content[i][findTextInArray(tpf_data_list, "HAULING DATE")])) {
-                    sf_tpf_transaction_treatment.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "SF #")]);
-                    tpf_transaction_treatment.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "TPF #")]);
+                if(month_filter.value == formatMonth(tpf_data_list.content[i][findTextInArray(tpf_data_list, "HAULING DATE")])){
+                    if (!sf_tpf_transaction_treatment.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "SF #")])) {
+                        sf_tpf_transaction_treatment.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "SF #")]);
+                        tpf_transaction_treatment.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "TPF #")]);
+                    }
+                    if(!done_list_tpf.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")])){
+                        done_list_tpf.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")])
+                    }
                 }
-                else if (!sf_tpf_transaction_treatment.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "SF #")]) &&
-                month_filter.value == "ALL") {
-                    sf_tpf_transaction_treatment.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "SF #")]);
-                    tpf_transaction_treatment.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "TPF #")]);
-                }
-                if (!sf_tpf_wcf_transaction_treatment.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")]) &&
-                month_filter.value == formatMonth(tpf_data_list.content[i][findTextInArray(tpf_data_list, "HAULING DATE")])) {
-                    sf_tpf_wcf_transaction_treatment.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")]);
-                }
-                else if (!sf_tpf_wcf_transaction_treatment.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")]) &&
-                month_filter.value == "ALL") {
-                    sf_tpf_wcf_transaction_treatment.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")]);
-                }
-                if (!wcf_tpf_transaction_sorting.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")]) &&
-                month_filter.value == formatMonth(tpf_data_list.content[i][findTextInArray(tpf_data_list, "HAULING DATE")])) {
-                    wcf_tpf_transaction_sorting.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")]);
-                }
-                else if (!wcf_tpf_transaction_sorting.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")]) &&
-                month_filter.value == "ALL") {
-                    wcf_tpf_transaction_sorting.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")]);
-                }
-                if(month_filter.value == formatMonth(tpf_data_list.content[i][findTextInArray(tpf_data_list, "HAULING DATE")]) &&
-                !done_list_tpf.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")])){
-                    done_list_tpf.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")])
-                }
-                else if(month_filter.value == "ALL" &&
-                !done_list_tpf.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")])){
-                    done_list_tpf.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")])
+                else if(month_filter.value == "ALL"){
+                    if (!sf_tpf_transaction_treatment.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "SF #")])) {
+                        sf_tpf_transaction_treatment.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "SF #")]);
+                        tpf_transaction_treatment.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "TPF #")]);
+                    }
+                    if(!done_list_tpf.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")])){
+                        done_list_tpf.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")])
+                    }
                 }
             }
-            
+            console.log(sf_tpf_transaction_treatment)            
+            console.log(done_list_tpf)            
             pending_treatment_sf = sf_transaction_treatment.filter((element) => !sf_tpf_transaction_treatment.includes(element));
-            pending_treatment_wcf = wcf_transaction_sorting.filter((element) => !wcf_tpf_transaction_sorting.includes(element));
+            pending_treatment_wcf = wcf_transaction_sorting.filter((element) => !done_list_tpf.includes(element));
+            pending_treatment_wdf = wdf_transaction_sorting.filter((element) => !sf_tpf_transaction_treatment.includes(element));
             const finished_treatment = sf_transaction_treatment.filter((element) => sf_tpf_transaction_treatment.includes(element));
-            const filtered_pending_treatment_wcf = wcf_tpf_transaction_sorting.filter(element => !sf_tpf_wcf_transaction_treatment.includes(element));
-
+            const filtered_pending_treatment_wcf = wcf_tpf_transaction_sorting.filter(element => !done_list_tpf.includes(element));
             
             // pending_list
             total_counter_treatment.innerText = pending_treatment_sf.length + pending_treatment_wcf.length + done_list_tpf.length;
-            pending_counter_treatment.innerText = pending_treatment_sf.length + pending_treatment_wcf.length;
+            pending_counter_treatment.innerText = pending_treatment_sf.length + pending_treatment_wcf.length + pending_treatment_wdf.length;
             treated_counter_treatment.innerText = done_list_tpf.length;
             var options = {
-                series: [pending_treatment_sf.length + pending_treatment_wcf.length, done_list_tpf.length],
+                series: [pending_treatment_sf.length + pending_treatment_wcf.length + pending_treatment_wdf.length, done_list_tpf.length],
                 chart: {
                     width: 500, // Set the desired width
                     height: 550, // Set the desired height
@@ -363,6 +360,84 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${findWasteName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")], wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
                             <td>${findTreatmentProcess(wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
                             <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "NET WEIGHT")]}</td>
+                        </tr>
+                        `
+                        data_value_counter += 1;
+                    }
+                }
+            }
+            for(let i = 0; i < pending_treatment_wdf.length; i++){
+                for(let j = 1; j < wdf_data_list.content.length; j++){
+                    if(pending_treatment_wdf[i] == wdf_data_list.content[j][findTextInArray(wdf_data_list, "WCF #")] &&
+                    month_filter.value == formatMonth(wdf_data_list.content[j][findTextInArray(wdf_data_list, "HAULING DATE")])){
+                        var mtf, ltf, client_id, waste_id, weight_data;
+                        for(let k = 1; k < wcf_data_list.content.length; k++){
+                            if(wdf_data_list.content[j][findTextInArray(wdf_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                                if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                    mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                }else{
+                                    ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                    for(let x = 1; x < ltf_data_list.content.length; x++){
+                                        if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                            mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                            break
+                                        }
+                                    }
+                                }
+                                client_id = wcf_data_list.content[k][findTextInArray(wcf_data_list, "CLIENT ID")]
+                                waste_id = wcf_data_list.content[k][findTextInArray(wcf_data_list, "WASTE ID")]
+                                weight_data = wcf_data_list.content[k][findTextInArray(wcf_data_list, "NET WEIGHT")]
+                            }
+                        }
+                        data_value +=`
+                        <tr>
+                            <td>${data_value_counter}</td>
+                            <td>${wdf_data_list.content[j][findTextInArray(wdf_data_list, "WDF #")]}</td>
+                            <td>${mtf}</td>
+                            <td>${date_decoder(wdf_data_list.content[j][findTextInArray(wdf_data_list, "HAULING DATE")])}</td>
+                            <td>${date_decoder(wdf_data_list.content[j][findTextInArray(wdf_data_list, "DISPOSAL DATE")])} /<br> ${time_decoder(wdf_data_list.content[j][findTextInArray(wdf_data_list, "DISPOSAL TIME")])}</td>
+                            <td>${findClientName(client_id)}</td>
+                            <td>${findWasteCode(waste_id)}</td>
+                            <td>${findWasteName(client_id, waste_id)}</td>
+                            <td>${wdf_data_list.content[j][findTextInArray(wdf_data_list, "DESTRUCTION PROCESS")]}</td>
+                            <td>${weight_data}</td>
+                        </tr>
+                        `
+                        data_value_counter += 1;
+                    }
+                    else if(pending_treatment_wdf[i] == wdf_data_list.content[j][findTextInArray(wdf_data_list, "WCF #")] &&
+                    month_filter.value == "ALL"){
+                        var mtf, ltf, client_id, waste_id, weight_data;
+                        for(let k = 1; k < wcf_data_list.content.length; k++){
+                            if(wdf_data_list.content[j][findTextInArray(wdf_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                                if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                    mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                }else{
+                                    ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                    for(let x = 1; x < ltf_data_list.content.length; x++){
+                                        if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                            mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                            break
+                                        }
+                                    }
+                                }
+                                client_id = wcf_data_list.content[k][findTextInArray(wcf_data_list, "CLIENT ID")]
+                                waste_id = wcf_data_list.content[k][findTextInArray(wcf_data_list, "WASTE ID")]
+                                weight_data = wcf_data_list.content[k][findTextInArray(wcf_data_list, "NET WEIGHT")]
+                            }
+                        }
+                        data_value +=`
+                        <tr>
+                            <td>${data_value_counter}</td>
+                            <td>${wdf_data_list.content[j][findTextInArray(wdf_data_list, "WDF #")]}</td>
+                            <td>${mtf}</td>
+                            <td>${date_decoder(wdf_data_list.content[j][findTextInArray(wdf_data_list, "HAULING DATE")])}</td>
+                            <td>${date_decoder(wdf_data_list.content[j][findTextInArray(wdf_data_list, "DISPOSAL DATE")])} /<br> ${time_decoder(wdf_data_list.content[j][findTextInArray(wdf_data_list, "DISPOSAL TIME")])}</td>
+                            <td>${findClientName(client_id)}</td>
+                            <td>${findWasteCode(waste_id)}</td>
+                            <td>${findWasteName(client_id, waste_id)}</td>
+                            <td>${wdf_data_list.content[j][findTextInArray(wdf_data_list, "DESTRUCTION PROCESS")]}</td>
+                            <td>${weight_data}</td>
                         </tr>
                         `
                         data_value_counter += 1;
