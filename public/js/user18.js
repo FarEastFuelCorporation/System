@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const vehicle_response_promise = fetch('https://script.google.com/macros/s/AKfycbw-JCnctX1x1W1ogGbrkhNdIGd9q6bYjy_nvaYeoiaBf7HreB2a1tKJZaJHw2wu4wmpcA/exec');
         const ltf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxBLMvyNDsT9_dlVO4Qc31dI4ErcymUHbzKimOpCZHgbJxip2XxCl7Wk3hJyqcdtrxU/exec');
         const wcf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyBFTBuFZ4PkvwmPi_3Pp_v74DCSEK2VpNy6janIGgaAK-P22wazmmShOKn6iwFbrQn/exec');
-        const tpf_response_promise = fetch('https://script.google.com/macros/s/AKfycbwbKss2XtW5lylCrUe8IC-ZA4ffA5CM5tY6kqIja9t80NXJw2nB8RBOJFWbXQz0hWMadw/exec');
+        const wdf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyLziogBa7p5kKRuOrN0sYCTftYxy0s58ytVyE6Biek5hTjvAWbu3E3y7qbIaM5Dj1kqg/exec');
         const wtf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxYB-N38emc6GUCKuuy-gGVRHQm4NoYgRRayHf56BwjiAPwsBKZ0llHjLAsW7Vt3j9I/exec');
         const stf_response_promise = fetch('https://script.google.com/macros/s/AKfycbytp1dpaOC_8sf0YsO2U2iJRiUjk791Pg-nA0zVYmxyE9zd0pc8Hlfu4P_-KalUyNLgDw/exec');
         const qlf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyFU_skru2tnyEiv8I5HkpRCXbUlQb5vlJUm8Le0nZBCvfZeFkQPd2Naljs5CZY41I17w/exec');
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             vehicle_response,
             ltf_response,
             wcf_response,
-            tpf_response,
+            wdf_response,
             wtf_response,
             stf_response,
             qlf_response,
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             vehicle_response_promise,
             ltf_response_promise,
             wcf_response_promise,
-            tpf_response_promise,
+            wdf_response_promise,
             wtf_response_promise,
             stf_response_promise,
             qlf_response_promise,
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const vehicle_data_list  = await vehicle_response.json();
         const ltf_data_list  = await ltf_response.json();
         const wcf_data_list  = await wcf_response.json();
-        const tpf_data_list  = await tpf_response.json();
+        const wdf_data_list  = await wdf_response.json();
         const wtf_data_list  = await wtf_response.json();
         const stf_data_list  = await stf_response.json();
         const qlf_data_list  = await qlf_response.json();
@@ -530,12 +530,13 @@ document.addEventListener('DOMContentLoaded', async function() {
         const form_tab_warehouse_inventory = warehouse_inventory.querySelector("#form_tab")
         const search_wtf_form_no_warehouse_inventory = warehouse_inventory.querySelector("#search_wtf_form_no")
         const search_wtf_form_no_button_warehouse_inventory = warehouse_inventory.querySelector("#search_wtf_form_no_button")
+        const item_container_warehouse_inventory = warehouse_inventory.querySelector("#item_container")
 
         // FORM GENERATOR
         // wdf_data_list
         const wdf_form_no = document.getElementById("wdf_form_no");
-        var last_row = tpf_data_list.content.length -1;
-        var data_info = tpf_data_list.content[last_row][findTextInArray(tpf_data_list, "WTF #")];
+        var last_row = wdf_data_list.content.length -1;
+        var data_info = wdf_data_list.content[last_row][findTextInArray(wdf_data_list, "WDF #")];
         var data_counter;
         if(last_row == 0){
             data_counter = 0;
@@ -546,7 +547,22 @@ document.addEventListener('DOMContentLoaded', async function() {
         var year = new Date().getFullYear();
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
         data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-        wtf_form_no.value = `WTF${year}${month}${data_counter}`;
+        wdf_form_no.value = `WDF${year}${month}${data_counter}`;
+
+        var pending_wtf = [];
+        var done_wtf = [];
+        for(let x = 1; x < wdf_data_list.content.length; x++){
+            wtf_no_wtf = wdf_data_list.content[x][findTextInArray(wdf_data_list, "WTF #")]
+            if(!done_wtf.includes(wtf_no_wtf)){
+                done_wtf.push(wtf_no_wtf)
+            }
+        }
+        for(let x = 1; x < wtf_data_list.content.length; x++){
+            wtf_no_wtf = wtf_data_list.content[x][findTextInArray(wtf_data_list, "WTF #")]
+            if(!done_wtf.includes(wtf_no_wtf)){
+                pending_wtf.push(wtf_no_wtf)
+            }
+        }
 
         var inventory_data = "";
         var inventory_data_counter = 1;
@@ -560,89 +576,93 @@ document.addEventListener('DOMContentLoaded', async function() {
             inventory_data = ""
             const filter_option = warehouse_inventory.querySelector("#filter_option")
             const filter_info = warehouse_inventory.querySelector("#filter_info")
-            for(let x = 1; x < wtf_data_list.content.length; x++){
-                var column_name = "";
-                for(let y = 0; y < wtf_data_list.content[0].length; y++){
-                    if(filter_option.value == wtf_data_list.content[0][y]){
-                        column_name = y
-                        break
-                    }
-                }
-                if(wtf_data_list.content[x][column_name] == filter_info.value){
-                    var mtf = "";
-                    var ltf = "";
-                    for(let k = 1; k < wcf_data_list.content.length; k++){
-                        if(wtf_data_list.content[x][findTextInArray(wtf_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
-                            if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
-                                mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
-                            }else{
-                                ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
-                                for(let x = 1; x < ltf_data_list.content.length; x++){
-                                    if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
-                                        mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
-                                        break
+            for(let i = 0; i < pending_wtf.length; i++){
+                for(let x = 1; x < wtf_data_list.content.length; x++){
+                    if(pending_wtf[i] == wtf_data_list.content[x][findTextInArray(wtf_data_list, "WTF #")]){
+                        var column_name = "";
+                        for(let y = 0; y < wtf_data_list.content[0].length; y++){
+                            if(filter_option.value == wtf_data_list.content[0][y]){
+                                column_name = y
+                                break
+                            }
+                        }
+                        if(wtf_data_list.content[x][column_name] == filter_info.value){
+                            var mtf = "";
+                            var ltf = "";
+                            for(let k = 1; k < wcf_data_list.content.length; k++){
+                                if(wtf_data_list.content[x][findTextInArray(wtf_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                                    if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                        mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                    }else{
+                                        ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                        for(let x = 1; x < ltf_data_list.content.length; x++){
+                                            if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                                mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                                break
+                                            }
+                                        }
                                     }
                                 }
                             }
+                            inventory_data += 
+                            `
+                            <tr>
+                                <td>${inventory_data_counter}</td>
+                                <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "WTF #")]}</td>
+                                <td>${mtf}</td>
+                                <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "GATE PASS #")]}</td>
+                                <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "STEAM #")]}</td>
+                                <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "WAREHOUSE #")]}</td>
+                                <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "AREA")]}</td>
+                                <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "SECTION")]}</td>
+                                <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "LEVEL")]}</td>
+                                <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "PALLET #")]}</td>
+                                <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "QUANTITY")]}</td>
+                                <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "UNIT")]}</td>
+                                <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "DESCRIPTION")]}</td>
+                            </tr>
+                            `
+                            inventory_data_counter += 1;
                         }
-                    }
-                    inventory_data += 
-                    `
-                    <tr>
-                        <td>${inventory_data_counter}</td>
-                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "WTF #")]}</td>
-                        <td>${mtf}</td>
-                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "GATE PASS #")]}</td>
-                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "STEAM #")]}</td>
-                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "WAREHOUSE #")]}</td>
-                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "AREA")]}</td>
-                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "SECTION")]}</td>
-                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "LEVEL")]}</td>
-                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "PALLET #")]}</td>
-                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "QUANTITY")]}</td>
-                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "UNIT")]}</td>
-                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "DESCRIPTION")]}</td>
-                    </tr>
-                    `
-                    inventory_data_counter += 1;
-                }
-                else if(filter_info.value == ""){
-                    var mtf = "";
-                    var ltf = "";
-                    for(let k = 1; k < wcf_data_list.content.length; k++){
-                        if(wtf_data_list.content[x][findTextInArray(wtf_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
-                            if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
-                                mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
-                            }else{
-                                ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
-                                for(let x = 1; x < ltf_data_list.content.length; x++){
-                                    if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
-                                        mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
-                                        break
+                        else if(filter_info.value == ""){
+                            var mtf = "";
+                            var ltf = "";
+                            for(let k = 1; k < wcf_data_list.content.length; k++){
+                                if(wtf_data_list.content[x][findTextInArray(wtf_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                                    if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                        mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                    }else{
+                                        ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                        for(let x = 1; x < ltf_data_list.content.length; x++){
+                                            if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                                mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                                break
+                                            }
+                                        }
                                     }
                                 }
                             }
+                            inventory_data += 
+                            `
+                            <tr>
+                                <td>${inventory_data_counter}</td>
+                                <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "WTF #")]}</td>
+                                <td>${mtf}</td>
+                                <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "GATE PASS #")]}</td>
+                                <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "STEAM #")]}</td>
+                                <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "WAREHOUSE #")]}</td>
+                                <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "AREA")]}</td>
+                                <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "SECTION")]}</td>
+                                <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "LEVEL")]}</td>
+                                <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "PALLET #")]}</td>
+                                <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "QUANTITY")]}</td>
+                                <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "UNIT")]}</td>
+                                <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "DESCRIPTION")]}</td>
+                            </tr>
+                            `
+                            inventory_data_counter += 1;
                         }
                     }
-                    inventory_data += 
-                    `
-                    <tr>
-                        <td>${inventory_data_counter}</td>
-                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "WTF #")]}</td>
-                        <td>${mtf}</td>
-                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "GATE PASS #")]}</td>
-                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "STEAM #")]}</td>
-                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "WAREHOUSE #")]}</td>
-                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "AREA")]}</td>
-                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "SECTION")]}</td>
-                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "LEVEL")]}</td>
-                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "PALLET #")]}</td>
-                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "QUANTITY")]}</td>
-                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "UNIT")]}</td>
-                        <td>${wtf_data_list.content[x][findTextInArray(wtf_data_list, "DESCRIPTION")]}</td>
-                    </tr>
-                    `
-                    inventory_data_counter += 1;
                 }
             }
             warehouse_inventory_list.insertAdjacentHTML("beforeend", inventory_data)
@@ -655,6 +675,59 @@ document.addEventListener('DOMContentLoaded', async function() {
                 form_tab_warehouse_inventory.style.display = "none"
             }
         })
+
+        search_wtf_form_no_button_warehouse_inventory.addEventListener("click", () => {
+            for(let x = 1; x < wtf_data_list.content.length; x++){
+                wtf_no_wtf = wtf_data_list.content[x][findTextInArray(wtf_data_list, "WTF #")]
+                if(search_wtf_form_no_warehouse_inventory.value == wtf_no_wtf){
+                    item_container_warehouse_inventory.style.display = "block"
+                }
+            }
+        })
+
+        // search_wtf_form_no_button_warehouse_inventory.addEventListener("click", () => {
+        //     for(b=0; b<=newElements_logistics.length; b++){
+        //         for(a=1; a < mtf_data_list.content.length; a++){
+        //             if(newElements_logistics[b] == mtf_data_list.content[a][findTextInArray(mtf_data_list, "MTF #")]){
+        //                 var data_value;
+        //                 if(search_mtf_form_no.value == mtf_data_list.content[a][findTextInArray(mtf_data_list, "MTF #")]){
+        //                     data_value =`
+        //                     MTF #: ${mtf_data_list.content[a][findTextInArray(mtf_data_list, "MTF #")]}<br>
+        //                     CLIENT: ${findClientName(mtf_data_list.content[a][findTextInArray(mtf_data_list, "CLIENT ID")])}<br>
+        //                     WASTE CODE: ${findWasteCode(mtf_data_list.content[a][findTextInArray(mtf_data_list, "WASTE ID")])}<br>
+        //                     WASTE DESCRIPTION: ${findWasteName(mtf_data_list.content[a][findTextInArray(mtf_data_list, "CLIENT ID")], mtf_data_list.content[a][findTextInArray(mtf_data_list, "WASTE ID")])}<br>
+        //                     HAULING DATE: ${date_decoder(mtf_data_list.content[a][findTextInArray(mtf_data_list, "HAULING DATE")])}<br>
+        //                     HAULING TIME: ${time_decoder(mtf_data_list.content[a][findTextInArray(mtf_data_list, "HAULING TIME")])}<br>
+        //                     TYPE OF VEHICLE: ${mtf_data_list.content[a][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")]}<br>
+        //                     REMARKS: ${mtf_data_list.content[a][findTextInArray(mtf_data_list, "REMARKS")]}<br>
+        //                     SUBMITTED BY: ${mtf_data_list.content[a][findTextInArray(mtf_data_list, "SUBMITTED BY")]}<br>
+        //                     `
+        //                     mtf_form_no.value = mtf_data_list.content[a][findTextInArray(mtf_data_list, "MTF #")];
+        //                     client.value = findClientName(mtf_data_list.content[a][findTextInArray(mtf_data_list, "CLIENT ID")]);
+        //                     type_of_waste.value = mtf_data_list.content[a][findTextInArray(mtf_data_list, "WASTE ID")];
+        //                     hauling_date.value = date_decoder(mtf_data_list.content[a][findTextInArray(mtf_data_list, "HAULING DATE")]);
+        //                     hauling_time.value = time_decoder(mtf_data_list.content[a][findTextInArray(mtf_data_list, "HAULING TIME")]);
+        //                     weight.value = mtf_data_list.content[a][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")];
+        //                     ltf_data.style.display = "block";
+        //                 }        
+        //                 if(data_value == undefined){
+        //                     search_mtf_result.innerHTML = `
+        //                     <div class="search_ltf_result">
+        //                     <h2>INFORMATION</h2>
+        //                     No Data Found
+        //                     </div><br>`            
+        //                 }
+        //                 else{
+        //                     search_mtf_result.innerHTML = `
+        //                     <div class="search_ltf_result">
+        //                     <h2>INFORMATION</h2>
+        //                     ${data_value}
+        //                     </div><br>`
+        //                 }
+        //             }  
+        //         }  
+        //     }  
+        // });
 
         // supplies_transaction
         // FORM GENERATOR
