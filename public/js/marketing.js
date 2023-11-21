@@ -1125,7 +1125,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 table_row.querySelectorAll("td")[7].innerText = tf_vat_calculation.value;
                 row = row + 1;
                 const table_row2 = table_data_quotation_form.querySelectorAll("tr")[row];
-                table_row2.querySelectorAll("td")[1].innerText = `(AREA OH HAUL - ${transportation_fee.value})`;
+                table_row2.querySelectorAll("td")[1].innerText = `(AREA OF HAUL - ${transportation_fee.value})`;
                 row = row + 1;
                 counter = counter + 1;
             }
