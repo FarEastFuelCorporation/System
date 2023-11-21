@@ -508,7 +508,8 @@ function addConfirmationListener(form, validateFunction = null) {
           return; // Do not submit if validation fails
         }
       }
-
+      
+      spinner.style.display = "block";
       form.submit(); // Use the form's submit() method
     } else {
       // If user clicks Cancel, do nothing or perform other actions
@@ -565,10 +566,9 @@ function customValidation3() {
 function customValidation4() {
   const available_funds = parseFloat(document.querySelector('#budget_form #available_funds').value);
   const budget = parseFloat(document.querySelector('#budget_form #budget').value);
-  console.log("🚀 ~ file: main.js:509 ~ customValidation4 ~ trucking_fund:", trucking_fund)
   
   if (budget > available_funds) {
-    alert('Invalid Transation! Insufficient Funds.');
+    alert('Invalid Transaction! Insufficient Funds.');
     
     return false;
   }
@@ -881,3 +881,29 @@ function formatMonth(dateString) {
   return "Invalid Month";
   }
 }
+
+// const forms_input = document.querySelectorAll('form'); // Select the spinner globally
+// const spinner = document.querySelector('.spinner'); // Select the spinner globally
+
+// forms_input.forEach(form => {
+//   const submitBtn = form.querySelector('button[type="submit"]');
+
+//   submitBtn.addEventListener('click', (event) => {
+//       // Prevent the default form submission
+//       event.preventDefault();
+
+//       // Show the spinner
+//       spinner.style.display = "block";
+
+//       // You may want to perform additional actions here, such as AJAX requests or form validation.
+
+//       // For the sake of example, here's a simulated successful form submission
+//       setTimeout(() => {
+//           // Hide the spinner (simulated delay of 2 seconds)
+//           spinner.style.display = "none";
+
+//           // Submit the form (optional, remove if you're using AJAX)
+//           form.submit();
+//       }, 2000);
+//   });
+// });

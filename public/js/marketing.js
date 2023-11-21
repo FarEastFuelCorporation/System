@@ -1171,24 +1171,28 @@ document.addEventListener('DOMContentLoaded', async function() {
             if(with_moa_quotation_form.value == "WITH MOA"){
                 validity_quotation_form.classList.remove("disabled")
                 validity_container_quotation_form.classList.remove("disabled")
+                validity_quotation_form.setAttribute("required", "true");
             }
         })
         without_moa_quotation_form.addEventListener("click", () => {
             if(without_moa_quotation_form.value == "WITHOUT MOA"){
                 validity_quotation_form.classList.add("disabled")
                 validity_container_quotation_form.classList.add("disabled")
+                validity_quotation_form.removeAttribute("required");
             }
         })
         with_moa_quotation_form2.addEventListener("click", () => {
             if(with_moa_quotation_form2.value == "WITH MOA"){
                 validity_quotation_form2.classList.remove("disabled")
                 validity_container_quotation_form2.classList.remove("disabled")
+                validity_quotation_form2.setAttribute("required", "true");
             }
         })
         without_moa_quotation_form2.addEventListener("click", () => {
             if(without_moa_quotation_form2.value == "WITHOUT MOA"){
                 validity_quotation_form2.classList.add("disabled")
                 validity_container_quotation_form2.classList.add("disabled")
+                validity_quotation_form2.removeAttribute("required"); 
             }
         })
 
