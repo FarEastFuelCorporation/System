@@ -367,23 +367,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var data2_value_counter = 1;
         for(let j = 1; j < vehicle_data_list.content.length; j++){
             var vehicle_status_logistics = `AVAILABLE`;
-            for(let k = 1; k < vehicle_log_data_list.content.length; k++){
-                if(vehicle_data_list.content[j][findTextInArray(vehicle_data_list, "PLATE #")] == vehicle_log_data_list.content[k][findTextInArray(vehicle_log_data_list, "PLATE #")]){
-                    vehicle_status_logistics = vehicle_log_data_list.content[k][findTextInArray(vehicle_log_data_list, "STATUS")];
-                    if(vehicle_status_logistics == "ON HAUL"){
-                        on_hauling_vehicle_counter_logistics += 1
-                    }
-                    if(vehicle_status_logistics == "AVAILABLE"){
-                        on_hauling_vehicle_counter_logistics -= 1
-                    }
-                    else if(vehicle_status_logistics == "UNDER MAINTENANCE"){
-                        under_maintenance_vehicle_counter_logistics += 1
-                    }
-                    else if(vehicle_status_logistics == "FOR MAINTENANCE"){
-                        for_maintenance_vehicle_counter_logistics += 1
-                    }
-                }
-            }
+
             data2_value +=`
             <tr>
                 <td>${data2_value_counter}</td>
@@ -711,8 +695,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         }
         total_vehicle_vehicle_list_section.innerHTML = total_vehicle_counter_vehicle_list_section;
-        available_vehicle_vehicle_list_section.innerHTML = total_vehicle_counter_vehicle_list_section - (for_maintenance_vehicle_counter_logistics + under_maintenance_vehicle_counter_logistics + on_hauling_vehicle_counter_logistics) ;
-        on_hauling_vehicle_vehicle_list_section.innerHTML = on_hauling_vehicle_counter_logistics;
+        available_vehicle_vehicle_list_section.innerHTML = total_vehicle_counter_vehicle_list_section - (for_maintenance_vehicle_counter_logistics + under_maintenance_vehicle_counter_logistics + newElements2_logistics.length) ;
+        on_hauling_vehicle_vehicle_list_section.innerHTML = newElements2_logistics.length;
         under_maintenance_vehicle_vehicle_list_section.innerHTML = under_maintenance_vehicle_counter_logistics;
         for_maintenance_vehicle_vehicle_list_section.innerHTML = for_maintenance_vehicle_counter_logistics;
         
