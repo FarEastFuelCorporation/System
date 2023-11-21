@@ -468,8 +468,72 @@
             </section>
             <!-- warehouse_inventory -->
             <section id="warehouse_inventory">
+                <h2>WAREHOUSE INVENTORY</h2>
+                <div>
+                    <label class="d-flex gap-3">
+                        <button type="button" id="withdrawal_form_button" class="form-control fw-bold fs-3 bg-success text-white" style="width: 50%;">
+                            DISPOSAL FORM
+                        </button>
+                    </label>
+                </div><br>
+                <div id="form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
+                    <form action="https://script.google.com/macros/s/AKfycbxz7liNGsSst5WXOF2e-GY9eXP0QJUS6VXffEMStQct_0nC9bOPrn6VrdFRJ70Wqs54/exec" method="post">
+                        <input type="hidden" name="user" id="user">
+                        <input type="hidden" name="iid_counter" id="iid_counter" value="0">
+                        <div>
+                            <div>
+                                <label for="stf_form_no">
+                                    <i class="fa-solid fa-list-ol"></i>
+                                    STF #
+                                </label><br>
+                                <div class="form">
+                                    <input type="text" id="stf_form_no" name="stf_form_no" autocomplete="off" class="form-control" readonly>
+                                </div>
+                            </div><br>
+                            <div>
+                                <label for="search_sf_wcf_form_no">
+                                    <i class="fa-solid fa-list-ol"></i>
+                                    Search WSF #
+                                </label>
+                                <div class="sf_form" style="display: flex; gap: 20px;">
+                                    <div class="form">
+                                        <input type="text" id="search_wsf_form_no" autocomplete="off" name="search_wsf_form_no" class="form-control">
+                                    </div>
+                                    <button id="search_wsf_form_no_button" class="form-control" type="button" style="height: 60px; width: 60px;">
+                                        <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
+                                    </button>
+                                    <button id="clear_wsf_form_no_button" type="button" class="form-control" style="height: 60px; width: 60px;">
+                                        <i class="fa-solid fa-rectangle-xmark" style="color: #ffffff;"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="item_container">
+
+                        </div>
+                        <div id="pick_up_by_container" class="wrapper" style="display: none;">
+                            <label for="pick_up_by">
+                                <i class="fa-solid fa-list-ol"></i>
+                                Pick-Up By
+                            </label><br>
+                            <div class="search_input" id="search_employee">
+                                <input type="text" autocomplete="off" name="pick_up_by" id="pick_up_by" class="form-control" required placeholder="Type to Search Employee Name...">
+                                <div class="autocom_box">
+                                </div>
+                                <div class="icon"><i class="fas fa-search"></i></div>
+                            </div>
+                        </div>
+                        <div class="buttons">
+                            <button type="submit" id="submit_btn" class="form-control" >
+                                Submit
+                            </button>
+                            <button type="reset" id="reset" class="form-control" >
+                                Clear
+                            </button>
+                        </div> 
+                    </form>
+                </div>
                 <div class="section_container">
-                    <h2>WAREHOUSE INVENTORY</h2><br>
                     <div style="display: flex; gap: 20px;">
                         <select name="filter_option" id="filter_option" class="form-control" style="width: auto; border: 3px solid #198754;">
                             <option value="">SELECT</option>
