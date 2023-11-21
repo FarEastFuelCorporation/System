@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const vehicle_response_promise = fetch('https://script.google.com/macros/s/AKfycbw-JCnctX1x1W1ogGbrkhNdIGd9q6bYjy_nvaYeoiaBf7HreB2a1tKJZaJHw2wu4wmpcA/exec');
         const ltf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxBLMvyNDsT9_dlVO4Qc31dI4ErcymUHbzKimOpCZHgbJxip2XxCl7Wk3hJyqcdtrxU/exec');
         const wcf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyBFTBuFZ4PkvwmPi_3Pp_v74DCSEK2VpNy6janIGgaAK-P22wazmmShOKn6iwFbrQn/exec');
+        const tpf_response_promise = fetch('https://script.google.com/macros/s/AKfycbwbKss2XtW5lylCrUe8IC-ZA4ffA5CM5tY6kqIja9t80NXJw2nB8RBOJFWbXQz0hWMadw/exec');
         const wtf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxYB-N38emc6GUCKuuy-gGVRHQm4NoYgRRayHf56BwjiAPwsBKZ0llHjLAsW7Vt3j9I/exec');
         const stf_response_promise = fetch('https://script.google.com/macros/s/AKfycbytp1dpaOC_8sf0YsO2U2iJRiUjk791Pg-nA0zVYmxyE9zd0pc8Hlfu4P_-KalUyNLgDw/exec');
         const qlf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyFU_skru2tnyEiv8I5HkpRCXbUlQb5vlJUm8Le0nZBCvfZeFkQPd2Naljs5CZY41I17w/exec');
@@ -26,6 +27,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             vehicle_response,
             ltf_response,
             wcf_response,
+            tpf_response,
             wtf_response,
             stf_response,
             qlf_response,
@@ -43,6 +45,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             vehicle_response_promise,
             ltf_response_promise,
             wcf_response_promise,
+            tpf_response_promise,
             wtf_response_promise,
             stf_response_promise,
             qlf_response_promise,
@@ -61,6 +64,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const vehicle_data_list  = await vehicle_response.json();
         const ltf_data_list  = await ltf_response.json();
         const wcf_data_list  = await wcf_response.json();
+        const tpf_data_list  = await tpf_response.json();
         const wtf_data_list  = await wtf_response.json();
         const stf_data_list  = await stf_response.json();
         const qlf_data_list  = await qlf_response.json();
@@ -517,10 +521,32 @@ document.addEventListener('DOMContentLoaded', async function() {
                 </div><br>`
             }
         })
-
+        
+        // wdf_data_list
         const warehouse_inventory = document.getElementById("warehouse_inventory")
         const warehouse_inventory_list = warehouse_inventory.querySelector("#warehouse_inventory_list")
         const search_filter_options = warehouse_inventory.querySelector("#search_filter_options")
+        const disposal_form_button_warehouse_inventory = warehouse_inventory.querySelector("#disposal_form_button")
+        const form_tab_warehouse_inventory = warehouse_inventory.querySelector("#form_tab")
+        const search_wtf_form_no_warehouse_inventory = warehouse_inventory.querySelector("#search_wtf_form_no")
+        const search_wtf_form_no_button_warehouse_inventory = warehouse_inventory.querySelector("#search_wtf_form_no_button")
+
+        // FORM GENERATOR
+        // wdf_data_list
+        const wdf_form_no = document.getElementById("wdf_form_no");
+        var last_row = tpf_data_list.content.length -1;
+        var data_info = tpf_data_list.content[last_row][findTextInArray(tpf_data_list, "WTF #")];
+        var data_counter;
+        if(last_row == 0){
+            data_counter = 0;
+        }
+        else{
+            data_counter = data_info.substring(9,12);
+        }
+        var year = new Date().getFullYear();
+        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        wtf_form_no.value = `WTF${year}${month}${data_counter}`;
 
         var inventory_data = "";
         var inventory_data_counter = 1;
@@ -621,6 +647,14 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             warehouse_inventory_list.insertAdjacentHTML("beforeend", inventory_data)
         }
+
+        disposal_form_button_warehouse_inventory.addEventListener("click", () => {
+            if(form_tab_warehouse_inventory.style.display == "none"){
+                form_tab_warehouse_inventory.style.display = "block"
+            } else{
+                form_tab_warehouse_inventory.style.display = "none"
+            }
+        })
 
         // supplies_transaction
         // FORM GENERATOR

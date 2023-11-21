@@ -571,7 +571,7 @@ nav{
 #fund_transfer_form,
 #disposal_warehouse,
 #supplies_inventory,
-#warehouse_inventory,
+#warehouse_dashboard,
 #supplies_transaction,
 #purchase_request_form,
 #supplies_warehouse,
@@ -3552,6 +3552,219 @@ input:disabled {
 }
 
 #supplies_inventory form #clear_wcf_form_no_button
+{
+    background-color: green;
+}
+
+/* warehouse_inventory section starts here */
+#warehouse_inventory form .form
+{
+    max-width: 250px !important;
+}
+
+#warehouse_inventory form .wcf_form
+{
+    display: flex;
+    gap: 20px;
+}
+
+#warehouse_inventory form input,
+#warehouse_inventory form select
+{
+    border: 3px solid green !important;
+}
+
+#warehouse_inventory form label,
+#warehouse_inventory form select,
+#warehouse_inventory form input
+{
+    font-size: 20px !important;
+}
+
+#warehouse_inventory form .search_wcf_result,
+#warehouse_inventory form .search_ltf_result
+{
+    width: 100%;
+    padding: 20px;
+    background-color: white;
+    border: 3px solid green;
+    font-size: 20px !important;
+}
+
+#warehouse_inventory form .search_input 
+{
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 0px 1px 5px 3px rgba(0,0,0,0.12);
+}
+
+#warehouse_inventory form .search_input input
+{
+    height: 55px;
+    width: 100%;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    padding: 0 60px 0 20px;
+    font-size: 20px;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+#warehouse_inventory form .search_input .icon
+{
+    height: 55px;
+    width: 55px;
+    line-height: 55px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    text-align: center;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#warehouse_inventory form .search_input .autocom_box
+{
+    padding: 0px;
+    max-height: 280px;
+    overflow-y: auto;
+    opacity: 0;
+    pointer-events: none;
+}
+
+#warehouse_inventory form .search_input.active .autocom_box
+{
+    padding: 10px 8px;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#warehouse_inventory form .search_input .autocom_box li
+{
+    list-style: none;
+    padding: 8px 12px;
+    width: 100%;
+    cursor: default;
+    border-radius: 3px;
+    display: none;
+}
+
+#warehouse_inventory form .search_input.active .autocom_box li
+{
+    display: block;
+}
+
+#warehouse_inventory form .search_input .autocom_box li:hover
+{
+    background-color: #efefef;
+}
+
+#warehouse_inventory form .plate_and_driver
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+}
+
+#warehouse_inventory form .time_in_out
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+}
+
+#warehouse_inventory form .time_in_out label
+{
+    width: 100%;
+}
+
+#warehouse_inventory form .time_in_out input
+{
+    font-size: 25px !important;
+}
+
+#warehouse_inventory form .items
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 20px;
+    width: 100%;
+}
+
+#warehouse_inventory form #wcf_data,
+#warehouse_inventory form #wcf_data2
+{
+    display: none;
+}
+
+#warehouse_inventory form .add_item
+{
+    display: flex;
+    width: 100%;
+    position: relative;
+}
+
+#warehouse_inventory form .item_buttons
+{
+    position: absolute;
+    right: 0;
+    display: flex;
+}
+
+#warehouse_inventory form #add_item_button
+{
+    max-width: 60px !important;
+    background-color: green;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    border-radius: 60px;
+    text-align: center;
+}
+
+#warehouse_inventory form #remove_item_button
+{
+    max-width: 60px !important;
+    background-color: red;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    border-radius: 60px;
+    text-align: center;
+    display: none;
+}
+
+#warehouse_inventory form .buttons
+{
+    display: flex;
+    gap: 20px;
+    margin-top: 50px;
+}
+
+#warehouse_inventory form #submit,
+#warehouse_inventory form button
+{
+    max-width: 200px !important;
+    background-color: green;
+    font-size: 30px;
+    font-weight: bold;
+    color: black;
+}
+
+#warehouse_inventory form #reset
+{
+    max-width: 200px !important;
+    background-color: green;
+    font-size: 30px;
+    font-weight: bold;
+    color: black;
+}
+
+#warehouse_inventory form #clear_wcf_form_no_button
 {
     background-color: green;
 }
