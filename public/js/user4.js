@@ -1023,8 +1023,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     else if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023018"){
                                         if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")] == "W20230003"){
                                             var new_waste_name = ""
+                                            var pull_out_form
                                             for(let a = 1; a < wcf_data_list.content.length; a++){
                                                 if(wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")] == tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")]){
+                                                    pull_out_form = wcf_data_list.content[a][findTextInArray(wcf_data_list, "PULL OUT FORM #")]
                                                     if((wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).substring(0,3) == "MTF"){
                                                         
                                                     }
@@ -1434,8 +1436,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     else if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023018"){
                                         if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")] == "W20230003"){
                                             var new_waste_name = ""
+                                            var pull_out_form
                                             for(let a = 1; a < wcf_data_list.content.length; a++){
                                                 if(wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")] == tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")]){
+                                                    pull_out_form = wcf_data_list.content[a][findTextInArray(wcf_data_list, "PULL OUT FORM #")]
                                                     if((wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).substring(0,3) == "MTF"){
                                                         
                                                     }
@@ -1518,8 +1522,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
                                             <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
                                             <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
-                                            <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
-                                            <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
                                             `
                                         }
                                     }
@@ -1845,8 +1847,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     else if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023018"){
                                         if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")] == "W20230003"){
                                             var new_waste_name = ""
+                                            var pull_out_form
                                             for(let a = 1; a < wcf_data_list.content.length; a++){
                                                 if(wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")] == tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")]){
+                                                    pull_out_form = wcf_data_list.content[a][findTextInArray(wcf_data_list, "PULL OUT FORM #")]
                                                     if((wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).substring(0,3) == "MTF"){
                                                         
                                                     }
