@@ -508,18 +508,23 @@ document.addEventListener('DOMContentLoaded', async function() {
                         client_id_input.forEach((data) => {
                             data.value = client_id
                         })
+                        var is_there_quotation = false;
                         for (let x = 1; x < qlf_data_list.content.length; x++) {
                             if (client_id == qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")] && qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")] !== "TRIP") {
+                                is_there_quotation = true;
                                 var data = `
                                 <option value="${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]}">${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")]}</option>
                                 `
                                 type_of_waste.insertAdjacentHTML("beforeend", data)
                             }
                         }
-                        var opt_data = `
-                        <option value="ASSORTED WASTE">ASSORTED WASTE</option>
-                        `
-                        type_of_waste.insertAdjacentHTML("beforeend", opt_data)
+                        if(is_there_quotation){
+                            var opt_data = `
+                            <option value="W2023100">ASSORTED NON-HAZARDOUS WASTE</option>
+                            <option value="W2023200">ASSORTED HAZARDOUS WASTE</option>
+                            `
+                            type_of_waste.insertAdjacentHTML("beforeend", opt_data)
+                        }
                     }
                 }              
             }
