@@ -62,17 +62,20 @@ document.addEventListener('DOMContentLoaded', async function() {
         const finished_list_treatment = document.querySelector("#treatment_process_dashboard #finished_list");
         const month_filter = document.getElementById("month_filter");
         let pending_treatment_sf = [];
+        let pending_treatment_sf_wcf = [];
         let pending_treatment_wcf = [];
-        let pending_treatment_wtf = [];
-        let wcf_transaction_sorting = []; // Variable containing existing elements
-        let wcf_tpf_transaction_sorting = []; // Variable containing existing elements
-        let wdf_transaction_sorting = []; // Variable containing existing elements
-        let wdf_tpf_transaction_sorting = []; // Variable containing existing elements
-        let sf_transaction_treatment = []; // Variable containing existing elements
-        let tpf_transaction_treatment = []; // Variable containing existing elements
-        let sf_tpf_transaction_treatment = []; // Variable containing existing elements
-        let sf_tpf_wcf_transaction_treatment = []; // Variable containing existing elements
-        let done_list_tpf = []; // Variable containing existing elements
+        let pending_treatment_wdf = [];
+        let pending_treatment_wdf_wcf = [];
+        let wcf_transaction_wcf = [];
+        let sf_transaction_sf = [];
+        let wcf_transaction_sf = [];
+        let wdf_transaction_wdf = [];
+        let wcf_transaction_wdf = [];
+        let wcf_done_list_tpf = [];
+        let sf_wdf_done_list_tpf = [];
+        let finished_treatment = [];
+
+
         
         function getCurrentMonthName() {
             const months = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
@@ -86,94 +89,83 @@ document.addEventListener('DOMContentLoaded', async function() {
         generatePending();
         function generatePending(){
             pending_treatment_sf = [];
+            pending_treatment_sf_wcf = [];
             pending_treatment_wcf = [];
-            pending_treatment_wtf = [];
-            wcf_transaction_sorting = [];
-            wcf_tpf_transaction_sorting = [];
-            wdf_transaction_sorting = [];
-            wdf_tpf_transaction_sorting = [];
-            sf_transaction_treatment = [];
-            tpf_transaction_treatment = [];
-            sf_tpf_transaction_treatment = [];
-            sf_tpf_wcf_transaction_treatment = [];
-            done_list_tpf = [];
+            pending_treatment_wdf = [];
+            pending_treatment_wdf_wcf = [];
+            wcf_transaction_wcf = [];
+            sf_transaction_sf = [];
+            wcf_transaction_sf = [];
+            wdf_transaction_wdf = [];
+            wcf_transaction_wdf = [];
+            wcf_done_list_tpf = [];
+            sf_wdf_done_list_tpf = [];
+            finished_treatment = [];
     
             // wcf to tpf
             for (let i = 1; i < wcf_data_list.content.length; i++) {
-                if(wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] !== "SORTING" &&
-                wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] !== "WAREHOUSE" &&
-                wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] !== "ACCOUNTING" &&
-                !wcf_transaction_sorting.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")])){
-                    if(month_filter.value == formatMonth(wcf_data_list.content[i][findTextInArray(wcf_data_list, "HAULING DATE")])){
-                        wcf_transaction_sorting.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]);
-                    }
-                    else if(month_filter.value == "ALL"){
-                        wcf_transaction_sorting.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]);
+                if(month_filter.value == formatMonth(wcf_data_list.content[i][findTextInArray(wcf_data_list, "HAULING DATE")])){
+                    if(wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] !== "SORTING" &&
+                    wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] !== "WAREHOUSE" &&
+                    wcf_data_list.content[i][findTextInArray(wcf_data_list, "SUBMIT TO")] !== "ACCOUNTING" &&
+                    !wcf_transaction_wcf.includes(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")])){
+                        wcf_transaction_wcf.push(wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]);
                     }
                 }
             }
             // sf to tpf
             for (let i = 1; i < sf_data_list.content.length; i++) {
-                if(sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE ID")] !== "DISCREPANCY"){
-                    if(sf_data_list.content[i][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")] !== "FOR STORAGE" &&
-                    sf_data_list.content[i][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")] !== "RECYCLING" &&
-                    sf_data_list.content[i][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")] !== "CRUSHING" &&
-                    !sf_transaction_treatment.includes(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")])){
-                        if (month_filter.value == formatMonth(sf_data_list.content[i][findTextInArray(sf_data_list, "HAULING DATE")])) {
-                            sf_transaction_treatment.push(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")]);
-                        }
-                        else if (month_filter.value == "ALL") {
-                            sf_transaction_treatment.push(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")]);
+                if(month_filter.value == formatMonth(sf_data_list.content[i][findTextInArray(sf_data_list, "HAULING DATE")])){
+                    if(sf_data_list.content[i][findTextInArray(sf_data_list, "WASTE ID")] !== "DISCREPANCY"){
+                        if(sf_data_list.content[i][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")] !== "FOR STORAGE" &&
+                        sf_data_list.content[i][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")] !== "RECYCLING" &&
+                        sf_data_list.content[i][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")] !== "CRUSHING" &&
+                        !sf_transaction_sf.includes(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")])){
+                            sf_transaction_sf.push(sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")]);
+                            if(!wcf_transaction_sf.includes(sf_data_list.content[i][findTextInArray(sf_data_list, "WCF #")])){
+                                wcf_transaction_sf.push(sf_data_list.content[i][findTextInArray(sf_data_list, "WCF #")]);
+                            }
                         }
                     }
                 }
             }
             // wdf to tpf
             for (let i = 1; i < wdf_data_list.content.length; i++) {
-                if(!wdf_transaction_sorting.includes(wdf_data_list.content[i][findTextInArray(wdf_data_list, "WCF #")])){
-                    if(month_filter.value == formatMonth(wdf_data_list.content[i][findTextInArray(wdf_data_list, "HAULING DATE")])){
-                        wdf_transaction_sorting.push(wdf_data_list.content[i][findTextInArray(wdf_data_list, "WCF #")]);
-                    }
-                    else if(month_filter.value == "ALL"){
-                        wdf_transaction_sorting.push(wdf_data_list.content[i][findTextInArray(wdf_data_list, "WCF #")]);
+                if(month_filter.value == formatMonth(wdf_data_list.content[i][findTextInArray(wdf_data_list, "HAULING DATE")])){
+                    if(!wdf_transaction_wdf.includes(wdf_data_list.content[i][findTextInArray(wdf_data_list, "WCF #")])){
+                        wdf_transaction_wdf.push(wdf_data_list.content[i][findTextInArray(wdf_data_list, "WDF #")]);
+                        if(!wcf_transaction_wdf.includes(wdf_data_list.content[i][findTextInArray(wdf_data_list, "WCF #")])){
+                            wcf_transaction_wdf.push(wdf_data_list.content[i][findTextInArray(wdf_data_list, "WCF #")]);
+                        }
                     }
                 }
             }
-            console.log(wdf_transaction_sorting)
+            // tpf
             for (let i = 1; i < tpf_data_list.content.length; i++) {
                 if(month_filter.value == formatMonth(tpf_data_list.content[i][findTextInArray(tpf_data_list, "HAULING DATE")])){
-                    if (!sf_tpf_transaction_treatment.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "SF #")])) {
-                        sf_tpf_transaction_treatment.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "SF #")]);
-                        tpf_transaction_treatment.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "TPF #")]);
+                    if (!sf_wdf_done_list_tpf.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "SF #")])) {
+                        sf_wdf_done_list_tpf.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "SF #")]);
+                        sf_wdf_done_list_tpf.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "TPF #")]);
                     }
-                    if(!done_list_tpf.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")])){
-                        done_list_tpf.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")])
-                    }
-                }
-                else if(month_filter.value == "ALL"){
-                    if (!sf_tpf_transaction_treatment.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "SF #")])) {
-                        sf_tpf_transaction_treatment.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "SF #")]);
-                        tpf_transaction_treatment.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "TPF #")]);
-                    }
-                    if(!done_list_tpf.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")])){
-                        done_list_tpf.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")])
+                    if(!wcf_done_list_tpf.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")])){
+                        wcf_done_list_tpf.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "WCF #")])
                     }
                 }
             }
-            console.log(sf_tpf_transaction_treatment)            
-            console.log(done_list_tpf)            
-            pending_treatment_sf = sf_transaction_treatment.filter((element) => !sf_tpf_transaction_treatment.includes(element));
-            pending_treatment_wcf = wcf_transaction_sorting.filter((element) => !done_list_tpf.includes(element));
-            pending_treatment_wdf = wdf_transaction_sorting.filter((element) => !sf_tpf_transaction_treatment.includes(element));
-            const finished_treatment = sf_transaction_treatment.filter((element) => sf_tpf_transaction_treatment.includes(element));
-            const filtered_pending_treatment_wcf = wcf_tpf_transaction_sorting.filter(element => !done_list_tpf.includes(element));
-            
+
+            pending_treatment_sf = sf_transaction_sf.filter((element) => !sf_wdf_done_list_tpf.includes(element));
+            pending_treatment_wdf = wdf_transaction_wdf.filter((element) => !sf_wdf_done_list_tpf.includes(element));
+            pending_treatment_wcf = wcf_transaction_wcf.filter((element) => !wcf_done_list_tpf.includes(element));
+            pending_treatment_sf_wcf = wcf_transaction_sf.filter((element) => !wcf_done_list_tpf.includes(element));
+            pending_treatment_wdf_wcf = wcf_transaction_wdf.filter((element) => !wcf_done_list_tpf.includes(element));
+            finished_treatment = sf_wdf_done_list_tpf       
+
             // pending_list
-            total_counter_treatment.innerText = pending_treatment_sf.length + pending_treatment_wcf.length + done_list_tpf.length;
-            pending_counter_treatment.innerText = pending_treatment_sf.length + pending_treatment_wcf.length + pending_treatment_wdf.length;
-            treated_counter_treatment.innerText = done_list_tpf.length;
+            total_counter_treatment.innerText = pending_treatment_wcf.length + pending_treatment_sf_wcf.length + pending_treatment_wdf_wcf.length + wcf_done_list_tpf.length;
+            pending_counter_treatment.innerText = pending_treatment_wcf.length + pending_treatment_sf_wcf.length + pending_treatment_wdf_wcf.length;
+            treated_counter_treatment.innerText = wcf_done_list_tpf.length;
             var options = {
-                series: [pending_treatment_sf.length + pending_treatment_wcf.length + pending_treatment_wdf.length, done_list_tpf.length],
+                series: [pending_treatment_wcf.length + pending_treatment_sf_wcf.length + pending_treatment_wdf_wcf.length, wcf_done_list_tpf.length],
                 chart: {
                     width: 500, // Set the desired width
                     height: 550, // Set the desired height
@@ -609,7 +601,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                 }
                                             }
                                         }
-                                        process = wcf_data_list.content[c][findTextInArray(wcf_data_list, "SUBMIT TO")]
                                     }
                                 }
                                 mtf_form_no.value = mtf;
@@ -627,7 +618,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 SORTED TIME: ${time_decoder(sf_data_list.content[a][findTextInArray(sf_data_list, "COMPLETION TIME")])}<br>
                                 SUBMITTED BY: ${sf_data_list.content[a][findTextInArray(sf_data_list, "SUBMITTED BY")]}<br>
                                 `
-                                if(process == 'THERMAL GASIFIER'){
+                                process = sf_data_list.content[a][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")]
+                                if(process == 'THERMAL DECOMPOSITION'){
                                     machine_list.innerHTML = `
                                     <label for="tpf_form_no">
                                         <i class="fa-solid fa-gears"></i>
@@ -662,7 +654,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     `
                                     machine_counter.value = 3
                                 }
-                                else if(process == 'ROTARY' || process == 'FURNACE'){
+                                else if(process == 'PYROLYSIS'){
                                     machine_list.innerHTML = `
                                     <label for="tpf_form_no">
                                         <i class="fa-solid fa-gears"></i>
