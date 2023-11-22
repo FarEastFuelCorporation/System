@@ -3877,17 +3877,20 @@ document.addEventListener('DOMContentLoaded', async function() {
         const lastTwoDigitsOfYear = currentYear.toString().slice(-2);        
         var last_three_digit = 0;
         
-        for (let x = 0; x < employee_data_list.content.length; x++) {
-            var employee_number = String(employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE ID")]); // Convert to a string
-            if (employee_number.slice(0, 2) == lastTwoDigitsOfYear) {
-                let threeDigitValue = parseFloat(employee_number.slice(-3));
-                if (!isNaN(threeDigitValue) && last_three_digit < threeDigitValue) {
-                    last_three_digit = threeDigitValue;
-                }
+        var employee_number = String(employee_data_list.content[employee_data_list.content.length -1][findTextInArray(employee_data_list, "EMPLOYEE ID")]); // Convert to a string
+        if (employee_number.slice(0, 2) == lastTwoDigitsOfYear) {
+            let threeDigitValue = parseFloat(employee_number.slice(-3));
+            if (!isNaN(threeDigitValue) && last_three_digit < threeDigitValue) {
+                last_three_digit = threeDigitValue;
+                last_three_digit += 1;
+                new_employee_id.value = `${lastTwoDigitsOfYear}${String(last_three_digit).padStart(3, '0')}`;                    
             }
         }
-        last_three_digit += 1;
-        new_employee_id.value = `${lastTwoDigitsOfYear}${String(last_three_digit).padStart(3, '0')}`;        
+        else{
+            new_employee_id.value = `${lastTwoDigitsOfYear}${String(1).padStart(3, '0')}`;                
+        }
+        for (let x = 0; x < employee_data_list.content.length; x++) {
+        }
         
         function findEmployeeName(employee_id){
             var employee_name = "";
