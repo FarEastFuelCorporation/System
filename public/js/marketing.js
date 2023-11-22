@@ -2147,7 +2147,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 </div>
                 <div class="wrapper">
                     <div>
-                        <input type="number" name="commission_price${commission_data_counter_commission.value}" id="commission_price${commission_data_counter_commission.value}" autocomplete="off" class="form-control" required placeholder="Type Commission">
+                        <input type="number" step="0.01" name="commission_price${commission_data_counter_commission.value}" id="commission_price${commission_data_counter_commission.value}" autocomplete="off" class="form-control" required placeholder="Type Commission">
                     </div>
                 </div>
             </div>
