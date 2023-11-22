@@ -1017,6 +1017,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                     waste_name = (qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE NAME")]);
                     break
                 }
+                else if(waste_id == "W2023100"){
+                    waste_name = "ASSORTED NON-HAZARDOUS WASTE"
+                }
+                else if(waste_id == "W2023200"){
+                    waste_name = "ASSORTED HAZARDOUS WASTE"
+                }
                 else{
                     waste_name = waste_id
                 }
