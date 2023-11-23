@@ -563,7 +563,7 @@ nav{
 #vehicle_maintenance_form,
 #incident_documentation_form,
 #employee_list_section,
-#attendance_form,
+#hr_dashboard,
 #employee_form,
 #purchase_order_form,
 #supplier_list_section,
@@ -2764,29 +2764,16 @@ input:disabled {
     gap: 20px;
 }
 
-.hr #payroll_button
-{
-    position: absolute;
-    z-index: 2;
-    top: 20px;
-    right: 50px;
-    width: 50px !important;
-    font-size: 40px;
-    padding: 5px;
-    color: blue;
-    border: 3px solid cyan;
-}
-
 .hr #payroll_tab
 {
     position: absolute;
     z-index: 2;
-    top: 100px;
+    top: 145px;
     right: 20px;
     width: calc(100vw - 300px);
     background-color: white;
     padding: 20px;
-    border: 3px solid cyan;
+    border: 3px solid #dc3545;
     border-radius: 10px;
     overflow: scroll;
     min-height: 80%;

@@ -199,6 +199,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         // attendance form
         const attendance_form = document.querySelector("#attendance_form");
+        const payroll_summary = document.querySelector("#payroll_summary");
         const form_tab = attendance_form.querySelector("#form_tab");
         const employee_name = form_tab.querySelector("#employee_name");
         const days = form_tab.querySelector("#days");
@@ -207,6 +208,27 @@ document.addEventListener('DOMContentLoaded', async function() {
         const time_out_sched = form_tab.querySelector("#time_out_sched");
         const payroll_type = form_tab.querySelector("#payroll_type");
         const generate_button = form_tab.querySelector("#generate_button");
+
+        var payroll_counter = 1
+        for(let x = 1; x < payroll_summary_data_list.content.length; x++){
+            var payroll_record = 
+            `
+            <tr>
+                <td>${payroll_counter}</td>
+                <td>${payroll_summary_data_list.content[x][findTextInArray(payroll_summary_data_list, "YEAR")]}</td>
+                <td>${findEmployeeName(payroll_summary_data_list.content[x][findTextInArray(payroll_summary_data_list, "WEEK NUMBER")])}</td>
+                <td>${payroll_summary_data_list.content[x][findTextInArray(payroll_summary_data_list, "EMPLOYEE ID")]}</td>
+                <td>${payroll_summary_data_list.content[x][findTextInArray(payroll_summary_data_list, "FULL NAME")]}</td>
+                <td>${formatNumber(payroll_summary_data_list.content[x][findTextInArray(payroll_summary_data_list, "GROSS SALARY")])}</td>
+                <td>${formatNumber(payroll_summary_data_list.content[x][findTextInArray(payroll_summary_data_list, "TOTAL DEDUCTIONS")])}</td>
+                <td>${formatNumber(payroll_summary_data_list.content[x][findTextInArray(payroll_summary_data_list, "NET SALARY")])}</td>
+            </tr>
+            `
+            payroll_summary.insertAdjacentHTML("beforeend", payroll_record);
+            payroll_counter += 1;
+        }
+
+        // payroll_tab
         var payroll_length = 0;
         var day_list = "";
         const date_input = [];
@@ -1906,6 +1928,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         const payroll_button = attendance_form.querySelector("#payroll_button");
         const payroll_tab = attendance_form.querySelector("#payroll_tab");
+        const payroll_transaction_button = attendance_form.querySelector("#payroll_transaction_button");
         const payroll_type2 = payroll_tab.querySelector("#payroll_type");
         const payroll_details = payroll_tab.querySelector("#payroll_details");
 
@@ -2007,6 +2030,16 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             else{
                 payroll_tab.style.display = "block";
+                form_tab.style.display = "none";
+            }
+        })
+        payroll_transaction_button.addEventListener("click", () => {
+            if(form_tab.style.display == "block"){
+                form_tab.style.display = "none";
+            }
+            else{
+                form_tab.style.display = "block";
+                payroll_tab.style.display = "none";
             }
         })
 

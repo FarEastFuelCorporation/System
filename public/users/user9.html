@@ -11,6 +11,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
     <link href="https://fonts.cdnfonts.com/css/script-mt?styles=95594" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <style>
+        /* Width of the scrollbar */
+        ::-webkit-scrollbar {
+        width: 12px;
+        }
+    
+        /* Handle (the draggable part) */
+        ::-webkit-scrollbar-thumb {
+        background: #198754; /* Color of the scrollbar handle */
+        border-bottom-right-radius: 6px; /* Rounded corners for the handle */
+        border-top-right-radius: 5px; /* Rounded corners for the handle */
+        }
+    
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+        background: #dc3545; /* Color of the scrollbar handle on hover */
+        }
+    </style>
 </head>
 <body>
     <div class="spinner" id="spinner"></div>
@@ -34,20 +52,14 @@
                 </li>
                 <li>
                     <a href="#">
-                        <i class="fa-solid fa-table-list"></i>
-                        Employee List
+                        <i class="fa-solid fa-users"></i>
+                        Employees
                     </a>
                 </li>
                 <li>
                     <a href="#">
                         <i class="fa-solid fa-clipboard-user"></i>
-                        Payroll Transaction
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa-solid fa-users"></i>
-                        Employee Form
+                        Payroll
                     </a>
                 </li>
                 <li>
@@ -186,795 +198,19 @@
             </section>
             <!-- settings -->
             <section class="hr" id="employee_list_section">
-                <h2>EMPLOYEE LIST</h2><br>
-                <div class="table" style="max-height: 80vh; align-items: start; overflow: scroll;">                            
-                    <div class="list">
-                        <table>
-                            <thead style="position: sticky; top: 0; background-color: black;">                                    
-                                    <th>ID #</th>
-                                    <th>FULL NAME</th>
-                                    <th>DEPARTMENT</th>
-                                    <th>DESIGNATION</th>
-                                    <th>GENDER</th>
-                                    <th>EMPLOYEE<br>TYPE</th>
-                                    <th>BIRTHDAY</th>
-                                    <th>MOBILE<br>NUMBER</th>
-                                    <th>DATE<br>HIRE</th>
-                                    <th>TIN NO.</th>
-                                    <th>SSS/GSIS NO.</th>
-                                    <th>PHILHEALTH NO.</th>
-                                    <th>PAG-IBIG NO.</th>
-                                </thead>
-                                <tbody id="employee_list">
-
-                                </tbody>
-                            </table>
-                            <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
-                        </div>
-                    </div><br>
-            </section>
-            <!-- attendance_form -->
-            <section class="hr" id="attendance_form">
-                <h2>PAYROLL TRANSACTION FORM</h2><br>
-                <form id="form_tab" action="https://script.google.com/macros/s/AKfycbxy2dKQhID0cNKqyJSMJxhhhbya-6REUqLQuCcUqTvKZGyHO9nMQtFT8zCUwzfFS4Jzow/exec" method="post">
-                    <input type="hidden" name="user" id="user">
-                    <input type="hidden" name="number_of_days" id="number_of_days">
-                    <div class="hrf_form_grid">
-                        <div class="wrapper">
-                            <label for="employee_name">
-                                <i class="fa-solid fa-id-card"></i>
-                                Employee Name
-                            </label><br>
-                            <div class="search_input" id="search_employee_name">
-                                <input type="text" name="employee_name" id="employee_name" autocomplete="off" class="form-control" required placeholder="Type to Search Employee Name...">
-                                <div class="autocom_box">
-                                </div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="department">
-                                <i class="fa-solid fa-id-card"></i>
-                                Department
-                            </label><br>
-                            <div class="search_input">
-                                <input type="text" name="department" id="department" autocomplete="off" class="form-control" required readonly>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="designation">
-                                <i class="fa-solid fa-id-card"></i>
-                                Designation
-                            </label><br>
-                            <div class="search_input">
-                                <input type="text" name="designation" id="designation" autocomplete="off" class="form-control" required readonly>
-                            </div>
-                        </div>
-                    </div><br>
-                    <div class="hrf_form_attendance">
-                        <div>
-                            <label for="id_no">
-                                <i class="fa-solid fa-id-card"></i>
-                                ID No.
-                            </label><br>    
-                            <input type="text" id="id_no" name="id_no" class="form-control" required autocomplete="off" readonly><br>
-                        </div>
-                        <div>
-                            <label for="time_in_sched">
-                                <i class="fa-solid fa-id-card"></i>
-                                Time In Schedule
-                            </label><br>
-                            <input type="time" id="time_in_sched" name="time_in_sched" class="form-control form" required autocomplete="off" readonly><br>    
-                        </div>
-                        <div>
-                            <label for="time_in_sched">
-                                <i class="fa-solid fa-id-card"></i>
-                                Time Out Schedule
-                            </label><br>
-                            <input type="time" id="time_out_sched" name="time_out_sched" class="form-control form" required autocomplete="off" readonly><br>    
-                        </div>
-                        <div>
-                            <label for="daily_rate">
-                                <i class="fa-solid fa-id-card"></i>
-                                Daily Rate
-                            </label><br>
-                            <input type="number" id="daily_rate" name="daily_rate" class="form-control form" required autocomplete="off" readonly><br>    
-                        </div>
-                        <div>
-                            <label for="day_allowance">
-                                <i class="fa-solid fa-id-card"></i>
-                                Day Allowance
-                            </label><br>
-                            <input type="number" id="day_allowance" name="day_allowance" class="form-control form" required autocomplete="off" readonly><br>    
-                        </div>
-                        <div>
-                            <label for="night_allowance">
-                                <i class="fa-solid fa-id-card"></i>
-                                Night Allowance
-                            </label><br>
-                            <input type="number" id="night_allowance" name="night_allowance" class="form-control form" required autocomplete="off" readonly><br>    
-                        </div>    
-                    </div>
-                    <div id="cut_off" style="display: grid; grid-template-columns: 200px 200px 200px 200px 200px; gap: 20px;">
-                        <label for="year">
-                            <i class="fa-solid fa-id-card"></i>
-                            Payroll Type
-                            <input type="text" id="payroll_type" name="payroll_type" class="form-control form" required readonly autocomplete="off">   
-                        </label>
-                        <label for="year">
-                            <i class="fa-solid fa-id-card"></i>
-                            Year
-                            <input type="number" id="year" name="year" class="form-control form" required autocomplete="off">   
-                        </label>
-                        <div id="generate_button" style="display: flex;">
-                            <button id="search_ltf_form_no_button" type="button" style=" height: 50px; width: 50px; margin-top: 30px; border: none; border-radius: 10px;">
-                                <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
-                            </button>
-                        </div>
-                    </div><br>
-                    <div id="input_container">
-                        <div id="input_container1" style="font-size: 14px;">
-                            <div class="label" style="height: 44px; font-size: 10px !important;">ABSENT / REST DAY /<br>SICK LEAVE / LEAVE</div>
-                            <div class="label" style="height: 44px; font-size: 10px !important;">HALF DAY / REST DAY DUTY<br>REGULAR HOLIDAY/<br>SPECIAL HOLIDAY/<br>SPECIAL HOLIDAY ABSENT</div>
-                            <div class="label">DAY</div>
-                            <div class="label" style="height: 36px;">DATE</div>
-                            <div class="label" style="height: 36px;">TIME IN</div>
-                            <div class="label" style="height: 36px;">TIME OUT</div>
-                            <div style="height: 24px;"></div>
-                            <div class="label" style="height: 36px;">BREAK (hours)</div>
-                            <div class="label" style="height: 36px;">HOURS</div>
-                            <div class="label" style="height: 24px;">RATE</div>
-                            <div class="label" style="height: 36px;">RATE/hour</div>
-                            <div class="label" style="height: 36px;">HOURS X RATE</div>
-                            <div class="label" style="height: 36px;">SUBTOTAL</div>
-                            <div class="label" style="height: 36px;">LATE (mins)</div>
-                            <div class="label" style="height: 36px;">UNDERTIME (hours)</div>
-                            <div class="label" style="height: 36px;">LATE DEDUCTION</div>
-                            <div class="label" style="height: 36px;">UNDERTIME DEDUCTION</div>
-                            <div class="label" style="height: 36px;">8 HOUR PAY</div>
-                            <div class="label" style="height: 44px;">WITH OT SLIP</div>
-                            <div class="label" style="height: 36px;">OT BREAK</div>
-                            <div class="label" style="height: 36px;">OT HOURS</div>
-                            <div class="label" style="height: 24px;">OT RATE</div>
-                            <div class="label" style="height: 36px;">OT RATE/hour</div>
-                            <div class="label" style="height: 36px;">OT HOURS X RATE</div>
-                            <div class="label" style="height: 36px;">OT PAY</div>
-                            <div class="label" style="height: 36px;">ALLOWANCE</div>
-                            <div class="label" style="height: 36px;">SALARY / DAY</div>                         
-                        </div>
-                        <div class="hrf_form_grid3" id="days">
-                        </div><br>
-                    </div>
-                    <div class="hide">
-                        <div class="net_salary">
-                            <div>
-                                <label for="net_salary">
-                                    <i class="fa-solid fa-money-bill-wave"></i>
-                                    Gross Salary
-                                </label><br>
-                                <input type="number" id="gross_salary" name="gross_salary" class="form-control form" required readonly autocomplete="off" value="0"><br>        
-                            </div>
-                        </div>
-                        <label for="net_salary">
-                            Additional
-                        </label>
-                        <div style="display: flex; justify-content: space-between;">
-                            <div class="hrf_form">
-                                <div>
-                                    <label for="adjustment">
-                                        <i class="fa-solid fa-address-card"></i>
-                                        Adjustment
-                                    </label><br>
-                                    <input type="number" id="adjustment" name="adjustment" class="form-control form" required autocomplete="off" value="0"><br>        
-                                </div>
-                                <div>
-                                    <label for="cash_advance">
-                                        <i class="fa-solid fa-address-card"></i>
-                                        Cash Advance
-                                    </label><br>
-                                    <input type="number" id="cash_advance" name="cash_advance" class="form-control form" required autocomplete="off" value="0"><br>        
-                                </div>
-                            </div>
-                            <div>
-                                <label for="total_additional">
-                                    <i class="fa-solid fa-money-bill-wave"></i>
-                                    Total Additional
-                                </label><br>
-                                <input type="number" id="total_additional" name="total_additional" class="form-control form" required readonly autocomplete="off" value="0"><br>        
-                            </div>
-                        </div>
-                        <label for="net_salary">
-                            Deductions
-                        </label>
-                        <div style="display: flex; justify-content: space-between;">
-                            <div class="hrf_form">
-                                <div>
-                                    <label for="sss_deduction">
-                                        <i class="fa-solid fa-address-card"></i>
-                                        SSS
-                                    </label><br>
-                                    <input type="number" id="sss_deduction" name="sss_deduction" class="form-control form" required autocomplete="off" value="0"><br>        
-                                </div>
-                                <div>
-                                    <label for="pag_ibig_deduction">
-                                        <i class="fa-solid fa-address-card"></i>
-                                        Pag-ibig
-                                    </label><br>
-                                    <input type="number" id="pag_ibig_deduction" name="pag_ibig_deduction" class="form-control form" required autocomplete="off" value="0"><br>        
-                                </div>
-                                <div>
-                                    <label for="philhealth_deduction">
-                                        <i class="fa-solid fa-address-card"></i>
-                                        Philhealth
-                                    </label><br>
-                                    <input type="number" id="philhealth_deduction" name="philhealth_deduction" class="form-control form" required autocomplete="off" value="0"><br>        
-                                </div>
-                                <div>
-                                    <label for="sss_loan">
-                                        <i class="fa-solid fa-money-bill-wave"></i>
-                                        SSS Loan
-                                    </label><br>
-                                    <input type="number" id="sss_loan" name="sss_loan" class="form-control form" required autocomplete="off" value="0"><br>        
-                                </div>
-                                <div>
-                                    <label for="pag_ibig_loan">
-                                        <i class="fa-solid fa-money-bill-wave"></i>
-                                        Pag-ibig Loan
-                                    </label><br>
-                                    <input type="number" id="pag_ibig_loan" name="pag_ibig_loan" class="form-control form" required autocomplete="off" value="0"><br>        
-                                </div>
-                            </div>
-                        </div>
-                        <div style="display: flex; justify-content: space-between;">
-                            <div class="hrf_form">
-                                <div>
-                                    <label for="ca_deduction">
-                                        <i class="fa-solid fa-money-bill-wave"></i>
-                                        C/A Deduction
-                                    </label><br>
-                                    <input type="number" id="ca_deduction" name="ca_deduction" class="form-control form" required autocomplete="off" value="0"><br>        
-                                </div>
-                                <div>
-                                    <label for="uniform">
-                                        <i class="fa-solid fa-address-card"></i>
-                                        Uniform
-                                    </label><br>
-                                    <input type="number" id="uniform" name="uniform" class="form-control form" required autocomplete="off" value="0"><br>        
-                                </div>
-                                <div>
-                                    <label for="housing">
-                                        <i class="fa-solid fa-address-card"></i>
-                                        Housing
-                                    </label><br>
-                                    <input type="number" id="housing" name="housing" class="form-control form" required autocomplete="off" value="0"><br>        
-                                </div>
-                                <div>
-                                    <label for="st_peter">
-                                        <i class="fa-solid fa-address-card"></i>
-                                        St. Peter
-                                    </label><br>
-                                    <input type="number" id="st_peter" name="st_peter" class="form-control form" required autocomplete="off" value="0"><br>        
-                                </div>
-                                <div>
-                                    <label for="cash_not_return">
-                                        <i class="fa-solid fa-money-bill-wave"></i>
-                                        Cash Not Return
-                                    </label><br>
-                                    <input type="number" id="cash_not_return" name="cash_not_return" class="form-control form" required autocomplete="off" value="0"><br>        
-                                </div>
-                            </div>
-                        </div>
-                        <div style="display: flex; justify-content: space-between;">
-                            <div class="hrf_form">
-                                <div>
-                                    <label for="hard_hat">
-                                        <i class="fa-solid fa-address-card"></i>
-                                        Hard Hat
-                                    </label><br>
-                                    <input type="number" id="hard_hat" name="hard_hat" class="form-control form" required autocomplete="off" value="0"><br>        
-                                </div>
-                                <div>
-                                    <label for="safety_shoes">
-                                        <i class="fa-solid fa-address-card"></i>
-                                        Safety Shoes
-                                    </label><br>
-                                    <input type="number" id="safety_shoes" name="safety_shoes" class="form-control form" required autocomplete="off" value="0"><br>        
-                                </div>
-                                <div>
-                                    <label for="over_meals">
-                                        <i class="fa-solid fa-address-card"></i>
-                                        Over Meals
-                                    </label><br>
-                                    <input type="number" id="over_meals" name="over_meals" class="form-control form" required autocomplete="off" value="0"><br>        
-                                </div>
-                                <div>
-                                    <label for="bereavement_assistance">
-                                        <i class="fa-solid fa-money-bill-wave"></i>
-                                        Beravement Assistance
-                                    </label><br>
-                                    <input type="number" id="bereavement_assistance" name="bereavement_assistance" class="form-control form" required autocomplete="off" value="0"><br>        
-                                </div>
-                            </div>
-                            <div>
-                                <label for="total_deductions">
-                                    <i class="fa-solid fa-money-bill-wave"></i>
-                                    Total Deductions
-                                </label><br>
-                                <input type="number" id="total_deductions" name="total_deductions" class="form-control form" required readonly autocomplete="off" value="0"><br>        
-                            </div>
-                        </div>
-                        <div class="net_salary">
-                            <div>
-                                <label for="net_salary">
-                                    <i class="fa-solid fa-money-bill-wave"></i>
-                                    Net Salary
-                                </label><br>
-                                <input type="number" id="net_salary" name="net_salary" class="form-control form" required readonly autocomplete="off" value="0"><br>        
-                            </div>
-                        </div>
-                        <div class="buttons">
-                            <button type="submit" id="submit_btn" class="form-control" >
-                                Submit
-                            </button>
-                            <button type="reset" id="reset" class="form-control" >
-                                Clear
-                            </button>
-                        </div><br>
-                    </div>
-                </form>
-                <button id="payroll_button" class="form-control">
-                    <i class="fa-solid fa-receipt"></i>
-                </button>
-                <div id="payroll_tab">
-                    <h2>PRINT PAYROLL</h2><br>
-                    <form action="">
-                        <input type="hidden" name="user" id="user">
-                        <div class="d-flex gap-4">
-                            <div style="width: 200px !important;">
-                                <label>
-                                    <i class="fa-solid fa-calendar-days"></i>
-                                    Payroll Type
-                                </label>
-                                <select name="payroll_type" id="payroll_type" class="form-control">
-                                    <option value="">Choose</option>
-                                    <option value="WEEKLY">WEEKLY</option>
-                                    <option value="SEMI-MONTHLY">SEMI-MONTHLY</option>
-                                </select>  
-                            </div>
-                            <div id="payroll_details" class="d-flex gap-4">
-                            </div>
-                        </div>
-                        <br>
-                        <div class="d-flex">
-                            <button type="button" class="form-control" id="generate_payslip_button">
-                                Generate Payslip
-                            </button>
-                            <button class="form-control" id="download_payslip_button" onclick="convertToPDF()">
-                                Download Payslip
-                            </button>
-                            <!-- <button class="form-control" id="generate_payslip_button" onclick="convertToPDF2()">
-                                Generate Payroll
-                            </button> -->
-                        </div>
-                        <div id="payslip_form_container_container">
-                            <div id="payslip_container">
-            
-                            </div>
-                            <style>
-                                .left{
-                                    text-align: start !important;
-                                }
-                                .right{
-                                    text-align: right !important;
-                                }
-                                .border-top-bottom{
-                                    border-top: 1px solid black !important;
-                                    border-bottom: 1px solid black !important;
-                                }
-                                
-                                .border-top{
-                                    border-top: 1px solid black !important;
-                                }
-                                
-                                .border-bottom{
-                                    border-bottom: 1px solid black !important;
-                                }
-                                
-                                .border-left{
-                                    border-left: 1px solid black !important;
-                                }
-                                
-                                .border-right{
-                                    border-right: 1px solid black !important;
-                                }
-                                
-                                .border-bottom-right{
-                                    border-bottom: 1px solid black !important;
-                                    border-right: 1px solid black !important;
-                                }
-                                
-                                .border{
-                                    border: 1px solid black !important;
-                                }
-                                
-                                .truncate_text {
-                                    white-space: nowrap;
-                                    overflow: hidden; 
-                                    text-overflow: ellipsis;
-                                }
-                        
-                                .vertical-table 
-                                {
-                                    display: flex;
-                                    width: 100% !important;
-                                }
-                        
-                                .vertical-table table 
-                                {
-                                    border-collapse: collapse;
-                                    width: 100% !important;
-                                }
-                        
-                                .vertical-table table tr
-                                {
-                                    display: grid !important;
-                                    grid-template-columns: 15% repeat(7,calc(85%/7)) !important;
-                                    text-align: center;
-                                    width: 100% !important;
-                                }
-                        
-                                .vertical-table th,
-                                .vertical-table td 
-                                {
-                                    padding: 0 4px !important;
-                                }
-                        
-                                .vertical-table th 
-                                {
-                                    text-align: left;
-                                    color: black !important;
-                                    font-size: 9px !important;
-                                }
-                        
-                                .vertical-table td
-                                {
-                                    border-bottom: 1px solid #ddd;
-                                    font-size: 9px !important;
-                                }
-
-                                #payslip_form
-                                {
-                                    width: 1056px;
-                                    height: 816px;
-                                    border: 3px solid black;
-                                    background-color: white;
-                                    color: black !important;
-                                    position: relative;
-                                    font-weight: bold !important;
-                                    display: flex;
-                                    flex-direction: column;
-                                }
-                        
-                                #payslip_form .payslip
-                                {
-                                    margin: 20px;
-                                    width: 420px;
-                                    height: 368px;
-                                    border: 3px solid black;
-                                }
-                        
-                                #payslip_form .bold
-                                {
-                                    font-weight: bold;
-                                }
-                        
-                                #payslip_form h1
-                                {
-                                    font-size: 16px;
-                                    margin: 0;
-                                }
-                        
-                                #payslip_form h2
-                                {
-                                    font-size: 14px;
-                                    margin: 0;
-                                }
-                        
-                                #payslip_form h3
-                                {
-                                    font-size: 12px;
-                                    margin: 0;
-                                }
-                        
-                                #payslip_form h4
-                                {
-                                    font-size: 10px;
-                                    margin: 0;
-                                }
-                        
-                                #payslip_form .payslip img
-                                {
-                                    height: 25px;
-                                    width: 25px;
-                                }
-                        
-                                #payslip_form .payslip .summary{
-                                    padding: 5px;
-                                }
-                        
-                                #payslip_form .payslip .summary .header{
-                                    border-bottom: 1px solid black;
-                                    display: flex;
-                                }
-                        
-                                #payslip_form .payslip .summary .header .header_title{
-                                    padding-left: 5px;
-                                }
-                        
-                                #payslip_form .payslip .summary .employee_details{
-                                    border-bottom: 1px solid black;
-                                }
-                        
-                                #payslip_form .payslip .summary .employee_details .grid1{
-                                    display: grid;
-                                    grid-template-columns: 60% 40%;
-                                }
-                        
-                                #payslip_form .payslip .summary .summary_details_header{
-                                    justify-content: space-around;
-                                    border-bottom: 1px solid black;
-                                    border-right: 1px solid black;
-                                    border-left: 1px solid black;
-                                    text-align: center;
-                                }
-
-                                #payslip_form .payslip .summary .summary_details_header > div
-                                {
-                                    text-align: center;
-                                }
-                    
-                                #payslip_form .payslip .summary .summary_details_details > div:first-child
-                                {
-                                    border-bottom: 1px solid black;
-                                    width: 100% !important;
-                                    display: grid;
-                                    grid-template-columns: 22% 5% 12% 8% 11% 8% 12% 10% 12%;
-                                    padding: 0 5px;
-                                }
-                    
-                                #payslip_form .payslip .summary .summary_details_details .detail_header h4
-                                {
-                                    display: flex;
-                                    justify-content: center;
-                                    align-items: center;
-                                    text-align: center;
-                                }
-                                
-                                #payslip_form .payslip .summary .summary_details_details2 > div
-                                {
-                                    border-bottom: 1px solid black;
-                                    width: 100% !important;
-                                    display: grid;
-                                    grid-template-columns: 2fr 1fr 2fr 1fr 2fr 1fr;
-                                    padding: 0 5px;
-                                }
-                                
-                                #payslip_form .payslip .summary .summary_footer
-                                {
-                                    border-bottom: 1px solid black;
-                                    display: grid;
-                                    grid-template-columns: 1fr 1fr;
-                                    padding: 0 5px;
-                                }
-                                
-                                #payslip_form .payslip .summary .summary_footer > div
-                                {
-                                    display: grid;
-                                    grid-template-columns: 1fr 1fr;
-                                    padding: 0 5px;
-                                }
-                                
-                                #payslip_form .payslip .summary .summary_footer2
-                                {
-                                    border-bottom: 1px solid black;
-                                    display: grid;
-                                    grid-template-columns: 1fr 1fr;
-                                    padding: 0 5px;
-                                }
-
-                            </style>
-                        </div>
-                        <!-- <div id="payroll_form">
-                            <div class="payroll">
-                                <div class="header">
-                                    <img src="../images/logo.png" alt="">
-                                    <div class="header_title">
-                                        <h2 class="bold">FAR EAST FUEL CORPORATION</h2>
-                                        <h3>#888 Purok 5, Irabagon St. Brgy. Anyatam, San Ildefonso, Bulacan, 3010</h3>
-                                    </div>
-                                </div>
-                                <div class="text-center">
-                                    <h2>PAYROLL FOR WEEK 30 (July 24-30, 2023)</h2>
-                                </div>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th rowspan="4">#</th>
-                                            <th rowspan="4">Full Name</th>
-                                            <th rowspan="4">Daily<br>Rate</th>
-                                            <th rowspan="4"># of<br>Days</th>
-                                            <th colspan="24">Eight Hour Pay</th>
-                                            <th colspan="24">Overtime Pay</th>
-                                            <th rowspan="4">Gross<br>Pay</th>
-                                        </tr>
-                                        <tr>
-                                            <th colspan="4">Ordinary</th>
-                                            <th colspan="4">Rest Day DUty</th>
-                                            <th colspan="4">Special Holiday</th>
-                                            <th colspan="4">Regular Holiday</th>
-                                            <th colspan="4">Special Holiday & RDD</th>
-                                            <th colspan="4">Regular Holiday & RDD</th>
-                                            <th colspan="4">Ordinary</th>
-                                            <th colspan="4">Rest Day Duty</th>
-                                            <th colspan="4">Special Holiday</th>
-                                            <th colspan="4">Regular Holiday</th>
-                                            <th colspan="4">Special Holiday & RDD</th>
-                                            <th colspan="4">Regular Holiday & RDD</th>
-                                        </tr>
-                                        <tr>
-                                            <th colspan="2">Day</th>
-                                            <th colspan="2">Night Diff.</th>
-                                            <th colspan="2">Day</th>
-                                            <th colspan="2">Night Diff.</th>
-                                            <th colspan="2">Day</th>
-                                            <th colspan="2">Night Diff.</th>
-                                            <th colspan="2">Day</th>
-                                            <th colspan="2">Night Diff.</th>
-                                            <th colspan="2">Day</th>
-                                            <th colspan="2">Night Diff.</th>
-                                            <th colspan="2">Day</th>
-                                            <th colspan="2">Night Diff.</th>
-                                            <th colspan="2">Day</th>
-                                            <th colspan="2">Night Diff.</th>
-                                            <th colspan="2">Day</th>
-                                            <th colspan="2">Night Diff.</th>
-                                            <th colspan="2">Day</th>
-                                            <th colspan="2">Night Diff.</th>
-                                            <th colspan="2">Day</th>
-                                            <th colspan="2">Night Diff.</th>
-                                            <th colspan="2">Day</th>
-                                            <th colspan="2">Night Diff.</th>
-                                            <th colspan="2">Day</th>
-                                            <th colspan="2">Night Diff.</th>
-                                        </tr>
-                                        <tr>
-                                            <th># of<br>hrs</th>
-                                            <th>Rate/<br>1.00</th>
-                                            <th># of<br>hrs</th>
-                                            <th>Rate/<br>1.10</th>
-                                            <th># of<br>hrs</th>
-                                            <th>Rate/<br>1.30</th>
-                                            <th># of<br>hrs</th>
-                                            <th>Rate/<br>1.43</th>
-                                            <th># of<br>hrs</th>
-                                            <th>Rate/<br>1.30</th>
-                                            <th># of<br>hrs</th>
-                                            <th>Rate/<br>1.43</th>
-                                            <th># of<br>hrs</th>
-                                            <th>Rate/<br>2.00</th>
-                                            <th># of<br>hrs</th>
-                                            <th>Rate/<br>2.20</th>
-                                            <th># of<br>hrs</th>
-                                            <th>Rate/<br>1.50</th>
-                                            <th># of<br>hrs</th>
-                                            <th>Rate/<br>1.65</th>
-                                            <th># of<br>hrs</th>
-                                            <th>Rate/<br>2.60</th>
-                                            <th># of<br>hrs</th>
-                                            <th>Rate/<br>2.86</th>
-                                            <th># of<br>hrs</th>
-                                            <th>Rate/<br>1.25</th>
-                                            <th># of<br>hrs</th>
-                                            <th>Rate/<br>1.375</th>
-                                            <th># of<br>hrs</th>
-                                            <th>Rate/<br>1.69</th>
-                                            <th># of<br>hrs</th>
-                                            <th>Rate/<br>1.859</th>
-                                            <th># of<br>hrs</th>
-                                            <th>Rate/<br>1.69</th>
-                                            <th># of<br>hrs</th>
-                                            <th>Rate/<br>1.859</th>
-                                            <th># of<br>hrs</th>
-                                            <th>Rate/<br>1.95</th>
-                                            <th># of<br>hrs</th>
-                                            <th>Rate/<br>2.145</th>
-                                            <th># of<br>hrs</th>
-                                            <th>Rate/<br>2.60</th>
-                                            <th># of<br>hrs</th>
-                                            <th>Rate/<br>2.86</th>
-                                            <th># of<br>hrs</th>
-                                            <th>Rate/<br>3.38</th>
-                                            <th># of<br>hrs</th>
-                                            <th>Rate/<br>3.718</th>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>!
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div> -->
-                    </form>
-                </div>
-            </section>
-            <!-- employee_form -->
-            <section class="hr" id="employee_form">
-                <h2>EMPLOYEE FORM</h2><br>
+                <h2>EMPLOYEES</h2>
                 <label class="d-flex gap-3">
                     <button type="button" id="new_employee_button" class="form-control fw-bold fs-3 bg-success text-white">
                         NEW EMPLOYEE
                     </button>
-                    <button type="button" id="update_record_button" class="form-control fw-bold fs-3">
+                    <button type="button" id="update_record_button" class="form-control fw-bold fs-3" style="border: 1px solid black;">
                         UPDATE RECORD
                     </button>
                     <button type="button" id="resign_button" class="form-control fw-bold fs-3 bg-danger text-white">
                         RESIGN
                     </button>
                 </label><br>
-                <form id="new_employee_form" action="https://script.google.com/macros/s/AKfycbz--ofawc-qwe6lqQBsUtfQAnXNAZArrD7yfPzJeC8McDqui5pm8ma5i99XPPOroZTRuQ/exec" method="post">
+                <form id="new_employee_form" style="display: none;" action="https://script.google.com/macros/s/AKfycbz--ofawc-qwe6lqQBsUtfQAnXNAZArrD7yfPzJeC8McDqui5pm8ma5i99XPPOroZTRuQ/exec" method="post">
                     <label for="employee_id">
                         <b>Employee ID</b>
                         <div  class="d-flex gap-3">
@@ -1449,6 +685,809 @@
                         </button>    
                     </div>
                 </form>
+                <div class="table" style="max-height: 80vh; align-items: start; overflow: scroll;">                            
+                    <div class="list">
+                        <table>
+                            <thead style="position: sticky; top: 0; background-color: black;">                                    
+                                <th>ID #</th>
+                                <th>FULL NAME</th>
+                                <th>DEPARTMENT</th>
+                                <th>DESIGNATION</th>
+                                <th>GENDER</th>
+                                <th>EMPLOYEE<br>TYPE</th>
+                                <th>BIRTHDAY</th>
+                                <th>MOBILE<br>NUMBER</th>
+                                <th>DATE<br>HIRE</th>
+                                <th>TIN NO.</th>
+                                <th>SSS/GSIS NO.</th>
+                                <th>PHILHEALTH NO.</th>
+                                <th>PAG-IBIG NO.</th>
+                            </thead>
+                            <tbody id="employee_list">
+
+                            </tbody>
+                            </table>
+                        <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
+                </div><br>
+            </section>
+            <!-- attendance_form -->
+            <section class="hr" id="attendance_form">
+                <h2>PAYROLL</h2>
+                <div>
+                    <label class="d-flex gap-3">
+                        <button type="button" id="payroll_transaction_button" class="form-control fw-bold fs-3 bg-success text-white">
+                            PAYROLL TRANSACTION FORM
+                        </button>
+                        <button type="button" id="payroll_button" class="form-control fw-bold fs-3 bg-danger text-white">
+                            GENERATE PAYSLIP
+                        </button>
+                    </label>
+                </div><br>
+                <form id="form_tab" style="display: none; height: 75vh; position: absolute; width: calc(100% - 40px); z-index: 2; background-color: white; padding: 20px; border: 3px solid #198754; border-radius: 10px;"
+                action="https://script.google.com/macros/s/AKfycbxy2dKQhID0cNKqyJSMJxhhhbya-6REUqLQuCcUqTvKZGyHO9nMQtFT8zCUwzfFS4Jzow/exec" method="post">
+                    <input type="hidden" name="user" id="user">
+                    <input type="hidden" name="number_of_days" id="number_of_days">
+                    <div class="hrf_form_grid">
+                        <div class="wrapper">
+                            <label for="employee_name">
+                                <i class="fa-solid fa-id-card"></i>
+                                Employee Name
+                            </label><br>
+                            <div class="search_input" id="search_employee_name">
+                                <input type="text" name="employee_name" id="employee_name" autocomplete="off" class="form-control" required placeholder="Type to Search Employee Name...">
+                                <div class="autocom_box">
+                                </div>
+                                <div class="icon"><i class="fas fa-search"></i></div>
+                            </div>
+                        </div>
+                        <div class="wrapper">
+                            <label for="department">
+                                <i class="fa-solid fa-id-card"></i>
+                                Department
+                            </label><br>
+                            <div class="search_input">
+                                <input type="text" name="department" id="department" autocomplete="off" class="form-control" required readonly>
+                            </div>
+                        </div>
+                        <div class="wrapper">
+                            <label for="designation">
+                                <i class="fa-solid fa-id-card"></i>
+                                Designation
+                            </label><br>
+                            <div class="search_input">
+                                <input type="text" name="designation" id="designation" autocomplete="off" class="form-control" required readonly>
+                            </div>
+                        </div>
+                    </div><br>
+                    <div class="hrf_form_attendance">
+                        <div>
+                            <label for="id_no">
+                                <i class="fa-solid fa-id-card"></i>
+                                ID No.
+                            </label><br>    
+                            <input type="text" id="id_no" name="id_no" class="form-control" required autocomplete="off" readonly><br>
+                        </div>
+                        <div>
+                            <label for="time_in_sched">
+                                <i class="fa-solid fa-id-card"></i>
+                                Time In Schedule
+                            </label><br>
+                            <input type="time" id="time_in_sched" name="time_in_sched" class="form-control form" required autocomplete="off" readonly><br>    
+                        </div>
+                        <div>
+                            <label for="time_in_sched">
+                                <i class="fa-solid fa-id-card"></i>
+                                Time Out Schedule
+                            </label><br>
+                            <input type="time" id="time_out_sched" name="time_out_sched" class="form-control form" required autocomplete="off" readonly><br>    
+                        </div>
+                        <div>
+                            <label for="daily_rate">
+                                <i class="fa-solid fa-id-card"></i>
+                                Daily Rate
+                            </label><br>
+                            <input type="number" id="daily_rate" name="daily_rate" class="form-control form" required autocomplete="off" readonly><br>    
+                        </div>
+                        <div>
+                            <label for="day_allowance">
+                                <i class="fa-solid fa-id-card"></i>
+                                Day Allowance
+                            </label><br>
+                            <input type="number" id="day_allowance" name="day_allowance" class="form-control form" required autocomplete="off" readonly><br>    
+                        </div>
+                        <div>
+                            <label for="night_allowance">
+                                <i class="fa-solid fa-id-card"></i>
+                                Night Allowance
+                            </label><br>
+                            <input type="number" id="night_allowance" name="night_allowance" class="form-control form" required autocomplete="off" readonly><br>    
+                        </div>    
+                    </div>
+                    <div id="cut_off" style="display: grid; grid-template-columns: 200px 200px 200px 200px 200px; gap: 20px;">
+                        <label for="year">
+                            <i class="fa-solid fa-id-card"></i>
+                            Payroll Type
+                            <input type="text" id="payroll_type" name="payroll_type" class="form-control form" required readonly autocomplete="off">   
+                        </label>
+                        <label for="year">
+                            <i class="fa-solid fa-id-card"></i>
+                            Year
+                            <input type="number" id="year" name="year" class="form-control form" required autocomplete="off">   
+                        </label>
+                        <div id="generate_button" style="display: flex;">
+                            <button id="search_ltf_form_no_button" type="button" style=" height: 50px; width: 50px; margin-top: 30px; border: none; border-radius: 10px;">
+                                <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
+                            </button>
+                        </div>
+                    </div><br>
+                    <div id="input_container">
+                        <div id="input_container1" style="font-size: 14px;">
+                            <div class="label" style="height: 44px; font-size: 10px !important;">ABSENT / REST DAY /<br>SICK LEAVE / LEAVE</div>
+                            <div class="label" style="height: 44px; font-size: 10px !important;">HALF DAY / REST DAY DUTY<br>REGULAR HOLIDAY/<br>SPECIAL HOLIDAY/<br>SPECIAL HOLIDAY ABSENT</div>
+                            <div class="label">DAY</div>
+                            <div class="label" style="height: 36px;">DATE</div>
+                            <div class="label" style="height: 36px;">TIME IN</div>
+                            <div class="label" style="height: 36px;">TIME OUT</div>
+                            <div style="height: 24px;"></div>
+                            <div class="label" style="height: 36px;">BREAK (hours)</div>
+                            <div class="label" style="height: 36px;">HOURS</div>
+                            <div class="label" style="height: 24px;">RATE</div>
+                            <div class="label" style="height: 36px;">RATE/hour</div>
+                            <div class="label" style="height: 36px;">HOURS X RATE</div>
+                            <div class="label" style="height: 36px;">SUBTOTAL</div>
+                            <div class="label" style="height: 36px;">LATE (mins)</div>
+                            <div class="label" style="height: 36px;">UNDERTIME (hours)</div>
+                            <div class="label" style="height: 36px;">LATE DEDUCTION</div>
+                            <div class="label" style="height: 36px;">UNDERTIME DEDUCTION</div>
+                            <div class="label" style="height: 36px;">8 HOUR PAY</div>
+                            <div class="label" style="height: 44px;">WITH OT SLIP</div>
+                            <div class="label" style="height: 36px;">OT BREAK</div>
+                            <div class="label" style="height: 36px;">OT HOURS</div>
+                            <div class="label" style="height: 24px;">OT RATE</div>
+                            <div class="label" style="height: 36px;">OT RATE/hour</div>
+                            <div class="label" style="height: 36px;">OT HOURS X RATE</div>
+                            <div class="label" style="height: 36px;">OT PAY</div>
+                            <div class="label" style="height: 36px;">ALLOWANCE</div>
+                            <div class="label" style="height: 36px;">SALARY / DAY</div>                         
+                        </div>
+                        <div class="hrf_form_grid3" id="days">
+                        </div><br>
+                    </div>
+                    <div class="hide">
+                        <div class="net_salary">
+                            <div>
+                                <label for="net_salary">
+                                    <i class="fa-solid fa-money-bill-wave"></i>
+                                    Gross Salary
+                                </label><br>
+                                <input type="number" id="gross_salary" name="gross_salary" class="form-control form" required readonly autocomplete="off" value="0"><br>        
+                            </div>
+                        </div>
+                        <label for="net_salary">
+                            Additional
+                        </label>
+                        <div style="display: flex; justify-content: space-between;">
+                            <div class="hrf_form">
+                                <div>
+                                    <label for="adjustment">
+                                        <i class="fa-solid fa-address-card"></i>
+                                        Adjustment
+                                    </label><br>
+                                    <input type="number" id="adjustment" name="adjustment" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                                <div>
+                                    <label for="cash_advance">
+                                        <i class="fa-solid fa-address-card"></i>
+                                        Cash Advance
+                                    </label><br>
+                                    <input type="number" id="cash_advance" name="cash_advance" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                            </div>
+                            <div>
+                                <label for="total_additional">
+                                    <i class="fa-solid fa-money-bill-wave"></i>
+                                    Total Additional
+                                </label><br>
+                                <input type="number" id="total_additional" name="total_additional" class="form-control form" required readonly autocomplete="off" value="0"><br>        
+                            </div>
+                        </div>
+                        <label for="net_salary">
+                            Deductions
+                        </label>
+                        <div style="display: flex; justify-content: space-between;">
+                            <div class="hrf_form">
+                                <div>
+                                    <label for="sss_deduction">
+                                        <i class="fa-solid fa-address-card"></i>
+                                        SSS
+                                    </label><br>
+                                    <input type="number" id="sss_deduction" name="sss_deduction" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                                <div>
+                                    <label for="pag_ibig_deduction">
+                                        <i class="fa-solid fa-address-card"></i>
+                                        Pag-ibig
+                                    </label><br>
+                                    <input type="number" id="pag_ibig_deduction" name="pag_ibig_deduction" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                                <div>
+                                    <label for="philhealth_deduction">
+                                        <i class="fa-solid fa-address-card"></i>
+                                        Philhealth
+                                    </label><br>
+                                    <input type="number" id="philhealth_deduction" name="philhealth_deduction" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                                <div>
+                                    <label for="sss_loan">
+                                        <i class="fa-solid fa-money-bill-wave"></i>
+                                        SSS Loan
+                                    </label><br>
+                                    <input type="number" id="sss_loan" name="sss_loan" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                                <div>
+                                    <label for="pag_ibig_loan">
+                                        <i class="fa-solid fa-money-bill-wave"></i>
+                                        Pag-ibig Loan
+                                    </label><br>
+                                    <input type="number" id="pag_ibig_loan" name="pag_ibig_loan" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <div class="hrf_form">
+                                <div>
+                                    <label for="ca_deduction">
+                                        <i class="fa-solid fa-money-bill-wave"></i>
+                                        C/A Deduction
+                                    </label><br>
+                                    <input type="number" id="ca_deduction" name="ca_deduction" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                                <div>
+                                    <label for="uniform">
+                                        <i class="fa-solid fa-address-card"></i>
+                                        Uniform
+                                    </label><br>
+                                    <input type="number" id="uniform" name="uniform" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                                <div>
+                                    <label for="housing">
+                                        <i class="fa-solid fa-address-card"></i>
+                                        Housing
+                                    </label><br>
+                                    <input type="number" id="housing" name="housing" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                                <div>
+                                    <label for="st_peter">
+                                        <i class="fa-solid fa-address-card"></i>
+                                        St. Peter
+                                    </label><br>
+                                    <input type="number" id="st_peter" name="st_peter" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                                <div>
+                                    <label for="cash_not_return">
+                                        <i class="fa-solid fa-money-bill-wave"></i>
+                                        Cash Not Return
+                                    </label><br>
+                                    <input type="number" id="cash_not_return" name="cash_not_return" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <div class="hrf_form">
+                                <div>
+                                    <label for="hard_hat">
+                                        <i class="fa-solid fa-address-card"></i>
+                                        Hard Hat
+                                    </label><br>
+                                    <input type="number" id="hard_hat" name="hard_hat" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                                <div>
+                                    <label for="safety_shoes">
+                                        <i class="fa-solid fa-address-card"></i>
+                                        Safety Shoes
+                                    </label><br>
+                                    <input type="number" id="safety_shoes" name="safety_shoes" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                                <div>
+                                    <label for="over_meals">
+                                        <i class="fa-solid fa-address-card"></i>
+                                        Over Meals
+                                    </label><br>
+                                    <input type="number" id="over_meals" name="over_meals" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                                <div>
+                                    <label for="bereavement_assistance">
+                                        <i class="fa-solid fa-money-bill-wave"></i>
+                                        Beravement Assistance
+                                    </label><br>
+                                    <input type="number" id="bereavement_assistance" name="bereavement_assistance" class="form-control form" required autocomplete="off" value="0"><br>        
+                                </div>
+                            </div>
+                            <div>
+                                <label for="total_deductions">
+                                    <i class="fa-solid fa-money-bill-wave"></i>
+                                    Total Deductions
+                                </label><br>
+                                <input type="number" id="total_deductions" name="total_deductions" class="form-control form" required readonly autocomplete="off" value="0"><br>        
+                            </div>
+                        </div>
+                        <div class="net_salary">
+                            <div>
+                                <label for="net_salary">
+                                    <i class="fa-solid fa-money-bill-wave"></i>
+                                    Net Salary
+                                </label><br>
+                                <input type="number" id="net_salary" name="net_salary" class="form-control form" required readonly autocomplete="off" value="0"><br>        
+                            </div>
+                        </div>
+                        <div class="buttons">
+                            <button type="submit" id="submit_btn" class="form-control" >
+                                Submit
+                            </button>
+                            <button type="reset" id="reset" class="form-control" >
+                                Clear
+                            </button>
+                        </div><br>
+                    </div>
+                </form>
+                <!-- <button id="" class="form-control">
+                    <i class="fa-solid fa-receipt"></i>
+                </button> -->
+                <div id="payroll_tab">
+                    <h2>PRINT PAYROLL</h2><br>
+                    <form action="">
+                        <input type="hidden" name="user" id="user">
+                        <div class="d-flex gap-4">
+                            <div style="width: 200px !important;">
+                                <label>
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                    Payroll Type
+                                </label>
+                                <select name="payroll_type" id="payroll_type" class="form-control">
+                                    <option value="">Choose</option>
+                                    <option value="WEEKLY">WEEKLY</option>
+                                    <option value="SEMI-MONTHLY">SEMI-MONTHLY</option>
+                                </select>  
+                            </div>
+                            <div id="payroll_details" class="d-flex gap-4">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="d-flex">
+                            <button type="button" class="form-control" id="generate_payslip_button">
+                                Generate Payslip
+                            </button>
+                            <button class="form-control" id="download_payslip_button" onclick="convertToPDF()">
+                                Download Payslip
+                            </button>
+                            <!-- <button class="form-control" id="generate_payslip_button" onclick="convertToPDF2()">
+                                Generate Payroll
+                            </button> -->
+                        </div>
+                        <div id="payslip_form_container_container">
+                            <div id="payslip_container">
+            
+                            </div>
+                            <style>
+                                .left{
+                                    text-align: start !important;
+                                }
+                                .right{
+                                    text-align: right !important;
+                                }
+                                .border-top-bottom{
+                                    border-top: 1px solid black !important;
+                                    border-bottom: 1px solid black !important;
+                                }
+                                
+                                .border-top{
+                                    border-top: 1px solid black !important;
+                                }
+                                
+                                .border-bottom{
+                                    border-bottom: 1px solid black !important;
+                                }
+                                
+                                .border-left{
+                                    border-left: 1px solid black !important;
+                                }
+                                
+                                .border-right{
+                                    border-right: 1px solid black !important;
+                                }
+                                
+                                .border-bottom-right{
+                                    border-bottom: 1px solid black !important;
+                                    border-right: 1px solid black !important;
+                                }
+                                
+                                .border{
+                                    border: 1px solid black !important;
+                                }
+                                
+                                .truncate_text {
+                                    white-space: nowrap;
+                                    overflow: hidden; 
+                                    text-overflow: ellipsis;
+                                }
+                        
+                                .vertical-table 
+                                {
+                                    display: flex;
+                                    width: 100% !important;
+                                }
+                        
+                                .vertical-table table 
+                                {
+                                    border-collapse: collapse;
+                                    width: 100% !important;
+                                }
+                        
+                                .vertical-table table tr
+                                {
+                                    display: grid !important;
+                                    grid-template-columns: 15% repeat(7,calc(85%/7)) !important;
+                                    text-align: center;
+                                    width: 100% !important;
+                                }
+                        
+                                .vertical-table th,
+                                .vertical-table td 
+                                {
+                                    padding: 0 4px !important;
+                                }
+                        
+                                .vertical-table th 
+                                {
+                                    text-align: left;
+                                    color: black !important;
+                                    font-size: 9px !important;
+                                }
+                        
+                                .vertical-table td
+                                {
+                                    border-bottom: 1px solid #ddd;
+                                    font-size: 9px !important;
+                                }
+
+                                #payslip_form
+                                {
+                                    width: 1056px;
+                                    height: 816px;
+                                    border: 3px solid black;
+                                    background-color: white;
+                                    color: black !important;
+                                    position: relative;
+                                    font-weight: bold !important;
+                                    display: flex;
+                                    flex-direction: column;
+                                }
+                        
+                                #payslip_form .payslip
+                                {
+                                    margin: 20px;
+                                    width: 420px;
+                                    height: 368px;
+                                    border: 3px solid black;
+                                }
+                        
+                                #payslip_form .bold
+                                {
+                                    font-weight: bold;
+                                }
+                        
+                                #payslip_form h1
+                                {
+                                    font-size: 16px;
+                                    margin: 0;
+                                }
+                        
+                                #payslip_form h2
+                                {
+                                    font-size: 14px;
+                                    margin: 0;
+                                }
+                        
+                                #payslip_form h3
+                                {
+                                    font-size: 12px;
+                                    margin: 0;
+                                }
+                        
+                                #payslip_form h4
+                                {
+                                    font-size: 10px;
+                                    margin: 0;
+                                }
+                        
+                                #payslip_form .payslip img
+                                {
+                                    height: 25px;
+                                    width: 25px;
+                                }
+                        
+                                #payslip_form .payslip .summary{
+                                    padding: 5px;
+                                }
+                        
+                                #payslip_form .payslip .summary .header{
+                                    border-bottom: 1px solid black;
+                                    display: flex;
+                                }
+                        
+                                #payslip_form .payslip .summary .header .header_title{
+                                    padding-left: 5px;
+                                }
+                        
+                                #payslip_form .payslip .summary .employee_details{
+                                    border-bottom: 1px solid black;
+                                }
+                        
+                                #payslip_form .payslip .summary .employee_details .grid1{
+                                    display: grid;
+                                    grid-template-columns: 60% 40%;
+                                }
+                        
+                                #payslip_form .payslip .summary .summary_details_header{
+                                    justify-content: space-around;
+                                    border-bottom: 1px solid black;
+                                    border-right: 1px solid black;
+                                    border-left: 1px solid black;
+                                    text-align: center;
+                                }
+
+                                #payslip_form .payslip .summary .summary_details_header > div
+                                {
+                                    text-align: center;
+                                }
+                    
+                                #payslip_form .payslip .summary .summary_details_details > div:first-child
+                                {
+                                    border-bottom: 1px solid black;
+                                    width: 100% !important;
+                                    display: grid;
+                                    grid-template-columns: 22% 5% 12% 8% 11% 8% 12% 10% 12%;
+                                    padding: 0 5px;
+                                }
+                    
+                                #payslip_form .payslip .summary .summary_details_details .detail_header h4
+                                {
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    text-align: center;
+                                }
+                                
+                                #payslip_form .payslip .summary .summary_details_details2 > div
+                                {
+                                    border-bottom: 1px solid black;
+                                    width: 100% !important;
+                                    display: grid;
+                                    grid-template-columns: 2fr 1fr 2fr 1fr 2fr 1fr;
+                                    padding: 0 5px;
+                                }
+                                
+                                #payslip_form .payslip .summary .summary_footer
+                                {
+                                    border-bottom: 1px solid black;
+                                    display: grid;
+                                    grid-template-columns: 1fr 1fr;
+                                    padding: 0 5px;
+                                }
+                                
+                                #payslip_form .payslip .summary .summary_footer > div
+                                {
+                                    display: grid;
+                                    grid-template-columns: 1fr 1fr;
+                                    padding: 0 5px;
+                                }
+                                
+                                #payslip_form .payslip .summary .summary_footer2
+                                {
+                                    border-bottom: 1px solid black;
+                                    display: grid;
+                                    grid-template-columns: 1fr 1fr;
+                                    padding: 0 5px;
+                                }
+
+                            </style>
+                        </div>
+                        <!-- <div id="payroll_form">
+                            <div class="payroll">
+                                <div class="header">
+                                    <img src="../images/logo.png" alt="">
+                                    <div class="header_title">
+                                        <h2 class="bold">FAR EAST FUEL CORPORATION</h2>
+                                        <h3>#888 Purok 5, Irabagon St. Brgy. Anyatam, San Ildefonso, Bulacan, 3010</h3>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <h2>PAYROLL FOR WEEK 30 (July 24-30, 2023)</h2>
+                                </div>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="4">#</th>
+                                            <th rowspan="4">Full Name</th>
+                                            <th rowspan="4">Daily<br>Rate</th>
+                                            <th rowspan="4"># of<br>Days</th>
+                                            <th colspan="24">Eight Hour Pay</th>
+                                            <th colspan="24">Overtime Pay</th>
+                                            <th rowspan="4">Gross<br>Pay</th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="4">Ordinary</th>
+                                            <th colspan="4">Rest Day DUty</th>
+                                            <th colspan="4">Special Holiday</th>
+                                            <th colspan="4">Regular Holiday</th>
+                                            <th colspan="4">Special Holiday & RDD</th>
+                                            <th colspan="4">Regular Holiday & RDD</th>
+                                            <th colspan="4">Ordinary</th>
+                                            <th colspan="4">Rest Day Duty</th>
+                                            <th colspan="4">Special Holiday</th>
+                                            <th colspan="4">Regular Holiday</th>
+                                            <th colspan="4">Special Holiday & RDD</th>
+                                            <th colspan="4">Regular Holiday & RDD</th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2">Day</th>
+                                            <th colspan="2">Night Diff.</th>
+                                            <th colspan="2">Day</th>
+                                            <th colspan="2">Night Diff.</th>
+                                            <th colspan="2">Day</th>
+                                            <th colspan="2">Night Diff.</th>
+                                            <th colspan="2">Day</th>
+                                            <th colspan="2">Night Diff.</th>
+                                            <th colspan="2">Day</th>
+                                            <th colspan="2">Night Diff.</th>
+                                            <th colspan="2">Day</th>
+                                            <th colspan="2">Night Diff.</th>
+                                            <th colspan="2">Day</th>
+                                            <th colspan="2">Night Diff.</th>
+                                            <th colspan="2">Day</th>
+                                            <th colspan="2">Night Diff.</th>
+                                            <th colspan="2">Day</th>
+                                            <th colspan="2">Night Diff.</th>
+                                            <th colspan="2">Day</th>
+                                            <th colspan="2">Night Diff.</th>
+                                            <th colspan="2">Day</th>
+                                            <th colspan="2">Night Diff.</th>
+                                            <th colspan="2">Day</th>
+                                            <th colspan="2">Night Diff.</th>
+                                        </tr>
+                                        <tr>
+                                            <th># of<br>hrs</th>
+                                            <th>Rate/<br>1.00</th>
+                                            <th># of<br>hrs</th>
+                                            <th>Rate/<br>1.10</th>
+                                            <th># of<br>hrs</th>
+                                            <th>Rate/<br>1.30</th>
+                                            <th># of<br>hrs</th>
+                                            <th>Rate/<br>1.43</th>
+                                            <th># of<br>hrs</th>
+                                            <th>Rate/<br>1.30</th>
+                                            <th># of<br>hrs</th>
+                                            <th>Rate/<br>1.43</th>
+                                            <th># of<br>hrs</th>
+                                            <th>Rate/<br>2.00</th>
+                                            <th># of<br>hrs</th>
+                                            <th>Rate/<br>2.20</th>
+                                            <th># of<br>hrs</th>
+                                            <th>Rate/<br>1.50</th>
+                                            <th># of<br>hrs</th>
+                                            <th>Rate/<br>1.65</th>
+                                            <th># of<br>hrs</th>
+                                            <th>Rate/<br>2.60</th>
+                                            <th># of<br>hrs</th>
+                                            <th>Rate/<br>2.86</th>
+                                            <th># of<br>hrs</th>
+                                            <th>Rate/<br>1.25</th>
+                                            <th># of<br>hrs</th>
+                                            <th>Rate/<br>1.375</th>
+                                            <th># of<br>hrs</th>
+                                            <th>Rate/<br>1.69</th>
+                                            <th># of<br>hrs</th>
+                                            <th>Rate/<br>1.859</th>
+                                            <th># of<br>hrs</th>
+                                            <th>Rate/<br>1.69</th>
+                                            <th># of<br>hrs</th>
+                                            <th>Rate/<br>1.859</th>
+                                            <th># of<br>hrs</th>
+                                            <th>Rate/<br>1.95</th>
+                                            <th># of<br>hrs</th>
+                                            <th>Rate/<br>2.145</th>
+                                            <th># of<br>hrs</th>
+                                            <th>Rate/<br>2.60</th>
+                                            <th># of<br>hrs</th>
+                                            <th>Rate/<br>2.86</th>
+                                            <th># of<br>hrs</th>
+                                            <th>Rate/<br>3.38</th>
+                                            <th># of<br>hrs</th>
+                                            <th>Rate/<br>3.718</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>!
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> -->
+                    </form>
+                </div>
+                <div class="table" style="max-height: 75vh; align-items: start; overflow-y: scroll;">                            
+                    <div class="list">
+                        <table>
+                            <thead style="position: sticky; top: 0; background-color: black;">
+                                <th>#</th>
+                                <th>YEAR</th>
+                                <th>WEEK #/<br>CUT-OFF</th>
+                                <th>EMPLOYEE ID</th>
+                                <th>FULL NAME</th>
+                                <th>GROSS SALARY</th>
+                                <th>TOTAL DEDUCTIONS</th>
+                                <th>NET SALARY</th>
+                            </thead>
+                            <tbody id="payroll_summary">
+
+                            </tbody>
+                        </table>
+                        <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
+                </div><br>
             </section>
             <!-- settings -->
             <section id="settingsSection">
