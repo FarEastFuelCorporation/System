@@ -134,6 +134,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <td>${employee_data_list.content[b][findTextInArray(employee_data_list, "EMPLOYEE TYPE")]}</td>
                     <td>${date_decoder(employee_data_list.content[b][findTextInArray(employee_data_list, "BIRTH DATE")])}</td>
                     <td>${employee_data_list.content[b][findTextInArray(employee_data_list, "MOBILE NO.")]}</td>
+                    <td>${date_decoder(employee_data_list.content[b][findTextInArray(employee_data_list, "DATE HIRE")])}</td>
+                    <td>${employee_data_list.content[b][findTextInArray(employee_data_list, "TIN NO.")]}</td>
+                    <td>${employee_data_list.content[b][findTextInArray(employee_data_list, "SSS/GSIS NO.")]}</td>
+                    <td>${employee_data_list.content[b][findTextInArray(employee_data_list, "PHILHEALTH NO.")]}</td>
+                    <td>${employee_data_list.content[b][findTextInArray(employee_data_list, "PAG-IBIG NO.")]}</td>
                 </tr>
                 `
             }

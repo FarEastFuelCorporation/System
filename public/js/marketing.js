@@ -140,7 +140,18 @@ document.addEventListener('DOMContentLoaded', async function() {
             generateCalendarDays(2023, monthNameToNumber(month_filter.value))
             calendar_month.innerText = month_filter.value
             // color coding
-            var [forHaulingColor, forReceivingColor, forWarehousingColor, forSortingColor, forTreatmentColor, forCertificationColor, forBillingColor, forCollectionColor, finishedColor] = ["#dc3545", "#ffc107", "#c3c3c3", "#fd7e14", "#0d6efd", "#6610f2", "#0dcaf0", "#d63384", "#198754"];
+            var [forHaulingColor, forReceivingColor, forWarehousingColor, forSortingColor, forTreatmentColor, forCertificationColor, forBillingColor, forCollectionColor, finishedColor] = 
+                [
+                "#FFC0CB", // Light Pink (forHaulingColor)
+                "#FFDAB9", // Peachpuff (forSortingColor)
+                "#FFB6C1", // Light Pink (forCollectionColor)
+                "#FFE4B5", // Moccasin (forReceivingColor)
+                "#AFEEEE", // Pale Turquoise (forWarehousingColor)
+                "#D8BFD8", // Thistle (forCertificationColor)
+                "#98FB98", // Pale Green (forTreatmentColor)
+                "#B0C4DE", // Light Steel Blue (forBillingColor)
+                "#C1FFC1"  // Pale Green (finishedColor)
+                ];
             var for_hauling_marketing = 0;
             var for_receiving_marketing = 0;
             var for_warehousing_marketing = 0;
@@ -314,7 +325,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 if(month_filter.value == formatMonth(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])){
                     if(status == "FOR HAULING"){
                         color = forHaulingColor;
-                        font_color = "white";
                     } else if(status == "FOR RECEIVING"){
                         color = forReceivingColor;
                     } else if(status == "FOR WAREHOUSING"){
@@ -323,10 +333,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                         color = forSortingColor;
                     } else if(status == "FOR TREATMENT"){
                         color = forTreatmentColor;
-                        font_color = "white !important";
                     } else if(status == "FOR CERTIFICATION"){
                         color = forCertificationColor;
-                        font_color = "white !important";
                     } else if(status == "FOR BILLING"){
                         color = forBillingColor;
                     } else if(status == "FOR COLLECTION"){
@@ -425,7 +433,18 @@ document.addEventListener('DOMContentLoaded', async function() {
                     },
                 },
                 labels: ["For Hauling", "For Receiving", "For Warehousing", "For Sorting", "For Treatment", "For Certification", "For Billing", "For Collection", "Finished"],
-                colors: ["#dc3545", "#ffc107", "#c3c3c3", "#fd7e14", "#0d6efd", "#6610f2", "#0dcaf0", "#d63384", "#198754"], // Specify solid colors here
+                colors:                 
+                    [
+                    "#FFC0CB", // Light Pink (forHaulingColor)
+                    "#FFDAB9", // Peachpuff (forSortingColor)
+                    "#FFB6C1", // Light Pink (forCollectionColor)
+                    "#FFE4B5", // Moccasin (forReceivingColor)
+                    "#AFEEEE", // Pale Turquoise (forWarehousingColor)
+                    "#D8BFD8", // Thistle (forCertificationColor)
+                    "#98FB98", // Pale Green (forTreatmentColor)
+                    "#B0C4DE", // Light Steel Blue (forBillingColor)
+                    "#C1FFC1"  // Pale Green (finishedColor)
+                    ], // Specify solid colors here
                 responsive: [{
                     breakpoint: 480,
                     options: {
