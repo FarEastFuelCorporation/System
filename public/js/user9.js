@@ -784,31 +784,36 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
                 
                 function calculateAllowance(){
+                    const totalHours = parseFloat(regular_hours[x].value) + parseFloat(night_hours[x].value);
                     if(rest_day_duty_box[x].checked == true){
                         allowance[x].value = 0;
                     }
+                    
                     else{
-                        if(parseInt(time_in_sched.value.slice(0,2)) >= 18){
-                            if(((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) >= 8){
+                        if (parseInt(time_in_sched.value.slice(0, 2)) >= 18) {
+                            if (totalHours >= 8) {
                                 allowance[x].value = parseFloat(night_allowance.value);
-                            }
-                            else if(((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) < 8 && ((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) >= 4){
-                                allowance[x].value = (parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))/8 * parseFloat(night_allowance.value);
-                            }
-                            else if(((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) < 4){
+                            } else if (totalHours >= 4) {
+                                allowance[x].value = (totalHours / 8) * parseFloat(night_allowance.value);
+                            } else {
                                 allowance[x].value = 0;
                             }
                         }
-                        else{
-                            if(((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) >= 8){
+                        else {                        
+                            if (totalHours >= 8) {
                                 allowance[x].value = parseFloat(day_allowance.value);
-                            }
-                            else if(((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) < 8 && ((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) >= 4){
-                                allowance[x].value = (parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value)) * parseFloat(day_allowance.value);
-                            }
-                            else if(((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) < 8){
+                            } else if (totalHours < 8 && totalHours >= 4) {
+                                allowance[x].value = (totalHours / 8) * parseFloat(day_allowance.value);
+                            } else if (totalHours < 4) {
                                 allowance[x].value = 0;
                             }
+                        
+                            console.log(parseFloat(regular_hours[x].value));
+                            console.log(parseFloat(night_hours[x].value));
+                            console.log(totalHours / 8);
+                            console.log((totalHours / 8) * parseFloat(day_allowance.value));
+                            console.log(allowance[x].value);
+                            console.log(day_allowance.value);
                         }
                     }
                 }
@@ -1663,6 +1668,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     calculateHours();
                     calculateGrossSalary();
                     calculateNetSalary();
+                    calculateAllowance();
                 });
     
                 night_break[x].addEventListener("keyup", () => {
@@ -1670,6 +1676,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     calculateHours();
                     calculateGrossSalary();
                     calculateNetSalary();
+                    calculateAllowance();
                 });
     
                 ot_day_break[x].addEventListener("keyup", () => {
@@ -1677,6 +1684,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     calculateOvertimeHours();
                     calculateGrossSalary();
                     calculateNetSalary();
+                    calculateAllowance();
                 });
     
                 ot_night_break[x].addEventListener("keyup", () => {
@@ -1684,6 +1692,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     calculateOvertimeHours();
                     calculateGrossSalary();
                     calculateNetSalary();
+                    calculateAllowance();
                 });
             
                 time_out_input[x].addEventListener("change", () => {
