@@ -2042,6 +2042,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         
         generate_payslip_button.addEventListener("click", () => {
+            download_payslip_button.style.display = "block"
             var payslip_employee_id = [];
             const months = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
             if(payroll_type2.value == "WEEKLY"){
@@ -2146,10 +2147,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                     var sub_deduction = 0;
                     var subtotal = 0;
                     var other_deduction = 0;
-                    // var government_dues_month = "";
                     for(let c = 1; c < payroll_summary_data_list.content.length; c++){
                         if(payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "EMPLOYEE ID")] == payslip_employee_id[x] && payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "YEAR")] == search_year.value && payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "WEEK NUMBER")] == search_week_number.value){
-                            // government_dues_month = weekNumberToPrevMonthAbbreviation(search_week_number.value)
                             adjustment = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "ADJUSTMENT")];
                             cash_advance = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "CASH ADVANCE")];
                             sss = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "SSS")];

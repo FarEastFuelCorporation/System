@@ -505,7 +505,7 @@ nav {
 #hr_dashboard,
 #employee_list_section,
 #attendance_form,
-#employee_form,
+#loan_section,
 #accounting_head_dashboard,
 #purchasing_dashboard,
 #purchase_order_form,
@@ -2495,7 +2495,7 @@ input:disabled {
   width: calc(100vw - 300px);
   background-color: white;
   padding: 20px;
-  border: 3px solid #dc3545;
+  border: 3px solid black;
   border-radius: 10px;
   overflow: scroll;
   min-height: 80%;
