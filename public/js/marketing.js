@@ -139,6 +139,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         function generatePending(){
             generateCalendarDays(2023, monthNameToNumber(month_filter.value))
             calendar_month.innerText = month_filter.value
+            // color coding
+            var [forHaulingColor, forReceivingColor, forWarehousingColor, forSortingColor, forTreatmentColor, forCertificationColor, forBillingColor, forCollectionColor, finishedColor] = ["#dc3545", "#ffc107", "#c3c3c3", "#fd7e14", "#0d6efd", "#6610f2", "#0dcaf0", "#d63384", "#198754"];
             var for_hauling_marketing = 0;
             var for_receiving_marketing = 0;
             var for_warehousing_marketing = 0;
@@ -307,22 +309,47 @@ document.addEventListener('DOMContentLoaded', async function() {
                         break
                     }
                 }
+                var color;
+                var font_color = "black";
                 if(month_filter.value == formatMonth(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])){
+                    if(status == "FOR HAULING"){
+                        color = forHaulingColor;
+                        font_color = "white";
+                    } else if(status == "FOR RECEIVING"){
+                        color = forReceivingColor;
+                    } else if(status == "FOR WAREHOUSING"){
+                        color = forWarehousingColor;
+                    } else if(status == "FOR SORTING"){
+                        color = forSortingColor;
+                    } else if(status == "FOR TREATMENT"){
+                        color = forTreatmentColor;
+                        font_color = "white !important";
+                    } else if(status == "FOR CERTIFICATION"){
+                        color = forCertificationColor;
+                        font_color = "white !important";
+                    } else if(status == "FOR BILLING"){
+                        color = forBillingColor;
+                    } else if(status == "FOR COLLECTION"){
+                        color = forCollectionColor;
+                    } else if(status == "FOR ACCOUNTING"){
+                        color = finishedColor;
+                    }
+                    var style = `style="color: ${font_color}; font-size: 14px !important;"`
                     data_value +=`
-                    <tr>
-                        <td>${data_value_counter}</td>
-                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")]}</td>
-                        <td>${date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])} /<br> ${time_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING TIME")])}</td>
-                        <td>${findClientName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")])}</td>
-                        <td>${findWasteCode(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")])}</td>
-                        <td>${findWasteName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")], (mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")]))}</td>
-                        <td>${vehicle}</td>
-                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")]}</td>
-                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "REMARKS")]}</td>
-                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMITTED BY")]}</td>
-                        <td>${plate_no}</td>
-                        <td>${driver_name}</td>
-                        <td>${status}</td>
+                    <tr style="background-color: ${color};">
+                        <td ${style}>${data_value_counter}</td>
+                        <td ${style}>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")]}</td>
+                        <td ${style}>${date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])} /<br> ${time_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING TIME")])}</td>
+                        <td ${style}>${findClientName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")])}</td>
+                        <td ${style}>${findWasteCode(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")])}</td>
+                        <td ${style}>${findWasteName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")], (mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")]))}</td>
+                        <td ${style}>${vehicle}</td>
+                        <td ${style}>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")]}</td>
+                        <td ${style}>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "REMARKS")]}</td>
+                        <td ${style}>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMITTED BY")]}</td>
+                        <td ${style}>${plate_no}</td>
+                        <td ${style}>${driver_name}</td>
+                        <td ${style}>${status}</td>
                     </tr>
                     `
                     
@@ -426,8 +453,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         var code_year_month;
         var data_counter;
         
+        var vehicle_list = [];
+        for(let y = 1; y < vehicle_data_list.content.length; y++){
+            if (!vehicle_list.includes(vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")])) {
+                vehicle_list.push(vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")]);
+            }
+        }
+
         // FORM GENERATOR
-        
         code_year_month = `C${today_year}`;
         
         var data_content = 1;
@@ -510,7 +543,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         })
                         var is_there_quotation = false;
                         for (let x = 1; x < qlf_data_list.content.length; x++) {
-                            if (client_id == qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")] && qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")] !== "TRIP") {
+                            if (client_id == qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")] && !vehicle_list.includes(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])) {
                                 is_there_quotation = true;
                                 var data = `
                                 <option value="${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]}">${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")]} (${findWasteCode(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])})</option>
@@ -653,13 +686,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 treatment_process_list.push(treatment_process_data_list.content[i][findTextInArray(treatment_process_data_list, "TREATMENT PROCESS")]);
             }
         }       
-
-        var vehicle_list = [];
-        for(let y = 1; y < vehicle_data_list.content.length; y++){
-            if (!vehicle_list.includes(vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")])) {
-                vehicle_list.push(vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")]);
-            }
-        }
 
         // mtf_data_list
         const mtf_form_no = document.getElementById("mtf_form_no");
@@ -2816,7 +2842,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         function findWasteCode(waste_id){
             var waste_code = "";
             for(let c = 1; c < type_of_waste_data_list.content.length; c++){
-                if(waste_id.substring(0, 8) == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
+                if((waste_id).toString().substring(0, 8) == type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE ID")]){
                     waste_code = (type_of_waste_data_list.content[c][findTextInArray(type_of_waste_data_list, "WASTE CODE")]).substring(0, 4);
                     break
                 }
