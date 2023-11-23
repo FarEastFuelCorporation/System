@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     useSeriesColors: false, // Use custom color
                 },
             },
-            labels: ["Regular", "Project Based", "Subcon"],
+            labels: ["Regular", "Project Based", "Temporary"],
             colors: ["#198754", "#c3c3c3", "#dc3545"], // Specify solid colors here
             responsive: [{
                 breakpoint: 480,
