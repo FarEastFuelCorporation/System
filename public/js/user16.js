@@ -437,7 +437,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 let empty_array = [];
                 if (user_data) {
                     empty_array = data_value.filter((data) => {
-                        return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
+                        return data.toLocaleLowerCase().includes(user_data.toLocaleLowerCase());
                     });
                     empty_array = empty_array.map((data) => {
                         return '<li>' + data + '</li>';
@@ -523,7 +523,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     let empty_array = [];
                     if (user_data) {
                         empty_array = waste_name_list.filter((data) => {
-                            return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
+                            return data.toLocaleLowerCase().includes(user_data.toLocaleLowerCase());
                         });
                         empty_array = empty_array.map((data) => {
                             return '<li>' + data + '</li>';
@@ -2224,7 +2224,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 let empty_array = [];
                 if (user_data) {
                     empty_array = employee_name.filter((data) => {
-                        return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
+                        return data.toLocaleLowerCase().includes(user_data.toLocaleLowerCase());
                     });
                     empty_array = empty_array.map((data) => {
                         return '<li>' + data + '</li>';

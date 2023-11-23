@@ -473,10 +473,18 @@ document.addEventListener('DOMContentLoaded', async function() {
         const hauling_date = document.getElementById("hauling_date");
         const mtf_form_no = document.getElementById("mtf_form_no");
         
+        var vehicle_list = [];
+        for(let y = 1; y < vehicle_data_list.content.length; y++){
+            if (!vehicle_list.includes(vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")])) {
+                vehicle_list.push(vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")]);
+            }
+        }
+        
         search_sf_wcf_form_no_button.addEventListener("click", () => {
             var data_value_text;
             for(let a = 1; a < wcf_data_list.content.length; a++){
                 if(search_sf_wcf_form_no.value == wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")]){
+                    data_value = [];
                     for(let b = 0; b < pending_sorting.length; b++){
                         if(search_sf_wcf_form_no.value == pending_sorting[b]){
                             var mtf = "";
@@ -533,7 +541,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     for (var x = 1; x < qlf_data_list.content.length; x++) {
                         if(qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "CLIENT ID")]){
-                            data_value.push(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")]);
+                            if(!vehicle_list.includes(findWasteCode(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]))){
+                                data_value.push(`${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")]} (${findWasteCode(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])})`);
+                            }
                         }
                     }
                 }
@@ -575,7 +585,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const weight = [];
         const input_box = [];
         const sugg_box = [];
-
+        console.log(data_value)
         for (let z = 1; z <= itemcounter.length; z++) {
             search_wrapper[z] = document.getElementById(`search_type_of_waste${z}`);
             destruction_process[z] = document.getElementById(`destruction_process${z}`);
@@ -590,7 +600,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 let empty_array = [];
                 if (user_data) {
                     empty_array = data_value.filter((data) => {
-                        return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
+                        return data.toLocaleLowerCase().includes(user_data.toLocaleLowerCase());
                     });
                     empty_array = empty_array.map((data) => {
                         return '<li>' + data + '</li>';
@@ -720,7 +730,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 let empty_array = [];
                 if (user_data) {
                     empty_array = data_value2.filter((data) => {
-                        return data.toLocaleLowerCase().startsWith(user_data.toLocaleLowerCase());
+                        return data.toLocaleLowerCase().includes(user_data.toLocaleLowerCase());
                     });
                     empty_array = empty_array.map((data) => {
                         return '<li>' + data + '</li>';

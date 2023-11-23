@@ -816,7 +816,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             let empty_array = [];
             if (user_data) {
                 empty_array = data_value2.filter((data2) => {
-                    return data2.toLowerCase().startsWith(user_data.toLowerCase());
+                    return data2.toLowerCase().includes(user_data.toLowerCase());
                 });
                 empty_array = empty_array.map((data2) => {
                     return '<li>' + data2 + '</li>';
