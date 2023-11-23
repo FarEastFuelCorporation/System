@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     try {
         const username_response_promise = fetch('https://script.google.com/macros/s/AKfycbwmA97K4sdfq6dhzSsp14JU9KgQrFgSARNZbvSfiU7vuH8oEipt6TmcFo_o-jCI0kiQ/exec');
         const employee_response_promise = fetch('https://script.google.com/macros/s/AKfycbwns5R6TA8U64ywbb9hwYu4LKurAjTM0Z18NYNZMt0Ft0m-_NUHYbYqblk_5KWugvt7lA/exec');
+        const vehicle_response_promise = fetch('https://script.google.com/macros/s/AKfycbw-JCnctX1x1W1ogGbrkhNdIGd9q6bYjy_nvaYeoiaBf7HreB2a1tKJZaJHw2wu4wmpcA/exec');
         const client_list_response_promise = fetch('https://script.google.com/macros/s/AKfycbxXnIsmgK52Ws9H2qAh47qkgZxDltFJaHSFV0e9UQRwaK1g_xwFUKGokL_hk4fq-_mhSg/exec');
         const type_of_waste_response_promise = fetch('https://script.google.com/macros/s/AKfycbw0yC-8_V38Zl1-KGyBwX1JmfTEW1jwyFxgpZ-oNC2lvtoAraUtkLCS27HfNbXi_l4IPg/exec');
         const treatment_process_response_promise = fetch('https://script.google.com/macros/s/AKfycbzlzR7zmvdHSz4JpeXtEzPE4OQckTIVaE6PBw5IYwlqmmeIprQxEKkp4d2Jb1kBcgndzA/exec');
@@ -13,6 +14,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const [
             username_response,
             employee_response,
+            vehicle_response,
             client_list_response,
             type_of_waste_response,
             treatment_process_response,
@@ -23,6 +25,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         ] = await Promise.all([
             username_response_promise,
             employee_response_promise,
+            vehicle_response_promise,
             client_list_response_promise,
             type_of_waste_response_promise,
             treatment_process_response_promise,
@@ -35,6 +38,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         const username_data_list  = await username_response.json();
         const employee_data_list  = await employee_response.json();
+        const vehicle_data_list  = await vehicle_response.json();
         const client_data_list  = await client_list_response.json();
         const type_of_waste_data_list  = await type_of_waste_response.json();
         const treatment_process_data_list  = await treatment_process_response.json();
@@ -541,7 +545,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     for (var x = 1; x < qlf_data_list.content.length; x++) {
                         if(qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "CLIENT ID")]){
-                            if(!vehicle_list.includes(findWasteCode(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]))){
+                            if(!vehicle_list.includes(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])){
                                 data_value.push(`${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")]} (${findWasteCode(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])})`);
                             }
                         }
@@ -627,7 +631,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     if(search_sf_wcf_form_no.value == wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]){
                         for (var x = 1; x < qlf_data_list.content.length; x++) {
                             if (wcf_data_list.content[i][findTextInArray(wcf_data_list, "CLIENT ID")] == qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")] &&
-                                input_box[z].value == qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")]) {
+                                (input_box[z].value).replace(/\s*\([^)]*\)/, '') == qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")]) {
                                 waste_id[z].value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")];
                                 waste_name[z].value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")];
                                 break
