@@ -1246,11 +1246,18 @@ document.addEventListener('DOMContentLoaded', async function() {
         //         new_quotation_form_tab.style.display = "none";
         //     }
         // })
+
+        var vehicle_list = [];
+        for(let y = 1; y < vehicle_data_list.content.length; y++){
+            if (!vehicle_list.includes(vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")])) {
+                vehicle_list.push(vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")]);
+            }
+        }
         
         var qlf_data_value = "";
         var qlf_data_value_counter = 1;
         for(let x = 1; x < qlf_data_list.content.length; x++){
-            if(qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")] != "TRIP"){
+            if(!vehicle_list.includes(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])){
                 qlf_data_value += `
                 <tr>
                     <td>${qlf_data_value_counter}</td>
@@ -1270,7 +1277,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 `
                 qlf_data_value_counter += 1;
             }
-            else if(qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")] == "TRIP"){
+            else if(vehicle_list.includes(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])){
                 qlf_data_value += `
                 <tr>
                     <td>${qlf_data_value_counter}</td>
@@ -2204,13 +2211,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             `<option value="${data}">${data}</option>`
             )
         })
-
-        var vehicle_list = [];
-        for(let y = 1; y < vehicle_data_list.content.length; y++){
-            if (!vehicle_list.includes(vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")])) {
-                vehicle_list.push(vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")]);
-            }
-        }
 
         var quotation_waste_data = []
         quotation_selection.addEventListener("change", () => {
