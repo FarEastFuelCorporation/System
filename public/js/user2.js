@@ -589,7 +589,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const weight = [];
         const input_box = [];
         const sugg_box = [];
-        console.log(data_value)
+        
         for (let z = 1; z <= itemcounter.length; z++) {
             search_wrapper[z] = document.getElementById(`search_type_of_waste${z}`);
             destruction_process[z] = document.getElementById(`destruction_process${z}`);
