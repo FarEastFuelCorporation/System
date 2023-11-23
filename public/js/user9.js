@@ -793,7 +793,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 allowance[x].value = parseFloat(night_allowance.value);
                             }
                             else if(((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) < 8 && ((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) >= 4){
-                                allowance[x].value = parseFloat(night_allowance.value)/2;
+                                allowance[x].value = (parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))/8 * parseFloat(night_allowance.value);
                             }
                             else if(((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) < 4){
                                 allowance[x].value = 0;
@@ -804,7 +804,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 allowance[x].value = parseFloat(day_allowance.value);
                             }
                             else if(((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) < 8 && ((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) >= 4){
-                                allowance[x].value = parseFloat(day_allowance.value)/2;
+                                allowance[x].value = (parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value)) * parseFloat(day_allowance.value);
                             }
                             else if(((parseFloat(regular_hours[x].value))+(parseFloat(night_hours[x].value))) < 8){
                                 allowance[x].value = 0;
