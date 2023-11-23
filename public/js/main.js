@@ -882,6 +882,19 @@ function formatMonth(dateString) {
   }
 }
 
+function weekNumberToPrevMonthAbbreviation(weekNumber) {
+  // Create a Date object based on the week number and assume it's in the current year
+  var date = new Date(new Date().getFullYear(), 0, (weekNumber - 1) * 7 + 1);
+
+  // Subtract 1 month from the date
+  date.setMonth(date.getMonth() - 1);
+
+  // Get the month abbreviation (e.g., "JAN", "FEB", etc.)
+  var monthAbbreviation = date.toLocaleString('en-US', { month: 'short' }).toUpperCase();
+
+  return monthAbbreviation;
+}
+
 // const forms_input = document.querySelectorAll('form'); // Select the spinner globally
 // const spinner = document.querySelector('.spinner'); // Select the spinner globally
 

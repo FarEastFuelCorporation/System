@@ -829,13 +829,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                             } else if (totalHours < 4) {
                                 allowance[x].value = 0;
                             }
-                        
-                            console.log(parseFloat(regular_hours[x].value));
-                            console.log(parseFloat(night_hours[x].value));
-                            console.log(totalHours / 8);
-                            console.log((totalHours / 8) * parseFloat(day_allowance.value));
-                            console.log(allowance[x].value);
-                            console.log(day_allowance.value);
                         }
                     }
                 }
@@ -2065,7 +2058,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 var payslip_others2 = []
                 var government_dues_month = "";
                 var government_dues_year = "";
-                var month = (new Date((getDatesInWeek(search_year.value, search_week_number.value))[0])).getMonth();
+                var month = (new Date((getDatesInWeek(search_year.value, search_week_number.value))[0])).getMonth() -1;
                 var year = (new Date((getDatesInWeek(search_year.value, search_week_number.value))[0])).getFullYear();
                 if(month == 0){
                     government_dues_month = months[11];
@@ -2128,6 +2121,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                     var rh_rdd_ot_night_hrs = 0;
                     var rh_rdd_ot_night_hrs_pay = 0;
                     var allowance = 0;
+                    var adjustment = 0;
+                    var cash_advance = 0;
                     var sss = 0;
                     var pag_ibig = 0;
                     var philhealth = 0;
@@ -2138,13 +2133,43 @@ document.addEventListener('DOMContentLoaded', async function() {
                     var under_time_hours = 0;
                     var late_deduction = 0;
                     var late_mins = 0;
+                    var ca_deduction = 0;
+                    var uniform = 0;
+                    var housing = 0;
+                    var st_peter = 0;
+                    var cash_not_return = 0;
+                    var hard_hat = 0;
+                    var safety_shoes = 0;
+                    var over_meals = 0;
+                    var bereavement_assistance = 0;
+                    var gross_salary = 0;
+                    var sub_deduction = 0;
+                    var subtotal = 0;
+                    var other_deduction = 0;
+                    // var government_dues_month = "";
                     for(let c = 1; c < payroll_summary_data_list.content.length; c++){
-                        if(payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "EMPLOYEE ID")] == payslip_employee_id[x] && payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "YEAR")] == search_year.value && payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "WEEK NUMBER / MONTH-CUT OFF")] == search_week_number.value){
+                        if(payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "EMPLOYEE ID")] == payslip_employee_id[x] && payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "YEAR")] == search_year.value && payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "WEEK NUMBER")] == search_week_number.value){
+                            // government_dues_month = weekNumberToPrevMonthAbbreviation(search_week_number.value)
+                            adjustment = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "ADJUSTMENT")];
+                            cash_advance = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "CASH ADVANCE")];
                             sss = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "SSS")];
                             pag_ibig = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "PAG-IBIG")];
                             philhealth = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "PHILHEALTH")];
                             sss_loan = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "SSS LOAN")];
                             pag_ibig_loan = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "PAG-IBIG LOAN")];
+                            ca_deduction = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "C/A DEDUCTION")];
+                            uniform = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "UNIFORM")];
+                            housing = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "HOUSING")];
+                            st_peter = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "ST. PETER")];
+                            cash_not_return = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "CASH NOT RETURN")];
+                            hard_hat = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "HARD HAT")];
+                            safety_shoes = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "SAFETY SHOES")];
+                            over_meals = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "OVER MEALS")];
+                            bereavement_assistance = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "BEREAVEMENT ASSISTANCE")];
+                            gross_salary = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "GROSS SALARY")];
+                            sub_deduction = sss + sss_loan + pag_ibig + pag_ibig_loan + philhealth;
+                            subtotal = gross_salary - sub_deduction;
+                            other_deduction = ca_deduction + uniform + housing + st_peter + cash_not_return + hard_hat + safety_shoes + over_meals + bereavement_assistance;
                         }
                     }
                     for(let c = 1; c < payroll_transaction_data_list.content.length; c++){
@@ -2396,13 +2421,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         </div>
                                         <div>
                                             <h3 style="text-align: right; padding-right: 5px;">0.00</h3>
-                                            <h3 style="text-align: right; padding-right: 5px;">0.00</h3>
-                                            <h3 style="text-align: right; padding-right: 5px;">0.00</h3>
+                                            <h3 style="text-align: right; padding-right: 5px;">${formatNumber(gross_salary)}</h3>
+                                            <h3 style="text-align: right; padding-right: 5px;">${formatNumber(sub_deduction)}</h3>
                                         </div>
                                     </div>
                                     <div class="border-left ps-1" style="display: grid; grid-template-columns: 50% 50%; justify-content: center; align-items: center;">
                                         <h3>Net Pay:</h3>
-                                        <h3 style="text-align: right; padding-right: 5px;">0.00</h3>
+                                        <h3 style="text-align: right; padding-right: 5px;">${formatNumber(subtotal)}</h3>
                                     </div>
                                 </div>
                                 <div class="summary_footer2 border-left border-right">
@@ -2431,34 +2456,34 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         </div>
                                         <div style="display: grid; grid-template-columns: 55% 45%" class="border">
                                             <div class="border-bottom-right" style="display: grid; grid-template-columns: 70% 30%;">
-                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">C/A Deduction</h4><h4 class="pe-1 right">0.00</h4>
+                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">C/A Deduction</h4><h4 class="pe-1 right">${ca_deduction}</h4>
                                             </div>
                                             <div class="border-bottom" style="display: grid; grid-template-columns: 60% 40%;">
-                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Uniform</h4><h4 class="pe-1 right">0.00</h4>
+                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Uniform</h4><h4 class="pe-1 right">${uniform}</h4>
                                             </div>
                                             <div class="border-bottom-right" style="display: grid; grid-template-columns: 70% 30%;">
-                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Housing</h4><h4 class="pe-1 right">0.00</h4>
+                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Housing</h4><h4 class="pe-1 right">${housing}</h4>
                                             </div>
                                             <div class="border-bottom" style="display: grid; grid-template-columns: 60% 40%;">
-                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">St. Peter</h4><h4 class="pe-1 right">0.00</h4>
+                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">St. Peter</h4><h4 class="pe-1 right">${st_peter}</h4>
                                             </div>
                                             <div class="border-bottom-right" style="display: grid; grid-template-columns: 70% 30%;">
-                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Safety Shoes</h4><h4 class="pe-1 right">0.00</h4>
+                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Safety Shoes</h4><h4 class="pe-1 right">${safety_shoes}</h4>
                                             </div>
                                             <div class="border-bottom" style="display: grid; grid-template-columns: 60% 40%;">
-                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Hard Hat</h4><h4 class="pe-1 right">0.00</h4>
+                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Hard Hat</h4><h4 class="pe-1 right">${hard_hat}</h4>
                                             </div>
                                             <div class="border-bottom-right" style="display: grid; grid-template-columns: 70% 30%;">
-                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Cash Not Return</h4><h4 class="pe-1 right">0.00</h4>
+                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Cash Not Return</h4><h4 class="pe-1 right">${cash_not_return}</h4>
                                             </div>
                                             <div style="display: grid; grid-template-columns: 60% 40%;">
-                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Bereavement</h4><h4 class="pe-1 right">0.00</h4>
+                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Bereavement</h4><h4 class="pe-1 right">${bereavement_assistance}</h4>
                                             </div>
                                             <div class="border-right" style="display: grid; grid-template-columns: 70% 30%;">
-                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Over Meals</h4><h4 class="pe-1 right">0.00</h4>
+                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Over Meals</h4><h4 class="pe-1 right">${over_meals}</h4>
                                             </div>
                                             <div style="display: grid; grid-template-columns: 60% 40%;">
-                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Assistance</h4><h4 class="pe-1 right">0.00</h4>
+                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Assistance</h4><h4 class="pe-1 right"></h4>
                                             </div>
                                         </div>
                                     </div>
@@ -2468,13 +2493,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         </div>
                                         <div class="border">
                                             <div class="border-bottom" style="display: grid; grid-template-columns: 50% 50%; align-items: center;">
-                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Net Pay:</h4><h3 class="pe-1 bold" style="text-align: end;">0.00</h3>
+                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Net Pay:</h4><h3 class="pe-1 bold" style="text-align: end;">${formatNumber(subtotal)}</h3>
                                             </div>
                                             <div class="border-bottom" style="display: grid; grid-template-columns: 50% 50%; align-items: center;">
-                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Other<br>Deductions:</h4><h3 class="pe-1 bold" style="text-align: end;">0.00</h3>
+                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Other<br>Deductions:</h4><h3 class="pe-1 bold" style="text-align: end;">${formatNumber(other_deduction)}</h3>
                                             </div>
                                             <div class="" style="display: grid; grid-template-columns: 50% 50%; align-items: center;">
-                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Remaining<br>Salary:</h4><h2 class="pe-1 bold" style="text-align: end;">0.00</h2>
+                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Remaining<br>Salary:</h4><h2 class="pe-1 bold" style="text-align: end;">${formatNumber(subtotal - other_deduction)}</h2>
                                             </div>
                                         </div>
                                     </div>
@@ -3757,12 +3782,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                     payslip_container.insertAdjacentHTML("beforeend", payslip_container_data)
                 }
             }
-            console.log(payslip_employee_id)
         })
 
 
         // employee_form
-        const employee_form = document.querySelector("#employee_form");
+        const employee_form = document.querySelector("#employee_list_section");
         const new_employee_button = employee_form.querySelector("#new_employee_button");
         const update_record_button = employee_form.querySelector("#update_record_button");
         const resign_button = employee_form.querySelector("#resign_button");
