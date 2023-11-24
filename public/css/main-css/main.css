@@ -4102,6 +4102,10 @@ input:disabled {
   .nb {
     margin-top: -9px !important;
   }
+  #user_sidebar, #user_sidebar_officer, #user_sidebar_department, #filter_button,
+  #generate_report_button, .header_date_time, .back_button, .refresh_button {
+    display: none !important;
+  }
 }
 @media (max-width: 500px) {
   .topbar {
@@ -4129,5 +4133,7 @@ input:disabled {
   h2 {
     font-size: 16px !important;
     margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
   }
 }/*# sourceMappingURL=main.css.map */

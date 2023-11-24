@@ -627,14 +627,17 @@ document.addEventListener('DOMContentLoaded', async function() {
             const yesInput = createRadioButton(index, 'Yes');
             const noInput = createRadioButton(index, 'No');
             const naInput = createRadioButton(index, 'N/A');
+            yesInput.name
     
             const radioCell = document.createElement('td');
             radioCell.classList.add("radio_btn");
+            const radioDiv = document.createElement('div');
             
-            radioCell.appendChild(yesInput);
-            radioCell.appendChild(noInput);
-            radioCell.appendChild(naInput);
-    
+            radioDiv.appendChild(yesInput);
+            radioDiv.appendChild(noInput);
+            radioDiv.appendChild(naInput);
+            radioCell.appendChild(radioDiv);
+            
             row.appendChild(guidelineCell);
             row.appendChild(radioCell);
     
