@@ -483,7 +483,7 @@
             <section class="safety" id="safety_inspection">
                 <h2>SAFETY INSPECTION</h2>
                 <label class="d-flex gap-3">
-                    <button type="button" id="new_employee_button" class="form-control fw-bold fs-3 bg-success text-white">
+                    <button type="button" id="safety_inspection_button" class="form-control fw-bold fs-3 bg-success text-white">
                         <h2>SAFETY INSPECTION FORM</h2>
                     </button>
                     <!-- <button type="button" id="update_record_button" class="form-control fw-bold fs-3" style="border: 1px solid black;">
@@ -493,49 +493,69 @@
                         RESIGN FORM
                     </button> -->
                 </label><br>
-                <form id="safety_inspection_form" style="position: absolute; z-index: 2; padding: 20px; background-color: white; border: 3px solid #198754; border-radius: 10px; height: 75vh; overflow-y: scroll; width: calc(100% - 40px);" 
+                <form id="safety_inspection_form" style="display: none; position: absolute; z-index: 2; padding: 20px; background-color: white; border: 3px solid #198754; border-radius: 10px; height: 75vh; overflow-y: scroll; width: calc(100% - 40px);" 
                     action="https://script.google.com/macros/s/AKfycbz--ofawc-qwe6lqQBsUtfQAnXNAZArrD7yfPzJeC8McDqui5pm8ma5i99XPPOroZTRuQ/exec" method="post">
                     <h2>SAFETY INSPECTION FORM</h2>
                     <div id="sitePremises">
                         <h2>Site Premises and Safety Guidelines</h2>
-                        <form id="safetyForm">
-                            <table id="safetyTable" style="width: 100%; border-collapse: collapse;">
-                                <thead>
-                                    <tr>
-                                        <th>Guidelines</th>
-                                        <th>Yes / No / N/A</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Guidelines with radio buttons will be dynamically inserted here -->
-                                </tbody>
-                            </table>
-                            <style>
-                                /* Add your CSS styles here */
-                                table {
-                                    width: 100%;
-                                    border-collapse: collapse;
-                                }
-                            
-                                th, td {
-                                    border: 1px solid black;
-                                    padding: 8px;
-                                    text-align: center;
-                                }
-                                .radio_btn{
-                                    height: 100%;
-                                    width: 100%;
-                                }
-                                .radio_btn div{
-                                    display: flex;
-                                    justify-content: space-around;
-                                    align-items: center;
-                                    height: 100%;
-                                    width: 100%;
-                                }
-                            </style>
-                        </form>
+                        <table id="safetyTable" style="width: 100%; border-collapse: collapse;">
+                            <colgroup>
+                                <col style="width: 60%;"><!-- Set the width for the guidelines column -->
+                                <col style="width: 20%;"><!-- Set the width for the radio buttons column -->
+                                <col style="width: 20%;"><!-- Set the width for the remarks column -->
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>Guidelines</th>
+                                    <th>Yes / No / N/A</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Guidelines with radio buttons will be dynamically inserted here -->
+                            </tbody>
+                        </table>
+                        <style>
+                            /* Add your CSS styles here */
+                            #safetyTable {
+                                width: 100%;
+                                border-collapse: collapse;
+                            }
+                        
+                            #safetyTable th,
+                            #safetyTable td {
+                                border: 1px solid black;
+                                padding: 8px;
+                                text-align: center;
+                            }
+                            #safetyTable .radio_btn{
+                                height: 100%;
+                                width: 100%;
+                            }
+                            #safetyTable .radio_btn div{
+                                display: flex;
+                                justify-content: space-around;
+                                align-items: center;
+                                height: 100%;
+                                width: 100%;
+                            }
+                            #safetyTable .remarks-input {
+                                display: none;
+                            }
+                            #safetyTable .remarks-input-show {
+                                display: block !important;
+                            }
+                        </style>
                     </div>
+                    <div class="buttons">
+                        <button type="submit" id="submit_btn" class="form-control" >
+                            Submit
+                        </button>
+                        <button type="reset" id="reset" class="form-control" >
+                            Clear
+                        </button>
+                    </div>    
+                </form>
             </section>
             <!-- settings -->
             <section id="settingsSection">

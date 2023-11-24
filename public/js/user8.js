@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         user_sidebar_officer.innerText = username_data_list.content[8][findTextInArray(username_data_list, "SECTIONS")];
         user_sidebar_department.innerText = username_data_list.content[8][findTextInArray(username_data_list, "DEPARTMENT")];
         
-        // incident_history_list
+        // // incident_history_list
         const incident_report_safety = document.querySelector("#safety_dashboard #incident_report");
         const pending_counter_safety = document.querySelector("#safety_dashboard #pending_counter");
         const documented_safety = document.querySelector("#safety_dashboard #documented");
@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
         incident_history_list_safety.innerHTML = incident_history_data_value
 
-        // FORM GENERATOR
+        // // FORM GENERATOR
         const today = new Date();
         const today_year = today.getFullYear();
         const today_month = today.getMonth()+1;
@@ -579,11 +579,12 @@ document.addEventListener('DOMContentLoaded', async function() {
             incident_documentation_form.insertAdjacentHTML("beforeend", data)
         }
 
-        // safety_inspection
+        // // safety_inspection
         const safety_inspection = document.querySelector("#safety_inspection")
+        const safety_inspection_button = document.querySelector("#safety_inspection_button")
         const safety_inspection_form = safety_inspection.querySelector("#safety_inspection_form")
 
-        safety_inspection_form.addEventListener("click", () => {
+        safety_inspection_button.addEventListener("click", () => {
             if(safety_inspection_form.style.display == "block"){
                 safety_inspection_form.style.display = "none";
             }
@@ -620,30 +621,47 @@ document.addEventListener('DOMContentLoaded', async function() {
         // Function to generate a table row for each guideline
         function generateGuidelineRow(guideline, index) {
             const row = document.createElement('tr');
-    
+
             const guidelineCell = document.createElement('td');
             guidelineCell.textContent = guideline;
-    
+
             const yesInput = createRadioButton(index, 'Yes');
             const noInput = createRadioButton(index, 'No');
             const naInput = createRadioButton(index, 'N/A');
-            yesInput.name
-    
+
+            const remarksInput = createRemarksInput(index);
+
             const radioCell = document.createElement('td');
             radioCell.classList.add("radio_btn");
             const radioDiv = document.createElement('div');
-            
+
             radioDiv.appendChild(yesInput);
             radioDiv.appendChild(noInput);
             radioDiv.appendChild(naInput);
             radioCell.appendChild(radioDiv);
-            
+
+            const remarksCell = document.createElement('td');
+            const remarksDiv = document.createElement('div');
+            remarksCell.appendChild(remarksDiv);
+            remarksDiv.classList.add("remarks-input");
+            remarksDiv.appendChild(remarksInput);
+
             row.appendChild(guidelineCell);
             row.appendChild(radioCell);
-    
+            row.appendChild(remarksCell);
+
+            // Add event listener to radio buttons to toggle remarks input
+            const updateRemarksVisibility = () => {
+                remarksDiv.classList.toggle('remarks-input-show', noInput.checked);
+            };
+
+            yesInput.addEventListener('change', updateRemarksVisibility);
+            noInput.addEventListener('change', updateRemarksVisibility);
+            naInput.addEventListener('change', updateRemarksVisibility);
+
             return row;
         }
-    
+
         // Function to create a radio button
         function createRadioButton(index, value) {
             const input = document.createElement('input');
@@ -652,15 +670,23 @@ document.addEventListener('DOMContentLoaded', async function() {
             input.value = value.toLowerCase();
             return input;
         }
-    
+
+        // Function to create a remarks input
+        function createRemarksInput(index) {
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.name = `remarks${index}`;
+            return input;
+        }
+
         // Get the safetyTable tbody element
         const safetyTableBody = document.querySelector('#safetyTable tbody');
-    
+
         // Generate a table row for each guideline and append to safetyTableBody
         guidelines.forEach((guideline, index) => {
             const row = generateGuidelineRow(guideline, index + 1);
             safetyTableBody.appendChild(row);
-        });        
+        });
 
         function findEmployeeName(employee_id){
             var employee_name = "";

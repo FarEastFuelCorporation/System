@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="safety_inspection_form" style="position: absolute; z-index: 2; padding: 20px; background-color: white; border: 3px solid #198754; border-radius: 10px; height: 75vh; overflow-y: scroll; width: calc(100% - 40px);" 
+        action="https://script.google.com/macros/s/AKfycbz--ofawc-qwe6lqQBsUtfQAnXNAZArrD7yfPzJeC8McDqui5pm8ma5i99XPPOroZTRuQ/exec" method="post">
+        <h2>SAFETY INSPECTION FORM</h2>
+        <div id="sitePremises">
+            <h2>Site Premises and Safety Guidelines</h2>
+            <table id="safetyTable" style="width: 100%; border-collapse: collapse;">
+                <colgroup>
+                    <col style="width: 70%;"><!-- Set the width for the guidelines column -->
+                    <col style="width: 30%;"><!-- Set the width for the radio buttons column -->
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>Guidelines</th>
+                        <th>Yes / No / N/A</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Guidelines with radio buttons will be dynamically inserted here -->
+                </tbody>
+            </table>
+            <style>
+                /* Add your CSS styles here */
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+            
+                th, td {
+                    border: 1px solid black;
+                    padding: 8px;
+                    text-align: center;
+                }
+                .radio_btn{
+                    height: 100%;
+                    width: 100%;
+                }
+                .radio_btn div{
+                    display: flex;
+                    justify-content: space-around;
+                    align-items: center;
+                    height: 100%;
+                    width: 100%;
+                }
+            </style>
+        </div>
+        <div class="buttons">
+            <button type="submit" id="submit_btn" class="form-control" >
+                Submit
+            </button>
+            <button type="reset" id="reset" class="form-control" >
+                Clear
+            </button>
+        </div>    
+    </form>
+</body>
+<script>
+            const guidelines = [
+            "Free of slip, trip, or fall hazards.",
+            "Free of protrusions such as rebar, nails, etc.",
+            "Openings are barricaded or covered.",
+            "Passageways have sufficient width for normal movements (at least 28 inches wide).",
+            "No electrical flying connections.",
+            "Passages are clear and unobstructed.",
+            "Unnecessary items are disposed of properly in the work area.",
+            "All stacks are stable and secure against sliding and collapse.",
+            "Ramps and stairways are adequate width and provided with handrails.",
+            "Safe walkways are provided for pedestrians.",
+            "Posters and safety signs are posted and provided.",
+            "High standard of cleanliness in the workplace.",
+            "Illuminated adequately.",
+            "Lighting fixtures are clean.",
+            "Adequate ventilation.",
+            "Portable fire extinguishers are available.",
+            "Proper signages are installed where applicable.",
+            "Clean and properly maintained welfare facilities.",
+            "First aid kit available and adequately stocked.",
+            "Safety meetings held periodically.",
+            "Job-related safety trainings.",
+            "Accident reporting procedures established."
+        ];
+    
+        // Function to generate a table row for each guideline
+        function generateGuidelineRow(guideline, index) {
+            const row = document.createElement('tr');
+    
+            const guidelineCell = document.createElement('td');
+            guidelineCell.textContent = guideline;
+    
+            const yesInput = createRadioButton(index, 'Yes');
+            const noInput = createRadioButton(index, 'No');
+            const naInput = createRadioButton(index, 'N/A');
+    
+            const radioCell = document.createElement('td');
+            radioCell.classList.add("radio_btn");
+            const radioDiv = document.createElement('div');
+            
+            radioDiv.appendChild(yesInput);
+            radioDiv.appendChild(noInput);
+            radioDiv.appendChild(naInput);
+            radioCell.appendChild(radioDiv);
+            
+            row.appendChild(guidelineCell);
+            row.appendChild(radioCell);
+    
+            return row;
+        }
+    
+        // Function to create a radio button
+        function createRadioButton(index, value) {
+            const input = document.createElement('input');
+            input.type = 'radio';
+            input.name = `guideline${index}`;
+            input.value = value.toLowerCase();
+            return input;
+        }
+    
+        // Get the safetyTable tbody element
+        const safetyTableBody = document.querySelector('#safetyTable tbody');
+    
+        // Generate a table row for each guideline and append to safetyTableBody
+        guidelines.forEach((guideline, index) => {
+            const row = generateGuidelineRow(guideline, index + 1);
+            safetyTableBody.appendChild(row);
+        });        
+
+</script>
+</html>
