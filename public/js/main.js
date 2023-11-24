@@ -236,7 +236,7 @@ function pushUniqueElement(arr, element) {
 }
 
 // Set the idle time in milliseconds (e.g., 1 minutes)
-const idleTime = 2 * 60 * 1000; // 2 minute
+const idleTime = 2 * 60 * 10000; // 2 minute
 
 let idleTimer;
 

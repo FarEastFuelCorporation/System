@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "DEPARTMENT")]}</td>
                         <td>${employee_names.join(" || ")}</td>
                         <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "DESIGNATION")]}</td>
-                        <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "INCIDENT DETAILS")]}</td>
+                        <td class="my_element">${irf_data_list.content[x][findTextInArray(irf_data_list, "INCIDENT DETAILS")]}</td>
                         <td>${irf_data_list.content[x][findTextInArray(irf_data_list, "ACTION TAKEN")]}</td>
                         <td>${date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "REPORT DATE")])} /<br> ${time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "REPORT TIME")])}</td>
                         <td>${calculateTravelTime(date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "INCIDENT DATE")]),time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "INCIDENT TIME")]),date_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "REPORT DATE")]),time_decoder(irf_data_list.content[x][findTextInArray(irf_data_list, "REPORT TIME")]))}</td>
@@ -578,6 +578,86 @@ document.addEventListener('DOMContentLoaded', async function() {
             `
             incident_documentation_form.insertAdjacentHTML("beforeend", data)
         }
+
+        // safety_inspection
+        const safety_inspection = document.querySelector("#safety_inspection")
+        const safety_inspection_form = safety_inspection.querySelector("#safety_inspection_form")
+
+        safety_inspection_form.addEventListener("click", () => {
+            if(safety_inspection_form.style.display == "block"){
+                safety_inspection_form.style.display = "none";
+            }
+            else{
+                safety_inspection_form.style.display = "block";
+            }
+        })
+
+        const guidelines = [
+            "Free of slip, trip, or fall hazards.",
+            "Free of protrusions such as rebar, nails, etc.",
+            "Openings are barricaded or covered.",
+            "Passageways have sufficient width for normal movements (at least 28 inches wide).",
+            "No electrical flying connections.",
+            "Passages are clear and unobstructed.",
+            "Unnecessary items are disposed of properly in the work area.",
+            "All stacks are stable and secure against sliding and collapse.",
+            "Ramps and stairways are adequate width and provided with handrails.",
+            "Safe walkways are provided for pedestrians.",
+            "Posters and safety signs are posted and provided.",
+            "High standard of cleanliness in the workplace.",
+            "Illuminated adequately.",
+            "Lighting fixtures are clean.",
+            "Adequate ventilation.",
+            "Portable fire extinguishers are available.",
+            "Proper signages are installed where applicable.",
+            "Clean and properly maintained welfare facilities.",
+            "First aid kit available and adequately stocked.",
+            "Safety meetings held periodically.",
+            "Job-related safety trainings.",
+            "Accident reporting procedures established."
+        ];
+    
+        // Function to generate a table row for each guideline
+        function generateGuidelineRow(guideline, index) {
+            const row = document.createElement('tr');
+    
+            const guidelineCell = document.createElement('td');
+            guidelineCell.textContent = guideline;
+    
+            const yesInput = createRadioButton(index, 'Yes');
+            const noInput = createRadioButton(index, 'No');
+            const naInput = createRadioButton(index, 'N/A');
+    
+            const radioCell = document.createElement('td');
+            radioCell.classList.add("radio_btn");
+            
+            radioCell.appendChild(yesInput);
+            radioCell.appendChild(noInput);
+            radioCell.appendChild(naInput);
+    
+            row.appendChild(guidelineCell);
+            row.appendChild(radioCell);
+    
+            return row;
+        }
+    
+        // Function to create a radio button
+        function createRadioButton(index, value) {
+            const input = document.createElement('input');
+            input.type = 'radio';
+            input.name = `guideline${index}`;
+            input.value = value.toLowerCase();
+            return input;
+        }
+    
+        // Get the safetyTable tbody element
+        const safetyTableBody = document.querySelector('#safetyTable tbody');
+    
+        // Generate a table row for each guideline and append to safetyTableBody
+        guidelines.forEach((guideline, index) => {
+            const row = generateGuidelineRow(guideline, index + 1);
+            safetyTableBody.appendChild(row);
+        });        
 
         function findEmployeeName(employee_id){
             var employee_name = "";

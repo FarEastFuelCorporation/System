@@ -502,6 +502,7 @@ nav {
 #vehicle_maintenance_form,
 #safety_dashboard,
 #incident_documentation_form,
+#safety_inspection,
 #hr_dashboard,
 #employee_list_section,
 #attendance_form,
@@ -551,6 +552,7 @@ nav {
 #new_vehicle_form,
 #vehicle_maintenance_form,
 #incident_documentation_form,
+#safety_dashboard,
 #employee_list_section,
 #attendance_form,
 #employee_form,
@@ -2027,7 +2029,7 @@ section h2 {
   height: 120px;
   padding: 10px 0px 0 0px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr) 500px;
   grid-gap: 20px;
   background: #f5f5f5;
 }
@@ -4008,15 +4010,50 @@ input:disabled {
     display: none;
   }
   #dashboard_section,
-  #sorting_dashboard_section,
-  #treatment_process_dashboard,
-  #certification_dashboard,
-  #billing_dashboard,
   #waste_collection_form,
+  #sorting_dashboard_section,
   #sorting_form,
+  #treatment_process_dashboard,
   #treatment_process_form,
+  #certification_dashboard,
   #destruction_form,
+  #marketing_dashboard_pco,
+  #billing_dashboard,
+  #collection_dashboard,
   #billing_process_form,
+  #marketing_dashboard,
+  #marketing_transaction_form,
+  #client_list_section,
+  #type_of_waste_list_section,
+  #quotation_form,
+  #commission_form,
+  #logistic_dashboard,
+  #logistics_travel_form,
+  #vehicle_list_section,
+  #new_vehicle_form,
+  #vehicle_maintenance_form,
+  #safety_dashboard,
+  #incident_documentation_form,
+  #safety_inspection,
+  #hr_dashboard,
+  #employee_list_section,
+  #attendance_form,
+  #loan_section,
+  #accounting_head_dashboard,
+  #purchasing_dashboard,
+  #purchase_order_form,
+  #supplier_list_section,
+  #ap_accounting_dashboard,
+  #trip_forms,
+  #fund_transfer_form,
+  #warehouse_dashboard,
+  #disposal_warehouse,
+  #warehouse_inventory,
+  #supplies_transaction,
+  #supplies_inventory,
+  #purchase_request_form,
+  #supplies_warehouse,
+  #incident_report_form,
   #directorySection,
   #accountingSection,
   #settingsSection,
@@ -4046,6 +4083,9 @@ input:disabled {
   .cards :nth-child(5) .card-name {
     padding: 16px 0 0 0;
   }
+  #user_sidebar, #user_sidebar_officer, #user_sidebar_department {
+    display: none !important;
+  }
 }
 @media (max-width: 880px) {
   .cards {
@@ -4064,11 +4104,14 @@ input:disabled {
   }
 }
 @media (max-width: 500px) {
+  .topbar {
+    padding: 0 10px;
+  }
   .cards {
     grid-template-columns: 1fr;
   }
   .logo h2 {
-    font-size: 20px;
+    font-size: 20px !important;
   }
   .search {
     width: 80%;
@@ -4078,5 +4121,13 @@ input:disabled {
   }
   .charts {
     margin-top: 650px;
+  }
+  #user_sidebar, #user_sidebar_officer, #user_sidebar_department, #filter_button,
+  #generate_report_button, .header_date_time, .back_button, .refresh_button {
+    display: none !important;
+  }
+  h2 {
+    font-size: 16px !important;
+    margin: 0 !important;
   }
 }/*# sourceMappingURL=main.css.map */
