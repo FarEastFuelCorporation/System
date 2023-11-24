@@ -5,19 +5,22 @@ document.addEventListener('DOMContentLoaded', async function() {
         const idf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyXPvq606vmfSlFG3nVjYuJLN8Jnv4BFGbhEmDp6e4wLL1kUQVa4kIi2dGGRKuSklT2bg/exec');
         const sf_response_promise = fetch('https://script.google.com/macros/s/AKfycby9b2VCfXc0ifkwBXJRi2UVUwgZIj9F4FTOdZa_SYKZdsTwbVtAzAXzNMFeklE35bg1/exec');
         const irf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzTmhNOz5cXeKitSXAriUJ_FEahAQugYEKIRwDuFt9tjhj2AtPKEf2H4yTMmZ1igpUxlQ/exec');
+        const sif_response_promise = fetch('https://script.google.com/macros/s/AKfycbzGVbiQV2LOCAI_eeNF6wqfg7INqawyP3ieeTuGY7B5wE8aPApqlujc4onghGCwcow1iw/exec');
 
         const [
             username_response,
             employee_response,
             idf_response,
             sf_response,
-            irf_response
+            irf_response,
+            sif_response,
         ] = await Promise.all([
             username_response_promise,
             employee_response_promise,
             idf_response_promise,
             sf_response_promise,
-            irf_response_promise
+            irf_response_promise,
+            sif_response_promise,
         ]);
 
         const username_data_list  = await username_response.json();
@@ -25,6 +28,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const idf_data_list  = await idf_response.json();
         const sf_data_list  = await sf_response.json();
         const irf_data_list  = await irf_response.json();
+        const sif_data_list  = await sif_response.json();
 
         // Code that depends on the fetched data
         // username_data_list3
@@ -583,6 +587,27 @@ document.addEventListener('DOMContentLoaded', async function() {
         const safety_inspection = document.querySelector("#safety_inspection")
         const safety_inspection_button = document.querySelector("#safety_inspection_button")
         const safety_inspection_form = safety_inspection.querySelector("#safety_inspection_form")
+        const department_selection = safety_inspection.querySelector("#department_selection")
+        const section_selection = safety_inspection.querySelector("#section_selection")
+        const grade = safety_inspection.querySelector("#grade")
+
+        // sif_data_list
+        // FORM GENERATOR
+        const sif_form_no = safety_inspection.querySelector("#sif_form_no");
+        var last_row = sif_data_list.content.length -1;
+        var data_info = sif_data_list.content[last_row][findTextInArray(sif_data_list, "SIF #")];
+        var data_counter;
+        if(last_row == 0){
+            data_counter = 0;
+        }
+        else{
+            data_counter = data_info.substring(9,12);
+        }
+        var year = new Date().getFullYear();
+        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        sif_form_no.value = `SIF${year}${month}${data_counter}`;
+
 
         safety_inspection_button.addEventListener("click", () => {
             if(safety_inspection_form.style.display == "block"){
@@ -593,81 +618,140 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         })
 
-        const guidelines = [
-            "Free of slip, trip, or fall hazards.",
-            "Free of protrusions such as rebar, nails, etc.",
-            "Openings are barricaded or covered.",
-            "Passageways have sufficient width for normal movements (at least 28 inches wide).",
-            "No electrical flying connections.",
-            "Passages are clear and unobstructed.",
-            "Unnecessary items are disposed of properly in the work area.",
-            "All stacks are stable and secure against sliding and collapse.",
-            "Ramps and stairways are adequate width and provided with handrails.",
-            "Safe walkways are provided for pedestrians.",
-            "Posters and safety signs are posted and provided.",
-            "High standard of cleanliness in the workplace.",
-            "Illuminated adequately.",
-            "Lighting fixtures are clean.",
-            "Adequate ventilation.",
-            "Portable fire extinguishers are available.",
-            "Proper signages are installed where applicable.",
-            "Clean and properly maintained welfare facilities.",
-            "First aid kit available and adequately stocked.",
-            "Safety meetings held periodically.",
-            "Job-related safety trainings.",
-            "Accident reporting procedures established."
-        ];
-    
-        // Function to generate a table row for each guideline
-        function generateGuidelineRow(guideline, index) {
-            const row = document.createElement('tr');
+        department_selection.addEventListener("change", () => {
+            var options;
+            if (department_selection.value === "TREATMENT DEPARTMENT") {
+                options = `
+                    <option value="">SELECT SECTION</option>
+                    <option value="THERMAL SECTION">THERMAL SECTION</option>
+                    <option value="ROTARY SECTION">ROTARY SECTION</option>
+                    <option value="FURNACE SECTION">FURNACE SECTION</option>
+                    <option value="WASTE WATER SECTION">WASTE WATER SECTION</option>
+                `;
+            }
+            else if (department_selection.value === "WAREHOUSE AND RENDERING DEPARTMENT") {
+                options = `
+                    <option value="">SELECT SECTION</option>
+                    <option value="WAREHOUSE SECTION">WAREHOUSE SECTION</option>
+                    <option value="RENDERING SECTION">RENDERING SECTION</option>
+                `;
+            }
+            else if (department_selection.value === "LOGISTICS DEPARTMENT") {
+                options = `
+                    <option value="">SELECT SECTION</option>
+                    <option value="LOGISTICS SECTION">LOGISTICS SECTION</option>
+                    <option value="MOTORPOOL SECTION">MOTORPOOL SECTION</option>
+                `;
+            }
+            else if (department_selection.value === "ADMIN DEPARTMENT") {
+                options = `
+                    <option value="">SELECT SECTION</option>
+                    <option value="ADMIN SECTION">ADMIN SECTION</option>
+                `;
+            }
+            else if (department_selection.value === "CONSTRUCTION DEPARTMENT") {
+                options = `
+                    <option value="">SELECT SECTION</option>
+                    <option value="CONSTRUCTION SECTION">CONSTRUCTION SECTION</option>
+                `;
+            }
+            else if (department_selection.value === "FACILITY SERVICES MANAGEMENT DEPARTMENT") {
+                options = `
+                    <option value="">SELECT SECTION</option>
+                    <option value="FACILITY SERVICES MANAGEMENT SECTION">FACILITY SERVICES MANAGEMENT SECTION</option>
+                `;
+            }
+            else if (department_selection.value === "MARKETING DEPARTMENT") {
+                options = `
+                    <option value="">SELECT SECTION</option>
+                    <option value="MARKETING SECTION">MARKETING SECTION</option>
+                `;
+            }
+            else if (department_selection.value === "ACCOUNTING DEPARTMENT") {
+                options = `
+                    <option value="">SELECT SECTION</option>
+                    <option value="ACCOUNTING SECTION">ACCOUNTING SECTION</option>
+                `;
+            }
+            // Clear existing options
+            section_selection.innerHTML = "";
+            // Add new options
+            section_selection.insertAdjacentHTML("beforeend", options);
+        });
 
-            const guidelineCell = document.createElement('td');
-            guidelineCell.textContent = guideline;
 
-            const yesInput = createRadioButton(index, 'Yes');
-            const noInput = createRadioButton(index, 'No');
-            const naInput = createRadioButton(index, 'N/A');
+        const guidelines = {
+            "Site Premises": [
+                "Are floors / operation site clean and clear of waste?",
+                "Are floors / operation site in good condition?",
+                "Are there protruding objects such as nails, sharp corners, open cabinet drawers, trailing electrical wires?",
+                "Is the work area congested?",
+                "Are all areas without dust deposits?",
+                "Is the workplace lighting adequate?",
+                "Is there no water ponding?"
+            ],
+            "Equipment Maintenance": [
+                "Is equipment in good working order, with all necessary safety features operational or in place?",
+                "Is equipment damaged or outdated?",
+                "Are tools and machinery inspected regularly for wear or leaks?",
+                "Is equipment repaired promptly?",
+                "Are drip pans or absorbent materials used if leaks cannot be stopped at the source?",
+                "Is a machine that splashes oil fitted with a screen or splash guard?",
+                "Are machines and tools cleaned regularly?"
+            ],
+            "Waste Disposal": [
+                "Are there adequate numbers of containers?",
+                "Are there separate and approved containers for toxic and flammable waste?",
+                "Are waste containers located where the waste is produced?",
+                "Are waste containers emptied regularly?",
+                "Are toxic and flammable waste chemicals handled properly?"
+            ],
+            "Storage / Cabinet": [
+                "Are zoning of materials properly observed?",
+                "Are storage areas safe and accessible?",
+                "Is material stacked securely, blocked, or interlocked if possible?",
+                "Are materials stored in areas that do not obstruct fire escapes, exits, or firefighting equipment?",
+                "Are materials stored in areas that do not interfere with workers or the flow of materials?",
+                "Are bins or racks provided where material cannot be piled?",
+                "Are materials not in use properly piled?",
+                "Are all storage areas clearly marked?",
+                "Do workers understand material storage and handling procedures?",
+                "Are records properly compiled and archived and can be immediately retrieved?",
+                "Are obsolete records properly tagged and discarded if beyond the retention period?"
+            ],
+            "Fire Prevention": [
+                "Are electrical wirings, junction boxes, outlets, and switches properly covered and not exposed?",
+                "Are combustible and flammable materials present only in the quantities needed for the job at hand?",
+                "Are hazardous materials stored in approved containers and away from ignition sources?",
+                "Are fire extinguishers inspected and located along commonly traveled routes, and close to possible ignition sources?",
+                "Are oily or greasy rags placed in metal containers and disposed of regularly?"
+            ],
+            "Dust and Dirt Removal": [
+                "Is sufficient ventilation in place to provide good operator visibility?",
+                "Is sufficient ventilation in place to prevent dust from settling and accumulating in the room?",
+                "Is sufficient ventilation in place to reduce dust concentrations?",
+                "Is sufficient ventilation in place to prevent the escape of contaminants into adjacent work areas or the environment?",
+                "Are dust residues cleaned at regular intervals and in areas that may be normally overlooked (e.g., overhead)?"
+            ],
+            "Sanitation Facility": [
+                "Are toilets clean, serviceable, and adequate in number at the worksite?"
+            ]
+        };
 
-            const remarksInput = createRemarksInput(index);
-
-            const radioCell = document.createElement('td');
-            radioCell.classList.add("radio_btn");
-            const radioDiv = document.createElement('div');
-
-            radioDiv.appendChild(yesInput);
-            radioDiv.appendChild(noInput);
-            radioDiv.appendChild(naInput);
-            radioCell.appendChild(radioDiv);
-
-            const remarksCell = document.createElement('td');
-            const remarksDiv = document.createElement('div');
-            remarksCell.appendChild(remarksDiv);
-            remarksDiv.classList.add("remarks-input");
-            remarksDiv.appendChild(remarksInput);
-
-            row.appendChild(guidelineCell);
-            row.appendChild(radioCell);
-            row.appendChild(remarksCell);
-
-            // Add event listener to radio buttons to toggle remarks input
-            const updateRemarksVisibility = () => {
-                remarksDiv.classList.toggle('remarks-input-show', noInput.checked);
-            };
-
-            yesInput.addEventListener('change', updateRemarksVisibility);
-            noInput.addEventListener('change', updateRemarksVisibility);
-            naInput.addEventListener('change', updateRemarksVisibility);
-
-            return row;
-        }
-
+        let yesCount = 0;
+        let noCount = 0;
+        
         // Function to create a radio button
         function createRadioButton(index, value) {
             const input = document.createElement('input');
             input.type = 'radio';
             input.name = `guideline${index}`;
             input.value = value.toLowerCase();
+            input.required = true;
+                    
+            // Add event listener to track changes
+            input.addEventListener('change', updateCounts);
+
             return input;
         }
 
@@ -676,18 +760,124 @@ document.addEventListener('DOMContentLoaded', async function() {
             const input = document.createElement('input');
             input.type = 'text';
             input.name = `remarks${index}`;
+            input.required = false; // Initially, set it as not required
+
+            // Add event listener to track changes in the radio buttons
+            document.querySelectorAll(`input[name="guideline${index}"]`).forEach((radio) => {
+                radio.addEventListener('change', () => {
+                    input.required = radio.value.toLowerCase() === 'no'; // Set required based on the selected option
+                });
+            });
+
             return input;
         }
 
-        // Get the safetyTable tbody element
-        const safetyTableBody = document.querySelector('#safetyTable tbody');
+        let currentIndex = 1; // Initialize the index
 
-        // Generate a table row for each guideline and append to safetyTableBody
-        guidelines.forEach((guideline, index) => {
-            const row = generateGuidelineRow(guideline, index + 1);
-            safetyTableBody.appendChild(row);
+        // Function to generate a table row for each guideline
+        function generateGuidelineRow(category, guideline) {
+            const row = document.createElement('tr');
+
+            if (!guideline) {
+                const categoryHeaderCell = document.createElement('td');
+                categoryHeaderCell.textContent = category;
+                categoryHeaderCell.colSpan = 4;
+                categoryHeaderCell.style.fontWeight = 'bold';
+                categoryHeaderCell.style.textAlign = 'center';
+                row.appendChild(categoryHeaderCell);
+            } else {
+                const numberCell = document.createElement('td');
+                numberCell.textContent = currentIndex;
+
+                const guidelineCell = document.createElement('td');
+                guidelineCell.textContent = guideline;
+
+                const yesInput = createRadioButton(currentIndex, 'Yes');
+                const noInput = createRadioButton(currentIndex, 'No');
+                const naInput = createRadioButton(currentIndex, 'N/A');
+
+                const remarksInput = createRemarksInput(currentIndex);
+
+                const radioCell = document.createElement('td');
+                radioCell.classList.add('radio_btn');
+                const radioDiv = document.createElement('div');
+
+                radioDiv.appendChild(yesInput);
+                radioDiv.appendChild(noInput);
+                radioDiv.appendChild(naInput);
+                radioCell.appendChild(radioDiv);
+
+                const remarksCell = document.createElement('td');
+                const remarksDiv = document.createElement('div');
+                remarksCell.appendChild(remarksDiv);
+                remarksDiv.classList.add('remarks-input');
+                remarksDiv.appendChild(remarksInput);
+
+                row.appendChild(numberCell);
+                row.appendChild(guidelineCell);
+                row.appendChild(radioCell);
+                row.appendChild(remarksCell);
+
+                // Add event listener to radio buttons to toggle remarks input
+                const updateRemarksVisibility = () => {
+                    remarksDiv.classList.toggle('remarks-input-show', noInput.checked);
+                };
+
+                yesInput.addEventListener('change', updateRemarksVisibility);
+                noInput.addEventListener('change', updateRemarksVisibility);
+                naInput.addEventListener('change', updateRemarksVisibility);
+
+                currentIndex++; // Increment the index for the next row
+            }
+
+            return row;
+        }
+
+        // Get the safetyTable tbody element
+        const safetyTableBody = document.querySelector("#safetyTable tbody");
+
+        // Generate a table row for each guideline in the category and append to safetyTableBody
+        Object.keys(guidelines).forEach((category) => {
+            const headerRow = generateGuidelineRow(category, '');
+            safetyTableBody.appendChild(headerRow);
+
+            guidelines[category].forEach((guideline) => {
+                const row = generateGuidelineRow(category, guideline);
+                safetyTableBody.appendChild(row);
+            });
         });
 
+        // Function to update the counts and compute the percentage
+        function updateCounts() {
+            yesCount = 0;
+            noCount = 0;
+
+            document.querySelectorAll('.radio_btn input[type="radio"]').forEach((radio) => {
+                if (radio.value.toLowerCase() === 'yes' && radio.checked) {
+                    yesCount++;
+                }
+                if (radio.value.toLowerCase() === 'no' && radio.checked) {
+                    noCount++;
+                }
+            });
+            const percentage = (yesCount / (yesCount + noCount)) * 100;
+
+            if (isNaN(percentage)) {
+                grade.value = 'Safety Grade: N/A';
+            } else {
+                grade.value = `Safety Grade: ${percentage.toFixed(2)}%`;
+            }
+
+        }
+
+        // Add event listener to all radio buttons
+        document.querySelectorAll('.radio_btn input[type="radio"]').forEach((radio) => {
+            radio.addEventListener('change', updateCounts);
+        });
+        
+        // Initialize counts and percentage on page load
+        updateCounts();
+        
         function findEmployeeName(employee_id){
             var employee_name = "";
             for(let c = 1; c < employee_data_list.content.length; c++){

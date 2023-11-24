@@ -33,6 +33,14 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
+        ::-webkit-scrollbar {
+            width: 0px !important;
+        }
+    
+        ::-webkit-scrollbar-thumb {
+            background-color: transparent !important;
+        }
     </style>
 </head>
 <body>
@@ -493,38 +501,70 @@
                         RESIGN FORM
                     </button> -->
                 </label><br>
-                <form id="safety_inspection_form" style="display: none; position: absolute; z-index: 2; padding: 20px; background-color: white; border: 3px solid #198754; border-radius: 10px; height: 75vh; overflow-y: scroll; width: calc(100% - 40px);" 
-                    action="https://script.google.com/macros/s/AKfycbz--ofawc-qwe6lqQBsUtfQAnXNAZArrD7yfPzJeC8McDqui5pm8ma5i99XPPOroZTRuQ/exec" method="post">
+                <form id="safety_inspection_form" style="position: absolute; z-index: 2; padding: 20px; background-color: white; border: 3px solid #198754; border-radius: 10px; height: 75vh; overflow-y: scroll; width: calc(100% - 40px);" 
+                    action="https://script.google.com/macros/s/AKfycbw4gPiTsWXXXHnH7dvaMuQEUKlFqH9Uqs7bN4A3kaDdOUmaDL2l-sUeiECNbc07dVo/exec" method="post">
                     <h2>SAFETY INSPECTION FORM</h2>
+                    <input type="hidden" id="sif_form_no" name="sif_form_no">
+                    <input type="text" id="grade" name="grade" class="form-control" style="text-align: center; max-width: 300px; width: 100%">
+                    <div style="display: flex; flex-wrap: wrap; max-width: 300px; flex-direction: row;">
+                        <select name="department_selection" id="department_selection" class="form-control" required>
+                            <option value="">SELECT DEPARTMENT</option>
+                            <option value="ADMIN DEPARTMENT">ADMIN DEPARTMENT</option>
+                            <option value="ACCOUNTING DEPARTMENT">ACCOUNTING DEPARTMENT</option>
+                            <option value="MARKETING DEPARTMENT">MARKETING DEPARTMENT</option>
+                            <option value="LOGISTICS DEPARTMENT">LOGISTICS DEPARTMENT</option>
+                            <option value="TREATMENT DEPARTMENT">TREATMENT DEPARTMENT</option>
+                            <option value="WAREHOUSE AND RENDERING DEPARTMENT">WAREHOUSE AND RENDERING DEPARTMENT</option>
+                            <option value="CONSTRUCTION DEPARTMENT">CONSTRUCTION DEPARTMENT</option>
+                            <option value="FACILITY SERVICES MANAGEMENT DEPARTMENT">FACILITY SERVICES MANAGEMENT DEPARTMENT</option>
+                        </select>
+                        <select name="section_selection" id="section_selection" class="form-control" required>
+                            <option value="">SELECT SECTION</option>
+                        </select>
+                    </div>
                     <div id="sitePremises">
-                        <h2>Site Premises and Safety Guidelines</h2>
-                        <table id="safetyTable" style="width: 100%; border-collapse: collapse;">
-                            <colgroup>
-                                <col style="width: 60%;"><!-- Set the width for the guidelines column -->
-                                <col style="width: 20%;"><!-- Set the width for the radio buttons column -->
-                                <col style="width: 20%;"><!-- Set the width for the remarks column -->
-                            </colgroup>
-                            <thead>
-                                <tr>
-                                    <th>Guidelines</th>
-                                    <th>Yes / No / N/A</th>
-                                    <th>Remarks</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Guidelines with radio buttons will be dynamically inserted here -->
-                            </tbody>
-                        </table>
+                        <div class="table-container" style="max-height: 400px; overflow-y: auto;">
+                            <table id="safetyTable" style="width: calc(100%); border-collapse: collapse;">
+                                <colgroup>
+                                    <col style="width: 1%;"><!-- Set the width for the guidelines column -->
+                                    <col style="width: 65%;"><!-- Set the width for the guidelines column -->
+                                    <col style="width: 5%;"><!-- Set the width for the radio buttons column -->
+                                    <col style="width: 20%;"><!-- Set the width for the remarks column -->
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Guidelines</th>
+                                        <th>Yes / No / N/A</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Guidelines with radio buttons will be dynamically inserted here -->
+                                </tbody>
+                            </table>
+                        </div>
                         <style>
                             /* Add your CSS styles here */
+                            .table-container {
+                                max-height: 400px; /* Set the maximum height for the container */
+                                overflow-y: auto; /* Add a vertical scrollbar when content overflows */
+                                position: relative; /* Make the container a positioning context */
+                            }
                             #safetyTable {
                                 width: 100%;
                                 border-collapse: collapse;
+                                border: 3px solid #198754;
+                                border-radius: 10px;
                             }
-                        
-                            #safetyTable th,
+
+                            #safetyTable th {
+                                border: 1px solid white;
+                                padding: 8px;
+                                text-align: center;
+                            }
                             #safetyTable td {
-                                border: 1px solid black;
+                                border: 1px solid #198754;
                                 padding: 8px;
                                 text-align: center;
                             }
@@ -545,13 +585,22 @@
                             #safetyTable .remarks-input-show {
                                 display: block !important;
                             }
+
+                            #safetyTable thead {
+                                position: sticky; /* Make the thead sticky */
+                                top: 2px; /* Stick to the top of the container */
+                                background-color: #198754; /* Set the background color for the sticky header */
+                                z-index: 2; /* Ensure the header is above the tbody content */
+                                color: #ffffff;
+                            }
                         </style>
                     </div>
+                    <input type="text" id="other_remarks" name="other_remarks" class="form-control" placeholder="Input Other Remarks">
                     <div class="buttons">
-                        <button type="submit" id="submit_btn" class="form-control" >
+                        <button type="submit" id="submit_btn" class="form-control bg-success" >
                             Submit
                         </button>
-                        <button type="reset" id="reset" class="form-control" >
+                        <button type="reset" id="reset" class="form-control bg-danger" >
                             Clear
                         </button>
                     </div>    

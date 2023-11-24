@@ -2057,7 +2057,7 @@ section h2 {
 
 .safety form input,
 .safety form select {
-  border: 3px solid violet !important;
+  border: 3px solid #198754 !important;
 }
 
 .safety form label,
@@ -4200,6 +4200,15 @@ input:disabled {
   }
   .sidebar::-webkit-scrollbar-thumb {
     background-color: transparent;
+  }
+  #safetyTable .radio_btn div {
+    display: flex;
+    flex-direction: column !important;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    gap: 20px;
   }
   #pieChart {
     display: none !important; /* Hide icon boxes on smaller screens */
