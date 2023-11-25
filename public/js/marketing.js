@@ -1102,6 +1102,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const revision_no_quotation_form = new_quotation_form_tab.querySelector("#revision_no");
         const revision_number_container_quotation_form = new_quotation_form_tab.querySelector("#revision_number_container");
         const valid_until_container_quotation_form = new_quotation_form_tab.querySelector("#valid_until_container");
+        const remarks_input_quotation_form = new_quotation_form_tab.querySelector("#remarks_input");
+        const remarks_quotation_form = new_quotation_form_tab.querySelector("#remarks");
 
         marketing_user_quotation_form.innerText = user.value.toLowerCase().replace(/\b\w/g, function (char) {
             return char.toUpperCase();
@@ -1120,6 +1122,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         vice_president_signature_quotation_form.innerHTML = `<img src="../images/DE VERA_EXEQUIEL.png" alt="">`;
 
         generate_button_quotation_form.addEventListener("click", () => {
+            remarks_input_quotation_form.innerText = remarks_quotation_form.value;
             qlf_form_no_container_quotation_form.innerText = quotation_no_quotation_form.value;
             var currentDate = new Date();
             date_made_container_quotation_form.innerText = date_decoder(currentDate);
