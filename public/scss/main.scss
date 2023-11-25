@@ -499,6 +499,7 @@ nav{
 #billing_dashboard,
 #collection_dashboard,
 #billing_process_form,
+#collection_transaction,
 #marketing_dashboard,
 #marketing_transaction_form,
 #client_list_section,
@@ -552,8 +553,9 @@ nav{
 #treatment_process_form,
 #destruction_form,
 #marketing_dashboard_pco,
-#collection_dashboard,
 #billing_process_form,
+#collection_transaction,
+#marketing_dashboard_pco,
 #marketing_transaction_form,
 #client_list_section,
 #type_of_waste_list_section,
@@ -1546,36 +1548,36 @@ section h2
 }
 
 // Billing Process
-#billing_process_form
+.billing
 {
     overflow: scroll;
 }
 
-#billing_process_form form .form
+.billing form .form
 {
     max-width: 250px !important;
 }
 
-#billing_process_form form .bpf_form
+.billing form .bpf_form
 {
     display: flex;
     gap: 20px;
 }
 
-#billing_process_form form input,
-#billing_process_form form select
+.billing form input,
+.billing form select
 {
     border: 3px solid cyan !important;
 }
 
-#billing_process_form form label,
-#billing_process_form form select,
-#billing_process_form form input
+.billing form label,
+.billing form select,
+.billing form input
 {
     font-size: 20px !important;
 }
 
-#billing_process_form form .search_wcf_result
+.billing form .search_wcf_result
 {
     width: 100%;
     padding: 20px;
@@ -1584,7 +1586,7 @@ section h2
     font-size: 20px !important;
 }
 
-#billing_process_form form .search_input 
+.billing form .search_input 
 {
     position: relative;
     background-color: #fff;
@@ -1593,7 +1595,7 @@ section h2
     box-shadow: 0px 1px 5px 3px rgba(0,0,0,0.12);
 }
 
-#billing_process_form form .search_input input
+.billing form .search_input input
 {
     height: 55px;
     width: 100%;
@@ -1605,7 +1607,7 @@ section h2
     box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
 }
 
-#billing_process_form form .search_input .icon
+.billing form .search_input .icon
 {
     height: 55px;
     width: 55px;
@@ -1618,7 +1620,7 @@ section h2
     cursor: pointer;
 }
 
-#billing_process_form form .search_input .autocom_box
+.billing form .search_input .autocom_box
 {
     padding: 0px;
     max-height: 280px;
@@ -1627,14 +1629,14 @@ section h2
     pointer-events: none;
 }
 
-#billing_process_form form .search_input.active .autocom_box
+.billing form .search_input.active .autocom_box
 {
     padding: 10px 8px;
     opacity: 1;
     pointer-events: auto;
 }
 
-#billing_process_form form .search_input .autocom_box li
+.billing form .search_input .autocom_box li
 {
     list-style: none;
     padding: 8px 12px;
@@ -1644,30 +1646,30 @@ section h2
     display: none;
 }
 
-#billing_process_form form .search_input.active .autocom_box li
+.billing form .search_input.active .autocom_box li
 {
     display: block;
 }
 
-#billing_process_form form .search_input .autocom_box li:hover
+.billing form .search_input .autocom_box li:hover
 {
     background-color: #efefef;
 }
 
-#billing_process_form .form
+.billing .form
 {
     max-width: 250px !important;
     color: white;
     font-weight: bold;
 }
 
-#billing_process_form form .buttons
+.billing form .buttons
 {
     display: flex;
     gap: 20px;
 }
 
-#billing_process_form form .what_to_print
+.billing form .what_to_print
 {
     width: 816px;
     height: 1056px;
@@ -1676,7 +1678,7 @@ section h2
     display: none;
 }
 
-#billing_process_form form #submit
+.billing form #submit
 {
     max-width: 200px !important;
     background-color: cyan;
@@ -1685,8 +1687,8 @@ section h2
     color: black;
 }
 
-#billing_process_form form #reset,
-#billing_process_form form button
+.billing form #reset,
+.billing form button
 {
     max-width: 200px !important;
     background-color: cyan;
@@ -1695,18 +1697,18 @@ section h2
     color: black;
 }
 
-#billing_process_form form #search_sf_wcf_form_no_button
+.billing form #search_sf_wcf_form_no_button
 {
     background-color: cyan;
 }
 
-#billing_process_form form #convertToPDF_button
+.billing form #convertToPDF_button
 {
     display: none;
 }
 
-#billing_process_form form #add_item_button {
-    max-width: 60px !important;
+.billing form #add_item_button {
+    max-width: 0px !important;
     background-color: cyan;
     font-size: 30px;
     font-weight: bold;
@@ -1716,7 +1718,7 @@ section h2
     display: none;
 }
 
-#billing_process_form form #remove_item_button {
+.billing form #remove_item_button {
     max-width: 60px !important;
     background-color: cyan;
     font-size: 30px;

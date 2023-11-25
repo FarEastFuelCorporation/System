@@ -59,7 +59,12 @@
                 <li>
                     <a href="#">
                         <i class="fa-solid fa-clipboard-list"></i>
-                        Billing Transaction Form
+                        Billing Transaction
+                    </a>
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                        Collection Transaction
                     </a>
                 </li>
                 <li>
@@ -448,9 +453,10 @@
                         </div>
                     </div>
                 </div>
-            </section>     
-            <section id="billing_process_form">
-                <h2>BILLING PROCESS FORM</h2><br>
+            </section>
+            <!-- billing_process_form -->
+            <section class="billing" id="billing_process_form">
+                <h2>BILLING TRANSACTION</h2><br>
                 <form id="form_id" action="https://script.google.com/macros/s/AKfycbwJaL3g4R8384HYaw8v8hxqw0P-p1i34O1owh660qzSEE7kF0afUzoc7Fb3exUU2kHhuQ/exec" method="post" style="position: relative;">
                     <input type="hidden" name="user" id="user">
                     <input type="hidden" name="wcf_form_no1" id="wcf_form_no1">
@@ -465,7 +471,7 @@
                         <div>
                             <label for="bpf_form_no">
                                 <i class="fa-solid fa-list-ol"></i>
-                                BPF #
+                                BTF #
                             </label><br>
                             <div class="form">
                                 <input type="text" id="bpf_form_no" autocomplete="off" name="bpf_form_no" class="form-control" required><br>
@@ -1229,6 +1235,110 @@
 
                         </style>
                     </div><br>
+                </form>
+            </section>
+            <!-- collection_transaction -->
+            <section class="billing" id="collection_transaction">
+                <h2>COLLECTION TRANSACTION</h2><br>
+                <form id="form_id" action="https://script.google.com/macros/s/AKfycbwJaL3g4R8384HYaw8v8hxqw0P-p1i34O1owh660qzSEE7kF0afUzoc7Fb3exUU2kHhuQ/exec" method="post" style="position: relative;">
+                    <input type="hidden" name="user" id="user">
+                    <input type="hidden" name="wcf_form_no1" id="wcf_form_no1">
+                    <input type="hidden" name="client" id="client">
+                    <input type="hidden" name="hauling_date1" id="hauling_date1">
+                    <input type="hidden" name="total_vat_in1" id="total_vat_in1">
+                    <input type="hidden" name="total_vat_ex1" id="total_vat_ex1">
+                    <input type="hidden" name="billing_date" id="billing_date">
+                    <input type="hidden" name="terms" id="terms">
+                    <input type="hidden" name="cod_counter" id="cod_counter" value="1">
+                    <div>
+                        <label for="ctf_form_no">
+                            <i class="fa-solid fa-list-ol"></i>
+                            CTF #
+                        </label><br>
+                        <div class="form">
+                            <input type="text" id="ctf_form_no" autocomplete="off" name="ctf_form_no" class="form-control" required><br>
+                        </div>
+                    </div>
+                    <div id="search_tpf_result">
+
+                    </div>
+                    <div style="display: flex; gap: 20px;">
+                        <div>
+                            <label for="search_bpf_no">
+                                <i class="fa-solid fa-list-ol"></i>
+                                BTF #
+                            </label><br>
+                            <div class="form">
+                                <input type="text" id="search_bpf_no" autocomplete="off" name="search_bpf_no" class="form-control" required><br>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="search_bpf_no">
+                                <i class="fa-solid fa-list-ol"></i>
+                                Billing Amount
+                            </label><br>
+                            <div class="form">
+                                <input type="number" id="billing_amount" autocomplete="off" name="billing_amount" class="form-control" required style="text-align: end;" step="" value="0.00"><br>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 20px;">
+                        <label for="total_amount" style="min-width: 230px; text-align: right;">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Total Amount
+                        </label><br>
+                        <div class="form">
+                            <input type="number" id="total_amount" autocomplete="off" name="total_amount" class="form-control" required style="text-align: end;" step="" value="0.00"><br>
+                        </div>
+                    </div>
+                    <hr>
+                    <div style="display: flex; gap: 20px;">
+                        <div>
+                            <label for="date_paid">
+                                <i class="fa-solid fa-list-ol"></i>
+                                Date Paid
+                            </label><br>
+                            <div class="form">
+                                <input type="date" id="date_paid" autocomplete="off" name="date_paid" class="form-control" required style="min-width: 250px;"><br>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="amount_paid">
+                                <i class="fa-solid fa-list-ol"></i>
+                                Amount Paid
+                            </label><br>
+                            <div class="form">
+                                <input type="number" id="amount_paid" autocomplete="off" name="amount_paid" class="form-control" required style="text-align: end;" step="" value="0.00"><br>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="remarks">
+                                <i class="fa-solid fa-list-ol"></i>
+                                Remarks
+                            </label><br>
+                            <div class="form">
+                                <input type="text" id="remarks" autocomplete="off" name="remarks" class="form-control" placeholder="Input Remarks if any"><br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add_item pt-3" style="position: absolute; top: 100px; left: 550px !important; width: 100px;">
+                        <div class="item_buttons" style="width: fit-content;">
+                            <button type="button" id="remove_tf_button" class="form-control" style="display: none;">
+                                <i class="fa-solid fa-minus"></i>
+                            </button>
+                            <button type="button" id="add_tf_button" class="form-control">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="button_container" class="buttons">
+                        <button type="submit" id="submit_btn" class="form-control">
+                            Submit
+                        </button>
+                        <button type="reset" id="reset" class="form-control" >
+                            Clear
+                        </button>
+                    </div>    
                 </form>
             </section>
             <!-- settings -->

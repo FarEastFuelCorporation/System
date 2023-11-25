@@ -526,7 +526,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         // var year = new Date().getFullYear();
         // var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
         // data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-        // bpf_form_no.value = `BPF${year}${month}${data_counter}`;
+        // bpf_form_no.value = `BTF${year}${month}${data_counter}`;
         
         const billing_process_form = document.querySelector("#billing_process_form");
         const generate_button = billing_process_form.querySelector("#generate_button");
@@ -2581,6 +2581,23 @@ document.addEventListener('DOMContentLoaded', async function() {
                 sugg_box.innerHTML = list_data;
             }
         }
+
+        // ctf_data_list
+        // FORM GENERATOR
+        const ctf_form_no = document.getElementById("ctf_form_no");
+        var last_row = ctf_data_list.content.length -1;
+        var data_info = ctf_data_list.content[last_row][findTextInArray(ctf_data_list, "CTF #")];
+        var data_counter;
+        if(last_row == 0){
+            data_counter = 0;
+        }
+        else{
+            data_counter = data_info.substring(9,12);
+        }
+        var year = new Date().getFullYear();
+        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        ctf_form_no.value = `CTF${year}${month}${data_counter}`;
 
         function findEmployeeName(employee_id){
             var employee_name = "";
