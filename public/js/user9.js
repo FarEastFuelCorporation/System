@@ -815,8 +815,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                         if (parseInt(time_in_sched.value.slice(0, 2)) >= 18) {
                             if (totalHours >= 8) {
                                 allowance[x].value = parseFloat(night_allowance.value);
-                            } else if (totalHours >= 4) {
-                                allowance[x].value = (totalHours / 8) * parseFloat(night_allowance.value);
+                            } else if (totalHours > 0 && totalHours < 8) {
+                                allowance[x].value = ((totalHours - (under_time_mins[x].value + ((late_mins[x].value)/60))) / 8) * parseFloat(night_allowance.value);
                             } else {
                                 allowance[x].value = 0;
                             }
@@ -824,12 +824,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                         else {                        
                             if (totalHours >= 8) {
                                 allowance[x].value = parseFloat(day_allowance.value);
-                            } else if (totalHours < 8 && totalHours >= 4) {
-                                allowance[x].value = (totalHours / 8) * parseFloat(day_allowance.value);
+                            } else if (totalHours > 0 && totalHours < 8) {
+                                allowance[x].value = ((totalHours - (under_time_mins[x].value + ((late_mins[x].value)/60))) / 8) * parseFloat(day_allowance.value);
                             } else if (totalHours < 4) {
                                 allowance[x].value = 0;
                             }
                         }
+                        console.log(under_time_mins[x].value)
+                        console.log(late_mins[x].value)
                     }
                 }
     
@@ -1230,6 +1232,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
 
                 time_out_sched.addEventListener("change", () => {
+                    calculateAllowance();
                     calculateGrossSalary();
                     calculateNetSalary();
                 })           

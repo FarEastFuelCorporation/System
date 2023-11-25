@@ -1093,6 +1093,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const buying_input_quotation_form = new_quotation_form_tab.querySelector("#buying_input");
         const marketing_user_quotation_form = new_quotation_form_tab.querySelector("#marketing_user");
         const marketing_signature_quotation_form = new_quotation_form_tab.querySelector("#marketing_signature");
+        const accounting_head_signature_quotation_form = new_quotation_form_tab.querySelector("#accounting_head_signature");
+        const vice_president_signature_quotation_form = new_quotation_form_tab.querySelector("#vice_president_signature");
         const user = new_quotation_form_tab.querySelector("#user");
         const convertToPDFandDownload_button = new_quotation_form_tab.querySelector("#convertToPDFandDownload_button");
         const convertToPDF_button = new_quotation_form_tab.querySelector("#convertToPDF_button");
@@ -1113,6 +1115,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         else if(user.value == "JOHONEY CANLAS"){
             marketing_signature_quotation_form.innerHTML = `<img src="../images/CANLAS_JOHONEY.png" alt="">`;
         }
+        
+        accounting_head_signature_quotation_form.innerHTML = `<img src="../images/CARDINEZ_DAISY.png" alt="">`;
+        vice_president_signature_quotation_form.innerHTML = `<img src="../images/DE VERA_EXEQUIEL.png" alt="">`;
 
         generate_button_quotation_form.addEventListener("click", () => {
             qlf_form_no_container_quotation_form.innerText = quotation_no_quotation_form.value;
@@ -2317,6 +2322,8 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         const marketing_user_commission_form = commission_form.querySelector("#marketing_user");
         const marketing_signature_commission_form = commission_form.querySelector("#marketing_signature");
+        const accounting_head_signature_commission_form = commission_form.querySelector("#accounting_head_signature");
+        const vice_president_signature_commission_form = commission_form.querySelector("#vice_president_signature");
         const clf_pending_list_commission_form = commission_form.querySelector("#clf_pending_list");
         const generate_button_commission_form = commission_form.querySelector("#generate_button");
         const search_bpf_form_no_commission_form = commission_form.querySelector("#search_bpf_form_no");
