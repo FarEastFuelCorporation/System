@@ -707,8 +707,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     var data = "";
                     var data3 = "";
-                    if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]
-                    && mode != "FREE OF CHARGE"){
+                    if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]){
                         bpf_form_no_container.innerText = bpf_form_no.value;
                         date_made_container.innerText = date_decoder(new Date());
                         client_name_container.innerHTML = client_name;
@@ -720,48 +719,50 @@ document.addEventListener('DOMContentLoaded', async function() {
                         si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                         si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                         si_date_container.innerText = date_of_certification;
-                        data = `
-                        <tr>
-                            <td>${date_of_certification}</td>
-                            <td></td>
-                            <td>${service_invoice_no.value}</td>
-                            <td style="font-size: 10px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
-                            <td>${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
-                            <td>${unit}</td>
-                            <td style="text-align: right; padding-right: 5px">${formatNumber(unit_price)}</td>
-                            <td style="text-align: right; padding-right: 5px">${formatNumber(parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price))}</td>
-                            <td style="font-size: 10px !important">${vat_calculation}</td>
-                        </tr>
-                        `
-                        table_data_info.push(data);
-                        var si_unit_price = 0;
-                        var si_amount = 0;
-                        if(vat_calculation == "VAT EXCLUSIVE"){
-                            vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                            si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
-                            si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
-                            si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                        if(mode != "FREE OF CHARGE"){
+                            data = `
+                            <tr>
+                                <td>${date_of_certification}</td>
+                                <td></td>
+                                <td>${service_invoice_no.value}</td>
+                                <td style="font-size: 10px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
+                                <td>${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
+                                <td>${unit}</td>
+                                <td style="text-align: right; padding-right: 5px">${formatNumber(unit_price)}</td>
+                                <td style="text-align: right; padding-right: 5px">${formatNumber(parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price))}</td>
+                                <td style="font-size: 10px !important">${vat_calculation}</td>
+                            </tr>
+                            `
+                            table_data_info.push(data);
+                            var si_unit_price = 0;
+                            var si_amount = 0;
+                            if(vat_calculation == "VAT EXCLUSIVE"){
+                                vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
+                                si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                                si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                            }
+                            else{
+                                non_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                si_unit_price = parseFloat(unit_price);
+                                si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                            }                    
+                            data3 = `
+                            <tr>
+                                <td>${data3_counter}</td>
+                                <td class="amount">${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
+                                <td>${unit}</td>
+                                <td>${date_of_certification}</td>
+                                <td style="font-size: 10px !important; padding-top: 5px !important;">${waste_name}</td>
+                                <td class="amount">${formatNumber(si_unit_price)}</td>
+                                <td class="amount">${formatNumber(si_amount)}</td>
+                            </tr>
+                            `
+                            data3_counter += 2;
+                            table_counter += 1;
+                            si_table_data_info.push(data3);
                         }
-                        else{
-                            non_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                            si_unit_price = parseFloat(unit_price);
-                            si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                            si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                        }                    
-                        data3 = `
-                        <tr>
-                            <td>${data3_counter}</td>
-                            <td class="amount">${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
-                            <td>${unit}</td>
-                            <td>${date_of_certification}</td>
-                            <td style="font-size: 10px !important; padding-top: 5px !important;">${waste_name}</td>
-                            <td class="amount">${formatNumber(si_unit_price)}</td>
-                            <td class="amount">${formatNumber(si_amount)}</td>
-                        </tr>
-                        `
-                        data3_counter += 2;
-                        table_counter += 1;
-                        si_table_data_info.push(data3);
                     }
                 }
                 for(let y = 0; y < wcf_transaction.length; y++){
@@ -966,8 +967,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     var data = "";
                     var data3 = "";
-                    if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]
-                        && mode != "FREE OF CHARGE"){
+                    if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]){
                         bpf_form_no_container.innerText = bpf_form_no.value;
                         date_made_container.innerText = date_decoder(new Date());
                         client_name_container.innerHTML = client_name;
@@ -979,48 +979,50 @@ document.addEventListener('DOMContentLoaded', async function() {
                         si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                         si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                         si_date_container.innerText = date_of_certification;
-                        data = `
-                        <tr>
-                            <td>${date_of_certification}</td>
-                            <td></td>
-                            <td>${service_invoice_no.value}</td>
-                            <td style="font-size: 10px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
-                            <td>${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
-                            <td>${unit}</td>
-                            <td style="text-align: right; padding-right: 5px">${formatNumber(unit_price)}</td>
-                            <td style="text-align: right; padding-right: 5px">${formatNumber(parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price))}</td>
-                            <td style="font-size: 10px !important">${vat_calculation}</td>
-                        </tr>
-                        `
-                        table_data_info.push(data);
-                        var si_unit_price = 0;
-                        var si_amount = 0;
-                        if(vat_calculation == "VAT EXCLUSIVE"){
-                            vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                            si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
-                            si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
-                            si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                        if(mode != "FREE OF CHARGE"){
+                            data = `
+                            <tr>
+                                <td>${date_of_certification}</td>
+                                <td></td>
+                                <td>${service_invoice_no.value}</td>
+                                <td style="font-size: 10px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
+                                <td>${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
+                                <td>${unit}</td>
+                                <td style="text-align: right; padding-right: 5px">${formatNumber(unit_price)}</td>
+                                <td style="text-align: right; padding-right: 5px">${formatNumber(parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price))}</td>
+                                <td style="font-size: 10px !important">${vat_calculation}</td>
+                            </tr>
+                            `
+                            table_data_info.push(data);
+                            var si_unit_price = 0;
+                            var si_amount = 0;
+                            if(vat_calculation == "VAT EXCLUSIVE"){
+                                vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
+                                si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                                si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                            }
+                            else{
+                                non_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                si_unit_price = parseFloat(unit_price);
+                                si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                            }                    
+                            data3 = `
+                            <tr>
+                                <td>${data3_counter}</td>
+                                <td class="amount">${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
+                                <td>${unit}</td>
+                                <td>${date_of_certification}</td>
+                                <td style="font-size: 10px !important; padding-top: 5px !important;">${waste_name}</td>
+                                <td class="amount">${formatNumber(si_unit_price)}</td>
+                                <td class="amount">${formatNumber(si_amount)}</td>
+                            </tr>
+                            `
+                            data3_counter += 2;
+                            table_counter += 1;
+                            si_table_data_info.push(data3);
                         }
-                        else{
-                            non_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                            si_unit_price = parseFloat(unit_price);
-                            si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                            si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                        }                    
-                        data3 = `
-                        <tr>
-                            <td>${data3_counter}</td>
-                            <td class="amount">${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
-                            <td>${unit}</td>
-                            <td>${date_of_certification}</td>
-                            <td style="font-size: 10px !important; padding-top: 5px !important;">${waste_name}</td>
-                            <td class="amount">${formatNumber(si_unit_price)}</td>
-                            <td class="amount">${formatNumber(si_amount)}</td>
-                        </tr>
-                        `
-                        data3_counter += 2;
-                        table_counter += 1;
-                        si_table_data_info.push(data3);
                     }
                 }
                 for(let y = 0; y < wcf_transaction.length; y++){
@@ -1229,8 +1231,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                         var data = "";
                         var data3 = "";
-                        if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]
-                            && mode != "FREE OF CHARGE"){
+                        if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]){
                             bpf_form_no_container.innerText = bpf_form_no.value;
                             date_made_container.innerText = date_decoder(new Date());
                             client_name_container.innerHTML = client_name;
@@ -1242,50 +1243,52 @@ document.addEventListener('DOMContentLoaded', async function() {
                             si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                             si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                             si_date_container.innerText = date_of_certification;
-                            data = `
-                            <tr>
-                                <td>${date_of_certification}</td>
-                                <td></td>
-                                <td>${service_invoice_no.value}</td>
-                                <td style="font-size: 10px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
-                                <td>${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
-                                <td>${unit}</td>
-                                <td style="text-align: right; padding-right: 5px">${formatNumber(unit_price)}</td>
-                                <td style="text-align: right; padding-right: 5px">${formatNumber(parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price))}</td>
-                                <td style="font-size: 10px !important">${vat_calculation}</td>
-                            </tr>
-                            `
-                            table_data_info.push(data);
-                            var si_unit_price = 0;
-                            var si_amount = 0;
-                            if(vat_calculation == "VAT EXCLUSIVE"){
-                                vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                                individual_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                                si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
-                                si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
-                                si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                            if(mode != "FREE OF CHARGE"){
+                                data = `
+                                <tr>
+                                    <td>${date_of_certification}</td>
+                                    <td></td>
+                                    <td>${service_invoice_no.value}</td>
+                                    <td style="font-size: 10px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
+                                    <td>${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
+                                    <td>${unit}</td>
+                                    <td style="text-align: right; padding-right: 5px">${formatNumber(unit_price)}</td>
+                                    <td style="text-align: right; padding-right: 5px">${formatNumber(parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price))}</td>
+                                    <td style="font-size: 10px !important">${vat_calculation}</td>
+                                </tr>
+                                `
+                                table_data_info.push(data);
+                                var si_unit_price = 0;
+                                var si_amount = 0;
+                                if(vat_calculation == "VAT EXCLUSIVE"){
+                                    vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                    individual_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                    si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
+                                    si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                                    si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                                }
+                                else{
+                                    non_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                    individual_non_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                    si_unit_price = parseFloat(unit_price);
+                                    si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                    si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                }                    
+                                data3 = `
+                                <tr>
+                                    <td>${data3_counter}</td>
+                                    <td class="amount">${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
+                                    <td>${unit}</td>
+                                    <td>${date_of_certification}</td>
+                                    <td style="font-size: 10px !important; padding-top: 5px !important;">${waste_name}</td>
+                                    <td class="amount">${formatNumber(si_unit_price)}</td>
+                                    <td class="amount">${formatNumber(si_amount)}</td>
+                                </tr>
+                                `
+                                data3_counter += 2;
+                                table_counter += 1;
+                                si_table_data_info.push(data3);
                             }
-                            else{
-                                non_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                                individual_non_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                                si_unit_price = parseFloat(unit_price);
-                                si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                                si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                            }                    
-                            data3 = `
-                            <tr>
-                                <td>${data3_counter}</td>
-                                <td class="amount">${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
-                                <td>${unit}</td>
-                                <td>${date_of_certification}</td>
-                                <td style="font-size: 10px !important; padding-top: 5px !important;">${waste_name}</td>
-                                <td class="amount">${formatNumber(si_unit_price)}</td>
-                                <td class="amount">${formatNumber(si_amount)}</td>
-                            </tr>
-                            `
-                            data3_counter += 2;
-                            table_counter += 1;
-                            si_table_data_info.push(data3);
                         }
                     }
                     for(let y = 0; y < wcf_transaction.length; y++){
@@ -1506,8 +1509,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                         var data = "";
                         var data3 = "";
-                        if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]
-                            && mode != "FREE OF CHARGE"){
+                        if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]){
                             bpf_form_no_container.innerText = bpf_form_no.value;
                             date_made_container.innerText = date_decoder(new Date());
                             client_name_container.innerHTML = client_name;
@@ -1519,48 +1521,50 @@ document.addEventListener('DOMContentLoaded', async function() {
                             si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                             si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                             si_date_container.innerText = date_of_certification;
-                            data = `
-                            <tr>
-                                <td>${date_of_certification}</td>
-                                <td></td>
-                                <td>${service_invoice_no.value}</td>
-                                <td style="font-size: 10px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
-                                <td>${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
-                                <td>${unit}</td>
-                                <td style="text-align: right; padding-right: 5px">${formatNumber(unit_price)}</td>
-                                <td style="text-align: right; padding-right: 5px">${formatNumber(parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price))}</td>
-                                <td style="font-size: 10px !important">${vat_calculation}</td>
-                            </tr>
-                            `
-                            table_data_info.push(data);
-                            var si_unit_price = 0;
-                            var si_amount = 0;
-                            if(vat_calculation == "VAT EXCLUSIVE"){
-                                vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                                si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
-                                si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
-                                si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                            if(mode != "FREE OF CHARGE"){
+                                data = `
+                                <tr>
+                                    <td>${date_of_certification}</td>
+                                    <td></td>
+                                    <td>${service_invoice_no.value}</td>
+                                    <td style="font-size: 10px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
+                                    <td>${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
+                                    <td>${unit}</td>
+                                    <td style="text-align: right; padding-right: 5px">${formatNumber(unit_price)}</td>
+                                    <td style="text-align: right; padding-right: 5px">${formatNumber(parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price))}</td>
+                                    <td style="font-size: 10px !important">${vat_calculation}</td>
+                                </tr>
+                                `
+                                table_data_info.push(data);
+                                var si_unit_price = 0;
+                                var si_amount = 0;
+                                if(vat_calculation == "VAT EXCLUSIVE"){
+                                    vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                    si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
+                                    si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                                    si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                                }
+                                else{
+                                    non_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                    si_unit_price = parseFloat(unit_price);
+                                    si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                    si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                }                    
+                                data3 = `
+                                <tr>
+                                    <td>${data3_counter}</td>
+                                    <td class="amount">${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
+                                    <td>${unit}</td>
+                                    <td>${date_of_certification}</td>
+                                    <td style="font-size: 10px !important; padding-top: 5px !important;">${waste_name}</td>
+                                    <td class="amount">${formatNumber(si_unit_price)}</td>
+                                    <td class="amount">${formatNumber(si_amount)}</td>
+                                </tr>
+                                `
+                                data3_counter += 2;
+                                table_counter += 1;
+                                si_table_data_info.push(data3);
                             }
-                            else{
-                                non_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                                si_unit_price = parseFloat(unit_price);
-                                si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                                si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                            }                    
-                            data3 = `
-                            <tr>
-                                <td>${data3_counter}</td>
-                                <td class="amount">${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
-                                <td>${unit}</td>
-                                <td>${date_of_certification}</td>
-                                <td style="font-size: 10px !important; padding-top: 5px !important;">${waste_name}</td>
-                                <td class="amount">${formatNumber(si_unit_price)}</td>
-                                <td class="amount">${formatNumber(si_amount)}</td>
-                            </tr>
-                            `
-                            data3_counter += 2;
-                            table_counter += 1;
-                            si_table_data_info.push(data3);
                         }
                     }
                     for(let y = 0; y < wcf_transaction.length; y++){
@@ -1784,8 +1788,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     var data = "";
                     var data3 = "";
-                    if(wcf_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")]
-                        && mode != "FREE OF CHARGE"){
+                    if(wcf_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")]){
                         bpf_form_no_container.innerText = bpf_form_no.value;
                         date_made_container.innerText = date_decoder(new Date());
                         client_name_container.innerHTML = client_name;
@@ -1798,66 +1801,68 @@ document.addEventListener('DOMContentLoaded', async function() {
                         si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                         date_of_certification = date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]);
                         si_date_container.innerText = date_of_certification;
-                        data = `
-                        <tr>
-                            <td>${date_of_certification}</td>
-                            <td></td>
-                            <td>${service_invoice_no.value}</td>
-                            <td style="font-size: 10px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
-                            <td>${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
-                            <td>${unit}</td>
-                            <td style="text-align: right; padding-right: 5px">${formatNumber(unit_price)}</td>
-                            <td style="text-align: right; padding-right: 5px">${formatNumber(parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price))}</td>
-                            <td style="font-size: 10px !important">${vat_calculation}</td>
-                        </tr>
-                        `
-                        table_data_info.push(data);
-                        var si_unit_price = 0;
-                        var si_amount = 0;
-                        if(mode == "CHARGE"){
-                            if(vat_calculation == "VAT EXCLUSIVE"){
-                                vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                                si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
-                                si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
-                                si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                        if(mode != "FREE OF CHARGE"){
+                            data = `
+                            <tr>
+                                <td>${date_of_certification}</td>
+                                <td></td>
+                                <td>${service_invoice_no.value}</td>
+                                <td style="font-size: 10px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
+                                <td>${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
+                                <td>${unit}</td>
+                                <td style="text-align: right; padding-right: 5px">${formatNumber(unit_price)}</td>
+                                <td style="text-align: right; padding-right: 5px">${formatNumber(parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price))}</td>
+                                <td style="font-size: 10px !important">${vat_calculation}</td>
+                            </tr>
+                            `
+                            table_data_info.push(data);
+                            var si_unit_price = 0;
+                            var si_amount = 0;
+                            if(mode == "CHARGE"){
+                                if(vat_calculation == "VAT EXCLUSIVE"){
+                                    vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                    si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
+                                    si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                                    si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                                }
+                                else{
+                                    non_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                    si_unit_price = parseFloat(unit_price);
+                                    si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                    si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                }
                             }
-                            else{
-                                non_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                                si_unit_price = parseFloat(unit_price);
-                                si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                                si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                            else if(mode == "BUYING"){
+                                if(vat_calculation == "VAT EXCLUSIVE"){
+                                    credits += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                    si_credits += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                    si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
+                                    si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                                    si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                                }
+                                else{
+                                    credits += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                    si_credits += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                    si_unit_price = parseFloat(unit_price);
+                                    si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                    si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                }
                             }
+                            data3 = `
+                            <tr>
+                                <td>${data3_counter}</td>
+                                <td class="amount">${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
+                                <td>${unit}</td>
+                                <td>${date_of_certification}</td>
+                                <td style="font-size: 10px !important; padding-top: 5px !important;">${waste_name}</td>
+                                <td class="amount">${formatNumber(si_unit_price)}</td>
+                                <td class="amount">${formatNumber(si_amount)}</td>
+                            </tr>
+                            `
+                            data3_counter += 2;
+                            table_counter += 1;
+                            si_table_data_info.push(data3);
                         }
-                        else if(mode == "BUYING"){
-                            if(vat_calculation == "VAT EXCLUSIVE"){
-                                credits += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                                si_credits += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                                si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
-                                si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
-                                si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
-                            }
-                            else{
-                                credits += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                                si_credits += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                                si_unit_price = parseFloat(unit_price);
-                                si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                                si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                            }
-                        }
-                        data3 = `
-                        <tr>
-                            <td>${data3_counter}</td>
-                            <td class="amount">${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
-                            <td>${unit}</td>
-                            <td>${date_of_certification}</td>
-                            <td style="font-size: 10px !important; padding-top: 5px !important;">${waste_name}</td>
-                            <td class="amount">${formatNumber(si_unit_price)}</td>
-                            <td class="amount">${formatNumber(si_amount)}</td>
-                        </tr>
-                        `
-                        data3_counter += 2;
-                        table_counter += 1;
-                        si_table_data_info.push(data3);
                     }
                 }
                 for(let y = 0; y < wcf_transaction.length; y++){
@@ -2071,8 +2076,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                         var data = "";
                         var data3 = "";
-                        if(wcf_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")]
-                            && mode != "FREE OF CHARGE"){
+                        if(wcf_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")]){
                             bpf_form_no_container.innerText = bpf_form_no.value;
                             date_made_container.innerText = date_decoder(new Date());
                             client_name_container.innerHTML = client_name;
@@ -2088,80 +2092,82 @@ document.addEventListener('DOMContentLoaded', async function() {
                             if(cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")] == "CARDBOARDS"){
                                 is_transportation = false
                             }
-                            var si_unit_price = 0;
-                            var si_amount = 0;
-                            if(mode == "CHARGE"){
-                                if(vat_calculation == "VAT EXCLUSIVE"){
-                                    vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                                    si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
-                                    si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
-                                    si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                            if(mode != "FREE OF CHARGE"){
+                                var si_unit_price = 0;
+                                var si_amount = 0;
+                                if(mode == "CHARGE"){
+                                    if(vat_calculation == "VAT EXCLUSIVE"){
+                                        vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                        si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
+                                        si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                                        si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                                    }
+                                    else{
+                                        non_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                        si_unit_price = parseFloat(unit_price);
+                                        si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                        si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                    }
+                                    data = `
+                                    <tr>
+                                        <td>${date_of_certification}</td>
+                                        <td></td>
+                                        <td>${service_invoice_no.value}</td>
+                                        <td style="font-size: 10px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
+                                        <td>${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
+                                        <td>${unit}</td>
+                                        <td style="text-align: right; padding-right: 5px">${formatNumber(unit_price)}</td>
+                                        <td style="text-align: right; padding-right: 5px">${formatNumber(parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price))}</td>
+                                        <td style="font-size: 10px !important">${vat_calculation}</td>
+                                    </tr>
+                                    `
+                                    table_data_info.push(data);
                                 }
-                                else{
-                                    non_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                                    si_unit_price = parseFloat(unit_price);
-                                    si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                                    si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                else if(mode == "BUYING"){
+                                    if(vat_calculation == "VAT EXCLUSIVE"){
+                                        credits += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                        si_credits += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                        si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
+                                        si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                                        si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
+                                    }
+                                    else{
+                                        credits += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                        si_credits += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                        si_unit_price = parseFloat(unit_price);
+                                        si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                        si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                    }
+                                    data = `
+                                    <tr style="color: #dc3545;">
+                                        <td>${date_of_certification}</td>
+                                        <td></td>
+                                        <td>${service_invoice_no.value}</td>
+                                        <td style="font-size: 10px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
+                                        <td>${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
+                                        <td>${unit}</td>
+                                        <td style="text-align: right; padding-right: 5px">${formatNumber(unit_price)}</td>
+                                        <td style="text-align: right; padding-right: 5px">${formatNumber(parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price))}</td>
+                                        <td style="font-size: 10px !important">${vat_calculation}</td>
+                                    </tr>
+                                    `
+                                    table_data_info.push(data);
                                 }
-                                data = `
+                                data3 = `
                                 <tr>
-                                    <td>${date_of_certification}</td>
-                                    <td></td>
-                                    <td>${service_invoice_no.value}</td>
-                                    <td style="font-size: 10px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
-                                    <td>${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
+                                    <td>${data3_counter}</td>
+                                    <td class="amount">${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
                                     <td>${unit}</td>
-                                    <td style="text-align: right; padding-right: 5px">${formatNumber(unit_price)}</td>
-                                    <td style="text-align: right; padding-right: 5px">${formatNumber(parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price))}</td>
-                                    <td style="font-size: 10px !important">${vat_calculation}</td>
+                                    <td>${date_of_certification}</td>
+                                    <td style="font-size: 10px !important; padding-top: 5px !important;">${waste_name}</td>
+                                    <td class="amount">${formatNumber(si_unit_price)}</td>
+                                    <td class="amount">${formatNumber(si_amount)}</td>
                                 </tr>
                                 `
-                                table_data_info.push(data);
+                                data3_counter += 2;
+                                table_counter += 1;
+                                si_table_data_info.push(data3);
                             }
-                            else if(mode == "BUYING"){
-                                if(vat_calculation == "VAT EXCLUSIVE"){
-                                    credits += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                                    si_credits += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                                    si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
-                                    si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
-                                    si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
-                                }
-                                else{
-                                    credits += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                                    si_credits += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                                    si_unit_price = parseFloat(unit_price);
-                                    si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                                    si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
-                                }
-                                data = `
-                                <tr style="color: #dc3545;">
-                                    <td>${date_of_certification}</td>
-                                    <td></td>
-                                    <td>${service_invoice_no.value}</td>
-                                    <td style="font-size: 10px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
-                                    <td>${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
-                                    <td>${unit}</td>
-                                    <td style="text-align: right; padding-right: 5px">${formatNumber(unit_price)}</td>
-                                    <td style="text-align: right; padding-right: 5px">${formatNumber(parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price))}</td>
-                                    <td style="font-size: 10px !important">${vat_calculation}</td>
-                                </tr>
-                                `
-                                table_data_info.push(data);
-                            }
-                            data3 = `
-                            <tr>
-                                <td>${data3_counter}</td>
-                                <td class="amount">${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
-                                <td>${unit}</td>
-                                <td>${date_of_certification}</td>
-                                <td style="font-size: 10px !important; padding-top: 5px !important;">${waste_name}</td>
-                                <td class="amount">${formatNumber(si_unit_price)}</td>
-                                <td class="amount">${formatNumber(si_amount)}</td>
-                            </tr>
-                            `
-                            data3_counter += 2;
-                            table_counter += 1;
-                            si_table_data_info.push(data3);
                         }
                         console.log(date_of_certification)
 
