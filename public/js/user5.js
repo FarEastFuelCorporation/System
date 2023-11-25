@@ -707,8 +707,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     var data = "";
                     var data3 = "";
-                    if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]){
-                        // && vat_calculation == "CHARGE"
+                    if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]
+                    && mode != "FREE OF CHARGE"){
                         bpf_form_no_container.innerText = bpf_form_no.value;
                         date_made_container.innerText = date_decoder(new Date());
                         client_name_container.innerHTML = client_name;
@@ -966,8 +966,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     var data = "";
                     var data3 = "";
-                    if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]){
-                        // && vat_calculation == "CHARGE"
+                    if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]
+                        && mode != "FREE OF CHARGE"){
                         bpf_form_no_container.innerText = bpf_form_no.value;
                         date_made_container.innerText = date_decoder(new Date());
                         client_name_container.innerHTML = client_name;
@@ -1229,8 +1229,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                         var data = "";
                         var data3 = "";
-                        if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]){
-                            // && vat_calculation == "CHARGE"
+                        if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]
+                            && mode != "FREE OF CHARGE"){
                             bpf_form_no_container.innerText = bpf_form_no.value;
                             date_made_container.innerText = date_decoder(new Date());
                             client_name_container.innerHTML = client_name;
@@ -1506,8 +1506,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                         var data = "";
                         var data3 = "";
-                        if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]){
-                            // && vat_calculation == "CHARGE"
+                        if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]
+                            && mode != "FREE OF CHARGE"){
                             bpf_form_no_container.innerText = bpf_form_no.value;
                             date_made_container.innerText = date_decoder(new Date());
                             client_name_container.innerHTML = client_name;
@@ -1784,8 +1784,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     var data = "";
                     var data3 = "";
-                    if(wcf_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")]){
-                        // && vat_calculation == "CHARGE"
+                    if(wcf_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")]
+                        && mode != "FREE OF CHARGE"){
                         bpf_form_no_container.innerText = bpf_form_no.value;
                         date_made_container.innerText = date_decoder(new Date());
                         client_name_container.innerHTML = client_name;
@@ -2071,8 +2071,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                         var data = "";
                         var data3 = "";
-                        if(wcf_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")]){
-                            // && vat_calculation == "CHARGE"
+                        if(wcf_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")]
+                            && mode != "FREE OF CHARGE"){
                             bpf_form_no_container.innerText = bpf_form_no.value;
                             date_made_container.innerText = date_decoder(new Date());
                             client_name_container.innerHTML = client_name;
