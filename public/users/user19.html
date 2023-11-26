@@ -52,7 +52,13 @@
                 <li>
                     <a href="#">
                         <i class="fa-solid fa-wrench"></i>
-                        Vehicle Maintenance
+                        Vehicle Maintenance Transactions
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                        Preventive Maintenance Transactions
                     </a>
                 </li>
                 <li>
@@ -160,8 +166,8 @@
                     <img src="../images/logo_name2.png" alt="logo" style="height: 50px; margin-top: 10px;"><hr>
                     <div style="position: relative;">
                         <h1 style="text-align: center; font-weight: bold; font-size: 32px;">WEEKLY REPORT</h1>
-                        <h1 style="text-align: center; font-weight: bold;">RECEIVING</h1>
-                        <h1 style="text-align: center; font-weight: bold;">LOGISTICS DEPARTMENT</h1>
+                        <h1 style="text-align: center; font-weight: bold;">MAINTENANCE TRANSACTION</h1>
+                        <h1 style="text-align: center; font-weight: bold;">MOTORPOOL</h1>
                         <h3 id="date_covered" style="text-align: center;"></h3><br>
                         <div style="display: flex; position: absolute; right: 0; top: 0;">
                             <h6 id="page_counter1" style="margin-right: 5px;"></h6>
@@ -173,15 +179,14 @@
                         <table>
                             <thead id="report_head">
                                 <tr>
-                                    <th>WCF #</td>
-                                    <th>MTF #</td>
-                                    <th>HAULING DATE</th>
-                                    <th>ARRIVAL DATE</th>
-                                    <th>ARRIVAL TIME</th>
-                                    <th>CLIENT</th>
-                                    <th>TYPE OF WASTE</th>
-                                    <th>TYPE OF VEHICLE</th>
+                                    <th>VMF #/<br>PMF #</th>
+                                    <th>VMR #</th>
+                                    <th>MAINTENANCE<br>DATE/TIME</th>
                                     <th>PLATE #</th>
+                                    <th>VEHICLE NAME</th>
+                                    <th>TYPE OF VEHICLE</th>
+                                    <th>DETAILS FOR REPAIR</th>
+                                    <th>MECHANIC NAME</th>
                                 </tr>
                             </thead>
                             <tbody id="report_body"></tbody>
@@ -240,7 +245,7 @@
                     {
                         width: 100%;
                         display: grid;
-                        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 3fr 2fr 1fr 1fr;
+                        grid-template-columns: 80px 80px 95px 70px 2fr 2fr 2fr 1fr;
                     }
 
                     .report_tab #report_head tr th
@@ -281,17 +286,17 @@
             </div>
         </div>
         <!-- dashboard -->
-        <section id="dashboard_section">
+        <section id="sorting_dashboard_section">
             <h2>DASHBOARD</h2><br>
-            <h2>RECEIVING SUMMARY</h2>
-            <div class="cards2">
+            <h2>MAINTENANCE SUMMARY</h2>
+            <div class="cards">
                 <div class="card">
                     <div class="card-content">
                         <div class="number" id="to_received"></div>
-                        <div class="card-name">For Maintenance</div>
+                        <div class="card-name">Maintenance Requests</div>
                     </div>
                     <div class="icon-box">
-                        <i class="fa-solid fa-wrench"></i>
+                        <i class="fa-solid fa-clipboard-list"></i>
                     </div>
                 </div>
                 <div class="card">
@@ -306,7 +311,16 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="number" id="received"></div>
-                        <div class="card-name">Repaired</div>
+                        <div class="card-name">Repaired Transaction</div>
+                    </div>
+                    <div class="icon-box">
+                        <i class="fa-solid fa-wrench"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="number" id="preventive_maintenance"></div>
+                        <div class="card-name">Preventive Maintenance</div>
                     </div>
                     <div class="icon-box">
                         <i class="fa-solid fa-screwdriver-wrench"></i>
@@ -343,13 +357,15 @@
                     <table>
                         <thead style="position: sticky; top: 0; background-color: black;">
                             <th>#</th>
+                            <th>VMF #/<br>PMF #</th>
                             <th>VMR #</th>
-                            <th>REQUEST<br>DATE/TIME</th>
+                            <th>MAINTENANCE<br>DATE/TIME</th>
                             <th>PLATE #</th>
                             <th>VEHICLE NAME</th>
                             <th>TYPE OF VEHICLE</th>
                             <th>DETAILS FOR REPAIR</th>
                             <th>REQUISITIONER</th>
+                            <th>MECHANIC NAME</th>
                             <th>SUBMITTED BY</th>
                         </thead>
                         <tbody id="received_list">
@@ -365,7 +381,7 @@
             <h2>VEHICLE MAINTENANCE FORM</h2><br>
             <form id="form_id" action="https://script.google.com/macros/s/AKfycbxECjQTqJQx7XJN_L7913FL6k7y7UOWhjdxr-1fq9UdounJntHW-dikM4zrXs8ZnYrWHw/exec" method="post">
                 <input type="hidden" name="user" id="user">
-                <div class="wcf_form">
+                <div class="vmf_form_no">
                     <div>
                         <label for="wcf_form_no">
                             <i class="fa-solid fa-list-ol"></i>
@@ -434,6 +450,95 @@
                             Repair Details
                         </label><br>
                         <input type="text" id="repair" name="repair" class="form-control" required placeholder="Input Repair Details" autocomplete="off">
+                    </div><br>
+                    <div>
+                        <label for="name_of_mechanic">
+                            <i class="fa-solid fa-toolbox"></i>
+                            Mechanic Name
+                        </label><br>
+                        <input type="text" id="name_of_mechanic" name="name_of_mechanic" class="form-control" required placeholder="Input Name of Mechanic" autocomplete="off">
+                    </div><br>
+                    <div>
+                        <label for="pr_no">
+                            <i class="fa-solid fa-toolbox"></i>
+                            Purchase Request #
+                        </label><br>
+                        <input type="text" id="pr_no" name="pr_no" class="form-control form" placeholder="Input PR # if there is" autocomplete="off">
+                    </div>
+                    <div class="buttons">
+                        <button type="submit" id="submit_btn" class="form-control" >
+                            Submit
+                        </button>
+                        <button type="reset" id="reset" class="form-control">
+                            Clear
+                        </button>
+                    </div>    
+                </div>
+            </form>
+        </section>
+        <!-- VEHICLE MAINTENANCE FORM -->
+        <section id="waste_collection_form">
+            <h2>PREVENTIVE MAINTENANCE TRANSACTIONS</h2><br>
+            <form id="form_id" action="https://script.google.com/macros/s/AKfycbxYVGhnkt5lNz5_c47uWy9ujYXFx0Pm-G9ubxIVP0SEhJH8iuYagbL8bIduRL61I_Rr/exec" method="post">
+                <input type="hidden" name="user" id="user">
+                <div class="wcf_form">
+                    <div>
+                        <label for="pmf_form_no">
+                            <i class="fa-solid fa-list-ol"></i>
+                            PMF #
+                        </label><br>
+                        <div class="form">
+                            <input type="text" id="pmf_form_no" autocomplete="off" name="pmf_form_no" class="form-control" readonly><br>
+                        </div>
+                    </div>
+                </div>
+                <div id="search_vmr_result"></div>
+                <div class="wrapper" style="max-width: 250px;">
+                    <label for="plate_no">
+                        <i class="fa-solid fa-truck"></i>
+                        Plate #
+                    </label><br>
+                    <div class="search_input" id="search_plate_no">
+                        <input type="text" autocomplete="off" name="plate_no" id="plate_no" class="form-control form" required placeholder="Type to Search Plate #...">
+                        <div class="autocom_box">
+                        </div>
+                        <div class="icon"><i class="fas fa-search"></i></div>
+                    </div>
+                </div><br>
+                <div>
+                    <div>
+                        <label for="type_of_repair">
+                            <i class="fa-solid fa-wrench"></i>
+                            Type of Maintenance
+                        </label><br>
+                        <select name="type_of_repair" id="" class="form-control form" required>
+                            <option value="">SELECT</option>
+                            <option value="MECHANICAL">MECHANICAL</option>
+                            <option value="ELECTRICAL">ELECTRICAL</option>
+                        </select>
+                    </div><br>
+                    <div style="display: flex; gap: 20px;">
+                        <div>
+                            <label for="date_start">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                Date Start
+                            </label><br>
+                            <input type="date" id="date_start" name="date_start" class="form-control form" required autocomplete="off">
+                        </div>
+                        <div>
+                            <label for="date_finish">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                Date Finish
+                            </label><br>
+                            <input type="date" id="date_finish" name="date_finish" class="form-control form" required autocomplete="off">
+                        </div>
+                    </div><br>
+                    <div>
+                        <label for="repair">
+                            <i class="fa-solid fa-toolbox"></i>
+                            Maintenance Details
+                        </label><br>
+                        <input type="text" id="repair" name="repair" class="form-control" required placeholder="Input Maintenance Details" autocomplete="off">
                     </div><br>
                     <div>
                         <label for="name_of_mechanic">
@@ -586,8 +691,40 @@
             <h2>SETTINGS</h2><br>
         </section>
         <!-- help -->
-        <section id="helpSection">
+        <section class="all" id="helpSection">
             <h2>HELP</h2><br>
+            <form action="https://script.google.com/macros/s/AKfycbxikTLqNb0ote-pFoUabyNVphtpqvh1rWSi7bNrAkncoP6-a3BTXhn9jVu8Ka9YXjVA/exec" method="post">
+                <h2>VOID TRANSACTIONS</h2><br>
+                <input type="hidden" name="user" id="user">
+                <div style="font-size: 20px !important;">
+                    <div>
+                        <label for="transaction_no">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Transaction #
+                        </label><br>
+                        <div class="form">
+                            <input type="text" id="transaction_no" autocomplete="off" name="transaction_no" class="form-control form" required style="border: 3px solid #198754; max-width: 250px;"><br>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="reason">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Reason for Void
+                        </label><br>
+                        <div class="form">
+                            <input type="text" id="reason" autocomplete="off" name="reason" class="form-control" required style="border: 3px solid #198754;"><br>
+                        </div>
+                    </div>
+                    <div class="buttons" style="display: flex; gap: 20px;">
+                        <button type="submit" id="submit_btn" class="form-control bg-success text-white" style="width: 200px; font-size: 20px !important;">
+                            Submit
+                        </button>
+                        <button type="reset" id="reset" class="form-control bg-danger text-white" style="width: 200px; font-size: 20px !important;">
+                            Clear
+                        </button>
+                    </div> 
+                </div>
+            </form>
         </section>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.37.1/apexcharts.min.js"></script>
@@ -611,7 +748,7 @@
                 const totalPages = Math.ceil(page.clientHeight / pageHeight);
 
                 const opt = {
-                    filename: `Logistics Receiving Transaction Report ${date_decoder(report_from)} - ${date_decoder(report_to)} Page ${i + 1} of ${pages.length}`,
+                    filename: `Motorpool Maintenance Transaction Report ${date_decoder(report_from)} - ${date_decoder(report_to)} Page ${i + 1} of ${pages.length}`,
                     image: { type: 'jpeg', quality: 1 },
                     html2canvas: { scale: 2 },
                     jsPDF: { unit: 'mm', format: 'letter', orientation: 'landscape' }

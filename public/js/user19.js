@@ -78,10 +78,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         user_sidebar_department.innerText = username_data_list.content[19][findTextInArray(username_data_list, "DEPARTMENT")];
         
         // dashboard
-        const dashboard_section = document.querySelector("#dashboard_section");
+        const dashboard_section = document.querySelector("#sorting_dashboard_section");
         const to_received_receiving = dashboard_section.querySelector("#to_received");
         const received_receiving = dashboard_section.querySelector("#received");
         const pending_receiving = dashboard_section.querySelector("#pending");
+        const preventive_maintenance_receiving = dashboard_section.querySelector("#preventive_maintenance");
         const pending_list_receiving = dashboard_section.querySelector("#pending_list");
         const received_list_receiving = dashboard_section.querySelector("#received_list");
         const month_filter = document.getElementById("month_filter");
@@ -101,20 +102,49 @@ document.addEventListener('DOMContentLoaded', async function() {
         function generatePending(){
             pending_array = [];
             finish_array = [];
+            pm_array = [];
             for (let i = 1; i < vmf_data_list.content.length; i++) {
-                if (!finish_array.includes(vmf_data_list.content[i][findTextInArray(vmf_data_list, "VMR #")])) {
-                    finish_array.push(vmf_data_list.content[i][findTextInArray(vmf_data_list, "VMR #")]);
-                }            
-            }
-            for (let i = 1; i < vmr_data_list.content.length; i++) {
-                if (!finish_array.includes(vmr_data_list.content[i][findTextInArray(vmr_data_list, "VMR #")])) {
-                    pending_array.push(vmr_data_list.content[i][findTextInArray(vmr_data_list, "VMR #")]);
+                if(month_filter.value == formatMonth(vmf_data_list.content[i][findTextInArray(vmf_data_list, "CREATED AT")])){
+                    if ((vmf_data_list.content[i][findTextInArray(vmf_data_list, "VMF #")].substring(0,3)) == "VMF" &&
+                    !finish_array.includes(vmf_data_list.content[i][findTextInArray(vmf_data_list, "VMR #")])) {
+                        finish_array.push(vmf_data_list.content[i][findTextInArray(vmf_data_list, "VMR #")]);
+                    }            
+                    else if ((vmf_data_list.content[i][findTextInArray(vmf_data_list, "VMF #")].substring(0,3)) == "PMF" &&
+                        !pm_array.includes(vmf_data_list.content[i][findTextInArray(vmf_data_list, "VMR #")])) {
+                        pm_array.push(vmf_data_list.content[i][findTextInArray(vmf_data_list, "VMR #")]);
+                    }
+                }
+                else if(month_filter.value == "ALL"){
+                    if ((vmf_data_list.content[i][findTextInArray(vmf_data_list, "VMF #")].substring(0,3)) == "VMF" &&
+                    !finish_array.includes(vmf_data_list.content[i][findTextInArray(vmf_data_list, "VMR #")])) {
+                        finish_array.push(vmf_data_list.content[i][findTextInArray(vmf_data_list, "VMR #")]);
+                    }            
+                    else if ((vmf_data_list.content[i][findTextInArray(vmf_data_list, "VMF #")].substring(0,3)) == "PMF" &&
+                        !pm_array.includes(vmf_data_list.content[i][findTextInArray(vmf_data_list, "VMR #")])) {
+                        pm_array.push(vmf_data_list.content[i][findTextInArray(vmf_data_list, "VMR #")]);
+                    }
                 }
             }
+
+
+            for (let i = 1; i < vmr_data_list.content.length; i++) {
+                if(month_filter.value == formatMonth(vmr_data_list.content[i][findTextInArray(vmr_data_list, "CREATED AT")])){
+                    if (!finish_array.includes(vmr_data_list.content[i][findTextInArray(vmr_data_list, "VMR #")])) {
+                        pending_array.push(vmr_data_list.content[i][findTextInArray(vmr_data_list, "VMR #")]);
+                    }
+                }
+                else if(month_filter.value == "ALL"){
+                    if (!finish_array.includes(vmr_data_list.content[i][findTextInArray(vmr_data_list, "VMR #")])) {
+                        pending_array.push(vmr_data_list.content[i][findTextInArray(vmr_data_list, "VMR #")]);
+                    }
+                }
+            }
+
 
             to_received_receiving.innerText = pending_array.length + finish_array.length;
             pending_receiving.innerText = pending_array.length;
             received_receiving.innerText = finish_array.length;
+            preventive_maintenance_receiving.innerText = pm_array.length;
             
             var options = {
                 series: [pending_array.length, finish_array.length],
@@ -171,7 +201,33 @@ document.addEventListener('DOMContentLoaded', async function() {
             var data_value = "";
             var data_value_counter = 1;
             for(let x = 1; x < vmr_data_list.content.length; x++){
-                if(pending_array.includes(vmr_data_list.content[x][findTextInArray(vmr_data_list, "VMR #")])){
+                if(pending_array.includes(vmr_data_list.content[x][findTextInArray(vmr_data_list, "VMR #")]) &&
+                    month_filter.value == formatMonth(vmr_data_list.content[x][findTextInArray(vmr_data_list, "CREATED AT")])){
+                    var type_of_vehicle
+                    var vehicle
+                    for(let y = 1; y < vehicle_data_list.content.length; y++){
+                        if(vmr_data_list.content[x][findTextInArray(vmr_data_list, "PLATE #")] == vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "PLATE #")]){
+                            vehicle = vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "VEHICLE")]
+                            type_of_vehicle = vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")]
+                        }
+                    }
+                    data_value +=`
+                    <tr>
+                        <td>${data_value_counter}</td>
+                        <td>${vmr_data_list.content[x][findTextInArray(vmr_data_list, "VMR #")]}</td>
+                        <td>${date_decoder(vmr_data_list.content[x][findTextInArray(vmr_data_list, "CREATED AT")])} /<br> ${time_decoder(vmr_data_list.content[x][findTextInArray(vmr_data_list, "CREATED AT")])}</td>
+                        <td>${vmr_data_list.content[x][findTextInArray(vmr_data_list, "PLATE #")]}</td>
+                        <td>${vehicle}</td>
+                        <td>${type_of_vehicle}</td>
+                        <td>${vmr_data_list.content[x][findTextInArray(vmr_data_list, "DETAILS")]}</td>
+                        <td>${vmr_data_list.content[x][findTextInArray(vmr_data_list, "REQUISITIONER")]}</td>
+                        <td>${vmr_data_list.content[x][findTextInArray(vmr_data_list, "SUBMITTED BY")]}</td>
+                    </tr>
+                    `
+                    data_value_counter += 1;
+                }
+                else if(pending_array.includes(vmr_data_list.content[x][findTextInArray(vmr_data_list, "VMR #")]) &&
+                    month_filter.value == "ALLS"){
                     var type_of_vehicle
                     var vehicle
                     for(let y = 1; y < vehicle_data_list.content.length; y++){
@@ -198,7 +254,128 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             pending_list_receiving.innerHTML = data_value;
 
+            var data_value = "";
+            var data_value_counter = 1;
+            for(let x = 1; x < vmf_data_list.content.length; x++){
+                if(month_filter.value == formatMonth(vmf_data_list.content[x][findTextInArray(vmf_data_list, "CREATED AT")])){
+                    var plate_no = vmf_data_list.content[x][findTextInArray(vmf_data_list, "VMR #")]
+                    var vmr_no = "N/A";
+                    var requisitioner = "N/A";
+                    if ((vmf_data_list.content[x][findTextInArray(vmf_data_list, "VMF #")].substring(0,3)) == "VMF"){
+                        for(let y = 1; y < vmr_data_list.content.length; y++){
+                            if(vmf_data_list.content[x][findTextInArray(vmf_data_list, "VMR #")] == vmr_data_list.content[y][findTextInArray(vmr_data_list, "VMR #")]){
+                                plate_no = vmr_data_list.content[y][findTextInArray(vmr_data_list, "PLATE #")]
+                                vmr_no = vmr_data_list.content[y][findTextInArray(vmr_data_list, "VMR #")]
+                                requisitioner = vmr_data_list.content[y][findTextInArray(vmr_data_list, "REQUISITIONER")]
+                                break
+                            }
+                        }
+                    }
+                    var type_of_vehicle
+                    var vehicle
+                    for(let y = 1; y < vehicle_data_list.content.length; y++){
+                        if(plate_no == vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "PLATE #")]){
+                            vehicle = vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "VEHICLE")]
+                            type_of_vehicle = vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")]
+                        }
+                    }
+                    data_value +=`
+                    <tr>
+                        <td>${data_value_counter}</td>
+                        <td>${vmf_data_list.content[x][findTextInArray(vmf_data_list, "VMF #")]}</td>
+                        <td>${vmr_no}</td>
+                        <td>${date_decoder(vmf_data_list.content[x][findTextInArray(vmf_data_list, "CREATED AT")])} /<br> ${time_decoder(vmf_data_list.content[x][findTextInArray(vmf_data_list, "CREATED AT")])}</td>
+                        <td>${plate_no}</td>
+                        <td>${vehicle}</td>
+                        <td>${type_of_vehicle}</td>
+                        <td>${vmf_data_list.content[x][findTextInArray(vmf_data_list, "REPAIRED DETAILS")]}</td>
+                        <td>${requisitioner}</td>
+                        <td>${vmf_data_list.content[x][findTextInArray(vmf_data_list, "MECHANIC NAME")]}</td>
+                        <td>${vmf_data_list.content[x][findTextInArray(vmf_data_list, "SUBMITTED BY")]}</td>
+                    </tr>
+                    `
+                    data_value_counter += 1;
+                }
+                else if(pending_array.includes(vmr_data_list.content[x][findTextInArray(vmr_data_list, "VMR #")]) &&
+                    month_filter.value == "ALLS"){
+                    var type_of_vehicle
+                    var vehicle
+                    for(let y = 1; y < vehicle_data_list.content.length; y++){
+                        if(vmr_data_list.content[x][findTextInArray(vmr_data_list, "PLATE #")] == vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "PLATE #")]){
+                            vehicle = vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "VEHICLE")]
+                            type_of_vehicle = vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")]
+                        }
+                    }
+                    data_value +=`
+                    <tr>
+                        <td>${data_value_counter}</td>
+                        <td>${vmr_data_list.content[x][findTextInArray(vmr_data_list, "VMR #")]}</td>
+                        <td>${date_decoder(vmr_data_list.content[x][findTextInArray(vmr_data_list, "CREATED AT")])} /<br> ${time_decoder(vmr_data_list.content[x][findTextInArray(vmr_data_list, "CREATED AT")])}</td>
+                        <td>${vmr_data_list.content[x][findTextInArray(vmr_data_list, "PLATE #")]}</td>
+                        <td>${vehicle}</td>
+                        <td>${type_of_vehicle}</td>
+                        <td>${vmr_data_list.content[x][findTextInArray(vmr_data_list, "DETAILS")]}</td>
+                        <td>${vmr_data_list.content[x][findTextInArray(vmr_data_list, "REQUISITIONER")]}</td>
+                        <td>${vmr_data_list.content[x][findTextInArray(vmr_data_list, "SUBMITTED BY")]}</td>
+                    </tr>
+                    `
+                    data_value_counter += 1;
+                }
+            }
+            received_list_receiving.innerHTML = data_value;
+
+
         }
+
+        var data_value3 = [];
+        for (x = 1; x < vehicle_data_list.content.length; x++) {
+            data_value3.push(vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "PLATE #")]);
+        }
+
+        const search_wrapper3 = document.querySelector("#search_plate_no");
+        const input_box3 = search_wrapper3.querySelector("input");
+        const sugg_box3 = search_wrapper3.querySelector(".autocom_box");
+        input_box3.onkeyup = (e) => {
+            let user_data = e.target.value;
+            let empty_array = [];
+            if (user_data) {
+                empty_array = data_value3.filter((data) => {
+                    return data.toLocaleLowerCase().includes(user_data.toLocaleLowerCase());
+                });
+                empty_array = empty_array.map((data) => {
+                    return '<li>' + data + '</li>';
+                });
+                search_wrapper3.classList.add("active");
+                show_suggestions3(empty_array);
+            } else {
+                search_wrapper3.classList.remove("active");
+            }
+        };
+    
+        sugg_box3.addEventListener("click", (e) => {
+            if (e.target.tagName === "LI") {
+                select3(e.target.innerHTML);
+            }
+        });
+    
+        function select3(element) {
+            let select_user_data = element;
+            input_box3.value = select_user_data;
+            search_wrapper3.classList.remove("active");            
+        }
+    
+        function show_suggestions3(list) {
+            let list_data;
+            if (!list.length) {
+                user_value = input_box3.value;
+                list_data = '<li>' + user_value + '</li>';
+            } else {
+                list_data = list.join("");
+            }
+            sugg_box3.innerHTML = list_data;
+        }    
+
+
 
         // vmf_data_list
         // FORM GENERATOR
@@ -216,6 +393,23 @@ document.addEventListener('DOMContentLoaded', async function() {
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
         data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
         vmf_form_no.value = `VMF${year}${month}${data_counter}`;    
+
+        // vmf_data_list
+        // FORM GENERATOR
+        const pmf_form_no = document.querySelector("#pmf_form_no");
+        var last_row = vmf_data_list.content.length -1;
+        var data_info = vmf_data_list.content[last_row][findTextInArray(vmf_data_list, "VMF #")];
+        var data_counter;
+        if(last_row == 0){
+            data_counter = 0;
+        }
+        else{
+            data_counter = data_info.substring(9,12);
+        }
+        var year = new Date().getFullYear();
+        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        pmf_form_no.value = `PMF${year}${month}${data_counter}`;    
 
         const search_vmr_form_no_button = document.querySelector("#search_vmr_form_no_button");
         const search_vmr_form_no = document.querySelector("#search_vmr_form_no");
@@ -519,45 +713,54 @@ document.addEventListener('DOMContentLoaded', async function() {
             const pageHeight = 500;
             const dataHeight = 31; // Adjust this value based on your content
 
-            for(let x = 1; x < wcf_data_list.content.length; x++){
-                var hauling_date = new Date(wcf_data_list.content[x][findTextInArray(wcf_data_list, "HAULING DATE")])
-                var wcf_data = wcf_data_list.content[x][findTextInArray(wcf_data_list, "WCF #")]
-                var date_data = wcf_data_list.content[x][findTextInArray(wcf_data_list, "ARRIVAL DATE")]
-                var time_data = wcf_data_list.content[x][findTextInArray(wcf_data_list, "ARRIVAL TIME")]
-                var client_id_data = wcf_data_list.content[x][findTextInArray(wcf_data_list, "CLIENT ID")]
-                var waste_id_data = wcf_data_list.content[x][findTextInArray(wcf_data_list, "WASTE ID")]
-                var type_of_vehicle_data = wcf_data_list.content[x][findTextInArray(wcf_data_list, "TYPE OF VEHICLE")]
-                var plate_no_data = wcf_data_list.content[x][findTextInArray(wcf_data_list, "PLATE #")]
+            for(let x = 1; x < vmf_data_list.content.length; x++){
+                console.log(x)
+                var created_date = new Date(vmf_data_list.content[x][findTextInArray(vmf_data_list, "CREATED AT")])
+                var vmf_data = vmf_data_list.content[x][findTextInArray(vmf_data_list, "VMF #")]
+                var date_data = vmf_data_list.content[x][findTextInArray(vmf_data_list, "CREATED AT")]
+                var time_data = vmf_data_list.content[x][findTextInArray(vmf_data_list, "CREATED AT")]
+                var details = vmf_data_list.content[x][findTextInArray(vmf_data_list, "REPAIRED DETAILS")]
+                var mechanic = vmf_data_list.content[x][findTextInArray(vmf_data_list, "MECHANIC NAME")]
                 var report_from = new Date(report_date_from.value)
                 var report_to = new Date(report_date_to.value)
                 var datePortion = date_data.split("T")[0];
                 var timePortion = time_data.split("T")[1];
                 var datetime = new Date(datePortion + "T" + timePortion);
 
-                var mtf = "";
-                var ltf = "";
-                if((wcf_data_list.content[x][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
-                    mtf = wcf_data_list.content[x][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
-                }else{
-                    ltf = wcf_data_list.content[x][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
-                    for(let y = 1; y < ltf_data_list.content.length; y++){
-                        if(ltf == ltf_data_list.content[y][findTextInArray(ltf_data_list, "LTF #")]){
-                            mtf = ltf_data_list.content[y][findTextInArray(ltf_data_list, "MTF #")];
+                var plate_no = vmf_data_list.content[x][findTextInArray(vmf_data_list, "VMR #")]
+                var vmr_no = "N/A";
+                var requisitioner = "N/A";
+                if ((vmf_data_list.content[x][findTextInArray(vmf_data_list, "VMF #")].substring(0,3)) == "VMF"){
+                    for(let y = 1; y < vmr_data_list.content.length; y++){
+                        if(vmf_data_list.content[x][findTextInArray(vmf_data_list, "VMR #")] == vmr_data_list.content[y][findTextInArray(vmr_data_list, "VMR #")]){
+                            plate_no = vmr_data_list.content[y][findTextInArray(vmr_data_list, "PLATE #")]
+                            vmr_no = vmr_data_list.content[y][findTextInArray(vmr_data_list, "VMR #")]
+                            requisitioner = vmr_data_list.content[y][findTextInArray(vmr_data_list, "REQUISITIONER")]
+                            break
                         }
                     }
                 }
-
-                if (hauling_date >= report_from && hauling_date <= report_to) {
+                var type_of_vehicle
+                var vehicle
+                for(let y = 1; y < vehicle_data_list.content.length; y++){
+                    if(plate_no == vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "PLATE #")]){
+                        vehicle = vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "VEHICLE")]
+                        type_of_vehicle = vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")]
+                    }
+                }
+                console.log(created_date)
+                console.log(report_from)
+                console.log(report_to)
+                if (created_date >= report_from && created_date <= report_to) {
                     filteredData.push({
-                    wcf_data,
-                    mtf,
-                    hauling_date,
-                    date_data,
-                    time_data,
-                    client_id_data,
-                    waste_id_data,
-                    type_of_vehicle_data,
-                    plate_no_data,
+                    vmf_data,
+                    vmr_no,
+                    created_date,
+                    plate_no,
+                    vehicle,
+                    type_of_vehicle,
+                    details,
+                    mechanic,
                     datetime,
                     });
                 }
@@ -565,7 +768,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             
             // Sort the data by hauling date and time
             filteredData.sort((a, b) => a.datetime - b.datetime);
-        
+            console.log(filteredData)
             // Render the sorted data
             filteredData.forEach((item) => {
                 const page_number = document.getElementById("page_number");
@@ -575,15 +778,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                 
                 var data = `
                     <tr>
-                        <td>${item.wcf_data}</td>
-                        <td>${item.mtf}</td>
-                        <td>${date_decoder(item.hauling_date)}</td>
-                        <td>${date_decoder(item.date_data)}</td>
-                        <td>${time_decoder(item.time_data)}</td>
-                        <td>${findClientName(item.client_id_data)}</td>
-                        <td>${findWasteName(item.client_id_data, item.waste_id_data)}</td>
-                        <td>${item.type_of_vehicle_data}</td>
-                        <td>${item.plate_no_data}</td>
+                        <td>${item.vmf_data}</td>
+                        <td>${item.vmr_no}</td>
+                        <td>${date_decoder(item.created_date)}</td>
+                        <td>${item.plate_no}</td>
+                        <td>${item.vehicle}</td>
+                        <td>${item.type_of_vehicle}</td>
+                        <td>${item.details}</td>
+                        <td>${item.mechanic}</td>
                     </tr>
                 `;
 
@@ -605,9 +807,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <img src="../images/logo_name2.png" alt="logo" style="height: 50px; margin-top: 10px;"><hr>
                         <div style="position: relative;">
                             <h1 style="text-align: center; font-weight: bold; font-size: 32px;">WEEKLY REPORT</h1>
-                            <h1 style="text-align: center; font-weight: bold;">RECEIVING</h1>
-                            <h1 style="text-align: center; font-weight: bold;">LOGISTICS DEPARTMENT</h1>
-                            <h3 id="date_covered" style="text-align: center;"></h3><br>
+                            <h1 style="text-align: center; font-weight: bold;">MAINTENANCE TRANSACTION</h1>
+                            <h1 style="text-align: center; font-weight: bold;">MOTORPOOL</h1>
+                                <h3 id="date_covered" style="text-align: center;"></h3><br>
                             <div style="display: flex; position: absolute; right: 0; top: 0;">
                                 <h6 id="page_counter${page_number.value}" style="margin-right: 5px;"></h6>
                                 <h6 style="margin-right: 5px;">of</h6>

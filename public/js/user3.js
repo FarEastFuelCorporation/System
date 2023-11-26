@@ -1108,7 +1108,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <img src="../images/logo_name2.png" alt="logo" style="height: 50px; margin-top: 10px;"><hr>
                         <div style="position: relative;">
                             <h1 style="text-align: center; font-weight: bold; font-size: 32px;">WEEKLY REPORT</h1>
-                            <h1 style="text-align: center; font-weight: bold;">TREATMENT TRANSACTION</h1>
+                            <h1 style="text-align: center; font-weight: bold;">TREATMENT TRANSACTIONS</h1>
                             <h1 style="text-align: center; font-weight: bold;">TREATMENT DEPARTMENT</h1>
                             <h3 id="date_covered" style="text-align: center;"></h3><br>
                             <div style="display: flex; position: absolute; right: 0; top: 0;">

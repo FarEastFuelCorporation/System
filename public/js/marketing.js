@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const prf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxZctLub-6PuQGykx298syeH7Qm__S37uqQrVFYsHVtv-Qk8M2oSkRIPIMVT_1WexqRZA/exec');
         const pof_response_promise = fetch('https://script.google.com/macros/s/AKfycby9i2KfOZ_uF7-JUPX8qpXg7Jewmw6oU3EfUTpXiwnRRB91_qIW3xAVNy5SZBN1YhVzzg/exec');
         const irf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzTmhNOz5cXeKitSXAriUJ_FEahAQugYEKIRwDuFt9tjhj2AtPKEf2H4yTMmZ1igpUxlQ/exec');
+        const void_response_promise = fetch('https://script.google.com/macros/s/AKfycbzeHHk1OkGhQEmii69e_l0jQLo4zNsxIFTRj8cF4__Sbm_UeCdNzupkDHv_3ZgdFUPdAw/exec');
 
         const [
             username_response,
@@ -38,6 +39,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             prf_response,
             pof_response,
             irf_response,
+            void_response,
         ] = await Promise.all([
             username_response_promise,
             client_list_response_promise,
@@ -57,6 +59,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             prf_response_promise,
             pof_response_promise,
             irf_response_promise,
+            void_response_promise,
         ]);
 
         const username_data_list  = await username_response.json();
@@ -77,6 +80,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const prf_data_list  = await prf_response.json();
         const pof_data_list  = await pof_response.json();
         const irf_data_list  = await irf_response.json();
+        const void_data_list  = await void_response.json();
 
         // Code that depends on the fetched data
         // username_data_list3

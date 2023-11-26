@@ -52,7 +52,7 @@
                 <li>
                     <a href="#">
                         <i class="fa-solid fa-clipboard-list"></i>
-                        Logistics Travel Form
+                        Dispatching Transactions
                     </a>
                 </li>
                 <li>
@@ -176,7 +176,7 @@
                         <img src="../images/logo_name2.png" alt="logo" style="height: 50px; margin-top: 10px;"><hr>
                         <div style="position: relative;">
                             <h1 style="text-align: center; font-weight: bold; font-size: 32px;">WEEKLY REPORT</h1>
-                            <h1 style="text-align: center; font-weight: bold;">DISPATCHING</h1>
+                            <h1 style="text-align: center; font-weight: bold;">DISPATCHING TRANSACTIONS</h1>
                             <h1 style="text-align: center; font-weight: bold;">LOGISTICS DEPARTMENT</h1>
                             <h3 id="date_covered" style="text-align: center;"></h3><br>
                             <div style="display: flex; position: absolute; right: 0; top: 0;">
@@ -299,7 +299,7 @@
             <!-- dashboard -->
             <section class="logistic" id="logistic_dashboard">
                 <h2>DASHBOARD</h2><br>
-                <h2>TRAVEL SUMMARY</h2>
+                <h2>DISPATCHING SUMMARY</h2>
                 <div class="cards">
                     <div class="card">
                         <div class="card-content">
@@ -440,7 +440,7 @@
             </section>
             <!-- LOGISTICS TRAVEL FORM -->
             <section class="logistic" id="logistics_travel_form">
-                <h2>LOGISTICS TRAVEL FORM</h2><br>
+                <h2>DISPATCHING TRANSACTIONS</h2><br>
                 <form id="form_id" action="https://script.google.com/macros/s/AKfycbxoTl4vfPp5FGzgzTfE5RE_P1tuZWTblqzDpNmb6GF5TO2D9321Hw04YO8kMwJAOLLl/exec" method="post">
                     <input type="hidden" name="user" id="user">
                     <input type="hidden" name="mtf_form_no" id="mtf_form_no">
@@ -1127,8 +1127,40 @@
                 <h2>SETTINGS</h2><br>
             </section>
             <!-- help -->
-            <section id="helpSection">
+            <section class="all" id="helpSection">
                 <h2>HELP</h2><br>
+                <form action="https://script.google.com/macros/s/AKfycbxikTLqNb0ote-pFoUabyNVphtpqvh1rWSi7bNrAkncoP6-a3BTXhn9jVu8Ka9YXjVA/exec" method="post">
+                    <h2>VOID TRANSACTIONS</h2><br>
+                    <input type="hidden" name="user" id="user">
+                    <div style="font-size: 20px !important;">
+                        <div>
+                            <label for="transaction_no">
+                                <i class="fa-solid fa-list-ol"></i>
+                                Transaction #
+                            </label><br>
+                            <div class="form">
+                                <input type="text" id="transaction_no" autocomplete="off" name="transaction_no" class="form-control form" required style="border: 3px solid #198754; max-width: 250px;"><br>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="reason">
+                                <i class="fa-solid fa-list-ol"></i>
+                                Reason for Void
+                            </label><br>
+                            <div class="form">
+                                <input type="text" id="reason" autocomplete="off" name="reason" class="form-control" required style="border: 3px solid #198754;"><br>
+                            </div>
+                        </div>
+                        <div class="buttons" style="display: flex; gap: 20px;">
+                            <button type="submit" id="submit_btn" class="form-control bg-success text-white" style="width: 200px; font-size: 20px !important;">
+                                Submit
+                            </button>
+                            <button type="reset" id="reset" class="form-control bg-danger text-white" style="width: 200px; font-size: 20px !important;">
+                                Clear
+                            </button>
+                        </div> 
+                    </div>
+                </form>
             </section>
         </div>
     </div>

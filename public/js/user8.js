@@ -867,7 +867,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             } else {
                 grade.value = `Safety Grade: ${percentage.toFixed(2)}%`;
             }
-
         }
 
         // Add event listener to all radio buttons

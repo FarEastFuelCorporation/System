@@ -562,10 +562,41 @@
             <section id="settingsSection">
                 <h2>SETTINGS</h2><br>
             </section>
-            </section>
             <!-- help -->
-            <section id="helpSection">
+            <section class="all" id="helpSection">
                 <h2>HELP</h2><br>
+                <form action="https://script.google.com/macros/s/AKfycbxikTLqNb0ote-pFoUabyNVphtpqvh1rWSi7bNrAkncoP6-a3BTXhn9jVu8Ka9YXjVA/exec" method="post">
+                    <h2>VOID TRANSACTIONS</h2><br>
+                    <input type="hidden" name="user" id="user">
+                    <div style="font-size: 20px !important;">
+                        <div>
+                            <label for="transaction_no">
+                                <i class="fa-solid fa-list-ol"></i>
+                                Transaction #
+                            </label><br>
+                            <div class="form">
+                                <input type="text" id="transaction_no" autocomplete="off" name="transaction_no" class="form-control form" required style="border: 3px solid #198754; max-width: 250px;"><br>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="reason">
+                                <i class="fa-solid fa-list-ol"></i>
+                                Reason for Void
+                            </label><br>
+                            <div class="form">
+                                <input type="text" id="reason" autocomplete="off" name="reason" class="form-control" required style="border: 3px solid #198754;"><br>
+                            </div>
+                        </div>
+                        <div class="buttons" style="display: flex; gap: 20px;">
+                            <button type="submit" id="submit_btn" class="form-control bg-success text-white" style="width: 200px; font-size: 20px !important;">
+                                Submit
+                            </button>
+                            <button type="reset" id="reset" class="form-control bg-danger text-white" style="width: 200px; font-size: 20px !important;">
+                                Clear
+                            </button>
+                        </div> 
+                    </div>
+                </form>
             </section>
         </div>
     </div>
