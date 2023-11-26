@@ -565,6 +565,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             data.value = client_id
                         })
                         var is_there_quotation = false;
+                        type_of_waste.innerHTML = `<option value="">SELECT</option>`;
                         for (let x = 1; x < qlf_data_list.content.length; x++) {
                             if (client_id == qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")] && !vehicle_list.includes(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])) {
                                 is_there_quotation = true;
@@ -602,6 +603,25 @@ document.addEventListener('DOMContentLoaded', async function() {
             waste_name_list.push(type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "WASTE CODE")]);
             waste_id_list.push(type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "WASTE ID")]);
         }
+
+        const quotation_no = marketing_transaction_form.querySelector("#quotation_no");
+        const type_of_waste = marketing_transaction_form.querySelector("#type_of_waste");
+        const client_id_input = marketing_transaction_form.querySelector("#client_id_input");
+
+        type_of_waste.addEventListener("change", () => {
+            for (let x = 1; x < qlf_data_list.content.length; x++) {
+                if (client_id_input.value == qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")] 
+                && !vehicle_list.includes(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])) {
+                    if(type_of_waste.value == qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
+                        quotation_no.value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "QUOTATION CODE")];
+                        break
+                    }
+                    else{
+                        quotation_no.value = `N/A`
+                    }
+                }
+            }
+        })
 
         function typeOfWaste(){
             const search_wrappers2 = document.querySelectorAll("#search_waste_code");
