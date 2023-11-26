@@ -911,7 +911,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                             unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")];
                             unit_price = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")];
                             vat_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")];
-                            quotation_no = qlf_data_list.content[c][findTextInArray(qlf_data_list, "QUOTATION CODE")]
                             break
                         }
                         else{
@@ -925,15 +924,16 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 for(let b = 1; b < mtf_data_list.content.length; b++){
                                     if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "MTF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
                                         for(let c = 1; c < qlf_data_list.content.length; c++){
+                                            console.log(mtf_data_list.content[b][findTextInArray(mtf_data_list, "QUOTATION CODE")])
+                                            console.log(qlf_data_list.content[c][findTextInArray(qlf_data_list, "QUOTATION CODE")])
                                             if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "CLIENT ID")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")] &&
                                             mtf_data_list.content[b][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")] &&
-                                            quotation_no == qlf_data_list.content[c][findTextInArray(qlf_data_list, "QUOTATION CODE")]){
+                                            mtf_data_list.content[b][findTextInArray(mtf_data_list, "QUOTATION CODE")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "QUOTATION CODE")]){
                                                 transportation_vehicle = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]
                                                 transportation_unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
                                                 transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
                                                 transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
                                                 term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS CHARGE")]
-                                                console.log(term)
                                                 break
                                             }
                                         }
@@ -946,15 +946,17 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         for(let b = 1; b < mtf_data_list.content.length; b++){
                                             if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "MTF #")] == ltf_data_list.content[d][findTextInArray(ltf_data_list, "MTF #")]){
                                                 for(let c = 1; c < qlf_data_list.content.length; c++){
+                                                    console.log(mtf_data_list.content[b][findTextInArray(mtf_data_list, "QUOTATION CODE")])
+                                                    console.log(qlf_data_list.content[c][findTextInArray(qlf_data_list, "QUOTATION CODE")])
                                                     if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "CLIENT ID")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")] &&
                                                     mtf_data_list.content[b][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")] &&
-                                                    quotation_no == qlf_data_list.content[c][findTextInArray(qlf_data_list, "QUOTATION CODE")]){
+                                                    mtf_data_list.content[b][findTextInArray(mtf_data_list, "QUOTATION CODE")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "QUOTATION CODE")]){
                                                         transportation_vehicle = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]
                                                         transportation_unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
                                                         transportation_fee = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT PRICE")]
                                                         transportation_calculation = qlf_data_list.content[c][findTextInArray(qlf_data_list, "VAT CALCULATION")]
                                                         term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS CHARGE")]
-                                                        console.log(term)
+                                                        console.log(transportation_fee)
                                                         break
                                                     }
                                                 }
