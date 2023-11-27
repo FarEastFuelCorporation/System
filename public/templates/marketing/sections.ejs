@@ -741,7 +741,7 @@
                 </div>
             </div>
             <div id="transportation_fee_container" style="position: relative;">
-                <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; width: calc(100% - 240px); margin-top: 100px;">
+                <div class="tf_item" style="display: grid; grid-template-columns: 15% 25% 13% 13% 9% 13% 12%; gap: 20px; width: calc(100% - 140px); margin-top: 140px;">
                     <h4 style="position: absolute; top: -30px;">TRANSPORTATION FEE</h4>
                     <div class="wrapper" id="type_of_vehicle_container">
                         <label for="type_of_vehicle1">
@@ -809,17 +809,26 @@
                             </select>
                         </div>
                     </div>
+                    <div class="wrapper">
+                        <label for="max_capacity1">
+                            <i class="fa-solid fa-weight-scale"></i>
+                            Min. Weight/ Trip (Kg)
+                        </label><br>
+                        <div class="search_input">
+                            <input type="number" name="max_capacity1" id="max_capacity1" autocomplete="off" class="form-control" required value="0" style="padding-right: 20px !important;">
+                        </div>
+                    </div>
                 </div>            
                 <input type="hidden" id="tf_value" name="tf_value" value="true">
                 <input type="hidden" id="tf_counter" name="tf_counter" value="1">
-                <div class="add_item pt-3" style="position: absolute; top: 0; right: 0px !important; width: 100px;">
+                <div class="add_item pt-3" style="position: absolute; top: -80px; right: 150px !important; width: 100px;">
                     <div class="item_buttons">
                         <button type="button" id="tf_button" class="" style="padding: 5px; border-radius: 5px; font-size: 12px; color: white !important">
                             WITHOUT<br>TRANSPORTATION<br>FEE
                         </button>
                     </div>
                 </div>
-                <div class="add_item pt-3" style="position: absolute; top: 80px; right: 0px !important; width: 100px;;">
+                <div class="add_item pt-3" style="position: absolute; top: -80px; right: 0px !important; width: 100px;;">
                     <div class="item_buttons">
                         <button type="button" id="remove_tf_button" class="form-control">
                             <i class="fa-solid fa-minus"></i>

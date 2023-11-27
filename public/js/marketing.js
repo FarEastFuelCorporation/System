@@ -1566,7 +1566,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         add_tf_button_quotation_form.addEventListener("click", () => {
             tf_counter_quotation_form.value = parseInt(tf_counter_quotation_form.value) + 1;
             var data = `                        
-            <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; width: calc(100% - 240px);">
+            <div class="tf_item" style="display: grid; grid-template-columns: 15% 25% 13% 13% 9% 13% 12%; gap: 20px; width: calc(100% - 140px);">
                 <div class="wrapper" id="type_of_vehicle_container">
                     <select name="type_of_vehicle${tf_counter_quotation_form.value}" id="type_of_vehicle${tf_counter_quotation_form.value}" class="form-control" required style=" height: 55px !important;">
                         <option value="">SELECT</option>
@@ -1607,6 +1607,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <option value="VAT EXCLUSIVE">VAT EXCLUSIVE</option>
                             <option value="NON VATABLE">NON VATABLE</option>
                         </select>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <input type="number" name="max_capacity${tf_counter_quotation_form2.value}" id="max_capacity${tf_counter_quotation_form2.value}" autocomplete="off" class="form-control" required value="0" style="padding-right: 20px !important;">
                     </div>
                 </div>
             </div>      
@@ -1874,7 +1879,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         add_item_button_quotation_form2.addEventListener("click", () => {
             list_counter_quotation_form2.value = parseInt(list_counter_quotation_form2.value) + 1;
             var data = `
-            <div class="list_item" id="list${list_counter_quotation_form2.value}" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; width: calc(100% - 240px);"">
+            <div class="list_item" id="list${list_counter_quotation_form2.value}" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; width: calc(100% - 240px);">
                 <div class="wrapper">
                     <div class="search_input" id="search_waste_code">
                         <input type="text" name="waste_code${list_counter_quotation_form2.value}" id="waste_code${list_counter_quotation_form2.value}" autocomplete="off" class="form-control" required placeholder="Search">
@@ -2064,11 +2069,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         
         add_tf_button_quotation_form2.addEventListener("click", () => {
             tf_counter_quotation_form2.value = parseInt(tf_counter_quotation_form2.value) + 1;
-            if(tf_counter_quotation_form2.value == 1){
-                
-            }
             var data = `                        
-            <div class="tf_item" style="display: grid; grid-template-columns: 17% 30% 15% 13% 10% 15%; gap: 20px; width: calc(100% - 240px);">
+            <div class="tf_item" style="display: grid; grid-template-columns: 15% 25% 13% 13% 9% 13% 12%; gap: 20px; width: calc(100% - 140px);">
                 <div class="wrapper" id="type_of_vehicle_container">
                     <select name="type_of_vehicle${tf_counter_quotation_form2.value}" id="type_of_vehicle${tf_counter_quotation_form2.value}" class="form-control" required style=" height: 55px !important;">
                         <option value="">SELECT</option>
@@ -2109,6 +2111,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <option value="VAT EXCLUSIVE">VAT EXCLUSIVE</option>
                             <option value="NON VATABLE">NON VATABLE</option>
                         </select>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="search_input">
+                        <input type="number" name="max_capacity${tf_counter_quotation_form2.value}" id="max_capacity${tf_counter_quotation_form2.value}" autocomplete="off" class="form-control" required value="0" style="padding-right: 20px !important;">
                     </div>
                 </div>
             </div>      
