@@ -905,7 +905,7 @@
     </div><br>
     <div id="new_quotation_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
         <h2>NEW QUOTATION FORM</h2><br>
-        <form  action="https://script.google.com/macros/s/AKfycbyA7GDx7HTAzP2Qoc1CdZhSngo926s96LbvtCCBz8fL5g5yA8XGwZUmvIsM3Abg8cYePA/exec" method="post">
+        <form  action="https://script.google.com/macros/s/AKfycbxJOsU0neU9IXqEdXGAKZsQy01ejzImkcZuK7JnHT6hakYbx0gDc5rNoBGC3rvhsQlxKQ/exec" method="post">
             <input type="hidden" name="user" id="user">
             <div style="display: flex; gap: 20px;">
                 <div>
@@ -3328,8 +3328,9 @@
 <script>
     function convertToPDFandDownload() {
         const element = document.getElementById('what_to_print');
-        const quotation_no = document.getElementById('quotation_no').value;
-        const client = document.getElementById('client').value;
+        const new_quotation_form_tab = document.querySelector('new_quotation_form_tab');
+        const quotation_no = new_quotation_form_tab.querySelector('#quotation_no').value;
+        const client = new_quotation_form_tab.querySelector('#client').value;
         let modifiedCompanyName = client.replace(/\./g, '');
 
         const opt = {
@@ -3363,8 +3364,9 @@
 
     function convertToPDF() {
         const element = document.getElementById('what_to_print');
-        const quotation_no = document.getElementById('quotation_no').value;
-        const client = document.getElementById('client').value;
+        const new_quotation_form_tab = document.querySelector('new_quotation_form_tab');
+        const quotation_no = new_quotation_form_tab.querySelector('#quotation_no').value;
+        const client = new_quotation_form_tab.querySelector('#client').value;
         let modifiedCompanyName = client.replace(/\./g, '');
 
         const opt = {

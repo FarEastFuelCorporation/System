@@ -2,8 +2,9 @@
 <script>
     function convertToPDFandDownload() {
         const element = document.getElementById('what_to_print');
-        const quotation_no = document.getElementById('quotation_no').value;
-        const client = document.getElementById('client').value;
+        const new_quotation_form_tab = document.querySelector('new_quotation_form_tab');
+        const quotation_no = new_quotation_form_tab.querySelector('#quotation_no').value;
+        const client = new_quotation_form_tab.querySelector('#client').value;
         let modifiedCompanyName = client.replace(/\./g, '');
 
         const opt = {
@@ -37,8 +38,9 @@
 
     function convertToPDF() {
         const element = document.getElementById('what_to_print');
-        const quotation_no = document.getElementById('quotation_no').value;
-        const client = document.getElementById('client').value;
+        const new_quotation_form_tab = document.querySelector('new_quotation_form_tab');
+        const quotation_no = new_quotation_form_tab.querySelector('#quotation_no').value;
+        const client = new_quotation_form_tab.querySelector('#client').value;
         let modifiedCompanyName = client.replace(/\./g, '');
 
         const opt = {
