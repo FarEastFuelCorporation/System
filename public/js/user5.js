@@ -1956,7 +1956,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         }
 
-
         function addSelection(){
             const billing_process_form = document.getElementById("billing_process_form");
             const cod_counter = billing_process_form.querySelector("#cod_counter");
@@ -1981,7 +1980,8 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         // ctf_data_list
         // FORM GENERATOR
-        const ctf_form_no = document.getElementById("ctf_form_no");
+        const collection_transaction = document.getElementById("collection_transaction");
+        const ctf_form_no = collection_transaction.querySelector("#ctf_form_no");
         var last_row = ctf_data_list.content.length -1;
         var data_info = ctf_data_list.content[last_row][findTextInArray(ctf_data_list, "CTF #")];
         var data_counter;
@@ -1995,6 +1995,22 @@ document.addEventListener('DOMContentLoaded', async function() {
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
         data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
         ctf_form_no.value = `CTF${year}${month}${data_counter}`;
+
+        const search_bpf_no = collection_transaction.querySelector("#search_bpf_no");
+        const billing_amount = collection_transaction.querySelector("#billing_amount");
+        const total_amount = collection_transaction.querySelector("#total_amount");
+
+        search_bpf_no.addEventListener("change", () => {
+            var amount = 0;
+            for(let x = 1; x < bpf_data_list.content.length; x++){
+                if(search_bpf_no.value == bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")]){
+                    amount += bpf_data_list.content[x][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")]
+                    console.log(bpf_data_list.content[x][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")])
+                }
+            }
+            billing_amount.value = amount;
+            total_amount.value = amount;
+        })
 
         function findEmployeeName(employee_id){
             var employee_name = "";
