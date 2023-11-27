@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var vehicle_type = [];
         for(let x = 1; x < vehicle_data_list.content.length; x++){
             if(!vehicle_type.includes(vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "CODE")])){
-                vehicle_type.push(vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "CODE")])
+                vehicle_type.push(vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")])
                 total_vehicle[vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "CODE")]] = 1;
             }
             else{
@@ -1180,7 +1180,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 const table_row = table_data_quotation_form.querySelectorAll("tr")[row];
                 table_row.querySelectorAll("td")[0].innerText = `${counter}`;
                 table_row.querySelectorAll("td")[1].innerText = waste_name.value.toUpperCase();
-                table_row.querySelectorAll("td")[3].innerText = `Per ${unit.value}s`;
+                table_row.querySelectorAll("td")[3].innerText = `Per ${unit.value}`;
                 table_row.querySelectorAll("td")[4].innerText = formatNumber(unit_price.value);
                 table_row.querySelectorAll("td")[5].innerText = formatNumber(unit_price.value * quantity);
                 table_row.querySelectorAll("td")[6].innerText = mode.value;
@@ -1200,7 +1200,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 table_row.querySelectorAll("td")[0].innerText = `${counter}`;
                 table_row.querySelectorAll("td")[1].innerText = `TRANSPORTATION FEE - ${type_of_vehicle.value}`;
                 table_row.querySelectorAll("td")[1].style.fontSize = `10px`;
-                table_row.querySelectorAll("td")[3].innerText = `Per ${tf_unit.value}s`;
+                table_row.querySelectorAll("td")[3].innerText = `Per ${tf_unit.value}`;
                 table_row.querySelectorAll("td")[4].innerText = formatNumber(tf_unit_price.value);
                 table_row.querySelectorAll("td")[5].innerText = formatNumber(tf_unit_price.value * quantity);
                 table_row.querySelectorAll("td")[6].innerText = tf_mode.value;
