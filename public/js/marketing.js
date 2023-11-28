@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var vehicle_type = [];
         for(let x = 1; x < vehicle_data_list.content.length; x++){
             if(!vehicle_type.includes(vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "CODE")])){
-                vehicle_type.push(vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")])
+                vehicle_type.push(vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "CODE")])
                 total_vehicle[vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "CODE")]] = 1;
             }
             else{
