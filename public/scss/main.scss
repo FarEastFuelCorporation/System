@@ -4691,17 +4691,36 @@ input:disabled {
         min-height: 350px !important;
     }
     .cards2{
-        min-height: 350px !important;
-        display: none !important;
+        min-height: 450px !important;
     }
     .cards3{
-        min-height: 550px !important;
+        min-height: 850px !important;
     }
     .safety .cards{
         min-height: 300px !important;
     }
     .marketing .cards{
         min-height: 470px !important;
+    }
+    .logistic form .ltf_form
+    {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+    .logistic form .plate_driver_truck_helper
+    {
+        position: relative;
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100%;
+        margin-top: 20px;
+    }
+    #logistic form .time_in_out
+    {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100%;
     }
 
     .card-name{

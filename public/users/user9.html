@@ -903,6 +903,9 @@
                             Year
                             <input type="number" id="year" name="year" class="form-control form" required autocomplete="off">   
                         </label>
+                        <div id="payroll_details_data">
+
+                        </div>
                         <div id="generate_button" style="display: flex;">
                             <button id="search_ltf_form_no_button" type="button" style=" height: 50px; width: 50px; margin-top: 30px; border: none; border-radius: 10px;">
                                 <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
@@ -2188,9 +2191,18 @@
 
 
         function convertToPDF() {
+            const attendance_form = document.getElementById('attendance_form');
+            const payroll_type = document.querySelector('#payroll_type');
+            var data_input;
+
+            if(payroll_type.value == "WEEKLY"){
+                const payroll_type = document.querySelector('#payroll_type');
+                data_input
+            }
+
             const element = document.getElementById('payslip_form_container_container');
             const opt = {
-                filename: `Payslip Week Number`,
+                filename: `Payslip Week Number `,
                 image: { type: 'jpeg', quality: 1 },
                 html2canvas: { scale: 10 },
                 jsPDF: { unit: 'mm', format: 'letter', orientation: 'landscape' }

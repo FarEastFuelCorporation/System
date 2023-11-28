@@ -208,6 +208,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const time_out_sched = form_tab.querySelector("#time_out_sched");
         const payroll_type = form_tab.querySelector("#payroll_type");
         const generate_button = form_tab.querySelector("#generate_button");
+        const payroll_details_data = form_tab.querySelector("#payroll_details_data");
 
         var payroll_counter = 1
         for(let x = 1; x < payroll_summary_data_list.content.length; x++){
@@ -365,6 +366,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         time_in_sched.value = convertTo24HourFormat(time_decoder(employee_data_list.content[z][findTextInArray(employee_data_list, "TIME IN")]));
                         time_out_sched.value = convertTo24HourFormat(time_decoder(employee_data_list.content[z][findTextInArray(employee_data_list, "TIME OUT")]));
                         if(payroll_type.value == "WEEKLY"){
+                            payroll_details_data.innerHTML = "";
                             var data = 
                             `
                             <label for="week_number">
@@ -373,41 +375,19 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 <input type="number" id="week_number" name="week_number" class="form-control form" required autocomplete="off"> 
                             </label>
                             `
-                            generate_button.insertAdjacentHTML("beforebegin", data)
+                            payroll_details_data.insertAdjacentHTML("beforeend", data)
                         }
                         else if(payroll_type.value == "SEMI-MONTHLY"){
+                            payroll_details_data.innerHTML = "";
                             var data = 
                             `
-                            <label for="month">
-                                <i class="fa-solid fa-id-card"></i>
-                                Month
-                                <select name="month" id="month" class="form-control">
-                                    <option value="SELECT">SELECT</option>
-                                    <option value="JANUARY">JANUARY</option>
-                                    <option value="FEBRUARY">FEBRUARY</option>
-                                    <option value="MARCH">MARCH</option>
-                                    <option value="APRIL">APRIL</option>
-                                    <option value="MAY">MAY</option>
-                                    <option value="JUNE">JUNE</option>
-                                    <option value="JULY">JULY</option>
-                                    <option value="AUGUST">AUGUST</option>
-                                    <option value="SEPTEMBER">SEPTEMBER</option>
-                                    <option value="OCTOBER">OCTOBER</option>
-                                    <option value="NOVEMBER">NOVEMBER</option>
-                                    <option value="DECEMBER">DECEMBER</option>
-                                </select>
-                            </label>
                             <label for="cut_off_period">
                                 <i class="fa-solid fa-id-card"></i>
-                                Cut Off Period
-                                <select name="cut_off_period" id="cut_off_period" class="form-control">
-                                    <option value="SELECT">SELECT</option>
-                                    <option value="1ST CUT OFF">1ST CUT OFF</option>
-                                    <option value="2ND CUT OFF">2ND CUT OFF</option>
-                                </select>
+                                Cut Off Number
+                                <input type="number" id="cut_off_period" name="cut_off_period" class="form-control form" required autocomplete="off"> 
                             </label>
                             `
-                            generate_button.insertAdjacentHTML("beforebegin", data)
+                            payroll_details_data.insertAdjacentHTML("beforeend", data)
                         }
                     }
                 }
@@ -441,19 +421,21 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             else if(payroll_type.value == "SEMI-MONTHLY"){
                 const year = form_tab.querySelector("#year");
-                const month = form_tab.querySelector("#month");
                 const cut_off_period = form_tab.querySelector("#cut_off_period");
                 const number_of_days = form_tab.querySelector("#number_of_days");
-                payroll_length = getNumberOfDays(month.value, year.value, cut_off_period.value);
-                day_name = getDayNamesForCutoffPeriod(month.value, year.value, cut_off_period.value);
-                day_dates = getDatesForCutoffPeriod(month.value, year.value, cut_off_period.value);
+                payroll_length = getNumberOfDays(getCutoffPeriodAndMonth(cut_off_period.value)[1], year.value, getCutoffPeriodAndMonth(cut_off_period.value)[0]);
+                day_name = getDayNamesForCutoffPeriod(getCutoffPeriodAndMonth(cut_off_period.value)[1], year.value, getCutoffPeriodAndMonth(cut_off_period.value)[0]);
+                day_dates = getDatesForCutoffPeriod(year.value, getCutoffPeriodAndMonth(cut_off_period.value)[0]);
                 number_of_days.value = payroll_length;
                 insertInputs();
+                console.log(getNumberOfDays(getCutoffPeriodAndMonth(cut_off_period.value)[1], year.value, getCutoffPeriodAndMonth(cut_off_period.value)[0]))
+                console.log(getCutoffPeriodAndMonth(cut_off_period.value)[1])
+                console.log(getCutoffPeriodAndMonth(cut_off_period.value)[0])
+                console.log(number_of_days.value)
                 days.style.display = "flex";
                 hide.style.display = "grid";
                 input_container.style.display = "grid";
             }
-
         })
 
         function insertInputs(){
@@ -1674,6 +1656,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     else{
                         late_mins[x].value = 0;
                     }
+                    calculateAllowance();
                     calculateGrossSalary();
                     calculateNetSalary();
                 });
@@ -1681,39 +1664,40 @@ document.addEventListener('DOMContentLoaded', async function() {
                 day_break[x].addEventListener("keyup", () => {
                     regular_hours[x].value = parseFloat(regular_hours[x].value) - parseFloat(day_break[x].value);
                     calculateHours();
+                    calculateAllowance();
                     calculateGrossSalary();
                     calculateNetSalary();
-                    calculateAllowance();
                 });
     
                 night_break[x].addEventListener("keyup", () => {
                     night_hours[x].value = parseFloat(night_hours[x].value) - parseFloat(night_break[x].value);
                     calculateHours();
+                    calculateAllowance();
                     calculateGrossSalary();
                     calculateNetSalary();
-                    calculateAllowance();
                 });
     
                 ot_day_break[x].addEventListener("keyup", () => {
                     ot_hours[x].value = parseFloat(ot_hours[x].value) - parseFloat(ot_day_break[x].value);
                     calculateOvertimeHours();
+                    calculateAllowance();
                     calculateGrossSalary();
                     calculateNetSalary();
-                    calculateAllowance();
                 });
     
                 ot_night_break[x].addEventListener("keyup", () => {
                     ot_night_hours[x].value = parseFloat(ot_night_hours[x].value) - parseFloat(ot_night_break[x].value);
                     calculateOvertimeHours();
+                    calculateAllowance();
                     calculateGrossSalary();
                     calculateNetSalary();
-                    calculateAllowance();
                 });
             
                 time_out_input[x].addEventListener("change", () => {
                     calculateUnderTimeHour();
                     calculateOtRatePerHour();
                     calculateOvertimeHours();
+                    calculateAllowance();
                     calculateGrossSalary();
                     calculateNetSalary();
                 });
@@ -1772,8 +1756,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                     calculateNetSalary();
                 });                
 
-                late_mins[x].addEventListener("keyup", calculateGrossSalary);
-                under_time_mins[x].addEventListener("keyup", calculateGrossSalary);
+                late_mins[x].addEventListener("keyup", () => {
+                    calculateAllowance();
+                    calculateGrossSalary();
+                });
+                under_time_mins[x].addEventListener("keyup", () => {
+                    calculateAllowance();
+                    calculateGrossSalary();
+                });
             }
             adjustment.addEventListener("keyup", calculateNetSalary);
             cash_advance.addEventListener("keyup", calculateNetSalary);
@@ -1927,9 +1917,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         payroll_type2.addEventListener("change", () => {
             if(payroll_type2.value == "WEEKLY"){
-                while (payroll_details.firstChild) {
-                    payroll_details.removeChild(payroll_details.firstChild);
-                }
+                payroll_details.innerHTML = "";
                 var data_value = 
                 `
                 <div style="width: 200px !important;">
@@ -1960,9 +1948,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 payroll_details.insertAdjacentHTML("afterbegin", data_value)
             }
             else if(payroll_type2.value == "SEMI-MONTHLY"){
-                while (payroll_details.firstChild) {
-                    payroll_details.removeChild(payroll_details.firstChild);
-                }
+                payroll_details.innerHTML = "";
                 var data_value = 
                 `
                 <div style="width: 200px !important;">
@@ -1972,34 +1958,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                     </label>
                     <input type="number" id="search_year" name="search_year" class="form-control form" required autocomplete="off" placeholder="Input Year">
                 </div>
-                <label for="month">
-                <i class="fa-solid fa-calendar-days"></i>
-                Month
-                <select name="search_month" id="search_month" class="form-control">
-                    <option value="SELECT">SELECT</option>
-                    <option value="JANUARY">JANUARY</option>
-                    <option value="FEBRUARY">FEBRUARY</option>
-                    <option value="MARCH">MARCH</option>
-                    <option value="APRIL">APRIL</option>
-                    <option value="MAY">MAY</option>
-                    <option value="JUNE">JUNE</option>
-                    <option value="JULY">JULY</option>
-                    <option value="AUGUST">AUGUST</option>
-                    <option value="SEPTEMBER">SEPTEMBER</option>
-                    <option value="OCTOBER">OCTOBER</option>
-                    <option value="NOVEMBER">NOVEMBER</option>
-                    <option value="DECEMBER">DECEMBER</option>
-                </select>
-            </label>
-            <label for="cut_off_period">
-                <i class="fa-solid fa-calendar-days"></i>
-                Cut Off Period
-                <select name="search_cut_off_period" id="search_cut_off_period" class="form-control">
-                    <option value="SELECT">SELECT</option>
-                    <option value="1ST CUT OFF">1ST CUT OFF</option>
-                    <option value="2ND CUT OFF">2ND CUT OFF</option>
-                </select>
-            </label>
+                <div style="width: 200px !important;">
+                    <label for="cut_off_period">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        Cut Off Number
+                        <input type="number" id="search_cut_off_period" name="search_cut_off_period" class="form-control form" required autocomplete="off" placeholder="Input Cut-off Number"><br>
+                    </label>
+                </div>
                 <div style="width: 200px !important;">
                     <label>
                         <i class="fa-solid fa-calendar-days"></i>
@@ -2011,9 +1976,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 payroll_details.insertAdjacentHTML("afterbegin", data_value)
             }
             else{
-                while (payroll_details.firstChild) {
-                    payroll_details.removeChild(payroll_details.firstChild);
-                }
+                payroll_details.innerHTML = "";
             }
         })
 
@@ -2039,7 +2002,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         const payslip_container = payroll_tab.querySelector("#payslip_container")
         const generate_payslip_button = payroll_tab.querySelector("#generate_payslip_button")
         const download_payslip_button = payroll_tab.querySelector("#download_payslip_button")
-
         
         generate_payslip_button.addEventListener("click", () => {
             download_payslip_button.style.display = "block"
@@ -2450,7 +2412,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <div style=" transform: rotate(270deg); width: 368px; height: 92px; position: absolute; left: -140px; top: 135px;">
                                 <div style="width: 100%; height: 100%; padding: 3px; display: grid; grid-template-columns: 65% 35%;">
                                     <div style="border-right: 1px solid black; padding: 0 3px;">
-                                        <div style="text-align: center">
+                                        <div style="display: flex; justify-content: space-around;">
+                                            <h2>${employee_id}</h2>
                                             <h2>OTHER DEDUCTIONS</h2>
                                         </div>
                                         <div style="display: grid; grid-template-columns: 55% 45%" class="border">
@@ -2561,13 +2524,53 @@ document.addEventListener('DOMContentLoaded', async function() {
                     var rh_rdd_ot_night_hrs = 0;
                     var rh_rdd_ot_night_hrs_pay = 0;
                     var allowance = 0;
+                    var adjustment = 0;
+                    var cash_advance = 0;
+                    var sss = 0;
+                    var pag_ibig = 0;
+                    var philhealth = 0;
+                    var sss_loan = 0;
+                    var pag_ibig_loan = 0;
+                    var withholding_tax = 0;
+                    var under_time_deduction = 0;
+                    var under_time_hours = 0;
+                    var late_deduction = 0;
+                    var late_mins = 0;
+                    var ca_deduction = 0;
+                    var uniform = 0;
+                    var housing = 0;
+                    var st_peter = 0;
+                    var cash_not_return = 0;
+                    var hard_hat = 0;
+                    var safety_shoes = 0;
+                    var over_meals = 0;
+                    var bereavement_assistance = 0;
+                    var gross_salary = 0;
+                    var sub_deduction = 0;
+                    var subtotal = 0;
+                    var other_deduction = 0;
                     for(let c = 1; c < payroll_summary_data_list.content.length; c++){
-                        if(payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "EMPLOYEE ID")] == payslip_employee_id[x] && payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "YEAR")] == search_year.value && payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "WEEK NUMBER / MONTH-CUT OFF")] == search_week_number.value){
+                        if(payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "EMPLOYEE ID")] == payslip_employee_id[x] && payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "YEAR")] == search_year.value && payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "WEEK NUMBER")] == search_week_number.value){
+                            adjustment = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "ADJUSTMENT")];
+                            cash_advance = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "CASH ADVANCE")];
                             sss = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "SSS")];
                             pag_ibig = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "PAG-IBIG")];
                             philhealth = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "PHILHEALTH")];
                             sss_loan = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "SSS LOAN")];
                             pag_ibig_loan = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "PAG-IBIG LOAN")];
+                            ca_deduction = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "C/A DEDUCTION")];
+                            uniform = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "UNIFORM")];
+                            housing = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "HOUSING")];
+                            st_peter = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "ST. PETER")];
+                            cash_not_return = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "CASH NOT RETURN")];
+                            hard_hat = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "HARD HAT")];
+                            safety_shoes = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "SAFETY SHOES")];
+                            over_meals = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "OVER MEALS")];
+                            bereavement_assistance = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "BEREAVEMENT ASSISTANCE")];
+                            gross_salary = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "GROSS SALARY")];
+                            sub_deduction = sss + sss_loan + pag_ibig + pag_ibig_loan + philhealth;
+                            subtotal = gross_salary - sub_deduction;
+                            other_deduction = ca_deduction + uniform + housing + st_peter + cash_not_return + hard_hat + safety_shoes + over_meals + bereavement_assistance;
                         }
                     }
                     for(let c = 1; c < payroll_transaction_data_list.content.length; c++){
@@ -2819,13 +2822,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         </div>
                                         <div>
                                             <h3 style="text-align: right; padding-right: 5px;">0.00</h3>
-                                            <h3 style="text-align: right; padding-right: 5px;">0.00</h3>
-                                            <h3 style="text-align: right; padding-right: 5px;">0.00</h3>
+                                            <h3 style="text-align: right; padding-right: 5px;">${formatNumber(gross_salary)}</h3>
+                                            <h3 style="text-align: right; padding-right: 5px;">${formatNumber(sub_deduction)}</h3>
                                         </div>
                                     </div>
                                     <div class="border-left ps-1" style="display: grid; grid-template-columns: 50% 50%; justify-content: center; align-items: center;">
                                         <h3>Net Pay:</h3>
-                                        <h3 style="text-align: right; padding-right: 5px;">0.00</h3>
+                                        <h3 style="text-align: right; padding-right: 5px;">${formatNumber(subtotal)}</h3>
                                     </div>
                                 </div>
                                 <div class="summary_footer2 border-left border-right">
@@ -2842,46 +2845,47 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </div>
                         `
                     )
-                    
+
                     payslip_others2.push(
                         `
                         <div style="position: absolute; border: 3px solid black; top: 428px; left: 940px; width: 92px; height:368px; padding: 3px; display: flex; justify-content: end;">
                             <div style=" transform: rotate(270deg); width: 368px; height: 92px; position: absolute; left: -140px; top: 135px;">
                                 <div style="width: 100%; height: 100%; padding: 3px; display: grid; grid-template-columns: 65% 35%;">
                                     <div style="border-right: 1px solid black; padding: 0 3px;">
-                                        <div style="text-align: center">
+                                        <div style="display: flex; justify-content: space-around;">
+                                            <h2>${employee_id}</h2>
                                             <h2>OTHER DEDUCTIONS</h2>
                                         </div>
                                         <div style="display: grid; grid-template-columns: 55% 45%" class="border">
                                             <div class="border-bottom-right" style="display: grid; grid-template-columns: 70% 30%;">
-                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">C/A Deduction</h4><h4 class="pe-1 right">0.00</h4>
+                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">C/A Deduction</h4><h4 class="pe-1 right">${ca_deduction}</h4>
                                             </div>
                                             <div class="border-bottom" style="display: grid; grid-template-columns: 60% 40%;">
-                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Uniform</h4><h4 class="pe-1 right">0.00</h4>
+                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Uniform</h4><h4 class="pe-1 right">${uniform}</h4>
                                             </div>
                                             <div class="border-bottom-right" style="display: grid; grid-template-columns: 70% 30%;">
-                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Housing</h4><h4 class="pe-1 right">0.00</h4>
+                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Housing</h4><h4 class="pe-1 right">${housing}</h4>
                                             </div>
                                             <div class="border-bottom" style="display: grid; grid-template-columns: 60% 40%;">
-                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">St. Peter</h4><h4 class="pe-1 right">0.00</h4>
+                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">St. Peter</h4><h4 class="pe-1 right">${st_peter}</h4>
                                             </div>
                                             <div class="border-bottom-right" style="display: grid; grid-template-columns: 70% 30%;">
-                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Safety Shoes</h4><h4 class="pe-1 right">0.00</h4>
+                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Safety Shoes</h4><h4 class="pe-1 right">${safety_shoes}</h4>
                                             </div>
                                             <div class="border-bottom" style="display: grid; grid-template-columns: 60% 40%;">
-                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Hard Hat</h4><h4 class="pe-1 right">0.00</h4>
+                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Hard Hat</h4><h4 class="pe-1 right">${hard_hat}</h4>
                                             </div>
                                             <div class="border-bottom-right" style="display: grid; grid-template-columns: 70% 30%;">
-                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Cash Not Return</h4><h4 class="pe-1 right">0.00</h4>
+                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Cash Not Return</h4><h4 class="pe-1 right">${cash_not_return}</h4>
                                             </div>
                                             <div style="display: grid; grid-template-columns: 60% 40%;">
-                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Bereavement</h4><h4 class="pe-1 right">0.00</h4>
+                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Bereavement</h4><h4 class="pe-1 right">${bereavement_assistance}</h4>
                                             </div>
                                             <div class="border-right" style="display: grid; grid-template-columns: 70% 30%;">
-                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Over Meals</h4><h4 class="pe-1 right">0.00</h4>
+                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Over Meals</h4><h4 class="pe-1 right">${over_meals}</h4>
                                             </div>
                                             <div style="display: grid; grid-template-columns: 60% 40%;">
-                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Assistance</h4><h4 class="pe-1 right">0.00</h4>
+                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Assistance</h4><h4 class="pe-1 right"></h4>
                                             </div>
                                         </div>
                                     </div>
@@ -2891,13 +2895,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         </div>
                                         <div class="border">
                                             <div class="border-bottom" style="display: grid; grid-template-columns: 50% 50%; align-items: center;">
-                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Net Pay:</h4><h3 class="pe-1 bold" style="text-align: end;">0.00</h3>
+                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Net Pay:</h4><h3 class="pe-1 bold" style="text-align: end;">${formatNumber(subtotal)}</h3>
                                             </div>
                                             <div class="border-bottom" style="display: grid; grid-template-columns: 50% 50%; align-items: center;">
-                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Other<br>Deductions:</h4><h3 class="pe-1 bold" style="text-align: end;">0.00</h3>
+                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Other<br>Deductions:</h4><h3 class="pe-1 bold" style="text-align: end;">${formatNumber(other_deduction)}</h3>
                                             </div>
                                             <div class="" style="display: grid; grid-template-columns: 50% 50%; align-items: center;">
-                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Remaining<br>Salary:</h4><h2 class="pe-1 bold" style="text-align: end;">0.00</h2>
+                                                <h4 class="bold ps-1 truncate_text" style="text-align: start;">Remaining<br>Salary:</h4><h2 class="pe-1 bold" style="text-align: end;">${formatNumber(subtotal - other_deduction)}</h2>
                                             </div>
                                         </div>
                                     </div>
@@ -2908,7 +2912,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     )
 
                 }
-                for(let x = 0; x < payslip_employee_id.length; x++){
+                for(let x = 0; x < Math.ceil(payslip_employee_id.length/2); x++){
                     var payslip_container_data = 
                     `
                     <div id="payslip_form" style="display: flex; flex-direction: row;">
@@ -2918,9 +2922,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <div style="display: flex; flex-wrap: wrap; width: 920px">
                             ${payslip_data[x]}
                             ${payslip_data[x]}
-                            ${payslip_data2[x]}
-                            ${payslip_data2[x]}
                             ${payslip_others[x]}
+                            ${payslip_data2[x]}
+                            ${payslip_data2[x]}
                             ${payslip_others2[x]}
                         </div>
                     </div>
@@ -2930,7 +2934,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             else if(payroll_type2.value == "SEMI-MONTHLY"){
                 for(let c = 1; c < payroll_transaction_data_list.content.length; c++){
-                    if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "YEAR")] == search_year.value && (payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "WEEK NUMBER / MONTH-CUT OFF")]).toString().substring(0,2) == (months.indexOf(search_month.value) + 1).toString().padStart(2, "0")){
+                    if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "YEAR")] == search_year.value && (payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "WEEK NUMBER / MONTH-CUT OFF")]).toString().substring(0,2) == (months.indexOf(getCutoffPeriodAndMonth(cut_off_period.value)[1]) + 1).toString().padStart(2, "0")){
                         if (!payslip_employee_id.includes(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "EMPLOYEE ID")])) {
                             payslip_employee_id.push(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "EMPLOYEE ID")]);
                         }
@@ -2942,7 +2946,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 var payslip_others2 = []
                 var government_dues_month = "";
                 var government_dues_year = "";
-                var month = months.indexOf(search_month.value);
+                var month = months.indexOf(getCutoffPeriodAndMonth(cut_off_period.value)[1]);
                 var year = (search_year.value);
                 if(month == 0){
                     government_dues_month = months[11];
@@ -3016,7 +3020,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     var late_deduction = 0;
                     var late_mins = 0;
                     for(let c = 1; c < payroll_summary_data_list.content.length; c++){
-                        if(payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "EMPLOYEE ID")] == payslip_employee_id[x] && payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "YEAR")] == search_year.value && (payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "WEEK NUMBER / MONTH-CUT OFF")]).toString().substring(0,2) == (months.indexOf(search_month.value) + 1).toString().padStart(2, "0")){
+                        if(payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "EMPLOYEE ID")] == payslip_employee_id[x] && payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "YEAR")] == search_year.value && (payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "WEEK NUMBER / MONTH-CUT OFF")]).toString().substring(0,2) == (months.indexOf(getCutoffPeriodAndMonth(cut_off_period.value)[1]) + 1).toString().padStart(2, "0")){
                             sss = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "SSS")];
                             pag_ibig = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "PAG-IBIG")];
                             philhealth = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "PHILHEALTH")];
@@ -3025,7 +3029,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                     }
                     for(let c = 1; c < payroll_transaction_data_list.content.length; c++){
-                        if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "EMPLOYEE ID")] == payslip_employee_id[x] && payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "YEAR")] == search_year.value && (payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "WEEK NUMBER / MONTH-CUT OFF")]).toString().substring(0,2) == (months.indexOf(search_month.value) + 1).toString().padStart(2, "0")){
+                        if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "EMPLOYEE ID")] == payslip_employee_id[x] && payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "YEAR")] == search_year.value && (payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "WEEK NUMBER / MONTH-CUT OFF")]).toString().substring(0,2) == (months.indexOf(getCutoffPeriodAndMonth(cut_off_period.value)[1]) + 1).toString().padStart(2, "0")){
                             employee_id = payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "EMPLOYEE ID")];
                             employee_name = findEmployeeName(employee_id);
                             daily_rate = payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAILY RATE")];
@@ -3111,7 +3115,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     var employee_department = "";
                     var employee_designation = "";
                     var employee_tin_no = "";
-                    var pay_period_dates = getDatesForCutoffPeriod(search_month.value, search_year.value, search_cut_off_period.valus);
+                    var pay_period_dates = getDatesForCutoffPeriod(getCutoffPeriodAndMonth(cut_off_period.value)[1], search_year.value, getCutoffPeriodAndMonth(cut_off_period.value)[0]);
                     const parts = (date_decoder(pay_period_dates[0])).split(', ');
                     var date_start = parts.slice(0, -1).join(', ');
                     var pay_period = `${date_start} - ${date_decoder(pay_period_dates[6])}`

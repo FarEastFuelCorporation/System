@@ -829,6 +829,31 @@ function formatDate(date) {
   return `${year}-${month}-${day}`;
 }
 
+function getCutoffPeriodAndMonth(cutoffNumber) {
+  if (typeof cutoffNumber !== "number" || cutoffNumber < 1 || cutoffNumber > 24) {
+    return ["Invalid input"]; // Return an array with an error message for invalid input
+  }
+
+  const months = [
+    "JANUARY", "JANUARY", "FEBRUARY", "FEBRUARY", "MARCH", "MARCH", "APRIL", "APRIL",
+    "MAY", "MAY", "JUNE", "JUNE", "JULY", "JULY", "AUGUST", "AUGUST", "SEPTEMBER", "SEPTEMBER",
+    "OCTOBER", "OCTOBER", "NOVEMBER", "NOVEMBER", "DECEMBER", "DECEMBER"
+  ];
+
+  const cutoffPeriods = [
+    "1ST CUT OFF", "2ND CUT OFF", "1ST CUT OFF", "2ND CUT OFF", "1ST CUT OFF", "2ND CUT OFF",
+    "1ST CUT OFF", "2ND CUT OFF", "1ST CUT OFF", "2ND CUT OFF", "1ST CUT OFF", "2ND CUT OFF",
+    "1ST CUT OFF", "2ND CUT OFF", "1ST CUT OFF", "2ND CUT OFF", "1ST CUT OFF", "2ND CUT OFF",
+    "1ST CUT OFF", "2ND CUT OFF", "1ST CUT OFF", "2ND CUT OFF", "1ST CUT OFF", "2ND CUT OFF"
+  ];
+  
+  return [cutoffPeriods[cutoffNumber - 1], months[cutoffNumber - 1]];
+}
+
+// Example: Get cutoff period and month for cutoff number 23
+console.log(getCutoffPeriodAndMonth(23)[1]); // Output: ['1ST CUT OFF', 'DECEMBER']
+
+
 function getDatesInWeek(year, weekNumber) {
   // Check if the input year and week number are valid
   if (typeof parseInt(year) !== "number" || typeof parseInt(weekNumber) !== "number" || weekNumber < 1 || weekNumber > 53) {
