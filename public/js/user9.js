@@ -1657,7 +1657,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 });
                 
                 time_in_input[x].addEventListener("change", () => {
-    
                     const time_in_sched_value = new Date(`2000-01-01T${time_in_sched.value}`);
                     const time_in_input_value = new Date(`2000-01-01T${time_in_input[x].value}`);
                     const time_in_sched_hours = time_in_sched_value.getHours();
@@ -3788,6 +3787,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         // employee_form
         const employee_form = document.querySelector("#employee_list_section");
         const new_employee_button = employee_form.querySelector("#new_employee_button");
+        const resignation_form = employee_form.querySelector("#resignation_form");
         const update_record_button = employee_form.querySelector("#update_record_button");
         const resign_button = employee_form.querySelector("#resign_button");
         const new_employee_form = employee_form.querySelector("#new_employee_form");
@@ -3843,6 +3843,22 @@ document.addEventListener('DOMContentLoaded', async function() {
         const update_date_resignation = update_record_form.querySelector("#date_resignation");
         const reason_resignation = update_record_form.querySelector("#reason_resignation");
         const timestamp = update_record_form.querySelector("#timestamp");
+        const resign_search_employee_id_button = resignation_form.querySelector("#search_employee_id_button");
+        const resign_employee_id = resignation_form.querySelector("#employee_id");
+        const resign_gender = resignation_form.querySelector("#gender");
+        const resign_civil_status = resignation_form.querySelector("#civil_status");
+        const resign_first_name = resignation_form.querySelector("#first_name");
+        const resign_middle_name = resignation_form.querySelector("#middle_name");
+        const resign_last_name = resignation_form.querySelector("#last_name");
+        const resign_spouse_name = resignation_form.querySelector("#spouse_name");
+        const resign_spouse_name_container = resignation_form.querySelector("#spouse_name_container");
+        const resign_affix = resignation_form.querySelector("#affix");
+        const resign_affix_container = resignation_form.querySelector("#affix_container");
+        const resign_date_resignation = resignation_form.querySelector("#date_resignation");
+        const resign_reason_resignation = resignation_form.querySelector("#reason_resignation");
+        const resign_timestamp = resignation_form.querySelector("#timestamp");
+        const resign_details = resignation_form.querySelector("#details");
+
         new_spouse_name_container.style.display = "none";
 
         new_employee_button.addEventListener("click", () => {
@@ -3852,8 +3868,33 @@ document.addEventListener('DOMContentLoaded', async function() {
             else{
                 new_employee_form.style.display = "block";
                 update_record_form.style.display = "none";
+                resignation_form.style.display = "none";
             }
         })
+
+        update_record_button.addEventListener("click", () => {
+            if(update_record_form.style.display == "block"){
+                update_record_form.style.display = "none";
+            }
+            else{
+                new_employee_form.style.display = "none";
+                update_record_form.style.display = "block";
+                resignation_form.style.display = "none";
+            }
+        })
+
+        resign_button.addEventListener("click", () => {
+            if(resignation_form.style.display == "block"){
+                resignation_form.style.display = "none";
+            }
+            else{
+                new_employee_form.style.display = "none";
+                update_record_form.style.display = "none";
+                resignation_form.style.display = "block";
+            }
+        })
+
+
         new_gender.addEventListener("change", () => {
             if(new_gender.value == "MALE"){
                 new_spouse_name_container.style.display = "none";
@@ -3870,61 +3911,52 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         })
-
-        update_record_button.addEventListener("click", () => {
-            if(update_record_form.style.display == "block"){
-                update_record_form.style.display = "none";
-            }
-            else{
-                new_employee_form.style.display = "none";
-                update_record_form.style.display = "block";
-            }
-        })
         
         update_search_employee_id_button.addEventListener("click", () => {
-            for(let a = 1; a < employee_data_list.content.length; a++)
-            if(update_employee_id.value == employee_data_list.content[a][findTextInArray(employee_data_list, "EMPLOYEE ID")]){
-                update_gender.value = employee_data_list.content[a][findTextInArray(employee_data_list, "GENDER")];
-                update_civil_status.value = employee_data_list.content[a][findTextInArray(employee_data_list, "CIVIL STATUS")];
-                update_first_name.value = employee_data_list.content[a][findTextInArray(employee_data_list, "FIRST NAME")];
-                update_middle_name.value = employee_data_list.content[a][findTextInArray(employee_data_list, "MIDDLE NAME")];
-                update_last_name.value = employee_data_list.content[a][findTextInArray(employee_data_list, "LAST NAME")];
-                update_spouse_name.value = employee_data_list.content[a][findTextInArray(employee_data_list, "SPOUSE NAME")];
-                update_affix.value = employee_data_list.content[a][findTextInArray(employee_data_list, "AFFIX")];
-                update_birthday.value = formatDateToInputValue(employee_data_list.content[a][findTextInArray(employee_data_list, "BIRTH DATE")]);
-                update_birth_place.value = employee_data_list.content[a][findTextInArray(employee_data_list, "BIRTH PLACE")];
-                update_mobile_number.value = employee_data_list.content[a][findTextInArray(employee_data_list, "MOBILE NO.")];
-                update_email_address.value = employee_data_list.content[a][findTextInArray(employee_data_list, "EMAIL ADDRESS")];
-                update_nationality.value = employee_data_list.content[a][findTextInArray(employee_data_list, "NATIONALITY")];
-                update_address.value = employee_data_list.content[a][findTextInArray(employee_data_list, "PERMANENT ADDRESS")];
-                update_other_address.value = employee_data_list.content[a][findTextInArray(employee_data_list, "OTHER ADDRESS")];
-                update_mothers_maiden_name.value = employee_data_list.content[a][findTextInArray(employee_data_list, "MOTHER'S MAIDEN NAME")];
-                update_educational_attainment.value = employee_data_list.content[a][findTextInArray(employee_data_list, "EDUCATIONAL ATTAINMENT")];
-                update_course.value = employee_data_list.content[a][findTextInArray(employee_data_list, "COURSE")];
-                update_year.value = employee_data_list.content[a][findTextInArray(employee_data_list, "YEAR GRADUATE")];
-                update_tin_no.value = employee_data_list.content[a][findTextInArray(employee_data_list, "TIN NO.")];
-                update_sss_no.value = employee_data_list.content[a][findTextInArray(employee_data_list, "SSS/GSIS NO.")];
-                update_philhealth_no.value = employee_data_list.content[a][findTextInArray(employee_data_list, "PHILHEALTH NO.")];
-                update_pag_ibig_no.value = employee_data_list.content[a][findTextInArray(employee_data_list, "PAG-IBIG NO.")];
-                update_drivers_license_no.value = employee_data_list.content[a][findTextInArray(employee_data_list, "DRIVER'S LICENSE NO.")];
-                update_nbi_no.value = employee_data_list.content[a][findTextInArray(employee_data_list, "NBI NO.")];
-                update_police_clearance_no.value = employee_data_list.content[a][findTextInArray(employee_data_list, "POLICE CLEARANCE NO.")];
-                update_cedula_no.value = employee_data_list.content[a][findTextInArray(employee_data_list, "CEDULA NO.")];
-                update_date_hire.value = formatDateToInputValue(employee_data_list.content[a][findTextInArray(employee_data_list, "DATE HIRE")]);
-                update_employee_type.value = employee_data_list.content[a][findTextInArray(employee_data_list, "EMPLOYEE TYPE")];
-                update_payroll_type.value = employee_data_list.content[a][findTextInArray(employee_data_list, "PAYROLL TYPE")];
-                update_salary_type.value = employee_data_list.content[a][findTextInArray(employee_data_list, "SALARY TYPE")];
-                update_employee_status.value = employee_data_list.content[a][findTextInArray(employee_data_list, "EMPLOYEE STATUS")];
-                update_department.value = employee_data_list.content[a][findTextInArray(employee_data_list, "DEPARTMENT")];
-                update_designation.value = employee_data_list.content[a][findTextInArray(employee_data_list, "DESIGNATION")];
-                update_rate.value = employee_data_list.content[a][findTextInArray(employee_data_list, "DAILY RATE")];
-                update_day_allowance.value = employee_data_list.content[a][findTextInArray(employee_data_list, "DAY ALLOWANCE")];
-                update_night_allowance.value = employee_data_list.content[a][findTextInArray(employee_data_list, "NIGHT ALLOWANCE")];
-                update_time_in_schedule.value = formatTimeToInputValue(employee_data_list.content[a][findTextInArray(employee_data_list, "TIME IN")]);
-                update_time_out_schedule.value = formatTimeToInputValue(employee_data_list.content[a][findTextInArray(employee_data_list, "TIME OUT")]);
-                update_date_resignation.value = employee_data_list.content[a][findTextInArray(employee_data_list, "DATE OF RESIGNATION")];
-                reason_resignation.value = formatDateToInputValue(employee_data_list.content[a][findTextInArray(employee_data_list, "REASON OF RESIGNATION")]);        
-                timestamp.value = formatDateToInputValue(employee_data_list.content[a][findTextInArray(employee_data_list, "CREATED AT")]);        
+            for(let a = 1; a < employee_data_list.content.length; a++){
+                if(update_employee_id.value == employee_data_list.content[a][findTextInArray(employee_data_list, "EMPLOYEE ID")]){
+                    update_gender.value = employee_data_list.content[a][findTextInArray(employee_data_list, "GENDER")];
+                    update_civil_status.value = employee_data_list.content[a][findTextInArray(employee_data_list, "CIVIL STATUS")];
+                    update_first_name.value = employee_data_list.content[a][findTextInArray(employee_data_list, "FIRST NAME")];
+                    update_middle_name.value = employee_data_list.content[a][findTextInArray(employee_data_list, "MIDDLE NAME")];
+                    update_last_name.value = employee_data_list.content[a][findTextInArray(employee_data_list, "LAST NAME")];
+                    update_spouse_name.value = employee_data_list.content[a][findTextInArray(employee_data_list, "SPOUSE NAME")];
+                    update_affix.value = employee_data_list.content[a][findTextInArray(employee_data_list, "AFFIX")];
+                    update_birthday.value = formatDateToInputValue(employee_data_list.content[a][findTextInArray(employee_data_list, "BIRTH DATE")]);
+                    update_birth_place.value = employee_data_list.content[a][findTextInArray(employee_data_list, "BIRTH PLACE")];
+                    update_mobile_number.value = employee_data_list.content[a][findTextInArray(employee_data_list, "MOBILE NO.")];
+                    update_email_address.value = employee_data_list.content[a][findTextInArray(employee_data_list, "EMAIL ADDRESS")];
+                    update_nationality.value = employee_data_list.content[a][findTextInArray(employee_data_list, "NATIONALITY")];
+                    update_address.value = employee_data_list.content[a][findTextInArray(employee_data_list, "PERMANENT ADDRESS")];
+                    update_other_address.value = employee_data_list.content[a][findTextInArray(employee_data_list, "OTHER ADDRESS")];
+                    update_mothers_maiden_name.value = employee_data_list.content[a][findTextInArray(employee_data_list, "MOTHER'S MAIDEN NAME")];
+                    update_educational_attainment.value = employee_data_list.content[a][findTextInArray(employee_data_list, "EDUCATIONAL ATTAINMENT")];
+                    update_course.value = employee_data_list.content[a][findTextInArray(employee_data_list, "COURSE")];
+                    update_year.value = employee_data_list.content[a][findTextInArray(employee_data_list, "YEAR GRADUATE")];
+                    update_tin_no.value = employee_data_list.content[a][findTextInArray(employee_data_list, "TIN NO.")];
+                    update_sss_no.value = employee_data_list.content[a][findTextInArray(employee_data_list, "SSS/GSIS NO.")];
+                    update_philhealth_no.value = employee_data_list.content[a][findTextInArray(employee_data_list, "PHILHEALTH NO.")];
+                    update_pag_ibig_no.value = employee_data_list.content[a][findTextInArray(employee_data_list, "PAG-IBIG NO.")];
+                    update_drivers_license_no.value = employee_data_list.content[a][findTextInArray(employee_data_list, "DRIVER'S LICENSE NO.")];
+                    update_nbi_no.value = employee_data_list.content[a][findTextInArray(employee_data_list, "NBI NO.")];
+                    update_police_clearance_no.value = employee_data_list.content[a][findTextInArray(employee_data_list, "POLICE CLEARANCE NO.")];
+                    update_cedula_no.value = employee_data_list.content[a][findTextInArray(employee_data_list, "CEDULA NO.")];
+                    update_date_hire.value = formatDateToInputValue(employee_data_list.content[a][findTextInArray(employee_data_list, "DATE HIRE")]);
+                    update_employee_type.value = employee_data_list.content[a][findTextInArray(employee_data_list, "EMPLOYEE TYPE")];
+                    update_payroll_type.value = employee_data_list.content[a][findTextInArray(employee_data_list, "PAYROLL TYPE")];
+                    update_salary_type.value = employee_data_list.content[a][findTextInArray(employee_data_list, "SALARY TYPE")];
+                    update_employee_status.value = employee_data_list.content[a][findTextInArray(employee_data_list, "EMPLOYEE STATUS")];
+                    update_department.value = employee_data_list.content[a][findTextInArray(employee_data_list, "DEPARTMENT")];
+                    update_designation.value = employee_data_list.content[a][findTextInArray(employee_data_list, "DESIGNATION")];
+                    update_rate.value = employee_data_list.content[a][findTextInArray(employee_data_list, "DAILY RATE")];
+                    update_day_allowance.value = employee_data_list.content[a][findTextInArray(employee_data_list, "DAY ALLOWANCE")];
+                    update_night_allowance.value = employee_data_list.content[a][findTextInArray(employee_data_list, "NIGHT ALLOWANCE")];
+                    update_time_in_schedule.value = formatTimeToInputValue(employee_data_list.content[a][findTextInArray(employee_data_list, "TIME IN")]);
+                    update_time_out_schedule.value = formatTimeToInputValue(employee_data_list.content[a][findTextInArray(employee_data_list, "TIME OUT")]);
+                    update_date_resignation.value = formatDateToInputValue(employee_data_list.content[a][findTextInArray(employee_data_list, "DATE OF RESIGNATION")]);
+                    reason_resignation.value = employee_data_list.content[a][findTextInArray(employee_data_list, "REASON OF RESIGNATION")];        
+                    timestamp.value = formatDateToInputValue(employee_data_list.content[a][findTextInArray(employee_data_list, "CREATED AT")]);        
+                }
             }
             update_details.style.display = "block";
             if(update_gender.value == "MALE"){
@@ -3939,6 +3971,38 @@ document.addEventListener('DOMContentLoaded', async function() {
                 else{
                     update_spouse_name_container.style.display = "block"
                     update_affix_container.style.display = "none"
+                }
+            }
+        })
+
+        resign_search_employee_id_button.addEventListener("click", () => {
+            for(let a = 1; a < employee_data_list.content.length; a++){
+                if(resign_employee_id.value == employee_data_list.content[a][findTextInArray(employee_data_list, "EMPLOYEE ID")]){
+                    resign_gender.value = employee_data_list.content[a][findTextInArray(employee_data_list, "GENDER")];
+                    resign_civil_status.value = employee_data_list.content[a][findTextInArray(employee_data_list, "CIVIL STATUS")];
+                    resign_first_name.value = employee_data_list.content[a][findTextInArray(employee_data_list, "FIRST NAME")];
+                    resign_middle_name.value = employee_data_list.content[a][findTextInArray(employee_data_list, "MIDDLE NAME")];
+                    resign_last_name.value = employee_data_list.content[a][findTextInArray(employee_data_list, "LAST NAME")];
+                    resign_spouse_name.value = employee_data_list.content[a][findTextInArray(employee_data_list, "SPOUSE NAME")];
+                    resign_affix.value = employee_data_list.content[a][findTextInArray(employee_data_list, "AFFIX")];
+                    resign_date_resignation.value = formatDateToInputValue(employee_data_list.content[a][findTextInArray(employee_data_list, "DATE OF RESIGNATION")]);
+                    resign_reason_resignation.value = employee_data_list.content[a][findTextInArray(employee_data_list, "REASON OF RESIGNATION")];        
+                    resign_timestamp.value = formatDateToInputValue(employee_data_list.content[a][findTextInArray(employee_data_list, "CREATED AT")]);        
+                }
+            }
+            resign_details.style.display = "block";
+            if(resign_gender.value == "MALE"){
+                resign_spouse_name_container.style.display = "none"
+                resign_affix_container.style.display = "block"
+            }
+            else if(resign_gender.value == "FEMALE"){
+                if(resign_civil_status.value == "SINGLE"){
+                    resign_affix_container.style.display = "none"
+                    resign_spouse_name_container.style.display = "none"
+                }
+                else{
+                    resign_spouse_name_container.style.display = "block"
+                    resign_affix_container.style.display = "none"
                 }
             }
         })

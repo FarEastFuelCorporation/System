@@ -220,7 +220,7 @@
                         UPDATE RECORD FORM
                     </button>
                     <button type="button" id="resign_button" class="form-control fw-bold fs-3 bg-danger text-white">
-                        RESIGN FORM
+                        RESIGNATION FORM
                     </button>
                 </label><br>
                 <form id="new_employee_form" style="position: absolute; z-index: 2; display: none; padding: 20px; background-color: white; border: 3px solid #198754; border-radius: 10px; height: 75vh; overflow-y: scroll; width: calc(100% - 40px);" 
@@ -651,6 +651,8 @@
                                     <option value="ADMIN DEPARTMENT">ADMIN DEPARTMENT</option>
                                     <option value="WAREHOUSE AND RENDERING DEPARTMENT">WAREHOUSE AND RENDERING DEPARTMENT</option>
                                     <option value="FACILITY MANAGEMENT SERVICES DEPARTMENT">FACILITY MANAGEMENT SERVICES DEPARTMENT</option>
+                                    <option value="MARKETING DEPARTMENT">MARKETING DEPARTMENT</option>
+                                    <option value="ACCOUNTING DEPARTMENT">ACCOUNTING DEPARTMENT</option>
                                 </select>                    
                             </label>
                             <label for="designation">
@@ -690,16 +692,81 @@
                         </div><br>
                         <label for="date_resignation" class="d-none">
                             Date of Resignation
-                            <input type="text" name="date_resignation" id="date_resignation" class="form-control" autocomplete="off" value="">
+                            <input type="text" name="date_resignation" id="date_resignation" class="form-control" autocomplete="off">
                         </label>
                         <label for="reason_resignation" class="d-none">
                             Reason of Resignation
-                            <input type="text" name="reason_resignation" id="reason_resignation" class="form-control" autocomplete="off" value="">
+                            <input type="text" name="reason_resignation" id="reason_resignation" class="form-control" autocomplete="off">
                         </label>
                         <br><br>
                         <button type="submit" id="submit_btn" class="form-control">
                             Submit
                         </button>    
+                    </div>
+                </form>
+                <form id="resignation_form" style="position: absolute; z-index: 2; display: none; padding: 20px; background-color: white; border: 3px solid #dc3545; border-radius: 10px; height: 75vh; overflow-y: scroll; width: calc(100% - 40px);" 
+                    action="https://script.google.com/macros/s/AKfycbz--ofawc-qwe6lqQBsUtfQAnXNAZArrD7yfPzJeC8McDqui5pm8ma5i99XPPOroZTRuQ/exec" method="post">
+                    <h2>RESIGNATION FORM</h2>
+                    <input type="hidden" name="timestamp" id="timestamp">
+                    <label for="employee_id">
+                        <b>Employee ID</b>
+                        <div  class="d-flex gap-3">
+                            <div>
+                                <input type="text" name="employee_id" id="employee_id" class="form-control" required autocomplete="off" autocomplete="off">
+                            </div>
+                            <div>
+                                <button id="search_employee_id_button" type="button" class="form-control">
+                                    <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </label><br><br>
+                    <div id="details" style="display: none;">
+                        <label><b>Personal Information</b></label><br>
+                        <div class="line1">
+                            <label for="gender">
+                                Gender
+                                <input type="text" name="gender" id="gender" class="form-control" readonly>
+                            </label>
+                            <label for="civil_status">
+                                Civil Status
+                                <input type="text" name="civil_status" id="civil_status" class="form-control" readonly>
+                            </label>
+                            <label for="first_name">
+                                First Name
+                                <input type="text" name="first_name" id="first_name" class="form-control" required readonly autocomplete="off">
+                            </label>
+                            <label for="middle_name">
+                                Middle Name
+                                <input type="text" name="middle_name" id="middle_name" class="form-control" required readonly autocomplete="off">
+                            </label>
+                            <label for="last_name">
+                                Last Name
+                                <input type="text" name="last_name" id="last_name" class="form-control" required readonly autocomplete="off">
+                            </label>
+                            <label for="spouse_name" id="spouse_name_container">
+                                Spouse Name
+                                <input type="text" name="spouse_name" id="spouse_name" class="form-control" readonly autocomplete="off">
+                            </label>
+                            <label for="affix" id="affix_container">
+                                Affix
+                                <input type="text" name="affix" id="affix" class="form-control" readonly autocomplete="off">
+                            </label>
+                        </div><br>
+                        <div style="display: flex; gap: 20px;">
+                            <label for="date_resignation">
+                                Date of Resignation
+                                <input type="date" name="date_resignation" id="date_resignation" class="form-control" autocomplete="off" style="width: 250px;">
+                            </label>
+                            <label for="reason_resignation">
+                                Reason of Resignation
+                                <input type="text" name="reason_resignation" id="reason_resignation" class="form-control" autocomplete="off">
+                            </label>
+                        </div>
+                        <br><br>
+                        <button type="submit" id="submit_btn" class="form-control">
+                            Submit
+                        </button>
                     </div>
                 </form>
                 <div class="table" style="max-height: 75vh; align-items: start; overflow-y: scroll; padding-bottom: 0 !important;">                            

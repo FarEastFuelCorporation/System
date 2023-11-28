@@ -2484,7 +2484,7 @@ input:disabled {
 
 .hr .line6 {
   display: grid;
-  grid-template-columns: 1fr 1.5fr 1fr 1fr 3fr 3fr;
+  grid-template-columns: 1fr 1.5fr 1fr 1.5fr 3fr 3fr;
   gap: 20px;
 }
 
@@ -4172,7 +4172,7 @@ input:disabled {
     display: flex !important;
     align-items: center !important;
   }
-  .cards {
+  .cards, .cards2, .cards3 {
     width: 100%;
     height: 120px;
     padding: 10px 0px 0 0px;
@@ -4185,6 +4185,16 @@ input:disabled {
     min-height: auto !important;
     padding: 10px !important;
     width: 100% !important;
+  }
+  .logistic .cards {
+    min-height: 350px !important;
+  }
+  .cards2 {
+    min-height: 350px !important;
+    display: none !important;
+  }
+  .cards3 {
+    min-height: 550px !important;
   }
   .safety .cards {
     min-height: 300px !important;
