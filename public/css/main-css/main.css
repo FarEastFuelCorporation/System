@@ -453,7 +453,7 @@ nav {
 }
 
 .spinner {
-  position: absolute;
+  position: fixed;
   z-index: 5;
   top: 50%;
   right: 50%;
@@ -501,6 +501,7 @@ nav {
 #vehicle_list_section,
 #new_vehicle_form,
 #vehicle_maintenance_form,
+#vehicle_inspection,
 #safety_dashboard,
 #incident_documentation_form,
 #safety_inspection,
@@ -555,6 +556,7 @@ nav {
 #vehicle_list_section,
 #new_vehicle_form,
 #vehicle_maintenance_form,
+#logistic_dashboard,
 #incident_documentation_form,
 #safety_inspection,
 #employee_list_section,
@@ -2002,7 +2004,8 @@ section h2 {
 
 .logistic form #submit,
 .logistic form button {
-  max-width: 200px !important;
+  max-width: -moz-fit-content !important;
+  max-width: fit-content !important;
   background-color: yellowgreen;
   font-size: 30px;
   font-weight: bold;
@@ -4036,6 +4039,7 @@ input:disabled {
   #vehicle_list_section,
   #new_vehicle_form,
   #vehicle_maintenance_form,
+  #vehicle_inspection,
   #safety_dashboard,
   #incident_documentation_form,
   #safety_inspection,
@@ -4218,6 +4222,10 @@ input:disabled {
     flex-direction: column !important;
     width: 100%;
   }
+  #vehicle_inspection_checklist {
+    padding: 0 !important;
+    border: none !important;
+  }
   .card-name {
     padding: 0px !important;
   }
@@ -4241,5 +4249,9 @@ input:disabled {
   }
   #pieChart {
     display: none !important; /* Hide icon boxes on smaller screens */
+  }
+  /* Width of the scrollbar */
+  ::-webkit-scrollbar {
+    width: 0 !important;
   }
 }/*# sourceMappingURL=main.css.map */

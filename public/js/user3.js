@@ -627,7 +627,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     </label><br>
                                     <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px">
                                         <div>
-                                            <label for="tpf_form_no">
+                                            <label for="machine1">
                                                 <i class="fa-solid fa-gears"></i>
                                                 Thermal Gasifier Alpha
                                             </label><br>
@@ -635,7 +635,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <input type="hidden" name="machine1" value="THERMAL GASIFIER ALPHA">
                                         </div>
                                         <div>
-                                            <label for="tpf_form_no">
+                                            <label for="machine2">
                                                 <i class="fa-solid fa-gears"></i>
                                                 Thermal Gasifier Bravo
                                             </label><br>
@@ -643,7 +643,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <input type="hidden" name="machine2" value="THERMAL GASIFIER BRAVO">
                                         </div>
                                         <div>
-                                            <label for="tpf_form_no">
+                                            <label for="machine3">
                                                 <i class="fa-solid fa-gears"></i>
                                                 Thermal Gasifier Charlie
                                             </label><br>
@@ -662,7 +662,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     </label><br>
                                     <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 20px">
                                         <div>
-                                            <label for="tpf_form_no">
+                                            <label for="machine1">
                                                 <i class="fa-solid fa-gears"></i>
                                                 Rotary 1
                                             </label><br>
@@ -670,7 +670,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <input type="hidden" name="machine1" value="Rotary 1">
                                         </div>
                                         <div>
-                                            <label for="tpf_form_no">
+                                            <label for="machine2">
                                                 <i class="fa-solid fa-gears"></i>
                                                 Rotary 2
                                             </label><br>
@@ -678,7 +678,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <input type="hidden" name="machine2" value="Rotary 2">
                                         </div>
                                         <div>
-                                            <label for="tpf_form_no">
+                                            <label for="machine3">
                                                 <i class="fa-solid fa-gears"></i>
                                                 Rotary 3
                                             </label><br>
@@ -686,7 +686,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <input type="hidden" name="machine3" value="Rotary 3">
                                         </div>
                                         <div>
-                                            <label for="tpf_form_no">
+                                            <label for="machine4">
                                                 <i class="fa-solid fa-gears"></i>
                                                 Furnace
                                             </label><br>
@@ -758,7 +758,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     </label><br>
                                     <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px">
                                         <div>
-                                            <label for="tpf_form_no">
+                                            <label for="machine1">
                                                 <i class="fa-solid fa-gears"></i>
                                                 Thermal Gasifier Alpha
                                             </label><br>
@@ -766,7 +766,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <input type="hidden" name="machine1" value="THERMAL GASIFIER ALPHA">
                                         </div>
                                         <div>
-                                            <label for="tpf_form_no">
+                                            <label for="machine2">
                                                 <i class="fa-solid fa-gears"></i>
                                                 Thermal Gasifier Bravo
                                             </label><br>
@@ -774,7 +774,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <input type="hidden" name="machine2" value="THERMAL GASIFIER BRAVO">
                                         </div>
                                         <div>
-                                            <label for="tpf_form_no">
+                                            <label for="machine3">
                                                 <i class="fa-solid fa-gears"></i>
                                                 Thermal Gasifier Charlie
                                             </label><br>
@@ -793,7 +793,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     </label><br>
                                     <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 20px">
                                         <div>
-                                            <label for="tpf_form_no">
+                                            <label for="machine1">
                                                 <i class="fa-solid fa-gears"></i>
                                                 Rotary 1
                                             </label><br>
@@ -801,7 +801,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <input type="hidden" name="machine1" value="Rotary 1">
                                         </div>
                                         <div>
-                                            <label for="tpf_form_no">
+                                            <label for="machine2">
                                                 <i class="fa-solid fa-gears"></i>
                                                 Rotary 2
                                             </label><br>
@@ -809,7 +809,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <input type="hidden" name="machine2" value="Rotary 2">
                                         </div>
                                         <div>
-                                            <label for="tpf_form_no">
+                                            <label for="machine3">
                                                 <i class="fa-solid fa-gears"></i>
                                                 Rotary 3
                                             </label><br>
@@ -817,7 +817,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             <input type="hidden" name="machine3" value="Rotary 3">
                                         </div>
                                         <div>
-                                            <label for="tpf_form_no">
+                                            <label for="machine4">
                                                 <i class="fa-solid fa-gears"></i>
                                                 Furnace
                                             </label><br>

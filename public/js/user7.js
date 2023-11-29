@@ -1062,6 +1062,231 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
         vehicle_maintenance_request_list.innerHTML = data_value;
 
+        const vehicle_inspection = document.querySelector("#vehicle_inspection");
+        const vehicle_selection = vehicle_inspection.querySelector("#vehicle_selection");
+
+        var vehicle_list_array = []
+        for(let x = 1; x < vehicle_data_list.content.length; x++){
+            vehicle_list_array.push(vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "PLATE #")])
+        }
+
+        vehicle_list_array.forEach((data) => {
+            var data_details = 
+            `
+                <option value="${data}">${data}</option>
+            `
+            vehicle_selection.insertAdjacentHTML("beforeend", data_details)
+        })
+
+        // vehicle_inspection
+        const guidelines = {
+            "PPE (Driver & Helper)": [
+                "Hi-Visibility vest - worn at all times",
+                "Close / Safety shoes",
+                "Hard hat",
+                "Dust mask",
+                "Safety glasses"
+            ],
+            "Lights & Signals & Horns": [
+                "Turn signals (Front & Back, Left & Right)",
+                "Tail lights",
+                "Brake lights",
+                "Head lights",
+                "Hazard lights",
+                "Clearance / Marker lights",
+                "Reversing lights",
+                "Forward and reverse/back horn",
+                "Audible horns"
+            ],
+            "Tires & Rims & Nuts": [
+                "Thread depth for Front, Drive and Spare Tires - 5mm minimum and 2mm minimum for all other tires. Thread depth should be within 75% of the tire width.",
+                "No cracked rims",
+                "For spoke type rims wheel studs must be complete",
+                "Loose / missing wheel nuts - 6 to 8 wheel studs - not more than 1 missing. - 8 or more wheel studs - not more than 2 but SHOULD not be side by side."
+            ],
+            "Brakes": [
+                "Brakes Working: No visible fluid leaks and/or air tank leaks",
+                "Working Parking Brakes",
+                "Air Pressure Gauge working",
+                "Working Hand Brake",
+                "Wheel Chocks - minimum 2pcs A safety wheel choke should be approximately 25% of the diameter of your vehicle tyre and fit snugly into the tyre. E.g. A 600mm tire would require a 150mm high safety wheel chock."
+            ],
+            "Cabin": [
+                "Doors (equipped w/ locks and working window glass)",
+                "Windshield w/o crack",
+                "Wiper and Washer (both working and in good condition)",
+                "No loose objects inside (e.g. jack, fire extinguisher)",
+                "Working 3-point sash / retractable seatbelt (Driver & Passenger Seats)",
+                "Fire extinguisher (at least 5lbs and must have gauge and with charge)"
+            ],
+            "Basic Tools": [
+                "Early warning device - 2 sets",
+                "Jack, Tire Wrench"
+            ],
+            "Truck Condition": [
+                "Fuel tank condition (e.g. cover) and diesel level (min of 10 liters)",
+                "Working landing gears for Trailer",
+                "5th wheel",
+                "Bed made of steel or wood (good condition)",
+                "No protruding elements or loose gear aboard vehicle"
+            ],
+            "Tarpaulin & Lashing": [
+                "Tarpaulin with sufficient size to cover cargo (no holes or damage)",
+                "Printed with truck plate no. in accordance with LTO regulation",
+                "80m, 12mm diameter nylon rope for trailers & 60m, 12mm diameter nylon rope for cargo trucks"
+            ],
+            "Operators & Equipment Documents": [
+                "Valid vehicle / Trailer LTO registration",
+                "Professional Driver's License with appropriate restriction code. Temporary Operator's Permit is allowed only within its validity period.",
+                "Drivers / Helpers attended a safety orientation",
+                "No unauthorized rider on truck"
+            ],
+            "For Bulk truck": [
+                "Provided with top inspection catwalk and railings",
+                "Check if whip check is available",
+                "Pressure gauges & valves are working properly"
+            ]
+        };
+        
+
+        let yesCount = 0;
+        let noCount = 0;
+        
+        // Function to create a radio button
+        function createRadioButton(index, value) {
+            const input = document.createElement('input');
+            input.type = 'radio';
+            input.name = `guideline${index}`;
+            input.value = value.toLowerCase();
+            input.required = true;
+                    
+            // Add event listener to track changes
+            input.addEventListener('change', updateCounts);
+
+            return input;
+        }
+
+        // Function to create a remarks input
+        function createRemarksInput(index) {
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.name = `remarks${index}`;
+            input.required = false; // Initially, set it as not required
+
+            // Add event listener to track changes in the radio buttons
+            document.querySelectorAll(`input[name="guideline${index}"]`).forEach((radio) => {
+                radio.addEventListener('change', () => {
+                    input.required = radio.value.toLowerCase() === 'no'; // Set required based on the selected option
+                });
+            });
+
+            return input;
+        }
+
+        let currentIndex = 1; // Initialize the index
+
+        // Function to generate a table row for each guideline
+        function generateGuidelineRow(category, guideline) {
+            const row = document.createElement('tr');
+
+            if (!guideline) {
+                const categoryHeaderCell = document.createElement('td');
+                categoryHeaderCell.textContent = category;
+                categoryHeaderCell.colSpan = 4;
+                categoryHeaderCell.style.fontWeight = 'bold';
+                categoryHeaderCell.style.textAlign = 'center';
+                row.appendChild(categoryHeaderCell);
+            } else {
+                const numberCell = document.createElement('td');
+                numberCell.textContent = currentIndex;
+
+                const guidelineCell = document.createElement('td');
+                guidelineCell.textContent = guideline;
+
+                const yesInput = createRadioButton(currentIndex, 'Yes');
+                const noInput = createRadioButton(currentIndex, 'No');
+                const naInput = createRadioButton(currentIndex, 'N/A');
+
+                const remarksInput = createRemarksInput(currentIndex);
+
+                const radioCell = document.createElement('td');
+                radioCell.classList.add('radio_btn');
+                const radioDiv = document.createElement('div');
+
+                radioDiv.appendChild(yesInput);
+                radioDiv.appendChild(noInput);
+                radioDiv.appendChild(naInput);
+                radioCell.appendChild(radioDiv);
+
+                const remarksCell = document.createElement('td');
+                const remarksDiv = document.createElement('div');
+                remarksCell.appendChild(remarksDiv);
+                remarksDiv.classList.add('remarks-input');
+                remarksDiv.appendChild(remarksInput);
+
+                row.appendChild(numberCell);
+                row.appendChild(guidelineCell);
+                row.appendChild(radioCell);
+                row.appendChild(remarksCell);
+
+                // Add event listener to radio buttons to toggle remarks input
+                const updateRemarksVisibility = () => {
+                    remarksDiv.classList.toggle('remarks-input-show', noInput.checked);
+                };
+
+                yesInput.addEventListener('change', updateRemarksVisibility);
+                noInput.addEventListener('change', updateRemarksVisibility);
+                naInput.addEventListener('change', updateRemarksVisibility);
+
+                currentIndex++; // Increment the index for the next row
+            }
+
+            return row;
+        }
+
+        // Get the safetyTable tbody element
+        const safetyTableBody = document.querySelector("#safetyTable tbody");
+
+        // Generate a table row for each guideline in the category and append to safetyTableBody
+        Object.keys(guidelines).forEach((category) => {
+            const headerRow = generateGuidelineRow(category, '');
+            safetyTableBody.appendChild(headerRow);
+
+            guidelines[category].forEach((guideline) => {
+                const row = generateGuidelineRow(category, guideline);
+                safetyTableBody.appendChild(row);
+            });
+        });
+
+        // Function to update the counts and compute the percentage
+        function updateCounts() {
+            yesCount = 0;
+            noCount = 0;
+
+            document.querySelectorAll('.radio_btn input[type="radio"]').forEach((radio) => {
+                if (radio.value.toLowerCase() === 'yes' && radio.checked) {
+                    yesCount++;
+                }
+                if (radio.value.toLowerCase() === 'no' && radio.checked) {
+                    noCount++;
+                }
+            });
+            const percentage = (yesCount / (yesCount + noCount)) * 100;
+
+            if (isNaN(percentage)) {
+                grade.value = 'Safety Grade: N/A';
+            } else {
+                grade.value = `Safety Grade: ${percentage.toFixed(2)}%`;
+            }
+        }
+
+        // Add event listener to all radio buttons
+        document.querySelectorAll('.radio_btn input[type="radio"]').forEach((radio) => {
+            radio.addEventListener('change', updateCounts);
+        });
+        
+        // Initialize counts and percentage on page load
+        updateCounts();
 
         // multi section
         // purchase_request_form
