@@ -850,11 +850,6 @@ function getCutoffPeriodAndMonth(cutoffNumber) {
   return [cutoffPeriods[cutoffNumber - 1], months[cutoffNumber - 1]];
 }
 
-// Example: Get cutoff period and month for cutoff number 23
-console.log(getCutoffPeriodAndMonth(24)[1]); // Output: ['1ST CUT OFF', 'DECEMBER']
-console.log(getCutoffPeriodAndMonth(24)[0]); // Output: ['1ST CUT OFF', 'DECEMBER']
-
-
 function getDatesInWeek(year, weekNumber) {
   // Check if the input year and week number are valid
   if (typeof parseInt(year) !== "number" || typeof parseInt(weekNumber) !== "number" || weekNumber < 1 || weekNumber > 53) {

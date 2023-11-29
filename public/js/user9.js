@@ -217,8 +217,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             <tr>
                 <td>${payroll_counter}</td>
                 <td>${payroll_summary_data_list.content[x][findTextInArray(payroll_summary_data_list, "YEAR")]}</td>
-                <td>${findEmployeeName(payroll_summary_data_list.content[x][findTextInArray(payroll_summary_data_list, "WEEK NUMBER")])}</td>
-                <td>${payroll_summary_data_list.content[x][findTextInArray(payroll_summary_data_list, "EMPLOYEE ID")]}</td>
+                <td>${payroll_summary_data_list.content[x][findTextInArray(payroll_summary_data_list, "WEEK NUMBER")]}</td>
+                <td>${(payroll_summary_data_list.content[x][findTextInArray(payroll_summary_data_list, "EMPLOYEE ID")]).toString().padStart(5,"0")}</td>
                 <td>${payroll_summary_data_list.content[x][findTextInArray(payroll_summary_data_list, "FULL NAME")]}</td>
                 <td>${formatNumber(payroll_summary_data_list.content[x][findTextInArray(payroll_summary_data_list, "GROSS SALARY")])}</td>
                 <td>${formatNumber(payroll_summary_data_list.content[x][findTextInArray(payroll_summary_data_list, "TOTAL DEDUCTIONS")])}</td>
@@ -227,6 +227,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             `
             payroll_summary.insertAdjacentHTML("beforeend", payroll_record);
             payroll_counter += 1;
+            console.log()
         }
 
         // payroll_tab
@@ -662,7 +663,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 salary_day[x] = document.querySelector(`#salary_day${x}`);
                 
                 // Use a function to create a new scope for each iteration
-                
+                console.log(rest_day_box_input[x].value)
                 function calculateGrossSalary(){
                     if (regular_holiday_box[x].checked == true) {
                         if (rest_day_duty_box[x].checked == true) {
