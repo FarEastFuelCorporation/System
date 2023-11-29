@@ -423,15 +423,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                 const year = form_tab.querySelector("#year");
                 const cut_off_period = form_tab.querySelector("#cut_off_period");
                 const number_of_days = form_tab.querySelector("#number_of_days");
-                payroll_length = getNumberOfDays(getCutoffPeriodAndMonth(cut_off_period.value)[1], year.value, getCutoffPeriodAndMonth(cut_off_period.value)[0]);
-                day_name = getDayNamesForCutoffPeriod(getCutoffPeriodAndMonth(cut_off_period.value)[1], year.value, getCutoffPeriodAndMonth(cut_off_period.value)[0]);
-                day_dates = getDatesForCutoffPeriod(year.value, getCutoffPeriodAndMonth(cut_off_period.value)[0]);
+                payroll_length = getNumberOfDays(getCutoffPeriodAndMonth(parseInt(cut_off_period.value))[1], year.value, getCutoffPeriodAndMonth(parseInt(cut_off_period.value))[0]);
+                day_name = getDayNamesForCutoffPeriod(getCutoffPeriodAndMonth(parseInt(cut_off_period.value))[1], year.value, getCutoffPeriodAndMonth(parseInt(cut_off_period.value))[0]);
+                day_dates = getDatesForCutoffPeriod(getCutoffPeriodAndMonth(parseInt(cut_off_period.value))[1], year.value, getCutoffPeriodAndMonth(parseInt(cut_off_period.value))[0]);
                 number_of_days.value = payroll_length;
+                console.log(day_name)
+                console.log(day_dates)
                 insertInputs();
-                console.log(getNumberOfDays(getCutoffPeriodAndMonth(cut_off_period.value)[1], year.value, getCutoffPeriodAndMonth(cut_off_period.value)[0]))
-                console.log(getCutoffPeriodAndMonth(cut_off_period.value)[1])
-                console.log(getCutoffPeriodAndMonth(cut_off_period.value)[0])
-                console.log(number_of_days.value)
                 days.style.display = "flex";
                 hide.style.display = "grid";
                 input_container.style.display = "grid";
@@ -2946,7 +2944,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 var payslip_others2 = []
                 var government_dues_month = "";
                 var government_dues_year = "";
-                var month = months.indexOf(getCutoffPeriodAndMonth(cut_off_period.value)[1]);
+                var month = months.indexOf(getCutoffPeriodAndMonth(parseInt(cut_off_period.value))[1]);
                 var year = (search_year.value);
                 if(month == 0){
                     government_dues_month = months[11];
@@ -3020,7 +3018,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     var late_deduction = 0;
                     var late_mins = 0;
                     for(let c = 1; c < payroll_summary_data_list.content.length; c++){
-                        if(payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "EMPLOYEE ID")] == payslip_employee_id[x] && payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "YEAR")] == search_year.value && (payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "WEEK NUMBER / MONTH-CUT OFF")]).toString().substring(0,2) == (months.indexOf(getCutoffPeriodAndMonth(cut_off_period.value)[1]) + 1).toString().padStart(2, "0")){
+                        if(payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "EMPLOYEE ID")] == payslip_employee_id[x] && payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "YEAR")] == search_year.value && (payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "WEEK NUMBER / MONTH-CUT OFF")]).toString().substring(0,2) == (months.indexOf(getCutoffPeriodAndMonth(parseInt(cut_off_period.value))[1]) + 1).toString().padStart(2, "0")){
                             sss = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "SSS")];
                             pag_ibig = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "PAG-IBIG")];
                             philhealth = payroll_summary_data_list.content[c][findTextInArray(payroll_summary_data_list, "PHILHEALTH")];
@@ -3029,7 +3027,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                     }
                     for(let c = 1; c < payroll_transaction_data_list.content.length; c++){
-                        if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "EMPLOYEE ID")] == payslip_employee_id[x] && payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "YEAR")] == search_year.value && (payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "WEEK NUMBER / MONTH-CUT OFF")]).toString().substring(0,2) == (months.indexOf(getCutoffPeriodAndMonth(cut_off_period.value)[1]) + 1).toString().padStart(2, "0")){
+                        if(payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "EMPLOYEE ID")] == payslip_employee_id[x] && payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "YEAR")] == search_year.value && (payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "WEEK NUMBER / MONTH-CUT OFF")]).toString().substring(0,2) == (months.indexOf(getCutoffPeriodAndMonth(parseInt(cut_off_period.value))[1]) + 1).toString().padStart(2, "0")){
                             employee_id = payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "EMPLOYEE ID")];
                             employee_name = findEmployeeName(employee_id);
                             daily_rate = payroll_transaction_data_list.content[c][findTextInArray(payroll_transaction_data_list, "DAILY RATE")];
@@ -3115,7 +3113,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     var employee_department = "";
                     var employee_designation = "";
                     var employee_tin_no = "";
-                    var pay_period_dates = getDatesForCutoffPeriod(getCutoffPeriodAndMonth(cut_off_period.value)[1], search_year.value, getCutoffPeriodAndMonth(cut_off_period.value)[0]);
+                    var pay_period_dates = getDatesForCutoffPeriod(getCutoffPeriodAndMonth(parseInt(cut_off_period.value))[1], search_year.value, getCutoffPeriodAndMonth(parseInt(cut_off_period.value))[0]);
                     const parts = (date_decoder(pay_period_dates[0])).split(', ');
                     var date_start = parts.slice(0, -1).join(', ');
                     var pay_period = `${date_start} - ${date_decoder(pay_period_dates[6])}`

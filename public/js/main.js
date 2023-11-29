@@ -752,10 +752,10 @@ function getDayNamesForCutoffPeriod(month, year, cutoffPeriod) {
 
   let startDate, endDate;
 
-  if (cutoffPeriod === "1ST CUT OFF") {
+  if (cutoffPeriod === "2ND CUT OFF") {
     startDate = new Date(year, monthNumber, 11);
     endDate = new Date(year, monthNumber, 25);
-  } else if (cutoffPeriod === "2ND CUT OFF") {
+  } else if (cutoffPeriod === "1ST CUT OFF") {
     const nextMonth = monthNumber === 11 ? 0 : monthNumber + 1;
     const nextYear = monthNumber === 11 ? year + 1 : year;
     startDate = new Date(nextYear, monthNumber, 26);
@@ -798,10 +798,10 @@ function getDatesForCutoffPeriod(month, year, cutoffPeriod) {
 
   let startDate, endDate;
 
-  if (cutoffPeriod === "1ST CUT OFF") {
+  if (cutoffPeriod === "2ND CUT OFF") {
     startDate = new Date(year, monthNumber, 11);
     endDate = new Date(year, monthNumber, 25);
-  } else if (cutoffPeriod === "2ND CUT OFF") {
+  } else if (cutoffPeriod === "1ST CUT OFF") {
     const nextMonth = monthNumber === 11 ? 0 : monthNumber + 1;
     const nextYear = monthNumber === 11 ? year + 1 : year;
     startDate = new Date(nextYear, monthNumber, 26);
@@ -851,7 +851,8 @@ function getCutoffPeriodAndMonth(cutoffNumber) {
 }
 
 // Example: Get cutoff period and month for cutoff number 23
-console.log(getCutoffPeriodAndMonth(23)[1]); // Output: ['1ST CUT OFF', 'DECEMBER']
+console.log(getCutoffPeriodAndMonth(24)[1]); // Output: ['1ST CUT OFF', 'DECEMBER']
+console.log(getCutoffPeriodAndMonth(24)[0]); // Output: ['1ST CUT OFF', 'DECEMBER']
 
 
 function getDatesInWeek(year, weekNumber) {
