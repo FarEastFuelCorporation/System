@@ -69,6 +69,12 @@
                 </li>
                 <li>
                     <a href="#">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        Vehicle Inspection
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
                         <i class="fa-solid fa-cart-shopping"></i>
                         Purchase Requests
                     </a>
@@ -778,7 +784,7 @@
             <section class="logistic" id="vehicle_inspection">
                 <h2>VEHICLE INSPECTION</h2>
                 <label class="d-flex gap-3">
-                    <button type="button" id="safety_inspection_button" class="form-control fw-bold fs-3 bg-success text-white">
+                    <button type="button" id="vehicle_inspection_button" class="form-control fw-bold fs-3 bg-success text-white">
                         <h2>VEHICLE INSPECTION CHECKLIST</h2>
                     </button>
                     <!-- <button type="button" id="update_record_button" class="form-control fw-bold fs-3" style="border: 1px solid black;">
@@ -788,10 +794,10 @@
                         RESIGN FORM
                     </button> -->
                 </label><br>
-                <form id="vehicle_inspection_checklist" style="position: absolute; z-index: 2; padding: 20px; background-color: white; border: 3px solid #198754; border-radius: 10px; height: 75vh; overflow-y: scroll; width: calc(100% - 40px);" 
+                <form id="vehicle_inspection_checklist" style="display: none; position: absolute; z-index: 2; padding: 20px; background-color: white; border: 3px solid #198754; border-radius: 10px; height: 75vh; overflow-y: scroll; width: calc(100% - 40px);" 
                     action="https://script.google.com/macros/s/AKfycbw4gPiTsWXXXHnH7dvaMuQEUKlFqH9Uqs7bN4A3kaDdOUmaDL2l-sUeiECNbc07dVo/exec" method="post">
                     <h2>VEHICLE INSPECTION CHECKLIST</h2>
-                    <input type="hidden" id="sif_form_no" name="sif_form_no">
+                    <input type="hidden" id="vif_form_no" name="vif_form_no">
                     <input type="text" id="grade" name="grade" class="form-control" style="text-align: center; max-width: 300px; width: 100%">
                     <div style="display: flex; flex-wrap: wrap; max-width: 300px; flex-direction: row;">
                         <select name="vehicle_selection" id="vehicle_selection" class="form-control" required>

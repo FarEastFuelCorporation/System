@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const vehicle_response_promise = fetch('https://script.google.com/macros/s/AKfycbw-JCnctX1x1W1ogGbrkhNdIGd9q6bYjy_nvaYeoiaBf7HreB2a1tKJZaJHw2wu4wmpcA/exec');
         const vehicle_log_response_promise = fetch('https://script.google.com/macros/s/AKfycbwOVO1qi9ac0YojlrZUh-XMYMe_gAeO2bg_wU_lSRdBkLgmJKQuzQuq41lzvSOjKfzA/exec');
         const vehicle_maintenance_response_promise = fetch('https://script.google.com/macros/s/AKfycbwB-vjJrQoSk9Q0L5DoLKFdaSPtENNC60VfpIWG8IuHHXC_Nq6HU0bKhmektlKMMPqa/exec');
+        const vehicle_inspection_response_promise = fetch('https://script.google.com/macros/s/AKfycbzSzf8eUNedKDZaRX5ge_GL8KzQ3d8uXpeH6rE4EFp0YH7tc5D4T4OSEif2kEE-qoh2/exec');
         const mtf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzkzS4OVm3IfNl6KwOfLZq_uO3MnsXfu-oS5Su_1kxhfo1mMoKpYDm8a4RxWqsQh0qv/exec');
         const ltf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxBLMvyNDsT9_dlVO4Qc31dI4ErcymUHbzKimOpCZHgbJxip2XxCl7Wk3hJyqcdtrxU/exec');
         const wcf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyBFTBuFZ4PkvwmPi_3Pp_v74DCSEK2VpNy6janIGgaAK-P22wazmmShOKn6iwFbrQn/exec');
@@ -27,6 +28,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             vehicle_response,
             vehicle_log_response,
             vehicle_maintenance_response,
+            vehicle_inspection_response,
             mtf_response,
             ltf_response,
             wcf_response,
@@ -46,6 +48,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             vehicle_response_promise,
             vehicle_log_response_promise,
             vehicle_maintenance_response_promise,
+            vehicle_inspection_response_promise,
             mtf_response_promise,
             ltf_response_promise,
             wcf_response_promise,
@@ -66,6 +69,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const vehicle_data_list  = await vehicle_response.json();
         const vehicle_log_data_list  = await vehicle_log_response.json();
         const vmr_data_list  = await vehicle_maintenance_response.json();
+        const vif_data_list  = await vehicle_inspection_response.json();
         const mtf_data_list  = await mtf_response.json();
         const ltf_data_list  = await ltf_response.json();
         const wcf_data_list  = await wcf_response.json();
@@ -1062,8 +1066,41 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
         vehicle_maintenance_request_list.innerHTML = data_value;
 
+
+
+
+        // vehicle_inspection
+        // vif_data_list
+        // FORM GENERATOR
         const vehicle_inspection = document.querySelector("#vehicle_inspection");
         const vehicle_selection = vehicle_inspection.querySelector("#vehicle_selection");
+        const vehicle_inspection_button = vehicle_inspection.querySelector("#vehicle_inspection_button");
+        const vehicle_inspection_checklist = vehicle_inspection.querySelector("#vehicle_inspection_checklist");
+
+        const vif_form_no = vehicle_inspection.querySelector("#vif_form_no");
+        var last_row = vif_data_list.content.length -1;
+        var data_info = vif_data_list.content[last_row][findTextInArray(vif_data_list, "VIF #")];
+        var data_counter;
+        if(last_row == 0){
+            data_counter = 0;
+        }
+        else{
+            data_counter = data_info.substring(9,12);
+        }
+        var year = new Date().getFullYear();
+        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        vif_form_no.value = `VIF${year}${month}${data_counter}`;
+
+
+        vehicle_inspection_button.addEventListener("click", () => {
+            if(vehicle_inspection_checklist.style.display == "block"){
+                vehicle_inspection_checklist.style.display = "none";
+            }
+            else{
+                vehicle_inspection_checklist.style.display = "block";
+            }
+        })
 
         var vehicle_list_array = []
         for(let x = 1; x < vehicle_data_list.content.length; x++){
@@ -1078,7 +1115,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             vehicle_selection.insertAdjacentHTML("beforeend", data_details)
         })
 
-        // vehicle_inspection
         const guidelines = {
             "PPE (Driver & Helper)": [
                 "Hi-Visibility vest - worn at all times",
