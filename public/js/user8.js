@@ -761,6 +761,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             input.type = 'text';
             input.name = `remarks${index}`;
             input.required = false; // Initially, set it as not required
+            input.autocomplete = 'off'; // Disable autocomplete
 
             // Add event listener to track changes in the radio buttons
             document.querySelectorAll(`input[name="guideline${index}"]`).forEach((radio) => {
