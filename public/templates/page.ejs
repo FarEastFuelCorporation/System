@@ -6,6 +6,8 @@
     <title>
         <% if (user === 'marketing') { %>
             Marketing User
+        <% } else if (user === 'dispatching') { %>
+            Dispatching User
         <% } %>
     </title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
@@ -70,11 +72,19 @@
                 </li>
                 <% if (user === 'marketing') { %>
                     <%- include('../templates/marketing/sidebar.ejs') %>
+                <% } else if (user === 'dispatching') { %>
+                    <%- include('../templates/logistics/sidebar.ejs') %>
                 <% } %>
                 <li>
                     <a href="#">
                         <i class="fa-solid fa-cart-shopping"></i>
                         Purchase Requests
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-warehouse"></i>
+                        Supplies Warehouse
                     </a>
                 </li>
                 <li>
@@ -146,11 +156,15 @@
             <!-- generate_report_tab -->
             <% if (user === 'marketing') { %>
                 <%- include('../templates/marketing/generate_report.ejs') %>
+            <% } else if (user === 'dispatching') { %>
+                <%- include('../templates/logistics/generate_report.ejs') %>
             <% } %>
 
             <!-- sections -->
             <% if (user === 'marketing') { %>
                 <%- include('../templates/marketing/sections.ejs') %>
+            <% } else if (user === 'dispatching') { %>
+                <%- include('../templates/logistics/sections.ejs') %>
             <% } %>
 
             <!-- multi-user section -->
@@ -164,6 +178,8 @@
     <!-- other scripts -->
     <% if (user === 'marketing') { %>
         <%- include('../templates/marketing/scripts.ejs') %>
+    <% } else if (user === 'dispatching') { %>
+        <%- include('../templates/logistics/scripts.ejs') %>
     <% } %>
 </body>
 </html>
