@@ -583,7 +583,6 @@ nav {
 #purchase_request_form,
 #supplies_warehouse,
 #incident_report_form,
-#employee_dashboard,
 #settingsSection,
 #helpSection,
 .section_container #marketing_dashboard,
@@ -4129,6 +4128,10 @@ input:disabled {
   #account_info {
     padding: 5px !important;
   }
+  #account_info #profile_picture {
+    max-height: 50px !important;
+    max-width: 50px !important;
+  }
   .cards {
     width: 100%;
     padding: 10px 0px 0 0px !important;
@@ -4184,6 +4187,10 @@ input:disabled {
   }
   #account_info {
     padding: 5px !important;
+  }
+  #account_info #profile_picture {
+    max-height: 50px !important;
+    max-width: 50px !important;
   }
   h2 {
     font-size: 16px !important;
