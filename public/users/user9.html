@@ -65,6 +65,12 @@
                 </li>
                 <li>
                     <a href="#">
+                        <i class="fa-solid fa-file-signature"></i>
+                        Contracts
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
                         <i class="fa-solid fa-clipboard-user"></i>
                         Payroll
                     </a>
@@ -165,6 +171,35 @@
                             </div>
                         </div>
                     </div><br>
+                    <div class="cards">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="expired_contract"></div>
+                                <div class="card-name">Expired Contract</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-file-signature"></i>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="near_expired"></div>
+                                <div class="card-name">For Renewal</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-file-signature"></i>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="pending_contract"></div>
+                                <div class="card-name">Pending Contract</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-file-signature"></i>
+                            </div>
+                        </div>
+                    </div><br>
                     <h2>PENDING TRANSACTIONS</h2>
                     <div class="table" style="max-height: 75vh; align-items: start; overflow-y: scroll; padding-bottom: 0 !important;">                            
                         <div class="list">
@@ -231,7 +266,7 @@
                     </button>
                 </label><br>
                 <form id="new_employee_form" style="position: absolute; z-index: 2; display: none; padding: 20px; background-color: white; border: 3px solid #198754; border-radius: 10px; height: 75vh; overflow-y: scroll; width: calc(100% - 40px);" 
-                    action="https://script.google.com/macros/s/AKfycbz--ofawc-qwe6lqQBsUtfQAnXNAZArrD7yfPzJeC8McDqui5pm8ma5i99XPPOroZTRuQ/exec" method="post">
+                    action="https://script.google.com/macros/s/AKfycbyXzX718siimbnLAvgEdfEfPECzCZhYAWbmF8Z5QNKXiQo8KvuKvBo64RRMSyVovDUXng/exec" method="post">
                     <input type="hidden" name="user" id="user">
                     <h2>NEW EMPLOYEE FORM</h2>
                     <label for="employee_id">
@@ -476,7 +511,7 @@
                     </div>
                 </form>
                 <form id="update_record_form" style="position: absolute; z-index: 2; display: none; padding: 20px; background-color: white; border: 3px solid black; border-radius: 10px; height: 75vh; overflow-y: scroll; width: calc(100% - 40px);" 
-                    action="https://script.google.com/macros/s/AKfycbz--ofawc-qwe6lqQBsUtfQAnXNAZArrD7yfPzJeC8McDqui5pm8ma5i99XPPOroZTRuQ/exec" method="post">
+                    action="https://script.google.com/macros/s/AKfycbyXzX718siimbnLAvgEdfEfPECzCZhYAWbmF8Z5QNKXiQo8KvuKvBo64RRMSyVovDUXng/exec" method="post">
                     <input type="hidden" name="user" id="user">
                     <h2>UPDATE RECORD FORM</h2>
                     <input type="hidden" name="timestamp" id="timestamp">
@@ -722,7 +757,7 @@
                     </div>
                 </form>
                 <form id="resignation_form" style="position: absolute; z-index: 2; display: none; padding: 20px; background-color: white; border: 3px solid #dc3545; border-radius: 10px; height: 75vh; overflow-y: scroll; width: calc(100% - 40px);" 
-                    action="https://script.google.com/macros/s/AKfycbyXLEkG9M1FEIMUXa4ZGHZH67_R73qu-CTgOHHcQ51SBf4vCPLjGccIyCjCUAGxZfWs/exec" method="post">
+                    action="https://script.google.com/macros/s/AKfycbyvKMokNLhcqGiEZk8LqcmYLNxwT9kQ98swNmqL0bpGqhNJ4miG4DCREj_8B4OehZgm/exec" method="post">
                     <h2>RESIGNATION FORM</h2>
                     <input type="hidden" name="timestamp" id="timestamp">
                     <label for="employee_id">
@@ -799,12 +834,552 @@
                                 <th>BIRTHDAY</th>
                                 <th>MOBILE<br>NUMBER</th>
                                 <th>DATE<br>HIRE</th>
+                                <th>END OF<br>CONTRACT</th>
                                 <th>TIN NO.</th>
                                 <th>SSS/GSIS NO.</th>
                                 <th>PHILHEALTH NO.</th>
                                 <th>PAG-IBIG NO.</th>
                             </thead>
                             <tbody id="employee_list">
+
+                            </tbody>
+                            </table>
+                        <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
+                </div><br>
+            </section>
+            <!-- contracts_section -->
+            <section class="hr" id="contracts_section">
+                <h2>CONTRACTS</h2>
+                <label class="d-flex gap-3">
+                    <button type="button" id="project_based_contract_button" class="form-control fw-bold fs-3 bg-success text-white">
+                        PROJECT BASED CONTRACT FORM
+                    </button>
+                    <button type="button" id="logistics_contract_button" class="form-control fw-bold fs-3 bg-danger text-white">
+                        LOGISTICS CONTRACT FORM
+                    </button>
+                </label><br>
+                <form id="project_based_contract_form" style="position: absolute; z-index: 2; padding: 20px; background-color: white; border: 3px solid #198754; border-radius: 10px; overflow-y: scroll; width: calc(100% - 40px);" 
+                    action="https://script.google.com/macros/s/AKfycbz--ofawc-qwe6lqQBsUtfQAnXNAZArrD7yfPzJeC8McDqui5pm8ma5i99XPPOroZTRuQ/exec" method="post">
+                    <input type="hidden" name="user" id="user">
+                    <h2>PROJECT BASED CONTRACT FORM</h2>
+                    <label for="employee_id">
+                        <b>Employee ID</b>
+                        <div  class="d-flex gap-3">
+                            <div>
+                                <input type="text" name="employee_id" id="employee_id" class="form-control" required autocomplete="off" autocomplete="off">
+                            </div>
+                            <div>
+                                <button id="search_employee_id_button" type="button" class="form-control">
+                                    <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </label><br><br>
+                    <!-- <div id="details">
+                        <label><b>Personal Information</b></label><br>
+                        <div class="line1">
+                            <label for="gender">
+                                Gender
+                                <select name="gender" id="gender" class="form-control">
+                                    <option value="">Choose</option>
+                                    <option value="MALE">MALE</option>
+                                    <option value="FEMALE">FEMALE</option>
+                                </select>
+                            </label>
+                            <label for="civil_status">
+                                Civil Status
+                                <select name="civil_status" id="civil_status" class="form-control">
+                                    <option value="">Choose</option>
+                                    <option value="SINGLE">SINGLE</option>
+                                    <option value="MARRIED">MARRIED</option>
+                                    <option value="SEPARATED">SEPARATED</option>
+                                </select>
+                            </label>
+                            <label for="first_name">
+                                First Name
+                                <input type="text" name="first_name" id="first_name" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="middle_name">
+                                Middle Name
+                                <input type="text" name="middle_name" id="middle_name" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="last_name">
+                                Last Name
+                                <input type="text" name="last_name" id="last_name" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="spouse_name" id="spouse_name_container">
+                                Spouse Name
+                                <input type="text" name="spouse_name" id="spouse_name" class="form-control" autocomplete="off">
+                            </label>
+                            <label for="affix" id="affix_container">
+                                Affix
+                                <input type="text" name="affix" id="affix" class="form-control" autocomplete="off" >
+                            </label>
+                        </div><br>
+                        <div class="line2">
+                            <label for="birthday">
+                                Birthday
+                                <input type="date" name="birthday" id="birthday" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="birth_place">
+                                Birth Place
+                                <input type="text" name="birth_place" id="birth_place" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="mobile_number">
+                                Mobile Number
+                                <input type="text" name="mobile_number" id="mobile_number" class="form-control" autocomplete="off">
+                            </label>
+                            <label for="email_address">
+                                Email Address
+                                <input type="text" name="email_address" id="email_address" class="form-control" autocomplete="off">
+                            </label>
+                            <label for="nationality">
+                                Nationality
+                                <input type="text" name="nationality" id="nationality" class="form-control" autocomplete="off">
+                            </label>    
+                        </div><br>
+                        <div class="line3">
+                            <label for="address">
+                                Address
+                                <input type="text" name="address" id="address" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="other_address">
+                                Other Address
+                                <input type="text" name="other_address" id="other_address" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="mothers_maiden_name">
+                                Mother's Maiden Name
+                                <input type="text" name="mothers_maiden_name" id="mothers_maiden_name" class="form-control" autocomplete="off">
+                            </label>    
+                        </div><br><br>
+                        <label><b>Educational Background</b></label><br>
+                        <div class="line4">
+                            <label for="educational_attainment">
+                                Educational Attainment
+                                <input type="text" name="educational_attainment" id="educational_attainment" class="form-control" autocomplete="off">
+                            </label>
+                            <label for="course">
+                                Course
+                                <input type="text" name="course" id="course" class="form-control" autocomplete="off">
+                            </label>
+                            <label for="year">
+                                Year
+                                <input type="text" name="year" id="year" class="form-control" autocomplete="off">
+                            </label>
+                        </div><br><br>
+                        <label><b>ID Numbers</b></label><br>
+                        <div class="line5">
+                            <label for="tin_no">
+                                Tin No.
+                                <input type="text" name="tin_no" id="tin_no" class="form-control" autocomplete="off">
+                            </label>
+                            <label for="sss_no">
+                                SSS/GSIS No.
+                                <input type="text" name="sss_no" id="sss_no" class="form-control" autocomplete="off">
+                            </label>
+                            <label for="philhealth_no">
+                                Philhealth No.
+                                <input type="text" name="philhealth_no" id="philhealth_no" class="form-control" autocomplete="off">
+                            </label>
+                            <label for="pag_ibig_no">
+                                Pag-ibig No.
+                                <input type="text" name="pag_ibig_no" id="pag_ibig_no" class="form-control" autocomplete="off">
+                            </label>
+                        </div>
+                        <div class="line5">
+                            <label for="drivers_license_no">
+                                Driver's License No.
+                                <input type="text" name="drivers_license_no" id="drivers_license_no" class="form-control" autocomplete="off">
+                            </label>
+                            <label for="nbi_no">
+                                NBI No.
+                                <input type="text" name="nbi_no" id="nbi_no" class="form-control" autocomplete="off">
+                            </label>
+                            <label for="police_clearance_no">
+                                Police Clearance No.
+                                <input type="text" name="police_clearance_no" id="police_clearance_no" class="form-control" autocomplete="off">
+                            </label>
+                            <label for="cedula_no">
+                                Cedula No.
+                                <input type="text" name="cedula_no" id="cedula_no" class="form-control" autocomplete="off">
+                            </label>
+                        </div><br><br>
+                        <label><b>Employment Details</b></label><br>
+                        <div class="line6">
+                            <label for="employee_type">
+                                Employee Type
+                                <select name="employee_type" id="employee_type" class="form-control">
+                                    <option value="">Choose</option>
+                                    <option value="REGULAR">REGULAR</option>
+                                    <option value="PROJECT BASED">PROJECT BASED</option>
+                                    <option value="TEMPORARY">TEMPORARY</option>
+                                    <option value="SUB CONTRACTOR">SUB CONTRACTOR</option>
+                                </select>                    
+                            </label>
+                            <label for="date_hire">
+                                Date Hire
+                                <input type="date" name="date_hire" id="date_hire" class="form-control" required autocomplete="off">
+                            </label>
+                            <label id="date_expire_container" for="date_expire">
+                                Date Expire
+                                <input type="date" name="date_expire" id="date_expire" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="payroll_type">
+                                Payroll Type
+                                <select name="payroll_type" id="payroll_type" class="form-control">
+                                    <option value="">Choose</option>
+                                    <option value="WEEKLY">WEEKLY</option>
+                                    <option value="SEMI-MONTHLY">SEMI-MONTHLY</option>
+                                </select>                    
+                            </label>
+                            <label for="employee_status">
+                                Employee Status
+                                <select name="employee_status" id="employee_status" class="form-control">
+                                    <option value="">Choose</option>
+                                    <option value="ACTIVE">ACTIVE</option>
+                                    <option value="INACTIVE">INACTIVE</option>
+                                </select>                    
+                            </label>
+                            <label for="department">
+                                Department
+                                <select name="department" id="department" class="form-control">
+                                    <option value="">Choose</option>
+                                    <option value="LOGISTICS DEPARTMENT">LOGISTICS DEPARTMENT</option>
+                                    <option value="CONSTRUCTION DEPARTMENT">CONSTRUCTION DEPARTMENT</option>
+                                    <option value="TREATMENT DEPARTMENT">TREATMENT DEPARTMENT</option>
+                                    <option value="ADMIN DEPARTMENT">ADMIN DEPARTMENT</option>
+                                    <option value="WAREHOUSE AND RENDERING DEPARTMENT">WAREHOUSE AND RENDERING DEPARTMENT</option>
+                                    <option value="FACILITY MANAGEMENT SERVICES DEPARTMENT">FACILITY MANAGEMENT SERVICES DEPARTMENT</option>
+                                    <option value="MARKETING DEPARTMENT">MARKETING DEPARTMENT</option>
+                                    <option value="ACCOUNTING DEPARTMENT">ACCOUNTING DEPARTMENT</option>
+                                </select>                    
+                            </label>
+                            <label for="designation">
+                                Designation
+                                <input type="text" name="designation" id="designation" class="form-control" required autocomplete="off" value="">
+                            </label>
+                        </div>
+                        <div class="line7">
+                            <label for="salary_type">
+                                Salary Type
+                                <select name="salary_type" id="salary_type" class="form-control">
+                                    <option value="">Choose</option>
+                                    <option value="CASH">CASH</option>
+                                    <option value="ATM">ATM</option>
+                                </select>                    
+                            </label>
+                            <label for="rate">
+                                Daily Rate
+                                <input type="number" step="0.01" name="rate" id="rate" class="form-control" required autocomplete="off" value="0">
+                            </label>
+                            <label for="day_allowance">
+                                Day Allowance
+                                <input type="number" name="day_allowance" id="day_allowance" class="form-control" required autocomplete="off" value="0">
+                            </label>
+                            <label for="night_allowance">
+                                Day Allowance
+                                <input type="number" name="night_allowance" id="night_allowance" class="form-control" required autocomplete="off" value="0">
+                            </label>
+                            <label for="time_in_schedule">
+                                Time In Schedule
+                                <input type="time" name="time_in_schedule" id="time_in_schedule" class="form-control" required autocomplete="off" value="">
+                            </label>
+                            <label for="time_out_schedule">
+                                Time Out Schedule
+                                <input type="time" name="time_out_schedule" id="time_out_schedule" class="form-control" required autocomplete="off" value="">
+                            </label>
+                        </div><br>
+                        <label for="date_resignation" class="d-none">
+                            Date of Resignation
+                            <input type="text" name="date_resignation" id="date_resignation" class="form-control" autocomplete="off" value="">
+                        </label>
+                        <label for="reason_resignation" class="d-none">
+                            Reason of Resignation
+                            <input type="text" name="reason_resignation" id="reason_resignation" class="form-control" autocomplete="off" value="">
+                        </label>
+                        <br><br>
+                        <button type="submit" id="submit_btn" class="form-control">
+                            Submit
+                        </button>    
+                    </div> -->
+                    <div id="contract_container">
+                        <div id="contract" class="contract">
+                            <div style="position: relative;">
+                                <h1 style="text-align: center; font-weight: bold; font-size: 24px;">PROJECT BASED EMPLOYEE CONTRACT</h1><br>
+                                <h2 style="margin-bottom: 10px;">This agreement is made and executed by and between:</h2>
+                                <h1 style="text-align: center; font-weight: bold; margin-bottom: 10px;">Empleyado</h1>
+                                <div style="display: flex; gap: 20px;">
+                                    <h1 style="width: 200px;">Pangalan</h1>:
+                                    <h1 style="font-weight: bold;">MARK ANTHONY</h1>
+                                </div>
+                                <div style="display: flex; gap: 20px;">
+                                    <h1 style="width: 200px;">Gitnang Pangalan</h1>:
+                                    <h1 style="font-weight: bold;">MIASCO</h1>
+                                </div>
+                                <div style="display: flex; gap: 20px; margin-bottom: 10px;">
+                                    <h1 style="width: 200px;">Apelyido</h1>:
+                                    <h1 style="font-weight: bold;">CADORNIGA</h1>
+                                </div>
+                                <h1 style="text-align: center; font-weight: bold; margin-bottom: 10px;">At</h1>
+                                <h1 style="text-align: center;">FAR EAST FUEL CORPORATION</h1>
+                                <h1 style="text-align: center;">No. 888 Purok 5, Irabagon Street,</h1>
+                                <h1 style="text-align: center; margin-bottom: 10px;">Brgy. Anyatam San Ildefonso, Bulacan 3010</h1>
+                                <h1 style="margin-bottom: 10px;">Ang kasunduan ay base sa trabahong proyekto ng may takdang katapusan;</h1>
+                                <h1 style="margin-bottom: 10px;">Simula ng kontrata para sa pansamantalang trabaho;</h1>
+                                <ol>
+                                    <li>
+                                        <h1 style="text-align: justify;">Tinanggap mo ang trabaho upang magsagawa ng mga tungkulin bilang isang </h1>
+                                        <span style="font-weight: bold;" id="designation"><u>CONSTRUCTION LABORER</u></span> 
+                                    </li>
+                                    <li>
+                                        <h1 style="text-align: justify;">Ikaw ay magsasagawa ng trabaho hanggang sa matapos ang proyekto o bahagi o aspeto nito;</h1>
+                                    </li>
+                                    <li>
+                                        <h1 style="text-align: justify;">Ang kontratang ito ay magsisimula sa 
+                                            <span style="font-weight: bold;" id="date_hire"><u>September 20, 2023</u></span> 
+                                            at maging epektibo hanggang
+                                            <span style="font-weight: bold;" id="date_expire"><u>February 20, 2024</u></span> 
+                                            , hanggang sa makumpleto ang proyekto o bahagi nito;</h1>
+                                    </li>
+                                    <li>
+                                        <h1 style="text-align: justify;">
+                                            Ikaw ay malayang mag-alok ng iyong serbisyo sa ibang kumpanya o maghanap ng ibang trabaho pagkatapos ng proyekto o bahagi nito na hindi kapareho ng linya ng negosyo ng Far East Fuel Corporation.
+                                        </h1>
+                                    </li>
+                                    <li style="margin-bottom: 10px;">
+                                        <h1 style="text-align: justify;">
+                                            Ikaw ay tatanggap ng sahod na Basic Rate <span style="font-weight: bold;" id="salary"><u>Php 500.00</u></span> sa bawat araw na babayaran ayon sa tinakdang patakaran sa loob ng kumpanya tungkol sa “cut-off period”;
+                                        </h1>
+                                    </li>
+                                    <h1 style="text-align: center; margin-bottom: 10px;">Ang Proyekto</h1>
+                                    <li>
+                                        <h1 style="text-align: justify;">
+                                            Ikaw ay magtatrabaho bilang isang 
+                                            <span style="font-weight: bold;" id="designation"><u>CONSTRUCTION LABORER</u></span> sa proyektong base sa kontrata ng Far East Fuel Corporation sa kanyang mga kliyente 
+                                            <span style="font-weight: bold;" id="contract_year"><u>(2024)</u></span>.
+                                        </h1>
+                                    </li>
+                                    <li>
+                                        <h1 style="text-align: justify;">
+                                            Kung sakali ang proyekto ay lalampas sa nakatakdang petsa o araw ng pagtatapos nito, ikaw ay aabisuhan kung papalawigin o ikaw ay hihinto sa iyong trabaho isang lingo bago matapos ang iyong kontrata.
+                                        </h1>
+                                    </li>
+                                    <li>
+                                        <h1 style="text-align: justify;">
+                                            Bilang isang Project Based Employee ikaw ay magsagawa ng mga gawain at responsibilidad na nakasaad sa Annex ”A” nitong kasunduan;
+                                        </h1>
+                                    </li>
+                                    <li>
+                                        <h1 style="text-align: justify;">
+                                            Sa panahong ikaw ay nagtatrabaho sa kumpanya bahagi ng pagpapaunlad ng kaalaman. Ikaw ay magkakaroon ng mga training at seminar sa ibat-ibang departamento ng gobyerno na gagastusan ng kumpanya, kung sakaling hindi mo matapos ang kontratang ito obligadong bayaran mo ang nagastos sa iyong pagsasanay.
+                                        </h1>
+                                    </li>
+                                </ol>
+                                <h1 style="text-align: center;">IN WITNESS WHEREOF, the parties have hereby affixed their respective signature</h1>
+                                <h1 style="text-align: center;">this ____day of ___________, 20___ in the City of ____________.</h1><br>
+                                <h1 style="text-align: center; margin-bottom: 10px;">For the Company;</h1>
+                                <div style="display: flex; justify-content:  space-around;">
+                                    <div>
+                                        <h1 style="text-align: center; font-weight: bold;">_________________________</h1>
+                                        <h1 style="text-align: center; font-weight: bold;">HR Department</h1>
+                                    </div>
+                                    <div>
+                                        <h1 style="text-align: center; font-weight: bold;">_________________________</h1>
+                                        <h1 style="text-align: center; font-weight: bold;">Project Based Employee</h1>
+                                    </div>
+                                </div><br>
+                                <h1 style="text-align: center; margin-bottom: 10px;">Signed in the presence of</h1><br>
+                                <div style="display: flex; justify-content:  space-around;">
+                                    <div>
+                                        <h1 style="text-align: center; font-weight: bold;">_________________________</h1>
+                                    </div>
+                                    <div>
+                                        <h1 style="text-align: center; font-weight: bold;">_________________________</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <style>
+                            
+                            .contract
+                            {
+                                width: 816px;
+                                height: 1248px;
+                                border: 3px solid black;
+                                background-color: white;
+                                z-index: 4;
+                                position: relative;
+                                padding: 48px 48px;
+                                border: 3px solid black;
+                            }
+                            
+                            .contract h1
+                            {
+                                font-size: 18px;
+                                margin: 0;
+                            }
+        
+                            .contract h2
+                            {
+                                font-size: 16px;
+                                margin: 0;
+                            }
+        
+                            .contract h3
+                            {
+                                font-size: 14px;
+                                margin: 0;
+                            }
+        
+                            .contract h4
+                            {
+                                font-size: 12px;
+                                margin: 0;
+                            }
+        
+                            .contract h5
+                            {
+                                font-size: 10px;
+                                margin: 0;
+                            }
+        
+                            .contract table
+                            {
+                                width: 100%;
+                            }
+        
+                            .contract #report_head tr,
+                            .contract tbody tr
+                            {
+                                width: 100%;
+                                display: grid;
+                                grid-template-columns: 1fr 1fr 1fr 1fr 1fr 3fr 2fr 1fr 1fr;
+                            }
+        
+                            .contract #report_head tr th
+                            {
+                                text-align: center;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                border-top: 1px solid black;
+                                border-bottom: 1px solid black;
+                                border-right: 1px solid black;
+                                font-size: 12px;
+                            }
+        
+                            .contract #report_head tr th:first-child
+                            {
+                                border: 1px solid black;
+                            }
+        
+                            .contract tbody tr td
+                            {
+                                text-align: center;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                border-bottom: 1px solid black;
+                                border-right: 1px solid black;
+                                font-size: 10px;
+                            }
+        
+                            .contract tbody tr td:first-child
+                            {
+                                border-bottom: 1px solid black;
+                                border-right: 1px solid black;
+                                border-left: 1px solid black;
+                            }
+                        </style>
+                    </div>
+                </form>
+                <form id="logistics_contract_form" style="position: absolute; z-index: 2; display: none; padding: 20px; background-color: white; border: 3px solid #dc3545; border-radius: 10px; height: 75vh; overflow-y: scroll; width: calc(100% - 40px);" 
+                    action="https://script.google.com/macros/s/AKfycbyXLEkG9M1FEIMUXa4ZGHZH67_R73qu-CTgOHHcQ51SBf4vCPLjGccIyCjCUAGxZfWs/exec" method="post">
+                    <h2>LOGISTICS CONTRACT FORM</h2>
+                    <input type="hidden" name="timestamp" id="timestamp">
+                    <label for="employee_id">
+                        <b>Employee ID</b>
+                        <div  class="d-flex gap-3">
+                            <div>
+                                <input type="text" name="employee_id" id="employee_id" class="form-control" required autocomplete="off" autocomplete="off">
+                            </div>
+                            <div>
+                                <button id="search_employee_id_button" type="button" class="form-control">
+                                    <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </label><br><br>
+                    <!-- <div id="details" style="display: none;">
+                        <label><b>Personal Information</b></label><br>
+                        <div class="line1">
+                            <label for="gender">
+                                Gender
+                                <input type="text" name="gender" id="gender" class="form-control" readonly>
+                            </label>
+                            <label for="civil_status">
+                                Civil Status
+                                <input type="text" name="civil_status" id="civil_status" class="form-control" readonly>
+                            </label>
+                            <label for="first_name">
+                                First Name
+                                <input type="text" name="first_name" id="first_name" class="form-control" required readonly autocomplete="off">
+                            </label>
+                            <label for="middle_name">
+                                Middle Name
+                                <input type="text" name="middle_name" id="middle_name" class="form-control" required readonly autocomplete="off">
+                            </label>
+                            <label for="last_name">
+                                Last Name
+                                <input type="text" name="last_name" id="last_name" class="form-control" required readonly autocomplete="off">
+                            </label>
+                            <label for="spouse_name" id="spouse_name_container">
+                                Spouse Name
+                                <input type="text" name="spouse_name" id="spouse_name" class="form-control" readonly autocomplete="off">
+                            </label>
+                            <label for="affix" id="affix_container">
+                                Affix
+                                <input type="text" name="affix" id="affix" class="form-control" readonly autocomplete="off">
+                            </label>
+                        </div><br>
+                        <div style="display: flex; gap: 20px;">
+                            <label for="date_resignation">
+                                Date of Resignation
+                                <input type="date" name="date_resignation" id="date_resignation" class="form-control" autocomplete="off" style="width: 250px;">
+                            </label>
+                            <label for="reason_resignation">
+                                Reason of Resignation
+                                <input type="text" name="reason_resignation" id="reason_resignation" class="form-control" autocomplete="off">
+                            </label>
+                        </div>
+                        <br><br>
+                        <button type="submit" id="submit_btn" class="form-control">
+                            Submit
+                        </button>
+                    </div> -->
+                
+                </form>
+                <div class="table" style="max-height: 75vh; align-items: start; overflow-y: scroll; padding-bottom: 0 !important;">                            
+                    <div class="list">
+                        <table style=" margin-bottom: 0 !important;">
+                            <thead style="position: sticky; top: 0; background-color: black;">                                    
+                                <th>ID #</th>
+                                <th>FULL NAME</th>
+                                <th>DEPARTMENT</th>
+                                <th>DESIGNATION</th>
+                                <th>GENDER</th>
+                                <th>EMPLOYEE<br>TYPE</th>
+                                <th>BIRTHDAY</th>
+                                <th>MOBILE<br>NUMBER</th>
+                                <th>DATE<br>HIRE</th>
+                                <th>END OF<br>CONTRACT</th>
+                                <th>TIN NO.</th>
+                                <th>SSS/GSIS NO.</th>
+                                <th>PHILHEALTH NO.</th>
+                                <th>PAG-IBIG NO.</th>
+                            </thead>
+                            <tbody id="contract_list">
 
                             </tbody>
                             </table>
