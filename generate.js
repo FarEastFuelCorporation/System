@@ -25,7 +25,7 @@ if (!fs.existsSync(userFolder)) {
 }
 
 
-
+// marketing user
 // Use path.join to create the full path for the EJS template
 const marketingTemplatePath = path.join(templatesFolder, 'page.ejs');
 
@@ -43,7 +43,7 @@ ejs.renderFile(marketingTemplatePath, marketing_data, (err, html) => {
 });
 
 
-
+// dispatching user
 const logisticsTemplatePath = path.join(templatesFolder, 'page.ejs');
 
 const logistics_data = {
@@ -56,4 +56,20 @@ ejs.renderFile(logisticsTemplatePath, logistics_data, (err, html) => {
     const logisticsOutputPath = path.join(userFolder, 'dispatching.html');
     fs.writeFileSync(logisticsOutputPath, html);
     console.log('HTML generated successfully for', logisticsOutputPath);
+});
+
+
+// employee user
+const employeeTemplatePath = path.join(templatesFolder, 'page.ejs');
+
+const employee_data = {
+    user: 'employee',
+};
+
+// Pass data to the ejs.renderFile function
+ejs.renderFile(employeeTemplatePath, employee_data, (err, html) => {
+    if (err) throw err;
+    const employeeOutputPath = path.join(userFolder, 'employee.html');
+    fs.writeFileSync(employeeOutputPath, html);
+    console.log('HTML generated successfully for', employeeOutputPath);
 });

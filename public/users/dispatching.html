@@ -59,9 +59,16 @@
         </div>
         <div class="sidebar">
             <ul>
-                <div id="user_sidebar"></div>
-                <div id="user_sidebar_officer"></div>
-                <div id="user_sidebar_department"></div>
+                <div id="account_info" style="display: flex; padding: 0 20px; gap: 10px;">
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                        <img id="profile_picture" src="" alt="">
+                    </div>
+                    <div id="info" style="display: flex; flex-direction: column; font-size: 14px !important; align-items: center; justify-content: center;">
+                        <div id="user_sidebar"></div>
+                        <div id="user_sidebar_officer"></div>
+                        <div id="user_sidebar_department"></div>
+                    </div>
+                </div><hr>
                 <li class="hover">
                     <a href="#">
                         <i class="fas fa-th-large"></i>
@@ -93,26 +100,26 @@
         Vehicle Inspection
     </a>
 </li>
-
+<li>
+    <a href="#">
+        <i class="fa-solid fa-cart-shopping"></i>
+        Purchase Requests
+    </a>
+</li>
+<li>
+    <a href="#">
+        <i class="fa-solid fa-warehouse"></i>
+        Supplies Warehouse
+    </a>
+</li>
+<li>
+    <a href="#">
+        <i class="fa-solid fa-person-falling-burst"></i>
+        Incident Reports
+    </a>
+</li>
                 
-                <li>
-                    <a href="#">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                        Purchase Requests
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa-solid fa-warehouse"></i>
-                        Supplies Warehouse
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa-solid fa-person-falling-burst"></i>
-                        Incident Reports
-                    </a>
-                </li>
+
                 <li>
                     <a href="#">
                         <i class="fas fa-cog"></i>
@@ -920,7 +927,8 @@
             
 
             <!-- multi-user section -->
-            <!-- purchase_request_form -->
+            
+                <!-- purchase_request_form -->
 <section class="marketing" id="purchase_request_form">
     <h2>PURCHASE REQUESTS</h2>
     <div>
@@ -1041,7 +1049,7 @@
     </div><br>
 </section>
 <!-- supplies_warehouse -->
-<section class="logistic" id="supplies_warehouse">
+<section class="marketing" id="supplies_warehouse">
     <h2>SUPPLIES WAREHOUSE</h2>
     <div>
         <label class="d-flex gap-3">
@@ -1313,6 +1321,7 @@
         </div>
     </form>
 </section>
+            
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.37.1/apexcharts.min.js"></script>

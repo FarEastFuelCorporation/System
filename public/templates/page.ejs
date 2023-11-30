@@ -8,6 +8,8 @@
             Marketing User
         <% } else if (user === 'dispatching') { %>
             Dispatching User
+        <% } else if (user === 'employee') { %>
+            Employee User
         <% } %>
     </title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
@@ -61,9 +63,16 @@
         </div>
         <div class="sidebar">
             <ul>
-                <div id="user_sidebar"></div>
-                <div id="user_sidebar_officer"></div>
-                <div id="user_sidebar_department"></div>
+                <div id="account_info" style="display: flex; padding: 0 20px; gap: 10px;">
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                        <img id="profile_picture" src="" alt="">
+                    </div>
+                    <div id="info" style="display: flex; flex-direction: column; font-size: 14px !important; align-items: center; justify-content: center;">
+                        <div id="user_sidebar"></div>
+                        <div id="user_sidebar_officer"></div>
+                        <div id="user_sidebar_department"></div>
+                    </div>
+                </div><hr>
                 <li class="hover">
                     <a href="#">
                         <i class="fas fa-th-large"></i>
@@ -74,25 +83,10 @@
                     <%- include('../templates/marketing/sidebar.ejs') %>
                 <% } else if (user === 'dispatching') { %>
                     <%- include('../templates/logistics/sidebar.ejs') %>
+                <% } else if (user === 'dispatching') { %>
+                    <%- include('../templates/logistics/sidebar.ejs') %>
                 <% } %>
-                <li>
-                    <a href="#">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                        Purchase Requests
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa-solid fa-warehouse"></i>
-                        Supplies Warehouse
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa-solid fa-person-falling-burst"></i>
-                        Incident Reports
-                    </a>
-                </li>
+
                 <li>
                     <a href="#">
                         <i class="fas fa-cog"></i>
@@ -165,10 +159,14 @@
                 <%- include('../templates/marketing/sections.ejs') %>
             <% } else if (user === 'dispatching') { %>
                 <%- include('../templates/logistics/sections.ejs') %>
+            <% } else if (user === 'employee') { %>
+                <%- include('../templates/employee/sections.ejs') %>
             <% } %>
 
             <!-- multi-user section -->
-            <%- include('../templates/multi_user_section.ejs') %>
+            <% if (user !== 'employee') { %>
+                <%- include('../templates/multi_user_section.ejs') %>
+            <% } %>
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.37.1/apexcharts.min.js"></script>
@@ -180,6 +178,8 @@
         <%- include('../templates/marketing/scripts.ejs') %>
     <% } else if (user === 'dispatching') { %>
         <%- include('../templates/logistics/scripts.ejs') %>
+    <% } else if (user === 'employee') { %>
+        <%- include('../templates/employee/scripts.ejs') %>
     <% } %>
 </body>
 </html>

@@ -86,6 +86,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         // username_data_list
         const queryParams = new URLSearchParams(window.location.search);
         const xValue = queryParams.get('user');
+        const profile_picture = document.getElementById("profile_picture");
         const user_sidebar = document.getElementById("user_sidebar");
         const user_sidebar_officer = document.getElementById("user_sidebar_officer");
         const user_sidebar_department = document.getElementById("user_sidebar_department");
@@ -93,6 +94,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const departments = document.querySelectorAll("#department");
 
         const user_name = username_data_list.content[xValue][findTextInArray(username_data_list, "NAME")];
+        profile_picture.src = `../images/profile_picture/${username_data_list.content[xValue][findTextInArray(username_data_list, "PICTURE")]}`;
         users.forEach(user => {user.value = username_data_list.content[xValue][findTextInArray(username_data_list, "NAME")]})
         departments.forEach(user => {user.value = username_data_list.content[xValue][findTextInArray(username_data_list, "DEPARTMENT")]})
         user_sidebar.innerHTML = `<u>${username_data_list.content[xValue][findTextInArray(username_data_list, "NAME")]}</u>`;

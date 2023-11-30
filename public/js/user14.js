@@ -28,12 +28,14 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         // Code that depends on the fetched data
         // username_data3
+        const profile_picture = document.getElementById("profile_picture");
         const user_sidebar = document.getElementById("user_sidebar");
         const user_sidebar_officer = document.getElementById("user_sidebar_officer");
         const user_sidebar_department = document.getElementById("user_sidebar_department");
         const users = document.querySelectorAll("#user");
 
         const user_name = username_data_list.content[14][findTextInArray(username_data_list, "NAME")];
+        profile_picture.src = `../images/profile_picture/${username_data_list.content[14][findTextInArray(username_data_list, "PICTURE")]}`;
         users.forEach(user => {user.value = username_data_list.content[14][findTextInArray(username_data_list, "NAME")]})
         user_sidebar.innerHTML = `<u>${username_data_list.content[14][findTextInArray(username_data_list, "NAME")]}</u>`;
         user_sidebar_officer.innerText = username_data_list.content[14][findTextInArray(username_data_list, "SECTIONS")];

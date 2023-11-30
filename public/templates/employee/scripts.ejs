@@ -1,0 +1,142 @@
+<!-- dashboard -->
+<section class="logistic" id="employee_dashboard">
+    <h2>DASHBOARD</h2><br>
+    <h2>DISPATCHING SUMMARY</h2>
+    <div class="cards">
+        <div class="card">
+            <div class="card-content">
+                <div class="number" id="booked_transactions"></div>
+                <div class="card-name">Booked Transactions</div>
+            </div>
+            <div class="icon-box">
+                <i class="fa-solid fa-book-bookmark"></i>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <div class="number" id="pending_transactions"></div>
+                <div class="card-name">Pending Transaction</div>
+            </div>
+            <div class="icon-box">
+                <i class="fa-solid fa-clipboard-list"></i>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <div class="number" id="on_hauling_transactions"></div>
+                <div class="card-name">Ongoing Transactions</div>
+            </div>
+            <div class="icon-box">
+                <i class="fa-solid fa-clipboard-user"></i>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <div class="number" id="hauled_transactions"></div>
+                <div class="card-name">Hauled Transactions</div>
+            </div>
+            <div class="icon-box">
+                <i class="fa-solid fa-clipboard-check"></i>
+            </div>
+        </div>
+        <div style="position: relative;">
+            <div id="pieChart" style="position: absolute; margin-top: -40px;">
+            </div>
+        </div>
+    </div><br>
+    <h2>VEHICLE SUMMARY</h2>
+    <div class="cards3" id="vehicle_type_container">
+    </div>
+    <div class="cards2">
+        <div class="card">
+            <div class="card-content">
+                <div class="number" id="total_vehicle"></div>
+                <div class="card-name">Total Vehicles</div>
+            </div>
+            <div class="icon-box">
+                <i class="fa-solid fa-truck-moving"></i>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <div class="number" id="on_hauling_vehicle"></div>
+                <div class="card-name">On Hauling</div>
+            </div>
+            <div class="icon-box">
+                <i class="fa-solid fa-truck-ramp-box"></i>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <div class="number" id="under_maintenance_vehicle"></div>
+                <div class="card-name">Under Maintenance</div>
+            </div>
+            <div class="icon-box">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <div class="number" id="for_maintenance_vehicle"></div>
+                <div class="card-name">For Maintenance</div>
+            </div>
+            <div class="icon-box">
+                <i class="fa-solid fa-wrench"></i>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <div class="number" id="available_vehicle"></div>
+                <div class="card-name">Available Vehicles</div>
+            </div>
+            <div class="icon-box">
+                <i class="fa-solid fa-truck"></i>
+            </div>
+        </div>
+    </div><br>
+    <h2>PENDING TRANSACTIONS</h2>
+    <div class="table" style="position: relative; max-height: 40vh; align-items: start; overflow-y: scroll;">                            
+        <div class="list">
+            <table>
+                <thead style="position: sticky; top: 0; background-color: black;">
+                    <th>#</th>
+                    <th>MTF #</th>
+                    <th>HAULING<br>DATE/TIME</th>
+                    <th>CLIENT</th>
+                    <th>WASTE<br>CODE</th>
+                    <th>WASTE DESCRIPTION</th>
+                    <th>TYPE OF VEHICLE</th>
+                    <th>REMARKS</th>
+                </thead>
+                <tbody id="pending_list">
+
+                </tbody>
+            </table>
+            <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+        </div>
+    </div><br>
+    <h2>TRAVEL HISTORY</h2>
+    <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
+        <div class="list">
+            <table>
+                <thead style="position: sticky; top: 0; background-color: black;">
+                    <th>#</th>
+                    <th>LTF #</th>
+                    <th>MTF #</th>
+                    <th>DEPARTURE<br>DATE/TIME</th>
+                    <th>CLIENT</th>
+                    <th>WASTE<br>CODE</th>
+                    <th>WASTE DESCRIPTION</th>
+                    <th>PLATE #</th>
+                    <th>DRIVER</th>
+                    <th>ARRIVAL<br>DATE/TIME</th>
+                    <th>DURATION</th>
+                </thead>
+                <tbody id="ongoing_list">
+
+                </tbody>
+            </table>
+            <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+        </div>
+    </div><br>
+</section>
