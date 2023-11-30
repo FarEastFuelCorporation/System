@@ -232,6 +232,7 @@
                 </label><br>
                 <form id="new_employee_form" style="position: absolute; z-index: 2; display: none; padding: 20px; background-color: white; border: 3px solid #198754; border-radius: 10px; height: 75vh; overflow-y: scroll; width: calc(100% - 40px);" 
                     action="https://script.google.com/macros/s/AKfycbz--ofawc-qwe6lqQBsUtfQAnXNAZArrD7yfPzJeC8McDqui5pm8ma5i99XPPOroZTRuQ/exec" method="post">
+                    <input type="hidden" name="user" id="user">
                     <h2>NEW EMPLOYEE FORM</h2>
                     <label for="employee_id">
                         <b>Employee ID</b>
@@ -377,10 +378,6 @@
                         </div><br><br>
                         <label><b>Employment Details</b></label><br>
                         <div class="line6">
-                            <label for="date_hire">
-                                Date Hire
-                                <input type="date" name="date_hire" id="date_hire" class="form-control" required autocomplete="off">
-                            </label>
                             <label for="employee_type">
                                 Employee Type
                                 <select name="employee_type" id="employee_type" class="form-control">
@@ -390,6 +387,14 @@
                                     <option value="TEMPORARY">TEMPORARY</option>
                                     <option value="SUB CONTRACTOR">SUB CONTRACTOR</option>
                                 </select>                    
+                            </label>
+                            <label for="date_hire">
+                                Date Hire
+                                <input type="date" name="date_hire" id="date_hire" class="form-control" required autocomplete="off">
+                            </label>
+                            <label id="date_expire_container" for="date_expire">
+                                Date Expire
+                                <input type="date" name="date_expire" id="date_expire" class="form-control" required autocomplete="off">
                             </label>
                             <label for="payroll_type">
                                 Payroll Type
@@ -472,6 +477,7 @@
                 </form>
                 <form id="update_record_form" style="position: absolute; z-index: 2; display: none; padding: 20px; background-color: white; border: 3px solid black; border-radius: 10px; height: 75vh; overflow-y: scroll; width: calc(100% - 40px);" 
                     action="https://script.google.com/macros/s/AKfycbz--ofawc-qwe6lqQBsUtfQAnXNAZArrD7yfPzJeC8McDqui5pm8ma5i99XPPOroZTRuQ/exec" method="post">
+                    <input type="hidden" name="user" id="user">
                     <h2>UPDATE RECORD FORM</h2>
                     <input type="hidden" name="timestamp" id="timestamp">
                     <label for="employee_id">
@@ -618,10 +624,6 @@
                         </div><br><br>
                         <label><b>Employment Details</b></label><br>
                         <div class="line6">
-                            <label for="date_hire">
-                                Date Hire
-                                <input type="date" name="date_hire" id="date_hire" class="form-control" required autocomplete="off">
-                            </label>
                             <label for="employee_type">
                                 Employee Type
                                 <select name="employee_type" id="employee_type" class="form-control">
@@ -631,6 +633,14 @@
                                     <option value="TEMPORARY">TEMPORARY</option>
                                     <option value="SUB CONTRACTOR">SUB CONTRACTOR</option>
                                 </select>                    
+                            </label>
+                            <label for="date_hire">
+                                Date Hire
+                                <input type="date" name="date_hire" id="date_hire" class="form-control" required autocomplete="off">
+                            </label>
+                            <label id="date_expire_container" for="date_expire">
+                                Date Expire
+                                <input type="date" name="date_expire" id="date_expire" class="form-control" required autocomplete="off">
                             </label>
                             <label for="payroll_type">
                                 Payroll Type
@@ -1993,10 +2003,6 @@
                         </div><br><br>
                         <label><b>Employment Details</b></label><br>
                         <div class="line6">
-                            <label for="date_hire">
-                                Date Hire
-                                <input type="date" name="date_hire" id="date_hire" class="form-control" required autocomplete="off">
-                            </label>
                             <label for="employee_type">
                                 Employee Type
                                 <select name="employee_type" id="employee_type" class="form-control">
@@ -2006,6 +2012,14 @@
                                     <option value="TEMPORARY">TEMPORARY</option>
                                     <option value="SUB CONTRACTOR">SUB CONTRACTOR</option>
                                 </select>                    
+                            </label>
+                            <label for="date_hire">
+                                Date Hire
+                                <input type="date" name="date_hire" id="date_hire" class="form-control" required autocomplete="off">
+                            </label>
+                            <label for="date_expire">
+                                Date Expire
+                                <input type="date" name="date_expire" id="date_expire" class="form-control" required autocomplete="off">
                             </label>
                             <label for="payroll_type">
                                 Payroll Type

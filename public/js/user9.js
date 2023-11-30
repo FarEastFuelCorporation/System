@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                     }
                 }
-                if(employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE TYPE")] == "PROJECT BASED"){
+                else if(employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE TYPE")] == "PROJECT BASED"){
                     if (!project_based_employee_name.includes(full_name)) {
                         project_based_employee_name.push(full_name);
                         if(gender == "MALE"){
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                     }
                 }
-                if(employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE TYPE")] == "TEMPORARY"){
+                else if(employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE TYPE")] == "TEMPORARY"){
                     if (!subcon_employee_name.includes(full_name)) {
                         subcon_employee_name.push(full_name);
                         if(gender == "MALE"){
@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         regular_employee.innerText = `${regular_employee_male}/${regular_employee_female}/${regular_employee_name.length}`
         project_based_employee.innerText = `${project_based_employee_male}/${project_based_employee_female}/${project_based_employee_name.length}`
         subcon_employee.innerText = `${subcon_employee_male}/${subcon_employee_female}/${subcon_employee_name.length}`
-        total_employee.innerText = `${total_employee_male}/${total_employee_female}/${total_employee_name.length}`
+        total_employee.innerText = `${regular_employee_male + project_based_employee_male + subcon_employee_male}/${regular_employee_female + project_based_employee_female + subcon_employee_female}/${regular_employee_name.length + project_based_employee_name.length + subcon_employee_name.length}`
 
         // employee_list_section
         const employee_list = document.querySelector("#employee_list_section #employee_list");
@@ -3905,6 +3905,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         const new_civil_status= new_employee_form.querySelector("#civil_status");
         const new_spouse_name_container= new_employee_form.querySelector("#spouse_name_container");
         const new_affix_container= new_employee_form.querySelector("#affix_container");
+        const new_employee_type = new_employee_form.querySelector("#employee_type");
+        const new_date_expire = new_employee_form.querySelector("#date_expire");
+        const new_date_expire_container = new_employee_form.querySelector("#date_expire_container");
         const update_record_form = employee_form.querySelector("#update_record_form");
         const update_employee_id = update_record_form.querySelector("#employee_id");
         const update_search_employee_id_button = update_record_form.querySelector("#search_employee_id_button");
@@ -3938,6 +3941,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const update_police_clearance_no = update_record_form.querySelector("#police_clearance_no");
         const update_cedula_no = update_record_form.querySelector("#cedula_no");
         const update_date_hire = update_record_form.querySelector("#date_hire");
+        const update_date_expire = update_record_form.querySelector("#date_expire");
+        const update_date_expire_container = update_record_form.querySelector("#date_expire_container");
         const update_employee_type = update_record_form.querySelector("#employee_type");
         const update_payroll_type = update_record_form.querySelector("#payroll_type");
         const update_salary_type = update_record_form.querySelector("#salary_type");
@@ -4003,6 +4008,31 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         })
 
+        new_employee_type.addEventListener("change", () => {
+            if(new_employee_type.value == "REGULAR"){
+                new_date_expire.classList.add("disabled")
+                new_date_expire_container.classList.add("disabled")
+                new_date_expire.removeAttribute("required");
+            }
+            else{
+                new_date_expire.classList.remove("disabled")
+                new_date_expire_container.classList.remove("disabled")
+                new_date_expire.setAttribute("required", "true");
+            }
+        })
+
+        update_employee_type.addEventListener("change", () => {
+            if(update_employee_type.value == "REGULAR"){
+                update_date_expire.classList.add("disabled")
+                update_date_expire_container.classList.add("disabled")
+                update_date_expire.removeAttribute("required");
+            }
+            else{
+                update_date_expire.classList.remove("disabled")
+                update_date_expire_container.classList.remove("disabled")
+                update_date_expire.setAttribute("required", "true");
+            }
+        })
 
         new_gender.addEventListener("change", () => {
             if(new_gender.value == "MALE"){
@@ -4064,7 +4094,17 @@ document.addEventListener('DOMContentLoaded', async function() {
                     update_time_out_schedule.value = formatTimeToInputValue(employee_data_list.content[a][findTextInArray(employee_data_list, "TIME OUT")]);
                     update_date_resignation.value = formatDateToInputValue(employee_data_list.content[a][findTextInArray(employee_data_list, "DATE OF RESIGNATION")]);
                     reason_resignation.value = employee_data_list.content[a][findTextInArray(employee_data_list, "REASON OF RESIGNATION")];        
-                    timestamp.value = formatDateToInputValue(employee_data_list.content[a][findTextInArray(employee_data_list, "CREATED AT")]);        
+                    timestamp.value = formatDateToInputValue(employee_data_list.content[a][findTextInArray(employee_data_list, "CREATED AT")]);
+                    if(update_employee_type.value == "REGULAR"){
+                        update_date_expire.classList.add("disabled")
+                        update_date_expire_container.classList.add("disabled")
+                        update_date_expire.removeAttribute("required");
+                    }
+                    else{
+                        update_date_expire.classList.remove("disabled")
+                        update_date_expire_container.classList.remove("disabled")
+                        update_date_expire.setAttribute("required", "true");
+                    }        
                 }
             }
             update_details.style.display = "block";
