@@ -2496,7 +2496,7 @@ input:disabled {
 
 .hr .line6 {
   display: grid;
-  grid-template-columns: 1fr 1.5fr 1fr 1.5fr 3fr 3fr;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 1.5fr 3fr 3fr;
   gap: 20px;
 }
 

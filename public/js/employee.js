@@ -29,7 +29,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         user_sidebar_officer.innerText = username_data_list.content[xValue][findTextInArray(username_data_list, "SECTIONS")];
         user_sidebar_department.innerText = username_data_list.content[xValue][findTextInArray(username_data_list, "DEPARTMENT")];
 
-
         
     } catch (error) {
         console.error('Error fetching data:', error);
