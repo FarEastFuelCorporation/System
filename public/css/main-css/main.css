@@ -4276,4 +4276,17 @@ input:disabled {
   ::-webkit-scrollbar {
     width: 0 !important;
   }
+  #employee_dashboard .cards {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    min-height: -moz-fit-content !important;
+    min-height: fit-content !important;
+  }
+  #employee_dashboard .cards .card {
+    height: -moz-fit-content !important;
+    height: fit-content !important;
+  }
+  #employee_dashboard .icon-box {
+    display: none !important;
+  }
 }/*# sourceMappingURL=main.css.map */

@@ -4781,4 +4781,16 @@ input:disabled {
     ::-webkit-scrollbar {
         width: 0 !important;
     }
+    #employee_dashboard .cards{
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        min-height: fit-content !important;
+
+    }
+    #employee_dashboard .cards .card{
+        height: fit-content !important;
+    }
+    #employee_dashboard .icon-box{
+        display: none !important;
+    }
 }
