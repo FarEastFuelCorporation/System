@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const sf_response_promise = fetch('https://script.google.com/macros/s/AKfycby9b2VCfXc0ifkwBXJRi2UVUwgZIj9F4FTOdZa_SYKZdsTwbVtAzAXzNMFeklE35bg1/exec');
         const irf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzTmhNOz5cXeKitSXAriUJ_FEahAQugYEKIRwDuFt9tjhj2AtPKEf2H4yTMmZ1igpUxlQ/exec');
         const employee_response_promise = fetch('https://script.google.com/macros/s/AKfycbwns5R6TA8U64ywbb9hwYu4LKurAjTM0Z18NYNZMt0Ft0m-_NUHYbYqblk_5KWugvt7lA/exec');
+        const employee_contracts_response_promise = fetch('https://script.google.com/macros/s/AKfycbyMVVDXiY91doC5FBeje9UIhvwsZCgm68jDBZ4uKZnE-zRyG6BLUlWMfqt9sO1v0SfcSw/exec');
         const payroll_transaction_response_promise = fetch('https://script.google.com/macros/s/AKfycbzYyGI99twep_njWGI4_Cd7Gd6bBERGhpP3IuwFRtUZ6hXYD-mpP2gRse2KEqjqKyNckw/exec');
         const payroll_summary_response_promise = fetch('https://script.google.com/macros/s/AKfycbxOfQ8EeEUegve06wUBw4afHRkHSnTP4QwnB8N9AKyHfp8x00pDhLkGiCKkECUm2Iuy2g/exec');
 
@@ -14,6 +15,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             sf_response,
             irf_response,
             employee_response,
+            employee_contracts_response,
             payroll_transaction_response,
             payroll_summary_response,
         ] = await Promise.all([
@@ -22,6 +24,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             sf_response_promise,
             irf_response_promise,
             employee_response_promise,
+            employee_contracts_response_promise,
             payroll_transaction_response_promise,
             payroll_summary_response_promise,
         ]);
@@ -31,6 +34,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const sf_data_list  = await sf_response.json();
         const irf_data_list  = await irf_response.json();
         const employee_data_list  = await employee_response.json();
+        const employee_contract_data_list  = await employee_contracts_response.json();
         const payroll_transaction_data_list  = await payroll_transaction_response.json();
         const payroll_summary_data_list  = await payroll_summary_response.json();
 
@@ -132,42 +136,45 @@ document.addEventListener('DOMContentLoaded', async function() {
         var near_expired_data = 0;
         var pending_contract_data = 0;
         for (let b = 1; b < employee_data_list.content.length; b++) {
-            var employee_record = "";
-            var expiration = employee_data_list.content[b][findTextInArray(employee_data_list, "CONTRACT EXPIRATION")];
+            var employee_id_data = employee_data_list.content[b][findTextInArray(employee_data_list, "EMPLOYEE ID")];
+            var employee_type_data = employee_data_list.content[b][findTextInArray(employee_data_list, "EMPLOYEE TYPE")];
+            var expiration = "";
+            for(let x = employee_contract_data_list.content.length -1; x >= 1; x--){
+                var employee_id_data2 = employee_contract_data_list.content[x][findTextInArray(employee_contract_data_list, "EMPLOYEE ID")];
+                if(employee_id_data == employee_id_data2){
+                    expiration = employee_contract_data_list.content[x][findTextInArray(employee_contract_data_list, "END OF CONTRACT")]
+                    break
+                }
+            }
             var color = "1D1D1F";
             var font_color = "black";
-
-            if (expiration === "") {
-                // If expiration is blank, change the color to blue
-                color = "blue !important";
-                font_color = "white !important";
-                expiration = "PENDING CONTRACT"
-            } else {
-                // If expiration is not blank, perform additional checks
-                var expirationDate = new Date(date_decoder(expiration));
-                var today = (new Date());
-                if (expirationDate < today) {
-                    // If expiration is in the past, change the color to red
-                    color = "red !important";
+            if(employee_type_data != "REGULAR"){
+                if (expiration === "") {
+                    // If expiration is blank, change the color to blue
+                    color = "#0d6efd !important";
                     font_color = "white !important";
-                    expiration = date_decoder(expiration)
                 } else {
-                    // Calculate the difference in days
-                    var timeDifference = expirationDate.getTime() - today.getTime();
-                    var daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
-        
-                    if (daysDifference <= 30) {
-                        // If expiration is within the next 30 days, change the color to yellow
-                        color = "yellow !important";
-                        font_color = "black !important";
-                        expiration = date_decoder(expiration)
-                    }
-                    else{
-                        expiration = "N/A"
+                    // If expiration is not blank, perform additional checks
+                    var expirationDate = new Date(date_decoder(expiration));
+                    var today = (new Date());
+                    if (expirationDate < today) {
+                        // If expiration is in the past, change the color to red
+                        color = "#dc3545 !important";
+                        font_color = "white !important";
+                    } else {
+                        // Calculate the difference in days
+                        var timeDifference = expirationDate.getTime() - today.getTime();
+                        var daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+            
+                        if (daysDifference <= 30) {
+                            // If expiration is within the next 30 days, change the color to yellow
+                            color = "#ffc107 !important";
+                            font_color = "black !important";
+                        }
                     }
                 }
             }
-        
+            var employee_record = "";
             if(employee_data_list.content[b][findTextInArray(employee_data_list, "EMPLOYEE STATUS")] == "ACTIVE"){
                 employee_record += `
                 <tr style="background-color: ${color};">
@@ -180,7 +187,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <td style=" color: ${font_color}">${date_decoder(employee_data_list.content[b][findTextInArray(employee_data_list, "BIRTH DATE")])}</td>
                     <td style=" color: ${font_color}">${employee_data_list.content[b][findTextInArray(employee_data_list, "MOBILE NO.")]}</td>
                     <td style=" color: ${font_color}">${date_decoder(employee_data_list.content[b][findTextInArray(employee_data_list, "DATE HIRE")])}</td>
-                    <td style=" color: ${font_color}">${expiration}</td>
                     <td style=" color: ${font_color}">${employee_data_list.content[b][findTextInArray(employee_data_list, "TIN NO.")]}</td>
                     <td style=" color: ${font_color}">${employee_data_list.content[b][findTextInArray(employee_data_list, "SSS/GSIS NO.")]}</td>
                     <td style=" color: ${font_color}">${employee_data_list.content[b][findTextInArray(employee_data_list, "PHILHEALTH NO.")]}</td>
@@ -188,43 +194,207 @@ document.addEventListener('DOMContentLoaded', async function() {
                 </tr>
                 `
                 employee_list.insertAdjacentHTML("beforeend", employee_record)
-                var expiration = employee_data_list.content[b][findTextInArray(employee_data_list, "CONTRACT EXPIRATION")];
+            }
+        }
+
+        // contract_list
+        var done_array = [];
+        var done_object = {};
+        for(let x = employee_contract_data_list.content.length - 1; x >= 1; x--){
+            var employee_id_data = employee_contract_data_list.content[x][findTextInArray(employee_contract_data_list, "EMPLOYEE ID")];
+            if(!done_array.includes(employee_id_data)){
+                done_array.push(employee_id_data);
+                done_object[employee_id_data] = employee_contract_data_list.content[x];
+                done_object[employee_id_data][11] = 1;
+            }
+            else{
+                done_object[employee_id_data][11]++
+            }
+        }
+        console.log(done_array)
+        console.log(done_object)
+        Object.keys(done_object).forEach(key => {
+            const myArray = done_object[key];
+
+            var form_no = myArray[findTextInArray(employee_contract_data_list, "PCF # / LCF #")];
+            var start = myArray[findTextInArray(employee_contract_data_list, "START OF CONTRACT")];
+            var expiration = myArray[findTextInArray(employee_contract_data_list, "END OF CONTRACT")];
+            var department = myArray[findTextInArray(employee_contract_data_list, "DEPARTMENT")];
+            var designation = myArray[findTextInArray(employee_contract_data_list, "DESIGNATION")];
+            var daily_rate = myArray[findTextInArray(employee_contract_data_list, "DAILY RATE")];
+            var contracts = myArray[11];
+            var employee_type, employee_status, date_hire;
+
+            for(let y = 1; y < employee_data_list.content.length; y++){
+                var employee_id_data2 = employee_data_list.content[y][findTextInArray(employee_data_list, "EMPLOYEE ID")];
+                if(key == employee_id_data2){
+                    employee_type = employee_data_list.content[y][findTextInArray(employee_data_list, "EMPLOYEE TYPE")];
+                    employee_status = employee_data_list.content[y][findTextInArray(employee_data_list, "EMPLOYEE STATUS")]
+                    date_hire = employee_data_list.content[y][findTextInArray(employee_data_list, "DATE HIRE")]
+                    break
+                }
+            }
+
+            var color = "1D1D1F";
+            var font_color = "black";
+            if(employee_type != "REGULAR" && employee_status == "ACTIVE"){
                 if (expiration === "") {
                     // If expiration is blank, change the color to blue
-                    color = "blue !important";
+                    color = "#0d6efd !important";
                     font_color = "white !important";
                     expiration = "N/A";
                     if(employee_data_list.content[b][findTextInArray(employee_data_list, "EMPLOYEE TYPE")] != "TEMPORARY"){
                         contract_list.insertAdjacentHTML("beforeend", employee_record)
                         pending_contract_data++
                     }
-                } else {
+                }
+                else {
                     // If expiration is not blank, perform additional checks
                     var expirationDate = new Date(date_decoder(expiration));
                     var today = (new Date());
                     if (expirationDate < today) {
                         // If expiration is in the past, change the color to red
-                        color = "red !important";
+                        color = "#dc3545 !important";
                         font_color = "white !important";
-                        contract_list.insertAdjacentHTML("afterbegin", employee_record)
                         expired_contract_data++
-                        console.log(employee_data_list.content[b][findTextInArray(employee_data_list, "EMPLOYEE ID")])
-                    } else {
+                    } 
+                    else {
                         // Calculate the difference in days
                         var timeDifference = expirationDate.getTime() - today.getTime();
                         var daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
             
                         if (daysDifference <= 30) {
                             // If expiration is within the next 30 days, change the color to yellow
-                            color = "yellow !important";
+                            color = "#ffc107 !important";
                             font_color = "black !important";
-                            contract_list.insertAdjacentHTML("beforeend", employee_record)
                             near_expired_data++
                         }
                     }
                 }
+                var employee_record = "";
+                if(employee_status == "ACTIVE"){
+                    employee_record = `
+                    <tr style="background-color: ${color};">
+                        <td style=" color: ${font_color}">${key}</td>
+                        <td style=" color: ${font_color}">${findEmployeeName(key)}</td>
+                        <td style=" color: ${font_color}">${department}</td>
+                        <td style=" color: ${font_color}">${designation}</td>
+                        <td style=" color: ${font_color}">${employee_type}</td>
+                        <td style=" color: ${font_color}">${date_decoder(date_hire)}</td>
+                        <td style=" color: ${font_color}">${date_decoder(start)}</td>
+                        <td style=" color: ${font_color}">${date_decoder(expiration)}</td>
+                        <td style=" color: ${font_color}">${contracts}</td>
+                    </tr>
+                    `
+                }
+                if (expiration === "") {
+                    if(employee_data_list.content[b][findTextInArray(employee_data_list, "EMPLOYEE TYPE")] != "TEMPORARY"){
+                        contract_list.insertAdjacentHTML("beforeend", employee_record)
+                    }
+                }
+                else {
+                    if (expirationDate < today) {
+                        contract_list.insertAdjacentHTML("afterbegin", employee_record)
+                    } 
+                    else {
+                        if (daysDifference <= 30) {
+                            contract_list.insertAdjacentHTML("beforeend", employee_record)
+                        }
+                    }
+                }
+            }
+        });
+        
+        for(let x = 1; x < employee_data_list.content.length; x++){
+            var employee_id_data2 = employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE ID")];
+            var employee_type2 = employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE TYPE")];
+            var employee_status2 = employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE STATUS")];
+            var department2 = employee_data_list.content[x][findTextInArray(employee_data_list, "DEPARTMENT")];
+            var designation2 = employee_data_list.content[x][findTextInArray(employee_data_list, "DESIGNATION")];
+            var date_hire2 = employee_data_list.content[x][findTextInArray(employee_data_list, "DATE HIRE")];
+            var start2 = "PENDING"
+            var expiration2 = "PENDING"
+            var contracts2 = "PENDING"
+            var employee_record2 = 
+            `
+            <tr style="background-color: ${color};">
+                <td style=" color: ${font_color}">${employee_id_data2}</td>
+                <td style=" color: ${font_color}">${findEmployeeName(employee_id_data2)}</td>
+                <td style=" color: ${font_color}">${department2}</td>
+                <td style=" color: ${font_color}">${designation2}</td>
+                <td style=" color: ${font_color}">${employee_type2}</td>
+                <td style=" color: ${font_color}">${date_decoder(date_hire2)}</td>
+                <td style=" color: ${font_color}">${start2}</td>
+                <td style=" color: ${font_color}">${expiration2}</td>
+                <td style=" color: ${font_color}">${contracts2}</td>
+            </tr>
+            `
+            if(!done_array.includes(employee_id_data2)){
+                if(employee_status2 == "ACTIVE"){
+                    if(employee_type2 == "PROJECT BASED"){
+                        contract_list.insertAdjacentHTML("beforeend", employee_record2)
+                        pending_contract_data++
+                    }
+                }
             }
         }
+
+        Object.keys(done_object).forEach(key => {
+            const myArray = done_object[key];
+
+            var form_no = myArray[findTextInArray(employee_contract_data_list, "PCF # / LCF #")];
+            var start = myArray[findTextInArray(employee_contract_data_list, "START OF CONTRACT")];
+            var expiration = myArray[findTextInArray(employee_contract_data_list, "END OF CONTRACT")];
+            var department = myArray[findTextInArray(employee_contract_data_list, "DEPARTMENT")];
+            var designation = myArray[findTextInArray(employee_contract_data_list, "DESIGNATION")];
+            var daily_rate = myArray[findTextInArray(employee_contract_data_list, "DAILY RATE")];
+            var contracts = myArray[11];
+            var employee_type, employee_status, date_hire;
+
+            for(let y = 1; y < employee_data_list.content.length; y++){
+                var employee_id_data2 = employee_data_list.content[y][findTextInArray(employee_data_list, "EMPLOYEE ID")];
+                if(key == employee_id_data2){
+                    employee_type = employee_data_list.content[y][findTextInArray(employee_data_list, "EMPLOYEE TYPE")];
+                    employee_status = employee_data_list.content[y][findTextInArray(employee_data_list, "EMPLOYEE STATUS")]
+                    date_hire = employee_data_list.content[y][findTextInArray(employee_data_list, "DATE HIRE")]
+                    break
+                }
+            }
+
+            var color = "1D1D1F";
+            var font_color = "black";
+            if(employee_type == "PROJECT BASED" && employee_status == "ACTIVE"){
+                // If expiration is not blank, perform additional checks
+                var expirationDate = new Date(date_decoder(expiration));
+                var today = (new Date());
+
+                // Calculate the difference in days
+                var timeDifference = expirationDate.getTime() - today.getTime();
+                var daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+    
+                if (daysDifference > 30) {
+                    var employee_record = "";
+                    if(employee_status == "ACTIVE"){
+                        employee_record = `
+                        <tr style="background-color: ${color};">
+                            <td style=" color: ${font_color}">${key}</td>
+                            <td style=" color: ${font_color}">${findEmployeeName(key)}</td>
+                            <td style=" color: ${font_color}">${department}</td>
+                            <td style=" color: ${font_color}">${designation}</td>
+                            <td style=" color: ${font_color}">${employee_type}</td>
+                            <td style=" color: ${font_color}">${date_decoder(date_hire)}</td>
+                            <td style=" color: ${font_color}">${date_decoder(start)}</td>
+                            <td style=" color: ${font_color}">${date_decoder(expiration)}</td>
+                            <td style=" color: ${font_color}">${contracts}</td>
+                        </tr>
+                        `
+                    }
+                    contract_list.insertAdjacentHTML("beforeend", employee_record)
+                }
+            }
+        });
+
+
         expired_contract.innerText = expired_contract_data
         near_expired.innerText = near_expired_data
         pending_contract.innerText = pending_contract_data
@@ -307,7 +477,26 @@ document.addEventListener('DOMContentLoaded', async function() {
                 project_based_contract_form.style.display = "none";
             }
         })
+        /project_based_contract_form
 
+        const search_employee_id_button = project_based_contract_form.querySelector("#search_employee_id_button");
+        const employee_id = project_based_contract_form.querySelector("#employee_id");
+
+        search_employee_id_button.addEventListener("click", ()  => {
+            for(let x = 1; x < employee_data_list.content.length; x++){
+                var employee_id_data = employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE ID")]
+                var employee_id_data = employee_data_list.content[x][findTextInArray(employee_data_list, "FIRST NAME")]
+                var employee_id_data = employee_data_list.content[x][findTextInArray(employee_data_list, "MIDDLE NAME")]
+                var employee_id_data = employee_data_list.content[x][findTextInArray(employee_data_list, "LAST NAME")]
+                var employee_id_data = employee_data_list.content[x][findTextInArray(employee_data_list, "DESIGNATION")]
+                var employee_id_data = employee_data_list.content[x][findTextInArray(employee_data_list, "DAILY RATE")]
+                var employee_id_data = employee_data_list.content[x][findTextInArray(employee_data_list, "DATE HIRE")]
+                var employee_id_data = employee_data_list.content[x][findTextInArray(employee_data_list, "CONTRACT EXPIRATION")]
+                if(employee_id.value == employee_id_data){
+
+                }
+            }
+        })
 
         // attendance form
         const attendance_form = document.querySelector("#attendance_form");
