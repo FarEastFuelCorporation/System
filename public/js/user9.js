@@ -136,11 +136,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         var near_expired_data = 0;
         var pending_contract_data = 0;
         for (let b = 1; b < employee_data_list.content.length; b++) {
-            var employee_id_data = employee_data_list.content[b][findTextInArray(employee_data_list, "EMPLOYEE ID")];
+            var employee_id_data = employee_data_list.content[b][findTextInArray(employee_data_list, "EMPLOYEE ID")].toString();
             var employee_type_data = employee_data_list.content[b][findTextInArray(employee_data_list, "EMPLOYEE TYPE")];
             var expiration = "";
             for(let x = employee_contract_data_list.content.length -1; x >= 1; x--){
-                var employee_id_data2 = employee_contract_data_list.content[x][findTextInArray(employee_contract_data_list, "EMPLOYEE ID")];
+                var employee_id_data2 = employee_contract_data_list.content[x][findTextInArray(employee_contract_data_list, "EMPLOYEE ID")].toString();
                 if(employee_id_data == employee_id_data2){
                     expiration = employee_contract_data_list.content[x][findTextInArray(employee_contract_data_list, "END OF CONTRACT")]
                     break
@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var done_array = [];
         var done_object = {};
         for(let x = employee_contract_data_list.content.length - 1; x >= 1; x--){
-            var employee_id_data = employee_contract_data_list.content[x][findTextInArray(employee_contract_data_list, "EMPLOYEE ID")];
+            var employee_id_data = employee_contract_data_list.content[x][findTextInArray(employee_contract_data_list, "EMPLOYEE ID")].toString();
             if(!done_array.includes(employee_id_data)){
                 done_array.push(employee_id_data);
                 done_object[employee_id_data] = employee_contract_data_list.content[x];
@@ -211,8 +211,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 done_object[employee_id_data][11]++
             }
         }
-        console.log(done_array)
-        console.log(done_object)
+
         Object.keys(done_object).forEach(key => {
             const myArray = done_object[key];
 
@@ -226,7 +225,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             var employee_type, employee_status, date_hire;
 
             for(let y = 1; y < employee_data_list.content.length; y++){
-                var employee_id_data2 = employee_data_list.content[y][findTextInArray(employee_data_list, "EMPLOYEE ID")];
+                var employee_id_data2 = employee_data_list.content[y][findTextInArray(employee_data_list, "EMPLOYEE ID")].toString();
                 if(key == employee_id_data2){
                     employee_type = employee_data_list.content[y][findTextInArray(employee_data_list, "EMPLOYEE TYPE")];
                     employee_status = employee_data_list.content[y][findTextInArray(employee_data_list, "EMPLOYEE STATUS")]
@@ -238,39 +237,29 @@ document.addEventListener('DOMContentLoaded', async function() {
             var color = "1D1D1F";
             var font_color = "black";
             if(employee_type != "REGULAR" && employee_status == "ACTIVE"){
-                if (expiration === "") {
-                    // If expiration is blank, change the color to blue
-                    color = "#0d6efd !important";
+
+                // If expiration is not blank, perform additional checks
+                var expirationDate = new Date(date_decoder(expiration));
+                var today = (new Date());
+                if (expirationDate < today) {
+                    // If expiration is in the past, change the color to red
+                    color = "#dc3545 !important";
                     font_color = "white !important";
-                    expiration = "N/A";
-                    if(employee_data_list.content[b][findTextInArray(employee_data_list, "EMPLOYEE TYPE")] != "TEMPORARY"){
-                        contract_list.insertAdjacentHTML("beforeend", employee_record)
-                        pending_contract_data++
-                    }
-                }
+                    expired_contract_data++
+                } 
                 else {
-                    // If expiration is not blank, perform additional checks
-                    var expirationDate = new Date(date_decoder(expiration));
-                    var today = (new Date());
-                    if (expirationDate < today) {
-                        // If expiration is in the past, change the color to red
-                        color = "#dc3545 !important";
-                        font_color = "white !important";
-                        expired_contract_data++
-                    } 
-                    else {
-                        // Calculate the difference in days
-                        var timeDifference = expirationDate.getTime() - today.getTime();
-                        var daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
-            
-                        if (daysDifference <= 30) {
-                            // If expiration is within the next 30 days, change the color to yellow
-                            color = "#ffc107 !important";
-                            font_color = "black !important";
-                            near_expired_data++
-                        }
+                    // Calculate the difference in days
+                    var timeDifference = expirationDate.getTime() - today.getTime();
+                    var daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+        
+                    if (daysDifference <= 30) {
+                        // If expiration is within the next 30 days, change the color to yellow
+                        color = "#ffc107 !important";
+                        font_color = "black !important";
+                        near_expired_data++
                     }
                 }
+
                 var employee_record = "";
                 if(employee_status == "ACTIVE"){
                     employee_record = `
@@ -306,7 +295,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         });
         
         for(let x = 1; x < employee_data_list.content.length; x++){
-            var employee_id_data2 = employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE ID")];
+            var employee_id_data2 = employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE ID")].toString();
             var employee_type2 = employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE TYPE")];
             var employee_status2 = employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE STATUS")];
             var department2 = employee_data_list.content[x][findTextInArray(employee_data_list, "DEPARTMENT")];
@@ -352,7 +341,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             var employee_type, employee_status, date_hire;
 
             for(let y = 1; y < employee_data_list.content.length; y++){
-                var employee_id_data2 = employee_data_list.content[y][findTextInArray(employee_data_list, "EMPLOYEE ID")];
+                var employee_id_data2 = employee_data_list.content[y][findTextInArray(employee_data_list, "EMPLOYEE ID")].toString();
                 if(key == employee_id_data2){
                     employee_type = employee_data_list.content[y][findTextInArray(employee_data_list, "EMPLOYEE TYPE")];
                     employee_status = employee_data_list.content[y][findTextInArray(employee_data_list, "EMPLOYEE STATUS")]
@@ -393,6 +382,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         });
+
 
 
         expired_contract.innerText = expired_contract_data
@@ -477,26 +467,246 @@ document.addEventListener('DOMContentLoaded', async function() {
                 project_based_contract_form.style.display = "none";
             }
         })
-        /project_based_contract_form
 
-        const search_employee_id_button = project_based_contract_form.querySelector("#search_employee_id_button");
-        const employee_id = project_based_contract_form.querySelector("#employee_id");
 
-        search_employee_id_button.addEventListener("click", ()  => {
-            for(let x = 1; x < employee_data_list.content.length; x++){
-                var employee_id_data = employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE ID")]
-                var employee_id_data = employee_data_list.content[x][findTextInArray(employee_data_list, "FIRST NAME")]
-                var employee_id_data = employee_data_list.content[x][findTextInArray(employee_data_list, "MIDDLE NAME")]
-                var employee_id_data = employee_data_list.content[x][findTextInArray(employee_data_list, "LAST NAME")]
-                var employee_id_data = employee_data_list.content[x][findTextInArray(employee_data_list, "DESIGNATION")]
-                var employee_id_data = employee_data_list.content[x][findTextInArray(employee_data_list, "DAILY RATE")]
-                var employee_id_data = employee_data_list.content[x][findTextInArray(employee_data_list, "DATE HIRE")]
-                var employee_id_data = employee_data_list.content[x][findTextInArray(employee_data_list, "CONTRACT EXPIRATION")]
-                if(employee_id.value == employee_id_data){
+        // project_based_contract_form
+        const search_employee_id_button_pb = project_based_contract_form.querySelector("#search_employee_id_button");
+        const employee_id_pb = project_based_contract_form.querySelector("#employee_id");
+        const gender_pb = project_based_contract_form.querySelector("#gender");
+        const civil_status_pb = project_based_contract_form.querySelector("#civil_status");
+        const first_name_pb = project_based_contract_form.querySelector("#first_name");
+        const middle_name_pb = project_based_contract_form.querySelector("#middle_name");
+        const last_name_pb = project_based_contract_form.querySelector("#last_name");
+        const spouse_name_pb = project_based_contract_form.querySelector("#spouse_name");
+        const spouse_name_container_pb = project_based_contract_form.querySelector("#spouse_name_container");
+        const affix_pb = project_based_contract_form.querySelector("#affix");
+        const affix_container_pb = project_based_contract_form.querySelector("#affix_container");
+        const employee_type_pb = project_based_contract_form.querySelector("#employee_type");
+        const details_pb = project_based_contract_form.querySelector("#details");
+        const start_of_contract_pb = project_based_contract_form.querySelector("#start_of_contract");
+        const end_of_contract_pb = project_based_contract_form.querySelector("#end_of_contract");
+        const designation_pb = project_based_contract_form.querySelector("#designation");
+        const daily_rate_pb = project_based_contract_form.querySelector("#daily_rate");
+        const department_pb = project_based_contract_form.querySelector("#department");
+        const first_name2_pb = project_based_contract_form.querySelector("#first_name2");
+        const middle_name2_pb = project_based_contract_form.querySelector("#middle_name2");
+        const last_name2_pb = project_based_contract_form.querySelector("#last_name2");
+        const designation2_pb = project_based_contract_form.querySelector("#designation2");
+        const date_start_pb = project_based_contract_form.querySelector("#date_start");
+        const date_expire_pb = project_based_contract_form.querySelector("#date_expire");
+        const salary_pb = project_based_contract_form.querySelector("#salary");
+        const designation3_pb = project_based_contract_form.querySelector("#designation3");
+        const submit_btn_pb = project_based_contract_form.querySelector("#submit_btn");
+        const generate_button_pb = project_based_contract_form.querySelector("#generate_button");
+        const download_button_pb = project_based_contract_form.querySelector("#download_button");
+        const download_and_submit_button_pb = project_based_contract_form.querySelector("#downloada_and_submit_button");
+        const contract_container_pb = project_based_contract_form.querySelector("#contract_container");
 
+
+        var first_name_data, middle_name_data, last_name_data, spouse_name_data, affix_data, gender_data, civil_status_data, employee_type_data, designation_data, daily_rate_data, department_data;
+        search_employee_id_button_pb.addEventListener("click", () => {
+            for(let x = 1; x < employee_data_list.content.length; x++){                
+                var employee_id_data2 = employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE ID")];
+                if(employee_id_pb.value == employee_id_data2){
+                    first_name_data = employee_data_list.content[x][findTextInArray(employee_data_list, "FIRST NAME")];
+                    middle_name_data = employee_data_list.content[x][findTextInArray(employee_data_list, "MIDDLE NAME")];
+                    last_name_data = employee_data_list.content[x][findTextInArray(employee_data_list, "LAST NAME")];
+                    spouse_name_data = employee_data_list.content[x][findTextInArray(employee_data_list, "SPOUSE NAME")];
+                    affix_data = employee_data_list.content[x][findTextInArray(employee_data_list, "AFFIX")];
+                    gender_data = employee_data_list.content[x][findTextInArray(employee_data_list, "GENDER")];
+                    civil_status_data = employee_data_list.content[x][findTextInArray(employee_data_list, "CIVIL STATUS")];
+                    employee_type_data = employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE TYPE")];
+                    designation_data = employee_data_list.content[x][findTextInArray(employee_data_list, "DESIGNATION")];
+                    daily_rate_data = employee_data_list.content[x][findTextInArray(employee_data_list, "DAILY RATE")];
+                    department_data = employee_data_list.content[x][findTextInArray(employee_data_list, "DEPARTMENT")];
+                    if(gender_data == "MALE"){
+                        spouse_name_container_pb.style.display = "none"
+                        affix_container_pb.style.display = "block"
+                    }
+                    else if(gender_data == "FEMALE"){
+                        if(civil_status_data == "SINGLE"){
+                            affix_container_pb.style.display = "none"
+                            spouse_name_container_pb.style.display = "none"
+                        }
+                        else{
+                            spouse_name_container_pb.style.display = "block"
+                            affix_container_pb.style.display = "none"
+                        }
+                    }
                 }
             }
+            gender_pb.value = gender_data;
+            civil_status_pb.value = civil_status_data;
+            first_name_pb.value = first_name_data;
+            middle_name_pb.value = middle_name_data;
+            last_name_pb.value = last_name_data;
+            spouse_name_pb.value = spouse_name_data;
+            affix_pb.value = affix_data;
+            employee_type_pb.value = employee_type_data;
+            designation_pb.value = designation_data;
+            daily_rate_pb.value = daily_rate_data;
+            department_pb.value = department_data;
+            details_pb.style.display = "block"
+            generate_button_pb.style.display = "block"
         })
+
+        generate_button_pb.addEventListener("click", ()  => {
+            first_name2_pb.innerText = first_name_data;
+            middle_name2_pb.innerText = middle_name_data;
+            last_name2_pb.innerText = last_name_data;
+            designation2_pb.innerText = designation_data;
+            date_start_pb.innerText = date_decoder(start_of_contract_pb.value);
+            date_expire_pb.innerText = date_decoder(end_of_contract_pb.value);
+            salary_pb.innerHTML = formatNumber(daily_rate_data);
+            designation3_pb.innerText = designation_data;
+            submit_btn_pb.style.display = "block"
+            download_button_pb.style.display = "block"
+            download_and_submit_button_pb.style.display = "block"
+            contract_container_pb.style.display = "block"
+        })
+
+        // logistics_contract_form
+        const search_employee_id_button_log = logistics_contract_form.querySelector("#search_employee_id_button");
+        const employee_id_log = logistics_contract_form.querySelector("#employee_id");
+        const gender_log = logistics_contract_form.querySelector("#gender");
+        const civil_status_log = logistics_contract_form.querySelector("#civil_status");
+        const first_name_log = logistics_contract_form.querySelector("#first_name");
+        const middle_name_log = logistics_contract_form.querySelector("#middle_name");
+        const last_name_log = logistics_contract_form.querySelector("#last_name");
+        const spouse_name_log = logistics_contract_form.querySelector("#spouse_name");
+        const spouse_name_container_log = logistics_contract_form.querySelector("#spouse_name_container");
+        const affix_log = logistics_contract_form.querySelector("#affix");
+        const affix_container_log = logistics_contract_form.querySelector("#affix_container");
+        const employee_type_log = logistics_contract_form.querySelector("#employee_type");
+        const details_log = logistics_contract_form.querySelector("#details");
+        const start_of_contract_log = logistics_contract_form.querySelector("#start_of_contract");
+        const end_of_contract_log = logistics_contract_form.querySelector("#end_of_contract");
+        const designation_log = logistics_contract_form.querySelector("#designation");
+        const daily_rate_log = logistics_contract_form.querySelector("#daily_rate");
+        const department_log = logistics_contract_form.querySelector("#department");
+        const first_name2_log = logistics_contract_form.querySelector("#first_name2");
+        const middle_name2_log = logistics_contract_form.querySelector("#middle_name2");
+        const last_name2_log = logistics_contract_form.querySelector("#last_name2");
+        const designation2_log = logistics_contract_form.querySelector("#designation2");
+        const date_start_log = logistics_contract_form.querySelector("#date_start");
+        const date_expire_log = logistics_contract_form.querySelector("#date_expire");
+        const salary_log = logistics_contract_form.querySelector("#salary");
+        const designation3_log = logistics_contract_form.querySelector("#designation3");
+        const submit_btn_log = logistics_contract_form.querySelector("#submit_btn");
+        const generate_button_log = logistics_contract_form.querySelector("#generate_button");
+        const download_button_log = logistics_contract_form.querySelector("#download_button");
+        const download_and_submit_button_log = logistics_contract_form.querySelector("#downloada_and_submit_button");
+        const contract_container_log = logistics_contract_form.querySelector("#contract_container");
+
+
+        var first_name_data, middle_name_data, last_name_data, spouse_name_data, affix_data, gender_data, civil_status_data, employee_type_data, designation_data, daily_rate_data, department_data;
+        search_employee_id_button_log.addEventListener("click", () => {
+            for(let x = 1; x < employee_data_list.content.length; x++){                
+                var employee_id_data2 = employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE ID")];
+                if(employee_id_log.value == employee_id_data2){
+                    first_name_data = employee_data_list.content[x][findTextInArray(employee_data_list, "FIRST NAME")];
+                    middle_name_data = employee_data_list.content[x][findTextInArray(employee_data_list, "MIDDLE NAME")];
+                    last_name_data = employee_data_list.content[x][findTextInArray(employee_data_list, "LAST NAME")];
+                    spouse_name_data = employee_data_list.content[x][findTextInArray(employee_data_list, "SPOUSE NAME")];
+                    affix_data = employee_data_list.content[x][findTextInArray(employee_data_list, "AFFIX")];
+                    gender_data = employee_data_list.content[x][findTextInArray(employee_data_list, "GENDER")];
+                    civil_status_data = employee_data_list.content[x][findTextInArray(employee_data_list, "CIVIL STATUS")];
+                    employee_type_data = employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE TYPE")];
+                    designation_data = employee_data_list.content[x][findTextInArray(employee_data_list, "DESIGNATION")];
+                    daily_rate_data = employee_data_list.content[x][findTextInArray(employee_data_list, "DAILY RATE")];
+                    department_data = employee_data_list.content[x][findTextInArray(employee_data_list, "DEPARTMENT")];
+                    if(gender_data == "MALE"){
+                        spouse_name_container_log.style.display = "none"
+                        affix_container_log.style.display = "block"
+                    }
+                    else if(gender_data == "FEMALE"){
+                        if(civil_status_data == "SINGLE"){
+                            affix_container_log.style.display = "none"
+                            spouse_name_container_log.style.display = "none"
+                        }
+                        else{
+                            spouse_name_container_log.style.display = "block"
+                            affix_container_log.style.display = "none"
+                        }
+                    }
+                }
+            }
+            gender_log.value = gender_data;
+            civil_status_log.value = civil_status_data;
+            first_name_log.value = first_name_data;
+            middle_name_log.value = middle_name_data;
+            last_name_log.value = last_name_data;
+            spouse_name_log.value = spouse_name_data;
+            affix_log.value = affix_data;
+            employee_type_log.value = employee_type_data;
+            designation_log.value = designation_data;
+            daily_rate_log.value = daily_rate_data;
+            department_log.value = department_data;
+            details_log.style.display = "block"
+            generate_button_log.style.display = "block"
+        })
+
+        generate_button_log.addEventListener("click", ()  => {
+            first_name2_log.innerText = first_name_data;
+            middle_name2_log.innerText = middle_name_data;
+            last_name2_log.innerText = last_name_data;
+            designation2_log.innerText = designation_data;
+            date_start_log.innerText = date_decoder(start_of_contract_log.value);
+            date_expire_log.innerText = date_decoder(end_of_contract_log.value);
+            salary_log.innerHTML = formatNumber(daily_rate_data);
+            designation3_log.innerText = designation_data;
+            submit_btn_log.style.display = "block"
+            download_button_log.style.display = "block"
+            download_and_submit_button_log.style.display = "block"
+            contract_container_log.style.display = "block"
+        })
+
+        // pcf_form_no
+        // FORM GENERATOR
+        const pcf_form_no = project_based_contract_form.querySelector("#pcf_form_no");
+        var last_row = employee_contract_data_list.content.length -1;
+        var data_info;
+        var data_counter;
+        if(last_row == 0){
+            data_counter = 0;
+        }
+        else{
+            for(let x = employee_contract_data_list.content.length -1; x >= 1; x--){
+                if(employee_contract_data_list.content[x][findTextInArray(employee_contract_data_list, "PCF # / LCF #")].toString().substring(0,3) == "PCF"){
+                    data_info = employee_contract_data_list.content[x][findTextInArray(employee_contract_data_list, "PCF # / LCF #")]
+                    break
+                }
+            }
+            data_counter = data_info.substring(9,12);
+        }
+        var year = new Date().getFullYear();
+        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        pcf_form_no.value = `PCF${year}${month}${data_counter}`;
+
+        // lcf_form_no
+        // FORM GENERATOR
+        const lcf_form_no = logistics_contract_form.querySelector("#lcf_form_no");
+        var last_row = employee_contract_data_list.content.length -1;
+        var data_info;
+        var data_counter;
+        if(last_row == 0){
+            data_counter = 0;
+        }
+        else{
+            for(let x = employee_contract_data_list.content.length -1; x >= 1; x--){
+                if(employee_contract_data_list.content[x][findTextInArray(employee_contract_data_list, "PCF # / LCF #")].toString().substring(0,3) == "LCF"){
+                    data_info = employee_contract_data_list.content[x][findTextInArray(employee_contract_data_list, "PCF # / LCF #")]
+                    break
+                }
+            }
+            data_counter = data_info.substring(9,12);
+        }
+        var year = new Date().getFullYear();
+        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        lcf_form_no.value = `LCF${year}${month}${data_counter}`;
+
 
         // attendance form
         const attendance_form = document.querySelector("#attendance_form");
@@ -528,7 +738,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             `
             payroll_summary.insertAdjacentHTML("beforeend", payroll_record);
             payroll_counter += 1;
-            console.log()
         }
 
         // payroll_tab
@@ -729,8 +938,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 day_name = getDayNamesForCutoffPeriod(getCutoffPeriodAndMonth(parseInt(cut_off_period.value))[1], year.value, getCutoffPeriodAndMonth(parseInt(cut_off_period.value))[0]);
                 day_dates = getDatesForCutoffPeriod(getCutoffPeriodAndMonth(parseInt(cut_off_period.value))[1], year.value, getCutoffPeriodAndMonth(parseInt(cut_off_period.value))[0]);
                 number_of_days.value = payroll_length;
-                console.log(day_name)
-                console.log(day_dates)
                 insertInputs();
                 days.style.display = "flex";
                 hide.style.display = "grid";
