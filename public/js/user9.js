@@ -499,7 +499,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const submit_btn_pb = project_based_contract_form.querySelector("#submit_btn");
         const generate_button_pb = project_based_contract_form.querySelector("#generate_button");
         const download_button_pb = project_based_contract_form.querySelector("#download_button");
-        const download_and_submit_button_pb = project_based_contract_form.querySelector("#downloada_and_submit_button");
+        const download_and_submit_button_pb = project_based_contract_form.querySelector("#download_and_submit_button");
         const contract_container_pb = project_based_contract_form.querySelector("#contract_container");
 
 
@@ -595,7 +595,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const submit_btn_log = logistics_contract_form.querySelector("#submit_btn");
         const generate_button_log = logistics_contract_form.querySelector("#generate_button");
         const download_button_log = logistics_contract_form.querySelector("#download_button");
-        const download_and_submit_button_log = logistics_contract_form.querySelector("#downloada_and_submit_button");
+        const download_and_submit_button_log = logistics_contract_form.querySelector("#download_and_submit_button");
         const contract_container_log = logistics_contract_form.querySelector("#contract_container");
 
 
