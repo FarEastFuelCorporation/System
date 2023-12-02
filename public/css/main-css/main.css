@@ -269,25 +269,14 @@ nav {
 /* sidebar starts here */
 .sidebar {
   position: fixed;
-  overflow-x: hidden;
   top: 60px;
   width: 260px;
   height: calc(100% - 60px);
   background-color: #c3c3c3;
 }
 
-.sidebar > div {
-  background-color: #c3c3c3;
-}
-
-.sidebar #account_info {
-  margin-top: 20px;
-  position: fixed;
-  background-color: #c3c3c3;
-}
-
 .sidebar ul {
-  margin-top: 100px;
+  margin-top: 10px;
   margin-left: -32px;
 }
 

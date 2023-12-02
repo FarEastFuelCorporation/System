@@ -58,7 +58,7 @@
             </div>
         </div>
         <div class="sidebar">
-            <div id="account_info" style="display: flex; padding: 0 20px; gap: 10px;">
+            <div id="account_info" style="display: flex; padding: 0 20px; gap: 10px;margin-top: 10px;">
                 <div style="display: flex; justify-content: center; align-items: center;">
                     <img id="profile_picture" src="" alt="">
                 </div>
@@ -68,8 +68,8 @@
                     <div id="user_sidebar_department"></div>
                     
                 </div>
-                <hr>
             </div>
+            <hr>
             <ul>
                 <li class="hover">
                     <a href="#">
@@ -160,27 +160,29 @@
                     <i class="fa-solid fa-arrows-rotate"></i>
                 </button>
             </div>
-            <div  id="filter_button" style="display: flex; position: absolute; top: 60px; right: 20px; z-index: 2; border: 3px solid #dc3545; border-radius: 5px; padding: 5px 20px; background-color: #198754;">
-                <label for="month_filter" style="font-weight: bold; color: #ffffff;">FILTER MONTH</label>
-                <select name="month_filter" id="month_filter" class="form-control" style="cursor: pointer;">
-                    <option value="ALL">ALL</option>
-                    <option value="JANUARY">JANUARY</option>
-                    <option value="FEBRUARY">FEBRUARY</option>
-                    <option value="MARCH">MARCH</option>
-                    <option value="APRIL">APRIL</option>
-                    <option value="MAY">MAY</option>
-                    <option value="JUNE">JUNE</option>
-                    <option value="JULY">JULY</option>
-                    <option value="AUGUST">AUGUST</option>
-                    <option value="SEPTEMBER">SEPTEMBER</option>
-                    <option value="OCTOBER">OCTOBER</option>
-                    <option value="NOVEMBER">NOVEMBER</option>
-                    <option value="DECEMBER">DECEMBER</option>
-                </select>
-            </div>
-            <button id="generate_report_button" style="display: flex; position: absolute; top: 60px; right: 330px; z-index: 2; border: 3px solid #dc3545; border-radius: 5px; padding: 5px 20px; background-color: #198754;">
-                <p style="margin: 0; font-weight: bold; color: white;">GENERATE<br>REPORT</p>
-            </button>
+            
+                <div  id="filter_button" style="display: flex; position: absolute; top: 60px; right: 20px; z-index: 2; border: 3px solid #dc3545; border-radius: 5px; padding: 5px 20px; background-color: #198754;">
+                    <label for="month_filter" style="font-weight: bold; color: #ffffff;">FILTER MONTH</label>
+                    <select name="month_filter" id="month_filter" class="form-control" style="cursor: pointer;">
+                        <option value="ALL">ALL</option>
+                        <option value="JANUARY">JANUARY</option>
+                        <option value="FEBRUARY">FEBRUARY</option>
+                        <option value="MARCH">MARCH</option>
+                        <option value="APRIL">APRIL</option>
+                        <option value="MAY">MAY</option>
+                        <option value="JUNE">JUNE</option>
+                        <option value="JULY">JULY</option>
+                        <option value="AUGUST">AUGUST</option>
+                        <option value="SEPTEMBER">SEPTEMBER</option>
+                        <option value="OCTOBER">OCTOBER</option>
+                        <option value="NOVEMBER">NOVEMBER</option>
+                        <option value="DECEMBER">DECEMBER</option>
+                    </select>
+                </div>
+                <button id="generate_report_button" style="display: flex; position: absolute; top: 60px; right: 330px; z-index: 2; border: 3px solid #dc3545; border-radius: 5px; padding: 5px 20px; background-color: #198754;">
+                    <p style="margin: 0; font-weight: bold; color: white;">GENERATE<br>REPORT</p>
+                </button>
+            
             <!-- generate_report_tab -->
             
                 <div id="generate_report_tab" style="display: none;">
