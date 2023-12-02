@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const user_sidebar = document.getElementById("user_sidebar");
         const user_sidebar_officer = document.getElementById("user_sidebar_officer");
         const user_sidebar_department = document.getElementById("user_sidebar_department");
+        const user_sidebar_employee_type = document.getElementById("user_sidebar_employee_type");
         const users = document.querySelectorAll("#user");
         const departments = document.querySelectorAll("#department");
 
@@ -28,7 +29,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         user_sidebar.innerHTML = `<u>${username_data_list.content[xValue][findTextInArray(username_data_list, "NAME")]}</u>`;
         user_sidebar_officer.innerText = username_data_list.content[xValue][findTextInArray(username_data_list, "SECTIONS")];
         user_sidebar_department.innerText = username_data_list.content[xValue][findTextInArray(username_data_list, "DEPARTMENT")];
-
+        user_sidebar_employee_type.innerText = username_data_list.content[xValue][findTextInArray(username_data_list, "EMPLOYEE TYPE")];
         
     } catch (error) {
         console.error('Error fetching data:', error);
