@@ -1424,6 +1424,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <option value="Kg">KILOGRAMS</option>
                             <option value="L">LITERS</option>
                             <option value="DRUM">DRUM</option>
+                            <option value="LOT">LOT</option>
                             <option value="TRIP">TRIP</option>
                         </select>
                     </div>
@@ -1760,6 +1761,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <option value="Kg">KILOGRAMS</option>
                             <option value="L">LITERS</option>
                             <option value="DRUM">DRUM</option>
+                            <option value="LOT">LOT</option>
                             <option value="TRIP">TRIP</option>
                         </select>
                     </div>
@@ -1923,6 +1925,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <option value="Kg">KILOGRAMS</option>
                             <option value="L">LITERS</option>
                             <option value="DRUM">DRUM</option>
+                            <option value="LOT">LOT</option>
                             <option value="TRIP">TRIP</option>
                         </select>
                     </div>
