@@ -1,5 +1,5 @@
 <!-- dashboard -->
-<section class="logistic" id="employee_dashboard">
+<section id="employee_dashboard">
     <h2>DASHBOARD</h2><br>
     <h2>PERFORMANCE SUMMARY</h2>
     <div class="cards">
@@ -47,7 +47,7 @@
     <h2>APPLICATION</h2>
 </section>
 <!-- inbox -->
-<section class="logistic" id="inbox_section">
+<section id="inbox_section">
     <h2>INBOX</h2><br>
     <di style="display: flex; justify-content: center; align-items: center;">
         <img src="../images/coming_soon.jpg" alt="" style="width: 80%;">
@@ -59,7 +59,7 @@
     <div style="display: flex; flex-wrap: wrap; gap: 20px;">
         <button type="button" class="card">
             <div class="card-content">
-                <div class="number" id="sick_leave">15 days</div>
+                <div class="number" id="sick_leave">5 days</div>
                 <div class="card-name">Service Incentive Leave Form</div>
             </div>
             <div class="icon-box">
@@ -68,7 +68,7 @@
         </button>
         <button type="button" class="card">
             <div class="card-content">
-                <div class="number" id="vacation_leave">15 days</div>
+                <div class="number" id="vacation_leave">30 days</div>
                 <div class="card-name">Sick / Vacation Leave Form</div>
             </div>
             <div class="icon-box">
@@ -95,6 +95,7 @@
     <form id="sick_leave_tab" style="display: none; position: absolute; top: 0; left: 0; height: calc(100% - 60px); width: 100%; background-color: white; z-index: 2; padding: 20px;">
         <h2>SICK LEAVE FORM</h2><br>
         <input type="hidden" id="type_of_leave" name="type_of_leave" value="SICK LEAVE">
+        <input type="hidden" id="user" name="user">
         <button type="button" id="back" style="position: absolute; border: none; right: 20px; top: 20px;">
             <i class="fa-solid fa-circle-arrow-left"></i>
             Back
@@ -144,110 +145,13 @@
             <i class="fa-solid fa-circle-arrow-left"></i>
             Back
         </button>
-        <div style="display: flex; justify-content: center; align-items: center;">
-            <img id="profile_picture" src="" alt="">
-        </div>
-        <div id="info" style="display: flex; flex-direction: column; font-size: 14px !important; align-items: center; justify-content: center;">
-            <div id="user_sidebar"></div>
-            <div id="user_sidebar_officer"></div>
-            <div id="user_sidebar_department"></div>
-            <div id="user_sidebar_employee_type"></div>
-        </div>
     </div>
 </section>
 <!-- profile_section -->
 <section id="profile_section">
-    <h2>APPLICATION FORMS</h2><br>
-    <div style="display: flex; flex-wrap: wrap; gap: 20px;">
-        <button type="button" class="card">
-            <div class="card-content">
-                <div class="number" id="sick_leave">15 days</div>
-                <div class="card-name">Service Incentive Leave Form</div>
-            </div>
-            <div class="icon-box">
-                <i class="fa-solid fa-file-signature"></i>
-            </div>
-        </button>
-        <button type="button" class="card">
-            <div class="card-content">
-                <div class="number" id="vacation_leave">15 days</div>
-                <div class="card-name">Sick / Vacation Leave Form</div>
-            </div>
-            <div class="icon-box">
-                <i class="fa-solid fa-file-signature"></i>
-            </div>
-        </button>
-        <button type="button" class="card">
-            <div class="card-content">
-                <div class="card-name">Undertime Form</div>
-            </div>
-            <div class="icon-box">
-                <i class="fa-solid fa-clock-rotate-left"></i>
-            </div>
-        </button>
-        <button type="button" class="card">
-            <div class="card-content">
-                <div class="card-name">Overtime Form</div>
-            </div>
-            <div class="icon-box">
-                <i class="fa-regular fa-clock"></i>
-            </div>
-        </button>
-    </div>
-    <form id="sick_leave_tab" style="display: none; position: absolute; top: 0; left: 0; height: calc(100% - 60px); width: 100%; background-color: white; z-index: 2; padding: 20px;">
-        <h2>SICK LEAVE FORM</h2><br>
-        <input type="hidden" id="type_of_leave" name="type_of_leave" value="SICK LEAVE">
-        <button type="button" id="back" style="position: absolute; border: none; right: 20px; top: 20px;">
-            <i class="fa-solid fa-circle-arrow-left"></i>
-            Back
-        </button>
-        <label for="date_start">
-            From
-        </label>
-        <input type="date" id="date_start" name="date_start" class="form-control" style="border: 1px solid black; width: 100% !important;"><br>
-        <label for="date_end">
-            To
-        </label>
-        <input type="date" id="date_end" name="date_end" class="form-control" style="border: 1px solid black; width: 100% !important;"><br>
-        <label for="reason">
-            Reasons
-        </label>
-        <input type="text" id="reason" name="reason" class="form-control" style="border: 1px solid black; width: 100% !important;">
-    </form>
-    <div id="vacation_leave_tab" style="display: none; position: absolute; top: 0; left: 0; height: calc(100% - 60px); width: 100%; background-color: white; z-index: 2; padding: 20px">
-        <h2>VACATION LEAVE FORM</h2><br>
-        <input type="hidden" id="type_of_leave" name="type_of_leave" value="VACATION LEAVE">
-        <button type="button" id="back" style="position: absolute; border: none; right: 20px; top: 20px;">
-            <i class="fa-solid fa-circle-arrow-left"></i>
-            Back
-        </button>
-        <label for="date_start">
-            From
-        </label>
-        <input type="date" id="date_start" name="date_start" class="form-control" style="border: 1px solid black; width: 100% !important;"><br>
-        <label for="date_end">
-            To
-        </label>
-        <input type="date" id="date_end" name="date_end" class="form-control" style="border: 1px solid black; width: 100% !important;"><br>
-        <label for="reason">
-            Reasons
-        </label>
-        <input type="text" id="reason" name="reason" class="form-control" style="border: 1px solid black; width: 100% !important;">
-
-    </div>
-    <div id="undertime_tab" style="display: none; position: absolute; top: 0; left: 0; height: calc(100% - 60px); width: 100%; background-color: white; z-index: 2; padding: 20px">
-        <button type="button" id="back" style="position: absolute; border: none; right: 20px; top: 20px;">
-            <i class="fa-solid fa-circle-arrow-left"></i>
-            Back
-        </button>
-    </div>
-    <div id="overtime_tab" style="display: none; position: absolute; top: 0; left: 0; height: calc(100% - 60px); width: 100%; background-color: white; z-index: 2; padding: 20px">
-        <button type="button" id="back" style="position: absolute; border: none; right: 20px; top: 20px;">
-            <i class="fa-solid fa-circle-arrow-left"></i>
-            Back
-        </button>
+    <div style="display: flex; gap: 20px;">
         <div style="display: flex; justify-content: center; align-items: center;">
-            <img id="profile_picture" src="" alt="">
+            <img id="profile_picture" src="" alt="" style="height: 100px; border-radius: 100%; border: 3px solid black;">
         </div>
         <div id="info" style="display: flex; flex-direction: column; font-size: 14px !important; align-items: center; justify-content: center;">
             <div id="user_sidebar"></div>
@@ -256,5 +160,6 @@
             <div id="user_sidebar_employee_type"></div>
         </div>
     </div>
+    <hr>
 </section>
 

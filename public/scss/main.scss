@@ -4790,6 +4790,7 @@ input:disabled {
     #employee_dashboard,
     #inbox_section,
     #application_section,
+    #profile_section,
     #settingsSection,
     #helpSection    
     {
@@ -4963,6 +4964,9 @@ input:disabled {
         flex-direction: column !important;
         align-items: center !important;
         text-align: center !important;
+    }
+    #profile_section{
+        background-color: #198754 !important;
     }
     #employee_dashboard .icon-box{
         display: none !important;
