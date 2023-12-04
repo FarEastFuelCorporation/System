@@ -551,6 +551,7 @@ nav {
 #employee_dashboard,
 #inbox_section,
 #application_section,
+#profile_section,
 #settingsSection,
 #helpSection {
   position: absolute;
@@ -600,8 +601,9 @@ nav {
 #purchase_request_form,
 #supplies_warehouse,
 #incident_report_form,
-#inbox_section,
 #employee_dashboard,
+#inbox_section,
+#application_section,
 #settingsSection,
 #helpSection,
 .section_container #marketing_dashboard,
@@ -4093,6 +4095,7 @@ input:disabled {
   #employee_dashboard,
   #inbox_section,
   #application_section,
+  #profile_section,
   #settingsSection,
   #helpSection {
     position: absolute;
@@ -4120,9 +4123,6 @@ input:disabled {
   .cards :nth-child(5) .card-name {
     padding: 16px 0 0 0;
   }
-  #user_sidebar, #user_sidebar_officer, #user_sidebar_department {
-    display: none !important;
-  }
 }
 @media (max-width: 880px) {
   .cards {
@@ -4142,7 +4142,7 @@ input:disabled {
   .nb {
     margin-top: -9px !important;
   }
-  #info, #filter_button,
+  #filter_button,
   #generate_report_button, .header_date_time, .back_button, .refresh_button {
     display: none !important;
   }
@@ -4308,9 +4308,6 @@ input:disabled {
   .cards :nth-child(5) .card-name {
     padding: 16px 0 0 0;
   }
-  #user_sidebar, #user_sidebar_officer, #user_sidebar_department {
-    display: none !important;
-  }
   .topbar {
     padding: 0 10px;
   }
@@ -4326,7 +4323,7 @@ input:disabled {
   .charts {
     margin-top: 650px;
   }
-  #info, #filter_button,
+  #filter_button,
   #generate_report_button, .header_date_time, .back_button, .refresh_button {
     display: none !important;
   }
