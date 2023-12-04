@@ -270,6 +270,7 @@ nav{
     width: 260px;
     height: calc(100% - 60px);
     background-color: variables.$lightgray;
+    overflow-x: hidden;
 }
 .sidebar ul{
     margin-top: 10px;

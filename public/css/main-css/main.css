@@ -273,6 +273,7 @@ nav {
   width: 260px;
   height: calc(100% - 60px);
   background-color: #c3c3c3;
+  overflow-x: hidden;
 }
 
 .sidebar ul {
