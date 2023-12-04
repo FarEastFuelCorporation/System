@@ -75,39 +75,33 @@
             
                 <ul style="justify-content: space-around !important">
             
-                <li class="hover">
-                    <a href="#">
-                        <i class="fas fa-th-large"></i>
-                        Dashboard
-                    </a>
-                </li>
                 
-                    <li>
+                    <li class="hover">
+    <a href="#">
+        <i class="fa-solid fa-house"></i>
+        <h6>Home</h6>
+    </a>
+</li>
+<li>
+    <a href="#">
+        <i class="fa-regular fa-envelope"></i>
+        <h6>Inbox</h6>
+    </a>
+</li>
+<li>
     <a href="#">
         <i class="fa-solid fa-file-signature"></i>
-        Applications
+        <h6>Transaction</h6>
+    </a>
+</li>
+<li>
+    <a href="#">
+        <i class="fa-regular fa-circle-user"></i>
+        <h6>Profile</h6>
     </a>
 </li>
 
                 
-                <li>
-                    <a href="#">
-                        <i class="fas fa-cog"></i>
-                        Settings
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fas fa-question"></i>
-                        Help
-                    </a>
-                </li>
-                <li>
-                    <a href="https://fareastfuelcorporation.github.io/System/">
-                        <i class="fa-solid fa-power-off"></i>
-                        Logout
-                    </a>
-                </li>
             </ul>
         </div>
         <div class="main">
@@ -183,8 +177,12 @@
     </div><br>
     <h2>APPLICATION</h2>
 </section>
+<!-- inbox -->
+<section class="logistic" id="inbox_section">
+    <h2>INBOX</h2><br>
+</section>
 <!-- dashboard -->
-<section class="logistic" id="application_section">
+<section id="application_section">
     <h2>APPLICATION FORMS</h2><br>
     <div style="display: flex; flex-wrap: wrap; gap: 20px;">
         <button type="button" class="card">
@@ -222,9 +220,59 @@
             </div>
         </button>
     </div>
-    <!-- <div id="sick_leave_tab" style="position: absolute; top: 0; left: 0; height: calc(100%); width: 100%; background-color: #198754;">
+    <form id="sick_leave_tab" style="display: none; position: absolute; top: 0; left: 0; height: calc(100% - 60px); width: 100%; background-color: white; z-index: 2; padding: 20px;">
+        <h2>SICK LEAVE FORM</h2><br>
+        <input type="hidden" id="type_of_leave" name="type_of_leave" value="SICK LEAVE">
+        <button type="button" id="back" style="position: absolute; border: none; right: 20px; top: 20px;">
+            <i class="fa-solid fa-circle-arrow-left"></i>
+            Back
+        </button>
+        <label for="date_start">
+            From
+        </label>
+        <input type="date" id="date_start" name="date_start" class="form-control" style="border: 1px solid black; width: 100% !important;"><br>
+        <label for="date_end">
+            To
+        </label>
+        <input type="date" id="date_end" name="date_end" class="form-control" style="border: 1px solid black; width: 100% !important;"><br>
+        <label for="reason">
+            Reasons
+        </label>
+        <input type="text" id="reason" name="reason" class="form-control" style="border: 1px solid black; width: 100% !important;">
+    </form>
+    <div id="vacation_leave_tab" style="display: none; position: absolute; top: 0; left: 0; height: calc(100% - 60px); width: 100%; background-color: white; z-index: 2; padding: 20px">
+        <h2>VACATION LEAVE FORM</h2><br>
+        <input type="hidden" id="type_of_leave" name="type_of_leave" value="VACATION LEAVE">
+        <button type="button" id="back" style="position: absolute; border: none; right: 20px; top: 20px;">
+            <i class="fa-solid fa-circle-arrow-left"></i>
+            Back
+        </button>
+        <label for="date_start">
+            From
+        </label>
+        <input type="date" id="date_start" name="date_start" class="form-control" style="border: 1px solid black; width: 100% !important;"><br>
+        <label for="date_end">
+            To
+        </label>
+        <input type="date" id="date_end" name="date_end" class="form-control" style="border: 1px solid black; width: 100% !important;"><br>
+        <label for="reason">
+            Reasons
+        </label>
+        <input type="text" id="reason" name="reason" class="form-control" style="border: 1px solid black; width: 100% !important;">
 
-    </div> -->
+    </div>
+    <div id="undertime_tab" style="display: none; position: absolute; top: 0; left: 0; height: calc(100% - 60px); width: 100%; background-color: white; z-index: 2; padding: 20px">
+        <button type="button" id="back" style="position: absolute; border: none; right: 20px; top: 20px;">
+            <i class="fa-solid fa-circle-arrow-left"></i>
+            Back
+        </button>
+    </div>
+    <div id="overtime_tab" style="display: none; position: absolute; top: 0; left: 0; height: calc(100% - 60px); width: 100%; background-color: white; z-index: 2; padding: 20px">
+        <button type="button" id="back" style="position: absolute; border: none; right: 20px; top: 20px;">
+            <i class="fa-solid fa-circle-arrow-left"></i>
+            Back
+        </button>
+    </div>
 </section>
 
 

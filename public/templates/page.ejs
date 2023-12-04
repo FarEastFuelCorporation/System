@@ -81,12 +81,6 @@
             <% } else if (user === 'employee') { %>
                 <ul style="justify-content: space-around !important">
             <% } %>
-                <li class="hover">
-                    <a href="#">
-                        <i class="fas fa-th-large"></i>
-                        Dashboard
-                    </a>
-                </li>
                 <% if (user === 'marketing') { %>
                     <%- include('../templates/marketing/sidebar.ejs') %>
                 <% } else if (user === 'dispatching') { %>
@@ -94,24 +88,6 @@
                 <% } else if (user === 'employee') { %>
                     <%- include('../templates/employee/sidebar.ejs') %>
                 <% } %>
-                <li>
-                    <a href="#">
-                        <i class="fas fa-cog"></i>
-                        Settings
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fas fa-question"></i>
-                        Help
-                    </a>
-                </li>
-                <li>
-                    <a href="https://fareastfuelcorporation.github.io/System/">
-                        <i class="fa-solid fa-power-off"></i>
-                        Logout
-                    </a>
-                </li>
             </ul>
         </div>
         <div class="main">

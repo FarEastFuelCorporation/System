@@ -29,6 +29,7 @@ ul li h3,
 ul li h4,
 ul li h6{
     color: variables.$accent1 !important;
+    margin: 0 !important;
 }
 
 .navbar-toggler{
@@ -359,6 +360,20 @@ nav{
     text-align: center;
 }
 
+.sidebar ul li a h6
+{
+    color: black !important;
+}
+// hover
+.sidebar ul .hover a h6
+{
+    color: white !important;
+}
+.sidebar ul li:hover a h6
+{
+    color: white !important;
+}
+
 .table
 {
     display: flex;
@@ -546,6 +561,7 @@ nav{
 #supplies_warehouse,
 #incident_report_form,
 #employee_dashboard,
+#inbox_section,
 #application_section,
 #settingsSection,
 #helpSection
@@ -597,6 +613,7 @@ nav{
 #purchase_request_form,
 #supplies_warehouse,
 #incident_report_form,
+#inbox_section,
 #employee_dashboard,
 #settingsSection,
 #helpSection,
@@ -2775,7 +2792,7 @@ input:disabled {
 .hr .line6
 {
     display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr 1fr 1.5fr 3fr 3fr;
+    grid-template-columns: 1.5fr 1fr 1fr 1.5fr 3fr 3fr;
     gap: 20px;
 }
 
@@ -4563,6 +4580,7 @@ input:disabled {
     #supplies_warehouse,
     #incident_report_form,
     #employee_dashboard,
+    #inbox_section,
     #application_section,
     #settingsSection,
     #helpSection    
@@ -4687,7 +4705,6 @@ input:disabled {
         flex-direction: row !important;
         margin: 0 !important;
         padding: 0 !important;
-        justify-content: flex-start !important;
         overflow-x: auto !important;
     }
     .sidebar ul li
@@ -4696,6 +4713,30 @@ input:disabled {
         min-width: 60px !important;
         overflow: hidden !important;
         flex-shrink: 0 !important;
+
+    }
+    .sidebar ul li a
+    {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        height: 60px !important;
+        flex-direction: column !important;
+    }
+    .sidebar ul li a h6
+    {
+        margin: 0 !important;
+        color: black !important;
+        font-size: 10px !important;
+    }
+    // hover
+    .sidebar ul .hover a h6
+    {
+        color: white !important;
+    }
+    .sidebar ul li:hover a h6
+    {
+        color: white !important;
     }
     #dashboard_section,
     #waste_collection_form,
@@ -4744,6 +4785,7 @@ input:disabled {
     #supplies_warehouse,
     #incident_report_form,
     #employee_dashboard,
+    #inbox_section,
     #application_section,
     #settingsSection,
     #helpSection    
