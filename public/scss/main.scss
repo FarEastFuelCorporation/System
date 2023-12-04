@@ -614,9 +614,9 @@ nav{
 #purchase_request_form,
 #supplies_warehouse,
 #incident_report_form,
-#employee_dashboard,
 #inbox_section,
 #application_section,
+#profile_section,
 #settingsSection,
 #helpSection,
 .section_container #marketing_dashboard,
@@ -4953,10 +4953,17 @@ input:disabled {
     }
     #employee_dashboard .cards .card{
         height: fit-content !important;
+        max-width: 100% !important;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+        border-radius: 8px !important;
+        border: none !important;
     }
     #application_section .card{
         display: grid !important;
         grid-template-columns: 75% 25% !important;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+        border-radius: 8px !important;
+        border: none !important;
     }
     #application_section .card > div{
         display: flex !important;
@@ -4967,6 +4974,33 @@ input:disabled {
     }
     #profile_section{
         background-color: #198754 !important;
+    }
+    #profile_section ul li{
+        list-style: none;
+        margin-bottom: 40px !important;
+    }
+    #profile_section ul li a{
+        text-decoration: none !important;
+        color: white !important;
+        display: grid;
+        grid-template-columns: 25px 1fr;
+        gap: 20px;
+    }
+    #profile_section ul li a > div:first-child{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #profile_section ul li a > div:nth-child(2){
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    #profile_section ul li a i,
+    #profile_section ul li a h6
+    {
+        color: white !important;
+        margin: 0 !important;
     }
     #employee_dashboard .icon-box{
         display: none !important;

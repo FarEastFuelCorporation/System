@@ -24,13 +24,16 @@ document.addEventListener('DOMContentLoaded', async function() {
         const user_sidebar_department = document.getElementById("user_sidebar_department");
         const user_sidebar_employee_type = document.getElementById("user_sidebar_employee_type");
         const users = document.querySelectorAll("#user");
+        const employee_ids = document.querySelectorAll("#employee_id");
         const departments = document.querySelectorAll("#department");
+        const designations = document.querySelectorAll("#designation");
 
-        const user_name = username_data_list.content[xValue][findTextInArray(username_data_list, "NAME")];
         profile_picture.src = `../images/profile_picture/${username_data_list.content[xValue][findTextInArray(username_data_list, "PICTURE")]}`;
         users.forEach(user => {user.value = username_data_list.content[xValue][findTextInArray(username_data_list, "NAME")]})
+        employee_ids.forEach(employee_id => {employee_id.value = username_data_list.content[xValue][findTextInArray(username_data_list, "EMPLOYEE ID")]})
+        designations.forEach(designation => {designation.value = username_data_list.content[xValue][findTextInArray(username_data_list, "SECTIONS")]})
         departments.forEach(user => {user.value = username_data_list.content[xValue][findTextInArray(username_data_list, "DEPARTMENT")]})
-        user_sidebar.innerHTML = `<u>${username_data_list.content[xValue][findTextInArray(username_data_list, "NAME")]}</u>`;
+        user_sidebar.innerHTML = `${username_data_list.content[xValue][findTextInArray(username_data_list, "NAME")]}`;
         user_sidebar_officer.innerText = username_data_list.content[xValue][findTextInArray(username_data_list, "SECTIONS")];
         user_sidebar_department.innerText = username_data_list.content[xValue][findTextInArray(username_data_list, "DEPARTMENT")];
         user_sidebar_employee_type.innerText = username_data_list.content[xValue][findTextInArray(username_data_list, "EMPLOYEE TYPE")];

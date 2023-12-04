@@ -44,14 +44,29 @@
             </div>
         </div>
     </div><br>
-    <h2>APPLICATION</h2>
+    <div style="margin-top: 50px;">
+        <h2 style="margin-bottom: 20px;">PENDING TRANSACTIONS</h2>
+        <div class="table" style="max-height: 75vh; align-items: start; overflow-y: scroll; padding-bottom: 0 !important;">                            
+            <div class="list">
+                <table style=" margin-bottom: 0 !important;">
+                    <thead style="position: sticky; top: 0; background-color: black;">                                    
+                        <th>#</th>
+                    </thead>
+                    <tbody id="pending_list">
+    
+                    </tbody>
+                    </table>
+                <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+            </div>
+        </div><br>
+    </div>
 </section>
 <!-- inbox -->
 <section id="inbox_section">
     <h2>INBOX</h2><br>
-    <di style="display: flex; justify-content: center; align-items: center;">
+    <div style="display: flex; justify-content: center; align-items: center; height: 60vh;">
         <img src="../images/coming_soon.jpg" alt="" style="width: 80%;">
-    </di>
+    </div>
 </section>
 <!-- application_section -->
 <section id="application_section">
@@ -92,10 +107,14 @@
             </div>
         </button>
     </div>
-    <form id="sick_leave_tab" style="display: none; position: absolute; top: 0; left: 0; height: calc(100% - 60px); width: 100%; background-color: white; z-index: 2; padding: 20px;">
-        <h2>SICK LEAVE FORM</h2><br>
-        <input type="hidden" id="type_of_leave" name="type_of_leave" value="SICK LEAVE">
+    <form id="sick_leave_tab" style="display: none; position: absolute; top: 0; left: 0; height: calc(100% - 60px); width: 100%; background-color: white; z-index: 2; padding: 20px;"
+        action="https://script.google.com/macros/s/AKfycbxWHQ4n8RYb8DgJsAKPFQkjIhJeWWu3CLtRXbkJw1rFuAoNYrEBs26vXZD0t2VPFCMgDQ/exec" method="post">
+        <h2>SERVICE INCENTIVE FORM</h2><br>
+        <input type="hidden" id="employee_id" name="employee_id">
         <input type="hidden" id="user" name="user">
+        <input type="hidden" id="department" name="department">
+        <input type="hidden" id="designation" name="designation">
+        <input type="hidden" id="type_of_leave" name="type_of_leave" value="SERVICE INCENTIVE LEAVE">
         <button type="button" id="back" style="position: absolute; border: none; right: 20px; top: 20px;">
             <i class="fa-solid fa-circle-arrow-left"></i>
             Back
@@ -103,19 +122,32 @@
         <label for="date_start">
             From
         </label>
-        <input type="date" id="date_start" name="date_start" class="form-control" style="border: 1px solid black; width: 100% !important;"><br>
+        <input type="date" id="date_start" name="date_start" required class="form-control" style="border: 1px solid black; width: 100% !important;"><br>
         <label for="date_end">
             To
         </label>
-        <input type="date" id="date_end" name="date_end" class="form-control" style="border: 1px solid black; width: 100% !important;"><br>
+        <input type="date" id="date_end" name="date_end" required class="form-control" style="border: 1px solid black; width: 100% !important;"><br>
         <label for="reason">
             Reasons
         </label>
-        <input type="text" id="reason" name="reason" class="form-control" style="border: 1px solid black; width: 100% !important;">
+        <input type="text" id="reason" name="reason" required class="form-control" style="border: 1px solid black; width: 100% !important;"><br>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <button type="reset" class="form-control bg-danger text-white">
+                Clear
+            </button>
+            <button type="submit" class="form-control bg-success text-white">
+                Submit
+            </button>
+        </div>
     </form>
-    <div id="vacation_leave_tab" style="display: none; position: absolute; top: 0; left: 0; height: calc(100% - 60px); width: 100%; background-color: white; z-index: 2; padding: 20px">
-        <h2>VACATION LEAVE FORM</h2><br>
-        <input type="hidden" id="type_of_leave" name="type_of_leave" value="VACATION LEAVE">
+    <form id="vacation_leave_tab" style="display: none; position: absolute; top: 0; left: 0; height: calc(100% - 60px); width: 100%; background-color: white; z-index: 2; padding: 20px"
+        action="https://script.google.com/macros/s/AKfycbxWHQ4n8RYb8DgJsAKPFQkjIhJeWWu3CLtRXbkJw1rFuAoNYrEBs26vXZD0t2VPFCMgDQ/exec" method="post">
+        <h2>SICK / VACATION LEAVE FORM</h2><br>
+        <input type="hidden" id="employee_id" name="employee_id">
+        <input type="hidden" id="user" name="user">
+        <input type="hidden" id="department" name="department">
+        <input type="hidden" id="designation" name="designation">
+        <input type="hidden" id="type_of_leave" name="type_of_leave" value="SICK / VACATION LEAVE">
         <button type="button" id="back" style="position: absolute; border: none; right: 20px; top: 20px;">
             <i class="fa-solid fa-circle-arrow-left"></i>
             Back
@@ -123,43 +155,104 @@
         <label for="date_start">
             From
         </label>
-        <input type="date" id="date_start" name="date_start" class="form-control" style="border: 1px solid black; width: 100% !important;"><br>
+        <input type="date" id="date_start" name="date_start" required class="form-control" style="border: 1px solid black; width: 100% !important;"><br>
         <label for="date_end">
             To
         </label>
-        <input type="date" id="date_end" name="date_end" class="form-control" style="border: 1px solid black; width: 100% !important;"><br>
+        <input type="date" id="date_end" name="date_end" required class="form-control" style="border: 1px solid black; width: 100% !important;"><br>
         <label for="reason">
             Reasons
         </label>
-        <input type="text" id="reason" name="reason" class="form-control" style="border: 1px solid black; width: 100% !important;">
-
-    </div>
+        <input type="text" id="reason" name="reason" required class="form-control" style="border: 1px solid black; width: 100% !important;"><br>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <button type="reset" class="form-control bg-danger text-white">
+                Clear
+            </button>
+            <button type="submit" class="form-control bg-success text-white">
+                Submit
+            </button>
+        </div>
+    </form>
     <div id="undertime_tab" style="display: none; position: absolute; top: 0; left: 0; height: calc(100% - 60px); width: 100%; background-color: white; z-index: 2; padding: 20px">
         <button type="button" id="back" style="position: absolute; border: none; right: 20px; top: 20px;">
             <i class="fa-solid fa-circle-arrow-left"></i>
             Back
         </button>
+        <h2>UNDERTIME FORM</h2><br>
+        <div style="display: flex; justify-content: center; align-items: center; height: 60vh;">
+            <img src="../images/coming_soon.jpg" alt="" style="width: 80%;">
+        </div>
     </div>
     <div id="overtime_tab" style="display: none; position: absolute; top: 0; left: 0; height: calc(100% - 60px); width: 100%; background-color: white; z-index: 2; padding: 20px">
         <button type="button" id="back" style="position: absolute; border: none; right: 20px; top: 20px;">
             <i class="fa-solid fa-circle-arrow-left"></i>
             Back
         </button>
+        <h2>OVERTIME FORM</h2><br>
+        <div style="display: flex; justify-content: center; align-items: center; height: 60vh;">
+            <img src="../images/coming_soon.jpg" alt="" style="width: 80%;">
+        </div>
     </div>
 </section>
 <!-- profile_section -->
 <section id="profile_section">
     <div style="display: flex; gap: 20px;">
         <div style="display: flex; justify-content: center; align-items: center;">
-            <img id="profile_picture" src="" alt="" style="height: 100px; border-radius: 100%; border: 3px solid black;">
+            <img id="profile_picture" src="" alt="" style="height: 100px; border-radius: 100%; border: 3px solid white;">
         </div>
         <div id="info" style="display: flex; flex-direction: column; font-size: 14px !important; align-items: center; justify-content: center;">
-            <div id="user_sidebar"></div>
-            <div id="user_sidebar_officer"></div>
-            <div id="user_sidebar_department"></div>
-            <div id="user_sidebar_employee_type"></div>
+            <div class="text-white text-center fw-bold" id="user_sidebar"></div>
+            <div class="text-white text-center"  id="user_sidebar_officer"></div>
+            <div class="text-white text-center"  id="user_sidebar_department"></div>
+            <div class="text-white text-center" id="user_sidebar_employee_type"></div>
         </div>
     </div>
-    <hr>
+    <hr style="color: white;">
+    <ul>
+        <li>
+            <a href="#">
+                <div>
+                    <i class="fa-solid fa-gear"></i>
+                </div>
+                <div>
+                    <h6>Settings</h6>
+                    <h6>></h6>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <div>
+                    <i class="fa-regular fa-circle-question"></i>
+                </div>
+                <div>
+                    <h6>Help</h6>
+                    <h6>></h6>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <div>
+                    <i class="fa-regular fa-file-lines"></i>
+                </div>
+                <div>
+                    <h6>Terms and Conditions</h6>
+                    <h6>></h6>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="https://fareastfuelcorporation.github.io/System/">
+                <div>
+                    <i class="fa-solid fa-power-off"></i>
+                </div>
+                <div>
+                    <h6>Logout</h6>
+                    <h6>></h6>
+                </div>
+            </a>
+        </li>
+    </ul>
 </section>
 
