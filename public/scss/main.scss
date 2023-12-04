@@ -545,8 +545,8 @@ nav{
 #purchase_request_form,
 #supplies_warehouse,
 #incident_report_form,
-#accountingSection,
 #employee_dashboard,
+#application_section,
 #settingsSection,
 #helpSection
 {
@@ -597,6 +597,7 @@ nav{
 #purchase_request_form,
 #supplies_warehouse,
 #incident_report_form,
+#employee_dashboard,
 #settingsSection,
 #helpSection,
 .section_container #marketing_dashboard,
@@ -4562,6 +4563,7 @@ input:disabled {
     #supplies_warehouse,
     #incident_report_form,
     #employee_dashboard,
+    #application_section,
     #settingsSection,
     #helpSection    
     {
@@ -4792,6 +4794,9 @@ input:disabled {
     }
     #employee_dashboard .cards .card{
         height: fit-content !important;
+    }
+    #application_section .card{
+        max-width: 100px !important;
     }
     #employee_dashboard .icon-box{
         display: none !important;
