@@ -74,9 +74,13 @@
                         <div id="user_sidebar_employee_type"></div>
                     <% } %>
                 </div>
+                <hr>
             </div>
-            <hr>
-            <ul>
+            <% if (user !== 'employee') { %>
+                <ul style="justify-content: flex-start !important">
+            <% } else if (user === 'employee') { %>
+                <ul style="justify-content: space-around !important">
+            <% } %>
                 <li class="hover">
                     <a href="#">
                         <i class="fas fa-th-large"></i>

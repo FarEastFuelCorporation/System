@@ -557,7 +557,7 @@ nav{
     padding: 20px;
     min-height: calc(100vh - 60px);
     background: #f5f5f7;
-    overflow: scroll !important;
+    overflow-y: scroll !important;
 }
 
 #waste_collection_form,
@@ -4667,6 +4667,118 @@ input:disabled {
 }
 
 @media (max-width:500px){
+    .sidebar{
+        position: fixed !important;
+        top: auto;
+        height: 60px !important;
+        width: 100% !important;
+        bottom: 0 !important; /* Set bottom to 0 to position it at the bottom */
+        left: 0;
+        z-index: 2;
+    }
+    .sidebar div
+    {
+        display: none !important;
+    }
+    .sidebar ul
+    {
+        display: flex !important;
+        width: 100% !important;
+        flex-direction: row !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        justify-content: flex-start !important;
+        overflow-x: auto !important;
+    }
+    .sidebar ul li
+    {
+        width: 60px !important;
+        min-width: 60px !important;
+        overflow: hidden !important;
+        flex-shrink: 0 !important;
+    }
+    #dashboard_section,
+    #waste_collection_form,
+    #sorting_dashboard_section,
+    #sorting_form,
+    #treatment_process_dashboard,
+    #treatment_process_form,
+    #certification_dashboard,
+    #destruction_form,
+    #marketing_dashboard_pco,
+    #billing_dashboard,
+    #collection_dashboard,
+    #billing_process_form,
+    #marketing_dashboard,
+    #marketing_transaction_form,
+    #client_list_section,
+    #type_of_waste_list_section,
+    #quotation_form,
+    #commission_form,
+    #logistic_dashboard,
+    #logistics_travel_form,
+    #vehicle_list_section,
+    #new_vehicle_form,
+    #vehicle_maintenance_form,
+    #vehicle_inspection,
+    #safety_dashboard,
+    #incident_documentation_form,
+    #safety_inspection,
+    #hr_dashboard,
+    #employee_list_section,
+    #attendance_form,
+    #loan_section,
+    #accounting_head_dashboard,
+    #purchasing_dashboard,
+    #purchase_order_form,
+    #supplier_list_section,
+    #ap_accounting_dashboard,
+    #trip_forms,
+    #fund_transfer_form,
+    #warehouse_dashboard,
+    #disposal_warehouse,
+    #warehouse_inventory,
+    #supplies_transaction,
+    #supplies_inventory,
+    #purchase_request_form,
+    #supplies_warehouse,
+    #incident_report_form,
+    #employee_dashboard,
+    #application_section,
+    #settingsSection,
+    #helpSection    
+    {
+    position: absolute;
+    top: 60px;
+    width: calc(100%);
+    left: 0;
+    min-height: calc(100vh - 60px);
+    background: #f5f5f7;
+    overflow-y: scroll !important;
+    }
+    .main{
+        left: 60px;
+        width: calc(100% - 60px);
+    }
+    .cards{
+        width: calc(100% - 60px);
+    }
+    .card .card-name{
+        font-size: 16px;
+    }
+    .card .number{
+        font-size: 16px;
+    }
+    .cards :nth-child(2) .card-name,
+    .cards :nth-child(3) .card-name,
+    .cards :nth-child(5) .card-name{
+    padding: 16px 0 0 0;
+    }
+    #user_sidebar, #user_sidebar_officer, #user_sidebar_department
+    {
+        display: none !important;
+    }
+
     .topbar
     {
         padding: 0 10px;
@@ -4690,6 +4802,7 @@ input:disabled {
     }
     #account_info{
         padding: 5px !important;
+        margin: 0 !important;
     }
     #account_info #profile_picture{
         max-height: 50px !important; 
@@ -4796,7 +4909,15 @@ input:disabled {
         height: fit-content !important;
     }
     #application_section .card{
-        max-width: 100px !important;
+        display: grid !important;
+        grid-template-columns: 75% 25% !important;
+    }
+    #application_section .card > div{
+        display: flex !important;
+        justify-content: center !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
     }
     #employee_dashboard .icon-box{
         display: none !important;

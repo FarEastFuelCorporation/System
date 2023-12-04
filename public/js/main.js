@@ -916,6 +916,9 @@ function weekNumberToPrevMonthAbbreviation(weekNumber) {
   return monthAbbreviation;
 }
 
+  // You might need to call adjustLayout whenever the content changes dynamically
+  // For example, after adding or removing li elements.
+
 // const forms_input = document.querySelectorAll('form'); // Select the spinner globally
 // const spinner = document.querySelector('.spinner'); // Select the spinner globally
 

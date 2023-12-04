@@ -31,6 +31,16 @@ document.addEventListener('DOMContentLoaded', async function() {
         user_sidebar_department.innerText = username_data_list.content[xValue][findTextInArray(username_data_list, "DEPARTMENT")];
         user_sidebar_employee_type.innerText = username_data_list.content[xValue][findTextInArray(username_data_list, "EMPLOYEE TYPE")];
         
+
+        // application_section
+        const application_section = document.querySelector("#application_section");
+        const buttons = application_section.querySelectorAll("button");
+        const sick_leave_button = buttons[0];
+        const vacation_button = buttons[1];
+        const undertime_button = buttons[2];
+        const overtime_button = buttons[3];
+        console.log(buttons)
+
     } catch (error) {
         console.error('Error fetching data:', error);
     }

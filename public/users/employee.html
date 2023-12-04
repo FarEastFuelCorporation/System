@@ -70,9 +70,11 @@
                         <div id="user_sidebar_employee_type"></div>
                     
                 </div>
+                <hr>
             </div>
-            <hr>
-            <ul>
+            
+                <ul style="justify-content: space-around !important">
+            
                 <li class="hover">
                     <a href="#">
                         <i class="fas fa-th-large"></i>
@@ -80,7 +82,13 @@
                     </a>
                 </li>
                 
-                    
+                    <li>
+    <a href="#">
+        <i class="fa-solid fa-file-signature"></i>
+        Applications
+    </a>
+</li>
+
                 
                 <li>
                     <a href="#">
@@ -179,44 +187,44 @@
 <section class="logistic" id="application_section">
     <h2>APPLICATION FORMS</h2><br>
     <div style="display: flex; flex-wrap: wrap; gap: 20px;">
-        <div class="card">
+        <button type="button" class="card">
             <div class="card-content">
-                <div class="number" id="booked_transactions">0 day</div>
-                <div class="card-name">Present</div>
+                <div class="number" id="sick_leave">15 days</div>
+                <div class="card-name">Sick Leave Form</div>
             </div>
             <div class="icon-box">
-                <i class="fa-solid fa-book-bookmark"></i>
+                <i class="fa-solid fa-file-signature"></i>
             </div>
-        </div>
-        <div class="card">
+        </button>
+        <button type="button" class="card">
             <div class="card-content">
-                <div class="number" id="pending_transactions">0 day</div>
-                <div class="card-name">Absent</div>
+                <div class="number" id="vacation_leave">15 days</div>
+                <div class="card-name">Vacation Leave Form</div>
             </div>
             <div class="icon-box">
-                <i class="fa-solid fa-clipboard-list"></i>
+                <i class="fa-solid fa-file-signature"></i>
             </div>
-        </div>
-        <div class="card">
+        </button>
+        <button type="button" class="card">
             <div class="card-content">
-                <div class="number" id="on_hauling_transactions">0 min</div>
-                <div class="card-name">Late</div>
+                <div class="card-name">Undertime Form</div>
             </div>
             <div class="icon-box">
-                <i class="fa-solid fa-clipboard-user"></i>
+                <i class="fa-solid fa-clock-rotate-left"></i>
             </div>
-        </div>
-        <div class="card">
+        </button>
+        <button type="button" class="card">
             <div class="card-content">
-                <div class="number" id="hauled_transactions">0 min</div>
-                <div class="card-name">Undertime</div>
+                <div class="card-name">Overtime Form</div>
             </div>
             <div class="icon-box">
-                <i class="fa-solid fa-clipboard-check"></i>
+                <i class="fa-regular fa-clock"></i>
             </div>
-        </div>
-    </div><br>
-    <h2>APPLICATION</h2>
+        </button>
+    </div>
+    <!-- <div id="sick_leave_tab" style="position: absolute; top: 0; left: 0; height: calc(100%); width: 100%; background-color: #198754;">
+
+    </div> -->
 </section>
 
 
