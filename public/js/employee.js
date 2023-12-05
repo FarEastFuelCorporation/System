@@ -42,7 +42,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         user_sidebar_department.innerText = username_data_list.content[xValue][findTextInArray(username_data_list, "DEPARTMENT")];
         user_sidebar_employee_type.innerText = username_data_list.content[xValue][findTextInArray(username_data_list, "EMPLOYEE TYPE")];
         
-        console.log(window.location.href)
         // application_section
         const application_section = document.querySelector("#application_section");
         const buttons = application_section.querySelectorAll("button");
