@@ -72,13 +72,16 @@
 <section id="application_section">
     <h2>APPLICATION FORMS</h2><br>
     <div style="display: flex; flex-wrap: wrap; gap: 20px;">
-        <button type="button" class="card">
+        <button type="button" class="card" style="position: relative;">
             <div class="card-content">
                 <div class="number" id="sick_leave">5 days</div>
                 <div class="card-name">Service Incentive Leave Form</div>
             </div>
             <div class="icon-box">
                 <i class="fa-solid fa-file-signature"></i>
+            </div>
+            <div id="note" class="card-name" style="display: none; position: absolute; width: 100%; display: flex; justify-content: center; z-index: 2; color: #dc3545;">
+                For Employee 1 Year and Above in Service
             </div>
         </button>
         <button type="button" class="card">
@@ -185,7 +188,7 @@
             <img src="../images/coming_soon.jpg" alt="" style="width: 80%;">
         </div>
     </div>
-    <div id="overtime_tab" style="display: none; position: absolute; top: 0; left: 0; height: calc(100% - 60px); width: 100%; background-color: white; z-index: 2; padding: 20px">
+    <form id="overtime_tab" style="display: none; position: absolute; top: 0; left: 0; height: calc(100% - 60px); width: 100%; background-color: white; z-index: 2; padding: 20px">
         <button type="button" id="back" style="position: absolute; border: none; right: 20px; top: 20px;">
             <i class="fa-solid fa-circle-arrow-left"></i>
             Back
@@ -194,7 +197,7 @@
         <div style="display: flex; justify-content: center; align-items: center; height: 60vh;">
             <img src="../images/coming_soon.jpg" alt="" style="width: 80%;">
         </div>
-    </div>
+    </form>
 </section>
 <!-- profile_section -->
 <section id="profile_section">
