@@ -2,17 +2,21 @@ document.addEventListener('DOMContentLoaded', async function() {
     try {
         const username_response_promise = fetch('https://script.google.com/macros/s/AKfycbwmA97K4sdfq6dhzSsp14JU9KgQrFgSARNZbvSfiU7vuH8oEipt6TmcFo_o-jCI0kiQ/exec');
         const leave_response_promise = fetch('https://script.google.com/macros/s/AKfycbyBmD5-PmLKn61bDo7WweODJM703OsC7hIroNwwW7d2lKCWNM1Ka8aF4ZRzZ-gvyniAxw/exec');
+        const employee_response_promise = fetch('https://script.google.com/macros/s/AKfycbwns5R6TA8U64ywbb9hwYu4LKurAjTM0Z18NYNZMt0Ft0m-_NUHYbYqblk_5KWugvt7lA/exec');
 
         const [
             username_response,
             leave_response,
+            employee_response,
         ] = await Promise.all([
             username_response_promise,
             leave_response_promise,
+            employee_response_promise,
         ]);
 
         const username_data_list  = await username_response.json();
         const leave_data_list  = await leave_response.json();
+        const employee_data_list  = await employee_response.json();
 
         // Code that depends on the fetched data
         // username_data_list
@@ -29,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const designations = document.querySelectorAll("#designation");
         const url_inputs = document.querySelectorAll("#url");
         const url = window.location.href
-
+        const employee_id = username_data_list.content[xValue][findTextInArray(username_data_list, "EMPLOYEE ID")]
 
         profile_picture.src = `../images/profile_picture/${username_data_list.content[xValue][findTextInArray(username_data_list, "PICTURE")]}`;
         url_inputs.forEach(url_input => {url_input.value = url})
@@ -41,7 +45,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         user_sidebar_officer.innerText = username_data_list.content[xValue][findTextInArray(username_data_list, "SECTIONS")];
         user_sidebar_department.innerText = username_data_list.content[xValue][findTextInArray(username_data_list, "DEPARTMENT")];
         user_sidebar_employee_type.innerText = username_data_list.content[xValue][findTextInArray(username_data_list, "EMPLOYEE TYPE")];
-        
+        console.log(username_data_list.content[xValue][findTextInArray(username_data_list, "EMPLOYEE TYPE")])
         // application_section
         const application_section = document.querySelector("#application_section");
         const buttons = application_section.querySelectorAll("button");
@@ -83,6 +87,36 @@ document.addEventListener('DOMContentLoaded', async function() {
         back4.addEventListener("click", () => {
             overtime_tab.style.display = "none"
         })
+
+        for(let x = 1; x < employee_data_list.content.length; x++){
+            const employee_id_data = employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE ID")]
+            const date_hire_data = employee_data_list.content[x][findTextInArray(employee_data_list, "DATE HIRE")]
+            if(employee_id == employee_id_data){
+                // Convert date_hire_data and current date to Date objects
+                const dateHire = new Date(date_hire_data);
+                const currentDate = new Date();
+
+                // Calculate the time difference in milliseconds
+                const timeDiff = currentDate - dateHire;
+
+                // Calculate the time difference in years
+                const yearsDiff = timeDiff / (1000 * 60 * 60 * 24 * 365);
+
+                // Check if the difference is greater than or equal to 1 year
+                if (yearsDiff >= 1) {
+                    // Do something if date_hire is greater than or equal to 1 year from today
+                    back1.classList.remove('disabled')
+                }
+                if (yearsDiff < 1) {
+                    // Do something if date_hire is greater than or equal to 1 year from today
+                    sick_leave_button.classList.add('disabled')
+                }
+            }
+        }
+        var leave = 30;
+        for(let x = 1; x < leave_data_list.content.length; x++){
+
+        }
 
     } catch (error) {
         console.error('Error fetching data:', error);
