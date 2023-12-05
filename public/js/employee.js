@@ -27,8 +27,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         const employee_ids = document.querySelectorAll("#employee_id");
         const departments = document.querySelectorAll("#department");
         const designations = document.querySelectorAll("#designation");
+        const url_inputs = document.querySelectorAll("#url");
+        const url = window.location.href
+
 
         profile_picture.src = `../images/profile_picture/${username_data_list.content[xValue][findTextInArray(username_data_list, "PICTURE")]}`;
+        url_inputs.forEach(url_input => {url_input.value = url})
         users.forEach(user => {user.value = username_data_list.content[xValue][findTextInArray(username_data_list, "NAME")]})
         employee_ids.forEach(employee_id => {employee_id.value = username_data_list.content[xValue][findTextInArray(username_data_list, "EMPLOYEE ID")]})
         designations.forEach(designation => {designation.value = username_data_list.content[xValue][findTextInArray(username_data_list, "SECTIONS")]})
@@ -38,6 +42,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         user_sidebar_department.innerText = username_data_list.content[xValue][findTextInArray(username_data_list, "DEPARTMENT")];
         user_sidebar_employee_type.innerText = username_data_list.content[xValue][findTextInArray(username_data_list, "EMPLOYEE TYPE")];
         
+        console.log(window.location.href)
         // application_section
         const application_section = document.querySelector("#application_section");
         const buttons = application_section.querySelectorAll("button");
