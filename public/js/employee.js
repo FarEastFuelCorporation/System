@@ -107,6 +107,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     // Do something if date_hire is greater than or equal to 1 year from today
                     back1.classList.remove('disabled')
                     const note = sick_leave_button.querySelector("note");
+                    console.log(note)
                     note.style.display = "none"
 
                 }

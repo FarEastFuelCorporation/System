@@ -946,18 +946,28 @@
             const company = document.getElementById('company').value;
             const type_of_cod = document.getElementById('type_of_cod');
             const waste_description = document.getElementById('waste_description').value;
-            const year_covered = document.getElementById('year_covered').value;
-            const month_covered = document.getElementById('month_covered').value;
-            var month_name = monthNumberToName(month_covered);
+            var filename_data;
             let modifiedCompanyName = company.replace(/\./g, '');
+            var month_name, year_covered;
+            if(type_of_cod.value == "By Waste and Date Coverage"){
+                const date_from = date_decoder(document.getElementById("date_from").value);
+                const date_to = date_decoder(document.getElementById("date_to").value);
+                filename_data = `${cod_form_no} - ${modifiedCompanyName} - ${date_from} - ${date_to} - ${waste_description}`
+            }
+            else{
+                const month_covered = document.getElementById('month_covered').value;
+                var month_name = monthNumberToName(month_covered);
+                var year_covered = document.getElementById('year_covered').value;
+                filename_data = `${cod_form_no} - ${modifiedCompanyName} - ${year_covered} ${month_name} - ${waste_description}`
+            }
 
             const opt = {
-                filename: `${cod_form_no} - ${modifiedCompanyName} - ${year_covered} ${month_name} - ${waste_description}.pdf`,
+                filename: filename_data,
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 10 },
+                html2canvas: { scale: 2 },
                 jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
             };
-            
+
             const marginTop = 32.5; // Top margin in mm
             const marginBottom = 0; // Bottom margin in mm
 
@@ -986,13 +996,23 @@
             const company = document.getElementById('company').value;
             const type_of_cod = document.getElementById('type_of_cod');
             const waste_description = document.getElementById('waste_description').value;
-            const year_covered = document.getElementById('year_covered').value;
-            const month_covered = document.getElementById('month_covered').value;
-            var month_name = monthNumberToName(month_covered);
+            var filename_data;
             let modifiedCompanyName = company.replace(/\./g, '');
+            var month_name, year_covered;
+            if(type_of_cod.value == "By Waste and Date Coverage"){
+                const date_from = date_decoder(document.getElementById("date_from").value);
+                const date_to = date_decoder(document.getElementById("date_to").value);
+                filename_data = `${cod_form_no} - ${modifiedCompanyName} - ${date_from} - ${date_to} - ${waste_description}`
+            }
+            else{
+                const month_covered = document.getElementById('month_covered').value;
+                var month_name = monthNumberToName(month_covered);
+                var year_covered = document.getElementById('year_covered').value;
+                filename_data = `${cod_form_no} - ${modifiedCompanyName} - ${year_covered} ${month_name} - ${waste_description}`
+            }
 
             const opt = {
-                filename: `${cod_form_no} - ${modifiedCompanyName} - ${year_covered} ${month_name} - ${waste_description}`,
+                filename: filename_data,
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 2 },
                 jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
