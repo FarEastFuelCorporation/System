@@ -106,16 +106,16 @@ document.addEventListener('DOMContentLoaded', async function() {
                 if (yearsDiff >= 1) {
                     // Do something if date_hire is greater than or equal to 1 year from today
                     back1.classList.remove('disabled')
-                    const note = sick_leave_button.querySelector("note");
-                    console.log(note)
+                    const note = sick_leave_button.querySelector("#note");
                     note.style.display = "none"
 
                 }
                 if (yearsDiff < 1) {
                     // Do something if date_hire is greater than or equal to 1 year from today
                     sick_leave_button.classList.add('disabled');
-                    const note = sick_leave_button.querySelector("note");
+                    const note = sick_leave_button.querySelector("#note");
                     note.style.display = "block"
+                    console.log(sick_leave_button)
                 }
             }
         }

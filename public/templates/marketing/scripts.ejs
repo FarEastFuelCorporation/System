@@ -1,39 +1,65 @@
 <script src="../js/marketing.js"></script>
 <script>
     function convertToPDFandDownload() {
-        const element = document.getElementById('what_to_print');
+        // Assuming your form has an ID 'new_quotation_form_tab'
         const new_quotation_form_tab = document.querySelector('#new_quotation_form_tab');
-        const quotation_no = new_quotation_form_tab.querySelector('#quotation_no').value;
-        const client = new_quotation_form_tab.querySelector('#client').value;
-        let modifiedCompanyName = client.replace(/\./g, '');
-
-        const opt = {
-            filename: `${quotation_no} - ${client}`,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 10 },
-            jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
-        };
         
-        const marginTop = 32.5; // Top margin in mm
-        const marginBottom = 0; // Bottom margin in mm
+        // Perform form validation before proceeding
+        if (validateForm(new_quotation_form_tab)) {
+            const element = document.getElementById('what_to_print');
+            const quotation_no = new_quotation_form_tab.querySelector('#quotation_no').value;
+            const client = new_quotation_form_tab.querySelector('#client').value;
+            let modifiedCompanyName = client.replace(/\./g, '');
 
-        // Set the page height to account for the top and bottom margins
-        const pageHeight = 279.4 - marginTop - marginBottom;
+            const opt = {
+                filename: `${quotation_no} - ${client}`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 10 },
+                jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
+            };
 
-        // Reset the element's transform style
-        element.style.transform = 'none';
+            const marginTop = 32.5; // Top margin in mm
+            const marginBottom = 0; // Bottom margin in mm
 
-        // Generate the PDF with the adjusted options
-        html2pdf()
-            .set(opt)
-            .from(element)
-            .toContainer()
-            .then(() => {
-                html2pdf().set(opt).from(element).save().then(() => {
-                    // Call the submit button click event immediately after the PDF is downloaded
-                    document.getElementById('submit_button').click();
+            // Set the page height to account for the top and bottom margins
+            const pageHeight = 279.4 - marginTop - marginBottom;
+
+            // Reset the element's transform style
+            element.style.transform = 'none';
+
+            // Generate the PDF with the adjusted options
+            html2pdf()
+                .set(opt)
+                .from(element)
+                .toContainer()
+                .then(() => {
+                    html2pdf().set(opt).from(element).save().then(() => {
+                        // Call the submit button click event immediately after the PDF is downloaded
+                        document.getElementById('submit_button').click();
+                    });
                 });
-            });
+        } else {
+            // Handle the case where the form is not valid
+            alert('Please fill out the form completely before downloading.');
+        }
+    }
+
+    // Function to validate the form
+    function validateForm(form) {
+        // Query all input elements with the 'required' attribute
+        const requiredInputs = form.querySelectorAll('input[required]');
+
+        // Check if all required inputs have a non-empty value
+        for (const input of requiredInputs) {
+            if (input.value.trim() === '') {
+                return false; // Form is not valid
+            }
+            // You can add more specific validation checks for different input types if needed
+        }
+
+        // Add more validation checks as needed
+
+        return true; // Form is valid
     }
 
     function convertToPDF() {
