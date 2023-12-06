@@ -1264,7 +1264,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const add_item_button_gate_pass_transaction = gate_pass_transaction.querySelector("#add_item_button");
         const remove_item_button_gate_pass_transaction = gate_pass_transaction.querySelector("#remove_item_button");
         const generate_button_gate_pass_transaction = gate_pass_transaction.querySelector("#generate_button");
-        const what_to_print_gate_pass_transaction = gate_pass_transaction.querySelector("#what_to_print_container");
+        const what_to_print_gate_pass_transaction = gate_pass_transaction.querySelector("#what_to_print");
+        const what_to_print_container_gate_pass_transaction = gate_pass_transaction.querySelector("#what_to_print_container");
         const gp_form_no_gate_pass_transaction = gate_pass_transaction.querySelector("#gp_form_no");
         const issued_to_gate_pass_transaction = gate_pass_transaction.querySelector("#issued_to");
         const company_gate_pass_transaction = gate_pass_transaction.querySelector("#company");
@@ -1606,8 +1607,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 </div>
             </div>
             `
-            what_to_print_gate_pass_transaction.innerHTML = "";
-            what_to_print_gate_pass_transaction.insertAdjacentHTML("afterbegin", form_data)
+            what_to_print_container_gate_pass_transaction.innerHTML = "";
+            what_to_print_container_gate_pass_transaction.insertAdjacentHTML("afterbegin", form_data)
+            what_to_print_gate_pass_transaction.style.display = "Block"
         })
 
 
