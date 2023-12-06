@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const sf_response_promise = fetch('https://script.google.com/macros/s/AKfycby9b2VCfXc0ifkwBXJRi2UVUwgZIj9F4FTOdZa_SYKZdsTwbVtAzAXzNMFeklE35bg1/exec');
         const cod_response_promise = fetch('https://script.google.com/macros/s/AKfycbzgiOuXizUVviCsLVfihqYN9HJ3pyNr7ElHoCl3JGkbtQnChnm2U42yQuLd4UMH0ci5/exec');
         const bpf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyux0GBj9tk6quRz46IkXa0VemEDAi-v2iEHx7C_6OFi416ERkv_BFtKqBmbw-bxaaiFQ/exec');
+        const stf_response_promise = fetch('https://script.google.com/macros/s/AKfycbytp1dpaOC_8sf0YsO2U2iJRiUjk791Pg-nA0zVYmxyE9zd0pc8Hlfu4P_-KalUyNLgDw/exec');
         const qlf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyFU_skru2tnyEiv8I5HkpRCXbUlQb5vlJUm8Le0nZBCvfZeFkQPd2Naljs5CZY41I17w/exec');
         const clf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxTthjFI5UO-6LgpCH7bcy7A-c59g83xfiRiWgeBpetpHrPU9TBY7pP-TabLCQXc0zlSQ/exec');
         const ctf_response_promise = fetch('https://script.google.com/macros/s/AKfycby7B-ynU2Om6j9EZeGq4aROFUSMs7qjG3L7g54MSbwmbtzfAjimVJDavmUeJIy74YzDng/exec');
@@ -35,6 +36,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             sf_response,
             cod_response,
             bpf_response,
+            stf_response,
             qlf_response,
             clf_response,
             ctf_response,
@@ -57,6 +59,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             sf_response_promise,
             cod_response_promise,
             bpf_response_promise,
+            stf_response_promise,
             qlf_response_promise,
             clf_response_promise,
             ctf_response_promise,
@@ -80,6 +83,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const sf_data_list  = await sf_response.json();
         const cod_data_list  = await cod_response.json();
         const bpf_data_list  = await bpf_response.json();
+        const stf_data_list  = await stf_response.json();
         const qlf_data_list  = await qlf_response.json();
         const clf_data_list  = await clf_response.json();
         const ctf_data_list  = await ctf_response.json();

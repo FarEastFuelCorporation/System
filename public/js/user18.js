@@ -1256,6 +1256,360 @@ document.addEventListener('DOMContentLoaded', async function() {
             supplies_inventory_list.insertAdjacentHTML("beforeend", table_data_supplies_inventory)
         }
 
+        // gate_pass_transaction
+        const gate_pass_transaction = document.querySelector("#gate_pass_transaction");
+        const gate_pass_form_button = gate_pass_transaction.querySelector("#gate_pass_form_button");
+        const form_tab_gate_pass_transaction = gate_pass_transaction.querySelector("#form_tab");
+        const item_container_gate_pass_transaction = gate_pass_transaction.querySelector("#item_container");
+        const add_item_button_gate_pass_transaction = gate_pass_transaction.querySelector("#add_item_button");
+        const remove_item_button_gate_pass_transaction = gate_pass_transaction.querySelector("#remove_item_button");
+        const generate_button_gate_pass_transaction = gate_pass_transaction.querySelector("#generate_button");
+        const what_to_print_gate_pass_transaction = gate_pass_transaction.querySelector("#what_to_print_container");
+        const gp_form_no_gate_pass_transaction = gate_pass_transaction.querySelector("#gp_form_no");
+        const issued_to_gate_pass_transaction = gate_pass_transaction.querySelector("#issued_to");
+        const company_gate_pass_transaction = gate_pass_transaction.querySelector("#company");
+        const address_gate_pass_transaction = gate_pass_transaction.querySelector("#address");
+        const plate_no_gate_pass_transaction = gate_pass_transaction.querySelector("#plate_no");
+        const type_of_vehicle_gate_pass_transaction = gate_pass_transaction.querySelector("#type_of_vehicle");
+        const date_input_gate_pass_transaction = gate_pass_transaction.querySelector("#date_input");
+        const time_in_gate_pass_transaction = gate_pass_transaction.querySelector("#time_in");
+        const time_out_gate_pass_transaction = gate_pass_transaction.querySelector("#time_out");
+        const remarks1_gate_pass_transaction = gate_pass_transaction.querySelector("#remarks1");
+        const remarks2_gate_pass_transaction = gate_pass_transaction.querySelector("#remarks2");
+        const truck_scale_gate_pass_transaction = gate_pass_transaction.querySelector("#truck_scale");
+        const other_remarks_gate_pass_transaction = gate_pass_transaction.querySelector("#other_remarks");
+        console.log(time_in_gate_pass_transaction.value)
+
+        gate_pass_form_button.addEventListener("click", () => {
+            if(form_tab_gate_pass_transaction.style.display == "none"){
+                form_tab_gate_pass_transaction.style.display = "block"
+            } else{
+                form_tab_gate_pass_transaction.style.display = "none"
+            }
+        })
+
+        add_item_button_gate_pass_transaction.addEventListener("click", () => {
+            addGatePassItem();
+            const item_counter_gate_pass_transaction = gate_pass_transaction.querySelector("#item_counter");
+
+            remove_item_button_gate_pass_transaction.style.display = "block";
+            if(item_counter_gate_pass_transaction.value >= 15){
+                add_item_button_gate_pass_transaction.style.display = "none";
+            }
+        })
+        function addGatePassItem(){
+            const item_counter_gate_pass_transaction = gate_pass_transaction.querySelector("#item_counter");
+            item_counter_gate_pass_transaction.value++
+            var item_data = 
+            `
+            <div id="item${item_counter_gate_pass_transaction.value}">
+                <div style="display: flex; gap: 20px;">
+                    <div>
+                        <label for="item_description${item_counter_gate_pass_transaction.value}">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Item Description:
+                        </label><br>
+                        <input type="text" id="item_description${item_counter_gate_pass_transaction.value}" name="item_description${item_counter_gate_pass_transaction.value}" autocomplete="off" class="form-control" required style="width: 520px;">
+                    </div>
+                    <div>
+                        <label for="quantity${item_counter_gate_pass_transaction.value}">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Quantity:
+                        </label><br>
+                        <input type="number" id="quantity${item_counter_gate_pass_transaction.value}" name="quantity${item_counter_gate_pass_transaction.value}" autocomplete="off" class="form-control form" required>
+                    </div>
+                    <div>
+                        <label for="unit${item_counter_gate_pass_transaction.value}">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Unit:
+                        </label><br>
+                        <input type="text" id="unit${item_counter_gate_pass_transaction.value}" name="unit${item_counter_gate_pass_transaction.value}" autocomplete="off" class="form-control form" required>
+                    </div>
+                </div><br>
+            </div>
+            `
+            item_container_gate_pass_transaction.insertAdjacentHTML("beforeend", item_data)
+        }
+        addGatePassItem()
+
+        remove_item_button_gate_pass_transaction.addEventListener("click", () => {
+            const item_counter_gate_pass_transaction = gate_pass_transaction.querySelector("#item_counter");
+            const item_gate_pass_transaction = gate_pass_transaction.querySelector(`#item${item_counter_gate_pass_transaction.value}`);
+            item_gate_pass_transaction.remove()
+            item_counter_gate_pass_transaction.value--
+
+            if(item_counter_gate_pass_transaction.value == 1){
+                remove_item_button_gate_pass_transaction.style.display = "none";
+            }
+            else if(item_counter_gate_pass_transaction.value < 15){
+                add_item_button_gate_pass_transaction.style.display = "block";
+            }
+        })
+
+        generate_button_gate_pass_transaction.addEventListener("click", () => {
+            const item_counter_gate_pass_transaction = gate_pass_transaction.querySelector("#item_counter");
+            var table_data = "";
+            var counter = 1
+            for(let x = 1; x <= item_counter_gate_pass_transaction.value; x++){
+                const item_description = gate_pass_transaction.querySelector(`#item_description${x}`);
+                const quantity = gate_pass_transaction.querySelector(`#quantity${x}`);
+                const unit = gate_pass_transaction.querySelector(`#unit${x}`);
+                var table_row =
+                `
+                <tr>
+                    <td>${counter}</td>
+                    <td>${item_description.value}</td>
+                    <td>${quantity.value}</td>
+                    <td>${unit.value}</td>
+                </tr>
+                `
+                counter++
+                table_data += table_row
+            }
+            console.log(time_in_gate_pass_transaction.value)
+            for(let x = 1; x <= 15 - item_counter_gate_pass_transaction.value; x++){
+                table_data += 
+                `
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                `
+            }
+            var form_data = 
+            `
+            <div id="container">
+                <div style="display: grid; grid-template-columns: 70% 30%; border-bottom: 2px solid black;">
+                    <div style="display: flex; border-right: 2px solid black;">
+                        <img src="../images/logo.png" id="background-image" style="width: 72px; height: 72px;">
+                        <div style="display: flex; flex-direction: column; padding-left: 5px;">
+                            <img src="../images/logo_name2.png" id="background-image" style="height: 30px; margin-top: 5px;">
+                            <h6>888, Purok 5, Irabagon St. Brgy. Anyatam San Ildefonso, Bulacan-3010</h6>
+                            <h6>No: (+63 2) 579 3381, (+63 44) 896 0165</h6>
+                            <h6>Email Address: fareastfuel@gmail.com</h6>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-center" style="font-weight: bold; border-bottom: 2px solid black; background-color: #dc3545; color: white;"><i>COMPANY'S COPY</i></h3>
+                        <h3 class="text-center" style="font-weight: bold; border-bottom: 2px solid black;">GATE PASS FORM</h3>
+                        <h1 class="text-center" style="font-weight: bold;">${gp_form_no_gate_pass_transaction.value}</h1>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 70% 30%; border-bottom: 2px solid black;">
+                    <div>
+                        <div style="display: grid; grid-template-columns: 11.50% 88.50%; width: 100%;">
+                            <div style="border-right: 2px solid black;">
+                                <h5 style="padding-left: 5px; border-bottom: 2px solid black;">Issued To:</h5>
+                                <h5 style="padding-left: 5px; border-bottom: 2px solid black;">Company:</h5>
+                                <h5 style="padding-left: 5px;">Address:</h5>
+                            </div>
+                            <div style="border-right: 2px solid black;">
+                                <h5 style="padding-left: 5px; font-weight: bold; border-bottom: 2px solid black;">${issued_to_gate_pass_transaction.value}</h5>
+                                <h5 style="padding-left: 5px; font-weight: bold; border-bottom: 2px solid black;">${company_gate_pass_transaction.value}</h5>
+                                <h5 style="padding-left: 5px; font-weight: bold;">${address_gate_pass_transaction.value}</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h5 class="text-center" style="font-weight: bold; border-bottom: 2px solid black;">${date_decoder(date_input_gate_pass_transaction.value)}</h5>
+                        <h5 class="text-center" style="font-weight: bold; border-bottom: 2px solid black;">${remarks1_gate_pass_transaction.value}</h5>
+                        <h5 class="text-center" style="font-weight: bold;">${remarks2_gate_pass_transaction.value}</h5>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: calc(70% - 2px) 15% 15%; width: 100%; border-bottom: 2px solid black;">
+                    <div style="display: grid; grid-template-columns: 25% 75%;">
+                        <div style="display: flex;">
+                            <h5 style="padding-left: 5px;">Plate No.:</h5>
+                            <h5 style="padding-left: 5px; font-weight: bold;">${plate_no_gate_pass_transaction.value}</h5>
+                        </div>
+                        <div style="display: flex;">
+                            <h5 style="padding-left: 5px; border-left: 2px solid black;">Type of Vehicle:</h5>
+                            <h5 style="padding-left: 5px; font-weight: bold;">${type_of_vehicle_gate_pass_transaction.value}</h5>
+                        </div>
+                    </div>
+                    <div style="display: flex;">
+                        <h5 style="padding-left: 5px; border-left: 2px solid black">Time In:</h5>
+                        <h5 style="padding-left: 5px; font-weight: bold;">${convertTo24HourFormat2(time_in_gate_pass_transaction.value)}</h5>
+                    </div>
+                    <div style="display: flex;">
+                        <h5 style="padding-left: 5px; border-left: 2px solid black">Time Out:</h5>
+                        <h5 style="padding-left: 5px; font-weight: bold;">${convertTo24HourFormat2(time_out_gate_pass_transaction.value)}</h5>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 80% 20%; width: 100%; border-top: 2px solid black; border-bottom: 2px solid black; margin-top: 10px;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ITEM</th>
+                                <th>DESCRIPTION</th>
+                                <th>QUANTITY</th>
+                                <th>UNIT</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        ${table_data}
+                        </tbody>
+                    </table>
+                    <div>
+                        <div style="height: 15px;">
+                            <h5 style="text-align: center; font-weight: bold; border-bottom: 1px solid black;">Truck Scale / Remarks</h5>
+                        </div>
+                        <div style="height: 143px; border-bottom: 1px solid black; display: flex; justify-content: center; align-items: center;">
+                            ${truck_scale_gate_pass_transaction.value}
+                        </div>
+                        <div style="height: 95px; border-bottom: 1px solid black; display: flex; justify-content: center; align-items: center;">
+                            ${other_remarks_gate_pass_transaction.value}
+                        </div>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 20% 20% 20% 20% 20%; position: absolute; bottom: 0; width: 100%; border-top: 2px solid black;">
+                    <div style="display: flex; flex-direction: column;">
+                        <h6 style="padding-left: 5px;">Prepared By</h6><br>
+                        <u><h6 style="font-weight: bold; text-align: center; border-bottom: 1px solid black;">${user_name}</h6></u>
+                        <h6 style="text-align: center;">Warehouse Personel</h6>
+                    </div>
+                    <div style="display: flex; flex-direction: column; border-left: 2px solid black;">
+                        <h6 style="padding-left: 5px;">Checked By</h6><br>
+                        <u><h6 style="font-weight: bold; text-align: center; border-bottom: 1px solid black;">AMADO CRUZ III</h6></u>
+                        <h6 style="text-align: center;">Finance Staff</h6>
+                    </div>
+                    <div style="display: flex; flex-direction: column; border-left: 2px solid black;">
+                        <h6 style="padding-left: 5px;">Approved By</h6><br>
+                        <u><h6 style="font-weight: bold; text-align: center; border-bottom: 1px solid black;">JERRY MONTILLA</h6></u>
+                        <h6 style="text-align: center;">Treatment Dept. Head</h6>
+                    </div>
+                    <div style="display: flex; flex-direction: column; border-left: 2px solid black;">
+                        <h6 style="padding-left: 5px;">Released By</h6><br>
+                        <u><h6 style="font-weight: bold; text-align: center; border-bottom: 1px solid black;">_______________________</h6></u>
+                        <h6 style="text-align: center;">Security</h6>
+                    </div>
+                    <div style="display: flex; flex-direction: column; border-left: 2px solid black;">
+                        <h6 style="padding-left: 5px;">Received By</h6><br>
+                        <u><h6 style="font-weight: bold; text-align: center; border-bottom: 1px solid black;">_______________________</h6></u>
+                        <h6 style="text-align: center;">Client / Customer</h6>
+                    </div>
+                </div>
+            </div>
+            <div style="margin: 23px 0; width: 100%; border-bottom: 2px solid black;"></div>
+            <div id="container">
+                <div style="display: grid; grid-template-columns: 70% 30%; border-bottom: 2px solid black;">
+                    <div style="display: flex; border-right: 2px solid black;">
+                        <img src="../images/logo.png" id="background-image" style="width: 72px; height: 72px;">
+                        <div style="display: flex; flex-direction: column; padding-left: 5px;">
+                            <img src="../images/logo_name2.png" id="background-image" style="height: 30px; margin-top: 5px;">
+                            <h6>888, Purok 5, Irabagon St. Brgy. Anyatam San Ildefonso, Bulacan-3010</h6>
+                            <h6>No: (+63 2) 579 3381, (+63 44) 896 0165</h6>
+                            <h6>Email Address: fareastfuel@gmail.com</h6>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-center" style="font-weight: bold; border-bottom: 2px solid black; background-color: #198754; color: white;"><i>CLIENT'S COPY</i></h3>
+                        <h3 class="text-center" style="font-weight: bold; border-bottom: 2px solid black;">GATE PASS FORM</h3>
+                        <h1 class="text-center" style="font-weight: bold;">${gp_form_no_gate_pass_transaction.value}</h1>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 70% 30%; border-bottom: 2px solid black;">
+                    <div>
+                        <div style="display: grid; grid-template-columns: 11.50% 88.50%; width: 100%;">
+                            <div style="border-right: 2px solid black;">
+                                <h5 style="padding-left: 5px; border-bottom: 2px solid black;">Issued To:</h5>
+                                <h5 style="padding-left: 5px; border-bottom: 2px solid black;">Company:</h5>
+                                <h5 style="padding-left: 5px;">Address:</h5>
+                            </div>
+                            <div style="border-right: 2px solid black;">
+                                <h5 style="padding-left: 5px; font-weight: bold; border-bottom: 2px solid black;">${issued_to_gate_pass_transaction.value}</h5>
+                                <h5 style="padding-left: 5px; font-weight: bold; border-bottom: 2px solid black;">${company_gate_pass_transaction.value}</h5>
+                                <h5 style="padding-left: 5px; font-weight: bold;">${address_gate_pass_transaction.value}</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h5 class="text-center" style="font-weight: bold; border-bottom: 2px solid black;">${date_decoder(date_input_gate_pass_transaction.value)}</h5>
+                        <h5 class="text-center" style="font-weight: bold; border-bottom: 2px solid black;">${remarks1_gate_pass_transaction.value}</h5>
+                        <h5 class="text-center" style="font-weight: bold;">${remarks2_gate_pass_transaction.value}</h5>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: calc(70% - 2px) 15% 15%; width: 100%; border-bottom: 2px solid black;">
+                    <div style="display: grid; grid-template-columns: 25% 75%;">
+                        <div style="display: flex;">
+                            <h5 style="padding-left: 5px;">Plate No.:</h5>
+                            <h5 style="padding-left: 5px; font-weight: bold;">${plate_no_gate_pass_transaction.value}</h5>
+                        </div>
+                        <div style="display: flex;">
+                            <h5 style="padding-left: 5px; border-left: 2px solid black;">Type of Vehicle:</h5>
+                            <h5 style="padding-left: 5px; font-weight: bold;">${type_of_vehicle_gate_pass_transaction.value}</h5>
+                        </div>
+                    </div>
+                    <div style="display: flex;">
+                        <h5 style="padding-left: 5px; border-left: 2px solid black">Time In:</h5>
+                        <h5 style="padding-left: 5px; font-weight: bold;">${convertTo24HourFormat2(time_in_gate_pass_transaction.value)}</h5>
+                    </div>
+                    <div style="display: flex;">
+                        <h5 style="padding-left: 5px; border-left: 2px solid black">Time Out:</h5>
+                        <h5 style="padding-left: 5px; font-weight: bold;">${convertTo24HourFormat2(time_out_gate_pass_transaction.value)}</h5>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 80% 20%; width: 100%; border-top: 2px solid black; border-bottom: 2px solid black; margin-top: 10px;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ITEM</th>
+                                <th>DESCRIPTION</th>
+                                <th>QUANTITY</th>
+                                <th>UNIT</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        ${table_data}
+                        </tbody>
+                    </table>
+                    <div>
+                        <div style="height: 15px;">
+                            <h5 style="text-align: center; font-weight: bold; border-bottom: 1px solid black;">Truck Scale / Remarks</h5>
+                        </div>
+                        <div style="height: 143px; border-bottom: 1px solid black; display: flex; justify-content: center; align-items: center;">
+                            ${truck_scale_gate_pass_transaction.value}
+                        </div>
+                        <div style="height: 95px; border-bottom: 1px solid black; display: flex; justify-content: center; align-items: center;">
+                            ${other_remarks_gate_pass_transaction.value}
+                        </div>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 20% 20% 20% 20% 20%; position: absolute; bottom: 0; width: 100%; border-top: 2px solid black;">
+                    <div style="display: flex; flex-direction: column;">
+                        <h6 style="padding-left: 5px;">Prepared By</h6><br>
+                        <u><h6 style="font-weight: bold; text-align: center; border-bottom: 1px solid black;">${user_name}</h6></u>
+                        <h6 style="text-align: center;">Warehouse Personel</h6>
+                    </div>
+                    <div style="display: flex; flex-direction: column; border-left: 2px solid black;">
+                        <h6 style="padding-left: 5px;">Checked By</h6><br>
+                        <u><h6 style="font-weight: bold; text-align: center; border-bottom: 1px solid black;">AMADO CRUZ III</h6></u>
+                        <h6 style="text-align: center;">Finance Staff</h6>
+                    </div>
+                    <div style="display: flex; flex-direction: column; border-left: 2px solid black;">
+                        <h6 style="padding-left: 5px;">Approved By</h6><br>
+                        <u><h6 style="font-weight: bold; text-align: center; border-bottom: 1px solid black;">JERRY MONTILLA</h6></u>
+                        <h6 style="text-align: center;">Treatment Dept. Head</h6>
+                    </div>
+                    <div style="display: flex; flex-direction: column; border-left: 2px solid black;">
+                        <h6 style="padding-left: 5px;">Released By</h6><br>
+                        <u><h6 style="font-weight: bold; text-align: center; border-bottom: 1px solid black;">_______________________</h6></u>
+                        <h6 style="text-align: center;">Security</h6>
+                    </div>
+                    <div style="display: flex; flex-direction: column; border-left: 2px solid black;">
+                        <h6 style="padding-left: 5px;">Received By</h6><br>
+                        <u><h6 style="font-weight: bold; text-align: center; border-bottom: 1px solid black;">_______________________</h6></u>
+                        <h6 style="text-align: center;">Client / Customer</h6>
+                    </div>
+                </div>
+            </div>
+            `
+            what_to_print_gate_pass_transaction.innerHTML = "";
+            what_to_print_gate_pass_transaction.insertAdjacentHTML("afterbegin", form_data)
+        })
+
 
         // multi section
         // purchase_request_form

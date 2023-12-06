@@ -179,6 +179,25 @@ function convertTo24HourFormat(timeStr) {
   return `${hour24.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
 }
 
+function convertTo24HourFormat2(timeStr) {
+  if(timeStr == ""){
+    return ""
+  }
+  // Convert hour and minute to integers
+  const [hour, minute] = timeStr.split(':');
+  // Convert to 24-hour format if PM
+  
+  var amPm = "AM";
+  let hour24 = hour;
+  if (hour24 / 12 > 1) {
+    hour24 = hour24 % 12;
+    amPm = "PM"
+  }
+
+  // Return the formatted time
+  return `${hour24.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')} ${amPm}`;
+}
+
 function convertToOrdinal(cardinal) {
     var lastDigit = cardinal % 10;
     var lastTwoDigits = cardinal % 100;
