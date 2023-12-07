@@ -1486,8 +1486,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                     </div>
                     <div style="display: flex; flex-direction: column; border-left: 2px solid black;">
                         <h6 style="padding-left: 5px;">Approved By</h6><br>
-                        <u><h6 style="font-weight: bold; text-align: center; border-bottom: 1px solid black;">JERRY MONTILLA</h6></u>
-                        <h6 style="text-align: center;">Treatment Dept. Head</h6>
+                        <u><h6 style="font-weight: bold; text-align: center; border-bottom: 1px solid black;">_______________________</h6></u>
+                        <h6 style="text-align: center;">Authorized Personnel</h6>
                     </div>
                     <div style="display: flex; flex-direction: column; border-left: 2px solid black;">
                         <h6 style="padding-left: 5px;">Released By</h6><br>
@@ -1599,8 +1599,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                     </div>
                     <div style="display: flex; flex-direction: column; border-left: 2px solid black;">
                         <h6 style="padding-left: 5px;">Approved By</h6><br>
-                        <u><h6 style="font-weight: bold; text-align: center; border-bottom: 1px solid black;">JERRY MONTILLA</h6></u>
-                        <h6 style="text-align: center;">Treatment Dept. Head</h6>
+                        <u><h6 style="font-weight: bold; text-align: center; border-bottom: 1px solid black;">_______________________</h6></u>
+                        <h6 style="text-align: center;">Authorized Personnel</h6>
                     </div>
                     <div style="display: flex; flex-direction: column; border-left: 2px solid black;">
                         <h6 style="padding-left: 5px;">Released By</h6><br>
