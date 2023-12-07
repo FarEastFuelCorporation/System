@@ -515,7 +515,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             certified_counter_certification.innerText = done_list_cod.length;
 
             var done_client = [];
-            filter_option_client_certification.innerHTML = `<option value="">SELECT DATE</option>`
+            filter_option_client_certification.innerHTML = `<option value="">SELECT CLIENT</option>`
             pending_certification.forEach((data) => {
                 if(!done_client.includes(data.client)){
                     done_client.push(data.client)
@@ -554,6 +554,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     var status;
                     var date_accomplished;
                     var target_date;
+                    console.log(item)
                     for(let j = 1; j < tpf_data_list.content.length; j++){
                         if(filter_option_client_certification.value == item.client_id && filter_option_date_certification.value == date_decoder(item.date)){
                             if(item.tpfNumber == tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")] &&
@@ -586,7 +587,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         }
                                     }
                                 }
-                                data_value +=`
+                                data_value =`
                                 <tr>
                                     <td>${data_value_counter}</td>
                                     <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")]}</td>
@@ -603,6 +604,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     </tr>
                                 `
                                 data_value_counter += 1;
+                                pending_list_certification.insertAdjacentHTML("beforeend", data_value);
                                 break
                             }
                             else if(item.tpfNumber == tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")] &&
@@ -635,7 +637,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         }
                                     }
                                 }
-                                data_value +=`
+                                data_value =`
                                 <tr>
                                     <td>${data_value_counter}</td>
                                     <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")]}</td>
@@ -652,12 +654,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     </tr>
                                 `
                                 data_value_counter += 1;
+                                pending_list_certification.insertAdjacentHTML("beforeend", data_value);
                                 break
                             }
                         }
                     }
                 }
-                pending_list_certification.innerHTML = data_value;
             })
 
             var options = {
