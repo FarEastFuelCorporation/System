@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const client_list_response_promise = fetch('https://script.google.com/macros/s/AKfycbxXnIsmgK52Ws9H2qAh47qkgZxDltFJaHSFV0e9UQRwaK1g_xwFUKGokL_hk4fq-_mhSg/exec');
         const type_of_waste_response_promise = fetch('https://script.google.com/macros/s/AKfycbw0yC-8_V38Zl1-KGyBwX1JmfTEW1jwyFxgpZ-oNC2lvtoAraUtkLCS27HfNbXi_l4IPg/exec');
         const treatment_process_response_promise = fetch('https://script.google.com/macros/s/AKfycbzlzR7zmvdHSz4JpeXtEzPE4OQckTIVaE6PBw5IYwlqmmeIprQxEKkp4d2Jb1kBcgndzA/exec');
+        const mtf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzkzS4OVm3IfNl6KwOfLZq_uO3MnsXfu-oS5Su_1kxhfo1mMoKpYDm8a4RxWqsQh0qv/exec');
         const ltf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxBLMvyNDsT9_dlVO4Qc31dI4ErcymUHbzKimOpCZHgbJxip2XxCl7Wk3hJyqcdtrxU/exec');
         const wcf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyBFTBuFZ4PkvwmPi_3Pp_v74DCSEK2VpNy6janIGgaAK-P22wazmmShOKn6iwFbrQn/exec');
         const sf_response_promise = fetch('https://script.google.com/macros/s/AKfycby9b2VCfXc0ifkwBXJRi2UVUwgZIj9F4FTOdZa_SYKZdsTwbVtAzAXzNMFeklE35bg1/exec');
@@ -18,6 +19,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             client_list_response,
             type_of_waste_response,
             treatment_process_response,
+            mtf_response,
             ltf_response,
             wcf_response,
             sf_response,
@@ -29,6 +31,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             client_list_response_promise,
             type_of_waste_response_promise,
             treatment_process_response_promise,
+            mtf_response_promise,
             ltf_response_promise,
             wcf_response_promise,
             sf_response_promise,
@@ -42,6 +45,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const client_data_list  = await client_list_response.json();
         const type_of_waste_data_list  = await type_of_waste_response.json();
         const treatment_process_data_list  = await treatment_process_response.json();
+        const mtf_data_list  = await mtf_response.json();
         const ltf_data_list  = await ltf_response.json();
         const wcf_data_list  = await wcf_response.json();
         const sf_data_list  = await sf_response.json();
@@ -103,7 +107,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                 }
             }
-    
             for (let i = 1; i < sf_data_list.content.length; i++) {
                 if (!wcf_sf_transaction_sorting.includes(sf_data_list.content[i][findTextInArray(sf_data_list, "WCF #")]) &&
                 month_filter.value == formatMonth(sf_data_list.content[i][findTextInArray(sf_data_list, "HAULING DATE")])) {
@@ -486,7 +489,9 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         }
         
+        var quotation_no_data
         search_sf_wcf_form_no_button.addEventListener("click", () => {
+            quotation_no_data = ""
             var data_value_text;
             for(let a = 1; a < wcf_data_list.content.length; a++){
                 if(search_sf_wcf_form_no.value == wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")]){
@@ -505,6 +510,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
                                         break
                                     }
+                                }
+                            }
+                            for(let x = 1; x < mtf_data_list.content.length; x++){
+                                if(mtf_data_list.content[x][findTextInArray(mtf_data_list, "MTF #")] == mtf){
+                                    quotation_no_data = mtf_data_list.content[x][findTextInArray(mtf_data_list, "QUOTATION CODE")];
+                                    break
                                 }
                             }
                             data_value_text = `
@@ -588,6 +599,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const destruction_process = [];
         const waste_id = [];
         const waste_name = [];
+        const quotation = [];
         const weight = [];
         const input_box = [];
         const sugg_box = [];
@@ -597,6 +609,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             destruction_process[z] = document.getElementById(`destruction_process${z}`);
             waste_id[z] = document.getElementById(`waste_id${z}`);
             waste_name[z] = document.getElementById(`waste_name${z}`);
+            quotation[z] = document.getElementById(`quotation${z}`);
             weight[z] = document.getElementById(`weight${z}`);
             input_box[z] = search_wrapper[z].querySelector("input");
             sugg_box[z] = search_wrapper[z].querySelector(".autocom_box");
@@ -636,11 +649,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 (input_box[z].value).replace(/\s*\([^)]*\)/, '') == qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")]) {
                                 waste_id[z].value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")];
                                 waste_name[z].value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")];
+                                quotation[z].value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "QUOTATION CODE")];
                                 break
                             }
                             else{
                                 waste_id[z].value = "W2023000";
                                 waste_name[z].value = input_box[z].value;
+                                quotation[z].value = quotation_no_data;
                             }
                             treatment_input.removeAttribute("readonly");
                         }
