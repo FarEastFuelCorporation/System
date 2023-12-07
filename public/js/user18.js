@@ -1268,6 +1268,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const add_item_button_gate_pass_transaction = gate_pass_transaction.querySelector("#add_item_button");
         const remove_item_button_gate_pass_transaction = gate_pass_transaction.querySelector("#remove_item_button");
         const generate_button_gate_pass_transaction = gate_pass_transaction.querySelector("#generate_button");
+        const download_button_gate_pass_transaction = gate_pass_transaction.querySelector("#download_button");
         const what_to_print_gate_pass_transaction = gate_pass_transaction.querySelector("#what_to_print");
         const what_to_print_container_gate_pass_transaction = gate_pass_transaction.querySelector("#what_to_print_container");
         const gp_form_no_gate_pass_transaction = gate_pass_transaction.querySelector("#gp_form_no");
@@ -1283,6 +1284,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const remarks2_gate_pass_transaction = gate_pass_transaction.querySelector("#remarks2");
         const truck_scale_gate_pass_transaction = gate_pass_transaction.querySelector("#truck_scale");
         const other_remarks_gate_pass_transaction = gate_pass_transaction.querySelector("#other_remarks");
+        const gate_pass_list_gate_pass_transaction = gate_pass_transaction.querySelector("#gate_pass_list");
         console.log(time_in_gate_pass_transaction.value)
 
         gate_pass_form_button.addEventListener("click", () => {
@@ -1613,8 +1615,39 @@ document.addEventListener('DOMContentLoaded', async function() {
             `
             what_to_print_container_gate_pass_transaction.innerHTML = "";
             what_to_print_container_gate_pass_transaction.insertAdjacentHTML("afterbegin", form_data)
-            what_to_print_gate_pass_transaction.style.display = "Block"
+            what_to_print_gate_pass_transaction.style.display = "Block";
+            download_button_gate_pass_transaction.style.display = "Block";
         })
+
+        var counter = 1
+        for(let x =1; x < gpf_data_list.content.length; x++){
+            var data_table = 
+            `
+            <tr>
+                <td>${counter}</td>
+                <td>${gpf_data_list.content[x][findTextInArray(gpf_data_list, "GPF #")]}</td>
+                <td>${date_decoder(gpf_data_list.content[x][findTextInArray(gpf_data_list, "DATE")])}</td>
+                <td>${time_decoder(gpf_data_list.content[x][findTextInArray(gpf_data_list, "TIME IN")])}</td>
+                <td>${time_decoder(gpf_data_list.content[x][findTextInArray(gpf_data_list, "TIME OUT")])}</td>
+                <td>${gpf_data_list.content[x][findTextInArray(gpf_data_list, "ITEM DESCRIPTION")]}</td>
+                <td>${gpf_data_list.content[x][findTextInArray(gpf_data_list, "QUANTITY")]}</td>
+                <td>${gpf_data_list.content[x][findTextInArray(gpf_data_list, "UNIT")]}</td>
+                <td>${gpf_data_list.content[x][findTextInArray(gpf_data_list, "ISSUED TO")]}</td>
+                <td>${gpf_data_list.content[x][findTextInArray(gpf_data_list, "COMPANY")]}</td>
+                <td>${gpf_data_list.content[x][findTextInArray(gpf_data_list, "ADDRESS")]}</td>
+                <td>${gpf_data_list.content[x][findTextInArray(gpf_data_list, "PLATE #")]}</td>
+                <td>${gpf_data_list.content[x][findTextInArray(gpf_data_list, "TYPE OF VEHICLE")]}</td>
+                <td>${gpf_data_list.content[x][findTextInArray(gpf_data_list, "REMARKS 1")]}</td>
+                <td>${gpf_data_list.content[x][findTextInArray(gpf_data_list, "REMARKS 2")]}</td>
+                <td>${gpf_data_list.content[x][findTextInArray(gpf_data_list, "TRUCK SCALE")]}</td>
+                <td>${gpf_data_list.content[x][findTextInArray(gpf_data_list, "OTHER REMARKS")]}</td>
+                <td>${gpf_data_list.content[x][findTextInArray(gpf_data_list, "SUBMITTED BY")]}</td>
+            </tr>
+            `
+            counter++;
+            gate_pass_list_gate_pass_transaction.insertAdjacentHTML("beforeend", data_table)
+
+        }
 
 
         // multi section
