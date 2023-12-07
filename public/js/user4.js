@@ -500,11 +500,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                     pending_certification.push({ tpfNumber: key, weight: sf_transaction_certification[key], date: sf_transaction_certification_date[key], client: sf_transaction_certification_client[key]});
                 }
             }
-            console.log(sf_transaction_certification_client)
-            console.log(pending_certification)
             pending_certification.sort((a, b) => a.date - b.date);
             pending_certification.sort((a, b) => a.client - b.client);
-            console.log(pending_certification)
             finish_certification.sort((a, b) => a.date - b.date);
             treated_counter_certification.innerText = pending_list_tpf.length;
             pending_counter_certification.innerText = pending_list_tpf.length - done_list_cod.length;
