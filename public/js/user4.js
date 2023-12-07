@@ -96,7 +96,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         let sf_transaction_certification = {};
         let sf_tpf_transaction_certification = {};
         let sf_transaction_certification_date = {};
+        let sf_transaction_certification_client = {};
         let sf_tpf_transaction_certification_date = {};
+        let sf_tpf_transaction_certification_client = {};
         let tpf_certification = [];
         let pending_certification = [];
         let finish_certification = [];
@@ -117,7 +119,9 @@ document.addEventListener('DOMContentLoaded', async function() {
             sf_transaction_certification = {};
             sf_tpf_transaction_certification = {};
             sf_transaction_certification_date = {};
+            sf_transaction_certification_client = {};
             sf_tpf_transaction_certification_date = {};
+            sf_tpf_transaction_certification_client = {};
             tpf_certification = [];
             pending_certification = [];
             finish_certification = [];
@@ -398,6 +402,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             for (let i = 1; i < tpf_data_list.content.length; i++) {
                 const tpfNumber = tpf_data_list.content[i][findTextInArray(tpf_data_list, "TPF #")];
                 const haulingDate = new Date(tpf_data_list.content[i][findTextInArray(tpf_data_list, "HAULING DATE")]);
+                const client_id = tpf_data_list.content[i][findTextInArray(tpf_data_list, "CLIENT ID")];
                 
                 if (month_filter.value === formatMonth(haulingDate)) {
                     const weight = tpf_data_list.content[i][findTextInArray(tpf_data_list, "WEIGHT")];
@@ -411,6 +416,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         sf_transaction_certification[tpfNumber] = weight;
                     }
                     sf_transaction_certification_date[tpfNumber] = haulingDate;
+                    sf_transaction_certification_client[tpfNumber] = findClientName(client_id);
                     if(!tpf_certification.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "TPF #")])){
                         tpf_certification.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "TPF #")])
                     }
@@ -427,6 +433,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         sf_transaction_certification[tpfNumber] = weight;
                     }
                     sf_transaction_certification_date[tpfNumber] = haulingDate;
+                    sf_transaction_certification_client[tpfNumber] = findClientName(client_id);
                     if(!tpf_certification.includes(tpf_data_list.content[i][findTextInArray(tpf_data_list, "TPF #")])){
                         tpf_certification.push(tpf_data_list.content[i][findTextInArray(tpf_data_list, "TPF #")])
                     }
@@ -443,7 +450,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             for (let i = 1; i < cod_data_list.content.length; i++) {
                 const tpfNumber = cod_data_list.content[i][findTextInArray(cod_data_list, "TPF #")];
                 const haulingDate = new Date(cod_data_list.content[i][findTextInArray(cod_data_list, "HAULING DATE")]);
-                
+                const client_id = cod_data_list.content[i][findTextInArray(cod_data_list, "CLIENT ID")];
+
                 if (month_filter.value === formatMonth(haulingDate)) {
                     const weight = cod_data_list.content[i][findTextInArray(cod_data_list, "WEIGHT")];
                     
@@ -456,6 +464,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         sf_tpf_transaction_certification[tpfNumber] = weight;
                     }
                     sf_tpf_transaction_certification_date[tpfNumber] = haulingDate;
+                    sf_tpf_transaction_certification_client[tpfNumber] = findClientName(client_id);
                 }
                 else if (month_filter.value === "ALL") {
                     const weight = cod_data_list.content[i][findTextInArray(cod_data_list, "WEIGHT")];
@@ -469,6 +478,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         sf_tpf_transaction_certification[tpfNumber] = weight;
                     }
                     sf_tpf_transaction_certification_date[tpfNumber] = haulingDate;
+                    sf_tpf_transaction_certification_client[tpfNumber] = findClientName(client_id);
                 }
                 if(month_filter.value == formatMonth(cod_data_list.content[i][findTextInArray(cod_data_list, "HAULING DATE")]) &&
                 !done_list_cod.includes(cod_data_list.content[i][findTextInArray(cod_data_list, "WCF #")])){
@@ -484,13 +494,17 @@ document.addEventListener('DOMContentLoaded', async function() {
                 // Check if the key exists in sf_tpf_transaction_certification
                 if (sf_tpf_transaction_certification[key]) {
                     // If it exists in sf_tpf_transaction_certification, add both "tpf #" and weight to finish_certification
-                    finish_certification.push({ tpfNumber: key, weight: sf_tpf_transaction_certification[key], date: sf_tpf_transaction_certification_date[key]});
+                    finish_certification.push({ tpfNumber: key, weight: sf_tpf_transaction_certification[key], date: sf_tpf_transaction_certification_date[key], client: sf_tpf_transaction_certification_client[key]});
                 } else {
                     // If it doesn't exist in sf_tpf_transaction_certification, add both "tpf #" and weight to pending_certification
-                    pending_certification.push({ tpfNumber: key, weight: sf_transaction_certification[key], date: sf_transaction_certification_date[key]});
+                    pending_certification.push({ tpfNumber: key, weight: sf_transaction_certification[key], date: sf_transaction_certification_date[key], client: sf_transaction_certification_client[key]});
                 }
             }
+            console.log(sf_transaction_certification_client)
+            console.log(pending_certification)
             pending_certification.sort((a, b) => a.date - b.date);
+            pending_certification.sort((a, b) => a.client - b.client);
+            console.log(pending_certification)
             finish_certification.sort((a, b) => a.date - b.date);
             treated_counter_certification.innerText = pending_list_tpf.length;
             pending_counter_certification.innerText = pending_list_tpf.length - done_list_cod.length;
@@ -546,7 +560,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             var chart = new ApexCharts(pieChart, options);
             chart.render();
-
             var data_value = "";
             var data_value_counter = 1;
             for (const item of pending_certification){
@@ -1405,8 +1418,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             else if(type_of_cod.value == "By Date"){
                 const waste_description = document.getElementById("waste_description");
                 const year_covered = document.getElementById("year_covered");
-                const month_covered = document.getElementById("month_covered"); 
-                console.log(pending_certification)  
+                const month_covered = document.getElementById("month_covered");
                 for (const item of pending_certification){
                     for (let x = 1; x < tpf_data_list.content.length; x++) {
                         if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TPF #")] == item.tpfNumber){
