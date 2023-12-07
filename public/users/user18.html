@@ -834,7 +834,7 @@
                     </label><br>
                 </div>
                 <div id="form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
-                    <form action="https://script.google.com/macros/s/AKfycbyaEYJhRzNZvV4A9vkSMwEbW27jIpPOOYhEc4lfPpQY6HwQ-lbVfRV1-zxQUHf8H1MPcQ/exec" method="post">
+                    <form action="https://script.google.com/macros/s/AKfycbxJeLgnj5IROpJtRkgdMUcCcimgb7nPa_pY4eVhqieJEO5L620_m0GwQfKEmp4VIDoO/exec" method="post">
                         <h2>GATE PASS FORM</h2>
                         <input type="hidden" name="user" id="user">
                         <input type="hidden" name="item_counter" id="item_counter" value="0">
@@ -957,6 +957,9 @@
                                 <h4 style="margin: 0; color: white;">Generate</h4>
                             </button>
                             <button type="button" onclick="convertToPDF()" id="download_button" class="form-control" style="background-color: #198754;">
+                                <h4 style="margin: 0; color: white;">Download</h4>
+                            </button>
+                            <button type="submit" id="submit_button" class="form-control" style="display: none; background-color: #198754;">
                                 <h4 style="margin: 0; color: white;">Download</h4>
                             </button>
                         </div><br>
@@ -1344,6 +1347,7 @@
     <script src="../js/user18.js"></script>
     <script>
         function convertToPDF() {
+            const gate_pass_transaction = document.getElementById('gate_pass_transaction');
             const element = document.getElementById('what_to_print');
             const gp_form_no = document.getElementById('gp_form_no').value;
 
@@ -1380,6 +1384,7 @@
                 element.style.transform = 'none';
                 html2pdf().set(opt).from(element).save().then(() => {
                     // Call the submit button click event immediately after the PDF is downloaded
+                    gate_pass_transaction.querySelector('#submit_button').click();
                 });
             });
         }
