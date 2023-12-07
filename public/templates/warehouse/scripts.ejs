@@ -1,0 +1,45 @@
+<script src="../js/warehouse.js"></script>
+<script>
+    function convertToPDF() {
+        const gate_pass_transaction = document.getElementById('gate_pass_transaction');
+        const element = document.getElementById('what_to_print');
+        const gp_form_no = document.getElementById('gp_form_no').value;
+
+
+        const opt = {
+            filename: gp_form_no,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 10 },
+            jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
+        };
+
+        const marginTop = 32.5; // Top margin in mm
+        const marginBottom = 0; // Bottom margin in mm
+        const pageHeight = 279.4; // Adjust the value based on your available space for each page
+
+        const totalPages = Math.ceil(element.clientHeight / pageHeight);
+
+        let promises = [];
+
+        for (let i = 0; i < totalPages; i++) {
+            const promise = html2pdf()
+            .set(opt)
+            .from(element)
+            .toContainer()
+            .then(() => {
+                const newPosition = -pageHeight * (i + 1) - marginTop;
+                element.style.transform = `translate(0, ${newPosition}px)`;
+            });
+
+            promises.push(promise);
+        }
+        Promise.all(promises)
+            .then(() => {
+            element.style.transform = 'none';
+            html2pdf().set(opt).from(element).save().then(() => {
+                // Call the submit button click event immediately after the PDF is downloaded
+                gate_pass_transaction.querySelector('#submit_button').click();
+            });
+        });
+    }
+</script>

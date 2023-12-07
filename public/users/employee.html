@@ -311,8 +311,36 @@
             Back
         </button>
         <h2>OVERTIME FORM</h2><br>
-        <div style="display: flex; justify-content: center; align-items: center; height: 60vh;">
-            <img src="../images/coming_soon.jpg" alt="" style="width: 80%;">
+        <h2>SERVICE INCENTIVE FORM</h2><br>
+        <input type="hidden" id="url" name="url">
+        <input type="hidden" id="employee_id" name="employee_id">
+        <input type="hidden" id="user" name="user">
+        <input type="hidden" id="department" name="department">
+        <input type="hidden" id="designation" name="designation">
+        <input type="hidden" id="type_of_leave" name="type_of_leave" value="OVERTIME FORM">
+        <button type="button" id="back" style="position: absolute; border: none; right: 20px; top: 20px;">
+            <i class="fa-solid fa-circle-arrow-left"></i>
+            Back
+        </button>
+        <label for="date_start">
+            From
+        </label>
+        <input type="date" id="date_start" name="date_start" required class="form-control" autocomplete="off" style="border: 1px solid black; width: 100% !important;"><br>
+        <label for="date_end">
+            To
+        </label>
+        <input type="date" id="date_end" name="date_end" required class="form-control" autocomplete="off" style="border: 1px solid black; width: 100% !important;"><br>
+        <label for="reason">
+            Reasons
+        </label>
+        <input type="text" id="reason" name="reason" required class="form-control" autocomplete="off" style="border: 1px solid black; width: 100% !important;"><br>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <button type="reset" class="form-control bg-danger text-white">
+                Clear
+            </button>
+            <button type="submit" class="form-control bg-success text-white">
+                Submit
+            </button>
         </div>
     </form>
 </section>

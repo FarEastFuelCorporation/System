@@ -58,6 +58,21 @@ ejs.renderFile(logisticsTemplatePath, logistics_data, (err, html) => {
     console.log('HTML generated successfully for', logisticsOutputPath);
 });
 
+// dispatching user
+const warehouseTemplatePath = path.join(templatesFolder, 'page.ejs');
+
+const warehouse_data = {
+    user: 'warehouse',
+};
+
+// Pass data to the ejs.renderFile function
+ejs.renderFile(warehouseTemplatePath, warehouse_data, (err, html) => {
+    if (err) throw err;
+    const warehouseOutputPath = path.join(userFolder, 'warehouse.html');
+    fs.writeFileSync(warehouseOutputPath, html);
+    console.log('HTML generated successfully for', warehouseOutputPath);
+});
+
 
 // employee user
 const employeeTemplatePath = path.join(templatesFolder, 'page.ejs');
