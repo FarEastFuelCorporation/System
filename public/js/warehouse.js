@@ -1356,6 +1356,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         })
 
         generate_button_gate_pass_transaction.addEventListener("click", () => {
+            var signature = "";
+            if(user_name == "BENHUR DAILEG"){
+                signature = "DAILEG_BENHUR.png"
+            }else if (user_name == "NATHANIEL MARCOLINO"){
+                signature = "MARCOLINO_NATHANIEL.png"
+            }
             const item_counter_gate_pass_transaction = gate_pass_transaction.querySelector("#item_counter");
             var table_data = "";
             var counter = 1
@@ -1473,10 +1479,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </div>
                     </div>
                 </div>
-                <div style="display: grid; grid-template-columns: 20% 20% 20% 20% 20%; position: absolute; bottom: 0; width: 100%; border-top: 2px solid black;">
+                <div id="footer"  style="display: grid; grid-template-columns: 20% 20% 20% 20% 20%; position: absolute; bottom: 0; width: 100%; border-top: 2px solid black;">
                     <div style="display: flex; flex-direction: column;">
                         <h6 style="padding-left: 5px;">Prepared By</h6><br>
                         <u><h6 style="font-weight: bold; text-align: center; border-bottom: 1px solid black;">${user_name}</h6></u>
+                        <img src="../images/${signature}" alt="">
                         <h6 style="text-align: center;">Warehouse Personel</h6>
                     </div>
                     <div style="display: flex; flex-direction: column; border-left: 2px solid black;">
@@ -1586,10 +1593,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </div>
                     </div>
                 </div>
-                <div style="display: grid; grid-template-columns: 20% 20% 20% 20% 20%; position: absolute; bottom: 0; width: 100%; border-top: 2px solid black;">
+                <div id="footer" style="display: grid; grid-template-columns: 20% 20% 20% 20% 20%; position: absolute; bottom: 0; width: 100%; border-top: 2px solid black;">
                     <div style="display: flex; flex-direction: column;">
                         <h6 style="padding-left: 5px;">Prepared By</h6><br>
                         <u><h6 style="font-weight: bold; text-align: center; border-bottom: 1px solid black;">${user_name}</h6></u>
+                        <img src="../images/${signature}" alt="">
                         <h6 style="text-align: center;">Warehouse Personel</h6>
                     </div>
                     <div style="display: flex; flex-direction: column; border-left: 2px solid black;">
