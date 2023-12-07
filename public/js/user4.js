@@ -545,7 +545,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 })
             })
 
-            search_filter_options_certification.addEventListener("click", () => {
+            filter_option_date_certification.addEventListener("change", () => {
                 pending_list_certification.innerHTML = "";
 
                 var data_value = "";
@@ -554,7 +554,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     var status;
                     var date_accomplished;
                     var target_date;
-                    console.log(item)
                     if(filter_option_client_certification.value == item.client_id && filter_option_date_certification.value == date_decoder(item.date)){
                         for(let j = 1; j < tpf_data_list.content.length; j++){
                             if(item.tpfNumber == tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")] &&
