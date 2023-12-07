@@ -111,9 +111,21 @@
                 <i class="fa-regular fa-clock"></i>
             </div>
         </button>
+        <button type="button" class="card">
+            <div class="card-content">
+                <div class="card-name">Cash Advance Form</div>
+            </div>
+            <div class="icon-box">
+                <i class="fa-solid fa-money-bill-wave"></i>
+            </div>
+        </button>
     </div>
-    <form id="sick_leave_tab" style="display: none; position: absolute; top: 0; left: 0; height: calc(100% - 60px); width: 100%; background-color: white; z-index: 2; padding: 20px;"
+    <form id="sick_leave_tab" style="display: none; position: fixed; top: 60px; left: 0; height: calc(100% - 120px); width: 100%; background-color: white; z-index: 2; padding: 20px"
         action="https://script.google.com/macros/s/AKfycbxajlsctKB9Nr_INrV_675tqPzEp7isnL9jP6o0sZdoGn3r_fM3YFL88piRh0ZLAA2-fA/exec" method="post">
+        <button type="button" id="back" style="position: absolute; border: none; right: 20px; top: 20px;">
+            <i class="fa-solid fa-circle-arrow-left"></i>
+            Back
+        </button>
         <h2>SERVICE INCENTIVE FORM</h2><br>
         <input type="hidden" id="url" name="url">
         <input type="hidden" id="employee_id" name="employee_id">
@@ -121,10 +133,6 @@
         <input type="hidden" id="department" name="department">
         <input type="hidden" id="designation" name="designation">
         <input type="hidden" id="type_of_leave" name="type_of_leave" value="SERVICE INCENTIVE LEAVE">
-        <button type="button" id="back" style="position: absolute; border: none; right: 20px; top: 20px;">
-            <i class="fa-solid fa-circle-arrow-left"></i>
-            Back
-        </button>
         <label for="date_start">
             From
         </label>
@@ -146,8 +154,12 @@
             </button>
         </div>
     </form>
-    <form id="vacation_leave_tab" style="display: none; position: absolute; top: 0; left: 0; height: calc(100% - 60px); width: 100%; background-color: white; z-index: 2; padding: 20px"
+    <form id="vacation_leave_tab" style="display: none; position: fixed; top: 60px; left: 0; height: calc(100% - 120px); width: 100%; background-color: white; z-index: 2; padding: 20px"
         action="https://script.google.com/macros/s/AKfycbxajlsctKB9Nr_INrV_675tqPzEp7isnL9jP6o0sZdoGn3r_fM3YFL88piRh0ZLAA2-fA/exec" method="post">
+        <button type="button" id="back" style="position: absolute; border: none; right: 20px; top: 20px;">
+            <i class="fa-solid fa-circle-arrow-left"></i>
+            Back
+        </button>
         <h2>SICK / VACATION LEAVE FORM</h2><br>
         <input type="hidden" id="url" name="url">
         <input type="hidden" id="employee_id" name="employee_id">
@@ -155,10 +167,6 @@
         <input type="hidden" id="department" name="department">
         <input type="hidden" id="designation" name="designation">
         <input type="hidden" id="type_of_leave" name="type_of_leave" value="SICK / VACATION LEAVE">
-        <button type="button" id="back" style="position: absolute; border: none; right: 20px; top: 20px;">
-            <i class="fa-solid fa-circle-arrow-left"></i>
-            Back
-        </button>
         <label for="date_start">
             From
         </label>
@@ -180,45 +188,103 @@
             </button>
         </div>
     </form>
-    <div id="undertime_tab" style="display: none; position: absolute; top: 0; left: 0; height: calc(100% - 60px); width: 100%; background-color: white; z-index: 2; padding: 20px">
+    <form id="undertime_tab" style="display: none; position: fixed; top: 60px; left: 0; height: calc(100% - 120px); width: 100%; background-color: white; z-index: 2; padding: 20px"
+        action="https://script.google.com/macros/s/AKfycbw9rREoVNkEGe_rK2_MM1zPQCaAiL5W9WgHqYzUalc3jC7W0p87W_EeQ9MguRFpJCES/exec" method="post">
         <button type="button" id="back" style="position: absolute; border: none; right: 20px; top: 20px;">
             <i class="fa-solid fa-circle-arrow-left"></i>
             Back
         </button>
         <h2>UNDERTIME FORM</h2><br>
-        <div style="display: flex; justify-content: center; align-items: center; height: 60vh;">
-            <img src="../images/coming_soon.jpg" alt="" style="width: 80%;">
+        <input type="hidden" id="url" name="url">
+        <input type="hidden" id="employee_id" name="employee_id">
+        <input type="hidden" id="user" name="user">
+        <input type="hidden" id="department" name="department">
+        <input type="hidden" id="designation" name="designation">
+        <input type="hidden" id="type_of_leave" name="type_of_leave" value="UNDERTIME FORM">
+        <label for="date_input">
+            Date
+        </label>
+        <input type="date" id="date_input" name="date_input" required class="form-control" autocomplete="off" style="border: 1px solid black; width: 100% !important;"><br>
+        <label for="time_start">
+            From
+        </label>
+        <input type="time" id="time_start" name="time_start" required class="form-control" autocomplete="off" style="border: 1px solid black; width: 100% !important;"><br>
+        <label for="time_end">
+            To
+        </label>
+        <input type="time" id="time_end" name="time_end" required class="form-control" autocomplete="off" style="border: 1px solid black; width: 100% !important;"><br>
+        <label for="reason">
+            Reasons
+        </label>
+        <input type="text" id="reason" name="reason" required class="form-control" autocomplete="off" style="border: 1px solid black; width: 100% !important;"><br>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <button type="reset" class="form-control bg-danger text-white">
+                Clear
+            </button>
+            <button type="submit" class="form-control bg-success text-white">
+                Submit
+            </button>
         </div>
-    </div>
-    <form id="overtime_tab" style="display: none; position: absolute; top: 0; left: 0; height: calc(100% - 60px); width: 100%; background-color: white; z-index: 2; padding: 20px">
+    </form>
+    <form id="overtime_tab" style="display: none; position: fixed; top: 60px; left: 0; height: calc(100% - 120px); width: 100%; background-color: white; z-index: 2; padding: 20px"
+    action="https://script.google.com/macros/s/AKfycbw9rREoVNkEGe_rK2_MM1zPQCaAiL5W9WgHqYzUalc3jC7W0p87W_EeQ9MguRFpJCES/exec" method="post">
         <button type="button" id="back" style="position: absolute; border: none; right: 20px; top: 20px;">
             <i class="fa-solid fa-circle-arrow-left"></i>
             Back
         </button>
         <h2>OVERTIME FORM</h2><br>
-        <h2>SERVICE INCENTIVE FORM</h2><br>
         <input type="hidden" id="url" name="url">
         <input type="hidden" id="employee_id" name="employee_id">
         <input type="hidden" id="user" name="user">
         <input type="hidden" id="department" name="department">
         <input type="hidden" id="designation" name="designation">
         <input type="hidden" id="type_of_leave" name="type_of_leave" value="OVERTIME FORM">
-        <button type="button" id="back" style="position: absolute; border: none; right: 20px; top: 20px;">
-            <i class="fa-solid fa-circle-arrow-left"></i>
-            Back
-        </button>
-        <label for="date_start">
+        <label for="date_input">
+            Date
+        </label>
+        <input type="date" id="date_input" name="date_input" required class="form-control" autocomplete="off" style="border: 1px solid black; width: 100% !important;"><br>
+        <label for="time_start">
             From
         </label>
-        <input type="date" id="date_start" name="date_start" required class="form-control" autocomplete="off" style="border: 1px solid black; width: 100% !important;"><br>
-        <label for="date_end">
+        <input type="time" id="time_start" name="time_start" required class="form-control" autocomplete="off" style="border: 1px solid black; width: 100% !important;"><br>
+        <label for="time_end">
             To
         </label>
-        <input type="date" id="date_end" name="date_end" required class="form-control" autocomplete="off" style="border: 1px solid black; width: 100% !important;"><br>
+        <input type="time" id="time_end" name="time_end" required class="form-control" autocomplete="off" style="border: 1px solid black; width: 100% !important;"><br>
         <label for="reason">
             Reasons
         </label>
         <input type="text" id="reason" name="reason" required class="form-control" autocomplete="off" style="border: 1px solid black; width: 100% !important;"><br>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <button type="reset" class="form-control bg-danger text-white">
+                Clear
+            </button>
+            <button type="submit" class="form-control bg-success text-white">
+                Submit
+            </button>
+        </div>
+    </form>
+    <form id="cash_advance_tab" style="display: none; position: fixed; top: 60px; left: 0; height: calc(100% - 120px); width: 100%; background-color: white; z-index: 2; padding: 20px"
+    action="https://script.google.com/macros/s/AKfycbyI-ljnaYIgRfqkVwNLs-dtAKahXfA351NytoVGzHLHVMRTHSu1QZpy0NXRCDSJONi4Gw/exec" method="post">
+        <button type="button" id="back" style="position: absolute; border: none; right: 20px; top: 20px;">
+            <i class="fa-solid fa-circle-arrow-left"></i>
+            Back
+        </button>
+        <h2>CASH ADVANCE FORM</h2><br>
+        <input type="hidden" id="url" name="url">
+        <input type="hidden" id="employee_id" name="employee_id">
+        <input type="hidden" id="user" name="user">
+        <input type="hidden" id="department" name="department">
+        <input type="hidden" id="designation" name="designation">
+        <input type="hidden" id="type_of_leave" name="type_of_leave" value="COMPANY LOAN">
+        <label for="request_amount">
+            Requested Amount
+        </label>
+        <input type="number" id="request_amount" name="request_amount" required class="form-control" autocomplete="off" style="border: 1px solid black; width: 100% !important;"><br>
+        <label for="purpose">
+            Purpose of Cash Advance
+        </label>
+        <input type="text" id="purpose" name="purpose" required class="form-control" autocomplete="off" style="border: 1px solid black; width: 100% !important;"><br>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
             <button type="reset" class="form-control bg-danger text-white">
                 Clear

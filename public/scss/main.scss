@@ -4799,8 +4799,9 @@ input:disabled {
     position: absolute;
     top: 60px;
     width: calc(100%);
+    height: calc(100% - 120px);
     left: 0;
-    min-height: calc(100vh - 60px);
+    min-height: calc(100vh - 120px);
     background: #f5f5f7;
     overflow-y: scroll !important;
     }
