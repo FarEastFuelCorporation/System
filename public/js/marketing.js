@@ -1202,7 +1202,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 table_row.querySelectorAll("td")[5].style.justifyContent  = `right`;
                 table_row.querySelectorAll("td")[4].style.paddingRight  = `5px`;
                 table_row.querySelectorAll("td")[5].style.paddingRight  = `5px`;
-                table_row.querySelectorAll("td")[4].innerText = formatNumber(unit_price.value);
+                table_row.querySelectorAll("td")[4].innerText = formatNumber(parseFloat(unit_price.value));
                 table_row.querySelectorAll("td")[5].innerText = formatNumber(unit_price.value * quantity);
                 table_row.querySelectorAll("td")[6].innerText = mode.value;
                 table_row.querySelectorAll("td")[7].innerText = vat_calculation.value;
@@ -1226,7 +1226,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 table_row.querySelectorAll("td")[5].style.justifyContent  = `right`;
                 table_row.querySelectorAll("td")[4].style.paddingRight  = `5px`;
                 table_row.querySelectorAll("td")[5].style.paddingRight  = `5px`;
-                table_row.querySelectorAll("td")[4].innerText = formatNumber(tf_unit_price.value);
+                table_row.querySelectorAll("td")[4].innerText = formatNumber(parseFloat(tf_unit_price.value));
                 table_row.querySelectorAll("td")[5].innerText = formatNumber(tf_unit_price.value * quantity);
                 table_row.querySelectorAll("td")[6].innerText = tf_mode.value;
                 table_row.querySelectorAll("td")[7].innerText = tf_vat_calculation.value;
