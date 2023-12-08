@@ -1046,6 +1046,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const company = document.getElementById("company");
         const certification_text = document.getElementById("certification_text");
 
+        var certification_hauling_date = "";
+        var certification_Hauling_day = "";
         var certification_date = "";
         var certification_day = "";
         var certification_day_ordinal;
@@ -1598,9 +1600,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 month = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getMonth() + 1;
                                 certification_date = tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")];
                                 certification_day = new Date(certification_date).getDate();
+                                certification_hauling_date = tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")];
+                                certification_Hauling_day = new Date(certification_hauling_date).getDate();
                                 certification_day_ordinal = convertToOrdinal(certification_day);
                                 certification_month = convertToMonthName(month);
-                                if (waste_description.value == certification_day &&
+                                if (waste_description.value == certification_Hauling_day &&
                                     year_covered.value == year &&
                                     month_covered.value == month) {
                                     var pull_out_form = ""
