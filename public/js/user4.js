@@ -1056,6 +1056,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         generate_button.addEventListener("click", choose);
         function choose() {
             const done = [];
+            table_data.innerHTML = ""
             var table_data_value = "";
             var table_head_data_value = "";
             var table_data_input = "";
@@ -2537,9 +2538,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <div class="search_cod_result">
                 <h2>INFORMATION</h2>
                 No Data Found
-                </div><br>`            
+                </div><br>`
             }  
-            const generate_qr_button =document.getElementById("generate_qr_button")
+            const generate_qr_button = document.getElementById("generate_qr_button")
             submit_button.style.display = "block"
             generate_qr_button.addEventListener("click", processAndGenerateQRCode)
         }

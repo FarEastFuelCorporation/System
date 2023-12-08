@@ -1060,6 +1060,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <option value="">SELECT</option>
                         <option value="RACK">RACK</option>
                         <option value="PALLET">PALLET</option>
+                        <option value="LOCKER">LOCKER</option>
+                        <option value="1ST FLOOR">1ST FLOOR</option>
+                        <option value="2ND FLOOR">2ND FLOOR</option>
                     </select>
                 </div>
                 <div id="item_detail${inventory_counter.value}" style="display: flex; gap: 20px;">
