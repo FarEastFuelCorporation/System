@@ -2034,6 +2034,470 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }    
                 }    
             }
+            else if(type_of_cod.value == "By Transaction"){
+                const waste_description = document.getElementById("waste_description");
+                const year_covered = document.getElementById("year_covered");
+                const month_covered = document.getElementById("month_covered");
+                for (const item of pending_certification){
+                    for (let x = 1; x < tpf_data_list.content.length; x++) {
+                        if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TPF #")] == item.tpfNumber){
+                            if (!done.includes(item.tpfNumber) && input_box.value === findClientName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")])) {
+                                var mtf = "";
+                                var ltf = "";
+                                for(let k = 1; k < wcf_data_list.content.length; k++){
+                                    if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                                        if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                            mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                        }else{
+                                            ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                            for(let x = 1; x < ltf_data_list.content.length; x++){
+                                                if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                                    mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                                    break
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                done.push(item.tpfNumber)
+                                year = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getFullYear();
+                                month = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getMonth() + 1;
+                                certification_date = tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")];
+                                certification_day = new Date(certification_date).getDate();
+                                certification_hauling_date = tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")];
+                                certification_Hauling_day = new Date(certification_hauling_date).getDate();
+                                certification_day_ordinal = convertToOrdinal(certification_day);
+                                certification_month = convertToMonthName(month);
+                                if (waste_description.value == mtf &&
+                                    year_covered.value == year &&
+                                    month_covered.value == month) {
+                                    var pull_out_form = ""
+                                    for(let y = 1; y < sf_data_list.content.length; y++){
+                                        if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "SF #")] == sf_data_list.content[y][findTextInArray(sf_data_list, "SF #")])
+                                        pull_out_form = sf_data_list.content[y][findTextInArray(sf_data_list, "FORM #")]
+                                    }
+                                    for(let y = 1; y < wcf_data_list.content.length; y++){
+                                        if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "SF #")] == wcf_data_list.content[y][findTextInArray(wcf_data_list, "WCF #")])
+                                        pull_out_form = wcf_data_list.content[y][findTextInArray(wcf_data_list, "PULL OUT FORM #")]
+                                    }
+                                    const type_of_weight = document.getElementById("type_of_weight");
+                                    var cod_weight = 0;
+                                    if(type_of_weight.value == "CLIENT WEIGHT"){
+                                        cod_weight = findClientWeight(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")])
+                                        total_cod_weight += findClientWeight(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")])
+                                    }
+                                    else if(type_of_weight.value == "FEFC WEIGHT"){
+                                        cod_weight = item.weight
+                                        total_cod_weight += item.weight
+                                    }
+                                    certification_text.innerHTML = `A Total of <b>${formatNumber(total_cod_weight)} Kgs.</b> That is/are transported by <b>FAR EAST FUEL CORPORATION</b> to our TSD facility located at No. 888 Purok 5, Irabagon St., Barangay Anyatam, San Ildefonso, Bulacan with <b>TSD No. OL-TR-R3-14-000152.</b>`
+                                    table_data_counter += 1;
+                                    if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023015"){
+                                        table_data_value +=
+                                        `
+                                        <tr style="display: grid; grid-template-columns: 100px 1fr 60px 90px 1fr 100px;">
+                                            <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
+                                            <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
+                                            <td>TS ${pull_out_form}</td>
+                                            <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
+                                            <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
+                                            <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
+                                        </tr>
+                                        `;
+                                        table_head_data_value = 
+                                        `
+                                        <tr style="display: grid; grid-template-columns: 100px 1fr 60px 90px 1fr 100px;">
+                                            <th>Date Hauled</th>
+                                            <th>Class and Description of Waste</th>
+                                            <th>TS No.</th>
+                                            <th>Quantity</th>
+                                            <th>Destruction Process</th>
+                                            <th>Date of Completion</th>
+                                        </tr>
+                                        `
+                                        table_data_input += `
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "TPF #")]}" name="tpf_no_input${table_data_counter}" id="tpf_no_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "SF #")]}" name="sf_no_input${table_data_counter}" id="sf_no_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")]}" name="wcf_no_input${table_data_counter}" id="wcf_no_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")]}" name="client_input${table_data_counter}" id="client_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")]}" name="waste_description_input${table_data_counter}" id="waste_description_input${table_data_counter}">
+                                        <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
+                                        <input type="hidden" value="TS ${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
+                                        <input type="hidden" value="${cod_weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
+                                        <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
+                                        `
+                                    }
+                                    else if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023026"){
+                                        table_data_value +=
+                                        `
+                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 90px 1fr 100px;">
+                                            <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
+                                            <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
+                                            <td>${pull_out_form}</td>
+                                            <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
+                                            <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
+                                            <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
+                                        </tr>
+                                        `;
+                                        table_head_data_value = 
+                                        `
+                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 90px 1fr 100px;">
+                                            <th>Date Hauled</th>
+                                            <th>Class and Description of Waste</th>
+                                            <th>Gate pass No.</th>
+                                            <th>Quantity</th>
+                                            <th>Destruction Process</th>
+                                            <th>Date of Completion</th>
+                                        </tr>
+                                        `
+                                        table_data_input += `
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "TPF #")]}" name="tpf_no_input${table_data_counter}" id="tpf_no_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "SF #")]}" name="sf_no_input${table_data_counter}" id="sf_no_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")]}" name="wcf_no_input${table_data_counter}" id="wcf_no_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")]}" name="client_input${table_data_counter}" id="client_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")]}" name="waste_description_input${table_data_counter}" id="waste_description_input${table_data_counter}">
+                                        <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
+                                        <input type="hidden" value="${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
+                                        <input type="hidden" value="${cod_weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
+                                        <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
+                                        `
+                                    }
+                                    else if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023018"){
+                                        if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")] == "W20230003"){
+                                            var new_waste_name = ""
+                                            var pull_out_form
+                                            for(let a = 1; a < wcf_data_list.content.length; a++){
+                                                if(wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")] == tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")]){
+                                                    pull_out_form = wcf_data_list.content[a][findTextInArray(wcf_data_list, "PULL OUT FORM #")]
+                                                    if((wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).substring(0,3) == "MTF"){
+                                                        
+                                                    }
+                                                    else{
+                                                        new_waste_name = `${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]} <br> Plate No. ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "PLATE #")]} (FEFC)`
+                                                    }
+                                                }
+                                            }
+                                            table_data_value +=
+                                            `
+                                            <tr style="display: grid; grid-template-columns: 100px 1.3fr 70px 90px .7fr 100px;">
+                                                <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
+                                                <td>${new_waste_name}</td>
+                                                <td>${pull_out_form}</td>
+                                                <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
+                                                <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
+                                                <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
+                                            </tr>
+                                            `;
+                                            table_head_data_value = 
+                                            `
+                                            <tr style="display: grid; grid-template-columns: 100px 1.3fr 70px 90px .7fr 100px;">
+                                                <th>Date Hauled</th>
+                                                <th>Class and Description of Waste</th>
+                                                <th>Truck Scale Form #</th>
+                                                <th>Quantity</th>
+                                                <th>Destruction Process</th>
+                                                <th>Date of Completion</th>
+                                            </tr>
+                                            `
+                                            table_data_input += `
+                                            <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "TPF #")]}" name="tpf_no_input${table_data_counter}" id="tpf_no_input${table_data_counter}">
+                                            <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "SF #")]}" name="sf_no_input${table_data_counter}" id="sf_no_input${table_data_counter}">
+                                            <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")]}" name="wcf_no_input${table_data_counter}" id="wcf_no_input${table_data_counter}">
+                                            <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")]}" name="client_input${table_data_counter}" id="client_input${table_data_counter}">
+                                            <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")]}" name="waste_description_input${table_data_counter}" id="waste_description_input${table_data_counter}">
+                                            <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
+                                            <input type="hidden" value="${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
+                                            <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
+                                            <input type="hidden" value="${cod_weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                            <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
+                                            <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
+                                            <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                            <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
+                                            `
+                                        }
+                                        else{
+                                            table_data_value +=
+                                            `
+                                            <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                                <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
+                                                <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
+                                                <td>${pull_out_form}</td>
+                                                <td style="font-weight: bold">${formatNumber(findClientWeight(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")]))} kgs.</td>
+                                                <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
+                                                <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
+                                            </tr>
+                                            `;
+                                            table_head_data_value = 
+                                            `
+                                            <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                                <th>Date Hauled</th>
+                                                <th>Class and Description of Waste</th>
+                                                <th>Truck Scale Form #</th>
+                                                <th>Quantity</th>
+                                                <th>Destruction Process</th>
+                                                <th>Date of Completion</th>
+                                            </tr>
+                                            `
+                                            table_data_input += `
+                                            <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "TPF #")]}" name="tpf_no_input${table_data_counter}" id="tpf_no_input${table_data_counter}">
+                                            <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "SF #")]}" name="sf_no_input${table_data_counter}" id="sf_no_input${table_data_counter}">
+                                            <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")]}" name="wcf_no_input${table_data_counter}" id="wcf_no_input${table_data_counter}">
+                                            <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")]}" name="client_input${table_data_counter}" id="client_input${table_data_counter}">
+                                            <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")]}" name="waste_description_input${table_data_counter}" id="waste_description_input${table_data_counter}">
+                                            <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
+                                            <input type="hidden" value="${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
+                                            <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
+                                            <input type="hidden" value="${findClientWeight(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")])}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                            <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
+                                            <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
+                                            <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                            `
+                                        }
+                                    }
+                                    else if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023024"){
+                                        var new_waste_name = ""
+                                        var pull_out_form
+                                        for(let a = 1; a < wcf_data_list.content.length; a++){
+                                            if(wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")] == tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")]){
+                                                pull_out_form = wcf_data_list.content[a][findTextInArray(wcf_data_list, "PULL OUT FORM #")]
+                                                if((wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).substring(0,3) == "MTF"){
+                                                    
+                                                }
+                                                else{
+                                                    new_waste_name = `${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]} <br> Plate No. ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "PLATE #")]} (FEFC)`
+                                                }
+                                            }
+                                        }
+                                        table_data_value +=
+                                        `
+                                        <tr style="display: grid; grid-template-columns: 100px 1.3fr 80px 80px .7fr 100px;">
+                                            <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
+                                            <td>${new_waste_name}</td>
+                                            <td>${pull_out_form}</td>
+                                            <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
+                                            <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
+                                            <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
+                                        </tr>
+                                        `;
+                                        table_head_data_value = 
+                                        `
+                                        <tr style="display: grid; grid-template-columns: 100px 1.3fr 80px 80px .7fr 100px;">
+                                            <th>Date Hauled</th>
+                                            <th>Class and Description of Waste</th>
+                                            <th>Truck Scale Form #</th>
+                                            <th>Quantity</th>
+                                            <th>Destruction Process</th>
+                                            <th>Date of Completion</th>
+                                        </tr>
+                                        `
+                                        table_data_input += `
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "TPF #")]}" name="tpf_no_input${table_data_counter}" id="tpf_no_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "SF #")]}" name="sf_no_input${table_data_counter}" id="sf_no_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")]}" name="wcf_no_input${table_data_counter}" id="wcf_no_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")]}" name="client_input${table_data_counter}" id="client_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")]}" name="waste_description_input${table_data_counter}" id="waste_description_input${table_data_counter}">
+                                        <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
+                                        <input type="hidden" value="${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
+                                        <input type="hidden" value="${cod_weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
+                                        <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
+                                        `
+                                    }
+                                    else if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023016"){
+                                        table_data_value +=
+                                        `
+                                        <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                            <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
+                                            <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
+                                            <td>GPF ${pull_out_form}</td>
+                                            <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
+                                            <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
+                                            <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
+                                        </tr>
+                                        `;
+                                        table_head_data_value = 
+                                        `
+                                        <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                            <th>Date Hauled</th>
+                                            <th>Class and Description of Waste</th>
+                                            <th>Gate Pass No.</th>
+                                            <th>Quantity</th>
+                                            <th>Destruction Process</th>
+                                            <th>Date of Completion</th>
+                                        </tr>
+                                        `
+                                        table_data_input += `
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "TPF #")]}" name="tpf_no_input${table_data_counter}" id="tpf_no_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "SF #")]}" name="sf_no_input${table_data_counter}" id="sf_no_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")]}" name="wcf_no_input${table_data_counter}" id="wcf_no_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")]}" name="client_input${table_data_counter}" id="client_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")]}" name="waste_description_input${table_data_counter}" id="waste_description_input${table_data_counter}">
+                                        <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
+                                        <input type="hidden" value="GPF ${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
+                                        <input type="hidden" value="${cod_weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
+                                        <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
+                                        `
+                                    }
+                                    else if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023036"){
+                                        table_data_value +=
+                                        `
+                                        <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                            <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
+                                            <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
+                                            <td>${pull_out_form}</td>
+                                            <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
+                                            <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
+                                            <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
+                                        </tr>
+                                        `;
+                                        table_head_data_value = 
+                                        `
+                                        <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                            <th>Date Hauled</th>
+                                            <th>Class and Description of Waste</th>
+                                            <th>Pull Out Slip No.</th>
+                                            <th>Quantity</th>
+                                            <th>Destruction Process</th>
+                                            <th>Date of Completion</th>
+                                        </tr>
+                                        `
+                                        table_data_input += `
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "TPF #")]}" name="tpf_no_input${table_data_counter}" id="tpf_no_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "SF #")]}" name="sf_no_input${table_data_counter}" id="sf_no_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")]}" name="wcf_no_input${table_data_counter}" id="wcf_no_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")]}" name="client_input${table_data_counter}" id="client_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")]}" name="waste_description_input${table_data_counter}" id="waste_description_input${table_data_counter}">
+                                        <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
+                                        <input type="hidden" value="${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
+                                        <input type="hidden" value="${cod_weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
+                                        <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
+                                        `
+                                    }
+                                    else if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023014"){
+                                        table_data_value +=
+                                        `
+                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 80px 160px 100px;">
+                                            <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
+                                            <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
+                                            <td>${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
+                                            <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
+                                            <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
+                                            <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
+                                        </tr>
+                                        `;
+                                        table_head_data_value = 
+                                        `
+                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 80px 160px 100px;">
+                                            <th>Date Hauled</th>
+                                            <th>Class and Description of Waste</th>
+                                            <th>Waste Code</th>
+                                            <th>Quantity</th>
+                                            <th>Destruction Process</th>
+                                            <th>Date of Completion</th>
+                                        </tr>
+                                        `
+                                        table_data_input += `
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "TPF #")]}" name="tpf_no_input${table_data_counter}" id="tpf_no_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "SF #")]}" name="sf_no_input${table_data_counter}" id="sf_no_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")]}" name="wcf_no_input${table_data_counter}" id="wcf_no_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")]}" name="client_input${table_data_counter}" id="client_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")]}" name="waste_description_input${table_data_counter}" id="waste_description_input${table_data_counter}">
+                                        <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
+                                        <input type="hidden" value="${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
+                                        <input type="hidden" value="${cod_weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
+                                        <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
+                                        `
+                                    }
+                                    else{
+                                        table_data_value +=
+                                        `
+                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 90px 1fr 100px;">
+                                            <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
+                                            <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
+                                            <td>${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}</td>
+                                            <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
+                                            <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
+                                            <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}</td>
+                                        </tr>
+                                        `;
+                                        table_head_data_value = 
+                                        `
+                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 90px 1fr 100px;">
+                                            <th>Date Hauled</th>
+                                            <th>Class and Description of Waste</th>
+                                            <th>Waste Code</th>
+                                            <th>Quantity</th>
+                                            <th>Destruction Process</th>
+                                            <th>Date of Completion</th>
+                                        </tr>
+                                        `
+                                        table_data_input += `
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "TPF #")]}" name="tpf_no_input${table_data_counter}" id="tpf_no_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "SF #")]}" name="sf_no_input${table_data_counter}" id="sf_no_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")]}" name="wcf_no_input${table_data_counter}" id="wcf_no_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")]}" name="client_input${table_data_counter}" id="client_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")]}" name="waste_description_input${table_data_counter}" id="waste_description_input${table_data_counter}">
+                                        <input type="hidden" value="${findWasteCode(tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE ID")])}" name="waste_code_input${table_data_counter}" id="waste_code_input${table_data_counter}">
+                                        <input type="hidden" value="${pull_out_form}" name="pull_out_form${table_data_counter}" id="pull_out_form${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}" name="waste_name_input${table_data_counter}" id="waste_name_input${table_data_counter}">
+                                        <input type="hidden" value="${cod_weight}" name="weight_input${table_data_counter}" id="weight_input${table_data_counter}">
+                                        <input type="hidden" value="${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}" name="destruction_process_input${table_data_counter}" id="destruction_process_input${table_data_counter}">
+                                        <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}" name="hauling_date_input${table_data_counter}" id="hauling_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])}" name="certification_date_input${table_data_counter}" id="certification_date_input${table_data_counter}">    
+                                        <input type="hidden" value="${mtf}" name="mtf_form_no${table_data_counter}" id="mtf_form_no${table_data_counter}">    
+                                        `
+                                    }
+                                    table_company.innerHTML = findClientName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")]);
+                                    company.value = findClientName(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")]);
+                                    table_data_input_value.innerHTML = table_data_input;
+                                    for (let y = 1; y < client_data_list.content.length; y++) {
+                                        if (input_box.value == client_data_list.content[y][findTextInArray(client_data_list, "CLIENT NAME")]) {
+                                            if(client_data_list.content[y][findTextInArray(client_data_list, "CLIENT ID")] == "C2023018"){
+                                                table_company_address.innerHTML = `${client_data_list.content[y][findTextInArray(client_data_list, "ADDRESS")]} <br><h4 style="font-weight: bold">OL-GR-R4A-34-000594</h4>`;
+                                            }
+                                            else{
+                                                table_company_address.innerHTML = client_data_list.content[y][findTextInArray(client_data_list, "ADDRESS")];
+                                            }
+                                        }
+                                    }
+                                    what_to_print.style.display = "block";
+                                    completion.style.display = "grid";    
+                                    convertToPDFandDownload_button.style.display = "block";    
+                                    table_data.innerHTML = table_data_value;
+                                    table_head_data.innerHTML = table_head_data_value;
+                                    certification.innerHTML = `${certification_day}`;
+                                    certification2.innerHTML = `${certification_day_ordinal}`;
+                                    certification3.innerHTML = ` day of ${certification_month} ${year}`;
+                                    result_remarks.innerHTML = "";
+                                }
+                            }
+                        }
+                    }    
+                }    
+            }
             else if(type_of_cod.value == "By Waste and Date Coverage"){
                 const waste_description = document.getElementById("waste_description");
                 const date_from = new Date(document.getElementById("date_from").value).setHours(0);
@@ -2677,6 +3141,68 @@ document.addEventListener('DOMContentLoaded', async function() {
                 client_container.style.display = "grid";    
                 type_of_cod_list.innerHTML = data_content;
             }
+            else if(type_of_cod.value == "By Transaction"){
+                data_content = 
+                `
+                <div>
+                <label for="waste_description">
+                        <i class="fa-solid fa-list-ol"></i>
+                        MTF #
+                        </label><br>
+                    <div>
+                        <input type="text" id="waste_description" autocomplete="off" name="waste_description" class="form-control"><br>
+                    </div>
+                </div>
+                <div>
+                    <label for="year_covered">
+                        <i class="fa-solid fa-list-ol"></i>
+                        Year Covered
+                    </label><br>
+                    <div class="form">
+                        <input type="text" autocomplete="off" name="year_covered" id="year_covered" class="form-control"><br>
+                    </div>
+                </div>
+                <div>
+                    <label for="month_covered">
+                        <i class="fa-solid fa-list-ol"></i>
+                        Month Covered
+                    </label><br>
+                    <div class="form">
+                        <select name="month_covered" id="month_covered" class="form-control">
+                            <option value="">Select Month</option>
+                            <option value="1">JANUARY</option>
+                            <option value="2">FEBRUARY</option>
+                            <option value="3">MARCH</option>
+                            <option value="4">APRIL</option>
+                            <option value="5">MAY</option>
+                            <option value="6">JUNE</option>
+                            <option value="7">JULY</option>
+                            <option value="8">AUGUST</option>
+                            <option value="9">SEPTEMBER</option>
+                            <option value="10">OCTOBER</option>
+                            <option value="11">NOVEMBER</option>
+                            <option value="12">DECEMBER</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label for="type_of_weight">
+                    <i class="fa-solid fa-scale-balanced"></i>
+                        Type of Weight
+                    </label><br>
+                    <div class="form">
+                        <select name="type_of_weight" id="type_of_weight" class="form-control">
+                            <option value="">SELECT WEIGHT</option>
+                            <option value="CLIENT WEIGHT">CLIENT WEIGHT</option>
+                            <option value="FEFC WEIGHT">FEFC WEIGHT</option>
+                        </select>
+                    </div>
+                </div>
+                `
+                what_to_print.style.display = "none";
+                client_container.style.display = "grid";    
+                type_of_cod_list.innerHTML = data_content;
+            }
             else if(type_of_cod.value == "By Waste and Date Coverage"){
                 data_content = 
                 `
@@ -3046,6 +3572,27 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
             return client_weight
+        }
+
+        function findMTFNumber(wcf_number){
+            var mtf = "";
+            var ltf = "";
+            for(let k = 1; k < wcf_data_list.content.length; k++){
+                if(wcf_number == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                    if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                        mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                    }else{
+                        ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                        for(let x = 1; x < ltf_data_list.content.length; x++){
+                            if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                break
+                            }
+                        }
+                    }
+                }
+            }
+            return mtf
         }
 
         const generate_report_button = document.getElementById("generate_report_button");
