@@ -95,7 +95,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         const finished_list_certification = certification_dashboard.querySelector("#finished_list");
         const filter_option_client_certification = certification_dashboard.querySelector("#filter_option_client");
         const filter_option_date_certification = certification_dashboard.querySelector("#filter_option_date");
-        const search_filter_options_certification = certification_dashboard.querySelector("#search_filter_options");
         let sf_transaction_certification = {};
         let sf_tpf_transaction_certification = {};
         let sf_transaction_certification_date = {};
