@@ -1233,6 +1233,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 row = row + 1;
                 const table_row2 = table_data_quotation_form.querySelectorAll("tr")[row];
                 table_row2.querySelectorAll("td")[1].innerText = `(AREA OF HAUL - ${transportation_fee.value})`;
+                table_row2.querySelectorAll("td")[1].style.fontSize = `9px`;
                 row = row + 1;
                 counter = counter + 1;
             }
