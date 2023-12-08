@@ -1140,6 +1140,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const revision_no_quotation_form = new_quotation_form_tab.querySelector("#revision_no");
         const revision_number_container_quotation_form = new_quotation_form_tab.querySelector("#revision_number_container");
         const valid_until_container_quotation_form = new_quotation_form_tab.querySelector("#valid_until_container");
+        const scope_of_work_input_quotation_form = new_quotation_form_tab.querySelector("#scope_of_work_input");
+        const scope_of_work_quotation_form = new_quotation_form_tab.querySelector("#scope_of_work");
         const remarks_input_quotation_form = new_quotation_form_tab.querySelector("#remarks_input");
         const remarks_quotation_form = new_quotation_form_tab.querySelector("#remarks");
 
@@ -1160,6 +1162,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         vice_president_signature_quotation_form.innerHTML = `<img src="../images/DE VERA_EXEQUIEL.png" alt="">`;
 
         generate_button_quotation_form.addEventListener("click", () => {
+            scope_of_work_input_quotation_form.innerText = scope_of_work_quotation_form.value;
             remarks_input_quotation_form.innerText = remarks_quotation_form.value;
             qlf_form_no_container_quotation_form.innerText = quotation_no_quotation_form.value;
             var currentDate = new Date();
@@ -1195,6 +1198,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                 table_row.querySelectorAll("td")[0].innerText = `${counter}`;
                 table_row.querySelectorAll("td")[1].innerText = waste_name.value.toUpperCase();
                 table_row.querySelectorAll("td")[3].innerText = `Per ${unit.value}`;
+                table_row.querySelectorAll("td")[4].style.justifyContent  = `right`;
+                table_row.querySelectorAll("td")[5].style.justifyContent  = `right`;
+                table_row.querySelectorAll("td")[4].style.paddingRight  = `5px`;
+                table_row.querySelectorAll("td")[5].style.paddingRight  = `5px`;
                 table_row.querySelectorAll("td")[4].innerText = formatNumber(unit_price.value);
                 table_row.querySelectorAll("td")[5].innerText = formatNumber(unit_price.value * quantity);
                 table_row.querySelectorAll("td")[6].innerText = mode.value;
@@ -1213,8 +1220,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                 const table_row = table_data_quotation_form.querySelectorAll("tr")[row];
                 table_row.querySelectorAll("td")[0].innerText = `${counter}`;
                 table_row.querySelectorAll("td")[1].innerText = `TRANSPORTATION FEE - ${type_of_vehicle.value}`;
-                table_row.querySelectorAll("td")[1].style.fontSize = `10px`;
+                table_row.querySelectorAll("td")[1].style.fontSize = `9px`;
                 table_row.querySelectorAll("td")[3].innerText = `Per ${tf_unit.value}`;
+                table_row.querySelectorAll("td")[4].style.justifyContent  = `right`;
+                table_row.querySelectorAll("td")[5].style.justifyContent  = `right`;
+                table_row.querySelectorAll("td")[4].style.paddingRight  = `5px`;
+                table_row.querySelectorAll("td")[5].style.paddingRight  = `5px`;
                 table_row.querySelectorAll("td")[4].innerText = formatNumber(tf_unit_price.value);
                 table_row.querySelectorAll("td")[5].innerText = formatNumber(tf_unit_price.value * quantity);
                 table_row.querySelectorAll("td")[6].innerText = tf_mode.value;

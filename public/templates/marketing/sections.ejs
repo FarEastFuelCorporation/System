@@ -577,7 +577,7 @@
     </div><br>
     <div id="new_quotation_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
         <h2>NEW QUOTATION FORM</h2><br>
-        <form  action="https://script.google.com/macros/s/AKfycbxJOsU0neU9IXqEdXGAKZsQy01ejzImkcZuK7JnHT6hakYbx0gDc5rNoBGC3rvhsQlxKQ/exec" method="post">
+        <form  action="https://script.google.com/macros/s/AKfycbwTLM-nBKAsa_oRJrwGhfP8LQXohvfbOYN4SXr8Tv7lzvFn2LEl_SpFRgJmmRWW5MX9MQ/exec" method="post">
             <input type="hidden" name="user" id="user">
             <div style="display: flex; gap: 20px;">
                 <div>
@@ -841,6 +841,13 @@
                 </div>
             </div>
             <div style="margin-top: 40px;">
+                <label for="scope_of_work">
+                    <i class="fa-solid fa-list-ol"></i>
+                    Scope of Work
+                </label><br>
+                <input type="text" name="scope_of_work" id="scope_of_work" autocomplete="off" class="form-control" required placeholder="Input Scope of Work">
+            </div>
+            <div>
                 <label for="remarks">
                     <i class="fa-solid fa-list-ol"></i>
                     Remarks
@@ -919,7 +926,7 @@
                             <h3 class="bold">SCOPE OF WORK</h3>
                         </div>
                         <div class="scope_detail">
-                            <h3>1. Collection, Transportation, Treatment, and Certification of Waste</h3>
+                            <h3 id="scope_of_work_input"></h3>
                         </div>
                         <div class="account_details">
                             <div class="account_details_header">
@@ -1474,10 +1481,13 @@
                     #what_to_print .account_details_detail th,
                     #what_to_print .account_details_detail td
                     {
-                        width: 100%;
+                        width: 100% !important;
                         border-left: 1px solid black;
                         border-right: 1px solid black;
-                        text-align: center;
+                        text-align: center !important;
+                        display: flex;
+                        align-items: center !important;
+                        justify-content: center ;
                     }
 
                     #what_to_print .account_details_detail tr
@@ -1572,7 +1582,7 @@
     </div>
     <div id="update_quotation_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #dc3545; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
         <h2>UPDATE QUOTATION FORM</h2><br>
-        <form action="https://script.google.com/macros/s/AKfycbybq-eNZP7SVU3iIzMMXA1WUDre6bam77tO7FJE9E-Edq7-WFlSNrjQ3jQsPdue4KktHQ/exec" method="post">
+        <form action="https://script.google.com/macros/s/AKfycbwTLM-nBKAsa_oRJrwGhfP8LQXohvfbOYN4SXr8Tv7lzvFn2LEl_SpFRgJmmRWW5MX9MQ/exec" method="post">
             <input type="hidden" name="user" id="user">
             <input type="hidden" name="timestamp" id="timestamp">
             <div style="display: flex; gap: 20px;">
