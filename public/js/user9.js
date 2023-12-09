@@ -959,6 +959,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         generate_button.addEventListener("click", () => {
             if(payroll_type.value == "WEEKLY"){
+                days.innerHTML = "";
                 const year = form_tab.querySelector("#year");
                 const week_number = form_tab.querySelector("#week_number");
                 const number_of_days = form_tab.querySelector("#number_of_days");
@@ -972,6 +973,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 input_container.style.display = "grid";
             }
             else if(payroll_type.value == "SEMI-MONTHLY"){
+                days.innerHTML = "";
                 const year = form_tab.querySelector("#year");
                 const cut_off_period = form_tab.querySelector("#cut_off_period");
                 const number_of_days = form_tab.querySelector("#number_of_days");
@@ -1336,28 +1338,22 @@ document.addEventListener('DOMContentLoaded', async function() {
                 
                 function calculateAllowance(){
                     const totalHours = parseFloat(regular_hours[x].value) + parseFloat(night_hours[x].value);
-                    if(rest_day_duty_box[x].checked == true){
-                        allowance[x].value = 0;
-                    }
-                    
-                    else{
-                        if (parseInt(time_in_sched.value.slice(0, 2)) >= 18) {
-                            if (totalHours > 8) {
-                                allowance[x].value = parseFloat(night_allowance.value);
-                            } else if (totalHours > 0 && totalHours <= 8) {
-                                allowance[x].value = ((totalHours - (parseFloat(under_time_mins[x].value) + ((parseFloat(late_mins[x].value))/60))) / 8) * parseFloat(night_allowance.value);
-                            } else {
-                                allowance[x].value = 0;
-                            }
+                    if (parseInt(time_in_sched.value.slice(0, 2)) >= 18) {
+                        if (totalHours > 8) {
+                            allowance[x].value = parseFloat(night_allowance.value);
+                        } else if (totalHours > 0 && totalHours <= 8) {
+                            allowance[x].value = ((totalHours - (parseFloat(under_time_mins[x].value) + ((parseFloat(late_mins[x].value))/60))) / 8) * parseFloat(night_allowance.value);
+                        } else {
+                            allowance[x].value = 0;
                         }
-                        else {                        
-                            if (totalHours > 8) {
-                                allowance[x].value = parseFloat(day_allowance.value);
-                            } else if (totalHours > 0 && totalHours <= 8) {
-                                allowance[x].value = ((totalHours - (parseFloat(under_time_mins[x].value) + ((parseFloat(late_mins[x].value))/60))) / 8) * parseFloat(day_allowance.value);
-                            } else if (totalHours < 4) {
-                                allowance[x].value = 0;
-                            }
+                    }
+                    else {                        
+                        if (totalHours > 8) {
+                            allowance[x].value = parseFloat(day_allowance.value);
+                        } else if (totalHours > 0 && totalHours <= 8) {
+                            allowance[x].value = ((totalHours - (parseFloat(under_time_mins[x].value) + ((parseFloat(late_mins[x].value))/60))) / 8) * parseFloat(day_allowance.value);
+                        } else if (totalHours < 4) {
+                            allowance[x].value = 0;
                         }
                     }
                 }

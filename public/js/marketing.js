@@ -812,8 +812,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         remove_item_button_marketing_transaction_form.addEventListener("click", () => {
             const marketing_transaction_form = document.querySelector("#marketing_transaction_form");
             const transaction_counter = marketing_transaction_form.querySelector("#transaction_counter");
-            const type_of_vehicle = marketing_transaction_form.querySelector(`#type_of_vehicle${transaction_counter.value}`);
-            type_of_vehicle.remove()
+            const type_of_vehicle_container = marketing_transaction_form.querySelector(`#type_of_vehicle_container${transaction_counter.value}`);
+            type_of_vehicle_container.remove()
             transaction_counter.value--
             if(transaction_counter.value == 1){
                 remove_item_button_marketing_transaction_form.style.display = "none"
@@ -821,15 +821,20 @@ document.addEventListener('DOMContentLoaded', async function() {
         })
 
         submit_to.addEventListener("change", () => {
-            add_item_button_marketing_transaction_form.style.display = "block"
             if(submit_to.value == "LOGISTICS"){
+                const transaction_counter = marketing_transaction_form.querySelector("#transaction_counter");
+                type_of_vehicle_container.innerHTML = "";
+                transaction_counter.value = 0;
+                add_item_button_marketing_transaction_form.style.display = "block"
                 addTransaction();
             }
             else{
                 const type_of_vehicle_container = marketing_transaction_form.querySelector("#type_of_vehicle_container");
-                if(type_of_vehicle_container != undefined){
-                    type_of_vehicle_container.remove()
-                }
+                const transaction_counter = marketing_transaction_form.querySelector("#transaction_counter");
+                type_of_vehicle_container.innerHTML = "";
+                transaction_counter.value = 1;
+                add_item_button_marketing_transaction_form.style.display = "none";
+                remove_item_button_marketing_transaction_form.style.display = "none";
             }
         })
 
