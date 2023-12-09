@@ -567,7 +567,16 @@ document.addEventListener('DOMContentLoaded', async function() {
                 const type_of_vehicle = document.getElementById("type_of_vehicle");
                 const client_id_input = document.querySelectorAll("#client_id_input");
                 const search_client_id = document.querySelectorAll("#client_id");
+                const marketing_transaction_form = document.querySelector("#marketing_transaction_form");
+                const submit_to_marketing_transaction_form = marketing_transaction_form.querySelector("#submit_to");
+                const type_of_vehicle_container_transaction_form = marketing_transaction_form.querySelector("#type_of_vehicle_container");
+                const add_item_button_marketing_transaction_form = marketing_transaction_form.querySelector("#add_item_button");
+                const remove_item_button_marketing_transaction_form = marketing_transaction_form.querySelector("#remove_item_button");
+        
+                add_item_button_marketing_transaction_form.style.display = "none";
+                remove_item_button_marketing_transaction_form.style.display = "none";
                 for (let y = 1; y < client_data_list.content.length; y++) {
+                    
                     if (select_user_data == client_data_list.content[y][findTextInArray(client_data_list, "CLIENT NAME")]) {
                         var client_id = "";
                         client_id = client_data_list.content[y][findTextInArray(client_data_list, "CLIENT ID")];
@@ -578,7 +587,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                         client_id_input.forEach((data) => {
                             data.value = client_id
                         })
+        
                         var is_there_quotation = false;
+                        submit_to_marketing_transaction_form.value = "";
+                        type_of_vehicle_container_transaction_form.innerHTML = "";
                         type_of_waste.innerHTML = `<option value="">SELECT</option>`;
                         for (let x = 1; x < qlf_data_list.content.length; x++) {
                             if (client_id == qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")] && !vehicle_list.includes(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])) {
@@ -786,7 +798,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             type_of_vehicle_container.insertAdjacentHTML("beforeend", data_value);
 
             const type_of_vehicle = marketing_transaction_form.querySelector(`#type_of_vehicle${transaction_counter.value}`);
-
+            var done_vehicle = [];
             for (let y = 1; y < client_data_list.content.length; y++) {
                 if (client.value == client_data_list.content[y][1]) {
                     var client_id = "";
@@ -794,10 +806,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                     for (let x = 1; x < qlf_data_list.content.length; x++) {
                         if (client_id == qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")] && qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")] == "TRIP") {
                             if(vehicle_list.includes(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])){
-                                var data = `
-                                <option value="${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]}">${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]}</option>
-                                `
-                                type_of_vehicle.insertAdjacentHTML("beforeend", data)
+                                if(!done_vehicle.includes(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])){
+                                    var data = `
+                                    <option value="${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]}">${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]}</option>
+                                    `
+                                    type_of_vehicle.insertAdjacentHTML("beforeend", data)
+                                    done_vehicle.push(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])
+                                }
                             }
                         }
                     }
@@ -828,11 +843,17 @@ document.addEventListener('DOMContentLoaded', async function() {
                 add_item_button_marketing_transaction_form.style.display = "block"
                 addTransaction();
             }
-            else{
+            else if(submit_to.value == "RECEIVING"){
                 const type_of_vehicle_container = marketing_transaction_form.querySelector("#type_of_vehicle_container");
                 const transaction_counter = marketing_transaction_form.querySelector("#transaction_counter");
                 type_of_vehicle_container.innerHTML = "";
-                transaction_counter.value = 1;
+                transaction_counter.value = 0;
+                add_item_button_marketing_transaction_form.style.display = "none";
+                remove_item_button_marketing_transaction_form.style.display = "none";
+                addTransaction();
+            }
+            else{
+                type_of_vehicle_container.innerHTML = "";
                 add_item_button_marketing_transaction_form.style.display = "none";
                 remove_item_button_marketing_transaction_form.style.display = "none";
             }
