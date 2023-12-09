@@ -138,6 +138,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         for (let b = 1; b < employee_data_list.content.length; b++) {
             var employee_id_data = employee_data_list.content[b][findTextInArray(employee_data_list, "EMPLOYEE ID")].toString();
             var employee_type_data = employee_data_list.content[b][findTextInArray(employee_data_list, "EMPLOYEE TYPE")];
+            var employee_date_hire_data = employee_data_list.content[b][findTextInArray(employee_data_list, "DATE HIRE")];
             var expiration = "";
             for(let x = employee_contract_data_list.content.length -1; x >= 1; x--){
                 var employee_id_data2 = employee_contract_data_list.content[x][findTextInArray(employee_contract_data_list, "EMPLOYEE ID")].toString();
@@ -191,10 +192,50 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <td style=" color: ${font_color}">${employee_data_list.content[b][findTextInArray(employee_data_list, "SSS/GSIS NO.")]}</td>
                     <td style=" color: ${font_color}">${employee_data_list.content[b][findTextInArray(employee_data_list, "PHILHEALTH NO.")]}</td>
                     <td style=" color: ${font_color}">${employee_data_list.content[b][findTextInArray(employee_data_list, "PAG-IBIG NO.")]}</td>
+                    <td style=" color: ${font_color}">${calculateLengthOfServiceString(employee_date_hire_data)}</td>
                 </tr>
                 `
                 employee_list.insertAdjacentHTML("beforeend", employee_record)
             }
+        }
+
+        function calculateLengthOfServiceString(hireDateString) {
+            // Convert the hire date to a Date object
+            var hireDate = new Date(hireDateString);
+        
+            // Get the current date
+            var currentDate = new Date();
+        
+            // Calculate the time difference in milliseconds
+            var timeDifference = currentDate - hireDate;
+        
+            // Convert the time difference to years, months, and days
+            var years = Math.floor(timeDifference / (365.25 * 24 * 60 * 60 * 1000));
+            var months = Math.floor((timeDifference % (365.25 * 24 * 60 * 60 * 1000)) / (30.44 * 24 * 60 * 60 * 1000));
+            var days = Math.floor((timeDifference % (30.44 * 24 * 60 * 60 * 1000)) / (24 * 60 * 60 * 1000));
+        
+            // Create a string based on the calculated values
+            var resultString = "";
+        
+            if (years > 0) {
+            resultString += years + (years === 1 ? " year" : " years");
+            if (months > 0 || days > 0) {
+                resultString += ",<br> ";
+            }
+            }
+        
+            if (months > 0) {
+            resultString += months + (months === 1 ? " month" : " months");
+            if (days > 0) {
+                resultString += ",<br> ";
+            }
+            }
+        
+            if (days > 0) {
+            resultString += days + (days === 1 ? " day" : " days");
+            }
+        
+            return resultString || "Less than a day";
         }
 
         // contract_list
