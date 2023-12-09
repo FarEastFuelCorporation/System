@@ -588,7 +588,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             if(search_sf_form_no.value == pending_treatment_sf[b]){
                                 var mtf = "";
                                 var ltf = "";
-                                var process;
+                                var process, client_weight;
                                 for(let c = 1; c < wcf_data_list.content.length; c++){
                                     if(wcf_data_list.content[c][findTextInArray(wcf_data_list, "WCF #")] == sf_data_list.content[a][findTextInArray(sf_data_list, "WCF #")]){
                                         if((wcf_data_list.content[c][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
@@ -603,6 +603,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                 }
                                             }
                                         }
+                                        client_weight = wcf_data_list.content[c][findTextInArray(wcf_data_list, "CLIENT WEIGHT")]
                                     }
                                 }
                                 mtf_form_no.value = mtf;
@@ -614,7 +615,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 WASTE CODE: ${findWasteCode(sf_data_list.content[a][findTextInArray(sf_data_list, "WASTE ID")])}<br>
                                 WASTE DESCRIPTION: ${findWasteName(sf_data_list.content[a][findTextInArray(sf_data_list, "CLIENT ID")], sf_data_list.content[a][findTextInArray(sf_data_list, "WASTE ID")])}<br>
                                 DESTRUCTION PROCESS: ${sf_data_list.content[a][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")]}<br>
-                                WEIGHT: ${sf_data_list.content[a][findTextInArray(sf_data_list, "WEIGHT")]} kg.<br>
+                                CLIENT BATCH WEIGHT: ${client_weight} kg.<br>
+                                FEFC WEIGHT: ${sf_data_list.content[a][findTextInArray(sf_data_list, "WEIGHT")]} kg.<br>
                                 HAULING DATE: ${date_decoder(sf_data_list.content[a][findTextInArray(sf_data_list, "HAULING DATE")])}<br>
                                 SORTED DATE: ${date_decoder(sf_data_list.content[a][findTextInArray(sf_data_list, "COMPLETION DATE")])}<br>
                                 SORTED TIME: ${time_decoder(sf_data_list.content[a][findTextInArray(sf_data_list, "COMPLETION TIME")])}<br>
@@ -725,7 +727,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             if(search_sf_form_no.value == pending_treatment_wcf[b]){
                                 var mtf = "";
                                 var ltf = "";
-                                var process;
+                                var process, client_weight;
                                 if((wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
                                     mtf = wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
                                 }
@@ -738,6 +740,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         }
                                     }
                                 }
+                                client_weight = wcf_data_list.content[a][findTextInArray(wcf_data_list, "CLIENT WEIGHT")]
                                 process = wcf_data_list.content[a][findTextInArray(wcf_data_list, "SUBMIT TO")]
                                 mtf_form_no.value = mtf;
                                 data_value = `
@@ -746,7 +749,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 WASTE CODE: ${findWasteCode(wcf_data_list.content[a][findTextInArray(wcf_data_list, "WASTE ID")])}<br>
                                 WASTE DESCRIPTION: ${findWasteName(wcf_data_list.content[a][findTextInArray(wcf_data_list, "CLIENT ID")], wcf_data_list.content[a][findTextInArray(wcf_data_list, "WASTE ID")])}<br>
                                 DESTRUCTION PROCESS: ${findTreatmentProcess(wcf_data_list.content[a][findTextInArray(wcf_data_list, "WASTE ID")])}<br>
-                                WEIGHT: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "NET WEIGHT")]} kg.<br>
+                                CLIENT BATCH WEIGHT: ${client_weight} kg.<br>
+                                FEFC WEIGHT: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "NET WEIGHT")]} kg.<br>
                                 HAULING DATE: ${date_decoder(wcf_data_list.content[a][findTextInArray(wcf_data_list, "HAULING DATE")])}<br>
                                 ARRIVAL DATE: ${date_decoder(wcf_data_list.content[a][findTextInArray(wcf_data_list, "ARRIVAL DATE")])}<br>
                                 ARRIVAL TIME: ${time_decoder(wcf_data_list.content[a][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}<br>

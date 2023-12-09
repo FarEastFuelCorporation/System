@@ -529,6 +529,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             DATE IN: ${date_decoder(wcf_data_list.content[a][findTextInArray(wcf_data_list, "ARRIVAL DATE")])}<br>
                             TIME IN: ${time_decoder(wcf_data_list.content[a][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}<br>
                             CLIENT WEIGHT: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "CLIENT WEIGHT")]} Kg.<br>
+                            PULL OUT FORM # #: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "PULL OUT FORM #")]}<br>
                             TRUCK SCALE #: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "TRUCK SCALE #")]}<br>
                             GROSS WEIGHT: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "GROSS WEIGHT")]} Kg.<br>
                             TARE WEIGHT: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "TARE WEIGHT")]} Kg.<br>
