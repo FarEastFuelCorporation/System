@@ -758,48 +758,72 @@ document.addEventListener('DOMContentLoaded', async function() {
         const document_container = marketing_transaction_form.querySelector("#document_container");
         const submit_to = marketing_transaction_form.querySelector("#submit_to");
         const type_of_waste_container = marketing_transaction_form.querySelector("#type_of_waste_container");
+        const type_of_vehicle_container = marketing_transaction_form.querySelector("#type_of_vehicle_container");
         const marketing_transaction_button = marketing_transaction_form.querySelector("#marketing_transaction_button");
         const form_tab_marketing_transaction_form = marketing_transaction_form.querySelector("#form_tab");
         const close_button = marketing_transaction_form.querySelector("#close_button");
+        const add_item_button_marketing_transaction_form = marketing_transaction_form.querySelector("#add_item_button");
+        const remove_item_button_marketing_transaction_form = marketing_transaction_form.querySelector("#remove_item_button");
         
-        submit_to.addEventListener("change", () => {
-            if(submit_to.value == "LOGISTICS"){
-                // type_of_waste_data_list
-                const marketing_transaction_form = document.querySelector("#marketing_transaction_form");
-                const client = marketing_transaction_form.querySelector("#client");
-                
-                var data_value = 
-                `
-                <div id="type_of_vehicle_container" >
-                    <label for="type_of_vehicle">
-                        <i class="fa-solid fa-truck"></i>
-                        Type of Vehicle
-                    </label>
-                    <select name="type_of_vehicle" id="type_of_vehicle" class="form-control" required>
-                        <option value="">SELECT</option>
-                    </select>
-                </div>
-                `
-                type_of_waste_container.insertAdjacentHTML("beforebegin", data_value)
+        function addTransaction(){
+            // type_of_waste_data_list
+            const marketing_transaction_form = document.querySelector("#marketing_transaction_form");
+            const transaction_counter = marketing_transaction_form.querySelector("#transaction_counter");
+            const client = marketing_transaction_form.querySelector("#client");
+            transaction_counter.value++
+            var data_value = 
+            `
+            <div id="type_of_vehicle_container${transaction_counter.value}">
+                <label for="type_of_vehicle${transaction_counter.value}">
+                    <i class="fa-solid fa-truck"></i>
+                    Type of Vehicle ${transaction_counter.value}
+                </label>
+                <select name="type_of_vehicle${transaction_counter.value}" id="type_of_vehicle${transaction_counter.value}" class="form-control" required>
+                    <option value="">SELECT</option>
+                </select>
+            </div>
+            `
+            type_of_vehicle_container.insertAdjacentHTML("beforeend", data_value);
 
-                const type_of_vehicle = marketing_transaction_form.querySelector("#type_of_vehicle");
+            const type_of_vehicle = marketing_transaction_form.querySelector(`#type_of_vehicle${transaction_counter.value}`);
 
-                for (let y = 1; y < client_data_list.content.length; y++) {
-                    if (client.value == client_data_list.content[y][1]) {
-                        var client_id = "";
-                        client_id = client_data_list.content[y][findTextInArray(client_data_list, "CLIENT ID")];
-                        for (let x = 1; x < qlf_data_list.content.length; x++) {
-                            if (client_id == qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")] && qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")] == "TRIP") {
-                                if(vehicle_list.includes(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])){
-                                    var data = `
-                                    <option value="${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]}">${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]}</option>
-                                    `
-                                    type_of_vehicle.insertAdjacentHTML("beforeend", data)
-                                }
+            for (let y = 1; y < client_data_list.content.length; y++) {
+                if (client.value == client_data_list.content[y][1]) {
+                    var client_id = "";
+                    client_id = client_data_list.content[y][findTextInArray(client_data_list, "CLIENT ID")];
+                    for (let x = 1; x < qlf_data_list.content.length; x++) {
+                        if (client_id == qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")] && qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")] == "TRIP") {
+                            if(vehicle_list.includes(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])){
+                                var data = `
+                                <option value="${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]}">${qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]}</option>
+                                `
+                                type_of_vehicle.insertAdjacentHTML("beforeend", data)
                             }
                         }
                     }
-                }  
+                }
+            }
+        }
+
+        add_item_button_marketing_transaction_form.addEventListener("click", () => {
+            addTransaction();
+            remove_item_button_marketing_transaction_form.style.display = "block"
+        })
+        remove_item_button_marketing_transaction_form.addEventListener("click", () => {
+            const marketing_transaction_form = document.querySelector("#marketing_transaction_form");
+            const transaction_counter = marketing_transaction_form.querySelector("#transaction_counter");
+            const type_of_vehicle = marketing_transaction_form.querySelector(`#type_of_vehicle${transaction_counter.value}`);
+            type_of_vehicle.remove()
+            transaction_counter.value--
+            if(transaction_counter.value == 1){
+                remove_item_button_marketing_transaction_form.style.display = "none"
+            }
+        })
+
+        submit_to.addEventListener("change", () => {
+            add_item_button_marketing_transaction_form.style.display = "block"
+            if(submit_to.value == "LOGISTICS"){
+                addTransaction();
             }
             else{
                 const type_of_vehicle_container = marketing_transaction_form.querySelector("#type_of_vehicle_container");

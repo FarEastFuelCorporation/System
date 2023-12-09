@@ -59,7 +59,7 @@
         </div>
         <div class="sidebar">
                 
-                    <div id="account_info" style="display: flex; padding: 0 20px; gap: 10px;margin-top: 10px;">
+                    <div id="account_info" style="display: flex; padding: 0 20px; gap: 10px; margin-top: 10px;">
     <div style="display: flex; justify-content: center; align-items: center;">
         <img id="profile_picture" src="" alt="">
     </div>
@@ -474,10 +474,11 @@
     <div class="section_container">
         <h2>MARKETING TRANSACTIONS</h2>
         <div id="form_tab" style="display: none; position: absolute; top: 60px; right: 20px; width: calc(100% - 40px); height: 85vh; padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
-            <form id="form_id" style="position: relative;" action="https://script.google.com/macros/s/AKfycbyLArmm6b0CLIuq1o9MCLfLHiXJ0zm4TLJCaWLD6MyuUKdtgdBQk_gVao5_44MlKqCf/exec" method="post">
+            <form id="form_id" style="position: relative;" action="https://script.google.com/macros/s/AKfycbxpqhGp7hHFpqWqz5EO8IZ80rqhzmFs_q1Ce13WqFZQJ9m-g6m1CC05lYKQugr9W0OI/exec" method="post">
                 <h2>MARKETING TRANSACTION FORM</h2>
                 <input type="hidden" name="user" id="user">
                 <input type="hidden" name="quotation_no" id="quotation_no">
+                <input type="hidden" name="transaction_counter" id="transaction_counter" value="0">
                 <button id="close_button" type="button" style="position: absolute; top: 0; right: 0; background-color: transparent; border: none;">
                     <i class="fa-regular fa-rectangle-xmark" style="color: #ff0000;"></i>
                 </button>
@@ -542,6 +543,19 @@
                             <select name="type_of_waste" id="type_of_waste" class="form-control form" required>
                                 <option value="">SELECT</option>
                             </select>
+                        </div>
+                        <div id="type_of_vehicle_container" class="wrapper">
+
+                        </div>
+                    </div>
+                    <div class="add_item pt-3">
+                        <button type="button" id="remove_item_button" class="form-control">
+                            <i class="fa-solid fa-minus"></i>
+                        </button>
+                        <button type="button" id="add_item_button" class="form-control" style="display: none;">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                        <div class="item_buttons">
                         </div>
                     </div>
                     <div style="display: flex; gap: 20px;">
@@ -1052,6 +1066,15 @@
                         <label for="unit_price1">
                             <i class="fa-solid fa-money-bill-wave"></i>
                             Price
+                        </label><br>
+                        <div class="search_input">
+                            <input type="number" name="unit_price1" id="unit_price1" autocomplete="off" class="form-control" required value="0" style="padding-right: 20px !important;">
+                        </div>
+                    </div>
+                    <div class="wrapper">
+                        <label for="unit_price1">
+                            <i class="fa-solid fa-money-bill-wave"></i>
+                            Fix P
                         </label><br>
                         <div class="search_input">
                             <input type="number" name="unit_price1" id="unit_price1" autocomplete="off" class="form-control" required value="0" style="padding-right: 20px !important;">
