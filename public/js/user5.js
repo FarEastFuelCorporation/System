@@ -747,12 +747,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     if(mode == "CHARGE"){
                                         if(vat_calculation == "VAT EXCLUSIVE"){
                                             vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                            individual_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
                                             si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
                                             si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
                                             si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
                                         }
                                         else{
                                             non_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                            individual_non_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
                                             si_unit_price = parseFloat(unit_price);
                                             si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
                                             si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
@@ -883,12 +885,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 var si_amount = 0;
                                 if(transportation_calculation == "VAT EXCLUSIVE"){
                                     vatable += parseFloat(transportation_fee);
+                                    individual_vatable += parseFloat(transportation_fee);
                                     si_unit_price = parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12);
                                     si_amount = (1 * (parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12)));
                                     si_total_amount += (1 * (parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12)));
                                 }
                                 else{
                                     non_vatable += parseFloat(transportation_fee);
+                                    individual_vatable += parseFloat(transportation_fee);
                                     si_unit_price = parseFloat(transportation_fee);
                                     si_amount = (1 * (parseFloat(transportation_fee)));
                                     si_total_amount += (1 * (parseFloat(transportation_fee)));
@@ -951,12 +955,16 @@ document.addEventListener('DOMContentLoaded', async function() {
                             `
                             if(vat_calculation == "VAT EXCLUSIVE"){
                                 vatable += (parseFloat(capacity - max_capacity) * parseFloat(unit_price)) + parseFloat(transportation_fee);
+                                individual_vatable += (parseFloat(capacity - max_capacity) * parseFloat(unit_price)) + parseFloat(transportation_fee);
+                                individual_vatable += (parseFloat(capacity - max_capacity) * parseFloat(unit_price)) + parseFloat(transportation_fee);
                                 si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
                                 si_amount = (parseFloat(capacity - max_capacity) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12))) + (parseFloat(transportation_fee)*1.12);
                                 si_total_amount += (parseFloat(capacity - max_capacity) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12))) + (parseFloat(transportation_fee)*1.12);
                             }
                             else{
                                 non_vatable +=(parseFloat(capacity - max_capacity) * parseFloat(unit_price)) + parseFloat(transportation_fee);
+                                individual_non_vatable +=(parseFloat(capacity - max_capacity) * parseFloat(unit_price)) + parseFloat(transportation_fee);
+                                individual_non_vatable +=(parseFloat(capacity - max_capacity) * parseFloat(unit_price)) + parseFloat(transportation_fee);
                                 si_unit_price = parseFloat(unit_price);
                                 si_amount = (parseFloat(capacity - max_capacity) * parseFloat(unit_price)) + parseFloat(transportation_fee);
                                 si_total_amount += (parseFloat(capacity - max_capacity) * (parseFloat(unit_price))) + (parseFloat(transportation_fee));
@@ -989,12 +997,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                             `
                             if(vat_calculation == "VAT EXCLUSIVE"){
                                 vatable += parseFloat(transportation_fee);
+                                individual_vatable += parseFloat(transportation_fee);
                                 si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
                                 si_amount = (parseFloat(transportation_fee)*1.12);
                                 si_total_amount += (parseFloat(capacity - max_capacity) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12))) + (parseFloat(transportation_fee)*1.12);
                             }
                             else{
                                 non_vatable += parseFloat(transportation_fee);
+                                individual_non_vatable += parseFloat(transportation_fee);
                                 si_unit_price = parseFloat(unit_price);
                                 si_amount = parseFloat(transportation_fee);
                                 si_total_amount += parseFloat(transportation_fee);
@@ -1070,8 +1080,12 @@ document.addEventListener('DOMContentLoaded', async function() {
             else if(type_of_form.value == "By COD (Multiple Transaction)"){
                 for(let s = 1; s <= cod_counter.value; s++){
                     table_data_info = [];
+                    var individual_non_vatable = 0;
+                    var individual_vatable = 0;    
                     const search_cod_form_no = billing_process_form.querySelector(`#search_cod_form_no${s}`);
                     const service_invoice_no = billing_process_form.querySelector(`#service_invoice_no${s}`);
+                    const total_vat_in = billing_process_form.querySelector(`#total_vat_in${s}`);
+                    const total_vat_ex = billing_process_form.querySelector(`#total_vat_ex${s}`);
                     for(let x = 1; x < cod_data_list.content.length; x++){
                         if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]){
                             client = cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")]
@@ -1181,12 +1195,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 if(mode == "CHARGE"){
                                     if(vat_calculation == "VAT EXCLUSIVE"){
                                         vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                        individual_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
                                         si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
                                         si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
                                         si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
                                     }
                                     else{
                                         non_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
+                                        individual_non_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
                                         si_unit_price = parseFloat(unit_price);
                                         si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
                                         si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
@@ -1280,12 +1296,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                             var si_amount = 0;
                             if(transportation_calculation == "VAT EXCLUSIVE"){
                                 vatable += parseFloat(transportation_fee);
+                                individual_vatable += parseFloat(transportation_fee);
                                 si_unit_price = parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12);
                                 si_amount = (1 * (parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12)));
                                 si_total_amount += (1 * (parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12)));
                             }
                             else{
                                 non_vatable += parseFloat(transportation_fee);
+                                individual_non_vatable += parseFloat(transportation_fee);
                                 si_unit_price = parseFloat(transportation_fee);
                                 si_amount = (1 * (parseFloat(transportation_fee)));
                                 si_total_amount += (1 * (parseFloat(transportation_fee)));
@@ -1329,6 +1347,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                         si_table_data.insertAdjacentHTML("beforeend", si_table_data_info[x])
                         si_table_data.insertAdjacentHTML("beforeend", si_table_data_transportation[x])
                     }
+                    total_vat_ex.value = formatNumber(individual_vatable);
+                    total_vat_in.value = formatNumber(individual_non_vatable + individual_vatable + (parseFloat(individual_vatable))*.12);
                 }
                 for(let x = 0; x < 20 - table_counter; x++){
                     var data5 = "";
@@ -1714,7 +1734,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         }
 
-        const form_id = document.getElementById("form_id");
+        const form_id_billing = document.getElementById("form_id_billing");
         const type_of_form = document.getElementById("type_of_form");
         const type_of_form_list = document.getElementById("type_of_form_list");
         const bpf_form = document.getElementById("bpf_form");
@@ -1897,7 +1917,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <input type="hidden" name="total_vat_in${cod_counter.value}" id="total_vat_in${cod_counter.value}">
                 <input type="hidden" name="total_vat_ex${cod_counter.value}" id="total_vat_ex${cod_counter.value}">
             `
-            form_id.insertAdjacentHTML("afterbegin", additional_data)
+            form_id_billing.insertAdjacentHTML("afterbegin", additional_data)
         }
 
         function searchClient () {

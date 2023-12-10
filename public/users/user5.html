@@ -470,7 +470,7 @@
             <!-- billing_process_form -->
             <section class="billing" id="billing_process_form">
                 <h2>BILLING TRANSACTION</h2><br>
-                <form id="form_id" action="https://script.google.com/macros/s/AKfycbwe4c8ufTS3AslFusJbw8G0kUoJBRPT2tzYkUZmeqCTPeu39UNjWmEt8-d1yTOLq4kz3g/exec" method="post" style="position: relative;">
+                <form id="form_id_billing" action="https://script.google.com/macros/s/AKfycbwe4c8ufTS3AslFusJbw8G0kUoJBRPT2tzYkUZmeqCTPeu39UNjWmEt8-d1yTOLq4kz3g/exec" method="post" style="position: relative;">
                     <input type="hidden" name="user" id="user">
                     <input type="hidden" name="wcf_form_no1" id="wcf_form_no1">
                     <input type="hidden" name="client" id="client">
@@ -1254,7 +1254,7 @@
             <!-- collection_transaction -->
             <section class="billing" id="collection_transaction">
                 <h2>COLLECTION TRANSACTION</h2><br>
-                <form id="form_id" action="https://script.google.com/macros/s/AKfycbwJaL3g4R8384HYaw8v8hxqw0P-p1i34O1owh660qzSEE7kF0afUzoc7Fb3exUU2kHhuQ/exec" method="post" style="position: relative;">
+                <form id="form_id_collection" action="https://script.google.com/macros/s/AKfycbwJaL3g4R8384HYaw8v8hxqw0P-p1i34O1owh660qzSEE7kF0afUzoc7Fb3exUU2kHhuQ/exec" method="post" style="position: relative;">
                     <input type="hidden" name="user" id="user">
                     <input type="hidden" name="wcf_form_no1" id="wcf_form_no1">
                     <input type="hidden" name="client" id="client">
@@ -1443,79 +1443,111 @@
         }
 
         function convertToPDF() {
-            const element = document.getElementById('what_to_print');
-            const bpf_form_no = document.getElementById('bpf_form_no').value;
-            const opt = {
-                image: { type: 'jpeg', quality: 1 },
-                html2canvas: { scale: 10 },
-                jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
-            };
+            const form_id_billing = document.querySelector('#form_id_billing');
 
-            const marginTop = 32.5; // Top margin in mm
-            const pageHeight = 236.9; // Adjust the value based on your available space for each page
+            if (validateForm(form_id_billing)) {
+                const element = document.getElementById('what_to_print');
+                const bpf_form_no = document.getElementById('bpf_form_no').value;
+                const opt = {
+                    image: { type: 'jpeg', quality: 1 },
+                    html2canvas: { scale: 10 },
+                    jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
+                };
 
-            const totalPages = 1;
+                const marginTop = 32.5; // Top margin in mm
+                const pageHeight = 236.9; // Adjust the value based on your available space for each page
 
-            let promises = [];
+                const totalPages = 1;
 
-            for (let i = 0; i < totalPages; i++) {
-                const promise = html2pdf()
-                .set(opt)
-                .from(element)
-                .toContainer()
-                .then(() => {
-                    const newPosition = -pageHeight * (i + 1) - marginTop;
-                    element.style.transform = `translate(0, ${newPosition}px)`;
+                let promises = [];
+
+                for (let i = 0; i < totalPages; i++) {
+                    const promise = html2pdf()
+                    .set(opt)
+                    .from(element)
+                    .toContainer()
+                    .then(() => {
+                        const newPosition = -pageHeight * (i + 1) - marginTop;
+                        element.style.transform = `translate(0, ${newPosition}px)`;
+                    });
+
+                    promises.push(promise);
+                }
+
+                Promise.all(promises)
+                    .then(() => {
+                    element.style.transform = 'none';
+                    html2pdf().set(opt).from(element).save(`${bpf_form_no}_Billing_Statement.pdf`).then(() => {
+                        // Call the submit button click event immediately after the PDF is downloaded
+                    });
                 });
-
-                promises.push(promise);
+            } else {
+                // Handle the case where the form is not valid
+                alert('Please fill out the form completely before downloading.');
             }
-
-            Promise.all(promises)
-                .then(() => {
-                element.style.transform = 'none';
-                html2pdf().set(opt).from(element).save(`${bpf_form_no}_Billing_Statement.pdf`).then(() => {
-                    // Call the submit button click event immediately after the PDF is downloaded
-                });
-            });
         }
         
         function convertToPDF2() {
-            const element = document.getElementById('what_to_print2');
-            const bpf_form_no = document.getElementById('bpf_form_no').value;
-            const opt = {
-                image: { type: 'jpeg', quality: 1 },
-                html2canvas: { scale: 5 },
-                jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
-            };
+            const form_id_billing = document.querySelector('#form_id_billing');
 
-            const marginTop = 32.5; // Top margin in mm
-            const pageHeight = 236.9; // Adjust the value based on your available space for each page
+            if (validateForm(form_id_billing)) {
+                const element = document.getElementById('what_to_print2');
+                const bpf_form_no = document.getElementById('bpf_form_no').value;
+                const opt = {
+                    image: { type: 'jpeg', quality: 1 },
+                    html2canvas: { scale: 5 },
+                    jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
+                };
 
-            const totalPages = 1;
+                const marginTop = 32.5; // Top margin in mm
+                const pageHeight = 236.9; // Adjust the value based on your available space for each page
 
-            let promises = [];
+                const totalPages = 1;
 
-            for (let i = 0; i < totalPages; i++) {
-                const promise = html2pdf()
-                .set(opt)
-                .from(element)
-                .toContainer()
-                .then(() => {
-                    const newPosition = -pageHeight * (i + 1) - marginTop;
-                    element.style.transform = `translate(0, ${newPosition}px)`;
+                let promises = [];
+
+                for (let i = 0; i < totalPages; i++) {
+                    const promise = html2pdf()
+                    .set(opt)
+                    .from(element)
+                    .toContainer()
+                    .then(() => {
+                        const newPosition = -pageHeight * (i + 1) - marginTop;
+                        element.style.transform = `translate(0, ${newPosition}px)`;
+                    });
+
+                    promises.push(promise);
+                }
+
+                Promise.all(promises)
+                    .then(() => {
+                    element.style.transform = 'none';
+                    html2pdf().set(opt).from(element).save(`${bpf_form_no}_Service_Invoice.pdf`).then(() => {
+                        // Call the submit button click event immediately after the PDF is downloaded
+                    });
                 });
+            } else {
+                // Handle the case where the form is not valid
+                alert('Please fill out the form completely before downloading.');
+            }
+        }
 
-                promises.push(promise);
+        // Function to validate the form
+        function validateForm(form) {
+            // Query all input elements with the 'required' attribute
+            const requiredInputs = form.querySelectorAll('input[required]');
+
+            // Check if all required inputs have a non-empty value
+            for (const input of requiredInputs) {
+                if (input.value.trim() === '') {
+                    return false; // Form is not valid
+                }
+                // You can add more specific validation checks for different input types if needed
             }
 
-            Promise.all(promises)
-                .then(() => {
-                element.style.transform = 'none';
-                html2pdf().set(opt).from(element).save(`${bpf_form_no}_Service_Invoice.pdf`).then(() => {
-                    // Call the submit button click event immediately after the PDF is downloaded
-                });
-            });
+            // Add more validation checks as needed
+
+            return true; // Form is valid
         }
 
         function convertToPDF3() {
