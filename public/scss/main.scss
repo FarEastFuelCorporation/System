@@ -4948,6 +4948,66 @@ input:disabled {
     ::-webkit-scrollbar {
         width: 0 !important;
     }
+    
+    .sidebar ul li:hover
+    {
+        background: none !important;
+    }
+    
+    .sidebar ul li a:hover
+    {
+        color: variables.$sidebar_active !important;
+        font-weight: bold;
+    }
+    
+    .sidebar ul li:hover a{
+        color: variables.$sidebar_active;
+        font-weight: bold;
+    }
+    
+    .sidebar ul .hover{
+        background: none !important;
+    }
+    
+    .sidebar ul .hover a{
+        color: variables.$sidebar_active;
+        font-weight: bold;
+    }
+    
+    .sidebar ul li a{
+        width: 100%;
+        text-decoration: none;
+        color: variables.$darkgray;
+        height: 60px;
+        font-size: 18px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+    }
+    
+    .sidebar ul li a i{
+        min-width: 60px;
+        font-size: 24px;
+        text-align: center;
+    }
+    
+    .sidebar ul li a h6
+    {
+        color: black !important;
+    }
+    // hover
+    .sidebar ul .hover a h6
+    {
+        color: variables.$sidebar_active !important;
+        font-weight: bold;
+    }
+    .sidebar ul li:hover a h6
+    {
+        color: variables.$sidebar_active !important;
+        font-weight: bold;
+    }
+
+    
     #employee_dashboard .cards{
         display: grid !important;
         grid-template-columns: 1fr 1fr !important;
