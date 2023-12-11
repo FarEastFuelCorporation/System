@@ -2904,13 +2904,16 @@ document.addEventListener('DOMContentLoaded', async function() {
             const item = supplies_warehouse.querySelector(`#item${iid_counter.value}`);
             iid_form_no.addEventListener("keyup", () => {
                 for(let x = 0; x < iid_no_array.length; x++){
-
                     if(iid_form_no.value == iid_no_array[x]){
-                        item.value = iid_item_array[x]
-                        break
-                    }
-                    else{
-                        item.value = "No Item Found"
+                        for(let y = 1; y < iid_data_list.content.length; y++){
+                            if(iid_form_no.value == iid_data_list.content[y][findTextInArray(iid_data_list, "IID #")]){
+                                item.value = iid_data_list.content[y][findTextInArray(iid_data_list, "DESCRIPTION")];
+                                break
+                            }
+                            else{
+                                item.value = "No Item Found"
+                            }
+                        }
                     }
                 }
             })
