@@ -768,7 +768,6 @@ function getDayNamesForCutoffPeriod(month, year, cutoffPeriod) {
   if (monthNumber === -1) {
     return ["Invalid month"];
   }
-
   let startDate, endDate;
 
   if (cutoffPeriod === "2ND CUT OFF") {
@@ -776,9 +775,14 @@ function getDayNamesForCutoffPeriod(month, year, cutoffPeriod) {
     endDate = new Date(year, monthNumber, 25);
   } else if (cutoffPeriod === "1ST CUT OFF") {
     const nextMonth = monthNumber === 11 ? 0 : monthNumber + 1;
-    const nextYear = monthNumber === 11 ? year + 1 : year;
-    startDate = new Date(nextYear, monthNumber, 26);
-    endDate = new Date(nextYear, nextMonth, 10);
+    const nextYear = monthNumber === 11 ? parseInt(year) + 1 : year;
+    if(monthNumber === 11){
+      startDate = new Date(year, monthNumber, 26);
+      endDate = new Date(nextYear, nextMonth, 10);
+    }else{
+      startDate = new Date(year, monthNumber, 26);
+      endDate = new Date(year, nextMonth, 10);
+    }
   } else {
     return ["Invalid cutoffPeriod"];
   }
@@ -786,16 +790,17 @@ function getDayNamesForCutoffPeriod(month, year, cutoffPeriod) {
   const dayNames = [];
 
   let currentDate = startDate;
-
   while (currentDate <= endDate) {
     const options = { weekday: "long" };
     const dayName = new Intl.DateTimeFormat("en-US", options).format(currentDate);
     dayNames.push(dayName);
     currentDate.setDate(currentDate.getDate() + 1);
   }
-
   return dayNames;
 }
+
+console.log(getDayNamesForCutoffPeriod("DECEMBER", "2023", "1ST CUT OFF"))
+console.log(getDatesForCutoffPeriod("DECEMBER", "2023", "1ST CUT OFF"))
 
 function getDatesForCutoffPeriod(month, year, cutoffPeriod) {
   const monthArray = [
@@ -823,8 +828,13 @@ function getDatesForCutoffPeriod(month, year, cutoffPeriod) {
   } else if (cutoffPeriod === "1ST CUT OFF") {
     const nextMonth = monthNumber === 11 ? 0 : monthNumber + 1;
     const nextYear = monthNumber === 11 ? year + 1 : year;
-    startDate = new Date(nextYear, monthNumber, 26);
-    endDate = new Date(nextYear, nextMonth, 10);
+    if(monthNumber === 11){
+      startDate = new Date(year, monthNumber, 26);
+      endDate = new Date(nextYear, nextMonth, 10);
+    }else{
+      startDate = new Date(year, monthNumber, 26);
+      endDate = new Date(year, nextMonth, 10);
+    }
   } else {
     return ["Invalid cutoffPeriod"];
   }
