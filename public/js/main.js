@@ -795,15 +795,8 @@ function getDayNamesForCutoffPeriod(month, year, cutoffPeriod) {
     currentDate.setDate(currentDate.getDate() + 1);
   }
 
-  console.log(year)
-  console.log(startDate)
-  console.log(endDate)
-
   return dayNames;
 }
-
-console.log(getDayNamesForCutoffPeriod("JANUARY", "2024", "1ST CUT OFF"))
-console.log(getDatesForCutoffPeriod("JANUARY", "2024", "1ST CUT OFF"))
 
 function getDatesForCutoffPeriod(month, year, cutoffPeriod) {
   const monthArray = [
@@ -848,11 +841,6 @@ function getDatesForCutoffPeriod(month, year, cutoffPeriod) {
     formattedDates.push(formatDate(currentDate));
     currentDate.setDate(currentDate.getDate() + 1);
   }
-
-  console.log(year)
-  console.log(startDate)
-  console.log(endDate)
-
 
   return formattedDates;
 }

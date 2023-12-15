@@ -798,6 +798,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             type_of_vehicle_container.insertAdjacentHTML("beforeend", data_value);
 
             const type_of_vehicle = marketing_transaction_form.querySelector(`#type_of_vehicle${transaction_counter.value}`);
+            const submit_to = marketing_transaction_form.querySelector(`#submit_to`);
             var done_vehicle = [];
             for (let y = 1; y < client_data_list.content.length; y++) {
                 if (client.value == client_data_list.content[y][1]) {
@@ -815,6 +816,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 }
                             }
                         }
+                    }
+                    if(submit_to.value == "RECEIVING"){
+                        console.log("pass")
+                        var data = `
+                        <option value="CLIENT VEHICLE">CLIENT VEHICLE</option>
+                        `
+                        type_of_vehicle.insertAdjacentHTML("beforeend", data)
                     }
                 }
             }
@@ -2573,7 +2581,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                     }
                     for(let x = 0; x < 20 - table_counter; x++){
-                        console.log("pass")
                         var data5 = "";
                         data5 = `
                         <tr>
