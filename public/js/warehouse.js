@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const wcf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyBFTBuFZ4PkvwmPi_3Pp_v74DCSEK2VpNy6janIGgaAK-P22wazmmShOKn6iwFbrQn/exec');
         const wdf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzqTONQ_bC0F204KVgDsF42r4-51oMRbh57wQgUs8Tob8YxmdUC6lmUX6wZD0LFnrulYw/exec');
         const wtf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxYB-N38emc6GUCKuuy-gGVRHQm4NoYgRRayHf56BwjiAPwsBKZ0llHjLAsW7Vt3j9I/exec');
-        const stf_response_promise = fetch('https://script.google.com/macros/s/AKfycbytp1dpaOC_8sf0YsO2U2iJRiUjk791Pg-nA0zVYmxyE9zd0pc8Hlfu4P_-KalUyNLgDw/exec');
+        const stf_response_promise = fetch('https://script.google.com/macros/s/AKfycbwj90Rla-HId1Oa61WeMKxqJDJUq-n1mvHYi8wXpRMhU34UNxtQpxTG1DytiKpeY4DL/exec');
         const gpf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzQObpSJ0o3Wo0xg-lYlhoAnN6fO73VGC4TtGlqtRw1GNUqrXmm5zsQrFDl50alIaSTfQ/exec');
         const qlf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyFU_skru2tnyEiv8I5HkpRCXbUlQb5vlJUm8Le0nZBCvfZeFkQPd2Naljs5CZY41I17w/exec');
         const prf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxZctLub-6PuQGykx298syeH7Qm__S37uqQrVFYsHVtv-Qk8M2oSkRIPIMVT_1WexqRZA/exec');
