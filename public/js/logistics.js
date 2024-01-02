@@ -812,14 +812,21 @@ document.addEventListener('DOMContentLoaded', async function() {
         const timestamp = document.getElementById("timestamp");
         const ltf_data = document.getElementById("ltf_data");
 
+        // FORM GENERATOR
         const ltf_form_no = document.getElementById("ltf_form_no");
         var last_row = ltf_data_list.content.length -1;        
         var data_info = ltf_data_list.content[last_row][findTextInArray(ltf_data_list, "LTF #")];
         var data_counter = data_info.substring(9,12);
-        var year = new Date().getFullYear();
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
         data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-        ltf_form_no.value = `LTF${year}${month}${data_counter}`
+        var current_year = new Date().getFullYear();
+        var last_counter_year = data_info.substring(3,7);
+        if(last_counter_year == current_year){
+            ltf_form_no.value = `LTF${last_counter_year}${month}${data_counter}`
+        } else {
+            data_counter = (1).toString().padStart(3, "0");
+            ltf_form_no.value = `LTF${current_year}${month}${data_counter}`
+        }
     
         // Search Button
         search_mtf_form_no_button.addEventListener("click", () => {
@@ -984,10 +991,16 @@ document.addEventListener('DOMContentLoaded', async function() {
         else{
             data_counter = data_info.substring(9,12);
         }
-        var year = new Date().getFullYear();
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
         data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-        vmr_form_no.value = `VMR${year}${month}${data_counter}`;
+        var current_year = new Date().getFullYear();
+        var last_counter_year = data_info.substring(3,7);
+        if(last_counter_year == current_year){
+            vmr_form_no.value = `VMR${last_counter_year}${month}${data_counter}`;
+        } else {
+            data_counter = (1).toString().padStart(3, "0");
+            vmr_form_no.value = `VMR${current_year}${month}${data_counter}`;
+        }
 
         var plate_no_data = [];
         for (x = 1; x < vehicle_data_list.content.length; x++) {
@@ -1091,10 +1104,16 @@ document.addEventListener('DOMContentLoaded', async function() {
         else{
             data_counter = data_info.substring(9,12);
         }
-        var year = new Date().getFullYear();
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
         data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-        vif_form_no.value = `VIF${year}${month}${data_counter}`;
+        var current_year = new Date().getFullYear();
+        var last_counter_year = data_info.substring(3,7);
+        if(last_counter_year == current_year){
+            vif_form_no.value = `VIF${last_counter_year}${month}${data_counter}`;
+        } else {
+            data_counter = (1).toString().padStart(3, "0");
+            vif_form_no.value = `VIF${current_year}${month}${data_counter}`;
+        }
 
 
         vehicle_inspection_button.addEventListener("click", () => {
@@ -1519,10 +1538,16 @@ document.addEventListener('DOMContentLoaded', async function() {
         else{
             data_counter = data_info.substring(9,12);
         }
-        var year = new Date().getFullYear();
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
         data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-        wsf_form_no.value = `WSF${year}${month}${data_counter}`;
+        var current_year = new Date().getFullYear();
+        var last_counter_year = data_info.substring(3,7);
+        if(last_counter_year == current_year){
+            wsf_form_no.value = `WSF${last_counter_year}${month}${data_counter}`;
+        } else {
+            data_counter = (1).toString().padStart(3, "0");
+            wsf_form_no.value = `WSF${current_year}${month}${data_counter}`;
+        }
 
         const supplies_warehouse = document.querySelector("#supplies_warehouse");
         const withdrawal_form_button = supplies_warehouse.querySelector("#withdrawal_form_button");
