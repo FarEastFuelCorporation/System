@@ -379,8 +379,8 @@ document.addEventListener('DOMContentLoaded', async function() {
 
 
 
-        // vmf_data_list
         // FORM GENERATOR
+        // vmf_form_no
         const vmf_form_no = document.querySelector("#vmf_form_no");
         var last_row = vmf_data_list.content.length -1;
         var data_info = vmf_data_list.content[last_row][findTextInArray(vmf_data_list, "VMF #")];
@@ -389,15 +389,21 @@ document.addEventListener('DOMContentLoaded', async function() {
             data_counter = 0;
         }
         else{
-            data_counter = data_info.substring(9,12);
+            data_counter = data_info.substring(9,13);
         }
-        var year = new Date().getFullYear();
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
-        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-        vmf_form_no.value = `VMF${year}${month}${data_counter}`;    
+        data_counter = (parseInt(data_counter) +1).toString().padStart(4, "0");
+        var current_year = new Date().getFullYear();
+        var last_counter_year = data_info.substring(4,7);
+        if(last_counter_year == current_year){
+            vmf_form_no.value = `VMF${last_counter_year}${month}${data_counter}`;
+        } else {
+            data_counter = (1).toString().padStart(4, "0");
+            vmf_form_no.value = `VMF${current_year}${month}${data_counter}`;
+        }
 
-        // vmf_data_list
         // FORM GENERATOR
+        // pmf_form_no
         const pmf_form_no = document.querySelector("#pmf_form_no");
         var last_row = vmf_data_list.content.length -1;
         var data_info = vmf_data_list.content[last_row][findTextInArray(vmf_data_list, "VMF #")];
@@ -406,12 +412,18 @@ document.addEventListener('DOMContentLoaded', async function() {
             data_counter = 0;
         }
         else{
-            data_counter = data_info.substring(9,12);
+            data_counter = data_info.substring(9,13);
         }
-        var year = new Date().getFullYear();
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
-        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-        pmf_form_no.value = `PMF${year}${month}${data_counter}`;    
+        data_counter = (parseInt(data_counter) +1).toString().padStart(4, "0");
+        var current_year = new Date().getFullYear();
+        var last_counter_year = data_info.substring(4,7);
+        if(last_counter_year == current_year){
+            pmf_form_no.value = `PMF${last_counter_year}${month}${data_counter}`;
+        } else {
+            data_counter = (1).toString().padStart(4, "0");
+            pmf_form_no.value = `PMF${current_year}${month}${data_counter}`;
+        }
 
         const search_vmr_form_no_button = document.querySelector("#search_vmr_form_no_button");
         const search_vmr_form_no = document.querySelector("#search_vmr_form_no");

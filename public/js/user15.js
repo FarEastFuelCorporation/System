@@ -667,11 +667,17 @@ document.addEventListener('DOMContentLoaded', async function() {
         const tbf_no_ap_accounting = budget_form_ap_accounting.querySelector("#tbf_no");
         var last_row = tbf_data_list.content.length -1;        
         var data_info = tbf_data_list.content[last_row][findTextInArray(tbf_data_list, "TBF #")];
-        var data_counter = data_info.substring(9,12);
-        var year = new Date().getFullYear();
+        var data_counter = data_info.substring(9,13);
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
-        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-        tbf_no_ap_accounting.value = `TBF${year}${month}${data_counter}`;
+        data_counter = (parseInt(data_counter) +1).toString().padStart(4, "0");
+        var current_year = new Date().getFullYear();
+        var last_counter_year = data_info.substring(4,7);
+        if(last_counter_year == current_year){
+            tbf_no_ap_accounting.value = `TBF${last_counter_year}${month}${data_counter}`;
+        } else {
+            data_counter = (1).toString().padStart(4, "0");
+            tbf_no_ap_accounting.value = `TBF${current_year}${month}${data_counter}`;
+        }
 
         search_ltf_form_no_button_ap_accounting.addEventListener("click", () => {
             var data_value;
@@ -766,11 +772,17 @@ document.addEventListener('DOMContentLoaded', async function() {
         const tlf_no_ap_accounting = liquidation_form_ap_accounting.querySelector("#tlf_no");
         var last_row = tlf_data_list.content.length -1;        
         var data_info = tlf_data_list.content[last_row][findTextInArray(tlf_data_list, "TLF #")];
-        var data_counter = data_info.substring(9,12);
-        var year = new Date().getFullYear();
+        var data_counter = data_info.substring(9,13);
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
-        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-        tlf_no_ap_accounting.value = `TLF${year}${month}${data_counter}`;
+        data_counter = (parseInt(data_counter) +1).toString().padStart(4, "0");
+        var current_year = new Date().getFullYear();
+        var last_counter_year = data_info.substring(4,7);
+        if(last_counter_year == current_year){
+            tlf_no_ap_accounting.value = `TLF${last_counter_year}${month}${data_counter}`;
+        } else {
+            data_counter = (1).toString().padStart(4, "0");
+            tlf_no_ap_accounting.value = `TLF${current_year}${month}${data_counter}`;
+        }
 
         var released_budget = "";
         search_tbf_form_no_button_ap_accounting.addEventListener("click", () => {
@@ -1267,29 +1279,20 @@ document.addEventListener('DOMContentLoaded', async function() {
         const fund_transfer_form_buttons_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_transfer_form_buttons");
 
         const ftf_form_no_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#ftf_form_no");
-        var last_row = ftf_data_list.content.length -1;
-        var year = new Date().getFullYear();
+        var last_row = ftf_data_list.content.length -1;        
+        var data_info = ftf_data_list.content[last_row][findTextInArray(ftf_data_list, "FTF # / FORM #")];
+        var data_counter = data_info.substring(9,13);
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
-        var ftf_data;
-        var is_ftf_data = false;
-        var data_info;
-        var data_counter;
-        for(let x = 1; x < ftf_data_list.content.length; x++){
-            ftf_data = ftf_data_list.content[x][findTextInArray(ftf_data_list, "FTF # / FORM #")];
-            
-            if(ftf_data.includes(`FTF${year}${month}`) == true){
-                is_ftf_data = true;
-            }
+        data_counter = (parseInt(data_counter) +1).toString().padStart(4, "0");
+        var current_year = new Date().getFullYear();
+        var last_counter_year = data_info.substring(4,7);
+        if(last_counter_year == current_year){
+            ftf_form_no_ap_accounting.value = `FTF${last_counter_year}${month}${data_counter}`;
+        } else {
+            data_counter = (1).toString().padStart(4, "0");
+            ftf_form_no_ap_accounting.value = `FTF${current_year}${month}${data_counter}`;
         }
-        if(is_ftf_data){
-            data_info = ftf_data_list.content[last_row][findTextInArray(ftf_data_list, "FTF # / FORM #")];
-            data_counter = data_info.substring(9,12);
-        }
-        else{
-            data_counter = 0;
-        }
-        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-        ftf_form_no_ap_accounting.value = `FTF${year}${month}${data_counter}`;
+
         
         fund_transfer_form_button_ap_accounting.addEventListener("click", () => {
             if(fund_transfer_form_id_ap_accounting.style.display == "block"){
@@ -1729,6 +1732,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             input.setAttribute('step', '0.01'); // Set the desired step value
         });
 
+        // FORM GENERATOR
         // frf_data_list
         const fund_request_form_button_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_request_form_button");
         const fund_request_form_id_ap_accounting = fund_transfer_form_ap_accounting.querySelector("#fund_request_form_id");
@@ -1741,11 +1745,17 @@ document.addEventListener('DOMContentLoaded', async function() {
         const frf_form_no_ap_accounting = fund_request_form_id_ap_accounting.querySelector("#frf_form_no1");
         var last_row = frf_data_list.content.length -1;        
         var data_info = frf_data_list.content[last_row][findTextInArray(frf_data_list, "FRF #")];
-        var data_counter = data_info.substring(9,12);
-        var year = new Date().getFullYear();
+        var data_counter = data_info.substring(9,13);
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
-        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-        frf_form_no_ap_accounting.value = `FRF${year}${month}${data_counter}`;
+        data_counter = (parseInt(data_counter) +1).toString().padStart(4, "0");
+        var current_year = new Date().getFullYear();
+        var last_counter_year = data_info.substring(4,7);
+        if(last_counter_year == current_year){
+            frf_form_no_ap_accounting.value = `FRF${last_counter_year}${month}${data_counter}`;
+        } else {
+            data_counter = (1).toString().padStart(4, "0");
+            frf_form_no_ap_accounting.value = `FRF${current_year}${month}${data_counter}`;
+        }
         
         fund_request_form_button_ap_accounting.addEventListener("click", () => {
             if(fund_request_form_id_ap_accounting.style.display == "block"){
@@ -1936,11 +1946,17 @@ document.addEventListener('DOMContentLoaded', async function() {
         const irf_form_no = document.getElementById("irf_form_no");
         var last_row = irf_data_list.content.length -1;        
         var data_info = irf_data_list.content[last_row][findTextInArray(irf_data_list, "IRF #")];
-        var data_counter = data_info.substring(9,12);
-        var year = new Date().getFullYear();
+        var data_counter = data_info.substring(9,13);
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
-        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-        irf_form_no.value = `IRF${year}${month}${data_counter}`;
+        data_counter = (parseInt(data_counter) +1).toString().padStart(4, "0");
+        var current_year = new Date().getFullYear();
+        var last_counter_year = data_info.substring(3,7);
+        if(last_counter_year == current_year){
+            irf_form_no.value = `IRF${last_counter_year}${month}${data_counter}`;
+        } else {
+            data_counter = (1).toString().padStart(4, "0");
+            irf_form_no.value = `IRF${current_year}${month}${data_counter}`;
+        }
 
 
         const incident_report_form = document.querySelector("#incident_report_form");

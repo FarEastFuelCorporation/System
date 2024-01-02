@@ -448,12 +448,18 @@ document.addEventListener('DOMContentLoaded', async function() {
             data_counter = 0;
         }
         else{
-            data_counter = data_info.substring(9,12);
+            data_counter = data_info.substring(9,13);
         }
-        var year = new Date().getFullYear();
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
-        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-        prf_form_no.value = `PRF${year}${month}${data_counter}`;
+        data_counter = (parseInt(data_counter) +1).toString().padStart(4, "0");
+        var current_year = new Date().getFullYear();
+        var last_counter_year = data_info.substring(4,7);
+        if(last_counter_year == current_year){
+            prf_form_no.value = `PRF${last_counter_year}${month}${data_counter}`;
+        } else {
+            data_counter = (1).toString().padStart(4, "0");
+            prf_form_no.value = `PRF${current_year}${month}${data_counter}`;
+        }
     
         const purchase_order_form = document.getElementById("purchase_order_form");
         const item_container_data = purchase_order_form.querySelector("#item_container_data");

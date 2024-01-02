@@ -177,12 +177,15 @@ document.addEventListener('DOMContentLoaded', async function() {
         data_content = parseInt(data_last_3digit) +1
     
         if(data_content.toString().length == 1){
-            data_counter = `00${data_content}`;
+            data_counter = `000${data_content}`;
         }
         else if(data_content.toString().length == 2){
-            data_counter = `0${data_content}`;
+            data_counter = `00${data_content}`;
         }
         else if(data_content.toString().length == 3){
+            data_counter = `0${data_content}`;
+        }
+        else if(data_content.toString().length == 4){
             data_counter = `${data_content}`;
         }
     
@@ -207,12 +210,15 @@ document.addEventListener('DOMContentLoaded', async function() {
         data_content = parseInt(data_last_3digit) +1
     
         if(data_content.toString().length == 1){
-            data_counter = `00${data_content}`;
+            data_counter = `000${data_content}`;
         }
         else if(data_content.toString().length == 2){
-            data_counter = `0${data_content}`;
+            data_counter = `00${data_content}`;
         }
         else if(data_content.toString().length == 3){
+            data_counter = `0${data_content}`;
+        }
+        else if(data_content.toString().length == 4){
             data_counter = `${data_content}`;
         }
     
@@ -237,12 +243,15 @@ document.addEventListener('DOMContentLoaded', async function() {
         data_content = parseInt(data_last_3digit) +1
     
         if(data_content.toString().length == 1){
-            data_counter = `00${data_content}`;
+            data_counter = `000${data_content}`;
         }
         else if(data_content.toString().length == 2){
-            data_counter = `0${data_content}`;
+            data_counter = `00${data_content}`;
         }
         else if(data_content.toString().length == 3){
+            data_counter = `0${data_content}`;
+        }
+        else if(data_content.toString().length == 4){
             data_counter = `${data_content}`;
         }
     

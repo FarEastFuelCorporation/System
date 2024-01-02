@@ -336,12 +336,18 @@ document.addEventListener('DOMContentLoaded', async function() {
             data_counter = 0;
         }
         else{
-            data_counter = data_info.substring(9,12);
+            data_counter = data_info.substring(9,13);
         }
-        var year = new Date().getFullYear();
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
-        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-        wtf_form_no.value = `WTF${year}${month}${data_counter}`;
+        data_counter = (parseInt(data_counter) +1).toString().padStart(4, "0");
+        var current_year = new Date().getFullYear();
+        var last_counter_year = data_info.substring(4,7);
+        if(last_counter_year == current_year){
+            wtf_form_no.value = `WTF${last_counter_year}${month}${data_counter}`;
+        } else {
+            data_counter = (1).toString().padStart(4, "0");
+            wtf_form_no.value = `WTF${current_year}${month}${data_counter}`;
+        }
 
         const disposal_warehouse = document.querySelector("#disposal_warehouse");
         const wcf_form_no_warehouse = disposal_warehouse.querySelector("#wcf_form_no");
@@ -554,12 +560,18 @@ document.addEventListener('DOMContentLoaded', async function() {
             data_counter = 0;
         }
         else{
-            data_counter = data_info.substring(9,12);
+            data_counter = data_info.substring(9,13);
         }
-        var year = new Date().getFullYear();
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
-        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-        wdf_form_no.value = `WDF${year}${month}${data_counter}`;
+        data_counter = (parseInt(data_counter) +1).toString().padStart(4, "0");
+        var current_year = new Date().getFullYear();
+        var last_counter_year = data_info.substring(4,7);
+        if(last_counter_year == current_year){
+            wdf_form_no.value = `WDF${last_counter_year}${month}${data_counter}`;
+        } else {
+            data_counter = (1).toString().padStart(4, "0");
+            wdf_form_no.value = `WDF${current_year}${month}${data_counter}`;
+        }
 
         var pending_wtf = [];
         var done_wtf = [];
@@ -763,12 +775,18 @@ document.addEventListener('DOMContentLoaded', async function() {
             data_counter = 0;
         }
         else{
-            data_counter = data_info.substring(9,12);
+            data_counter = data_info.substring(9,13);
         }
-        var year = new Date().getFullYear();
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
-        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-        stf_form_no.value = `STF${year}${month}${data_counter}`;
+        data_counter = (parseInt(data_counter) +1).toString().padStart(4, "0");
+        var current_year = new Date().getFullYear();
+        var last_counter_year = data_info.substring(4,7);
+        if(last_counter_year == current_year){
+            stf_form_no.value = `STF${last_counter_year}${month}${data_counter}`;
+        } else {
+            data_counter = (1).toString().padStart(4, "0");
+            stf_form_no.value = `STF${current_year}${month}${data_counter}`;
+        }
 
         const supplies_transaction = document.querySelector("#supplies_transaction");
         const withdrawal_form_button = supplies_transaction.querySelector("#withdrawal_form_button");
@@ -1459,7 +1477,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         const truck_scale_gate_pass_transaction = gate_pass_transaction.querySelector("#truck_scale");
         const other_remarks_gate_pass_transaction = gate_pass_transaction.querySelector("#other_remarks");
         const gate_pass_list_gate_pass_transaction = gate_pass_transaction.querySelector("#gate_pass_list");
-        console.log(time_in_gate_pass_transaction.value)
 
         gate_pass_form_button.addEventListener("click", () => {
             if(form_tab_gate_pass_transaction.style.display == "none"){

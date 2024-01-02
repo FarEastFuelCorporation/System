@@ -446,13 +446,19 @@ document.addEventListener('DOMContentLoaded', async function() {
         const sf_form_nos = [];
         var last_row = sf_data_list.content.length -1;        
         var data_info = sf_data_list.content[last_row][findTextInArray(sf_data_list, "SF #")];
-        var year = new Date().getFullYear();
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        var data_counter = data_info.substring(8,12);
         
         for (let i = 0; i < 21; i++) {
-            var data_counter = data_info.substring(8,11);
-            data_counter = (parseInt(data_counter) + i + 1).toString().padStart(3, "0");
-            sf_form_nos.push(`SF${year}${month}${data_counter}`);
+            var current_year = new Date().getFullYear();
+            var last_counter_year = data_info.substring(2,6);
+            if(last_counter_year == current_year){
+                data_counter = (parseInt(data_counter) + i + 1).toString().padStart(4, "0");
+                sf_form_nos.push(`SF${last_counter_year}${month}${data_counter}`);
+            } else {
+                data_counter = (i + 1).toString().padStart(4, "0");
+                sf_form_nos.push(`SF${current_year}${month}${data_counter}`);
+            }
         }
 
         // Assigning values to sf_form_no variables

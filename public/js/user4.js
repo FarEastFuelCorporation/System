@@ -970,13 +970,20 @@ document.addEventListener('DOMContentLoaded', async function() {
             data_counter = 0;
         }
         else{
-            data_counter = data_info.substring(9,12);
+            data_counter = data_info.substring(9,13);
         }
-        var year = new Date().getFullYear();
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
-        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-        cod_form_no.value = `COD${year}${month}${data_counter}`;
-        df_no.innerText = `COD${year}${month}${data_counter}`;
+        data_counter = (parseInt(data_counter) +1).toString().padStart(4, "0");
+        var current_year = new Date().getFullYear();
+        var last_counter_year = data_info.substring(3,7);
+        if(last_counter_year == current_year){
+            cod_form_no.value = `COD${last_counter_year}${month}${data_counter}`;
+            df_no.innerText = `COD${last_counter_year}${month}${data_counter}`;
+        } else {
+            data_counter = (1).toString().padStart(4, "0");
+            cod_form_no.value = `COD${current_year}${month}${data_counter}`;
+            df_no.innerText = `COD${current_year}${month}${data_counter}`;
+        }
     
         // tpf_data_list
         var data_value2 = [];

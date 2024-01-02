@@ -780,15 +780,23 @@ document.addEventListener('DOMContentLoaded', async function() {
             sugg_box3.innerHTML = list_data;
         }    
 
+        // FORM GENERATOR
         // wcf_data_list
         const wcf_form_no = document.getElementById("wcf_form_no"); 
         var last_row = wcf_data_list.content.length -1;        
         var data_info = wcf_data_list.content[last_row][findTextInArray(wcf_data_list, "WCF #")];
-        var data_counter = data_info.substring(9,12);
-        var year = new Date().getFullYear();
+        var data_counter = data_info.substring(9,13);
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
-        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-        wcf_form_no.value = `WCF${year}${month}${data_counter}`;
+        data_counter = (parseInt(data_counter) +1).toString().padStart(4, "0");
+        var current_year = new Date().getFullYear();
+        var last_counter_year = data_info.substring(3,7);
+        if(last_counter_year == current_year){
+            wcf_form_no.value = `WCF${last_counter_year}${month}${data_counter}`;
+        } else {
+            data_counter = (1).toString().padStart(4, "0");
+            wcf_form_no.value = `WCF${current_year}${month}${data_counter}`;
+        }
+    
     
         // multi section
         // purchase_request_form

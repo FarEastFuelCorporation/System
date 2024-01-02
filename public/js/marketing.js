@@ -762,15 +762,15 @@ document.addEventListener('DOMContentLoaded', async function() {
         const mtf_form_no = document.getElementById("mtf_form_no");
         var last_row = mtf_data_list.content.length -1;        
         var data_info = mtf_data_list.content[last_row][findTextInArray(mtf_data_list, "MTF #")];
-        var data_counter = data_info.substring(9,12);
+        var data_counter = data_info.substring(9,13);
         var current_year = new Date().getFullYear();
         var last_counter_year = data_info.substring(3,7);
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
-        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        data_counter = (parseInt(data_counter) +1).toString().padStart(4, "0");
         if(last_counter_year == current_year){
             mtf_form_no.value = `MTF${last_counter_year}${month}${data_counter}`;
         } else {
-            data_counter = (1).toString().padStart(3, "0");
+            data_counter = (1).toString().padStart(4, "0");
             mtf_form_no.value = `MTF${current_year}${month}${data_counter}`;
         }
 
@@ -2296,16 +2296,16 @@ document.addEventListener('DOMContentLoaded', async function() {
             data_counter = 0;
         }
         else{
-            data_counter = data_info.substring(9,12);
+            data_counter = data_info.substring(9,13);
         }
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
-        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        data_counter = (parseInt(data_counter) +1).toString().padStart(4, "0");
         var current_year = new Date().getFullYear();
         var last_counter_year = data_info.substring(3,7);
         if(last_counter_year == current_year){
             clf_form_no.value = `CLF${last_counter_year}${month}${data_counter}`;
         } else {
-            data_counter = (1).toString().padStart(3, "0");
+            data_counter = (1).toString().padStart(4, "0");
             clf_form_no.value = `CLF${current_year}${month}${data_counter}`;
         }
 
@@ -2632,13 +2632,21 @@ document.addEventListener('DOMContentLoaded', async function() {
         function prf_generator() {
             var last_row = prf_data_list.content.length -1;        
             var data_info = prf_data_list.content[last_row][findTextInArray(prf_data_list, "ITM #")];
-            var data_counter = data_info.substring(9,12) || 0;
-            var year = new Date().getFullYear();
+            var data_counter = data_info.substring(9,13) || 0;
             var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
-        
+            
             for (let y = 1; y <= prf_counter.value; y++) {
                 prf_form_no[y] = document.querySelector(`#prf_form_no${y}`);
-                prf_form_no[y].value = `ITM${year}${month}${((parseInt(data_counter) + y).toString().padStart(3,"0"))}`;
+                var current_year = new Date().getFullYear();
+                var last_counter_year = data_info.substring(3,7);
+                if(last_counter_year == current_year){
+                    data_counter = data_info.substring(9,13) || 0;
+                    prf_form_no[y].value = `ITM${last_counter_year}${month}${((parseInt(data_counter) + y).toString().padStart(4,"0"))}`;
+                } else {
+                    data_counter = (0).toString().padStart(4, "0");
+                    prf_form_no[y].value = `ITM${current_year}${month}${((parseInt(data_counter) + y).toString().padStart(4,"0"))}`;
+                }
+            
             }
         }
         
@@ -2807,16 +2815,16 @@ document.addEventListener('DOMContentLoaded', async function() {
             data_counter = 0;
         }
         else{
-            data_counter = data_info.substring(9,12);
+            data_counter = data_info.substring(9,13);
         }
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
-        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        data_counter = (parseInt(data_counter) +1).toString().padStart(4, "0");
         var current_year = new Date().getFullYear();
         var last_counter_year = data_info.substring(3,7);
         if(last_counter_year == current_year){
             wsf_form_no.value = `WSF${last_counter_year}${month}${data_counter}`;
         } else {
-            data_counter = (1).toString().padStart(3, "0");
+            data_counter = (1).toString().padStart(4, "0");
             wsf_form_no.value = `WSF${current_year}${month}${data_counter}`;
         }
 
@@ -2951,11 +2959,18 @@ document.addEventListener('DOMContentLoaded', async function() {
         const irf_form_no = document.getElementById("irf_form_no");
         var last_row = irf_data_list.content.length -1;        
         var data_info = irf_data_list.content[last_row][findTextInArray(irf_data_list, "IRF #")];
-        var data_counter = data_info.substring(9,12);
-        var year = new Date().getFullYear();
+        var data_counter = data_info.substring(9,13);
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
-        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-        irf_form_no.value = `IRF${year}${month}${data_counter}`;
+        data_counter = (parseInt(data_counter) +1).toString().padStart(4, "0");
+        var current_year = new Date().getFullYear();
+        var last_counter_year = data_info.substring(3,7);
+        if(last_counter_year == current_year){
+            irf_form_no.value = `IRF${last_counter_year}${month}${data_counter}`;
+        } else {
+            data_counter = (1).toString().padStart(4, "0");
+            irf_form_no.value = `IRF${current_year}${month}${data_counter}`;
+        }
+    
 
         const incident_report_form = document.querySelector("#incident_report_form");
         const person_involved_containers = incident_report_form.querySelector("#person_involved_containers");

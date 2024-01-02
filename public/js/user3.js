@@ -549,16 +549,18 @@ document.addEventListener('DOMContentLoaded', async function() {
             // FORM GENERATOR
             // tpf_data_list
             const tpf_form_no = document.getElementById("tpf_form_no");  
-            for(let x = tpf_data_list.content.length -1; x >= 1; x--){
-                var data_info = tpf_data_list.content[x][findTextInArray(tpf_data_list, "TPF #")];
-                if(data_info.substring(0,3) == "TPF"){
-                    var data_counter = data_info.substring(9,12);
-                    var year = new Date().getFullYear();
-                    var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
-                    data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-                    tpf_form_no.value = `TPF${year}${month}${data_counter}`
-                    break;
-                }
+            var last_row = tpf_data_list.content.length -1;        
+            var data_info = tpf_data_list.content[last_row][findTextInArray(tpf_data_list, "TPF #")];
+            var data_counter = data_info.substring(9,13);
+            var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+            data_counter = (parseInt(data_counter) +1).toString().padStart(4, "0");
+            var current_year = new Date().getFullYear();
+            var last_counter_year = data_info.substring(3,7);
+            if(last_counter_year == current_year){
+                tpf_form_no.value = `TPF${last_counter_year}${month}${data_counter}`
+            } else {
+                data_counter = (1).toString().padStart(4, "0");
+                tpf_form_no.value = `TPF${current_year}${month}${data_counter}`
             }
 
             // sf_data_list
