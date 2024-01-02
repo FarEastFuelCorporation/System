@@ -155,6 +155,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         generatePending();
         function generatePending(){
+            pending_list_marketing.innerHTML = "";
             generateCalendarDays(2023, monthNameToNumber(month_filter.value))
             calendar_month.innerText = month_filter.value
             // color coding
@@ -756,15 +757,24 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         }       
 
+        // FORM GENERATOR
         // mtf_data_list
         const mtf_form_no = document.getElementById("mtf_form_no");
         var last_row = mtf_data_list.content.length -1;        
         var data_info = mtf_data_list.content[last_row][findTextInArray(mtf_data_list, "MTF #")];
         var data_counter = data_info.substring(9,12);
-        var year = new Date().getFullYear();
+        var current_year = new Date().getFullYear();
+        var last_counter_year = data_info.substring(3,7);
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
         data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-        mtf_form_no.value = `MTF${year}${month}${data_counter}`;
+        console.log(current_year)
+        console.log(data_info.substring(3,7))
+        if(last_counter_year == current_year){
+            mtf_form_no.value = `MTF${last_counter_year}${month}${data_counter}`;
+        } else {
+            data_counter = (1).toString().padStart(3, "0");
+            mtf_form_no.value = `MTF${current_year}${month}${data_counter}`;
+        }
 
         const waste_category = marketing_transaction_form.querySelector("#waste_category");
         const document_container = marketing_transaction_form.querySelector("#document_container");
