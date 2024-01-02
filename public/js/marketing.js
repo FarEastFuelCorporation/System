@@ -767,8 +767,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         var last_counter_year = data_info.substring(3,7);
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
         data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-        console.log(current_year)
-        console.log(data_info.substring(3,7))
         if(last_counter_year == current_year){
             mtf_form_no.value = `MTF${last_counter_year}${month}${data_counter}`;
         } else {
@@ -2300,10 +2298,17 @@ document.addEventListener('DOMContentLoaded', async function() {
         else{
             data_counter = data_info.substring(9,12);
         }
-        var year = new Date().getFullYear();
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
         data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-        clf_form_no.value = `CLF${year}${month}${data_counter}`;
+        var current_year = new Date().getFullYear();
+        var last_counter_year = data_info.substring(3,7);
+        if(last_counter_year == current_year){
+            clf_form_no.value = `CLF${last_counter_year}${month}${data_counter}`;
+        } else {
+            data_counter = (1).toString().padStart(3, "0");
+            clf_form_no.value = `CLF${current_year}${month}${data_counter}`;
+        }
+
 
         const quotation_selection = commission_form.querySelector("#quotation_selection");
         const client = commission_form.querySelector("#client");
@@ -2804,10 +2809,16 @@ document.addEventListener('DOMContentLoaded', async function() {
         else{
             data_counter = data_info.substring(9,12);
         }
-        var year = new Date().getFullYear();
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
         data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-        wsf_form_no.value = `WSF${year}${month}${data_counter}`;
+        var current_year = new Date().getFullYear();
+        var last_counter_year = data_info.substring(3,7);
+        if(last_counter_year == current_year){
+            wsf_form_no.value = `WSF${last_counter_year}${month}${data_counter}`;
+        } else {
+            data_counter = (1).toString().padStart(3, "0");
+            wsf_form_no.value = `WSF${current_year}${month}${data_counter}`;
+        }
 
         const supplies_warehouse = document.querySelector("#supplies_warehouse");
         const withdrawal_form_button = supplies_warehouse.querySelector("#withdrawal_form_button");
