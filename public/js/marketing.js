@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         generatePending();
         function generatePending(){
             pending_list_marketing.innerHTML = "";
-            generateCalendarDays(2023, monthNameToNumber(month_filter.value))
+            generateCalendarDays(2024, monthNameToNumber(month_filter.value))
             calendar_month.innerText = month_filter.value
             // color coding
             var [forHaulingColor, forReceivingColor, forWarehousingColor, forSortingColor, forTreatmentColor, forCertificationColor, forBillingColor, forCollectionColor, finishedColor] = 
