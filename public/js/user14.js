@@ -454,7 +454,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         data_counter = (parseInt(data_counter) +1).toString().padStart(4, "0");
         var current_year = new Date().getFullYear();
         var last_counter_year = data_info.substring(3,7);
-        console.log(last_counter_year)
         if(last_counter_year == current_year){
             prf_form_no.value = `PRF${last_counter_year}${month}${data_counter}`;
         } else {
