@@ -1787,7 +1787,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     </tr>
                     `
                     purchased_data_value_counter += 1;
-                    console.log(amount)
                 }
             }
         }
