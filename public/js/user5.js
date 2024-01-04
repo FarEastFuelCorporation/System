@@ -871,6 +871,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 for(let x = 1; x < cod_data_list.content.length; x++){
                                     if(wcf_transaction[y] == cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")]){
                                         date_of_certification_transportation = date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]);
+                                        break
                                     }
                                 }
                                 data2 = `
@@ -1086,6 +1087,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             else if(type_of_form.value == "By COD (Multiple Transaction)"){
                 for(let s = 1; s <= cod_counter.value; s++){
                     table_data_info = [];
+                    table_data_transportation = [];
                     var individual_non_vatable = 0;
                     var individual_vatable = 0;    
                     const search_cod_form_no = billing_process_form.querySelector(`#search_cod_form_no${s}`);
@@ -1280,6 +1282,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                             for(let x = 1; x < cod_data_list.content.length; x++){
                                 if(wcf_transaction[y] == cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")]){
                                     date_of_certification_transportation = date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]);
+                                    console.log(cod_data_list.content[x])
+                                    console.log(date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]))
+                                    break
                                 }
                             }
                             var data2 = "";
