@@ -1235,7 +1235,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             date_made_container_quotation_form.innerText = date_decoder(currentDate);
             currentDate.setDate(currentDate.getDate() + 30);
             valid_until_container_quotation_form.innerText = date_decoder(currentDate);
-            revision_number_container_quotation_form.innerText = revision_no_quotation_form.value;
+            revision_number_container_quotation_form.innerText = (revision_no_quotation_form.value).toString().padStart(2, "0");
 
             for(let x = 1; x < client_data_list.content.length; x++){
                 if(client_id_input_quotation_form.value == client_data_list.content[x][findTextInArray(client_data_list, "CLIENT ID")]){
