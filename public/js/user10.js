@@ -1709,7 +1709,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td>${remarks}</td>
                         <td>${department}</td>
                         <td>${requisitioner}</td>
-                        <td>${amount}</td>
+                        <td>${formatNumber(amount)}</td>
                         <td>${status}</td>
                     </tr>
                     `
@@ -1745,7 +1745,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td>${remarks}</td>
                         <td>${department}</td>
                         <td>${requisitioner}</td>
-                        <td>${amount}</td>
+                        <td>${formatNumber(amount)}</td>
                         <td>${status}</td>
                     </tr>
                     `
@@ -1769,7 +1769,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                         if(pr_data == pof_data_list.content[x][findTextInArray(pof_data_list, "ITM #")]){
                             amount = pof_data_list.content[x][findTextInArray(pof_data_list, "AMOUNT")]
                         }
-                    }                    purchased_data_value += `
+                    }                    
+                    purchased_data_value += `
                     <tr>
                         <td>${purchased_data_value_counter}</td>
                         <td>${pr_data}</td>
@@ -1781,11 +1782,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td>${remarks}</td>
                         <td>${department}</td>
                         <td>${requisitioner}</td>
-                        <td>${amount}</td>
+                        <td>${formatNumber(amount)}</td>
                         <td>${status}</td>
                     </tr>
                     `
                     purchased_data_value_counter += 1;
+                    console.log(amount)
                 }
             }
         }
