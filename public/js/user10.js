@@ -1387,7 +1387,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
             for (let i = 1; i < ftf_data_list.content.length; i++) {
                 // fund_source
-                if(month_filter.value == formatMonth(ftf_data_list.content[i][findTextInArray(ftf_data_list, "CREATED AT")])){
+                if(month_filter.value == formatMonth(ftf_data_list.content[i][findTextInArray(ftf_data_list, "DATE")])){
                     if(!type_of_funds.includes(ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")])){
                         if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "SOURCE OF FUND") {
                             source_of_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
