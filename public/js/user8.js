@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         const irf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzTmhNOz5cXeKitSXAriUJ_FEahAQugYEKIRwDuFt9tjhj2AtPKEf2H4yTMmZ1igpUxlQ/exec');
         const sif_response_promise = fetch('https://script.google.com/macros/s/AKfycbzGVbiQV2LOCAI_eeNF6wqfg7INqawyP3ieeTuGY7B5wE8aPApqlujc4onghGCwcow1iw/exec');
         const prf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxZctLub-6PuQGykx298syeH7Qm__S37uqQrVFYsHVtv-Qk8M2oSkRIPIMVT_1WexqRZA/exec');
-        const pof_response_promise = fetch('https://script.google.com/macros/s/AKfycby9i2KfOZ_uF7-JUPX8qpXg7Jewmw6oU3EfUTpXiwnRRB91_qIW3xAVNy5SZBN1YhVzzg/exec');
 
         const [
             username_response,
@@ -17,7 +16,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             irf_response,
             sif_response,
             prf_response,
-            pof_response,
         ] = await Promise.all([
             username_response_promise,
             employee_response_promise,
@@ -26,7 +24,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             irf_response_promise,
             sif_response_promise,
             prf_response_promise,
-            pof_response_promise,
         ]);
 
         const username_data_list  = await username_response.json();
@@ -36,7 +33,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         const irf_data_list  = await irf_response.json();
         const sif_data_list  = await sif_response.json();
         const prf_data_list  = await prf_response.json();
-        const pof_data_list  = await pof_response.json();
 
         // Code that depends on the fetched data
         // username_data_list3

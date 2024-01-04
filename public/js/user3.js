@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const wdf_response_promise = fetch('https://script.google.com/macros/s/AKfycbzqTONQ_bC0F204KVgDsF42r4-51oMRbh57wQgUs8Tob8YxmdUC6lmUX6wZD0LFnrulYw/exec');
         const tpf_response_promise = fetch('https://script.google.com/macros/s/AKfycbwbKss2XtW5lylCrUe8IC-ZA4ffA5CM5tY6kqIja9t80NXJw2nB8RBOJFWbXQz0hWMadw/exec');
         const qlf_response_promise = fetch('https://script.google.com/macros/s/AKfycbyFU_skru2tnyEiv8I5HkpRCXbUlQb5vlJUm8Le0nZBCvfZeFkQPd2Naljs5CZY41I17w/exec');
+        const prf_response_promise = fetch('https://script.google.com/macros/s/AKfycbxZctLub-6PuQGykx298syeH7Qm__S37uqQrVFYsHVtv-Qk8M2oSkRIPIMVT_1WexqRZA/exec');
 
         const [
             username_response,
@@ -20,6 +21,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             wdf_response,
             tpf_response,
             qlf_response,
+            prf_response,
         ] = await Promise.all([
             username_response_promise,
             client_list_response_promise,
@@ -30,6 +32,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             wdf_response_promise,
             tpf_response_promise,
             qlf_response_promise,
+            prf_response_promise,
         ]);
 
         const username_data_list  = await username_response.json();
@@ -41,6 +44,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const wdf_data_list  = await wdf_response.json();
         const tpf_data_list  = await tpf_response.json();
         const qlf_data_list  = await qlf_response.json();
+        const prf_data_list  = await prf_response.json();
     
         // Code that depends on the fetched data
         // username_data_list
@@ -50,6 +54,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const user_sidebar_department = document.getElementById("user_sidebar_department");
         const user = document.getElementById("user");
 
+        const user_name = username_data_list.content[1][findTextInArray(username_data_list, "NAME")];
         profile_picture.src = `../images/profile_picture/${username_data_list.content[3][findTextInArray(username_data_list, "PICTURE")]}`;
         user.value = username_data_list.content[3][findTextInArray(username_data_list, "NAME")];
         user_sidebar.innerHTML = `<u>${username_data_list.content[3][findTextInArray(username_data_list, "NAME")]}</u>`;
@@ -577,6 +582,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             const search_sf_result = document.getElementById("search_sf_result");
             const additional_item1 = document.getElementById("additional_item1");
             const add_item_button = document.getElementById("add_item_button");
+            const remove_item_button = document.getElementById("remove_item_button");
             const completion = document.getElementById("completion");
             const buttons = document.getElementById("buttons");
             const machine_counter = document.getElementById("machine_counter");
@@ -867,68 +873,256 @@ document.addEventListener('DOMContentLoaded', async function() {
                     ${data_value}
                     </div><br>`
                 }
-            });    
+            });
+            const additional_item2 = document.getElementById("additional_item2");
+            const additional_item3 = document.getElementById("additional_item3");
+            const additional_item4 = document.getElementById("additional_item4");
+            const additional_item5 = document.getElementById("additional_item5");
+            const item_counter = document.getElementById("item_counter");
+            var item_counter_int = parseInt(item_counter.value)
+            const form_id = document.getElementById("form_id");
+    
+            add_item_button.addEventListener("click", add_new_item);
+    
+            function add_new_item(){        
+                item_counter_int += 1;
+                item_counter.value = item_counter_int;
+            
+                if(item_counter_int == 2){
+                    additional_item2.style.display ="grid";
+                    // FOR 2
+                    remove_item_button.style.display = "block"
+                }
+                else if(item_counter_int == 3){
+                    additional_item3.style.display ="grid";
+                    // FOR 3
+                }
+                else if(item_counter_int == 4){
+                    additional_item4.style.display ="grid";
+                    // FOR 4
+                }
+                else if(item_counter_int == 5){
+                    additional_item5.style.display ="grid";
+                    // FOR 5
+                    add_item_button.style.display = "none"
+                }
+            }
+    
+            remove_item_button.addEventListener("click", remove_new_item);
+            
+            function remove_new_item(){
+                if(item_counter_int == 2){
+                    additional_item2.style.display ="none";        
+                    // FOR 1
+                    remove_item_button.style.display = "none"
+                }
+                else if(item_counter_int == 3){
+                    additional_item3.style.display ="none";
+                    // FOR 2
+                }
+                else if(item_counter_int == 4){
+                    additional_item4.style.display ="none";
+                    // FOR 3
+                }
+                else if(item_counter_int == 5){
+                    additional_item5.style.display ="none";
+                    // FOR 4
+                    add_item_button.style.display = "block"
+                }
+                item_counter_int -= 1;
+                item_counter.value = item_counter_int;
+            }    
         }
 
 
-        const additional_item2 = document.getElementById("additional_item2");
-        const additional_item3 = document.getElementById("additional_item3");
-        const additional_item4 = document.getElementById("additional_item4");
-        const additional_item5 = document.getElementById("additional_item5");
-        const item_counter = document.getElementById("item_counter");
-        var item_counter_int = parseInt(item_counter.value)
-        const form_id = document.getElementById("form_id");
 
-        add_item_button.addEventListener("click", add_new_item);
 
-        function add_new_item(){        
-            item_counter_int += 1;
-            item_counter.value = item_counter_int;
+        // multi section
+        // purchase_request_form
+        const purchase_request_form = document.querySelector("#purchase_request_form");
+        const add_item_button_purchase_request_form = purchase_request_form.querySelector("#add_item_button");
+        const remove_item_button_purchase_request_form = purchase_request_form.querySelector("#remove_item_button");
+        const purchase_request_form_button = purchase_request_form.querySelector("#purchase_request_form_button");
+        const purchase_request_list = purchase_request_form.querySelector("#purchase_request_list");
+        const form_tab = purchase_request_form.querySelector("#form_tab");
+        var prf_counter = purchase_request_form.querySelector("#prf_counter");
+        var prf_form_no = [];
         
-            if(item_counter_int == 2){
-                additional_item2.style.display ="grid";
-                // FOR 2
-                remove_item_button.style.display = "block"
-            }
-            else if(item_counter_int == 3){
-                additional_item3.style.display ="grid";
-                // FOR 3
-            }
-            else if(item_counter_int == 4){
-                additional_item4.style.display ="grid";
-                // FOR 4
-            }
-            else if(item_counter_int == 5){
-                additional_item5.style.display ="grid";
-                // FOR 5
-                add_item_button.style.display = "none"
+        function prf_generator() {
+            var last_row = prf_data_list.content.length -1;        
+            var data_info = prf_data_list.content[last_row][findTextInArray(prf_data_list, "ITM #")];
+            var data_counter = data_info.substring(9,13) || 0;
+            var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+            
+            for (let y = 1; y <= prf_counter.value; y++) {
+                prf_form_no[y] = document.querySelector(`#prf_form_no${y}`);
+                var current_year = new Date().getFullYear();
+                var last_counter_year = data_info.substring(3,7);
+                if(last_counter_year == current_year){
+                    data_counter = data_info.substring(9,13) || 0;
+                    prf_form_no[y].value = `ITM${last_counter_year}${month}${((parseInt(data_counter) + y).toString().padStart(4,"0"))}`;
+                } else {
+                    data_counter = (0).toString().padStart(4, "0");
+                    prf_form_no[y].value = `ITM${current_year}${month}${((parseInt(data_counter) + y).toString().padStart(4,"0"))}`;
+                }
+            
             }
         }
-
-        remove_item_button.addEventListener("click", remove_new_item);
         
-        function remove_new_item(){
-            if(item_counter_int == 2){
-                additional_item2.style.display ="none";        
-                // FOR 1
-                remove_item_button.style.display = "none"
+        prf_generator()
+        
+        add_item_button_purchase_request_form.addEventListener("click", () => {
+            const prf_item_container = purchase_request_form.querySelector("#prf_item_container");
+            prf_counter.value = parseInt(prf_counter.value) + 1; // Increment the counter for the next item
+            const itemHTML = `
+            <div id="prf_item">
+                <div>
+                    <div>
+                        <label for="prf_form_no${prf_counter.value}">
+                            <i class="fa-solid fa-list-ol"></i>
+                            ITM #
+                        </label><br>
+                        <div class="form">
+                            <input type="text" id="prf_form_no${prf_counter.value}" name="prf_form_no${prf_counter.value}" autocomplete="off" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="item${prf_counter.value}">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Item ${prf_counter.value}
+                        </label>
+                        <div>
+                            <input type="text" id="item${prf_counter.value}" name="item${prf_counter.value}" autocomplete="off" class="form-control" required placeholder="Item Name">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="quantity${prf_counter.value}">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Quantity
+                        </label>
+                        <div>
+                            <input type="number" id="quantity${prf_counter.value}" name="quantity${prf_counter.value}" autocomplete="off" class="form-control" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="unit${prf_counter.value}">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Unit
+                        </label>
+                        <div>
+                            <input type="text" id="unit${prf_counter.value}" name="unit${prf_counter.value}" autocomplete="off" class="form-control" required placeholder="ex. kg/pc/box/set">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <label for="details${prf_counter.value}">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Details
+                        </label>
+                        <div>
+                            <input type="text" id="details${prf_counter.value}" name="details${prf_counter.value}" autocomplete="off" class="form-control" required  placeholder="Brand/Unit/Specifications">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="remarks1">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Remarks
+                        </label>
+                        <div>
+                            <input type="text" id="remarks${prf_counter.value}" name="remarks${prf_counter.value}" autocomplete="off" class="form-control" required placeholder="Where to use">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+            prf_item_container.insertAdjacentHTML("beforeend", itemHTML);
+
+            // Call the prf_generator function after adding a new item
+            prf_generator();
+
+            if (prf_counter.value > 1) {
+                remove_item_button_purchase_request_form.style.display = "block";
             }
-            else if(item_counter_int == 3){
-                additional_item3.style.display ="none";
-                // FOR 2
+        });
+        
+        remove_item_button_purchase_request_form.addEventListener("click", () => {
+            const lastItem = purchase_request_form.querySelector("#prf_item_container").lastElementChild;
+            if (lastItem) {
+                lastItem.remove();
+                prf_counter.value = parseInt(prf_counter.value) - 1;
+
+                // Call the prf_generator function after removing an item
+                prf_generator();
+
+                if (prf_counter.value <= 1) {
+                    remove_item_button_purchase_request_form.style.display = "none";
+                }
             }
-            else if(item_counter_int == 4){
-                additional_item4.style.display ="none";
-                // FOR 3
+        });
+
+        var purchase_request_data_value = "";
+        var purchase_request_data_value_counter = 1;
+        for(let x = 1; x < prf_data_list.content.length; x++){
+            if(prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")] == user_name){
+                if(prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")] == "PURCHASED"){
+                    var pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]
+                    var button = `
+                    <form action="https://script.google.com/macros/s/AKfycbzVr8O3e2RcbQpgvexfEaxtZnDT6N5I4_l6uGI0bh81kBQVFZJcemVLvKW7pIRZ15Eg/exec" method="post">
+                        <input type="hidden" name="itm_form_no" id="itm_form_no" value="${pr_data}">
+                        <input type="hidden" name="timestamp" id="timestamp" value="${new Date()}">
+                        <input type="hidden" name="user" id="user" value="${user_name}">
+                        <button type="submit" style="background-color: transparent !important; padding:0; color: #198754; border: none">
+                            <i class="fa-solid fa-clipboard-check"></i>
+                        </button>
+                    </form>
+                    `
+                    purchase_request_data_value += `
+                    <tr>
+                        <td>${purchase_request_data_value_counter}</td>
+                        <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]}</td>
+                        <td>${date_decoder(prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")])}/<br>${time_decoder(prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")])}</td>
+                        <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "ITEM")]}</td>
+                        <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")]}</td>
+                        <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "UNIT")]}</td>
+                        <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "DETAILS")]}</td>
+                        <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")]}</td>
+                        <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")]}</td>
+                        <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")]}</td>
+                        <td>${button}</td>
+                    </tr>
+                    `
+                }
+                else{
+                    purchase_request_data_value += `
+                    <tr>
+                        <td>${purchase_request_data_value_counter}</td>
+                        <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]}</td>
+                        <td>${date_decoder(prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")])}/<br>${time_decoder(prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")])}</td>
+                        <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "ITEM")]}</td>
+                        <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")]}</td>
+                        <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "UNIT")]}</td>
+                        <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "DETAILS")]}</td>
+                        <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")]}</td>
+                        <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")]}</td>
+                        <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")]}</td>
+                    </tr>
+                    `
+                }
+                purchase_request_data_value_counter += 1;
             }
-            else if(item_counter_int == 5){
-                additional_item5.style.display ="none";
-                // FOR 4
-                add_item_button.style.display = "block"
-            }
-            item_counter_int -= 1;
-            item_counter.value = item_counter_int;
         }
+        purchase_request_list.innerHTML = purchase_request_data_value;
+
+
+        purchase_request_form_button.addEventListener("click", () => {
+            if(form_tab.style.display == "block"){
+                form_tab.style.display = "none";
+            }
+            else{
+                form_tab.style.display = "block";
+            }
+        })
         
         function findEmployeeName(employee_id){
             var employee_name = "";
