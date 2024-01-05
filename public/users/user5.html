@@ -524,7 +524,7 @@
                         <button type="button" onclick="convertToPDFandDownload()" id="convertToPDFandDownload_button" class="form-control form" style="display: none; max-width: max-content !important;">
                             Download and Submit
                         </button>
-                        <button type="button" onclick="executeMultipleFunctions()" id="convertToPDF_button" class="form-control form" style="display: none; max-width: max-content !important;">
+                        <button type="button" onclick="convertToPDF()" id="convertToPDF_button" class="form-control form" style="display: none; max-width: max-content !important;">
                             Download
                         </button>
                         <button type="submit" id="submit_button" class="form-control form" style="display: none; max-width: max-content !important;">
@@ -1431,17 +1431,6 @@
     <script src="../js/main.js"></script>
     <script src="../js/user5.js"></script>
     <script>
-        function convertToPDFandDownload() {
-            convertToPDF();
-            // convertToPDF2();
-            document.getElementById('submit_button').click();
-        }
-
-        function executeMultipleFunctions() {
-            convertToPDF();
-            // convertToPDF2();
-        }
-
         function convertToPDF() {
             const form_id_billing = document.querySelector('#form_id_billing');
 
@@ -1479,6 +1468,52 @@
                     element.style.transform = 'none';
                     html2pdf().set(opt).from(element).save(`${bpf_form_no}_Billing_Statement.pdf`).then(() => {
                         // Call the submit button click event immediately after the PDF is downloaded
+                    });
+                });
+            } else {
+                // Handle the case where the form is not valid
+                alert('Please fill out the form completely before downloading.');
+            }
+        }
+        
+        function convertToPDFandDownload() {
+            const form_id_billing = document.querySelector('#form_id_billing');
+
+            if (validateForm(form_id_billing)) {
+                const element = document.getElementById('what_to_print');
+                const bpf_form_no = document.getElementById('bpf_form_no').value;
+                const opt = {
+                    image: { type: 'jpeg', quality: 1 },
+                    html2canvas: { scale: 10 },
+                    jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
+                };
+
+                const marginTop = 32.5; // Top margin in mm
+                const pageHeight = 236.9; // Adjust the value based on your available space for each page
+
+                const totalPages = 1;
+
+                let promises = [];
+
+                for (let i = 0; i < totalPages; i++) {
+                    const promise = html2pdf()
+                    .set(opt)
+                    .from(element)
+                    .toContainer()
+                    .then(() => {
+                        const newPosition = -pageHeight * (i + 1) - marginTop;
+                        element.style.transform = `translate(0, ${newPosition}px)`;
+                    });
+
+                    promises.push(promise);
+                }
+
+                Promise.all(promises)
+                    .then(() => {
+                    element.style.transform = 'none';
+                    html2pdf().set(opt).from(element).save(`${bpf_form_no}_Billing_Statement.pdf`).then(() => {
+                        // Call the submit button click event immediately after the PDF is downloaded
+                        document.getElementById('submit_button').click();
                     });
                 });
             } else {
