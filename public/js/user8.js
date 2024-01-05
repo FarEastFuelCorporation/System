@@ -698,61 +698,75 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         const guidelines = {
             "Site Premises": [
-                "Are floors / operation site clean and clear of waste?",
-                "Are floors / operation site in good condition?",
-                "Are there protruding objects such as nails, sharp corners, open cabinet drawers, trailing electrical wires?",
-                "Is the work area congested?",
-                "Are all areas without dust deposits?",
-                "Is the workplace lighting adequate?",
-                "Is there no water ponding?"
+                "Floor is free from slip, trip, or fall hazards.",
+                "Floor is free from protrusions such as rebar, nails, etc.",
+                "All openings are barricaded or covered.",
+                "All passageways have sufficient width for normal movements (at least 28 inches wide).",
+                "No exposed electrical wiring.",
+                "No electrical flying connections.",
+                "All passages are clear and unobstructed.",
+                "All unnecessary items are disposed of properly in the work area.",
+                "All stacks are stable and secure against sliding and collapse.",
+                "Ramps and stairways are of adequate width and provided with handrails.",
+                "Posters and safety signs are posted and provided.",
+                "High standard of cleanliness in the workplace/housekeeping.",
+                "Adequate illumination.",
+                "Lighting fixtures are clean.",
+                "Adequate ventilation.",
+                "Portable fire extinguishers are available.",
+                "Proper signage is installed where applicable.",
+                "Welfare facilities are clean and properly maintained.",
+                "First aid kits are always available and adequately stocked."
             ],
-            "Equipment Maintenance": [
-                "Is equipment in good working order, with all necessary safety features operational or in place?",
-                "Is equipment damaged or outdated?",
-                "Are tools and machinery inspected regularly for wear or leaks?",
-                "Is equipment repaired promptly?",
-                "Are drip pans or absorbent materials used if leaks cannot be stopped at the source?",
-                "Is a machine that splashes oil fitted with a screen or splash guard?",
-                "Are machines and tools cleaned regularly?"
+            "Electrical Safety": [
+                "No exposed electrical wires.",
+                "No broken insulation on cords.",
+                "All controls are labeled.",
+                "GFCIs outlet in wet or damp areas.",
+                "No cracked or broken receptacle covers.",
+                "No broken or bent ground prongs on plugs.",
+                "Do not use broken or damaged electrical tools or equipment.",
+                "Implement lockout tag-out before repairs.",
+                "All electrical tools and equipment are well cleaned and maintained.",
+                "All equipment is properly grounded.",
+                "Fire extinguishers are always available.",
+                "All electrical high voltage is identified.",
+                "All terminal boxes are properly closed/covered.",
+                "All lightings, temporary light guards, and bulbs are provided and in good condition.",
+                "All power tools have no broken or cracked casings and are in good condition."
             ],
-            "Waste Disposal": [
-                "Are there adequate numbers of containers?",
-                "Are there separate and approved containers for toxic and flammable waste?",
-                "Are waste containers located where the waste is produced?",
-                "Are waste containers emptied regularly?",
-                "Are toxic and flammable waste chemicals handled properly?"
+            "Fire Protection/Prevention": [
+                "Adequate number and type of fire extinguishers available.",
+                "All fire extinguishers are clearly identified with a wall-mounted sign.",
+                "All fire extinguishers are accessible and free of obstruction.",
+                "All fire extinguishers have no damage, corrosion, leakage, or clogged nozzles.",
+                "All fire extinguishers are properly placed in their designated locations."
             ],
-            "Storage / Cabinet": [
-                "Are zoning of materials properly observed?",
-                "Are storage areas safe and accessible?",
-                "Is material stacked securely, blocked, or interlocked if possible?",
-                "Are materials stored in areas that do not obstruct fire escapes, exits, or firefighting equipment?",
-                "Are materials stored in areas that do not interfere with workers or the flow of materials?",
-                "Are bins or racks provided where material cannot be piled?",
-                "Are materials not in use properly piled?",
-                "Are all storage areas clearly marked?",
-                "Do workers understand material storage and handling procedures?",
-                "Are records properly compiled and archived and can be immediately retrieved?",
-                "Are obsolete records properly tagged and discarded if beyond the retention period?"
+            "Personal Protective Equipment": [
+                "Adequate fall protection, harnesses provided.",
+                "Eye protection.",
+                "Face protection (glasses, goggles, shields).",
+                "Respirators, masks.",
+                "Respirators used as protection from harmful dust, asbestos, sandblasting, welding (lead paint and galvanized zinc or cadmium).",
+                "Hearing protection.",
+                "Foot protection.",
+                "Hand protection, gloves.",
+                "Head protection, hard hats."
             ],
-            "Fire Prevention": [
-                "Are electrical wirings, junction boxes, outlets, and switches properly covered and not exposed?",
-                "Are combustible and flammable materials present only in the quantities needed for the job at hand?",
-                "Are hazardous materials stored in approved containers and away from ignition sources?",
-                "Are fire extinguishers inspected and located along commonly traveled routes, and close to possible ignition sources?",
-                "Are oily or greasy rags placed in metal containers and disposed of regularly?"
+            "Emergency Exits": [
+                "All exit access, exit, and exit discharge are clear and unobstructed.",
+                "All assembly points are clear and unobstructed."
             ],
-            "Dust and Dirt Removal": [
-                "Is sufficient ventilation in place to provide good operator visibility?",
-                "Is sufficient ventilation in place to prevent dust from settling and accumulating in the room?",
-                "Is sufficient ventilation in place to reduce dust concentrations?",
-                "Is sufficient ventilation in place to prevent the escape of contaminants into adjacent work areas or the environment?",
-                "Are dust residues cleaned at regular intervals and in areas that may be normally overlooked (e.g., overhead)?"
-            ],
-            "Sanitation Facility": [
-                "Are toilets clean, serviceable, and adequate in number at the worksite?"
+            "Machine or Equipment": [
+                "No air hangers or attached fabrics.",
+                "Keep clean and free of oil leaks.",
+                "Keep the surrounding clean and free from flammables.",
+                "The area and machine are free of obstructions.",
+                "Keep clean.",
+                "No broken wirings and broken control panel buttons."
             ]
         };
+        
 
         let yesCount = 0;
         let noCount = 0;
