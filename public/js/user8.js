@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const user_sidebar_department = document.getElementById("user_sidebar_department");
         const user = document.getElementById("user");
         
-        const user_name = username_data_list.content[1][findTextInArray(username_data_list, "NAME")];
+        const user_name = username_data_list.content[8][findTextInArray(username_data_list, "NAME")];
         profile_picture.src = `../images/profile_picture/${username_data_list.content[8][findTextInArray(username_data_list, "PICTURE")]}`;
         user.value = username_data_list.content[8][findTextInArray(username_data_list, "NAME")];
         user_sidebar.innerHTML = `<u>${username_data_list.content[8][findTextInArray(username_data_list, "NAME")]}</u>`;
@@ -935,7 +935,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         // Initialize counts and percentage on page load
         updateCounts();
 
-                // multi section
+        // multi section
         // purchase_request_form
         const purchase_request_form = document.querySelector("#purchase_request_form");
         const add_item_button = purchase_request_form.querySelector("#add_item_button");
