@@ -1335,9 +1335,27 @@ document.addEventListener('DOMContentLoaded', async function() {
                             si_table_data_transportation.push(data4);
                         }
                     }
-                    for(let x = 0; x < table_data_info.length; x++){
-                        table_data.insertAdjacentHTML("beforeend", table_data_info[x])
-                        table_data.insertAdjacentHTML("beforeend", table_data_transportation[x])
+                    if(mode != "FREE OF CHARGE"){
+                        for(let x = 0; x < table_data_info.length; x++){
+                            table_data.insertAdjacentHTML("beforeend", table_data_info[x])
+                            table_data.insertAdjacentHTML("beforeend", table_data_transportation[x])
+                        }
+                        for(let x = 0; x < si_table_data_info.length; x++){
+                            si_table_data.insertAdjacentHTML("beforeend", si_table_data_info[x])
+                            si_table_data.insertAdjacentHTML("beforeend", si_table_data_transportation[x])
+                        }
+                        total_vat_ex.value = formatNumber(individual_vatable);
+                        total_vat_in.value = formatNumber(individual_non_vatable + individual_vatable + (parseFloat(individual_vatable))*.12);
+                    }
+                    else if(mode == "FREE OF CHARGE"){
+                        for(let x = 0; x < table_data_transportation.length; x++){
+                            table_data.insertAdjacentHTML("beforeend", table_data_transportation[x])
+                        }
+                        for(let x = 0; x < si_table_data_transportation.length; x++){
+                            si_table_data.insertAdjacentHTML("beforeend", si_table_data_transportation[x])
+                        }
+                        total_vat_ex.value = formatNumber(individual_vatable);
+                        total_vat_in.value = formatNumber(individual_non_vatable + individual_vatable + (parseFloat(individual_vatable))*.12);
                     }
                     var space = 
                     `
@@ -1354,12 +1372,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     </tr>
                     `
                     table_data.insertAdjacentHTML("beforeend", space)
-                    for(let x = 0; x < si_table_data_info.length; x++){
-                        si_table_data.insertAdjacentHTML("beforeend", si_table_data_info[x])
-                        si_table_data.insertAdjacentHTML("beforeend", si_table_data_transportation[x])
-                    }
-                    total_vat_ex.value = formatNumber(individual_vatable);
-                    total_vat_in.value = formatNumber(individual_non_vatable + individual_vatable + (parseFloat(individual_vatable))*.12);
                 }
                 for(let x = 0; x < 20 - table_counter; x++){
                     var data5 = "";
