@@ -696,75 +696,84 @@ document.addEventListener('DOMContentLoaded', async function() {
         });
 
 
-        const guidelines = {
-            "Site Premises": [
-                "Floor is free from slip, trip, or fall hazards.",
-                "Floor is free from protrusions such as rebar, nails, etc.",
-                "All openings are barricaded or covered.",
-                "All passageways have sufficient width for normal movements (at least 28 inches wide).",
-                "No exposed electrical wiring.",
-                "No electrical flying connections.",
-                "All passages are clear and unobstructed.",
-                "All unnecessary items are disposed of properly in the work area.",
-                "All stacks are stable and secure against sliding and collapse.",
-                "Ramps and stairways are of adequate width and provided with handrails.",
-                "Posters and safety signs are posted and provided.",
-                "High standard of cleanliness in the workplace/housekeeping.",
-                "Adequate illumination.",
-                "Lighting fixtures are clean.",
-                "Adequate ventilation.",
-                "Portable fire extinguishers are available.",
-                "Proper signage is installed where applicable.",
-                "Welfare facilities are clean and properly maintained.",
-                "First aid kits are always available and adequately stocked."
-            ],
-            "Electrical Safety": [
-                "No exposed electrical wires.",
-                "No broken insulation on cords.",
-                "All controls are labeled.",
-                "GFCIs outlet in wet or damp areas.",
-                "No cracked or broken receptacle covers.",
-                "No broken or bent ground prongs on plugs.",
-                "Do not use broken or damaged electrical tools or equipment.",
-                "Implement lockout tag-out before repairs.",
-                "All electrical tools and equipment are well cleaned and maintained.",
-                "All equipment is properly grounded.",
-                "Fire extinguishers are always available.",
-                "All electrical high voltage is identified.",
-                "All terminal boxes are properly closed/covered.",
-                "All lightings, temporary light guards, and bulbs are provided and in good condition.",
-                "All power tools have no broken or cracked casings and are in good condition."
-            ],
-            "Fire Protection/Prevention": [
-                "Adequate number and type of fire extinguishers available.",
-                "All fire extinguishers are clearly identified with a wall-mounted sign.",
-                "All fire extinguishers are accessible and free of obstruction.",
-                "All fire extinguishers have no damage, corrosion, leakage, or clogged nozzles.",
-                "All fire extinguishers are properly placed in their designated locations."
-            ],
-            "Personal Protective Equipment": [
-                "Adequate fall protection, harnesses provided.",
-                "Eye protection.",
-                "Face protection (glasses, goggles, shields).",
-                "Respirators, masks.",
-                "Respirators used as protection from harmful dust, asbestos, sandblasting, welding (lead paint and galvanized zinc or cadmium).",
-                "Hearing protection.",
-                "Foot protection.",
-                "Hand protection, gloves.",
-                "Head protection, hard hats."
-            ],
-            "Emergency Exits": [
-                "All exit access, exit, and exit discharge are clear and unobstructed.",
-                "All assembly points are clear and unobstructed."
-            ],
-            "Machine or Equipment": [
-                "No air hangers or attached fabrics.",
-                "Keep clean and free of oil leaks.",
-                "Keep the surrounding clean and free from flammables.",
-                "The area and machine are free of obstructions.",
-                "Keep clean.",
-                "No broken wirings and broken control panel buttons."
-            ]
+        const departmentGuidelines = {
+            "ADMIN DEPARTMENT": null,
+            "ACCOUNTING DEPARTMENT": null,
+            "MARKETING DEPARTMENT": null,
+            "LOGISTICS DEPARTMENT": null,
+            "TREATMENT DEPARTMENT": {
+                "Site Premises": [
+                    "Floor is free from slip, trip, or fall hazards.",
+                    "Floor is free from protrusions such as rebar, nails, etc.",
+                    "All openings are barricaded or covered.",
+                    "All passageways have sufficient width for normal movements (at least 28 inches wide).",
+                    "No exposed electrical wiring.",
+                    "No electrical flying connections.",
+                    "All passages are clear and unobstructed.",
+                    "All unnecessary items are disposed of properly in the work area.",
+                    "All stacks are stable and secure against sliding and collapse.",
+                    "Ramps and stairways are of adequate width and provided with handrails.",
+                    "Posters and safety signs are posted and provided.",
+                    "High standard of cleanliness in the workplace/housekeeping.",
+                    "Adequate illumination.",
+                    "Lighting fixtures are clean.",
+                    "Adequate ventilation.",
+                    "Portable fire extinguishers are available.",
+                    "Proper signage is installed where applicable.",
+                    "Welfare facilities are clean and properly maintained.",
+                    "First aid kits are always available and adequately stocked."
+                ],
+                "Electrical Safety": [
+                    "No exposed electrical wires.",
+                    "No broken insulation on cords.",
+                    "All controls are labeled.",
+                    "GFCIs outlet in wet or damp areas.",
+                    "No cracked or broken receptacle covers.",
+                    "No broken or bent ground prongs on plugs.",
+                    "Do not use broken or damaged electrical tools or equipment.",
+                    "Implement lockout tag-out before repairs.",
+                    "All electrical tools and equipment are well cleaned and maintained.",
+                    "All equipment is properly grounded.",
+                    "Fire extinguishers are always available.",
+                    "All electrical high voltage is identified.",
+                    "All terminal boxes are properly closed/covered.",
+                    "All lightings, temporary light guards, and bulbs are provided and in good condition.",
+                    "All power tools have no broken or cracked casings and are in good condition."
+                ],
+                "Fire Protection/Prevention": [
+                    "Adequate number and type of fire extinguishers available.",
+                    "All fire extinguishers are clearly identified with a wall-mounted sign.",
+                    "All fire extinguishers are accessible and free of obstruction.",
+                    "All fire extinguishers have no damage, corrosion, leakage, or clogged nozzles.",
+                    "All fire extinguishers are properly placed in their designated locations."
+                ],
+                "Personal Protective Equipment": [
+                    "Adequate fall protection, harnesses provided.",
+                    "Eye protection.",
+                    "Face protection (glasses, goggles, shields).",
+                    "Respirators, masks.",
+                    "Respirators used as protection from harmful dust, asbestos, sandblasting, welding (lead paint and galvanized zinc or cadmium).",
+                    "Hearing protection.",
+                    "Foot protection.",
+                    "Hand protection, gloves.",
+                    "Head protection, hard hats."
+                ],
+                "Emergency Exits": [
+                    "All exit access, exit, and exit discharge are clear and unobstructed.",
+                    "All assembly points are clear and unobstructed."
+                ],
+                "Machine or Equipment": [
+                    "No air hangers or attached fabrics.",
+                    "Keep clean and free of oil leaks.",
+                    "Keep the surrounding clean and free from flammables.",
+                    "The area and machine are free of obstructions.",
+                    "Keep clean.",
+                    "No broken wirings and broken control panel buttons."
+                ]
+            },
+            "WAREHOUSE AND RENDERING DEPARTMENT": null,
+            "CONSTRUCTION DEPARTMENT": null,
+            "FACILITY SERVICES MANAGEMENT DEPARTMENT": null,
         };
         
 
@@ -868,14 +877,28 @@ document.addEventListener('DOMContentLoaded', async function() {
         const safetyTableBody = document.querySelector("#safetyTable tbody");
 
         // Generate a table row for each guideline in the category and append to safetyTableBody
-        Object.keys(guidelines).forEach((category) => {
-            const headerRow = generateGuidelineRow(category, '');
-            safetyTableBody.appendChild(headerRow);
-
-            guidelines[category].forEach((guideline) => {
-                const row = generateGuidelineRow(category, guideline);
-                safetyTableBody.appendChild(row);
-            });
+        document.getElementById('department_selection').addEventListener('change', function () {
+            const selectedDepartment = this.value; // Get the selected department value
+        
+            // Clear existing table rows
+            safetyTableBody.innerHTML = '';
+        
+            // Validate if the selected department is a valid key in the guidelines object
+            if (selectedDepartment !== '' && departmentGuidelines[selectedDepartment]) {
+                // If a valid department is selected, generate and display guidelines for that department
+                Object.keys(departmentGuidelines[selectedDepartment]).forEach((category) => {
+                    const headerRow = generateGuidelineRow(category, '');
+                    safetyTableBody.appendChild(headerRow);
+        
+                    departmentGuidelines[selectedDepartment][category].forEach((guideline) => {
+                        const row = generateGuidelineRow(category, guideline);
+                        safetyTableBody.appendChild(row);
+                    });
+                });
+            } else {
+                // If an invalid department is selected, you can display a message or take other actions
+                console.log('Invalid department selected');
+            }
         });
 
         // Function to update the counts and compute the percentage
