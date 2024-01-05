@@ -768,7 +768,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                     "Keep the surrounding clean and free from flammables.",
                     "The area and machine are free of obstructions.",
                     "Keep clean.",
-                    "No broken wirings and broken control panel buttons."
+                    "No broken wirings and broken control panel buttons.",
+                    "Are all gauges calibrated and in good condition?"
                 ]
             },
             "WAREHOUSE AND RENDERING DEPARTMENT": null,

@@ -657,12 +657,18 @@ document.addEventListener('DOMContentLoaded', async function() {
                         var client_name = "";
                         var address = "";
                         var nature_of_business = "";
+                        var client_id_data = "";
+                        var tin_id = "";
                         date_of_certification = date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]);
                         for(let c = 1; c < client_data_list.content.length; c++){
                             if(cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")] == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")]){
                                 client_name = client_data_list.content[c][findTextInArray(client_data_list, "BILLER NAME")];
                                 address = client_data_list.content[c][findTextInArray(client_data_list, "BILLER ADDRESS")];
-                                // nature_of_business = client_data_list.content[c][findTextInArray(client_data_list, "NATURE OF BUSINESS")];
+                                nature_of_business = client_data_list.content[c][findTextInArray(client_data_list, "NATURE OF BUSINESS")];
+                                client_id_data = client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")];
+                                if(client_id_data == "C2023026"){
+                                    tin_id = "006-807-251-000";
+                                }
                                 break
                             }
                         }
@@ -741,8 +747,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                             si_client_name_container.innerText = client_name;
                             address_container.innerText = address;
                             si_address_container.innerText = address;
-                            tin_id_container.innerText = "";
-                            nature_of_business_container.innerText = nature_of_business;
+                            tin_id_container.innerText = `TIN #:${tin_id}`;
+                            nature_of_business_container.innerText = `BUSINESS TYPE: ${nature_of_business}`;
                             si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                             si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                             si_date_container.innerText = date_of_certification;
@@ -1108,12 +1114,18 @@ document.addEventListener('DOMContentLoaded', async function() {
                         var client_name = "";
                         var address = "";
                         var nature_of_business = "";
+                        var client_id_data = "";
+                        var tin_id = "";
                         date_of_certification = date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]);
                         for(let c = 1; c < client_data_list.content.length; c++){
                             if(cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")] == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")]){
                                 client_name = client_data_list.content[c][findTextInArray(client_data_list, "BILLER NAME")];
                                 address = client_data_list.content[c][findTextInArray(client_data_list, "BILLER ADDRESS")];
-                                // nature_of_business = client_data_list.content[c][findTextInArray(client_data_list, "NATURE OF BUSINESS")];
+                                nature_of_business = client_data_list.content[c][findTextInArray(client_data_list, "NATURE OF BUSINESS")];
+                                client_id_data = client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")];
+                                if(client_id_data == "C2023026"){
+                                    tin_id = "006-807-251-000";
+                                }
                                 break
                             }
                         }
@@ -1192,8 +1204,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                             si_client_name_container.innerText = client_name;
                             address_container.innerText = address;
                             si_address_container.innerText = address;
-                            tin_id_container.innerText = "";
-                            nature_of_business_container.innerText = nature_of_business;
+                            tin_id_container.innerText = `TIN #:${tin_id}`;
+                            nature_of_business_container.innerText = `BUSINESS TYPE: ${nature_of_business}`;
                             si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                             si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                             si_date_container.innerText = date_of_certification;
@@ -1282,8 +1294,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                             for(let x = 1; x < cod_data_list.content.length; x++){
                                 if(wcf_transaction[y] == cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")]){
                                     date_of_certification_transportation = date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]);
-                                    console.log(cod_data_list.content[x])
-                                    console.log(date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]))
                                     break
                                 }
                             }
@@ -1460,11 +1470,17 @@ document.addEventListener('DOMContentLoaded', async function() {
                         var client_name = "";
                         var address = "";
                         var nature_of_business = "";
+                        var client_id_data = "";
+                        var tin_id = "";
                         for(let c = 1; c < client_data_list.content.length; c++){
                             if(cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")] == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")]){
                                 client_name = client_data_list.content[c][findTextInArray(client_data_list, "BILLER NAME")];
                                 address = client_data_list.content[c][findTextInArray(client_data_list, "BILLER ADDRESS")];
-                                // nature_of_business = client_data_list.content[c][findTextInArray(client_data_list, "NATURE OF BUSINESS")];
+                                nature_of_business = client_data_list.content[c][findTextInArray(client_data_list, "NATURE OF BUSINESS")];
+                                client_id_data = client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")];
+                                if(client_id_data == "C2023026"){
+                                    tin_id = "006-807-251-000";
+                                }
                                 break
                             }
                         }
@@ -1537,17 +1553,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     waste_name = cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")];
                                 }
                             }
-                            console.log(wcf_form_no.value)
-                            console.log(cod_no)
-                            console.log(quotation_no)
                             bpf_form_no_container.innerText = bpf_form_no.value;
                             date_made_container.innerText = date_decoder(new Date());
                             client_name_container.innerHTML = client_name;
                             si_client_name_container.innerText = client_name;
                             address_container.innerText = address;
                             si_address_container.innerText = address;
-                            tin_id_container.innerText = "";
-                            nature_of_business_container.innerText = nature_of_business;
+                            tin_id_container.innerText = `TIN #:${tin_id}`;
+                            nature_of_business_container.innerText = `BUSINESS TYPE: ${nature_of_business}`;
                             si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                             si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                             date_of_certification = date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]);
@@ -2056,7 +2069,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             for(let x = 1; x < bpf_data_list.content.length; x++){
                 if(search_bpf_no.value == bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")]){
                     amount += bpf_data_list.content[x][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")]
-                    console.log(bpf_data_list.content[x][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")])
                 }
             }
             billing_amount.value = amount;
