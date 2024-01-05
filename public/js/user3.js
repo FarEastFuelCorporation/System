@@ -556,7 +556,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             const tpf_form_no = document.getElementById("tpf_form_no");  
             var data_info;
             for(let x = tpf_data_list.content.length -1; x > 1 ; x--){
-                console.log(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TPF #")].substring(0,3))
                 if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TPF #")].substring(0,3) == "TPF"){
                     data_info = tpf_data_list.content[x][findTextInArray(tpf_data_list, "TPF #")];
                     break

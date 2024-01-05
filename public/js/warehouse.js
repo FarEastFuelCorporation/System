@@ -1570,7 +1570,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 counter++
                 table_data += table_row
             }
-            console.log(time_in_gate_pass_transaction.value)
             for(let x = 1; x <= 15 - item_counter_gate_pass_transaction.value; x++){
                 table_data += 
                 `

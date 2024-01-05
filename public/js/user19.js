@@ -728,7 +728,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             const dataHeight = 31; // Adjust this value based on your content
 
             for(let x = 1; x < vmf_data_list.content.length; x++){
-                console.log(x)
                 var created_date = new Date(vmf_data_list.content[x][findTextInArray(vmf_data_list, "CREATED AT")])
                 var vmf_data = vmf_data_list.content[x][findTextInArray(vmf_data_list, "VMF #")]
                 var date_data = vmf_data_list.content[x][findTextInArray(vmf_data_list, "CREATED AT")]
@@ -762,9 +761,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                         type_of_vehicle = vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")]
                     }
                 }
-                console.log(created_date)
-                console.log(report_from)
-                console.log(report_to)
                 if (created_date >= report_from && created_date <= report_to) {
                     filteredData.push({
                     vmf_data,
@@ -782,7 +778,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             
             // Sort the data by hauling date and time
             filteredData.sort((a, b) => a.datetime - b.datetime);
-            console.log(filteredData)
             // Render the sorted data
             filteredData.forEach((item) => {
                 const page_number = document.getElementById("page_number");

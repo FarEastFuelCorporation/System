@@ -717,7 +717,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     amount_input.value = parseFloat(unit_cost_input.value) * parseFloat(quantity_input.value)
                     
                     amount_inputs.forEach((data) => {
-                        console.log("pass")
                         amount_data += parseFloat(data.value);
                     })
                     total_amount_input.value = amount_data;

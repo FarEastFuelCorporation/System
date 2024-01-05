@@ -826,7 +826,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                     }
                     if(submit_to.value == "RECEIVING"){
-                        console.log("pass")
                         var data = `
                         <option value="CLIENT VEHICLE">CLIENT VEHICLE</option>
                         `

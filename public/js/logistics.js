@@ -432,8 +432,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             sortedVehicleDataObject[key] = vehicleDataObject[key];
         });
         
-        // Now, sortedVehicleDataObject contains the organized data with the numeric part of ltf_no as the key, sorted in ascending order
-        // console.log(sortedVehicleDataObject);
 
         for (let x = 1; x < vehicle_data_list.content.length; x++) {
         const vehicleType = vehicle_data_list.content[x][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")];

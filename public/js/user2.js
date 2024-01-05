@@ -458,7 +458,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 sf_form_nos.push(`SF${current_year}${month}${data_counter}`);
             }
         }
-        console.log(sf_form_nos)
         // Assigning values to sf_form_no variables
         for (let i = 1; i <= 21; i++) {
             const sf_form_no = document.getElementById(`sf_form_no${i}`);

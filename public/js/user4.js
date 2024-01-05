@@ -543,7 +543,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                 })
             })
-            console.log(pending_certification)
             filter_option_date_certification.addEventListener("change", () => {
                 pending_list_certification.innerHTML = "";
 
