@@ -186,7 +186,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             var chart = new ApexCharts(pieChart, options);
             chart.render();
-    
             var data_value = "";
             var data_value_counter = 1;
             for(let i = 0; i < pending_sorting.length; i++){
