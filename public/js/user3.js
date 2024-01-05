@@ -554,8 +554,14 @@ document.addEventListener('DOMContentLoaded', async function() {
             // FORM GENERATOR
             // tpf_data_list
             const tpf_form_no = document.getElementById("tpf_form_no");  
-            var last_row = tpf_data_list.content.length -1;        
-            var data_info = tpf_data_list.content[last_row][findTextInArray(tpf_data_list, "TPF #")];
+            var data_info;
+            for(let x = tpf_data_list.content.length -1; x > 1 ; x--){
+                console.log(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TPF #")].substring(0,3))
+                if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TPF #")].substring(0,3) == "TPF"){
+                    data_info = tpf_data_list.content[x][findTextInArray(tpf_data_list, "TPF #")];
+                    break
+                }
+            }
             var data_counter = data_info.substring(9,13);
             var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
             data_counter = (parseInt(data_counter) +1).toString().padStart(4, "0");

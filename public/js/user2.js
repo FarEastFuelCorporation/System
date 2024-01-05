@@ -448,22 +448,20 @@ document.addEventListener('DOMContentLoaded', async function() {
         var data_info = sf_data_list.content[last_row][findTextInArray(sf_data_list, "SF #")];
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
         var data_counter = data_info.substring(8,12);
-        
-        for (let i = 0; i < 21; i++) {
+        for (let i = 1; i <= 21; i++) {
             var current_year = new Date().getFullYear();
             var last_counter_year = data_info.substring(2,6);
             if(last_counter_year == current_year){
-                data_counter = (parseInt(data_counter) + i + 1).toString().padStart(4, "0");
-                sf_form_nos.push(`SF${last_counter_year}${month}${data_counter}`);
+                sf_form_nos.push(`SF${last_counter_year}${month}${(parseInt(data_counter)+i).toString().padStart(4,"0")}`);
             } else {
                 data_counter = (i + 1).toString().padStart(4, "0");
                 sf_form_nos.push(`SF${current_year}${month}${data_counter}`);
             }
         }
-
+        console.log(sf_form_nos)
         // Assigning values to sf_form_no variables
-        for (let i = 0; i < 21; i++) {
-            const sf_form_no = document.getElementById(`sf_form_no${i + 1}`);
+        for (let i = 1; i <= 21; i++) {
+            const sf_form_no = document.getElementById(`sf_form_no${i}`);
             sf_form_no.value = sf_form_nos[i];
         }
 

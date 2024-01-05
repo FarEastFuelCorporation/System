@@ -895,6 +895,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         var counter = 0;
                         const row = generateGuidelineRow(category, guideline);
                         safetyTableBody.appendChild(row);
+                        console.log(guideline.length)
                         counter += guideline.length;
                         document.getElementById("safety_inspection_form").querySelector("#counter").value = counter;
                     });
