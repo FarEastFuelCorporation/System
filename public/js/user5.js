@@ -668,6 +668,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 client_id_data = client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")];
                                 if(client_id_data == "C2023026"){
                                     tin_id = "006-807-251-000";
+                                } else if (client_id_data == "C2023018") {
+                                    tin_id = "004-627-848-000";
                                 }
                                 break
                             }
@@ -1125,6 +1127,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 client_id_data = client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")];
                                 if(client_id_data == "C2023026"){
                                     tin_id = "006-807-251-000";
+                                } else if (client_id_data == "C2023018") {
+                                    tin_id = "004-627-848-000";
                                 }
                                 break
                             }
@@ -1480,6 +1484,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 client_id_data = client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")];
                                 if(client_id_data == "C2023026"){
                                     tin_id = "006-807-251-000";
+                                } else if (client_id_data == "C2023018") {
+                                    tin_id = "004-627-848-000";
                                 }
                                 break
                             }
