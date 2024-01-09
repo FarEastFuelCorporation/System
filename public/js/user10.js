@@ -1696,7 +1696,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 prf_pr_transaction.push(pof_data_list.content[i][findTextInArray(prf_data_list, "ITM #")]);
             }
         }
-        // pending_list
+        // history_list
         var approved_data_value = "";
         var approved_data_value_counter = 1;
         var released_data_value = "";
@@ -1706,7 +1706,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         for(let x = 1; x < prf_data_list.content.length; x++){  
             for(let y = 0; y < approved.length; y++){
                 if(approved[y] == prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]){
-                    var pr_data, date_time, quantity, unit, item, details, remarks, department, status, requisitioner;
+                    var pr_data, date_time, quantity, unit, item, details, remarks, department, status, requisitioner, approved_at;
                     pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")];
                     date_time = prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")];
                     quantity = prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")];
@@ -1720,6 +1720,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     for(let z = 1; z < pof_data_list.content.length; z++){
                         if(pr_data == pof_data_list.content[z][findTextInArray(pof_data_list, "ITM #")]){
                             amount = pof_data_list.content[z][findTextInArray(pof_data_list, "AMOUNT")]
+                            approved_at = pof_data_list.content[z][findTextInArray(pof_data_list, "DECIDED AT")]
                         }
                     }                    
                     approved_data_value += `
@@ -1736,6 +1737,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td>${requisitioner}</td>
                         <td>${formatNumber(amount)}</td>
                         <td>${status}</td>
+                        <td>${date_decoder(approved_at)} /<br> ${time_decoder(approved_at)}</td>
                     </tr>
                     `
                     approved_data_value_counter += 1;
@@ -1757,6 +1759,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     for(let z = 1; z < pof_data_list.content.length; z++){
                         if(pr_data == pof_data_list.content[z][findTextInArray(pof_data_list, "ITM #")]){
                             amount = pof_data_list.content[z][findTextInArray(pof_data_list, "AMOUNT")]
+                            approved_at = pof_data_list.content[z][findTextInArray(pof_data_list, "DECIDED AT")]
                         }
                     }                    
                     released_data_value += `
@@ -1773,6 +1776,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td>${requisitioner}</td>   
                         <td>${formatNumber(amount)}</td>
                         <td>${status}</td>
+                        <td>${date_decoder(approved_at)} /<br> ${time_decoder(approved_at)}</td>
                     </tr>
                     `
                     released_data_value_counter += 1;
@@ -1794,6 +1798,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     for(let z = 1; z < pof_data_list.content.length; z++){
                         if(pr_data == pof_data_list.content[z][findTextInArray(pof_data_list, "ITM #")]){
                             amount = pof_data_list.content[z][findTextInArray(pof_data_list, "AMOUNT")]
+                            approved_at = pof_data_list.content[z][findTextInArray(pof_data_list, "DECIDED AT")]
                         }
                     }                    
                     purchased_data_value += `
@@ -1810,6 +1815,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td>${requisitioner}</td>
                         <td>${formatNumber(amount)}</td>
                         <td>${status}</td>
+                        <td>${date_decoder(approved_at)} /<br> ${time_decoder(approved_at)}</td>
                     </tr>
                     `
                     purchased_data_value_counter += 1;

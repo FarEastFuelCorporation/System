@@ -1059,6 +1059,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var certification_day_ordinal;
         var certification_month = "";
         var year = "";
+        var certification_year = "";
         var month = "";
         var hauling_date
         generate_button.addEventListener("click", choose);
@@ -1097,6 +1098,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 }
                                 done.push(item.tpfNumber)
                                 year = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])).getFullYear();
+                                certification_year = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getFullYear();
                                 month = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])).getMonth() + 1;
                                 cert_month = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getMonth() + 1;
                                 certification_date = tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")];
@@ -1568,7 +1570,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     table_head_data.innerHTML = table_head_data_value;
                                     certification.innerHTML = `${certification_day}`;
                                     certification2.innerHTML = `${certification_day_ordinal}`;
-                                    certification3.innerHTML = ` day of ${certification_month} ${year}`;
+                                    certification3.innerHTML = ` day of ${certification_month} ${certification_year}`;
                                     result_remarks.innerHTML = "";
                                 }
                             }
@@ -1602,7 +1604,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     }
                                 }
                                 done.push(item.tpfNumber)
-                                year = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getFullYear();
+                                year = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])).getFullYear();
+                                certification_year = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getFullYear();
                                 month = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getMonth() + 1;
                                 certification_date = tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")];
                                 certification_day = new Date(certification_date).getDate();
@@ -2032,7 +2035,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     table_head_data.innerHTML = table_head_data_value;
                                     certification.innerHTML = `${certification_day}`;
                                     certification2.innerHTML = `${certification_day_ordinal}`;
-                                    certification3.innerHTML = ` day of ${certification_month} ${year}`;
+                                    certification3.innerHTML = ` day of ${certification_month} ${certification_year}`;
                                     result_remarks.innerHTML = "";
                                 }
                             }
@@ -2066,7 +2069,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     }
                                 }
                                 done.push(item.tpfNumber)
-                                year = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getFullYear();
+                                year = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])).getFullYear();
+                                certification_year = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getFullYear();
                                 month = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getMonth() + 1;
                                 certification_date = tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")];
                                 certification_day = new Date(certification_date).getDate();
@@ -2496,7 +2500,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     table_head_data.innerHTML = table_head_data_value;
                                     certification.innerHTML = `${certification_day}`;
                                     certification2.innerHTML = `${certification_day_ordinal}`;
-                                    certification3.innerHTML = ` day of ${certification_month} ${year}`;
+                                    certification3.innerHTML = ` day of ${certification_month} ${certification_year}`;
                                     result_remarks.innerHTML = "";
                                 }
                             }
@@ -2530,7 +2534,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     }
                                 }
                                 done.push(item.tpfNumber)
-                                year = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getFullYear();
+                                year = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])).getFullYear();
+                                certification_year = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getFullYear();
                                 month = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getMonth() + 1;
                                 certification_date = tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")];
                                 hauling_date = new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")]);
@@ -2999,7 +3004,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     table_head_data.innerHTML = table_head_data_value;
                                     certification.innerHTML = `${certification_day}`;
                                     certification2.innerHTML = `${certification_day_ordinal}`;
-                                    certification3.innerHTML = ` day of ${certification_month} ${year}`;
+                                    certification3.innerHTML = ` day of ${certification_month} ${certification_year}`;
                                     result_remarks.innerHTML = "";
                                 }
                             }
