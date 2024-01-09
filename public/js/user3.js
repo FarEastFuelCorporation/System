@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const user_sidebar_department = document.getElementById("user_sidebar_department");
         const user = document.getElementById("user");
 
-        const user_name = username_data_list.content[1][findTextInArray(username_data_list, "NAME")];
+        const user_name = username_data_list.content[3][findTextInArray(username_data_list, "NAME")];
         profile_picture.src = `../images/profile_picture/${username_data_list.content[3][findTextInArray(username_data_list, "PICTURE")]}`;
         user.value = username_data_list.content[3][findTextInArray(username_data_list, "NAME")];
         user_sidebar.innerHTML = `<u>${username_data_list.content[3][findTextInArray(username_data_list, "NAME")]}</u>`;

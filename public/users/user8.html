@@ -514,7 +514,7 @@
                         RESIGN FORM
                     </button> -->
                 </label><br>
-                <form id="safety_inspection_form" style="position: absolute; z-index: 2; padding: 20px; background-color: white; border: 3px solid #198754; border-radius: 10px; height: 75vh; overflow-y: scroll; width: calc(100% - 40px);" 
+                <form id="safety_inspection_form" style="display: none; position: absolute; z-index: 2; padding: 20px; background-color: white; border: 3px solid #198754; border-radius: 10px; height: 75vh; overflow-y: scroll; width: calc(100% - 40px);" 
                     action="https://script.google.com/macros/s/AKfycbw9gQS4_pHrRViCVAwh7ROL54Nqh3YBBujtbqNii5fvk6CAjD3lu_47sD_DdFT3vA3p/exec" method="post">
                     <h2>SAFETY INSPECTION FORM</h2>
                     <input type="hidden" id="sif_form_no" name="sif_form_no">
@@ -619,6 +619,28 @@
                         </button>
                     </div>    
                 </form>
+                <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
+                    <div class="list">
+                        <table>
+                            <thead style="position: sticky; top: 0; background-color: black;">
+                                <th>#</th>
+                                <th>WCF # / SF #</th>
+                                <th>MTF #</th>
+                                <th>HAULING<br>DATE</th>
+                                <th>SORTED<br>DATE/TIME</th>
+                                <th>CLIENT</th>
+                                <th>WASTE<br>CODE</th>
+                                <th>WASTE NAME</th>
+                                <th>TREATMENT PROCESS</th>
+                                <th>WEIGHT</th>
+                            </thead>
+                            <tbody id="pending_list">
+
+                            </tbody>
+                        </table>
+                        <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
+                </div><br>
             </section>
             <!-- purchase_request_form -->
             <section class="marketing" id="purchase_request_form">
