@@ -603,9 +603,26 @@ document.addEventListener('DOMContentLoaded', async function() {
         const safety_inspection = document.querySelector("#safety_inspection")
         const safety_inspection_button = document.querySelector("#safety_inspection_button")
         const safety_inspection_form = safety_inspection.querySelector("#safety_inspection_form")
+        const history_list = safety_inspection.querySelector("#history_list")
         const department_selection = safety_inspection.querySelector("#department_selection")
         const section_selection = safety_inspection.querySelector("#section_selection")
         const grade = safety_inspection.querySelector("#grade")
+
+        var list_counter = 1;
+        for(let x = sif_data_list.content.length - 1; x >= 1 ; x--){
+            var list = 
+            `
+            <td>${list_counter}</td>
+            <td>${sif_data_list.content[x][findTextInArray(sif_data_list, "SIF #")]}</td>
+            <td>${date_decoder(sif_data_list.content[x][findTextInArray(sif_data_list, "CREATED AT")])} / ${time_decoder(sif_data_list.content[x][findTextInArray(sif_data_list, "CREATED AT")])}</td>
+            <td>${sif_data_list.content[x][findTextInArray(sif_data_list, "DEPARTMENT")]}</td>
+            <td>${sif_data_list.content[x][findTextInArray(sif_data_list, "SECTION")]}</td>
+            <td>${formatNumber(sif_data_list.content[x][findTextInArray(sif_data_list, "SAFETY GRADE")])}%</td>
+            <td>${sif_data_list.content[x][findTextInArray(sif_data_list, "SUBMITTED BY")]}</td>
+            ` 
+            history_list.insertAdjacentHTML("beforeend", list);
+            list_counter++;
+        }
 
         // sif_data_list
         // FORM GENERATOR
@@ -1261,6 +1278,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         
         // Initialize counts and percentage on page load
         updateCounts();
+
 
         // multi section
         // purchase_request_form

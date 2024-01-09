@@ -1972,40 +1972,41 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         });
 
-        var purchase_request_data_value = "";
         var purchase_request_data_value_counter = 1;
         for(let x = 1; x < prf_data_list.content.length; x++){
+            if(prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")] == "PURCHASED"){
+                var pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]
+                var button = `
+                <form action="https://script.google.com/macros/s/AKfycbzVr8O3e2RcbQpgvexfEaxtZnDT6N5I4_l6uGI0bh81kBQVFZJcemVLvKW7pIRZ15Eg/exec" method="post">
+                    <input type="hidden" name="itm_form_no" id="itm_form_no" value="${pr_data}">
+                    <input type="hidden" name="timestamp" id="timestamp" value="${new Date()}">
+                    <input type="hidden" name="user" id="user" value="${user_name}">
+                    <button type="submit" style="background-color: transparent !important; padding:0; color: #198754; border: none">
+                        <i class="fa-solid fa-clipboard-check"></i>
+                    </button>
+                </form>
+                `
+                var purchase_request_data_value = `
+                <tr>
+                    <td>${purchase_request_data_value_counter}</td>
+                    <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]}</td>
+                    <td>${date_decoder(prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")])}/<br>${time_decoder(prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")])}</td>
+                    <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "ITEM")]}</td>
+                    <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")]}</td>
+                    <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "UNIT")]}</td>
+                    <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "DETAILS")]}</td>
+                    <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")]}</td>
+                    <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")]}</td>
+                    <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")]}</td>
+                    <td>${button}</td>
+                </tr>
+                `
+                purchase_request_list.insertAdjacentHTML("beforeend", purchase_request_data_value);
+                purchase_request_data_value_counter += 1;
+            }
             if(prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")] == user_name){
-                if(prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")] == "PURCHASED"){
-                    var pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]
-                    var button = `
-                    <form action="https://script.google.com/macros/s/AKfycbzVr8O3e2RcbQpgvexfEaxtZnDT6N5I4_l6uGI0bh81kBQVFZJcemVLvKW7pIRZ15Eg/exec" method="post">
-                        <input type="hidden" name="itm_form_no" id="itm_form_no" value="${pr_data}">
-                        <input type="hidden" name="timestamp" id="timestamp" value="${new Date()}">
-                        <input type="hidden" name="user" id="user" value="${user_name}">
-                        <button type="submit" style="background-color: transparent !important; padding:0; color: #198754; border: none">
-                            <i class="fa-solid fa-clipboard-check"></i>
-                        </button>
-                    </form>
-                    `
-                    purchase_request_data_value += `
-                    <tr>
-                        <td>${purchase_request_data_value_counter}</td>
-                        <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]}</td>
-                        <td>${date_decoder(prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")])}/<br>${time_decoder(prf_data_list.content[x][findTextInArray(prf_data_list, "CREATED AT")])}</td>
-                        <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "ITEM")]}</td>
-                        <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "QUANTITY")]}</td>
-                        <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "UNIT")]}</td>
-                        <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "DETAILS")]}</td>
-                        <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "REMARKS")]}</td>
-                        <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")]}</td>
-                        <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")]}</td>
-                        <td>${button}</td>
-                    </tr>
-                    `
-                }
-                else{
-                    purchase_request_data_value += `
+                if(prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")] != "PURCHASED"){
+                    var purchase_request_data_value = `
                     <tr>
                         <td>${purchase_request_data_value_counter}</td>
                         <td>${prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]}</td>
@@ -2020,6 +2021,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     </tr>
                     `
                 }
+                purchase_request_list.insertAdjacentHTML("beforeend", purchase_request_data_value);
                 purchase_request_data_value_counter += 1;
             }
         }
