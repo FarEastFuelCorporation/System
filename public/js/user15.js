@@ -75,6 +75,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const ap_accounting_dashboard = document.querySelector("#ap_accounting_dashboard");
 
         const source_of_fund_ap_accounting = ap_accounting_dashboard.querySelector("#source_of_fund");
+        const moldex_fund_ap_accounting = ap_accounting_dashboard.querySelector("#moldex_fund");
         const trucking_fund_ap_accounting = ap_accounting_dashboard.querySelector("#trucking_fund");
         const hauling_fund_ap_accounting = ap_accounting_dashboard.querySelector("#hauling_fund");
         const diesel_fund_ap_accounting = ap_accounting_dashboard.querySelector("#diesel_fund");
@@ -91,6 +92,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const pcv_no_pr_input_purchasing = ap_accounting_dashboard.querySelector("#pcv_no_pr_input");
 
         var source_of_fund = 0;
+        var moldex_fund = 0;
         var trucking_fund = 0;
         var hauling_fund = 0;
         var diesel_fund = 0;
@@ -103,6 +105,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var representation_fund = 0;
         var purchase_request_fund = 0;
         var deduction_source_of_fund = 0;
+        var deduction_moldex_fund = 0;
         var deduction_trucking_fund = 0;
         var deduction_hauling_fund = 0;
         var deduction_diesel_fund = 0;
@@ -115,6 +118,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var deduction_representation_fund = 0;
         var deduction_purchase_request_fund = 0;
         var additional_source_of_fund = 0;
+        var additional_moldex_fund = 0;
         var additional_trucking_fund = 0;
         var additional_hauling_fund = 0;
         var additional_diesel_fund = 0;
@@ -129,6 +133,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         function updateAmount(){
             source_of_fund = 0;
+            moldex_fund = 0;
             trucking_fund = 0;
             hauling_fund = 0;
             diesel_fund = 0;
@@ -144,6 +149,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 // fund_source
                 if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "SOURCE OF FUND") {
                     source_of_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "MOLDEX FUND") {
+                    moldex_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
                 }
                 else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "HAULING FUND") {
                     hauling_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
@@ -182,6 +190,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "SOURCE OF FUND") {
                     source_of_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
                 }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "MOLDEX FUND") {
+                    moldex_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
                 else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "HAULING FUND") {
                     hauling_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
                 }
@@ -219,6 +230,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
         updateAmount();
         source_of_fund_ap_accounting.innerText = formatNumber(source_of_fund);
+        moldex_fund_ap_accounting.innerText = formatNumber(moldex_fund);
         trucking_fund_ap_accounting.innerText = formatNumber(trucking_fund);
         hauling_fund_ap_accounting.innerText = formatNumber(hauling_fund);
         diesel_fund_ap_accounting.innerText = formatNumber(diesel_fund);
@@ -1339,6 +1351,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <select name="fund_source${data_counter_ap_accounting.value}" id="fund_source${data_counter_ap_accounting.value}" class="form-control fund_source" required>
                                 <option value="">SELECT FUND SOURCE</option>
                                 <option value="SOURCE OF FUND">SOURCE OF FUND</option>
+                                <option value="MOLDEX FUND">MOLDEX FUND</option>
                                 <option value="TRUCKING FUND">TRUCKING FUND</option>
                                 <option value="HAULING FUND">HAULING FUND</option>
                                 <option value="DIESEL FUND">DIESEL FUND</option>
@@ -1374,6 +1387,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 <option value="">SELECT FUND ALLOCATION</option>
                                 <option value="BANK">BANK</option>
                                 <option value="SOURCE OF FUND">SOURCE OF FUND</option>
+                                <option value="MOLDEX FUND">MOLDEX FUND</option>
                                 <option value="TRUCKING FUND">TRUCKING FUND</option>
                                 <option value="HAULING FUND">HAULING FUND</option>
                                 <option value="DIESEL FUND">DIESEL FUND</option>
@@ -1421,6 +1435,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             const fundAllocationValue = source3.value;
             let fundAmount = 0;
             source_of_fund += deduction_source_of_fund + additional_source_of_fund;
+            moldex_fund += deduction_moldex_fund + additional_moldex_fund;
             trucking_fund += deduction_trucking_fund + additional_trucking_fund;
             hauling_fund += deduction_hauling_fund + additional_hauling_fund;
             diesel_fund += deduction_diesel_fund + additional_diesel_fund;
@@ -1436,6 +1451,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                 case "SOURCE OF FUND":
                     fundAmount = source_of_fund - source5;
                     deduction_source_of_fund -= source5;
+                    source2.style.display = "block";
+                    source4.style.display = "none";
+                    break;
+                case "MOLDEX FUND":
+                    fundAmount = moldex_fund - source5;
+                    deduction_moldex_fund -= source5;
                     source2.style.display = "block";
                     source4.style.display = "none";
                     break;
@@ -1518,6 +1539,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 case "SOURCE OF FUND":
                     additional_source_of_fund += source5;
                     break;
+                case "MOLDEX FUND":
+                    additional_moldex_fund += source5;
+                    break;
                 case "TRUCKING FUND":
                     additional_trucking_fund += source5;
                     break;
@@ -1560,7 +1584,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             const fundSourceValue = source.value;
             const fundAllocationValue = source6.value;
             let fundAmount = 0;
-            source_of_fund += deduction_source_of_fund + additional_source_of_fund;
+            moldex_fund += deduction_moldex_fund + additional_moldex_fund;
             trucking_fund += deduction_trucking_fund + additional_trucking_fund;
             hauling_fund += deduction_hauling_fund + additional_hauling_fund;
             diesel_fund += deduction_diesel_fund + additional_diesel_fund;
@@ -1575,6 +1599,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                 case "SOURCE OF FUND":
                     fundAmount = source_of_fund;
                     deduction_source_of_fund -= source5;
+                    source2.style.display = "block";
+                    source4.style.display = "none";
+                    break;
+                case "MOLDEX FUND":
+                    fundAmount = moldex_fund;
+                    deduction_moldex_fund -= source5;
                     source2.style.display = "block";
                     source4.style.display = "none";
                     break;
@@ -1656,6 +1686,9 @@ document.addEventListener('DOMContentLoaded', async function() {
             switch (fundAllocationValue) {
                 case "SOURCE OF FUND":
                     additional_source_of_fund += parseFloat(source5);
+                    break;
+                case "MOLDEX FUND":
+                    additional_moldex_fund += parseFloat(source5);
                     break;
                 case "TRUCKING FUND":
                     additional_trucking_fund += parseFloat(source5);
@@ -1785,6 +1818,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <select name="fund_allocation${request_list_counter_ap_accounting.value}" id="fund_allocation${request_list_counter_ap_accounting.value}" class="form-control" required>
                         <option value="">SELECT FUND ALLOCATION</option>
                         <option value="SOURCE OF FUND">SOURCE OF FUND</option>
+                        <option value="MOLDEX FUND">MOLDEX FUND</option>
                         <option value="TRUCKING FUND">TRUCKING FUND</option>
                         <option value="HAULING FUND">HAULING FUND</option>
                         <option value="DIESEL FUND">DIESEL FUND</option>

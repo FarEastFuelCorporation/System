@@ -145,6 +145,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const ap_accounting_dashboard = document.querySelector("#ap_accounting_dashboard");
 
         const source_of_fund_ap_accounting = ap_accounting_dashboard.querySelector("#source_of_fund");
+        const moldex_fund_ap_accounting = ap_accounting_dashboard.querySelector("#moldex_fund");
         const trucking_fund_ap_accounting = ap_accounting_dashboard.querySelector("#trucking_fund");
         const hauling_fund_ap_accounting = ap_accounting_dashboard.querySelector("#hauling_fund");
         const diesel_fund_ap_accounting = ap_accounting_dashboard.querySelector("#diesel_fund");
@@ -158,6 +159,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const purchase_request_fund_ap_accounting = ap_accounting_dashboard.querySelector("#purchase_request_fund");
 
         var source_of_fund = 0;
+        var moldex_fund = 0;
         var trucking_fund = 0;
         var hauling_fund = 0;
         var diesel_fund = 0;
@@ -172,6 +174,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         
         function updateAmount(){
             source_of_fund = 0;
+            moldex_fund = 0;
             trucking_fund = 0;
             hauling_fund = 0;
             diesel_fund = 0;
@@ -187,6 +190,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 // fund_source
                 if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "SOURCE OF FUND") {
                     source_of_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "MOLDEX FUND") {
+                    moldex_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
                 }
                 else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "HAULING FUND") {
                     hauling_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
@@ -225,6 +231,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "SOURCE OF FUND") {
                     source_of_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
                 }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "MOLDEX FUND") {
+                    moldex_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
                 else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "HAULING FUND") {
                     hauling_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
                 }
@@ -262,6 +271,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
         updateAmount();
         source_of_fund_ap_accounting.innerText = formatNumber(source_of_fund);
+        moldex_fund_ap_accounting.innerText = formatNumber(moldex_fund);
         trucking_fund_ap_accounting.innerText = formatNumber(trucking_fund);
         hauling_fund_ap_accounting.innerText = formatNumber(hauling_fund);
         diesel_fund_ap_accounting.innerText = formatNumber(diesel_fund);
@@ -1358,6 +1368,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
             // ap_accounting_head_dashboard
             const source_of_fund_ap_accounting = ap_accounting_head_dashboard.querySelector("#source_of_fund");
+            const moldex_fund_ap_accounting = ap_accounting_head_dashboard.querySelector("#moldex_fund");
             const trucking_fund_ap_accounting = ap_accounting_head_dashboard.querySelector("#trucking_fund");
             const hauling_fund_ap_accounting = ap_accounting_head_dashboard.querySelector("#hauling_fund");
             const diesel_fund_ap_accounting = ap_accounting_head_dashboard.querySelector("#diesel_fund");
@@ -1371,6 +1382,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             const purchase_request_fund_ap_accounting = ap_accounting_head_dashboard.querySelector("#purchase_request_fund");
 
             var source_of_fund = 0;
+            var moldex_fund = 0;
             var trucking_fund = 0;
             var hauling_fund = 0;
             var diesel_fund = 0;
@@ -1383,7 +1395,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             var representation_fund = 0;
             var purchase_request_fund = 0;
 
-            var type_of_funds = ["SOURCE OF FUND", "HAULING FUND", "TRUCKING FUND", "DIESEL FUND", "GASOLINE FUND", "SIR RUEL'S FUND", "SCRAP SALES", "MOLD RUNNER SALES", "TRUCK SCALE COLLECTION", "HOUSE COLLECTION", "REPRESENTATION FUND", "PURCHASE REQUEST FUND"]
+            var type_of_funds = ["SOURCE OF FUND", "MOLDEX FUND", "HAULING FUND", "TRUCKING FUND", "DIESEL FUND", "GASOLINE FUND", "SIR RUEL'S FUND", "SCRAP SALES", "MOLD RUNNER SALES", "TRUCK SCALE COLLECTION", "HOUSE COLLECTION", "REPRESENTATION FUND", "PURCHASE REQUEST FUND"]
 
             for (let i = 1; i < ftf_data_list.content.length; i++) {
                 // fund_source
@@ -1391,6 +1403,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                     if(!type_of_funds.includes(ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")])){
                         if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "SOURCE OF FUND") {
                             source_of_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                        }
+                        else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "MOLDEX FUND") {
+                            moldex_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
                         }
                         else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "HAULING FUND") {
                             hauling_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
@@ -1431,6 +1446,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                         (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")].includes("RETURN"))) {
                         if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "SOURCE OF FUND") {
                             source_of_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                        }
+                        else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "MOLDEX FUND") {
+                            moldex_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
                         }
                         else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "HAULING FUND") {
                             hauling_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
@@ -1472,6 +1490,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                         if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "SOURCE OF FUND") {
                             source_of_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
                         }
+                        else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "MOLDEX FUND") {
+                            moldex_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                        }
                         else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "HAULING FUND") {
                             hauling_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
                         }
@@ -1512,6 +1533,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                         if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "SOURCE OF FUND") {
                             source_of_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
                         }
+                        else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "MOLDEX FUND") {
+                            moldex_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                        }
                         else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "HAULING FUND") {
                             hauling_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
                         }
@@ -1550,6 +1574,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             
             source_of_fund_ap_accounting.innerText = formatNumber(source_of_fund);
+            moldex_fund_ap_accounting.innerText = formatNumber(moldex_fund);
             trucking_fund_ap_accounting.innerText = formatNumber(trucking_fund);
             hauling_fund_ap_accounting.innerText = formatNumber(hauling_fund);
             diesel_fund_ap_accounting.innerText = formatNumber(diesel_fund);
