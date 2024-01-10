@@ -749,9 +749,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                             si_client_name_container.innerText = client_name;
                             address_container.innerText = address;
                             si_address_container.innerText = address;
-                            tin_id_container.innerText = `TIN #:${tin_id}`;
-                            nature_of_business_container.innerText = `BUSINESS TYPE: ${nature_of_business}`;
-                            si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
+                            if(client_id_data == "C2023036"){
+                                tin_id_container.innerText = "";
+                                nature_of_business_container.innerText = "";
+                            }   
+                            else{
+                                tin_id_container.innerText = `TIN #:${tin_id}`;
+                                nature_of_business_container.innerText = `BUSINESS TYPE: ${nature_of_business}`;
+                            }                            si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                             si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                             si_date_container.innerText = date_of_certification;
                             if(max_capacity == 0){
@@ -1208,9 +1213,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                             si_client_name_container.innerText = client_name;
                             address_container.innerText = address;
                             si_address_container.innerText = address;
-                            tin_id_container.innerText = `TIN #:${tin_id}`;
-                            nature_of_business_container.innerText = `BUSINESS TYPE: ${nature_of_business}`;
-                            si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
+                            if(client_id_data == "C2023036"){
+                                tin_id_container.innerText = "";
+                                nature_of_business_container.innerText = "";
+                            }   
+                            else{
+                                tin_id_container.innerText = `TIN #:${tin_id}`;
+                                nature_of_business_container.innerText = `BUSINESS TYPE: ${nature_of_business}`;
+                            }                            si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                             si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                             si_date_container.innerText = date_of_certification;
                             if(mode != "FREE OF CHARGE"){
@@ -1565,8 +1575,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                             si_client_name_container.innerText = client_name;
                             address_container.innerText = address;
                             si_address_container.innerText = address;
-                            tin_id_container.innerText = `TIN #:${tin_id}`;
-                            nature_of_business_container.innerText = `BUSINESS TYPE: ${nature_of_business}`;
+                            if(client_id_data == "C2023036"){
+                                tin_id_container.innerText = "";
+                                nature_of_business_container.innerText = "";
+                            }   
+                            else{
+                                tin_id_container.innerText = `TIN #:${tin_id}`;
+                                nature_of_business_container.innerText = `BUSINESS TYPE: ${nature_of_business}`;
+                            }
                             si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                             si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                             date_of_certification = date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]);

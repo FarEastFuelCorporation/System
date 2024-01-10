@@ -845,7 +845,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         // transaction_history_list
         var table_data_counter = 1;
-        for(let x = 1; x < stf_data_list.content.length; x++){
+        for(let x = stf_data_list.content.length -1; x >= 1 ; x--){
             var quantity = 0
             var total_amount = 0
             var item_name
@@ -854,7 +854,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     item_name = iid_data_list.content[y][findTextInArray(iid_data_list, "ITEM")];
                 }
             }
-            var department, pick_up_by, submitted_by;
+            var department = "", pick_up_by = "", submitted_by = "";
             for(let y = 1; y < wsf_data_list.content.length; y++){
                 if(stf_data_list.content[x][findTextInArray(stf_data_list, "PRF # / WSF #")] == wsf_data_list.content[y][findTextInArray(wsf_data_list, "WSF #")]){
                     department = wsf_data_list.content[y][findTextInArray(wsf_data_list, "DEPARTMENT")];
