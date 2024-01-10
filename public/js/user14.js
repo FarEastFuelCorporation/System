@@ -900,6 +900,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         var iid_no_array = [];
         var iid_item_array = [];
+        var table_data_counter = 1;
         for(let x = 1; x < iid_data_list.content.length; x++){
             var quantity = 0
             var total_amount = 0
@@ -920,7 +921,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                 }
             }
-            var table_data_counter = 1;
             var table_data_supplies_inventory =
             `
             <tr>

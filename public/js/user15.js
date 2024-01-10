@@ -387,7 +387,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                     }
                     button = `
-                    <form action="https://script.google.com/macros/s/AKfycbyQQEonqcAsX19cNv_fHNqyB8U5RttkF-2xdGcPuclqJkEckUbrSrXbFfFFOdzhDZW_pQ/exec" method="post">
+                    <form action="https://script.google.com/macros/s/AKfycbyfxGOVS7m3tpCZ8T2RZJzR2gLyvY1ugEk5XN_FbF8vurDGCOumx8a5IXO56zz0OEZnNA/exec" method="post">
                         <input type="hidden" name="pr_form_no" id="pr_form_no" value="${pr_no}">
                         <input type="hidden" name="itm_form_no" id="itm_form_no" value="${pr_data}">
                         <input type="hidden" name="timestamp" id="timestamp" value="${new Date()}">
@@ -399,15 +399,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </button>
                     </form>
                     `
-                    // button2 = `
-                    // <form action="https://script.google.com/macros/s/AKfycbx5SYw9DIYhoeFs656bTN-5G8qCcbrWnH5saJzZEeptNXL04S-dFQgbu10ecNU-s2hu2w/exec" method="post">
-                    // <input type="hidden" name="itm_form_no" id="itm_form_no" value="${pr_data}">
-                    // <input type="hidden" name="timestamp" id="timestamp" value="${new Date()}">
-                    // <button type="submit" style="background-color: transparent !important; padding:0; color: #dc3545; border: none">
-                    //         <i class="fa-solid fa-thumbs-down"></i>
-                    //     </button>
-                    // </form>
-                    // `
 
                     approved_data_value += `
                     <tr>
