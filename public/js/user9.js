@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const user_sidebar = document.getElementById("user_sidebar");
         const user_sidebar_officer = document.getElementById("user_sidebar_officer");
         const user_sidebar_department = document.getElementById("user_sidebar_department");
-        const users = document.querySelectorAll("user");
+        const users = document.querySelectorAll("#user");
         
         profile_picture.src = `../images/profile_picture/${username_data_list.content[9][findTextInArray(username_data_list, "PICTURE")]}`;
         users.forEach(user => {user.value = username_data_list.content[9][findTextInArray(username_data_list, "NAME")]})
