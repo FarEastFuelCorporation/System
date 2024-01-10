@@ -1619,7 +1619,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <td>${iid_data_list.content[x][findTextInArray(iid_data_list, "DESCRIPTION")]}</td>
                 <td>${iid_data_list.content[x][findTextInArray(iid_data_list, "UNIT")]}</td>
                 <td>${quantity}</td>
-                <td>${iid_data_list.content[x][findTextInArray(iid_data_list, "SUBMITTED BY")]}</td>
             </tr>
             `
             table_data_counter += 1;
