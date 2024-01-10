@@ -2926,8 +2926,43 @@
         }
 
         function convertToPDFandDownload3() {
-            convertToPDF3();
-            document.getElementById('submit_button').click();
+            const project_based_contract_form = document.getElementById('project_based_contract_form');
+            const element = project_based_contract_form.querySelector('#contract_container');
+            const pcf_form_no = project_based_contract_form.querySelector('#pcf_form_no').value;
+            const opt = {
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { scale: 10 },
+                jsPDF: { unit: 'mm', format: [215.90, 330.2], orientation: 'portrait' }
+            };
+
+            const marginTop = 12.70; // Top margin in mm
+            const pageHeight = 330.20; // Adjust the value based on your available space for each page
+
+            const totalPages = 1;
+
+            let promises = [];
+
+            for (let i = 0; i < totalPages; i++) {
+                const promise = html2pdf()
+                .set(opt)
+                .from(element)
+                .toContainer()
+                .then(() => {
+                    const newPosition = -pageHeight * (i + 1) - marginTop;
+                    element.style.transform = `translate(0, ${newPosition}px)`;
+                });
+
+                promises.push(promise);
+            }
+
+            Promise.all(promises)
+                .then(() => {
+                element.style.transform = 'none';
+                html2pdf().set(opt).from(element).save(`${pcf_form_no}.pdf`).then(() => {
+                    project_based_contract_form.querySelector('#submit_btn').click();
+                });
+            });
+            
         }
 
         function convertToPDF3() {
@@ -2971,8 +3006,43 @@
         }
         
         function convertToPDFandDownload4() {
-            convertToPDF4();
-            document.getElementById('submit_button').click();
+            const project_based_contract_form = document.getElementById('logistics_contract_form');
+            const element = project_based_contract_form.querySelector('#contract_container');
+            const pcf_form_no = project_based_contract_form.querySelector('#lcf_form_no').value;
+            const opt = {
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { scale: 10 },
+                jsPDF: { unit: 'mm', format: [215.90, 330.2], orientation: 'portrait' }
+            };
+
+            const marginTop = 12.70; // Top margin in mm
+            const pageHeight = 330.20; // Adjust the value based on your available space for each page
+
+            const totalPages = 1;
+
+            let promises = [];
+
+            for (let i = 0; i < totalPages; i++) {
+                const promise = html2pdf()
+                .set(opt)
+                .from(element)
+                .toContainer()
+                .then(() => {
+                    const newPosition = -pageHeight * (i + 1) - marginTop;
+                    element.style.transform = `translate(0, ${newPosition}px)`;
+                });
+
+                promises.push(promise);
+            }
+
+            Promise.all(promises)
+                .then(() => {
+                element.style.transform = 'none';
+                html2pdf().set(opt).from(element).save(`${pcf_form_no}.pdf`).then(() => {
+                    project_based_contract_form.querySelector('#submit_btn').click();
+                });
+            });
+
         }
 
         function convertToPDF4() {

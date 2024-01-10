@@ -1451,7 +1451,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             break
                         }
                     }
-                    if(type_waste.value == "ALL"){
+                    if(type_waste.value == ""){
                         for(let x = 1; x < cod_data_list.content.length; x++){
                             if(date_decoder(new Date(search_date.value)) == date_decoder(new Date(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")])) &&
                             client_id_input == cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")]){
@@ -1575,7 +1575,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             si_client_name_container.innerText = client_name;
                             address_container.innerText = address;
                             si_address_container.innerText = address;
-                            if(client_id_data == "C2023036"){
+                            if(client_id_data == "C2023036" ){
                                 tin_id_container.innerText = "";
                                 nature_of_business_container.innerText = "";
                             }   
