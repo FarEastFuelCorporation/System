@@ -1978,7 +1978,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 console.log(prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")])
                 var pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]
                 var button = `
-                <form action="https://script.google.com/macros/s/AKfycbzVr8O3e2RcbQpgvexfEaxtZnDT6N5I4_l6uGI0bh81kBQVFZJcemVLvKW7pIRZ15Eg/exec" method="post">
+                <form action="https://script.google.com/macros/s/AKfycbzcR96xS_5hiVWnUFYfDo1W9czyKJkUld2qbIa-uX3nIpJ9AVwDoGR8JoaTPMTEpqp1/exec" method="post">
                     <input type="hidden" name="itm_form_no" id="itm_form_no" value="${pr_data}">
                     <input type="hidden" name="timestamp" id="timestamp" value="${new Date()}">
                     <input type="hidden" name="user" id="user" value="${user_name}">
