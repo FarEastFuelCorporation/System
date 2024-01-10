@@ -2942,7 +2942,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     if(iid_form_no.value == iid_no_array[x]){
                         for(let y = 1; y < iid_data_list.content.length; y++){
                             if(iid_form_no.value == iid_data_list.content[y][findTextInArray(iid_data_list, "IID #")]){
-                                item.value = iid_data_list.content[y][findTextInArray(iid_data_list, "DESCRIPTION")];
+                                `${iid_data_list.content[y][findTextInArray(iid_data_list, "ITEM")]} ${iid_data_list.content[y][findTextInArray(iid_data_list, "DESCRIPTION")]}`;
                                 break
                             }
                             else{
