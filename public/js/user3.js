@@ -619,6 +619,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         client_weight = wcf_data_list.content[c][findTextInArray(wcf_data_list, "CLIENT WEIGHT")]
                                     }
                                 }
+                                var unit = "";
+                                for(let c = 1; c < qlf_data_list.content.length; c++){
+                                    if(qlf_data_list.content[c][findTextInArray(qlf_data_list, "QUOTATION CODE")] == sf_data_list.content[a][findTextInArray(sf_data_list, "QUOTATION CODE")] &&
+                                    qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")] == sf_data_list.content[a][findTextInArray(sf_data_list, "WASTE ID")]){
+                                        unit = qlf_data_list.content[c][findTextInArray(qlf_data_list, "UNIT")]
+                                    }
+                                }
                                 mtf_form_no.value = mtf;
                                 data_value = `
                                 SF #: ${sf_data_list.content[a][findTextInArray(sf_data_list, "SF #")]}<br>
@@ -629,7 +636,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 WASTE DESCRIPTION: ${findWasteName(sf_data_list.content[a][findTextInArray(sf_data_list, "CLIENT ID")], sf_data_list.content[a][findTextInArray(sf_data_list, "WASTE ID")])}<br>
                                 DESTRUCTION PROCESS: ${sf_data_list.content[a][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")]}<br>
                                 CLIENT BATCH WEIGHT: ${client_weight} kg.<br>
-                                FEFC WEIGHT: ${sf_data_list.content[a][findTextInArray(sf_data_list, "WEIGHT")]} kg.<br>
+                                FEFC WEIGHT: ${sf_data_list.content[a][findTextInArray(sf_data_list, "WEIGHT")]} ${unit}<br>
                                 HAULING DATE: ${date_decoder(sf_data_list.content[a][findTextInArray(sf_data_list, "HAULING DATE")])}<br>
                                 SORTED DATE: ${date_decoder(sf_data_list.content[a][findTextInArray(sf_data_list, "COMPLETION DATE")])}<br>
                                 SORTED TIME: ${time_decoder(sf_data_list.content[a][findTextInArray(sf_data_list, "COMPLETION TIME")])}<br>
