@@ -88,6 +88,12 @@
                 <li>
                     <a href="#">
                         <i class="fas fa-th-large"></i>
+                        HR Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-th-large"></i>
                         Purchasing Officer Dashboard
                     </a>
                 </li>
@@ -940,6 +946,137 @@
                         <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
                     </div>
                 </div><br>
+            </section>
+            <!-- hr_dashboard -->
+            <section class="hr" id="hr_dashboard">
+                <h2>HR DASHBOARD</h2><br>
+                <h2>EMPLOYEE SUMMARY</h2>
+                <div>
+                    <div class="cards">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="regular_employee"></div>
+                                <div style="color: white; font-size: 12px;">Male/Female/Total</div>
+                                <div class="card-name">Regular Employee</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-user-tie"></i>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="project_based_employee"></div>
+                                <div style="color: white; font-size: 12px;">Male/Female/Total</div>
+                                <div class="card-name">Project Based Employee</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-user-tag"></i>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="subcon_employee"></div>
+                                <div style="color: white; font-size: 12px;">Male/Female/Total</div>
+                                <div class="card-name">Temporary Employee</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-user-pen"></i>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="total_employee"></div>
+                                <div style="color: white; font-size: 12px;">Male/Female/Total</div>
+                                <div class="card-name">Total Employee</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-users"></i>
+                            </div>
+                        </div>
+                        <div style="position: relative;">
+                            <div id="pieChart" style="position: absolute; margin-top: -40px;">
+                            </div>
+                        </div>
+                    </div><br>
+                    <div class="cards">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="expired_contract"></div>
+                                <div class="card-name">Expired Contract</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-file-signature"></i>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="near_expired"></div>
+                                <div class="card-name">For Renewal</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-file-signature"></i>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="number" id="pending_contract"></div>
+                                <div class="card-name">Pending Contract</div>
+                            </div>
+                            <div class="icon-box">
+                                <i class="fa-solid fa-file-signature"></i>
+                            </div>
+                        </div>
+                    </div><br>
+                    <h2>PENDING TRANSACTIONS</h2>
+                    <div class="table" style="max-height: 75vh; align-items: start; overflow-y: scroll; padding-bottom: 0 !important;">                            
+                        <div class="list">
+                            <table style=" margin-bottom: 0 !important;">
+                                <thead style="position: sticky; top: 0; background-color: black;">                                    
+                                    <th>#</th>
+                                    <!-- <th>ID #</th>
+                                    <th>FULL NAME</th>
+                                    <th>DEPARTMENT</th>
+                                    <th>DESIGNATION</th>
+                                    <th>GENDER</th>
+                                    <th>EMPLOYEE<br>TYPE</th>
+                                    <th>BIRTHDAY</th>
+                                    <th>MOBILE<br>NUMBER</th>
+                                    <th>DATE<br>HIRE</th>
+                                    <th>TIN NO.</th>
+                                    <th>SSS/GSIS NO.</th>
+                                    <th>PHILHEALTH NO.</th>
+                                    <th>PAG-IBIG NO.</th> -->
+                                </thead>
+                                <tbody id="pending_list">
+    
+                                </tbody>
+                                </table>
+                            <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                        </div>
+                    </div><br>
+                    <!-- <h2>TREATED HISTORY LIST</h2>
+                    <div class="card">
+                        <div class="list">
+                            <table>
+                                <thead>
+                                    <th>#</th>
+                                    <th>TPF #</th>
+                                    <th>SORTED<br>DATE/TIME</th>
+                                    <th>CLIENT</th>
+                                    <th>WASTE DESCRIPTION</th>
+                                    <th>TREATMENT PROCESS</th>
+                                    <th>WEIGHT</th>
+                                    <th>TREATED<br>DATE/TIME</th>
+                                    <th>DURATION</th>
+                                </thead>
+                                <tbody id="finished_list">
+
+                                </tbody>
+                            </table>
+                            <div class="text-center fs-5">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                        </div>
+                    </div> -->
+                </div>
             </section>
             <!-- purchasing_dashboard -->
             <section class="purchasing" id="purchasing_dashboard">
