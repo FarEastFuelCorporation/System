@@ -3081,7 +3081,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <select name="type_of_weight" id="type_of_weight" class="form-control">
                             <option value="">SELECT WEIGHT</option>
                             <option value="CLIENT WEIGHT">CLIENT WEIGHT</option>
-                            <option value="FEFC WEIGHT">FEFC WEIGHT</option>
+                            <option value="FEFC WEIGHT">SORTED WEIGHT</option>
                         </select>
                     </div>
                 </div>
@@ -3143,7 +3143,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <select name="type_of_weight" id="type_of_weight" class="form-control">
                             <option value="">SELECT WEIGHT</option>
                             <option value="CLIENT WEIGHT">CLIENT WEIGHT</option>
-                            <option value="FEFC WEIGHT">FEFC WEIGHT</option>
+                            <option value="FEFC WEIGHT">SORTED WEIGHT</option>
                         </select>
                     </div>
                 </div>
