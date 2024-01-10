@@ -1975,6 +1975,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var purchase_request_data_value_counter = 1;
         for(let x = 1; x < prf_data_list.content.length; x++){
             if(prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")] == "PURCHASED"){
+                console.log(prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")])
                 var pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]
                 var button = `
                 <form action="https://script.google.com/macros/s/AKfycbzVr8O3e2RcbQpgvexfEaxtZnDT6N5I4_l6uGI0bh81kBQVFZJcemVLvKW7pIRZ15Eg/exec" method="post">
@@ -2004,6 +2005,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                 purchase_request_list.insertAdjacentHTML("beforeend", purchase_request_data_value);
                 purchase_request_data_value_counter += 1;
             }
+        }
+        for(let x = 1; x < prf_data_list.content.length; x++){
             if(prf_data_list.content[x][findTextInArray(prf_data_list, "SUBMITTED BY")] == user_name){
                 if(prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")] != "PURCHASED"){
                     var purchase_request_data_value = `
@@ -2025,7 +2028,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 purchase_request_data_value_counter += 1;
             }
         }
-        purchase_request_list.innerHTML = purchase_request_data_value;
 
         purchase_request_form_button.addEventListener("click", () => {
             if(form_tab.style.display == "block"){
