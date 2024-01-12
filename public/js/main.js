@@ -162,6 +162,22 @@ function time_decoder2(timestamp) {
   return timeString;
 }
 
+function time_decoder3(timestamp) {
+  var date = new Date(timestamp);
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var period = hours >= 12 ? 'PM' : 'AM';
+
+  // Convert hours to 12-hour format
+  hours = hours % 12;
+  hours = hours ? hours : 12; // If hours is 0, set it to 12
+
+  // Add leading zero to single-digit minutes
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+
+  return `${hours}:${minutes} ${period}`;
+}
+
 function convertTo24HourFormat(timeStr) {
   // Split the time string into hour, minute, and AM/PM components
   const [time, amPm] = timeStr.split(' ');

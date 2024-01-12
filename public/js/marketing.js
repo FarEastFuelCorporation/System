@@ -382,7 +382,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <tr style="background-color: ${color};">
                         <td ${style}>${data_value_counter}</td>
                         <td ${style}>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")]}</td>
-                        <td ${style}>${date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CREATED AT")])} /<br> ${time_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CREATED AT")])}</td>
+                        <td ${style}>${date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CREATED AT")])} /<br> ${time_decoder3(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CREATED AT")])}</td>
                         <td ${style}>${date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])} /<br> ${time_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING TIME")])}</td>
                         <td ${style}>${findClientName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")])}</td>
                         <td ${style}>${findWasteCode(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")])}</td>
@@ -405,7 +405,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <tr style="background-color: ${color};">
                         <td ${style}>${data_value_counter}</td>
                         <td ${style}>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")]}</td>
-                        <td ${style}>${date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CREATED AT")])} /<br> ${time_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CREATED AT")])}</td>
+                        <td ${style}>${date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CREATED AT")])} /<br> ${time_decoder3(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CREATED AT")])}</td>
                         <td ${style}>${date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])} /<br> ${time_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING TIME")])}</td>
                         <td ${style}>${findClientName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")])}</td>
                         <td ${style}>${findWasteCode(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")])}</td>
