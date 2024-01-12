@@ -1173,6 +1173,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         // quotation_form
         const quotation_form = document.querySelector("#quotation_form");
         const qlf_list_quotation_form = quotation_form.querySelector("#qlf_list");
+        const qlf_list2_quotation_form = quotation_form.querySelector("#qlf_list2");
         const new_quotation_button_quotation_form = quotation_form.querySelector("#new_quotation_button");
         const update_quotation_button_quotation_form = quotation_form.querySelector("#update_quotation_button");
         const new_quotation_form_tab = quotation_form.querySelector("#new_quotation_form_tab");
@@ -1440,11 +1441,11 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         }
         
-        var qlf_data_value = "";
         var qlf_data_value_counter = 1;
+        var qlf_data_value_counter2 = 1;
         for(let x = 1; x < qlf_data_list.content.length; x++){
             if(!vehicle_list.includes(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])){
-                qlf_data_value += `
+                var qlf_data_value = `
                 <tr>
                     <td>${qlf_data_value_counter}</td>
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "QUOTATION CODE")]}</td>
@@ -1461,10 +1462,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "SUBMITTED BY")]}</td>
                 </tr>
                 `
+                qlf_list_quotation_form.insertAdjacentHTML("beforeend", qlf_data_value);
                 qlf_data_value_counter += 1;
             }
             else if(vehicle_list.includes(qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")])){
-                qlf_data_value += `
+                var qlf_data_value2 = `
                 <tr>
                     <td>${qlf_data_value_counter}</td>
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "QUOTATION CODE")]}</td>
@@ -1481,10 +1483,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                     <td>${qlf_data_list.content[x][findTextInArray(qlf_data_list, "SUBMITTED BY")]}</td>
                 </tr>
                 `
-                qlf_data_value_counter += 1;
+                qlf_list2_quotation_form.insertAdjacentHTML("beforeend", qlf_data_value2);
+                qlf_data_value_counter2 += 1;
             }
         }
-        qlf_list_quotation_form.innerHTML = qlf_data_value;
 
         add_item_button_quotation_form.addEventListener("click", () => {
             list_counter_quotation_form.value = parseInt(list_counter_quotation_form.value) + 1;
