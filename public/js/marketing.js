@@ -341,6 +341,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
                 var color;
                 var font_color = "black";
+                var createdDateTime = mtf_data_list.content[j][findTextInArray(mtf_data_list, "CREATED AT")];
+                var haulingDate = date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")]);
+                var haulingTime = time_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING TIME")]);
+                var haulingDateTime = new Date(`${haulingDate} ${haulingTime}`);
+                var font_color = "black";
                 if(month_filter.value == formatMonth(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])){
                     if(status == "FOR HAULING"){
                         color = forHaulingColor;
@@ -361,11 +366,23 @@ document.addEventListener('DOMContentLoaded', async function() {
                     } else if(status == "FOR ACCOUNTING"){
                         color = finishedColor;
                     }
-                    var style = `style="color: ${font_color}; font-size: 14px !important;"`
+                    // Validation for created date and time being greater than hauling date and time
+                    if (compareDateTime(createdDateTime, haulingDateTime) > 0) {
+                        font_color = "#dc3545";
+                    }
+                    function compareDateTime(dateTime1, dateTime2) {
+                        // Compare two date-time strings in the format "Month Day, Year Hour:Minute AM/PM"
+                        var date1 = new Date(dateTime1);
+                        var date2 = new Date(dateTime2);
+                    
+                        return date1 - date2;
+                    }
+                    var style = `style="color: ${font_color}; font-size: 12px !important;"`
                     data_value +=`
                     <tr style="background-color: ${color};">
                         <td ${style}>${data_value_counter}</td>
                         <td ${style}>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")]}</td>
+                        <td ${style}>${date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CREATED AT")])} /<br> ${time_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CREATED AT")])}</td>
                         <td ${style}>${date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])} /<br> ${time_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING TIME")])}</td>
                         <td ${style}>${findClientName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")])}</td>
                         <td ${style}>${findWasteCode(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")])}</td>
@@ -385,20 +402,21 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
                 else if(month_filter.value == "ALL"){
                     data_value +=`
-                    <tr>
-                        <td>${data_value_counter}</td>
-                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")]}</td>
-                        <td>${date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])} /<br> ${time_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING TIME")])}</td>
-                        <td>${findClientName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")])}</td>
-                        <td>${findWasteCode(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")])}</td>
-                        <td>${findWasteName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")], (mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")]))}</td>
-                        <td>${vehicle}</td>
-                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")]}</td>
-                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "REMARKS")]}</td>
-                        <td>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMITTED BY")]}</td>
-                        <td>${plate_no}</td>
-                        <td>${driver_name}</td>
-                        <td>${status}</td>
+                    <tr style="background-color: ${color};">
+                        <td ${style}>${data_value_counter}</td>
+                        <td ${style}>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")]}</td>
+                        <td ${style}>${date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CREATED AT")])} /<br> ${time_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CREATED AT")])}</td>
+                        <td ${style}>${date_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])} /<br> ${time_decoder(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING TIME")])}</td>
+                        <td ${style}>${findClientName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")])}</td>
+                        <td ${style}>${findWasteCode(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")])}</td>
+                        <td ${style}>${findWasteName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")], (mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")]))}</td>
+                        <td ${style}>${vehicle}</td>
+                        <td ${style}>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")]}</td>
+                        <td ${style}>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "REMARKS")]}</td>
+                        <td ${style}>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMITTED BY")]}</td>
+                        <td ${style}>${plate_no}</td>
+                        <td ${style}>${driver_name}</td>
+                        <td ${style}>${status}</td>
                     </tr>
                     `
                     data_value_counter += 1;
