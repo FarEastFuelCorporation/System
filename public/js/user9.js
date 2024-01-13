@@ -988,7 +988,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 const year = form_tab.querySelector("#year");
                 const cut_off_period = form_tab.querySelector("#cut_off_period");
                 const number_of_days = form_tab.querySelector("#number_of_days");
-                payroll_length = getNumberOfDays(getCutoffPeriodAndMonth(parseInt(cut_off_period.value))[1], year.value, getCutoffPeriodAndMonth(parseInt(cut_off_period.value))[0]);
+                payroll_length = getNumberOfDays(getCutoffPeriodAndMonth(parseInt(cut_off_period.value))[1], year.value, getCutoffPeriodAndMonth(parseInt(cut_off_period.value))[0])+1;
                 day_name = getDayNamesForCutoffPeriod(getCutoffPeriodAndMonth(parseInt(cut_off_period.value))[1], year.value, getCutoffPeriodAndMonth(parseInt(cut_off_period.value))[0]);
                 day_dates = getDatesForCutoffPeriod(getCutoffPeriodAndMonth(parseInt(cut_off_period.value))[1], year.value, getCutoffPeriodAndMonth(parseInt(cut_off_period.value))[0]);
                 number_of_days.value = payroll_length;
@@ -1374,6 +1374,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                     for(let y = 1; y <= payroll_length; y++){
                         net_income += parseFloat(salary_day[y].value)
                     }
+                    console.log(net_income)
+                    net_income -= (parseFloat(day_allowance.value) + parseFloat(daily_rate.value));
+                    console.log(net_income)
+                    console.log(parseFloat(day_allowance.value))
+                    console.log(parseFloat(daily_rate.value))
                     gross_salary.value = net_income.toFixed(2);
                     var additional = 0;
                     additional = parseFloat(adjustment.value) + parseFloat(cash_advance.value)
