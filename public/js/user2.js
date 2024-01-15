@@ -909,19 +909,28 @@ document.addEventListener('DOMContentLoaded', async function() {
         function findWasteName(client_id, waste_id){
             var waste_name = "";
             for(let c = 1; c < qlf_data_list.content.length; c++){
-                if(client_id == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")]&& 
-                    waste_id == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
-                    waste_name = (qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE NAME")]);
+                if(client_id == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")]){
+                    var waste_id_data = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")].substring(0, 8);
+                    if(waste_id == waste_id_data){
+                        waste_name = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE NAME")];
+                        break
+                    }
+                    else if(waste_id == "W2023100"){
+                        waste_name = "ASSORTED NON-HAZARDOUS WASTE"
+                        break
+                    }
+                    else if(waste_id == "W2023200"){
+                        waste_name = "ASSORTED HAZARDOUS WASTE"
+                        break
+                    }
+                    else if(waste_id_data == "W2023000"){
+                        waste_name = "NON HAZARDOUS WASTE"
+                        break
+                    }
+                    else{
+                        waste_name = waste_id_data
+                    }
                     break
-                }
-                else if(waste_id == "W2023100"){
-                    waste_name = "ASSORTED NON-HAZARDOUS WASTE"
-                }
-                else if(waste_id == "W2023200"){
-                    waste_name = "ASSORTED HAZARDOUS WASTE"
-                }
-                else{
-                    waste_name = waste_id
                 }
             }
             return waste_name
