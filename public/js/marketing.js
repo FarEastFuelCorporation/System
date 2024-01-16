@@ -578,7 +578,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             function select(element) {
                 let select_user_data = element;
                 input_box.value = select_user_data;
-                console.log(select_user_data)
                 search_wrapper.classList.remove("active");
                 mtf_data.style.display = "block";
                 
@@ -597,12 +596,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                 remove_item_button_marketing_transaction_form.style.display = "none";
                 for (let y = 1; y < client_data_list.content.length; y++) {
                     
-                    console.log(client_data_list.content[y][findTextInArray(client_data_list, "CLIENT NAME")])
                     if (select_user_data == client_data_list.content[y][findTextInArray(client_data_list, "CLIENT NAME")]) {
                         var client_id = "";
                         client_id = client_data_list.content[y][findTextInArray(client_data_list, "CLIENT ID")];
                         client_id_input.value = client_id;
-                        console.log(client_id)
                         search_client_id.forEach((data) => {
                             data.value = client_id
                         })
