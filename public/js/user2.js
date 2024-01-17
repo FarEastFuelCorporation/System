@@ -910,7 +910,9 @@ document.addEventListener('DOMContentLoaded', async function() {
             var waste_name = "";
             for(let c = 1; c < qlf_data_list.content.length; c++){
                 if(client_id == qlf_data_list.content[c][findTextInArray(qlf_data_list, "CLIENT ID")]){
+                    var waste_id_data_full = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")];
                     var waste_id_data = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")].substring(0, 8);
+                    var waste = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE NAME")];
                     if(waste_id == waste_id_data){
                         waste_name = qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE NAME")];
                         break
@@ -924,7 +926,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                         break
                     }
                     else if(waste_id_data == "W2023000"){
-                        waste_name = "NON HAZARDOUS WASTE"
+                        if(waste_id == waste_id_data_full){
+                            waste_name = waste;
+                        }
                         break
                     }
                     else{
