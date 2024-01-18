@@ -87,6 +87,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const house_collection_ap_accounting = ap_accounting_dashboard.querySelector("#house_collection");
         const representation_fund_ap_accounting = ap_accounting_dashboard.querySelector("#representation_fund");
         const purchase_request_fund_ap_accounting = ap_accounting_dashboard.querySelector("#purchase_request_fund");
+        const pr_payable_ap_accounting = ap_accounting_dashboard.querySelector("#pr_payable");
         const approved_purchased_request_list_container_purchasing = ap_accounting_dashboard.querySelector("#approved_purchased_request_list");
         const history_list_container_purchasing = ap_accounting_dashboard.querySelector("#purchase_request_history");
         const pcv_no_pr_input_purchasing = ap_accounting_dashboard.querySelector("#pcv_no_pr_input");
@@ -104,6 +105,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var house_collection = 0;
         var representation_fund = 0;
         var purchase_request_fund = 0;
+        var pr_payable = 0;
         var deduction_source_of_fund = 0;
         var deduction_moldex_fund = 0;
         var deduction_trucking_fund = 0;
@@ -117,6 +119,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var deduction_house_collection = 0;
         var deduction_representation_fund = 0;
         var deduction_purchase_request_fund = 0;
+        var deduction_pr_payable = 0;
         var additional_source_of_fund = 0;
         var additional_moldex_fund = 0;
         var additional_trucking_fund = 0;
@@ -130,6 +133,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var additional_house_collection = 0;
         var additional_representation_fund = 0;
         var additional_purchase_request_fund = 0;
+        var additional_pr_payable = 0;
 
         function updateAmount(){
             source_of_fund = 0;
@@ -145,6 +149,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             house_collection = 0;
             representation_fund = 0;
             purchase_request_fund = 0;
+            pr_payable = 0;
             for (let i = 1; i < ftf_data_list.content.length; i++) {
                 // fund_source
                 if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "SOURCE OF FUND") {
@@ -186,6 +191,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "PURCHASE REQUEST FUND") {
                     purchase_request_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
                 }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "PR PAYABLE") {
+                    pr_payable -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
                 // fund_allocation
                 if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "SOURCE OF FUND") {
                     source_of_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
@@ -226,6 +234,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "PURCHASE REQUEST FUND") {
                     purchase_request_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
                 }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "PR PAYABLE") {
+                    pr_payable += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
             }
         }
         updateAmount();
@@ -242,6 +253,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         house_collection_ap_accounting.innerText = formatNumber(house_collection);
         representation_fund_ap_accounting.innerText = formatNumber(representation_fund);
         purchase_request_fund_ap_accounting.innerText = formatNumber(purchase_request_fund);
+        pr_payable_ap_accounting.innerText = formatNumber(pr_payable);
 
         const pending_list_container_ap_accounting = ap_accounting_dashboard.querySelector("#pending_list");
         const history_list_container_ap_accounting = document.querySelector("#history_list");
@@ -1438,6 +1450,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             house_collection += deduction_house_collection + additional_house_collection;
             representation_fund += deduction_representation_fund + additional_representation_fund;
             purchase_request_fund += deduction_representation_fund + additional_purchase_request_fund;
+            pr_payable += deduction_representation_fund + additional_pr_payable;
             switch (fundSourceValue) {
                 case "SOURCE OF FUND":
                     fundAmount = source_of_fund - source5;
@@ -1517,6 +1530,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                     source2.style.display = "block";
                     source4.style.display = "none";
                     break;
+                case "PR PAYABLE":
+                    fundAmount = pr_payable - source5;
+                    deduction_pr_payable -= source5;
+                    source2.style.display = "block";
+                    source4.style.display = "none";
+                    break;
                 case "BANK":
                     source2.style.display = "none";
                     source4.style.display = "none";
@@ -1563,8 +1582,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                 case "REPRESENTATION FUND":
                     additional_representation_fund += source5;
                     break;
-                case "PURCHASE REQUEST FUND":
-                    additional_purchase_request_fund += source5;
+                case "PR PAYABLE":
+                    additional_pr_payable += source5;
                     break;
             }
             source3.value = fundAmount.toFixed(2);
@@ -1665,6 +1684,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                     source2.style.display = "block";
                     source4.style.display = "none";
                     break;
+                case "PR PAYABLE":
+                    fundAmount = pr_payable - source5;
+                    deduction_pr_payable -= source5;
+                    source2.style.display = "block";
+                    source4.style.display = "none";
+                    break;
                 case "BANK":
                     source2.style.display = "none";
                     source4.style.display = "none";
@@ -1713,6 +1738,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                     break;
                 case "PURCHASE REQUEST FUND":
                     additional_purchase_request_fund += source5;
+                    break;
+                case "PR PAYABLE":
+                    additional_pr_payable += source5;
                     break;
             }
             source3.value = fundAmount.toFixed(2);

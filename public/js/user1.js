@@ -319,6 +319,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]}</td>
                             <td>${mtf_no}</td>
                             <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "TRUCK SCALE #")]}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "PULL OUT FORM #")]}</td>
                             <td>${hauling_date_info} /<br> ${hauling_time_info}</td>
                             <td>${findClientName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
                             <td>${findWasteCode(wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
@@ -352,6 +353,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]}</td>
                             <td>${mtf_no}</td>
                             <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "TRUCK SCALE #")]}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "PULL OUT FORM #")]}</td>
                             <td>${hauling_date_info} /<br> ${hauling_time_info}</td>
                             <td>${findClientName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
                             <td>${findWasteCode(wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
@@ -387,6 +389,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]}</td>
                             <td>${mtf_no}</td>
                             <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "TRUCK SCALE #")]}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "PULL OUT FORM #")]}</td>
                             <td>${hauling_date_info} /<br> ${hauling_time_info}</td>
                             <td>${findClientName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
                             <td>${findWasteCode(wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
@@ -420,6 +423,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]}</td>
                             <td>${mtf_no}</td>
                             <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "TRUCK SCALE #")]}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "PULL OUT FORM #")]}</td>
                             <td>${hauling_date_info} /<br> ${hauling_time_info}</td>
                             <td>${findClientName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
                             <td>${findWasteCode(wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
