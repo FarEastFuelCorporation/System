@@ -1649,7 +1649,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             }
                         }
                         button = `
-                        <form action="https://script.google.com/macros/s/AKfycbwMASBhz74of-1Xgj0RKR2LVHvrMoUf0GAa9N3avcDQdLqmDhs7Lz9XTuSaicZVYhOZ/exec" method="post">
+                        <form action="https://script.google.com/macros/s/AKfycbwva9_zH6IrPr7w_kKYwZsEun5tMuPz7-q1SdnmY3CIECAZkDgBlIjnXWPiE3X9THP1/exec" method="post">
                             <input type="hidden" name="pr_form_no" id="pr_form_no" value="${pr_no}">
                             <input type="hidden" name="itm_form_no" id="itm_form_no" value="${pr_data}">
                             <input type="hidden" name="timestamp" id="timestamp" value="${new Date()}">
