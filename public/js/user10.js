@@ -161,6 +161,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const house_collection_ap_accounting = ap_accounting_dashboard.querySelector("#house_collection");
         const representation_fund_ap_accounting = ap_accounting_dashboard.querySelector("#representation_fund");
         const purchase_request_fund_ap_accounting = ap_accounting_dashboard.querySelector("#purchase_request_fund");
+        const pr_payable_ap_accounting = ap_accounting_dashboard.querySelector("#pr_payable");
 
         var source_of_fund = 0;
         var moldex_fund = 0;
@@ -175,6 +176,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var house_collection = 0;
         var representation_fund = 0;
         var purchase_request_fund = 0;   
+        var pr_payable = 0;   
         
         function updateAmount(){
             source_of_fund = 0;
@@ -190,6 +192,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             house_collection = 0;
             representation_fund = 0;
             purchase_request_fund = 0;
+            pr_payable = 0;
             for (let i = 1; i < ftf_data_list.content.length; i++) {
                 // fund_source
                 if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "SOURCE OF FUND") {
@@ -231,6 +234,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "PURCHASE REQUEST FUND") {
                     purchase_request_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
                 }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "PR PAYABLE") {
+                    pr_payable -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
                 // fund_allocation
                 if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "SOURCE OF FUND") {
                     source_of_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
@@ -271,6 +277,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "PURCHASE REQUEST FUND") {
                     purchase_request_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
                 }
+                else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "PR PAYABLE") {
+                    pr_payable += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                }
             }
         }
         updateAmount();
@@ -287,6 +296,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         house_collection_ap_accounting.innerText = formatNumber(house_collection);
         representation_fund_ap_accounting.innerText = formatNumber(representation_fund);
         purchase_request_fund_ap_accounting.innerText = formatNumber(purchase_request_fund);
+        pr_payable_ap_accounting.innerText = formatNumber(pr_payable);
 
         // purchasing_dashboard
         const purchasing_dashboard = document.querySelector("#purchasing_dashboard");
@@ -1708,6 +1718,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             const house_collection_ap_accounting = ap_accounting_head_dashboard.querySelector("#house_collection");
             const representation_fund_ap_accounting = ap_accounting_head_dashboard.querySelector("#representation_fund");
             const purchase_request_fund_ap_accounting = ap_accounting_head_dashboard.querySelector("#purchase_request_fund");
+            const pr_payable_ap_accounting = ap_accounting_head_dashboard.querySelector("#pr_payable");
 
             var source_of_fund = 0;
             var moldex_fund = 0;
@@ -1722,8 +1733,9 @@ document.addEventListener('DOMContentLoaded', async function() {
             var house_collection = 0;
             var representation_fund = 0;
             var purchase_request_fund = 0;
+            var pr_payable = 0;
 
-            var type_of_funds = ["SOURCE OF FUND", "MOLDEX FUND", "HAULING FUND", "TRUCKING FUND", "DIESEL FUND", "GASOLINE FUND", "SIR RUEL'S FUND", "SCRAP SALES", "MOLD RUNNER SALES", "TRUCK SCALE COLLECTION", "HOUSE COLLECTION", "REPRESENTATION FUND", "PURCHASE REQUEST FUND"]
+            var type_of_funds = ["SOURCE OF FUND", "MOLDEX FUND", "HAULING FUND", "TRUCKING FUND", "DIESEL FUND", "GASOLINE FUND", "SIR RUEL'S FUND", "SCRAP SALES", "MOLD RUNNER SALES", "TRUCK SCALE COLLECTION", "HOUSE COLLECTION", "REPRESENTATION FUND", "PURCHASE REQUEST FUND", "PR PAYABLE"]
 
             for (let i = 1; i < ftf_data_list.content.length; i++) {
                 // fund_source
@@ -1768,6 +1780,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                         else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "PURCHASE REQUEST FUND") {
                             purchase_request_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
                         }
+                        else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "PR PAYABLE") {
+                            pr_payable += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                        }
                     }
                     // fund_allocation
                     if (!type_of_funds.includes(ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")]) &&
@@ -1810,6 +1825,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                         else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "PURCHASE REQUEST FUND") {
                             purchase_request_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                        }
+                        else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "PR PAYABLE") {
+                            pr_payable -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
                         }
                     }
                 }
@@ -1854,6 +1872,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                         else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "PURCHASE REQUEST FUND") {
                             purchase_request_fund += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
                         }
+                        else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")] == "PR PAYABLE") {
+                            pr_payable += ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                        }
                     }
                     // fund_allocation
                     if (!type_of_funds.includes(ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND SOURCE")]) &&
@@ -1897,6 +1918,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                         else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "PURCHASE REQUEST FUND") {
                             purchase_request_fund -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
                         }
+                        else if (ftf_data_list.content[i][findTextInArray(ftf_data_list, "FUND ALLOCATION")] == "PR PAYABLE") {
+                            pr_payable -= ftf_data_list.content[i][findTextInArray(ftf_data_list, "AMOUNT")]
+                        }
                     }
                 }
             }
@@ -1914,6 +1938,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             house_collection_ap_accounting.innerText = formatNumber(house_collection);
             representation_fund_ap_accounting.innerText = formatNumber(representation_fund);
             purchase_request_fund_ap_accounting.innerText = formatNumber(purchase_request_fund);
+            pr_payable_ap_accounting.innerText = formatNumber(pr_payable);
         }
         
         const ap_accounting_head_dashboard = document.querySelector("#accounting_head_dashboard");

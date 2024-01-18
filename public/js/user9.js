@@ -1375,7 +1375,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         net_income += parseFloat(salary_day[y].value)
                     }
                     console.log(net_income)
-                    net_income -= (parseFloat(day_allowance.value) + parseFloat(daily_rate.value));
+                    // net_income -= (parseFloat(day_allowance.value) + parseFloat(daily_rate.value));
                     console.log(net_income)
                     console.log(parseFloat(day_allowance.value))
                     console.log(parseFloat(daily_rate.value))
