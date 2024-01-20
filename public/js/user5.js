@@ -664,13 +664,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                             if(cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")] == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")]){
                                 client_name = client_data_list.content[c][findTextInArray(client_data_list, "BILLER NAME")];
                                 address = client_data_list.content[c][findTextInArray(client_data_list, "BILLER ADDRESS")];
-                                nature_of_business = client_data_list.content[c][findTextInArray(client_data_list, "NATURE OF BUSINESS")];
                                 client_id_data = client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")];
-                                if(client_id_data == "C2023026"){
-                                    tin_id = "006-807-251-000";
-                                } else if (client_id_data == "C2023018") {
-                                    tin_id = "004-627-848-000";
-                                }
+                                tin_id = client_data_list.content[c][findTextInArray(client_data_list, "BILLER TIN ID")];
+                                nature_of_business = client_data_list.content[c][findTextInArray(client_data_list, "BILLER NATURE OF BUSINESS")];
                                 break
                             }
                         }
@@ -1128,13 +1124,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                             if(cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")] == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")]){
                                 client_name = client_data_list.content[c][findTextInArray(client_data_list, "BILLER NAME")];
                                 address = client_data_list.content[c][findTextInArray(client_data_list, "BILLER ADDRESS")];
-                                nature_of_business = client_data_list.content[c][findTextInArray(client_data_list, "NATURE OF BUSINESS")];
                                 client_id_data = client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")];
-                                if(client_id_data == "C2023026"){
-                                    tin_id = "006-807-251-000";
-                                } else if (client_id_data == "C2023018") {
-                                    tin_id = "004-627-848-000";
-                                }
+                                tin_id = client_data_list.content[c][findTextInArray(client_data_list, "BILLER TIN ID")];
+                                nature_of_business = client_data_list.content[c][findTextInArray(client_data_list, "BILLER NATURE OF BUSINESS")];
                                 break
                             }
                         }
@@ -1490,13 +1482,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                             if(cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")] == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")]){
                                 client_name = client_data_list.content[c][findTextInArray(client_data_list, "BILLER NAME")];
                                 address = client_data_list.content[c][findTextInArray(client_data_list, "BILLER ADDRESS")];
-                                nature_of_business = client_data_list.content[c][findTextInArray(client_data_list, "NATURE OF BUSINESS")];
                                 client_id_data = client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")];
-                                if(client_id_data == "C2023026"){
-                                    tin_id = "006-807-251-000";
-                                } else if (client_id_data == "C2023018") {
-                                    tin_id = "004-627-848-000";
-                                }
+                                tin_id = client_data_list.content[c][findTextInArray(client_data_list, "BILLER TIN ID")];
+                                nature_of_business = client_data_list.content[c][findTextInArray(client_data_list, "BILLER NATURE OF BUSINESS")];
                                 break
                             }
                         }
