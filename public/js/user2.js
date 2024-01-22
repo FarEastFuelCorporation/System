@@ -864,6 +864,25 @@ document.addEventListener('DOMContentLoaded', async function() {
             item_counter.value = item_counter_int - 1;
         }
 
+        const type_of_waste_list = document.getElementById("type_of_waste_list");
+        var type_of_waste__list_data_value = "";
+        var type_of_waste__list_data_value_counter = 1;
+        for(let x = 1; x < type_of_waste_data_list.content.length; x++){
+            type_of_waste__list_data_value += `
+            <tr>
+                <td>${type_of_waste__list_data_value_counter}</td>
+                <td>${type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "WASTE ID")]}</td>
+                <td>${type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "WASTE CODE")]}</td>
+                <td>${type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "WASTE NAME")]}</td>
+                <td>${type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "TREATMENT PROCESS")]}</td>
+                <td>${type_of_waste_data_list.content[x][findTextInArray(type_of_waste_data_list, "CATEGORY")]}</td>
+            </tr>
+            `
+            type_of_waste__list_data_value_counter += 1;
+        }
+        type_of_waste_list.innerHTML = type_of_waste__list_data_value
+
+
         function findEmployeeName(employee_id){
             var employee_name = "";
             for(let c = 1; c < employee_data_list.content.length; c++){
