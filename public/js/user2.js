@@ -212,6 +212,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${mtf}</td>
                             <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "HAULING DATE")])}</td>
                             <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "PULL OUT FORM #")]}</td>
                             <td>${findClientName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
                             <td>${findWasteCode(wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
                             <td>${findWasteName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")], wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
@@ -242,6 +243,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${mtf}</td>
                             <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "HAULING DATE")])}</td>
                             <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "PULL OUT FORM #")]}</td>
                             <td>${findClientName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
                             <td>${findWasteCode(wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
                             <td>${findWasteName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")], wcf_data_list.content[j][findTextInArray(wcf_data_list, "WASTE ID")])}</td>
