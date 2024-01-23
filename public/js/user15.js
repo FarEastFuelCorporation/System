@@ -1343,7 +1343,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <label for="transaction_date${data_counter_ap_accounting.value}">
                                 Transaction Date
                             </label><br>
-                            <input type="date" id="transaction_date${data_counter_ap_accounting.value}" name="transaction_date${data_counter_ap_accounting.value}" class="form-control"  autocomplete="off" placeholder="Input Fund Amount" required> 
+                            <input type="date" id="transaction_date${data_counter_ap_accounting.value}" name="transaction_date${data_counter_ap_accounting.value}" class="form-control"  autocomplete="off" required> 
                         </div>
                     </div>
                     <div style="width: 30%;">

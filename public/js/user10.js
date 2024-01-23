@@ -1624,9 +1624,11 @@ document.addEventListener('DOMContentLoaded', async function() {
             const purchase_request_list_ap_accounting_head = ap_accounting_head_dashboard.querySelector("#purchase_request_list");
             const fund_source_pr_ap_accounting_head = ap_accounting_head_dashboard.querySelector("#fund_source_pr");
             const pr_counter_ap_accounting_head = ap_accounting_head_dashboard.querySelector("#pr_counter");
+            const pr_amount_ap_accounting_head = ap_accounting_head_dashboard.querySelector("#pr_amount");
 
             // purchase_request
             var requested_data_value = "";
+            var pr_amount_value = 0;
             var requested_data_value_counter = 1;
             for(let x = 1; x < prf_data_list.content.length; x++){  
                 for(let y = 0; y < requested.length; y++){
@@ -1690,7 +1692,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${button2}</td>
                         </tr>
                         `
+                        pr_amount_value += amount;
                         pr_counter_ap_accounting_head.innerHTML = `(${requested_data_value_counter})`
+                        pr_amount_ap_accounting_head.innerHTML = `(${formatNumber(pr_amount_value)})`
                         requested_data_value_counter += 1;
                     }
                 }
