@@ -521,7 +521,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             vehicles.push(vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "PLATE #")]);
         }
-        console.log(vehicles)
         // bpf_data_list
         // FORM GENERATOR
         const bpf_form_no = document.getElementById("bpf_form_no");
@@ -760,13 +759,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                             }                            si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                             si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                             si_date_container.innerText = date_of_certification;
-                            console.log(plate_no)
                             if(cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")] == "CARDBOARDS"){
                                 if(!vehicles.includes(plate_no)){
                                     is_transportation = false
                                 }
                             }
-                            console.log(is_transportation)
                             if(max_capacity == 0){
                                 if(mode != "FREE OF CHARGE"){
                                     var si_unit_price = 0;
