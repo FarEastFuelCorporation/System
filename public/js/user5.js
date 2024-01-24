@@ -736,6 +736,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 waste_name = cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")];
                             }
                         }
+                        console.log(mode)
                         var data = "";
                         var data3 = "";
                         if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]){

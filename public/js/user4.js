@@ -101,6 +101,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         let sf_transaction_certification_client = {};
         let sf_transaction_certification_client_id = {};
         let sf_tpf_transaction_certification_date = {};
+        let sf_tpf_transaction_certification_time = {};
         let sf_tpf_transaction_certification_client = {};
         let tpf_certification = [];
         let pending_certification = [];
@@ -125,6 +126,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             sf_transaction_certification_client = {};
             sf_transaction_certification_client_id = {};
             sf_tpf_transaction_certification_date = {};
+            sf_tpf_transaction_certification_time = {};
             sf_tpf_transaction_certification_client = {};
             tpf_certification = [];
             pending_certification = [];
@@ -456,6 +458,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             for (let i = 1; i < cod_data_list.content.length; i++) {
                 const tpfNumber = cod_data_list.content[i][findTextInArray(cod_data_list, "TPF #")];
                 const haulingDate = new Date(cod_data_list.content[i][findTextInArray(cod_data_list, "HAULING DATE")]);
+                const finishDate = new Date(cod_data_list.content[i][findTextInArray(cod_data_list, "ACTUAL COMPLETION DATE")]);
+                const finishTime = new Date(cod_data_list.content[i][findTextInArray(cod_data_list, "ACTUAL COMPLETION TIME")]);
                 const client_id = cod_data_list.content[i][findTextInArray(cod_data_list, "CLIENT ID")];
 
                 if (month_filter.value === formatMonth(haulingDate)) {
@@ -469,7 +473,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                         // If it doesn't exist, create a new entry with the weight
                         sf_tpf_transaction_certification[tpfNumber] = weight;
                     }
-                    sf_tpf_transaction_certification_date[tpfNumber] = haulingDate;
+                    sf_tpf_transaction_certification_date[tpfNumber] = finishDate;
+                    sf_tpf_transaction_certification_time[tpfNumber] = finishTime;
                     sf_tpf_transaction_certification_client[tpfNumber] = findClientName(client_id);
                 }
                 else if (month_filter.value === "ALL") {
@@ -483,7 +488,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                         // If it doesn't exist, create a new entry with the weight
                         sf_tpf_transaction_certification[tpfNumber] = weight;
                     }
-                    sf_tpf_transaction_certification_date[tpfNumber] = haulingDate;
+                    sf_tpf_transaction_certification_date[tpfNumber] = finishDate;
+                    sf_tpf_transaction_certification_time[tpfNumber] = finishTime;
                     sf_tpf_transaction_certification_client[tpfNumber] = findClientName(client_id);
                 }
                 if(month_filter.value == formatMonth(cod_data_list.content[i][findTextInArray(cod_data_list, "HAULING DATE")]) &&
@@ -500,7 +506,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 // Check if the key exists in sf_tpf_transaction_certification
                 if (sf_tpf_transaction_certification[key]) {
                     // If it exists in sf_tpf_transaction_certification, add both "tpf #" and weight to finish_certification
-                    finish_certification.push({ tpfNumber: key, weight: sf_tpf_transaction_certification[key], date: sf_tpf_transaction_certification_date[key], client: sf_tpf_transaction_certification_client[key]});
+                    finish_certification.push({ tpfNumber: key, weight: sf_tpf_transaction_certification[key], date: sf_tpf_transaction_certification_date[key], time: sf_tpf_transaction_certification_time[key], client: sf_tpf_transaction_certification_client[key]});
                 } else {
                     // If it doesn't exist in sf_tpf_transaction_certification, add both "tpf #" and weight to pending_certification
                     pending_certification.push({ tpfNumber: key, weight: sf_transaction_certification[key], date: sf_transaction_certification_date[key], client: sf_transaction_certification_client[key], client_id: sf_transaction_certification_client_id[key]});
@@ -508,7 +514,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             pending_certification.sort((a, b) => a.date - b.date);
             pending_certification.sort((a, b) => a.client - b.client);
-            finish_certification.sort((a, b) => a.date - b.date);
+            finish_certification.sort((a, b) => b.time - a.time);
+            finish_certification.sort((a, b) => b.date - a.date);
             treated_counter_certification.innerText = pending_list_tpf.length;
             pending_counter_certification.innerText = pending_list_tpf.length - done_list_cod.length;
             certified_counter_certification.innerText = done_list_cod.length;
