@@ -514,12 +514,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
 
         var vehicle_list = [];
+        var vehicles = [];
         for(let y = 1; y < vehicle_data_list.content.length; y++){
             if (!vehicle_list.includes(vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")])) {
                 vehicle_list.push(vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")]);
             }
+            vehicles.push(vehicle_data_list.content[y][findTextInArray(vehicle_data_list, "PLATE #")]);
         }
-
+        console.log(vehicles)
         // bpf_data_list
         // FORM GENERATOR
         const bpf_form_no = document.getElementById("bpf_form_no");
@@ -643,6 +645,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     const hauling_date = billing_process_form.querySelector(`#hauling_date${s}`);
                     const total_vat_in = billing_process_form.querySelector(`#total_vat_in${s}`);
                     const total_vat_ex = billing_process_form.querySelector(`#total_vat_ex${s}`);
+                    var is_transportation = true;
                     for(let x = 1; x < cod_data_list.content.length; x++){
                         if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]){
                             client = cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")]
@@ -658,6 +661,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         var nature_of_business = "";
                         var client_id_data = "";
                         var tin_id = "";
+                        var plate_no = "";
                         waste_id = cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE ID")]
                         date_of_certification = date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]);
                         for(let c = 1; c < client_data_list.content.length; c++){
@@ -673,6 +677,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         for(let a = 1; a < wcf_data_list.content.length; a++){
                             if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")] &&
                                 cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")]){
+                                plate_no = wcf_data_list.content[a][findTextInArray(wcf_data_list, "PLATE #")]
                                 if((wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).substring(0,3) == "MTF"){
                                     for(let b = 1; b < mtf_data_list.content.length; b++){
                                         if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "MTF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
@@ -755,6 +760,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                             }                            si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                             si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                             si_date_container.innerText = date_of_certification;
+                            console.log(plate_no)
+                            if(cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")] == "CARDBOARDS"){
+                                if(!vehicles.includes(plate_no)){
+                                    is_transportation = false
+                                }
+                            }
+                            console.log(is_transportation)
                             if(max_capacity == 0){
                                 if(mode != "FREE OF CHARGE"){
                                     var si_unit_price = 0;
@@ -874,165 +886,169 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     var data2 = "";
                     var data4 = "";
-                    if(max_capacity == 0){
-                        for(let y = 0; y < wcf_transaction.length; y++){
-                            if(search_cod_form_no.value == cod_transaction[y]){
-                                for(let x = 1; x < cod_data_list.content.length; x++){
-                                    if(wcf_transaction[y] == cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")]){
-                                        date_of_certification_transportation = date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]);
-                                        break
+                    if(is_transportation == true){
+                        if(max_capacity == 0){
+                            for(let y = 0; y < wcf_transaction.length; y++){
+                                if(search_cod_form_no.value == cod_transaction[y]){
+                                    for(let x = 1; x < cod_data_list.content.length; x++){
+                                        if(wcf_transaction[y] == cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")]){
+                                            date_of_certification_transportation = date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]);
+                                            break
+                                        }
                                     }
+                                    data2 = `
+                                    <tr>
+                                        <td>${date_of_certification_transportation}</td>
+                                        <td></td>
+                                        <td>${service_invoice_no.value}</td>
+                                        <td style="font-size: 10px !important; padding-top: 2px">TRANS. FEE ${transportation_vehicle}</td>
+                                        <td style="text-align: right; padding-right: 5px">${1}</td>
+                                        <td>${transportation_unit}</td>
+                                        <td style="text-align: right; padding-right: 5px">${formatNumber(transportation_fee)}</td>
+                                        <td style="text-align: right; padding-right: 5px">${formatNumber(transportation_fee)}</td>
+                                        <td style="font-size: 10px !important">${transportation_calculation}</td>
+                                    </tr>
+                                    `
+                                    table_data_transportation.push(data2);
+                                    var si_unit_price = 0;
+                                    var si_amount = 0;
+                                    if(transportation_calculation == "VAT EXCLUSIVE"){
+                                        vatable += parseFloat(transportation_fee);
+                                        individual_vatable += parseFloat(transportation_fee);
+                                        si_unit_price = parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12);
+                                        si_amount = (1 * (parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12)));
+                                        si_total_amount += (1 * (parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12)));
+                                    }
+                                    else{
+                                        non_vatable += parseFloat(transportation_fee);
+                                        individual_vatable += parseFloat(transportation_fee);
+                                        si_unit_price = parseFloat(transportation_fee);
+                                        si_amount = (1 * (parseFloat(transportation_fee)));
+                                        si_total_amount += (1 * (parseFloat(transportation_fee)));
+                                    }
+                                    data4 = `
+                                    <tr>
+                                        <td>${data4_counter}</td>
+                                        <td class="amount">${1}</td>
+                                        <td>${transportation_unit}</td>
+                                        <td>${date_of_certification_transportation}</td>
+                                        <td style="font-size: 10px !important; padding-top: 5px !important;">TRANS. FEE ${transportation_vehicle}</td>
+                                        <td class="amount">${formatNumber(si_unit_price)}</td>
+                                        <td class="amount">${formatNumber(si_amount)}</td>
+                                    </tr>
+                                    `
+                                    data4_counter += 2;
+                                    table_counter += 1;
+                                    si_table_data_transportation.push(data4);
+                                    break
                                 }
+        
+                            }
+                        }
+                        else{
+                            if(max_capacity < capacity){
                                 data2 = `
                                 <tr>
-                                    <td>${date_of_certification_transportation}</td>
+                                    <td>${s}</td>
                                     <td></td>
-                                    <td>${service_invoice_no.value}</td>
-                                    <td style="font-size: 10px !important; padding-top: 2px">TRANS. FEE ${transportation_vehicle}</td>
-                                    <td style="text-align: right; padding-right: 5px">${1}</td>
-                                    <td>${transportation_unit}</td>
+                                    <td></td>
+                                    <td style="font-size: 10px !important; padding-top: 2px">TOTAL:</td>
+                                    <td style="text-align: right; padding-right: 5px">${formatNumber(capacity)}</td>
+                                    <td>${unit}</td>
+                                    <td style="text-align: right; padding-right: 5px"></td>
+                                    <td style="text-align: right; padding-right: 5px"></td>
+                                    <td style="font-size: 10px !important"></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="font-size: 10px !important; padding-top: 2px">FIRST ${formatNumber2(max_capacity)} ${unit}:</td>
+                                    <td style="text-align: right; padding-right: 5px">${formatNumber(max_capacity)}</td>
+                                    <td>${unit}</td>
+                                    <td style="text-align: right; padding-right: 5px"></td>
                                     <td style="text-align: right; padding-right: 5px">${formatNumber(transportation_fee)}</td>
+                                    <td style="font-size: 10px !important">${transportation_calculation}</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="font-size: 10px !important; padding-top: 2px">EXCESS QUANTITY:</td>
+                                    <td style="text-align: right; padding-right: 5px">${formatNumber(capacity - max_capacity)}</td>
+                                    <td>${unit}</td>
+                                    <td style="text-align: right; padding-right: 5px">${formatNumber(unit_price)}</td>
+                                    <td style="text-align: right; padding-right: 5px">${formatNumber((capacity - max_capacity) * unit_price)}</td>
+                                    <td style="font-size: 10px !important">${vat_calculation}</td>
+                                </tr>
+                                `
+                                if(vat_calculation == "VAT EXCLUSIVE"){
+                                    vatable += (parseFloat(capacity - max_capacity) * parseFloat(unit_price)) + parseFloat(transportation_fee);
+                                    individual_vatable += (parseFloat(capacity - max_capacity) * parseFloat(unit_price)) + parseFloat(transportation_fee);
+                                    individual_vatable += (parseFloat(capacity - max_capacity) * parseFloat(unit_price)) + parseFloat(transportation_fee);
+                                    si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
+                                    si_amount = (parseFloat(capacity - max_capacity) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12))) + (parseFloat(transportation_fee)*1.12);
+                                    si_total_amount += (parseFloat(capacity - max_capacity) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12))) + (parseFloat(transportation_fee)*1.12);
+                                }
+                                else{
+                                    non_vatable +=(parseFloat(capacity - max_capacity) * parseFloat(unit_price)) + parseFloat(transportation_fee);
+                                    individual_non_vatable +=(parseFloat(capacity - max_capacity) * parseFloat(unit_price)) + parseFloat(transportation_fee);
+                                    individual_non_vatable +=(parseFloat(capacity - max_capacity) * parseFloat(unit_price)) + parseFloat(transportation_fee);
+                                    si_unit_price = parseFloat(unit_price);
+                                    si_amount = (parseFloat(capacity - max_capacity) * parseFloat(unit_price)) + parseFloat(transportation_fee);
+                                    si_total_amount += (parseFloat(capacity - max_capacity) * (parseFloat(unit_price))) + (parseFloat(transportation_fee));
+                                }  
+                            }
+                            else{
+                                data2 = `
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="font-size: 10px !important; padding-top: 2px">TOTAL:</td>
+                                    <td style="text-align: right; padding-right: 5px">${formatNumber(capacity)}</td>
+                                    <td>${unit}</td>
+                                    <td style="text-align: right; padding-right: 5px"></td>
+                                    <td style="text-align: right; padding-right: 5px"></td>
+                                    <td style="font-size: 10px !important"></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="font-size: 10px !important; padding-top: 2px">FIRST ${formatNumber2(max_capacity)} ${unit}:</td>
+                                    <td style="text-align: right; padding-right: 5px">${formatNumber(max_capacity)}</td>
+                                    <td>${unit}</td>
+                                    <td style="text-align: right; padding-right: 5px"></td>
                                     <td style="text-align: right; padding-right: 5px">${formatNumber(transportation_fee)}</td>
                                     <td style="font-size: 10px !important">${transportation_calculation}</td>
                                 </tr>
                                 `
-                                table_data_transportation.push(data2);
-                                var si_unit_price = 0;
-                                var si_amount = 0;
-                                if(transportation_calculation == "VAT EXCLUSIVE"){
+                                if(vat_calculation == "VAT EXCLUSIVE"){
                                     vatable += parseFloat(transportation_fee);
                                     individual_vatable += parseFloat(transportation_fee);
-                                    si_unit_price = parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12);
-                                    si_amount = (1 * (parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12)));
-                                    si_total_amount += (1 * (parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12)));
+                                    si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
+                                    si_amount = (parseFloat(transportation_fee)*1.12);
+                                    si_total_amount += (parseFloat(capacity - max_capacity) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12))) + (parseFloat(transportation_fee)*1.12);
                                 }
                                 else{
                                     non_vatable += parseFloat(transportation_fee);
-                                    individual_vatable += parseFloat(transportation_fee);
-                                    si_unit_price = parseFloat(transportation_fee);
-                                    si_amount = (1 * (parseFloat(transportation_fee)));
-                                    si_total_amount += (1 * (parseFloat(transportation_fee)));
-                                }
-                                data4 = `
-                                <tr>
-                                    <td>${data4_counter}</td>
-                                    <td class="amount">${1}</td>
-                                    <td>${transportation_unit}</td>
-                                    <td>${date_of_certification_transportation}</td>
-                                    <td style="font-size: 10px !important; padding-top: 5px !important;">TRANS. FEE ${transportation_vehicle}</td>
-                                    <td class="amount">${formatNumber(si_unit_price)}</td>
-                                    <td class="amount">${formatNumber(si_amount)}</td>
-                                </tr>
-                                `
-                                data4_counter += 2;
-                                table_counter += 1;
-                                si_table_data_transportation.push(data4);
-                                break
+                                    individual_non_vatable += parseFloat(transportation_fee);
+                                    si_unit_price = parseFloat(unit_price);
+                                    si_amount = parseFloat(transportation_fee);
+                                    si_total_amount += parseFloat(transportation_fee);
+                                }  
                             }
-    
+                            table_data_transportation.push(data2);
+        
                         }
-                    }
-                    else{
-                        if(max_capacity < capacity){
-                            data2 = `
-                            <tr>
-                                <td>${s}</td>
-                                <td></td>
-                                <td></td>
-                                <td style="font-size: 10px !important; padding-top: 2px">TOTAL:</td>
-                                <td style="text-align: right; padding-right: 5px">${formatNumber(capacity)}</td>
-                                <td>${unit}</td>
-                                <td style="text-align: right; padding-right: 5px"></td>
-                                <td style="text-align: right; padding-right: 5px"></td>
-                                <td style="font-size: 10px !important"></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td style="font-size: 10px !important; padding-top: 2px">FIRST ${formatNumber2(max_capacity)} ${unit}:</td>
-                                <td style="text-align: right; padding-right: 5px">${formatNumber(max_capacity)}</td>
-                                <td>${unit}</td>
-                                <td style="text-align: right; padding-right: 5px"></td>
-                                <td style="text-align: right; padding-right: 5px">${formatNumber(transportation_fee)}</td>
-                                <td style="font-size: 10px !important">${transportation_calculation}</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td style="font-size: 10px !important; padding-top: 2px">EXCESS QUANTITY:</td>
-                                <td style="text-align: right; padding-right: 5px">${formatNumber(capacity - max_capacity)}</td>
-                                <td>${unit}</td>
-                                <td style="text-align: right; padding-right: 5px">${formatNumber(unit_price)}</td>
-                                <td style="text-align: right; padding-right: 5px">${formatNumber((capacity - max_capacity) * unit_price)}</td>
-                                <td style="font-size: 10px !important">${vat_calculation}</td>
-                            </tr>
-                            `
-                            if(vat_calculation == "VAT EXCLUSIVE"){
-                                vatable += (parseFloat(capacity - max_capacity) * parseFloat(unit_price)) + parseFloat(transportation_fee);
-                                individual_vatable += (parseFloat(capacity - max_capacity) * parseFloat(unit_price)) + parseFloat(transportation_fee);
-                                individual_vatable += (parseFloat(capacity - max_capacity) * parseFloat(unit_price)) + parseFloat(transportation_fee);
-                                si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
-                                si_amount = (parseFloat(capacity - max_capacity) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12))) + (parseFloat(transportation_fee)*1.12);
-                                si_total_amount += (parseFloat(capacity - max_capacity) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12))) + (parseFloat(transportation_fee)*1.12);
-                            }
-                            else{
-                                non_vatable +=(parseFloat(capacity - max_capacity) * parseFloat(unit_price)) + parseFloat(transportation_fee);
-                                individual_non_vatable +=(parseFloat(capacity - max_capacity) * parseFloat(unit_price)) + parseFloat(transportation_fee);
-                                individual_non_vatable +=(parseFloat(capacity - max_capacity) * parseFloat(unit_price)) + parseFloat(transportation_fee);
-                                si_unit_price = parseFloat(unit_price);
-                                si_amount = (parseFloat(capacity - max_capacity) * parseFloat(unit_price)) + parseFloat(transportation_fee);
-                                si_total_amount += (parseFloat(capacity - max_capacity) * (parseFloat(unit_price))) + (parseFloat(transportation_fee));
-                            }  
-                        }
-                        else{
-                            data2 = `
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td style="font-size: 10px !important; padding-top: 2px">TOTAL:</td>
-                                <td style="text-align: right; padding-right: 5px">${formatNumber(capacity)}</td>
-                                <td>${unit}</td>
-                                <td style="text-align: right; padding-right: 5px"></td>
-                                <td style="text-align: right; padding-right: 5px"></td>
-                                <td style="font-size: 10px !important"></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td style="font-size: 10px !important; padding-top: 2px">FIRST ${formatNumber2(max_capacity)} ${unit}:</td>
-                                <td style="text-align: right; padding-right: 5px">${formatNumber(max_capacity)}</td>
-                                <td>${unit}</td>
-                                <td style="text-align: right; padding-right: 5px"></td>
-                                <td style="text-align: right; padding-right: 5px">${formatNumber(transportation_fee)}</td>
-                                <td style="font-size: 10px !important">${transportation_calculation}</td>
-                            </tr>
-                            `
-                            if(vat_calculation == "VAT EXCLUSIVE"){
-                                vatable += parseFloat(transportation_fee);
-                                individual_vatable += parseFloat(transportation_fee);
-                                si_unit_price = parseFloat(unit_price) + (parseFloat(unit_price)*.12);
-                                si_amount = (parseFloat(transportation_fee)*1.12);
-                                si_total_amount += (parseFloat(capacity - max_capacity) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12))) + (parseFloat(transportation_fee)*1.12);
-                            }
-                            else{
-                                non_vatable += parseFloat(transportation_fee);
-                                individual_non_vatable += parseFloat(transportation_fee);
-                                si_unit_price = parseFloat(unit_price);
-                                si_amount = parseFloat(transportation_fee);
-                                si_total_amount += parseFloat(transportation_fee);
-                            }  
-                        }
-                        table_data_transportation.push(data2);
-    
                     }
                     for(let x = 0; x < table_data_info.length; x++){
                         table_data.insertAdjacentHTML("beforeend", table_data_info[x])
                     }
-                    table_data.insertAdjacentHTML("beforeend", table_data_transportation[s - 1])
+                    if(is_transportation == true){
+                        table_data.insertAdjacentHTML("beforeend", table_data_transportation[s - 1])
+                    }
                     var space = 
                     `
                     <tr>
