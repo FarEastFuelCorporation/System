@@ -649,7 +649,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                             wcf_form_no.value = cod_data_list.content[x][findTextInArray(cod_data_list, "WCF #")]
                             client_id.value = cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")]
                             hauling_date.value = date_decoder(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")])
-                            waste_id = cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE ID")]
                             break
                         }
                     }
@@ -659,6 +658,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         var nature_of_business = "";
                         var client_id_data = "";
                         var tin_id = "";
+                        waste_id = cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE ID")]
                         date_of_certification = date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]);
                         for(let c = 1; c < client_data_list.content.length; c++){
                             if(cod_data_list.content[x][findTextInArray(cod_data_list, "CLIENT ID")] == client_data_list.content[c][findTextInArray(client_data_list, "CLIENT ID")]){
@@ -736,7 +736,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 waste_name = cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")];
                             }
                         }
-                        console.log(mode)
                         var data = "";
                         var data3 = "";
                         if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]){
