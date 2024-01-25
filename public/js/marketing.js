@@ -191,10 +191,12 @@ document.addEventListener('DOMContentLoaded', async function() {
             for(let j = mtf_data_list.content.length - 1; j >= 1; j--){
                 var status = "";
                 var vehicle = "";
+                var pull_out_slip = "TO FOLLOW";
                 // for logistics
                 if(mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")] == "LOGISTICS" &&
                 month_filter.value == formatMonth(mtf_data_list.content[j][findTextInArray(mtf_data_list, "HAULING DATE")])){
                     vehicle = mtf_data_list.content[j][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")];
+                    pull_out_slip = mtf_data_list.content[j][findTextInArray(mtf_data_list, "PULL OUT FORM #")];
                     status = mtf_data_list.content[j][findTextInArray(mtf_data_list, "STATUS")];
                     if(status == "FOR HAULING"){
                         for_hauling_marketing += 1;
@@ -338,11 +340,22 @@ document.addEventListener('DOMContentLoaded', async function() {
                     var mtf_no = mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")];
                     var mtf_wcf_no = wcf_data_list.content[x][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
                     if(mtf_no == mtf_wcf_no){
+                        pull_out_slip = wcf_data_list.content[x][findTextInArray(wcf_data_list, "PULL OUT FORM #")];
                         plate_no = wcf_data_list.content[x][findTextInArray(wcf_data_list, "PLATE #")];
                         driver_name = findEmployeeName(wcf_data_list.content[x][findTextInArray(wcf_data_list, "DRIVER ID")]);
                         break
                     }
                     else{
+                        for(let y = 1; y < ltf_data_list.content.length; y++){
+                            var mtf_no = mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")];
+                            var mtf_ltf_no = ltf_data_list.content[y][findTextInArray(ltf_data_list, "MTF #")];
+                            if(mtf_no == mtf_ltf_no){
+                                if(mtf_wcf_no == mtf_ltf_no){
+                                    pull_out_slip = wcf_data_list.content[x][findTextInArray(wcf_data_list, "PULL OUT FORM #")];
+                                    break
+                                }
+                            }
+                        }
                         plate_no = "PENDING";
                         driver_name = "PENDING";
                     }
@@ -407,6 +420,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td ${style}>${findWasteCode(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")])}</td>
                         <td ${style}>${findWasteName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")], (mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")]))}</td>
                         <td ${style}>${vehicle}</td>
+                        <td ${style}>${pull_out_slip}</td>
                         <td ${style}>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")]}</td>
                         <td ${style}>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "REMARKS")]}</td>
                         <td ${style}>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMITTED BY")]}</td>
@@ -430,6 +444,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td ${style}>${findWasteCode(mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")])}</td>
                         <td ${style}>${findWasteName(mtf_data_list.content[j][findTextInArray(mtf_data_list, "CLIENT ID")], (mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")]))}</td>
                         <td ${style}>${vehicle}</td>
+                        <td ${style}>${pull_out_slip}</td>
                         <td ${style}>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMIT TO")]}</td>
                         <td ${style}>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "REMARKS")]}</td>
                         <td ${style}>${mtf_data_list.content[j][findTextInArray(mtf_data_list, "SUBMITTED BY")]}</td>

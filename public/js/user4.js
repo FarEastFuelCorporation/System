@@ -576,8 +576,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 }
                                 var mtf = "";
                                 var ltf = "";
+                                var pull_out_slip = "";
                                 for(let k = 1; k < wcf_data_list.content.length; k++){
                                     if(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                                        pull_out_slip = wcf_data_list.content[k][findTextInArray(wcf_data_list, "PULL OUT FORM #")];
                                         if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
                                             mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
                                         }else{
@@ -596,6 +598,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <td>${data_value_counter}</td>
                                     <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")]}</td>
                                     <td>${mtf}</td>
+                                    <td>${pull_out_slip}</td>
                                     <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "HAULING DATE")])}
                                     <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")])} /<br> ${time_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION TIME")])}</td>
                                     <td>${findClientName(tpf_data_list.content[j][findTextInArray(tpf_data_list, "CLIENT ID")])}</td>
@@ -626,8 +629,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 }
                                 var mtf = "";
                                 var ltf = "";
+                                var pull_out_slip = "";
                                 for(let k = 1; k < wcf_data_list.content.length; k++){
                                     if(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                                        pull_out_slip = wcf_data_list.content[k][findTextInArray(wcf_data_list, "PULL OUT FORM #")];
                                         if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
                                             mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
                                         }else{
@@ -646,6 +651,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <td>${data_value_counter}</td>
                                     <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")]}</td>
                                     <td>${mtf}</td>
+                                    <td>${pull_out_slip}</td>
                                     <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "HAULING DATE")])}
                                     <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")])} /<br> ${time_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION TIME")])}</td>
                                     <td>${findClientName(tpf_data_list.content[j][findTextInArray(tpf_data_list, "CLIENT ID")])}</td>
@@ -740,8 +746,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                         var mtf = "";
                         var ltf = "";
+                        var pull_out_slip = "";
                         for(let k = 1; k < wcf_data_list.content.length; k++){
                             if(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                                pull_out_slip = wcf_data_list.content[k][findTextInArray(wcf_data_list, "PULL OUT FORM #")];
                                 if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
                                     mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
                                 }else{
@@ -760,6 +768,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${data_value_counter}</td>
                             <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")]}</td>
                             <td>${mtf}</td>
+                            <td>${pull_out_slip}</td>
                             <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "HAULING DATE")])}
                             <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")])} /<br> ${time_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION TIME")])}</td>
                             <td>${findClientName(tpf_data_list.content[j][findTextInArray(tpf_data_list, "CLIENT ID")])}</td>
@@ -789,8 +798,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                         var mtf = "";
                         var ltf = "";
+                        var pull_out_slip = "";
                         for(let k = 1; k < wcf_data_list.content.length; k++){
                             if(tpf_data_list.content[j][findTextInArray(tpf_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                                pull_out_slip = wcf_data_list.content[k][findTextInArray(wcf_data_list, "PULL OUT FORM #")];
                                 if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
                                     mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
                                 }else{
@@ -809,6 +820,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${data_value_counter}</td>
                             <td>${tpf_data_list.content[j][findTextInArray(tpf_data_list, "TPF #")]}</td>
                             <td>${mtf}</td>
+                            <td>${pull_out_slip}</td>
                             <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "HAULING DATE")])}
                             <td>${date_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION DATE")])} /<br> ${time_decoder(tpf_data_list.content[j][findTextInArray(tpf_data_list, "ACTUAL COMPLETION TIME")])}</td>
                             <td>${findClientName(tpf_data_list.content[j][findTextInArray(tpf_data_list, "CLIENT ID")])}</td>
