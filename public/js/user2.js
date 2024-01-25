@@ -949,13 +949,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                     else if(waste_id_data == "W2023000"){
                         if(waste_id == waste_id_data_full){
                             waste_name = waste;
+                            break
                         }
-                        break
                     }
                     else{
                         waste_name = waste_id_data
                     }
-                    break
                 }
             }
             return waste_name
