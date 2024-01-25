@@ -665,7 +665,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                             break
                         }
                     }
-                    console.log(wasteIDArray)
                     wasteIDArray.forEach((wasteId) => {
                         for(let x = 1; x < cod_data_list.content.length; x++){
                             if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]){

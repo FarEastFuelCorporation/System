@@ -4459,6 +4459,7 @@ input:disabled {
     text-align: center;
   }
   .sidebar ul li a h6 {
+    display: none;
     color: black !important;
   }
   .sidebar ul .hover a h6 {

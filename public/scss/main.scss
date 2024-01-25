@@ -4995,6 +4995,7 @@ input:disabled {
     
     .sidebar ul li a h6
     {
+        display: none;
         color: black !important;
     }
     // hover
@@ -5070,4 +5071,5 @@ input:disabled {
     #employee_dashboard .icon-box{
         display: none !important;
     }
+    
 }
