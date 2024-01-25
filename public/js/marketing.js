@@ -122,7 +122,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         const for_treatment_container_marketing = document.getElementById("for_treatment");
         const for_certification_container_marketing = document.getElementById("for_certification");
         const for_billing_container_marketing = document.getElementById("for_billing");
+        const for_billing_distribution_container_marketing = document.getElementById("for_billing_distribution");
         const for_collection_container_marketing = document.getElementById("for_collection");
+        const generated_income_container_marketing = document.getElementById("generated_income");
         const finished_marketing = document.getElementById("finished");
         const pending_list_marketing = document.getElementById("pending_list");
         const month_filter = document.getElementById("month_filter");
@@ -159,17 +161,18 @@ document.addEventListener('DOMContentLoaded', async function() {
             generateCalendarDays(2024, monthNameToNumber(month_filter.value))
             calendar_month.innerText = month_filter.value
             // color coding
-            var [forHaulingColor, forReceivingColor, forWarehousingColor, forSortingColor, forTreatmentColor, forCertificationColor, forBillingColor, forCollectionColor, finishedColor] = 
+            var [forHaulingColor, forReceivingColor, forWarehousingColor, forSortingColor, forTreatmentColor, forCertificationColor, forBillingColor, forBillingDistributionColor, forCollectionColor, finishedColor] = 
                 [
-                "#FFC0CB", // Light Pink (forHaulingColor)
-                "#FFDAB9", // Peachpuff (forSortingColor)
-                "#FFB6C1", // Light Pink (forCollectionColor)
-                "#FFE4B5", // Moccasin (forReceivingColor)
-                "#AFEEEE", // Pale Turquoise (forWarehousingColor)
-                "#D8BFD8", // Thistle (forCertificationColor)
-                "#98FB98", // Pale Green (forTreatmentColor)
-                "#B0C4DE", // Light Steel Blue (forBillingColor)
-                "#C1FFC1"  // Pale Green (finishedColor)
+                    "#FFC0CB", // Light Pink (forHaulingColor)
+                    "#FFDAB9", // Peachpuff (forSortingColor)
+                    "#FFB6C1", // Light Pink (forCollectionColor)
+                    "#FFE4B5", // Moccasin (forReceivingColor)
+                    "#AFEEEE", // Pale Turquoise (forWarehousingColor)
+                    "#D8BFD8", // Thistle (forCertificationColor)
+                    "#98FB98", // Pale Green (forTreatmentColor)
+                    "#B0C4DE", // Light Steel Blue (forBillingColor)
+                    "#ADD8E6", // Light Blue (forBillingDistributionColor)
+                    "#C1FFC1"  // Pale Green (finishedColor)
                 ];
             var for_hauling_marketing = 0;
             var for_receiving_marketing = 0;
@@ -178,8 +181,10 @@ document.addEventListener('DOMContentLoaded', async function() {
             var for_treatment_marketing = 0;
             var for_certification_marketing = 0;
             var for_billing_marketing = 0;
+            var for_billing_distribution_marketing = 0;
             var for_collection_marketing = 0;
             var for_accounting_marketing = 0;
+            var generated_income_marketing = 0;
 
             var data_value_counter = 1;
             var data_value = "";
@@ -208,6 +213,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     else if(status == "FOR BILLING"){
                         for_billing_marketing += 1;
+                    }
+                    else if(status == "FOR BILLING DISTRIBUTION"){
+                        for_billing_distribution_marketing += 1;
                     }
                     else if(status == "FOR COLLECTION"){
                         for_collection_marketing += 1;
@@ -240,6 +248,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     else if(status == "FOR BILLING"){
                         for_billing_marketing += 1;
+                    }
+                    else if(status == "FOR BILLING DISTRIBUTION"){
+                        for_billing_distribution_marketing += 1;
                     }
                     else if(status == "FOR COLLECTION"){
                         for_collection_marketing += 1;
@@ -274,6 +285,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                     else if(status == "FOR BILLING"){
                         for_billing_marketing += 1;
                     }
+                    else if(status == "FOR BILLING DISTRIBUTION"){
+                        for_billing_distribution_marketing += 1;
+                    }
                     else if(status == "FOR COLLECTION"){
                         for_collection_marketing += 1;
                     }
@@ -305,6 +319,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     else if(status == "FOR BILLING"){
                         for_billing_marketing += 1;
+                    }
+                    else if(status == "FOR BILLING DISTRIBUTION"){
+                        for_billing_distribution_marketing += 1;
                     }
                     else if(status == "FOR COLLECTION"){
                         for_collection_marketing += 1;
@@ -361,6 +378,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                         color = forCertificationColor;
                     } else if(status == "FOR BILLING"){
                         color = forBillingColor;
+                    } else if(status == "FOR BILLING DISTRIBUTION"){
+                        color = forBillingDistributionColor;
                     } else if(status == "FOR COLLECTION"){
                         color = forCollectionColor;
                     } else if(status == "FOR ACCOUNTING"){
@@ -423,7 +442,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     pending_list_marketing.innerHTML = data_value;
                 }
             }
-            booked_transactions_marketing.innerText = for_hauling_marketing + for_receiving_marketing + for_warehousing_marketing + for_sorting_marketing + for_treatment_marketing + for_certification_marketing + for_billing_marketing + for_collection_marketing + for_accounting_marketing;
+            booked_transactions_marketing.innerText = for_hauling_marketing + for_receiving_marketing + for_warehousing_marketing + for_sorting_marketing + for_treatment_marketing + for_certification_marketing + for_billing_marketing + for_billing_distribution_marketing + for_collection_marketing + for_accounting_marketing;
             for_hauling_container_marketing.innerText = for_hauling_marketing;
             for_receiving_container_marketing.innerText = for_receiving_marketing;
             for_warehousing_container_marketing.innerText = for_warehousing_marketing;
@@ -431,12 +450,13 @@ document.addEventListener('DOMContentLoaded', async function() {
             for_treatment_container_marketing.innerText = for_treatment_marketing;
             for_certification_container_marketing.innerText = for_certification_marketing;
             for_billing_container_marketing.innerText = for_billing_marketing;
+            for_billing_distribution_container_marketing.innerText = for_billing_distribution_marketing;
             for_collection_container_marketing.innerText = for_collection_marketing;
             finished_marketing.innerText = for_accounting_marketing;
     
 
             var options = {
-                series: [for_hauling_marketing, for_receiving_marketing, for_warehousing_marketing, for_sorting_marketing, for_treatment_marketing, for_certification_marketing, for_billing_marketing, for_collection_marketing, for_accounting_marketing],
+                series: [for_hauling_marketing, for_receiving_marketing, for_warehousing_marketing, for_sorting_marketing, for_treatment_marketing, for_certification_marketing, for_billing_marketing, for_billing_distribution_marketing, for_collection_marketing, for_accounting_marketing],
                 chart: {
                     width: 500, // Set the desired width
                     height: 550, // Set the desired height
@@ -457,7 +477,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 legend: {
                     show: true,
                     position: "left", // Set the legend position to "left"
-                    fontSize: '20px', // Increase legend font size as needed
+                    fontSize: '16px', // Increase legend font size as needed
                     formatter: function (seriesName, opts) {
                         // Here, you should use the correct variable to get the series value
                         var seriesValue = opts.w.globals.series[opts.seriesIndex];
@@ -469,18 +489,19 @@ document.addEventListener('DOMContentLoaded', async function() {
                         useSeriesColors: false, // Use custom color
                     },
                 },
-                labels: ["For Hauling", "For Receiving", "For Warehousing", "For Sorting", "For Treatment", "For Certification", "For Billing", "For Collection", "Finished"],
+                labels: ["For Hauling", "For Receiving", "For Warehousing", "For Sorting", "For Treatment", "For Certification", "For Billing", "For Billing Distribution", "For Collection", "Finished"],
                 colors:                 
                     [
-                    "#FFC0CB", // Light Pink (forHaulingColor)
-                    "#FFDAB9", // Peachpuff (forSortingColor)
-                    "#FFB6C1", // Light Pink (forCollectionColor)
-                    "#FFE4B5", // Moccasin (forReceivingColor)
-                    "#AFEEEE", // Pale Turquoise (forWarehousingColor)
-                    "#D8BFD8", // Thistle (forCertificationColor)
-                    "#98FB98", // Pale Green (forTreatmentColor)
-                    "#B0C4DE", // Light Steel Blue (forBillingColor)
-                    "#C1FFC1"  // Pale Green (finishedColor)
+                        "#FFC0CB", // Light Pink (forHaulingColor)
+                        "#FFDAB9", // Peachpuff (forSortingColor)
+                        "#FFB6C1", // Light Pink (forCollectionColor)
+                        "#FFE4B5", // Moccasin (forReceivingColor)
+                        "#AFEEEE", // Pale Turquoise (forWarehousingColor)
+                        "#D8BFD8", // Thistle (forCertificationColor)
+                        "#98FB98", // Pale Green (forTreatmentColor)
+                        "#B0C4DE", // Light Steel Blue (forBillingColor)
+                        "#C1FFC1", // Pale Green (forBillingDistributionColor)
+                        "#C1FFC1"  // Pale Green (finishedColor)                        
                     ], // Specify solid colors here
                 responsive: [{
                     breakpoint: 480,

@@ -271,7 +271,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             finish_collection.forEach((data) => {
                 bpf_ctf_transaction_amount_collection += data.amount;
             })
-            
             // billing
             var data_value = "";
             var data_value_counter = 1;
@@ -283,7 +282,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <tr>
                             <td>${data_value_counter}</td>
                             <td>${cod_data_list.content[j][findTextInArray(cod_data_list, "COD #")]}</td>
-                            <td>${mtf}</td>
+                            <td>${findMtfNumber(cod_data_list.content[j][findTextInArray(cod_data_list, "WCF #")])}</td>
                             <td>${date_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "HAULING DATE")])}</td>
                             <td>${date_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "ACTUAL COMPLETION DATE")])} /<br>${time_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "ACTUAL COMPLETION TIME")])}</td>
                             <td>${findClientName(cod_data_list.content[j][findTextInArray(cod_data_list, "CLIENT ID")])}</td>
@@ -301,7 +300,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <tr>
                             <td>${data_value_counter}</td>
                             <td>${cod_data_list.content[j][findTextInArray(cod_data_list, "COD #")]}</td>
-                            <td>${mtf}</td>
+                            <td>${findMtfNumber(cod_data_list.content[j][findTextInArray(cod_data_list, "WCF #")])}</td>
                             <td>${date_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "HAULING DATE")])}</td>
                             <td>${date_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "ACTUAL COMPLETION DATE")])} /<br>${time_decoder(cod_data_list.content[j][findTextInArray(cod_data_list, "ACTUAL COMPLETION TIME")])}</td>
                             <td>${findClientName(cod_data_list.content[j][findTextInArray(cod_data_list, "CLIENT ID")])}</td>
@@ -638,6 +637,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     capacity = 0;
                     max_capacity = 0;
                     table_data_info = [];
+                    var vat_calculation = "";
                     const search_cod_form_no = billing_process_form.querySelector(`#search_cod_form_no${s}`);
                     const service_invoice_no = billing_process_form.querySelector(`#service_invoice_no${s}`);
                     const wcf_form_no = billing_process_form.querySelector(`#wcf_form_no${s}`);
@@ -725,7 +725,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                         var mode = "";
                         var unit = "";
                         var unit_price = "";
-                        var vat_calculation = "";
                         for (let c = qlf_data_list.content.length - 1; c >= 1; c--) {
                             if(quotation_no == qlf_data_list.content[c][findTextInArray(qlf_data_list, "QUOTATION CODE")] &&
                             waste_id == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
@@ -2204,6 +2203,26 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
             return waste_name
+        }
+
+        function findMtfNumber(wcfNumber){
+            var mtf =""
+            for(let k = 1; k < wcf_data_list.content.length; k++){
+                if(wcfNumber == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                    if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                        mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                    }else{
+                        ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                        for(let x = 1; x < ltf_data_list.content.length; x++){
+                            if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                break
+                            }
+                        }
+                    }
+                }
+            }
+            return mtf
         }
 
         const generate_report_button = document.getElementById("generate_report_button");
