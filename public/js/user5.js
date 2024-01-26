@@ -522,26 +522,26 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
         // bpf_data_list
         // FORM GENERATOR
-        const bpf_form_no = document.getElementById("bpf_form_no");
-        var last_row = bpf_data_list.content.length -1;
-        var data_info = bpf_data_list.content[last_row][findTextInArray(bpf_data_list, "BPF #")];
-        var data_counter;
-        if(last_row == 0){
-            data_counter = 0;
-        }
-        else{
-            data_counter = data_info.substring(9,13);
-        }
-        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
-        data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
-        var current_year = new Date().getFullYear();
-        var last_counter_year = data_info.substring(3,7);
-        if(last_counter_year == current_year){
-            bpf_form_no.value = `BTF${last_counter_year}${month}${data_counter}`;
-        } else {
-            data_counter = (1).toString().padStart(4, "0");
-            bpf_form_no.value = `BTF${current_year}${month}${data_counter}`;
-        }
+        // const bpf_form_no = document.getElementById("bpf_form_no");
+        // var last_row = bpf_data_list.content.length -1;
+        // var data_info = bpf_data_list.content[last_row][findTextInArray(bpf_data_list, "BPF #")];
+        // var data_counter;
+        // if(last_row == 0){
+        //     data_counter = 0;
+        // }
+        // else{
+        //     data_counter = data_info.substring(9,13);
+        // }
+        // var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        // data_counter = (parseInt(data_counter) +1).toString().padStart(3, "0");
+        // var current_year = new Date().getFullYear();
+        // var last_counter_year = data_info.substring(3,7);
+        // if(last_counter_year == current_year){
+        //     bpf_form_no.value = `BTF${last_counter_year}${month}${data_counter}`;
+        // } else {
+        //     data_counter = (1).toString().padStart(4, "0");
+        //     bpf_form_no.value = `BTF${current_year}${month}${data_counter}`;
+        // }
         
         const billing_process_form = document.querySelector("#billing_process_form");
         const generate_button = billing_process_form.querySelector("#generate_button");
