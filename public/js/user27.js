@@ -67,6 +67,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             finished_list.innerHTML = "";
             var data_value = "";
             var data_value_counter = 1;
+            var data_value_counter2 = 1;
             for(let x = 1; x < bpf_data_list.content.length; x++){
                 if(month_filter.value == formatMonth(bpf_data_list.content[x][findTextInArray(bpf_data_list, "HAULING DATE")])){
                     if(bpf_data_list.content[x][findTextInArray(bpf_data_list, "RECEIVED DATE")] == ""){
@@ -87,7 +88,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         data_value =
                         `
                             <tr>
-                                <td>${data_value_counter}</td>
+                                <td>${data_value_counter2}</td>
                                 <td>${bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")]}</td>
                                 <td>${findClientName(bpf_data_list.content[x][findTextInArray(bpf_data_list, "CLIENT ID")])}</td>
                                 <td>${date_decoder(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BILLING DATE")])}</td>
@@ -97,7 +98,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         `
                         finish_array.push(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")])
                         finished_list.insertAdjacentHTML("beforeend", data_value)
-                        data_value_counter += 1;
+                        data_value_counter2 += 1;
                     }
                 }
                 else if(month_filter.value == "ALL"){
