@@ -42,6 +42,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         // dashboard
         const dashboard_section = document.querySelector("#dashboard_section");
         const pending_list = dashboard_section.querySelector("#pending_list");
+        const finished_list = dashboard_section.querySelector("#finished_list");
         const transactions = dashboard_section.querySelector("#transactions");
         const pending = dashboard_section.querySelector("#pending");
         const finished = dashboard_section.querySelector("#finished");
@@ -60,21 +61,76 @@ document.addEventListener('DOMContentLoaded', async function() {
         month_filter.addEventListener("change", generatePending)
         generatePending();
         function generatePending(){
+            pending_array = [];
+            finish_array = [];
+            pending_list.innerHTML = "";
+            finished_list.innerHTML = "";
             var data_value = "";
             var data_value_counter = 1;
             for(let x = 1; x < bpf_data_list.content.length; x++){
                 if(month_filter.value == formatMonth(bpf_data_list.content[x][findTextInArray(bpf_data_list, "HAULING DATE")])){
-                    data_value =
-                    `
-                        <tr>
-                            <td>${data_value_counter}</td>
-                            <td>${bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")]}</td>
-                            <td>${findClientName(bpf_data_list.content[x][findTextInArray(bpf_data_list, "CLIENT ID")])}</td>
-                        </tr>
-                    `
-                    pending_array.push(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")])
-                    pending_list.insertAdjacentHTML("beforeend", data_value)
-                    data_value_counter += 1;
+                    if(bpf_data_list.content[x][findTextInArray(bpf_data_list, "RECEIVED DATE")] == ""){
+                        data_value =
+                        `
+                            <tr>
+                                <td>${data_value_counter}</td>
+                                <td>${bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")]}</td>
+                                <td>${findClientName(bpf_data_list.content[x][findTextInArray(bpf_data_list, "CLIENT ID")])}</td>
+                                <td>${date_decoder(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BILLING DATE")])}</td>
+                            </tr>
+                        `
+                        pending_array.push(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")])
+                        pending_list.insertAdjacentHTML("beforeend", data_value)
+                        data_value_counter += 1;
+                    }
+                    else{
+                        data_value =
+                        `
+                            <tr>
+                                <td>${data_value_counter}</td>
+                                <td>${bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")]}</td>
+                                <td>${findClientName(bpf_data_list.content[x][findTextInArray(bpf_data_list, "CLIENT ID")])}</td>
+                                <td>${date_decoder(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BILLING DATE")])}</td>
+                                <td>${bpf_data_list.content[x][findTextInArray(bpf_data_list, "RECEIVED BY")]}</td>
+                                <td>${date_decoder(bpf_data_list.content[x][findTextInArray(bpf_data_list, "RECEIVED DATE")])}</td>
+                            </tr>
+                        `
+                        finish_array.push(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")])
+                        finished_list.insertAdjacentHTML("beforeend", data_value)
+                        data_value_counter += 1;
+                    }
+                }
+                else if(month_filter.value == "ALL"){
+                    if(bpf_data_list.content[x][findTextInArray(bpf_data_list, "RECEIVED DATE")] == ""){
+                        data_value =
+                        `
+                            <tr>
+                                <td>${data_value_counter}</td>
+                                <td>${bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")]}</td>
+                                <td>${findClientName(bpf_data_list.content[x][findTextInArray(bpf_data_list, "CLIENT ID")])}</td>
+                                <td>${date_decoder(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BILLING DATE")])}</td>
+                            </tr>
+                        `
+                        pending_array.push(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")])
+                        pending_list.insertAdjacentHTML("beforeend", data_value)
+                        data_value_counter += 1;
+                    }
+                    else{
+                        data_value =
+                        `
+                            <tr>
+                                <td>${data_value_counter}</td>
+                                <td>${bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")]}</td>
+                                <td>${findClientName(bpf_data_list.content[x][findTextInArray(bpf_data_list, "CLIENT ID")])}</td>
+                                <td>${date_decoder(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BILLING DATE")])}</td>
+                                <td>${bpf_data_list.content[x][findTextInArray(bpf_data_list, "RECEIVED BY")]}</td>
+                                <td>${date_decoder(bpf_data_list.content[x][findTextInArray(bpf_data_list, "RECEIVED DATE")])}</td>
+                            </tr>
+                        `
+                        finish_array.push(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")])
+                        finished_list.insertAdjacentHTML("beforeend", data_value)
+                        data_value_counter += 1;
+                    }
                 }
             }
 

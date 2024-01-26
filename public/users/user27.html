@@ -109,7 +109,7 @@
             </div>
             <h2>DASHBOARD</h2><br>
             <h2>BILLING DISTRIBUTION SUMMARY</h2>
-            <div class="cards">
+            <div class="cards2">
                 <div class="card">
                     <div class="card-content">
                         <div class="number" id="transactions">0</div>
@@ -142,7 +142,7 @@
                     </div>
                 </div>
             </div><br>
-            <div style="margin-top: 150px;">
+            <div style="margin-top: -100px;">
                 <h2>PENDING TRANSACTIONS</h2>
                 <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
                     <div class="list">
@@ -151,6 +151,7 @@
                                 <th>#</th>
                                 <th>BILLING #</th>
                                 <th>CLIENT NAME</th>
+                                <th>BILLING<br>DATE</th>
                             </thead>
                             <tbody id="pending_list"></tbody>
                         </table>
@@ -165,8 +166,11 @@
                                 <th>#</th>
                                 <th>BILLING #</th>
                                 <th>CLIENT NAME</th>
+                                <th>BILLING<br>DATE</th>
+                                <th>RECEIVED<br>DATE</th>
+                                <th>RECEIVED<br>BY</th>
                             </thead>
-                            <tbody id="received_list">
+                            <tbody id="finished_list">
     
                             </tbody>
                         </table>
@@ -178,36 +182,25 @@
         <!-- BILLING DISTRIBUTION FORM -->
         <section id="waste_collection_form">
             <h2>BILLING DISTRIBUTION FORM</h2><br>
-            <form id="form_id" action="https://script.google.com/macros/s/AKfycbxECjQTqJQx7XJN_L7913FL6k7y7UOWhjdxr-1fq9UdounJntHW-dikM4zrXs8ZnYrWHw/exec" method="post">
+            <form id="form_id" action="https://script.google.com/macros/s/AKfycbxe2B9524F8Qid6Ts3iWzzmQKTLi1PxXDBw0SAix8nW23YAxEDp-pPTgst8j4XX5wqd/exec" method="post">
                 <input type="hidden" name="user" id="user">
-                <div class="vmf_form_no" style="display: none;">
-                    <div>
-                        <label for="wcf_form_no">
-                            <i class="fa-solid fa-list-ol"></i>
-                            VMF #
-                        </label><br>
-                        <div class="form">
-                            <input type="text" id="vmf_form_no" autocomplete="off" name="vmf_form_no" class="form-control" readonly><br>
-                        </div>
-                    </div>
-                </div>
                 <div class="wcf_form">
                     <div>
-                        <label for="search_vmr_form_no">
+                        <label for="bpf_form_no">
                             <i class="fa-solid fa-list-ol"></i>
                             Search Billing #
                         </label>
                         <div class="wcf_form">
                             <div class="form">
-                                <input type="text" id="search_vmr_form_no" autocomplete="off" name="search_vmr_form_no" class="form-control"><br>
+                                <input type="text" id="bpf_form_no" autocomplete="off" name="bpf_form_no" class="form-control"><br>
                             </div>
                             <div>
-                                <button id="search_vmr_form_no_button" class="form-control" type="button">
+                                <button id="search_bpf_form_no_button" class="form-control" type="button">
                                     <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
                                 </button>
                             </div>
                             <div>
-                                <button id="clear_vmr_form_no_button" type="button" class="form-control">
+                                <button id="clear_bpf_form_no_button" type="button" class="form-control">
                                     <i class="fa-solid fa-rectangle-xmark" style="color: #ffffff;"></i>
                                 </button>
                             </div>
@@ -222,7 +215,7 @@
                                 <i class="fa-solid fa-calendar-days"></i>
                                 Received Date
                             </label><br>
-                            <input type="date" id="date_start" name="date_start" class="form-control form" required autocomplete="off">
+                            <input type="date" id="received_date" name="received_date" class="form-control form" required autocomplete="off">
                         </div>
                     </div><br>
                     <div>
@@ -230,7 +223,7 @@
                             <i class="fa-solid fa-user"></i>
                             Received By
                         </label><br>
-                        <input type="text" id="repair" name="repair" class="form-control" required placeholder="Input Name" autocomplete="off">
+                        <input type="text" id="received_by" name="received_by" class="form-control" required placeholder="Input Name" autocomplete="off">
                     </div><br>
                     <div class="buttons">
                         <button type="submit" id="submit_btn" class="form-control" >
