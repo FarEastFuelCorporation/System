@@ -74,6 +74,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const pending_counter_billing = billing_dashboard.querySelector("#pending_counter");
         const billed_counter_billing = billing_dashboard.querySelector("#billed_counter");
         const pending_list_billing = billing_dashboard.querySelector("#pending_list");
+        const history_list_billing = billing_dashboard.querySelector("#history_list");
         let sf_transaction_billing = []; 
         let sf_tpf_transaction_billing = [];
         const collection_dashboard = document.querySelector("#collection_dashboard");

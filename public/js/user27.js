@@ -71,66 +71,76 @@ document.addEventListener('DOMContentLoaded', async function() {
             for(let x = 1; x < bpf_data_list.content.length; x++){
                 if(month_filter.value == formatMonth(bpf_data_list.content[x][findTextInArray(bpf_data_list, "HAULING DATE")])){
                     if(bpf_data_list.content[x][findTextInArray(bpf_data_list, "RECEIVED DATE")] == ""){
-                        data_value =
-                        `
-                            <tr>
-                                <td>${data_value_counter}</td>
-                                <td>${bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")]}</td>
-                                <td>${findClientName(bpf_data_list.content[x][findTextInArray(bpf_data_list, "CLIENT ID")])}</td>
-                                <td>${date_decoder(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BILLING DATE")])}</td>
-                            </tr>
-                        `
-                        pending_array.push(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")])
-                        pending_list.insertAdjacentHTML("beforeend", data_value)
-                        data_value_counter += 1;
+                        if(!pending_array.includes(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")])){
+                            data_value =
+                            `
+                                <tr>
+                                    <td>${data_value_counter}</td>
+                                    <td>${bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")]}</td>
+                                    <td>${findClientName(bpf_data_list.content[x][findTextInArray(bpf_data_list, "CLIENT ID")])}</td>
+                                    <td>${date_decoder(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BILLING DATE")])}</td>
+                                </tr>
+                            `
+                            pending_array.push(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")])
+                            pending_list.insertAdjacentHTML("beforeend", data_value)
+    
+                            data_value_counter += 1;
+                        }
                     }
                     else{
-                        data_value =
-                        `
-                            <tr>
-                                <td>${data_value_counter2}</td>
-                                <td>${bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")]}</td>
-                                <td>${findClientName(bpf_data_list.content[x][findTextInArray(bpf_data_list, "CLIENT ID")])}</td>
-                                <td>${date_decoder(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BILLING DATE")])}</td>
-                                <td>${bpf_data_list.content[x][findTextInArray(bpf_data_list, "RECEIVED BY")]}</td>
-                                <td>${date_decoder(bpf_data_list.content[x][findTextInArray(bpf_data_list, "RECEIVED DATE")])}</td>
-                            </tr>
-                        `
-                        finish_array.push(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")])
-                        finished_list.insertAdjacentHTML("beforeend", data_value)
-                        data_value_counter2 += 1;
+                        if(!finish_array.includes(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")])){
+                            data_value =
+                            `
+                                <tr>
+                                    <td>${data_value_counter2}</td>
+                                    <td>${bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")]}</td>
+                                    <td>${findClientName(bpf_data_list.content[x][findTextInArray(bpf_data_list, "CLIENT ID")])}</td>
+                                    <td>${date_decoder(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BILLING DATE")])}</td>
+                                    <td>${bpf_data_list.content[x][findTextInArray(bpf_data_list, "RECEIVED BY")]}</td>
+                                    <td>${date_decoder(bpf_data_list.content[x][findTextInArray(bpf_data_list, "RECEIVED DATE")])}</td>
+                                </tr>
+                            `
+                            finish_array.push(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")])
+                            finished_list.insertAdjacentHTML("beforeend", data_value)
+                            data_value_counter2 += 1;
+                        }
                     }
                 }
                 else if(month_filter.value == "ALL"){
                     if(bpf_data_list.content[x][findTextInArray(bpf_data_list, "RECEIVED DATE")] == ""){
-                        data_value =
-                        `
-                            <tr>
-                                <td>${data_value_counter}</td>
-                                <td>${bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")]}</td>
-                                <td>${findClientName(bpf_data_list.content[x][findTextInArray(bpf_data_list, "CLIENT ID")])}</td>
-                                <td>${date_decoder(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BILLING DATE")])}</td>
-                            </tr>
-                        `
-                        pending_array.push(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")])
-                        pending_list.insertAdjacentHTML("beforeend", data_value)
-                        data_value_counter += 1;
+                        if(!pending_array.includes(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")])){
+                            data_value =
+                            `
+                                <tr>
+                                    <td>${data_value_counter}</td>
+                                    <td>${bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")]}</td>
+                                    <td>${findClientName(bpf_data_list.content[x][findTextInArray(bpf_data_list, "CLIENT ID")])}</td>
+                                    <td>${date_decoder(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BILLING DATE")])}</td>
+                                </tr>
+                            `
+                            pending_array.push(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")])
+                            pending_list.insertAdjacentHTML("beforeend", data_value)
+    
+                            data_value_counter += 1;
+                        }
                     }
                     else{
-                        data_value =
-                        `
-                            <tr>
-                                <td>${data_value_counter}</td>
-                                <td>${bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")]}</td>
-                                <td>${findClientName(bpf_data_list.content[x][findTextInArray(bpf_data_list, "CLIENT ID")])}</td>
-                                <td>${date_decoder(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BILLING DATE")])}</td>
-                                <td>${bpf_data_list.content[x][findTextInArray(bpf_data_list, "RECEIVED BY")]}</td>
-                                <td>${date_decoder(bpf_data_list.content[x][findTextInArray(bpf_data_list, "RECEIVED DATE")])}</td>
-                            </tr>
-                        `
-                        finish_array.push(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")])
-                        finished_list.insertAdjacentHTML("beforeend", data_value)
-                        data_value_counter += 1;
+                        if(!finish_array.includes(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")])){
+                            data_value =
+                            `
+                                <tr>
+                                    <td>${data_value_counter2}</td>
+                                    <td>${bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")]}</td>
+                                    <td>${findClientName(bpf_data_list.content[x][findTextInArray(bpf_data_list, "CLIENT ID")])}</td>
+                                    <td>${date_decoder(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BILLING DATE")])}</td>
+                                    <td>${bpf_data_list.content[x][findTextInArray(bpf_data_list, "RECEIVED BY")]}</td>
+                                    <td>${date_decoder(bpf_data_list.content[x][findTextInArray(bpf_data_list, "RECEIVED DATE")])}</td>
+                                </tr>
+                            `
+                            finish_array.push(bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")])
+                            finished_list.insertAdjacentHTML("beforeend", data_value)
+                            data_value_counter2 += 1;
+                        }
                     }
                 }
             }
