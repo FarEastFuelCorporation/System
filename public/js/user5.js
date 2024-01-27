@@ -73,6 +73,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const certified_counter_billing = billing_dashboard.querySelector("#certified_counter");
         const pending_counter_billing = billing_dashboard.querySelector("#pending_counter");
         const billed_counter_billing = billing_dashboard.querySelector("#billed_counter");
+        const generated_income_counter_billing = billing_dashboard.querySelector("#generated_income_counter");
         const pending_list_billing = billing_dashboard.querySelector("#pending_list");
         const history_list_billing = billing_dashboard.querySelector("#history_list");
         let sf_transaction_billing = []; 
@@ -322,6 +323,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             var data_value_counter_collection = 1;
             for (const item of pending_collection){
                 for(let j = 1; j < bpf_data_list.content.length; j++){
+                    // var receiving_date = bpf_data_list.content[j][findTextInArray(bpf_data_list, "RECEIVED DATE")];
                     if(item.bpfNumber == bpf_data_list.content[j][findTextInArray(bpf_data_list, "BPF #")] &&
                     month_filter.value == formatMonth(bpf_data_list.content[j][findTextInArray(bpf_data_list, "HAULING DATE")])){
                         var mtf = "";
@@ -396,6 +398,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             certified_counter_billing.innerText = mtf_cod_list.length + mtf_bpf_list.length;
             pending_counter_billing.innerText = mtf_cod_list.length;
             billed_counter_billing.innerText = mtf_bpf_list.length;
+            generated_income_counter_billing.innerText = formatNumber(bpf_transaction_amount_collection + bpf_ctf_transaction_amount_collection);
 
             // collection
             // const pending_collection = bpf_transaction_collection.filter((element) => !bpf_ctf_transaction_collection.includes(element));

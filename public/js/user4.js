@@ -2097,9 +2097,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 certification_Hauling_day = new Date(certification_hauling_date).getDate();
                                 certification_day_ordinal = convertToOrdinal(certification_day);
                                 certification_month = convertToMonthName(month);
-                                if (waste_description.value == mtf &&
-                                    year_covered.value == year &&
-                                    month_covered.value == month) {
+                                if (waste_description.value == mtf) {
                                     var pull_out_form = ""
                                     for(let y = 1; y < sf_data_list.content.length; y++){
                                         if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "SF #")] == sf_data_list.content[y][findTextInArray(sf_data_list, "SF #")])
@@ -3181,38 +3179,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </label><br>
                     <div>
                         <input type="text" id="waste_description" autocomplete="off" name="waste_description" class="form-control"><br>
-                    </div>
-                </div>
-                <div>
-                    <label for="year_covered">
-                        <i class="fa-solid fa-list-ol"></i>
-                        Year Covered
-                    </label><br>
-                    <div class="form">
-                        <input type="text" autocomplete="off" name="year_covered" id="year_covered" class="form-control"><br>
-                    </div>
-                </div>
-                <div>
-                    <label for="month_covered">
-                        <i class="fa-solid fa-list-ol"></i>
-                        Month Covered
-                    </label><br>
-                    <div class="form">
-                        <select name="month_covered" id="month_covered" class="form-control">
-                            <option value="">Select Month</option>
-                            <option value="1">JANUARY</option>
-                            <option value="2">FEBRUARY</option>
-                            <option value="3">MARCH</option>
-                            <option value="4">APRIL</option>
-                            <option value="5">MAY</option>
-                            <option value="6">JUNE</option>
-                            <option value="7">JULY</option>
-                            <option value="8">AUGUST</option>
-                            <option value="9">SEPTEMBER</option>
-                            <option value="10">OCTOBER</option>
-                            <option value="11">NOVEMBER</option>
-                            <option value="12">DECEMBER</option>
-                        </select>
                     </div>
                 </div>
                 <div>
