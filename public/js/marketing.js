@@ -458,14 +458,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
 
-            var generated_income = 0
-
             for(let x = 1; x < bpf_data_list.content.length; x++){
                 if(month_filter.value == formatMonth(bpf_data_list.content[x][findTextInArray(bpf_data_list, "HAULING DATE")])){
-                    generated_income += bpf_data_list.content[x][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")]
+                    generated_income_marketing += bpf_data_list.content[x][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")]
                 }
             }
-
             
             booked_transactions_marketing.innerText = for_hauling_marketing + for_receiving_marketing + for_warehousing_marketing + for_sorting_marketing + for_treatment_marketing + for_certification_marketing + for_billing_marketing + for_billing_distribution_marketing + for_collection_marketing + for_accounting_marketing;
             for_hauling_container_marketing.innerText = for_hauling_marketing;
@@ -477,7 +474,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             for_billing_container_marketing.innerText = for_billing_marketing;
             for_billing_distribution_container_marketing.innerText = for_billing_distribution_marketing;
             for_collection_container_marketing.innerText = for_collection_marketing;
-            generated_income_container_marketing.innerText = formatNumber(generated_income);
+            generated_income_container_marketing.innerText = formatNumber(generated_income_marketing);
             finished_marketing.innerText = for_accounting_marketing;
     
 

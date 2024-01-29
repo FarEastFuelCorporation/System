@@ -121,7 +121,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         const for_treatment_container_marketing = document.getElementById("for_treatment");
         const for_certification_container_marketing = document.getElementById("for_certification");
         const for_billing_container_marketing = document.getElementById("for_billing");
+        const for_billing_distribution_container_marketing = document.getElementById("for_billing_distribution");
         const for_collection_container_marketing = document.getElementById("for_collection");
+        const generated_income_container_marketing = document.getElementById("generated_income");
         const finished_marketing = document.getElementById("finished");
         const pending_list_marketing = document.getElementById("pending_list");
         // billing
@@ -129,7 +131,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         const certified_counter_billing = billing_dashboard.querySelector("#certified_counter");
         const pending_counter_billing = billing_dashboard.querySelector("#pending_counter");
         const billed_counter_billing = billing_dashboard.querySelector("#billed_counter");
+        const generated_income_counter_billing = billing_dashboard.querySelector("#generated_income_counter");
         const pending_list_billing = billing_dashboard.querySelector("#pending_list");
+        const history_list_billing = billing_dashboard.querySelector("#history_list");
         let sf_transaction_billing = []; 
         let sf_tpf_transaction_billing = [];
         // collection
@@ -330,8 +334,10 @@ document.addEventListener('DOMContentLoaded', async function() {
             var for_treatment_marketing = 0;
             var for_certification_marketing = 0;
             var for_billing_marketing = 0;
+            var for_billing_distribution_marketing = 0;
             var for_collection_marketing = 0;
             var for_accounting_marketing = 0;
+            var generated_income_marketing = 0;
 
             var data_value_counter = 1;
             var data_value = "";
@@ -360,6 +366,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     else if(status == "FOR BILLING"){
                         for_billing_marketing += 1;
+                    }
+                    else if(status == "FOR BILLING DISTRIBUTION"){
+                        for_billing_distribution_marketing += 1;
                     }
                     else if(status == "FOR COLLECTION"){
                         for_collection_marketing += 1;
@@ -392,6 +401,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     else if(status == "FOR BILLING"){
                         for_billing_marketing += 1;
+                    }
+                    else if(status == "FOR BILLING DISTRIBUTION"){
+                        for_billing_distribution_marketing += 1;
                     }
                     else if(status == "FOR COLLECTION"){
                         for_collection_marketing += 1;
@@ -426,6 +438,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                     else if(status == "FOR BILLING"){
                         for_billing_marketing += 1;
                     }
+                    else if(status == "FOR BILLING DISTRIBUTION"){
+                        for_billing_distribution_marketing += 1;
+                    }
                     else if(status == "FOR COLLECTION"){
                         for_collection_marketing += 1;
                     }
@@ -457,6 +472,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                     else if(status == "FOR BILLING"){
                         for_billing_marketing += 1;
+                    }
+                    else if(status == "FOR BILLING DISTRIBUTION"){
+                        for_billing_distribution_marketing += 1;
                     }
                     else if(status == "FOR COLLECTION"){
                         for_collection_marketing += 1;
@@ -534,7 +552,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                     pending_list_marketing.innerHTML = data_value;
                 }
             }
-            booked_transactions_marketing.innerText = for_hauling_marketing + for_receiving_marketing + for_warehousing_marketing + for_sorting_marketing + for_treatment_marketing + for_certification_marketing + for_billing_marketing + for_collection_marketing + for_accounting_marketing;
+
+            for(let x = 1; x < bpf_data_list.content.length; x++){
+                if(month_filter.value == formatMonth(bpf_data_list.content[x][findTextInArray(bpf_data_list, "HAULING DATE")])){
+                    generated_income_marketing += bpf_data_list.content[x][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")]
+                }
+            }
+
+            booked_transactions_marketing.innerText = for_hauling_marketing + for_receiving_marketing + for_warehousing_marketing + for_sorting_marketing + for_treatment_marketing + for_certification_marketing + for_billing_marketing + for_billing_distribution_marketing + for_collection_marketing + for_accounting_marketing;
             for_hauling_container_marketing.innerText = for_hauling_marketing;
             for_receiving_container_marketing.innerText = for_receiving_marketing;
             for_warehousing_container_marketing.innerText = for_warehousing_marketing;
@@ -542,12 +567,14 @@ document.addEventListener('DOMContentLoaded', async function() {
             for_treatment_container_marketing.innerText = for_treatment_marketing;
             for_certification_container_marketing.innerText = for_certification_marketing;
             for_billing_container_marketing.innerText = for_billing_marketing;
+            for_billing_distribution_container_marketing.innerText = for_billing_distribution_marketing;
             for_collection_container_marketing.innerText = for_collection_marketing;
+            generated_income_container_marketing.innerText = formatNumber(generated_income_marketing);
             finished_marketing.innerText = for_accounting_marketing;
             
             // marketing 
             var options = {
-                series: [for_hauling_marketing, for_receiving_marketing, for_warehousing_marketing, for_sorting_marketing, for_treatment_marketing, for_certification_marketing, for_billing_marketing, for_collection_marketing, for_accounting_marketing],
+                series: [for_hauling_marketing, for_receiving_marketing, for_warehousing_marketing, for_sorting_marketing, for_treatment_marketing, for_certification_marketing, for_billing_marketing, for_billing_distribution_marketing, for_collection_marketing, for_accounting_marketing],
                 chart: {
                     width: 500, // Set the desired width
                     height: 550, // Set the desired height
@@ -568,7 +595,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 legend: {
                     show: true,
                     position: "left", // Set the legend position to "left"
-                    fontSize: '20px', // Increase legend font size as needed
+                    fontSize: '16px', // Increase legend font size as needed
                     formatter: function (seriesName, opts) {
                         // Here, you should use the correct variable to get the series value
                         var seriesValue = opts.w.globals.series[opts.seriesIndex];
@@ -580,9 +607,21 @@ document.addEventListener('DOMContentLoaded', async function() {
                         useSeriesColors: false, // Use custom color
                     },
                 },
-                labels: ["For Hauling", "For Receiving", "For Warehousing", "For Sorting", "For Treatment", "For Certification", "For Billing", "For Collection", "Finished"],
-                colors: ["#dc3545", "#ffc107", "#c3c3c3", "#fd7e14", "#0d6efd", "#6610f2", "#0dcaf0", "#d63384", "#198754"], // Specify solid colors here
-                responsive: [{
+                labels: ["For Hauling", "For Receiving", "For Warehousing", "For Sorting", "For Treatment", "For Certification", "For Billing", "For Billing Distribution", "For Collection", "Finished"],
+                colors:                 
+                    [
+                        "#FFC0CB", // Light Pink (forHaulingColor)
+                        "#FFDAB9", // Peachpuff (forSortingColor)
+                        "#FFB6C1", // Light Pink (forCollectionColor)
+                        "#FFE4B5", // Moccasin (forReceivingColor)
+                        "#AFEEEE", // Pale Turquoise (forWarehousingColor)
+                        "#D8BFD8", // Thistle (forCertificationColor)
+                        "#98FB98", // Pale Green (forTreatmentColor)
+                        "#B0C4DE", // Light Steel Blue (forBillingColor)
+                        "#C1FFC1", // Pale Green (forBillingDistributionColor)
+                        "#C1FFC1"  // Pale Green (finishedColor)                        
+                    ], // Specify solid colors here
+                    responsive: [{
                     breakpoint: 480,
                     options: {
                         chart: {
@@ -769,6 +808,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             certified_counter_billing.innerText = mtf_cod_list.length + mtf_bpf_list.length;
             pending_counter_billing.innerText = mtf_cod_list.length;
             billed_counter_billing.innerText = mtf_bpf_list.length;
+            generated_income_counter_billing.innerText = formatNumber(bpf_transaction_amount_collection + bpf_ctf_transaction_amount_collection);
             
             // collection
             // const pending_collection = bpf_transaction_collection.filter((element) => !bpf_ctf_transaction_collection.includes(element));    
