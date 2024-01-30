@@ -655,14 +655,17 @@ document.addEventListener('DOMContentLoaded', async function() {
                         today.setHours(0, 0, 0, 0);
 
                         // Initialize the status variable
-                        var status;
+                        var status, style;
 
                         // Compare dates and determine the status
                         if (receivedDate < today) {
                             status = "OVERDUE";
+                            style = `style="background-color: #FF6961;"`;
                         } else if (receivedDate.getTime() === today.getTime()) {
                             status = "DUE TODAY";
+                            style = `style="background-color: #ffc107;"`;
                         } else {
+                            style = `style="background-color: #77DD77;"`;
                             status = "PENDING";
                         }
 
@@ -686,7 +689,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     }
                                 }
                                 data_value_collection +=`
-                                <tr>
+                                <tr ${style}>
                                     <td>${data_value_counter_collection}</td>
                                     <td>${bpf_data_list.content[j][findTextInArray(bpf_data_list, "BPF #")]}</td>
                                     <td>${mtf}</td>
