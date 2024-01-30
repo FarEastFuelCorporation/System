@@ -474,71 +474,101 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
                 haulingDate.setDate(haulingDate.getDate() + terms);
 
-                if (month_filter.value === formatMonth(haulingDate)) {
-                    const amount = bpf_data_list.content[i][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")];
-                    
-                    // Check if the bpfNumber already exists in the object
-                    if (bpf_transaction_collection[bpfNumber]) {
-                        // If it exists, add the amount to the existing value
-                        bpf_transaction_collection[bpfNumber] += amount;
-                    } else {
-                        // If it doesn't exist, create a new entry with the amount
-                        bpf_transaction_collection[bpfNumber] = amount;
+                if(bpf_data_list.content[i][findTextInArray(bpf_data_list, "COLLECTED DATE")] == ""){
+                    if (month_filter.value === formatMonth(haulingDate)) {
+                        const amount = bpf_data_list.content[i][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")];
+                        
+                        // Check if the bpfNumber already exists in the object
+                        if (bpf_transaction_collection[bpfNumber]) {
+                            // If it exists, add the amount to the existing value
+                            bpf_transaction_collection[bpfNumber] += amount;
+                        } else {
+                            // If it doesn't exist, create a new entry with the amount
+                            bpf_transaction_collection[bpfNumber] = amount;
+                        }
+                        bpf_transaction_collection_date[bpfNumber] = haulingDate;
+                        if(!bpf_collection.includes(bpf_data_list.content[i][findTextInArray(bpf_data_list, "BPF #")])){
+                            bpf_collection.push(bpf_data_list.content[i][findTextInArray(bpf_data_list, "BPF #")])
+                        }
                     }
-                    bpf_transaction_collection_date[bpfNumber] = haulingDate;
-                    if(!bpf_collection.includes(bpf_data_list.content[i][findTextInArray(bpf_data_list, "BPF #")])){
-                        bpf_collection.push(bpf_data_list.content[i][findTextInArray(bpf_data_list, "BPF #")])
+                    else if (month_filter.value === "ALL") {
+                        const amount = bpf_data_list.content[i][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")];
+                        
+                        // Check if the bpfNumber already exists in the object
+                        if (bpf_transaction_collection[bpfNumber]) {
+                            // If it exists, add the amount to the existing value
+                            bpf_transaction_collection[bpfNumber] += amount;
+                        } else {
+                            // If it doesn't exist, create a new entry with the amount
+                            bpf_transaction_collection[bpfNumber] = amount;
+                        }
+                        bpf_transaction_collection_date[bpfNumber] = haulingDate;
+                        if(!bpf_collection.includes(bpf_data_list.content[i][findTextInArray(bpf_data_list, "BPF #")])){
+                            bpf_collection.push(bpf_data_list.content[i][findTextInArray(bpf_data_list, "BPF #")])
+                        }
                     }
                 }
-                else if (month_filter.value === "ALL") {
-                    const amount = bpf_data_list.content[i][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")];
-                    
-                    // Check if the bpfNumber already exists in the object
-                    if (bpf_transaction_collection[bpfNumber]) {
-                        // If it exists, add the amount to the existing value
-                        bpf_transaction_collection[bpfNumber] += amount;
-                    } else {
-                        // If it doesn't exist, create a new entry with the amount
-                        bpf_transaction_collection[bpfNumber] = amount;
+                else{
+                    if (month_filter.value === formatMonth(haulingDate)) {
+                        const amount = bpf_data_list.content[i][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")];
+                        
+                        // Check if the bpfNumber already exists in the object
+                        if (bpf_ctf_transaction_collection[bpfNumber]) {
+                            // If it exists, add the amount to the existing value
+                            bpf_ctf_transaction_collection[bpfNumber] += amount;
+                        } else {
+                            // If it doesn't exist, create a new entry with the amount
+                            bpf_ctf_transaction_collection[bpfNumber] = amount;
+                        }
+                        bpf_ctf_transaction_collection_date[bpfNumber] = haulingDate;
                     }
-                    bpf_transaction_collection_date[bpfNumber] = haulingDate;
-                    if(!bpf_collection.includes(bpf_data_list.content[i][findTextInArray(bpf_data_list, "BPF #")])){
-                        bpf_collection.push(bpf_data_list.content[i][findTextInArray(bpf_data_list, "BPF #")])
+                    else if (month_filter.value === "ALL") {
+                        const amount = bpf_data_list.content[i][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")];
+                        
+                        // Check if the bpfNumber already exists in the object
+                        if (bpf_ctf_transaction_collection[bpfNumber]) {
+                            // If it exists, add the amount to the existing value
+                            bpf_ctf_transaction_collection[bpfNumber] += amount;
+                        } else {
+                            // If it doesn't exist, create a new entry with the amount
+                            bpf_ctf_transaction_collection[bpfNumber] = amount;
+                        }
+                        bpf_ctf_transaction_collection_date[bpfNumber] = haulingDate;
                     }
                 }
             }
-            for (let i = 1; i < ctf_data_list.content.length; i++) {
-                const bpfNumber = ctf_data_list.content[i][findTextInArray(ctf_data_list, "BPF #")];
-                var haulingDate = new Date(ctf_data_list.content[i][findTextInArray(ctf_data_list, "RECEIVED DATE")]);
-                haulingDate.setDate(haulingDate.getDate() + terms);
-                if (month_filter.value === formatMonth(haulingDate)) {
+            // for (let i = 1; i < ctf_data_list.content.length; i++) {
+            //     const bpfNumber = ctf_data_list.content[i][findTextInArray(ctf_data_list, "BPF #")];
+            //     var haulingDate = new Date(ctf_data_list.content[i][findTextInArray(ctf_data_list, "RECEIVED DATE")]);
+            //     haulingDate.setDate(haulingDate.getDate() + terms);
+            //     if (month_filter.value === formatMonth(haulingDate)) {
 
-                    const amount = ctf_data_list.content[i][findTextInArray(ctf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")];
+            //         const amount = ctf_data_list.content[i][findTextInArray(ctf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")];
                     
-                    // Check if the bpfNumber already exists in the object
-                    if (bpf_ctf_transaction_collection[bpfNumber]) {
-                        // If it exists, add the amount to the existing value
-                        bpf_ctf_transaction_collection[bpfNumber] += amount;
-                    } else {
-                        // If it doesn't exist, create a new entry with the amount
-                        bpf_ctf_transaction_collection[bpfNumber] = amount;
-                    }
-                    bpf_ctf_transaction_collection_date[bpfNumber] = haulingDate;
-                }
-                else if (month_filter.value === "ALL") {
-                    const amount = ctf_data_list.content[i][findTextInArray(ctf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")];
+            //         // Check if the bpfNumber already exists in the object
+            //         if (bpf_ctf_transaction_collection[bpfNumber]) {
+            //             // If it exists, add the amount to the existing value
+            //             bpf_ctf_transaction_collection[bpfNumber] += amount;
+            //         } else {
+            //             // If it doesn't exist, create a new entry with the amount
+            //             bpf_ctf_transaction_collection[bpfNumber] = amount;
+            //         }
+            //         bpf_ctf_transaction_collection_date[bpfNumber] = haulingDate;
+            //     }
+            //     else if (month_filter.value === "ALL") {
+            //         const amount = ctf_data_list.content[i][findTextInArray(ctf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")];
                     
-                    // Check if the bpfNumber already exists in the object
-                    if (bpf_ctf_transaction_collection[bpfNumber]) {
-                        // If it exists, add the amount to the existing value
-                        bpf_ctf_transaction_collection[bpfNumber] += amount;
-                    } else {
-                        // If it doesn't exist, create a new entry with the amount
-                        bpf_ctf_transaction_collection[bpfNumber] = amount;
-                    }
-                    bpf_ctf_transaction_collection_date[bpfNumber] = haulingDate;
-                }
-            }
+            //         // Check if the bpfNumber already exists in the object
+            //         if (bpf_ctf_transaction_collection[bpfNumber]) {
+            //             // If it exists, add the amount to the existing value
+            //             bpf_ctf_transaction_collection[bpfNumber] += amount;
+            //         } else {
+            //             // If it doesn't exist, create a new entry with the amount
+            //             bpf_ctf_transaction_collection[bpfNumber] = amount;
+            //         }
+            //         bpf_ctf_transaction_collection_date[bpfNumber] = haulingDate;
+            //     }
+            // }
             for (const key in bpf_transaction_collection) {  
                 // Check if the key exists in bpf_ctf_transaction_collection
                 if (bpf_ctf_transaction_collection[key]) {
