@@ -2163,36 +2163,40 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         }
 
-        const form_id_billing = document.getElementById("form_id_billing");
-        const type_of_form = document.getElementById("type_of_form");
-        const type_of_form_list = document.getElementById("type_of_form_list");
-        const bpf_form = document.getElementById("bpf_form");
-        const add_item_button = document.getElementById("add_item_button");
+        const form_id_billing = billing_process_form.querySelector("#form_id_billing");
+        const type_of_form = billing_process_form.querySelector("#type_of_form");
+        const type_of_form_list = billing_process_form.querySelector("#type_of_form_list");
+        const bpf_form = billing_process_form.querySelector("#bpf_form");
+        const add_item_button = billing_process_form.querySelector("#add_item_button");
+        const remove_item_button = billing_process_form.querySelector("#remove_item_button");
         
         add_item_button.addEventListener("click", addCOD)
+        remove_item_button.addEventListener("click", removeCOD)
         type_of_form.addEventListener("change", () => {
             var data_content;
             if(type_of_form.value == "By COD (Single Transaction)" || type_of_form.value == "By COD (Multiple Transaction)"){
                 data_content = 
                 `
-                <div style="display: grid; grid-template-columns: 200px 200px; gap: 20px;">
-                    <div>
-                        <label for="search_cod_form_no1">
-                            Search COD #
-                        </label><br>
-                        <div class="bpf_form">
-                            <div class="form">
-                                <input type="text" id="search_cod_form_no1" autocomplete="off" name="search_cod_form_no1" class="form-control">
+                <div id="list1">
+                    <div style="display: grid; grid-template-columns: 200px 200px; gap: 20px;">
+                        <div>
+                            <label for="search_cod_form_no1">
+                                Search COD #
+                            </label><br>
+                            <div class="bpf_form">
+                                <div class="form">
+                                    <input type="text" id="search_cod_form_no1" autocomplete="off" name="search_cod_form_no1" class="form-control">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        <label for="service_invoice_no1">
-                            Service Invoice #
-                        </label><br>
-                        <div class="bpf_form">
-                            <div class="form">
-                                <input type="text" id="service_invoice_no1" autocomplete="off" name="service_invoice_no1" class="form-control">
+                        <div>
+                            <label for="service_invoice_no1">
+                                Service Invoice #
+                            </label><br>
+                            <div class="bpf_form">
+                                <div class="form">
+                                    <input type="text" id="service_invoice_no1" autocomplete="off" name="service_invoice_no1" class="form-control">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2205,51 +2209,54 @@ document.addEventListener('DOMContentLoaded', async function() {
             else if(type_of_form.value == "By Date"){
                 data_content = 
                 `
-                <div class="wrapper" id="client_container" style="display: grid; grid-template-columns: 600px;">
-                    <div>
-                        <label for="client">
-                            <i class="fa-solid fa-user"></i>
-                            Client
-                        </label>
-                        <div class="search_input" id="cod_search_client">
-                            <input type="text" name="client_input" id="client_input" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
-                            <input type="hidden" name="client_id" id="client_id" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
-                            <div class="autocom_box">
-                            </div>
-                            <div class="icon"><i class="fas fa-search"></i></div>
-                        </div>
-                    </div>
-                </div><br>
-                <div style="display: grid; grid-template-columns: 200px 200px 200px; gap: 20px;">
-                    <div>
-                        <label for="search_date1">
-                            Date
-                        </label><br>
-                        <div class="bpf_form">
-                            <div class="form">
-                                <input type="date" id="search_date1" autocomplete="off" name="search_date1" class="form-control" style="width: 200px">
+
+                <div id="list1">
+                    <div class="wrapper" id="client_container" style="display: grid; grid-template-columns: 600px;">
+                        <div>
+                            <label for="client">
+                                <i class="fa-solid fa-user"></i>
+                                Client
+                            </label>
+                            <div class="search_input" id="cod_search_client">
+                                <input type="text" name="client_input" id="client_input" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
+                                <input type="hidden" name="client_id" id="client_id" autocomplete="off" class="form-control" required placeholder="Type to Search Client Name...">
+                                <div class="autocom_box">
+                                </div>
+                                <div class="icon"><i class="fas fa-search"></i></div>
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        <label for="service_invoice_no1">
-                            Service Invoice #
-                        </label><br>
-                        <div class="bpf_form">
-                            <div class="form">
-                                <input type="text" id="service_invoice_no1" autocomplete="off" name="service_invoice_no1" class="form-control">
+                    </div><br>
+                    <div style="display: grid; grid-template-columns: 200px 200px 200px; gap: 20px;">
+                        <div>
+                            <label for="search_date1">
+                                Date
+                            </label><br>
+                            <div class="bpf_form">
+                                <div class="form">
+                                    <input type="date" id="search_date1" autocomplete="off" name="search_date1" class="form-control" style="width: 200px">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        <label for="type_waste1">
-                            Type of Waste
-                        </label><br>
-                        <div class="bpf_form">
-                            <div class="form">
-                                <select name="type_waste1" id="type_waste1" class="form-control" style="width: 200px">
-                                    <option value="ALL">SELECT TYPE</option>
-                                </select>
+                        <div>
+                            <label for="service_invoice_no1">
+                                Service Invoice #
+                            </label><br>
+                            <div class="bpf_form">
+                                <div class="form">
+                                    <input type="text" id="service_invoice_no1" autocomplete="off" name="service_invoice_no1" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="type_waste1">
+                                Type of Waste
+                            </label><br>
+                            <div class="bpf_form">
+                                <div class="form">
+                                    <select name="type_waste1" id="type_waste1" class="form-control" style="width: 200px">
+                                        <option value="ALL">SELECT TYPE</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2273,24 +2280,26 @@ document.addEventListener('DOMContentLoaded', async function() {
             if(type_of_form.value == "By COD (Single Transaction)" || type_of_form.value == "By COD (Multiple Transaction)"){
                 var data_content = 
                 `
-                <div style="display: grid; grid-template-columns: 200px 200px; gap: 20px;">
-                    <div>
-                        <label for="search_cod_form_no${cod_counter.value}">
-                            Search COD #
-                        </label><br>
-                        <div class="bpf_form">
-                            <div class="form">
-                                <input type="text" id="search_cod_form_no${cod_counter.value}" autocomplete="off" name="search_cod_form_no${cod_counter.value}" class="form-control">
+                <div id="list${cod_counter.value}">
+                    <div style="display: grid; grid-template-columns: 200px 200px; gap: 20px;">
+                        <div>
+                            <label for="search_cod_form_no${cod_counter.value}">
+                                Search COD #
+                            </label><br>
+                            <div class="bpf_form">
+                                <div class="form">
+                                    <input type="text" id="search_cod_form_no${cod_counter.value}" autocomplete="off" name="search_cod_form_no${cod_counter.value}" class="form-control">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        <label for="service_invoice_no1">
-                            Service Invoice #
-                        </label><br>
-                        <div class="bpf_form">
-                            <div class="form">
-                                <input type="text" id="service_invoice_no${cod_counter.value}" autocomplete="off" name="service_invoice_no${cod_counter.value}" class="form-control">
+                        <div>
+                            <label for="service_invoice_no1">
+                                Service Invoice #
+                            </label><br>
+                            <div class="bpf_form">
+                                <div class="form">
+                                    <input type="text" id="service_invoice_no${cod_counter.value}" autocomplete="off" name="service_invoice_no${cod_counter.value}" class="form-control">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2301,36 +2310,38 @@ document.addEventListener('DOMContentLoaded', async function() {
             else if(type_of_form.value == "By Date"){
                 var data_content = 
                 `
-                <div style="display: grid; grid-template-columns: 200px 200px 200px; gap: 20px;">
-                    <div>
-                        <label for="search_date${cod_counter.value}">
-                            Date
-                        </label><br>
-                        <div class="bpf_form">
-                            <div class="form">
-                                <input type="date" id="search_date${cod_counter.value}" autocomplete="off" name="search_date${cod_counter.value}" class="form-control" style="width: 200px">
+                <div id="list${cod_counter.value}">
+                    <div style="display: grid; grid-template-columns: 200px 200px 200px; gap: 20px;">
+                        <div>
+                            <label for="search_date${cod_counter.value}">
+                                Date
+                            </label><br>
+                            <div class="bpf_form">
+                                <div class="form">
+                                    <input type="date" id="search_date${cod_counter.value}" autocomplete="off" name="search_date${cod_counter.value}" class="form-control" style="width: 200px">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        <label for="service_invoice_no${cod_counter.value}">
-                            Service Invoice #
-                        </label><br>
-                        <div class="bpf_form">
-                            <div class="form">
-                                <input type="text" id="service_invoice_no${cod_counter.value}" autocomplete="off" name="service_invoice_no${cod_counter.value}" class="form-control">
+                        <div>
+                            <label for="service_invoice_no${cod_counter.value}">
+                                Service Invoice #
+                            </label><br>
+                            <div class="bpf_form">
+                                <div class="form">
+                                    <input type="text" id="service_invoice_no${cod_counter.value}" autocomplete="off" name="service_invoice_no${cod_counter.value}" class="form-control">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        <label for="type_waste${cod_counter.value}">
-                            Type of Waste
-                        </label><br>
-                        <div class="bpf_form">
-                            <div class="form">
-                                <select name="type_waste${cod_counter.value}" id="type_waste${cod_counter.value}" class="form-control" style="width: 200px">
-                                    <option value="ALL">SELECT TYPE</option>
-                                </select>
+                        <div>
+                            <label for="type_waste${cod_counter.value}">
+                                Type of Waste
+                            </label><br>
+                            <div class="bpf_form">
+                                <div class="form">
+                                    <select name="type_waste${cod_counter.value}" id="type_waste${cod_counter.value}" class="form-control" style="width: 200px">
+                                        <option value="ALL">SELECT TYPE</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2347,6 +2358,16 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <input type="hidden" name="total_vat_ex${cod_counter.value}" id="total_vat_ex${cod_counter.value}">
             `
             form_id_billing.insertAdjacentHTML("afterbegin", additional_data)
+            remove_item_button.style.display = "block"
+        }
+
+        function removeCOD () {
+            const terms = billing_process_form.querySelector(`#list${cod_counter.value}`);
+            terms.remove();
+            cod_counter.value = parseInt(cod_counter.value) - 1;
+            if(cod_counter.value == 1){
+                remove_item_button.style.display = "none"
+            }
         }
 
         function searchClient () {
