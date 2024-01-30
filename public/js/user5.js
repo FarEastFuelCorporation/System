@@ -2429,45 +2429,87 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         }
 
-        // ctf_data_list
-        // FORM GENERATOR
-        const collection_transaction = document.getElementById("collection_transaction");
-        const ctf_form_no = collection_transaction.querySelector("#ctf_form_no");
-        var last_row = ctf_data_list.content.length -1;
-        var data_info = ctf_data_list.content[last_row][findTextInArray(ctf_data_list, "CTF #")];
-        var data_counter;
-        if(last_row == 0){
-            data_counter = 0;
-        }
-        else{
-            data_counter = data_info.substring(9,13);
-        }
-        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
-        data_counter = (parseInt(data_counter) +1).toString().padStart(4, "0");
-        var current_year = new Date().getFullYear();
-        var last_counter_year = data_info.substring(3,7);
-        if(last_counter_year == current_year){
-            ctf_form_no.value = `CTF${last_counter_year}${month}${data_counter}`;
-        } else {
-            data_counter = (1).toString().padStart(4, "0");
-            ctf_form_no.value = `CTF${current_year}${month}${data_counter}`;
-        }
-
-        const search_bpf_no = collection_transaction.querySelector("#search_bpf_no");
-        const billing_amount = collection_transaction.querySelector("#billing_amount");
-        const total_amount = collection_transaction.querySelector("#total_amount");
-
-        search_bpf_no.addEventListener("change", () => {
-            var amount = 0;
-            for(let x = 1; x < bpf_data_list.content.length; x++){
-                if(search_bpf_no.value == bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")]){
-                    amount += bpf_data_list.content[x][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")]
-                }
-            }
-            billing_amount.value = amount;
-            total_amount.value = amount;
-        })
+        // collection_transaction
+        const total_amount = collection_transaction.querySelector(`#total_amount`);
+        const collection_list = collection_transaction.querySelector("#collection_list");
+        const add_item_button_collection_transaction = collection_transaction.querySelector("#add_item_button");
+        const remove_item_button_collection_transaction = collection_transaction.querySelector("#remove_item_button");
         
+        function addCollectionList(){
+            var collection_counter = collection_transaction.querySelector("#collection_counter");
+            collection_counter.value++;
+            var collection_list_data = 
+            `
+            <div id="list${collection_counter.value}" style="display: flex; gap: 20px;">
+                <div>
+                    <label for="search_bpf_no${collection_counter.value}">
+                        <i class="fa-solid fa-list-ol"></i>
+                        Billing #
+                    </label><br>
+                    <div class="form">
+                        <input type="text" id="search_bpf_no${collection_counter.value}" autocomplete="off" name="search_bpf_no${collection_counter.value}" class="form-control" required><br>
+                    </div>
+                </div>
+                <div>
+                    <label for="billing_amount${collection_counter.value}">
+                        <i class="fa-solid fa-list-ol"></i>
+                        Billing Amount
+                    </label><br>
+                    <div class="form">
+                        <input type="number" id="billing_amount${collection_counter.value}" autocomplete="off" name="billing_amount${collection_counter.value}" class="form-control" required readonly style="text-align: end;" step="" value="0.00"><br>
+                    </div>
+                </div>
+            </div>
+            `
+            collection_list.insertAdjacentHTML("beforeend", collection_list_data);
+
+            const search_bpf_no = collection_transaction.querySelector(`#search_bpf_no${collection_counter.value}`);
+            const billing_amount = collection_transaction.querySelector(`#billing_amount${collection_counter.value}`);
+
+            search_bpf_no.addEventListener("keyup", () => {
+                for(let x = 1; x < bpf_data_list.content.length; x++){
+                    var amount = 0;
+                    if(search_bpf_no.value == bpf_data_list.content[x][findTextInArray(bpf_data_list, "BPF #")]){
+                        amount = bpf_data_list.content[x][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")]
+                        break
+                    }
+                }
+                billing_amount.value = amount;
+                calculateTotalAmount();
+            })
+        }
+
+        function removeCollectionList(){
+            var collection_counter = collection_transaction.querySelector("#collection_counter");
+            var list = collection_transaction.querySelector(`#list${collection_counter.value}`);
+            list.remove();
+            collection_counter.value--;
+            if(collection_counter.value == "1"){
+                remove_item_button_collection_transaction.style.display = "none";
+            }
+            calculateTotalAmount();
+        }
+
+        addCollectionList();
+
+        function calculateTotalAmount(){
+            var collection_counter = collection_transaction.querySelector("#collection_counter");
+            var totalAmount = 0;
+            for(let x = 1; x <= collection_counter.value; x++){
+                const billing_amount = collection_transaction.querySelector(`#billing_amount${x}`);
+                totalAmount += parseFloat(billing_amount.value);
+                total_amount.value = totalAmount;
+            }
+        }
+
+        add_item_button_collection_transaction.addEventListener("click", () => {
+            addCollectionList();
+            remove_item_button_collection_transaction.style.display = "block";
+        })
+
+        remove_item_button_collection_transaction.addEventListener("click", () => {
+            removeCollectionList();
+        })
 
         // qlf_data_list
         const quotation_form = document.querySelector("#quotation_form");
