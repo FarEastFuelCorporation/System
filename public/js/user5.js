@@ -645,6 +645,27 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
                         receiving_date.setDate(receiving_date.getDate() + terms);
 
+                        // Convert receiving_date string to a Date object
+                        var receivedDate = new Date(receiving_date);
+
+                        // Get today's date
+                        var today = new Date();
+
+                        // Set hours, minutes, seconds, and milliseconds to 0 for accurate date comparison
+                        today.setHours(0, 0, 0, 0);
+
+                        // Initialize the status variable
+                        var status;
+
+                        // Compare dates and determine the status
+                        if (receivedDate < today) {
+                            status = "OVERDUE";
+                        } else if (receivedDate.getTime() === today.getTime()) {
+                            status = "DUE TODAY";
+                        } else {
+                            status = "PENDING";
+                        }
+
                         if(month_filter.value == formatMonth(receiving_date)){
                             if(!finished_billing_array.includes(bpf_data_list.content[j][findTextInArray(bpf_data_list, "BPF #")])){
                                 var mtf = "";
@@ -677,6 +698,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <td>${terms} Days</td>
                                     <td>${date_decoder(receiving_date)}</td>
                                     <td>${formatNumber(bpf_data_list.content[j][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")])}</td>
+                                    <td>${status}</td>
                                 </tr>
                                 `
                                 data_value_counter_collection += 1;
@@ -715,6 +737,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <td>${terms} Days</td>
                                     <td>${date_decoder(receiving_date)}</td>
                                     <td>${formatNumber(bpf_data_list.content[j][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")])}</td>
+                                    <td>${status}</td>
                                 </tr>
                                 `
                                 data_value_counter_collection += 1;
