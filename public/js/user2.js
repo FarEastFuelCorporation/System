@@ -650,20 +650,22 @@ document.addEventListener('DOMContentLoaded', async function() {
                 for(let i = 1; i < wcf_data_list.content.length; i++){
                     if(search_sf_wcf_form_no.value == wcf_data_list.content[i][findTextInArray(wcf_data_list, "WCF #")]){
                         for (var x = 1; x < qlf_data_list.content.length; x++) {
-                            if (wcf_data_list.content[i][findTextInArray(wcf_data_list, "CLIENT ID")] == qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")] &&
-                                (input_box[z].value).replace(/\s*\([^)]*\)/, '') == qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")]) {
-                                waste_id[z].value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")];
-                                waste_name[z].value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")];
-                                quotation[z].value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "QUOTATION CODE")];
-                                break
+                            if (wcf_data_list.content[i][findTextInArray(wcf_data_list, "CLIENT ID")] == qlf_data_list.content[x][findTextInArray(qlf_data_list, "CLIENT ID")]){
+                                if((input_box[z].value).replace(/\s*\([^)]*\)/, '') == qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")]) {
+                                    waste_id[z].value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")];
+                                    waste_name[z].value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "WASTE NAME")];
+                                    quotation[z].value = qlf_data_list.content[x][findTextInArray(qlf_data_list, "QUOTATION CODE")];
+                                    break
+                                }
+                                else{
+                                    waste_id[z].value = "W2023000";
+                                    waste_name[z].value = input_box[z].value;
+                                    quotation[z].value = quotation_no_data;
+                                }
+                                treatment_input.removeAttribute("readonly");
                             }
-                            else{
-                                waste_id[z].value = "W2023000";
-                                waste_name[z].value = input_box[z].value;
-                                quotation[z].value = quotation_no_data;
-                            }
-                            treatment_input.removeAttribute("readonly");
                         }
+                        break
                     }
                 }
             }
