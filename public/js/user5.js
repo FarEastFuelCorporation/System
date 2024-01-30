@@ -669,13 +669,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <td>${data_value_counter_collection}</td>
                                     <td>${bpf_data_list.content[j][findTextInArray(bpf_data_list, "BPF #")]}</td>
                                     <td>${mtf}</td>
+                                    <td>${findClientName(bpf_data_list.content[j][findTextInArray(bpf_data_list, "CLIENT ID")])}</td>
                                     <td>${date_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "HAULING DATE")])}</td>
                                     <td>${bpf_data_list.content[j][findTextInArray(bpf_data_list, "SERVICE INVOICE #")]}</td>
                                     <td>${date_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "BILLING DATE")])}</td>
                                     <td>${date_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "RECEIVED DATE")])}</td>
                                     <td>${terms} Days</td>
                                     <td>${date_decoder(receiving_date)}</td>
-                                    <td>${findClientName(bpf_data_list.content[j][findTextInArray(bpf_data_list, "CLIENT ID")])}</td>
                                     <td>${formatNumber(bpf_data_list.content[j][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")])}</td>
                                 </tr>
                                 `
@@ -707,13 +707,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <td>${data_value_counter_collection}</td>
                                     <td>${bpf_data_list.content[j][findTextInArray(bpf_data_list, "BPF #")]}</td>
                                     <td>${mtf}</td>
+                                    <td>${findClientName(bpf_data_list.content[j][findTextInArray(bpf_data_list, "CLIENT ID")])}</td>
                                     <td>${date_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "HAULING DATE")])}</td>
                                     <td>${bpf_data_list.content[j][findTextInArray(bpf_data_list, "SERVICE INVOICE #")]}</td>
                                     <td>${date_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "BILLING DATE")])}</td>
                                     <td>${date_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "RECEIVED DATE")])}</td>
                                     <td>${terms} Days</td>
                                     <td>${date_decoder(receiving_date)}</td>
-                                    <td>${findClientName(bpf_data_list.content[j][findTextInArray(bpf_data_list, "CLIENT ID")])}</td>
                                     <td>${formatNumber(bpf_data_list.content[j][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")])}</td>
                                 </tr>
                                 `
