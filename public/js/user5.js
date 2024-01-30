@@ -472,11 +472,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         terms = parseInt(qlf_data_list.content[x][findTextInArray(qlf_data_list, "TERMS CHARGE")]);
                     }
                 }
-                console.log(bpfNumber)
-                console.log(haulingDate)
                 haulingDate.setDate(haulingDate.getDate() + terms);
-                console.log(terms)
-                console.log(haulingDate)
 
                 if (month_filter.value === formatMonth(haulingDate)) {
                     const amount = bpf_data_list.content[i][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")];
@@ -511,7 +507,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                 }
             }
-            console.log(bpf_transaction_collection)
             for (let i = 1; i < ctf_data_list.content.length; i++) {
                 const bpfNumber = ctf_data_list.content[i][findTextInArray(ctf_data_list, "BPF #")];
                 var haulingDate = new Date(ctf_data_list.content[i][findTextInArray(ctf_data_list, "RECEIVED DATE")]);
@@ -544,16 +539,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                     bpf_ctf_transaction_collection_date[bpfNumber] = haulingDate;
                 }
             }
-            console.log(bpf_ctf_transaction_collection)
             for (const key in bpf_transaction_collection) {  
-                console.log("pass")   
                 // Check if the key exists in bpf_ctf_transaction_collection
                 if (bpf_ctf_transaction_collection[key]) {
-                    console.log("if")   
                     // If it exists in bpf_ctf_transaction_collection, add both "tpf #" and weight to finish_collection
                     finish_collection.push({ bpfNumber: key, amount: bpf_ctf_transaction_collection[key], date: bpf_ctf_transaction_collection_date[key]});
                 } else {
-                    console.log("else")
                     // If it doesn't exist in bpf_ctf_transaction_billing, add both "tpf #" and weight to pending_collection
                     pending_collection.push({ bpfNumber: key, amount: bpf_transaction_collection[key], date: bpf_transaction_collection_date[key]});
                 }
@@ -563,7 +554,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             pending_collection.forEach((data) => {
                 bpf_transaction_amount_collection += data.amount;
             })
-            console.log(pending_collection)
             finish_collection.forEach((data) => {
                 bpf_ctf_transaction_amount_collection += data.amount;
             })
@@ -1066,7 +1056,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     var data = "";
                                     var data3 = "";
                                     if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]){
-                                        console.log(wasteId)
                                         bpf_form_no_container.innerText = bpf_form_no.value;
                                         date_made_container.innerText = date_decoder(new Date());
                                         client_name_container.innerHTML = client_name;
@@ -1365,7 +1354,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         
                         }
                     }
-                    console.log(table_data_info)
                     for(let x = 0; x < table_data_info.length; x++){
                         table_data.insertAdjacentHTML("beforeend", table_data_info[x])
                     }
