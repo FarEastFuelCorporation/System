@@ -2479,6 +2479,9 @@ document.addEventListener('DOMContentLoaded', async function() {
             })
         }
 
+
+
+
         function removeCollectionList(){
             var collection_counter = collection_transaction.querySelector("#collection_counter");
             var list = collection_transaction.querySelector(`#list${collection_counter.value}`);

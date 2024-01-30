@@ -65,6 +65,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         user_sidebar_officer.innerText = username_data_list.content[2][findTextInArray(username_data_list, "SECTIONS")];
         user_sidebar_department.innerText = username_data_list.content[2][findTextInArray(username_data_list, "DEPARTMENT")];
 
+        // Get the user's timezone
+        var userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+        console.log("User's Timezone: " + userTimeZone);
+
         // sf_data_list
         // sorting_dashboard_section
         const total_sorting = document.querySelector("#sorting_dashboard_section #total");
