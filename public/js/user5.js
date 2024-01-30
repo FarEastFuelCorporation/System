@@ -64,10 +64,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         const user_sidebar = document.getElementById("user_sidebar");
         const user_sidebar_officer = document.getElementById("user_sidebar_officer");
         const user_sidebar_department = document.getElementById("user_sidebar_department");
-        const user = document.getElementById("user");
+        const users = document.querySelectorAll("#user");
 
         profile_picture.src = `../images/profile_picture/${username_data_list.content[5][findTextInArray(username_data_list, "PICTURE")]}`;
-        user.value = username_data_list.content[5][findTextInArray(username_data_list, "NAME")];
+        users.forEach(user => {user.value = username_data_list.content[5][findTextInArray(username_data_list, "NAME")]})
         user_sidebar.innerHTML = `<u>${username_data_list.content[5][findTextInArray(username_data_list, "NAME")]}</u>`;
         user_sidebar_officer.innerText = username_data_list.content[5][findTextInArray(username_data_list, "SECTIONS")];
         user_sidebar_department.innerText = username_data_list.content[5][findTextInArray(username_data_list, "DEPARTMENT")];
@@ -537,38 +537,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                 }
             }
-            // for (let i = 1; i < ctf_data_list.content.length; i++) {
-            //     const bpfNumber = ctf_data_list.content[i][findTextInArray(ctf_data_list, "BPF #")];
-            //     var haulingDate = new Date(ctf_data_list.content[i][findTextInArray(ctf_data_list, "RECEIVED DATE")]);
-            //     haulingDate.setDate(haulingDate.getDate() + terms);
-            //     if (month_filter.value === formatMonth(haulingDate)) {
 
-            //         const amount = ctf_data_list.content[i][findTextInArray(ctf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")];
-                    
-            //         // Check if the bpfNumber already exists in the object
-            //         if (bpf_ctf_transaction_collection[bpfNumber]) {
-            //             // If it exists, add the amount to the existing value
-            //             bpf_ctf_transaction_collection[bpfNumber] += amount;
-            //         } else {
-            //             // If it doesn't exist, create a new entry with the amount
-            //             bpf_ctf_transaction_collection[bpfNumber] = amount;
-            //         }
-            //         bpf_ctf_transaction_collection_date[bpfNumber] = haulingDate;
-            //     }
-            //     else if (month_filter.value === "ALL") {
-            //         const amount = ctf_data_list.content[i][findTextInArray(ctf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")];
-                    
-            //         // Check if the bpfNumber already exists in the object
-            //         if (bpf_ctf_transaction_collection[bpfNumber]) {
-            //             // If it exists, add the amount to the existing value
-            //             bpf_ctf_transaction_collection[bpfNumber] += amount;
-            //         } else {
-            //             // If it doesn't exist, create a new entry with the amount
-            //             bpf_ctf_transaction_collection[bpfNumber] = amount;
-            //         }
-            //         bpf_ctf_transaction_collection_date[bpfNumber] = haulingDate;
-            //     }
-            // }
             for (const key in bpf_transaction_collection) {  
                 // Check if the key exists in bpf_ctf_transaction_collection
                 if (bpf_ctf_transaction_collection[key]) {
@@ -577,6 +546,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                 } else {
                     // If it doesn't exist in bpf_ctf_transaction_billing, add both "tpf #" and weight to pending_collection
                     pending_collection.push({ bpfNumber: key, amount: bpf_transaction_collection[key], date: bpf_transaction_collection_date[key]});
+                }
+            }
+            for (const key in bpf_ctf_transaction_collection) {  
+                // Check if the key exists in bpf_ctf_transaction_collection
+                if (bpf_ctf_transaction_collection[key]) {
+                    // If it exists in bpf_ctf_transaction_collection, add both "tpf #" and weight to finish_collection
+                    finish_collection.push({ bpfNumber: key, amount: bpf_ctf_transaction_collection[key], date: bpf_ctf_transaction_collection_date[key]});
                 }
             }
             pending_collection.sort((a, b) => a.date - b.date);
