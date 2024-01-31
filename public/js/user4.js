@@ -2088,7 +2088,16 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     }
                                 }
                                 done.push(item.tpfNumber)
-                                year = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])).getFullYear();
+                                let haulDate = new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")]);
+                                year = haulDate.getFullYear();
+                                year_covered.value = year;
+                                const monthNames = [
+                                    "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY",
+                                    "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"
+                                ];
+                                let monthIndex = haulDate.getMonth();
+                                let monthName = monthNames[monthIndex];
+                                month_covered.value = monthName
                                 certification_year = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getFullYear();
                                 month = (new Date(tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")])).getMonth() + 1;
                                 certification_date = tpf_data_list.content[x][findTextInArray(tpf_data_list, "TARGET COMPLETION DATE")];
@@ -3194,6 +3203,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </select>
                     </div>
                 </div>
+                <input type="hidden" autocomplete="off" name="year_covered" id="year_covered" class="form-control"><br>
+                <input type="hidden" autocomplete="off" name="month_covered" id="month_covered" class="form-control"><br>
                 `
                 what_to_print.style.display = "none";
                 client_container.style.display = "grid";    
