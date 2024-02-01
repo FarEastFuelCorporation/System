@@ -646,42 +646,42 @@ document.addEventListener('DOMContentLoaded', async function() {
                         }
 
                         if(month_filter.value == formatMonth(receiving_date)){
-                            if(!finished_billing_array.includes(bpf_data_list.content[j][findTextInArray(bpf_data_list, "BPF #")])){
-                                var mtf = "";
-                                var ltf = "";
-                                for(let k = 1; k < wcf_data_list.content.length; k++){
-                                    if(bpf_data_list.content[j][findTextInArray(bpf_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
-                                        if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
-                                            mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
-                                        }else{
-                                            ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
-                                            for(let x = 1; x < ltf_data_list.content.length; x++){
-                                                if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
-                                                    mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
-                                                    break
-                                                }
+                            var mtf = "";
+                            var ltf = "";
+                            for(let k = 1; k < wcf_data_list.content.length; k++){
+                                if(bpf_data_list.content[j][findTextInArray(bpf_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                                    if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                        mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                    }else{
+                                        ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                        for(let x = 1; x < ltf_data_list.content.length; x++){
+                                            if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                                mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                                break
                                             }
                                         }
                                     }
                                 }
-                                data_value_collection +=`
-                                <tr ${style}>
-                                    <td>${data_value_counter_collection}</td>
-                                    <td>${bpf_data_list.content[j][findTextInArray(bpf_data_list, "BPF #")]}</td>
-                                    <td>${mtf}</td>
-                                    <td>${findClientName(bpf_data_list.content[j][findTextInArray(bpf_data_list, "CLIENT ID")])}</td>
-                                    <td>${date_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "HAULING DATE")])}</td>
-                                    <td>${bpf_data_list.content[j][findTextInArray(bpf_data_list, "SERVICE INVOICE #")]}</td>
-                                    <td>${date_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "BILLING DATE")])}</td>
-                                    <td>${date_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "RECEIVED DATE")])}</td>
-                                    <td>${terms} Days</td>
-                                    <td>${date_decoder(receiving_date)}</td>
-                                    <td>${formatNumber(bpf_data_list.content[j][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")])}</td>
-                                    <td>${status}</td>
-                                </tr>
-                                `
-                                data_value_counter_collection += 1;
-                                finished_billing_array.push(bpf_data_list.content[j][findTextInArray(bpf_data_list, "BPF #")])
+                            }
+                            data_value_collection +=`
+                            <tr ${style}>
+                                <td>${data_value_counter_collection}</td>
+                                <td>${bpf_data_list.content[j][findTextInArray(bpf_data_list, "BPF #")]}</td>
+                                <td>${mtf}</td>
+                                <td>${findClientName(bpf_data_list.content[j][findTextInArray(bpf_data_list, "CLIENT ID")])}</td>
+                                <td>${date_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "HAULING DATE")])}</td>
+                                <td>${bpf_data_list.content[j][findTextInArray(bpf_data_list, "SERVICE INVOICE #")]}</td>
+                                <td>${date_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "BILLING DATE")])}</td>
+                                <td>${date_decoder(bpf_data_list.content[j][findTextInArray(bpf_data_list, "RECEIVED DATE")])}</td>
+                                <td>${terms} Days</td>
+                                <td>${date_decoder(receiving_date)}</td>
+                                <td>${formatNumber(bpf_data_list.content[j][findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")])}</td>
+                                <td>${status}</td>
+                            </tr>
+                            `
+                            data_value_counter_collection += 1;
+                            finished_billing_array.push(bpf_data_list.content[j][findTextInArray(bpf_data_list, "BPF #")])
+                            if(!finished_billing_array.includes(bpf_data_list.content[j][findTextInArray(bpf_data_list, "BPF #")])){
                             }
                         }
                         else if(month_filter.value == "ALL"){
