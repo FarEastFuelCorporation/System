@@ -997,6 +997,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                             break
                         }
                     }
+                    var waste_name = "";
+                    var mode = "";
+                    var unit = "";
+                    var unit_price = "";
                     wasteIDArray.forEach((wasteId) => {
                         for(let x = 1; x < cod_data_list.content.length; x++){
                             if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]){
@@ -1067,10 +1071,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             }
                                         }
                                     }
-                                    var waste_name = "";
-                                    var mode = "";
-                                    var unit = "";
-                                    var unit_price = "";
                                     for (let c = qlf_data_list.content.length - 1; c >= 1; c--) {
                                         if(quotation_no == qlf_data_list.content[c][findTextInArray(qlf_data_list, "QUOTATION CODE")] &&
                                         waste_id == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
@@ -1292,7 +1292,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             if(max_capacity < capacity){
                                 data2 = `
                                 <tr>
-                                    <td>${s}</td>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td style="font-size: 10px !important; padding-top: 2px">TOTAL:</td>
@@ -1320,7 +1320,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <td style="font-size: 10px !important; padding-top: 2px">EXCESS QUANTITY:</td>
                                     <td style="text-align: right; padding-right: 5px">${formatNumber(capacity - max_capacity)}</td>
                                     <td>${unit}</td>
-                                    <td style="text-align: right; padding-right: 5px">${formatNumber(unit_price)}</td>
+                                    <td style="text-align: right; padding-right: 5px">${(unit_price)}</td>
                                     <td style="text-align: right; padding-right: 5px">${formatNumber((capacity - max_capacity) * unit_price)}</td>
                                     <td style="font-size: 10px !important">${vat_calculation}</td>
                                 </tr>
