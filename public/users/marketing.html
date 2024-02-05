@@ -764,52 +764,73 @@
     </div><br>
     <div id="new_client_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
         <h2>NEW CLIENT FORM</h2><br>
-        <form  action="https://script.google.com/macros/s/AKfycbwYjAfEOBMmCuwlkq6QJ4EQa0KnXZsK21Z656j8mlTPZc0h1BlflAj2oVqODcxDR-JJ/exec" method="post">
+        <form  action="https://script.google.com/macros/s/AKfycbxM0OLt_Mi9VYDcEQVGNImvLudTtifjnB5X6X8eOC-8kWWNPVj9go0Y0-cJmFVsDiFl/exec" method="post">
             <label for="client_id">
                 <i class="fa-solid fa-user"></i>
                 Client ID
                 </label><br>
             <input type="text" name="client_id" id="client_id" autocomplete="off" class="form-control form" required readonly><br>
-            <label for="client_name">
-                <i class="fa-solid fa-user"></i>
-                Client
-                </label><br>
-            <input type="text" name="client_name" id="client_name" autocomplete="off" class="form-control" required placeholder="Input Client's Name..."><br>
-            <label for="address">
-                <i class="fa-solid fa-house-user"></i>
-                Address
-            </label><br>
-            <input type="text" name="address" id="address" autocomplete="off" class="form-control" required placeholder="Input Client's Address..."><br>
-            <label for="nature_of_business">
-                <i class="fa-solid fa-table-list"></i>
-                Nature of Business
-            </label><br>
-            <input type="text" name="nature_of_business" id="nature_of_business" autocomplete="off" class="form-control" required placeholder="Input Client's Nature of Business..."><br>
-            <label for="contact_number">
-                <i class="fa-solid fa-square-phone"></i>
-                Contact Number
-            </label><br>
-            <input type="text" name="contact_number" id="contact_number" autocomplete="off" class="form-control" required placeholder="Input Client's Contact Number..."><br>
-            <label for="biller_name">
-                <i class="fa-solid fa-user"></i>
-                Biller Name
-                </label><br>
-            <input type="text" name="biller_name" id="biller_name" autocomplete="off" class="form-control" required placeholder="Input Biller's Name..."><br>
-            <label for="biller_address">
-                <i class="fa-solid fa-house-user"></i>
-                Biller Address
-            </label><br>
-            <input type="text" name="biller_address" id="biller_address" autocomplete="off" class="form-control" required placeholder="Input Biller's Address..."><br>
-            <label for="biller_contact_person">
-                <i class="fa-solid fa-square-phone"></i>
-                Biller Contact Person
-            </label><br>
-            <input type="text" name="biller_contact_person" id="biller_contact_person" autocomplete="off" class="form-control" required placeholder="Input Biller's Contact Person..."><br>    
-            <label for="biller_contact_number">
-                <i class="fa-solid fa-square-phone"></i>
-                Biller Contact Number
-            </label><br>
-            <input type="text" name="biller_contact_number" id="biller_contact_number" autocomplete="off" class="form-control" required placeholder="Input Biller's Contact Number..."><br>
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    <label for="client_name">
+                        <i class="fa-solid fa-user"></i>
+                        Client
+                        </label><br>
+                    <input type="text" name="client_name" id="client_name" autocomplete="off" class="form-control" required placeholder="Input Client's Name..."><br>
+                    <label for="address">
+                        <i class="fa-solid fa-house-user"></i>
+                        Address
+                    </label><br>
+                    <input type="text" name="address" id="address" autocomplete="off" class="form-control" required placeholder="Input Client's Address..."><br>
+                    <label for="nature_of_business">
+                        <i class="fa-solid fa-table-list"></i>
+                        Nature of Business
+                    </label><br>
+                    <input type="text" name="nature_of_business" id="nature_of_business" autocomplete="off" class="form-control" required placeholder="Input Client's Nature of Business..."><br>
+                    <label for="contact_number">
+                        <i class="fa-solid fa-square-phone"></i>
+                        Contact Number
+                    </label><br>
+                    <input type="text" name="contact_number" id="contact_number" autocomplete="off" class="form-control" required placeholder="Input Client's Contact Number..."><br>
+                    <label for="tin_no">
+                        <i class="fa-solid fa-table-list"></i>
+                        Tin #
+                    </label><br>
+                    <input type="text" name="tin_no" id="tin_no" autocomplete="off" class="form-control" required placeholder="Input Client's Contact Number..."><br>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <label for="biller_name">
+                        <i class="fa-solid fa-user"></i>
+                        Biller Name
+                        </label><br>
+                    <input type="text" name="biller_name" id="biller_name" autocomplete="off" class="form-control" required placeholder="Input Biller's Name..."><br>
+                    <label for="biller_address">
+                        <i class="fa-solid fa-house-user"></i>
+                        Biller Address
+                    </label><br>
+                    <input type="text" name="biller_address" id="biller_address" autocomplete="off" class="form-control" required placeholder="Input Biller's Address..."><br>
+                    <label for="biller_contact_person">
+                        <i class="fa-solid fa-house-user"></i>
+                        Biller Contact Person
+                    </label><br>
+                    <input type="text" name="biller_contact_person" id="biller_contact_person" autocomplete="off" class="form-control" required placeholder="Input Biller's Contact Person..."><br>    
+                    <label for="biller_contact_number">
+                        <i class="fa-solid fa-square-phone"></i>
+                        Biller Contact Number
+                    </label><br>
+                    <input type="text" name="biller_contact_number" id="biller_contact_number" autocomplete="off" class="form-control" required placeholder="Input Biller's Contact Number..."><br>
+                    <label for="biller_nature_of_business">
+                        <i class="fa-solid fa-table-list"></i>
+                        Biller Nature of Business
+                    </label><br>
+                    <input type="text" name="biller_nature_of_business" id="biller_nature_of_business" autocomplete="off" class="form-control" required placeholder="Input Biller's Contact Number..."><br>
+                    <label for="biller_tin_no">
+                        <i class="fa-solid fa-table-list"></i>
+                        Biller Tin #
+                    </label><br>
+                    <input type="text" name="biller_tin_no" id="biller_tin_no" autocomplete="off" class="form-control" required placeholder="Input Biller's Contact Number..."><br>
+                </div>
+            </div>
             <div class="buttons">
                 <button type="submit" id="submit_btn" class="form-control" >
                     Submit
@@ -822,7 +843,7 @@
     </div>
     <div id="update_client_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #dc3545; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
         <h2>UPDATE CLIENT FORM</h2><br>
-        <form  action="https://script.google.com/macros/s/AKfycbwYjAfEOBMmCuwlkq6QJ4EQa0KnXZsK21Z656j8mlTPZc0h1BlflAj2oVqODcxDR-JJ/exec" method="post">
+        <form  action="https://script.google.com/macros/s/AKfycbxM0OLt_Mi9VYDcEQVGNImvLudTtifjnB5X6X8eOC-8kWWNPVj9go0Y0-cJmFVsDiFl/exec" method="post">
             <div style="display: flex; gap: 20px;">
                 <div>
                     <label for="client_id">
@@ -838,46 +859,67 @@
                 </div>
             </div><br>
             <div id="update_client_form_tab_container">
-                <label for="client">
-                    <i class="fa-solid fa-user"></i>
-                    Client
-                    </label><br>
-                <input type="text" name="client_name" id="client_name" autocomplete="off" class="form-control" required placeholder="Input Client Name..."><br>
-                <label for="address">
-                    <i class="fa-solid fa-house-user"></i>
-                    Address
-                </label><br>
-                <input type="text" name="address" id="address" autocomplete="off" class="form-control" required placeholder="Input Client's Address..."><br>
-                <label for="nature_of_business">
-                    <i class="fa-solid fa-table-list"></i>
-                    Nature of Business
-                </label><br>
-                <input type="text" name="nature_of_business" id="nature_of_business" autocomplete="off" class="form-control" required placeholder="Input Client's Nature of Business..."><br>
-                <label for="contact_number">
-                    <i class="fa-solid fa-square-phone"></i>
-                    Contact Number
-                </label><br>
-                <input type="text" name="contact_number" id="contact_number" autocomplete="off" class="form-control" required placeholder="Input Client's Contact Number..."><br>
-                <label for="biller_name">
-                    <i class="fa-solid fa-user"></i>
-                    Biller Name
-                    </label><br>
-                <input type="text" name="biller_name" id="biller_name" autocomplete="off" class="form-control" required placeholder="Input Biller's Name..."><br>
-                <label for="biller_address">
-                    <i class="fa-solid fa-house-user"></i>
-                    Biller Address
-                </label><br>
-                <input type="text" name="biller_address" id="biller_address" autocomplete="off" class="form-control" required placeholder="Input Biller's Address..."><br>
-                <label for="biller_contact_person">
-                    <i class="fa-solid fa-square-phone"></i>
-                    Biller Contact Person
-                </label><br>
-                <input type="text" name="biller_contact_person" id="biller_contact_person" autocomplete="off" class="form-control" required placeholder="Input Biller's Contact Person..."><br>    
-                <label for="biller_contact_number">
-                    <i class="fa-solid fa-square-phone"></i>
-                    Biller Contact Number
-                </label><br>
-                <input type="text" name="biller_contact_number" id="biller_contact_number" autocomplete="off" class="form-control" required placeholder="Input Biller's Contact Number..."><br>
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <label for="client_name">
+                            <i class="fa-solid fa-user"></i>
+                            Client
+                            </label><br>
+                        <input type="text" name="client_name" id="client_name" autocomplete="off" class="form-control" required placeholder="Input Client's Name..."><br>
+                        <label for="address">
+                            <i class="fa-solid fa-house-user"></i>
+                            Address
+                        </label><br>
+                        <input type="text" name="address" id="address" autocomplete="off" class="form-control" required placeholder="Input Client's Address..."><br>
+                        <label for="nature_of_business">
+                            <i class="fa-solid fa-table-list"></i>
+                            Nature of Business
+                        </label><br>
+                        <input type="text" name="nature_of_business" id="nature_of_business" autocomplete="off" class="form-control" required placeholder="Input Client's Nature of Business..."><br>
+                        <label for="contact_number">
+                            <i class="fa-solid fa-square-phone"></i>
+                            Contact Number
+                        </label><br>
+                        <input type="text" name="contact_number" id="contact_number" autocomplete="off" class="form-control" required placeholder="Input Client's Contact Number..."><br>
+                        <label for="tin_no">
+                            <i class="fa-solid fa-table-list"></i>
+                            Tin #
+                        </label><br>
+                        <input type="text" name="tin_no" id="tin_no" autocomplete="off" class="form-control" required placeholder="Input Client's Contact Number..."><br>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <label for="biller_name">
+                            <i class="fa-solid fa-user"></i>
+                            Biller Name
+                            </label><br>
+                        <input type="text" name="biller_name" id="biller_name" autocomplete="off" class="form-control" required placeholder="Input Biller's Name..."><br>
+                        <label for="biller_address">
+                            <i class="fa-solid fa-house-user"></i>
+                            Biller Address
+                        </label><br>
+                        <input type="text" name="biller_address" id="biller_address" autocomplete="off" class="form-control" required placeholder="Input Biller's Address..."><br>
+                        <label for="biller_contact_person">
+                            <i class="fa-solid fa-house-user"></i>
+                            Biller Contact Person
+                        </label><br>
+                        <input type="text" name="biller_contact_person" id="biller_contact_person" autocomplete="off" class="form-control" required placeholder="Input Biller's Contact Person..."><br>    
+                        <label for="biller_contact_number">
+                            <i class="fa-solid fa-square-phone"></i>
+                            Biller Contact Number
+                        </label><br>
+                        <input type="text" name="biller_contact_number" id="biller_contact_number" autocomplete="off" class="form-control" required placeholder="Input Biller's Contact Number..."><br>
+                        <label for="biller_nature_of_business">
+                            <i class="fa-solid fa-table-list"></i>
+                            Biller Nature of Business
+                        </label><br>
+                        <input type="text" name="biller_nature_of_business" id="biller_nature_of_business" autocomplete="off" class="form-control" required placeholder="Input Biller's Contact Number..."><br>
+                        <label for="biller_tin_no">
+                            <i class="fa-solid fa-table-list"></i>
+                            Biller Tin #
+                        </label><br>
+                        <input type="text" name="biller_tin_no" id="biller_tin_no" autocomplete="off" class="form-control" required placeholder="Input Biller's Contact Number..."><br>
+                    </div>
+                </div>
                 <input type="hidden" name="timestamp" id="timestamp">
                 <div class="buttons">
                     <button type="submit" id="submit_btn" class="form-control" >
