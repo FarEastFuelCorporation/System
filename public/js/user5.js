@@ -1131,7 +1131,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                         <td>${date_of_certification}</td>
                                                         <td></td>
                                                         <td>${service_invoice_no.value}</td>
-                                                        <td style="font-size: 10px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
+                                                        <td style="font-size: 9px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
                                                         <td style="text-align: right; padding-right: 5px">${formatNumber(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
                                                         <td>${unit}</td>
                                                         <td style="text-align: right; padding-right: 5px">${formatNumber(unit_price)}</td>
@@ -1161,7 +1161,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                         <td>${date_of_certification}</td>
                                                         <td></td>
                                                         <td>${service_invoice_no.value}</td>
-                                                        <td style="font-size: 10px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
+                                                        <td style="font-size: 9px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
                                                         <td style="text-align: right; padding-right: 5px">${formatNumber(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
                                                         <td>${unit}</td>
                                                         <td style="text-align: right; padding-right: 5px">${formatNumber(unit_price)}</td>
@@ -1177,7 +1177,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                     <td class="amount">${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
                                                     <td>${unit}</td>
                                                     <td>${date_of_certification}</td>
-                                                    <td style="font-size: 10px !important; padding-top: 5px !important;">${waste_name}</td>
+                                                    <td style="font-size: 9px !important; padding-top: 5px !important;">${waste_name}</td>
                                                     <td class="amount">${formatNumber(si_unit_price)}</td>
                                                     <td class="amount">${formatNumber(si_amount)}</td>
                                                 </tr>
@@ -1194,7 +1194,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                     <td>${date_of_certification}</td>
                                                     <td></td>
                                                     <td>${service_invoice_no.value}</td>
-                                                    <td style="font-size: 10px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
+                                                    <td style="font-size: 9px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
                                                     <td style="text-align: right; padding-right: 5px">${formatNumber(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
                                                     <td>${unit}</td>
                                                     <td style="text-align: right; padding-right: 5px"></td>
@@ -1212,7 +1212,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                     <td class="amount">${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
                                                     <td>${unit}</td>
                                                     <td>${date_of_certification}</td>
-                                                    <td style="font-size: 10px !important; padding-top: 5px !important;">${waste_name}</td>
+                                                    <td style="font-size: 9px !important; padding-top: 5px !important;">${waste_name}</td>
                                                     <td class="amount">${formatNumber(si_unit_price)}</td>
                                                     <td class="amount">${formatNumber(si_amount)}</td>
                                                 </tr>
@@ -1244,7 +1244,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <td>${date_of_certification_transportation}</td>
                                         <td></td>
                                         <td>${service_invoice_no.value}</td>
-                                        <td style="font-size: 10px !important; padding-top: 2px">TRANS. FEE ${transportation_vehicle}</td>
+                                        <td style="font-size: 9px !important; padding-top: 2px">TRANS. FEE ${transportation_vehicle}</td>
                                         <td style="text-align: right; padding-right: 5px">${1}</td>
                                         <td>${transportation_unit}</td>
                                         <td style="text-align: right; padding-right: 5px">${formatNumber(transportation_fee)}</td>
@@ -1275,7 +1275,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <td class="amount">${1}</td>
                                         <td>${transportation_unit}</td>
                                         <td>${date_of_certification_transportation}</td>
-                                        <td style="font-size: 10px !important; padding-top: 5px !important;">TRANS. FEE ${transportation_vehicle}</td>
+                                        <td style="font-size: 9px !important; padding-top: 5px !important;">TRANS. FEE ${transportation_vehicle}</td>
                                         <td class="amount">${formatNumber(si_unit_price)}</td>
                                         <td class="amount">${formatNumber(si_amount)}</td>
                                     </tr>
@@ -1295,7 +1295,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td style="font-size: 10px !important; padding-top: 2px">TOTAL:</td>
+                                    <td style="font-size: 9px !important; padding-top: 2px">TOTAL:</td>
                                     <td style="text-align: right; padding-right: 5px">${formatNumber(capacity)}</td>
                                     <td>${unit}</td>
                                     <td style="text-align: right; padding-right: 5px"></td>
@@ -1306,7 +1306,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td style="font-size: 10px !important; padding-top: 2px">FIRST ${formatNumber2(max_capacity)} ${unit}:</td>
+                                    <td style="font-size: 9px !important; padding-top: 2px">FIRST ${formatNumber2(max_capacity)} ${unit}:</td>
                                     <td style="text-align: right; padding-right: 5px">${formatNumber(max_capacity)}</td>
                                     <td>${unit}</td>
                                     <td style="text-align: right; padding-right: 5px"></td>
@@ -1317,7 +1317,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td style="font-size: 10px !important; padding-top: 2px">EXCESS QUANTITY:</td>
+                                    <td style="font-size: 9px !important; padding-top: 2px">EXCESS QUANTITY:</td>
                                     <td style="text-align: right; padding-right: 5px">${formatNumber(capacity - max_capacity)}</td>
                                     <td>${unit}</td>
                                     <td style="text-align: right; padding-right: 5px">${(unit_price)}</td>
@@ -1348,7 +1348,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td style="font-size: 10px !important; padding-top: 2px">TOTAL:</td>
+                                    <td style="font-size: 9px !important; padding-top: 2px">TOTAL:</td>
                                     <td style="text-align: right; padding-right: 5px">${formatNumber(capacity)}</td>
                                     <td>${unit}</td>
                                     <td style="text-align: right; padding-right: 5px"></td>
@@ -1359,7 +1359,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td style="font-size: 10px !important; padding-top: 2px">FIRST ${formatNumber2(max_capacity)} ${unit}:</td>
+                                    <td style="font-size: 9px !important; padding-top: 2px">FIRST ${formatNumber2(max_capacity)} ${unit}:</td>
                                     <td style="text-align: right; padding-right: 5px">${formatNumber(max_capacity)}</td>
                                     <td>${unit}</td>
                                     <td style="text-align: right; padding-right: 5px"></td>
@@ -1597,7 +1597,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <td>${date_of_certification}</td>
                                         <td></td>
                                         <td>${service_invoice_no.value}</td>
-                                        <td style="font-size: 10px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
+                                        <td style="font-size: 9px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
                                         <td style="text-align: right; padding-right: 5px">${formatNumber(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
                                         <td>${unit}</td>
                                         <td style="text-align: right; padding-right: 5px">${formatNumber(unit_price)}</td>
@@ -1627,7 +1627,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <td>${date_of_certification}</td>
                                         <td></td>
                                         <td>${service_invoice_no.value}</td>
-                                        <td style="font-size: 10px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
+                                        <td style="font-size: 9px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
                                         <td style="text-align: right; padding-right: 5px">${formatNumber(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
                                         <td>${unit}</td>
                                         <td style="text-align: right; padding-right: 5px">${formatNumber(unit_price)}</td>
@@ -1643,7 +1643,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <td class="amount">${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
                                     <td>${unit}</td>
                                     <td>${date_of_certification}</td>
-                                    <td style="font-size: 10px !important; padding-top: 5px !important;">${waste_name}</td>
+                                    <td style="font-size: 9px !important; padding-top: 5px !important;">${waste_name}</td>
                                     <td class="amount">${formatNumber(si_unit_price)}</td>
                                     <td class="amount">${formatNumber(si_amount)}</td>
                                 </tr>
@@ -1669,7 +1669,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 <td>${date_of_certification_transportation}</td>
                                 <td></td>
                                 <td>${service_invoice_no.value}</td>
-                                <td style="font-size: 10px !important; padding-top: 2px">TRANS. FEE ${transportation_vehicle}</td>
+                                <td style="font-size: 9px !important; padding-top: 2px">TRANS. FEE ${transportation_vehicle}</td>
                                 <td style="text-align: right; padding-right: 5px">${1}</td>
                                 <td>${transportation_unit}</td>
                                 <td style="text-align: right; padding-right: 5px">${formatNumber(transportation_fee)}</td>
@@ -1700,7 +1700,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 <td class="amount">${1}</td>
                                 <td>${transportation_unit}</td>
                                 <td>${date_of_certification_transportation}</td>
-                                <td style="font-size: 10px !important; padding-top: 5px !important;">TRANS. FEE ${transportation_vehicle}</td>
+                                <td style="font-size: 9px !important; padding-top: 5px !important;">TRANS. FEE ${transportation_vehicle}</td>
                                 <td class="amount">${formatNumber(si_unit_price)}</td>
                                 <td class="amount">${formatNumber(si_amount)}</td>
                             </tr>
@@ -1958,7 +1958,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <td>${date_of_certification}</td>
                                         <td></td>
                                         <td>${service_invoice_no.value}</td>
-                                        <td style="font-size: 10px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
+                                        <td style="font-size: 9px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
                                         <td style="text-align: right; padding-right: 5px">${formatNumber(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
                                         <td>${unit}</td>
                                         <td style="text-align: right; padding-right: 5px">${formatNumber(unit_price)}</td>
@@ -1988,7 +1988,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         <td>${date_of_certification}</td>
                                         <td></td>
                                         <td>${service_invoice_no.value}</td>
-                                        <td style="font-size: 10px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
+                                        <td style="font-size: 9px !important; padding-top: 2px;">${cod_data_list.content[x][findTextInArray(cod_data_list, "WASTE NAME")]}</td>
                                         <td style="text-align: right; padding-right: 5px">${formatNumber(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
                                         <td>${unit}</td>
                                         <td style="text-align: right; padding-right: 5px">${formatNumber(unit_price)}</td>
@@ -2004,7 +2004,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <td class="amount">${formatNumber2(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")])}</td>
                                     <td>${unit}</td>
                                     <td>${date_of_certification}</td>
-                                    <td style="font-size: 10px !important; padding-top: 5px !important;">${waste_name}</td>
+                                    <td style="font-size: 9px !important; padding-top: 5px !important;">${waste_name}</td>
                                     <td class="amount">${formatNumber(si_unit_price)}</td>
                                     <td class="amount">${formatNumber(si_amount)}</td>
                                 </tr>
@@ -2030,7 +2030,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <td>${date_of_certification}</td>
                                     <td></td>
                                     <td>${service_invoice_no.value}</td>
-                                    <td style="font-size: 10px !important; padding-top: 2px">TRANS. FEE ${transportation_vehicle}</td>
+                                    <td style="font-size: 9px !important; padding-top: 2px">TRANS. FEE ${transportation_vehicle}</td>
                                     <td style="text-align: right; padding-right: 5px">${1}</td>
                                     <td>${transportation_unit}</td>
                                     <td style="text-align: right; padding-right: 5px">${formatNumber(transportation_fee)}</td>
@@ -2059,7 +2059,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <td class="amount">${1}</td>
                                     <td>${transportation_unit}</td>
                                     <td>${date_of_certification}</td>
-                                    <td style="font-size: 10px !important; padding-top: 5px !important;">TRANS. FEE ${transportation_vehicle}</td>
+                                    <td style="font-size: 9px !important; padding-top: 5px !important;">TRANS. FEE ${transportation_vehicle}</td>
                                     <td class="amount">${formatNumber(si_unit_price)}</td>
                                     <td class="amount">${formatNumber(si_amount)}</td>
                                 </tr>
