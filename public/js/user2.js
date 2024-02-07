@@ -638,7 +638,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
             sugg_box[z].addEventListener("click", (e) => {
                 if (e.target.tagName === "LI") {
-                    select(e.target.innerHTML, z);
+                    select(e.target.innerText, z);
                 }
             });
 
@@ -772,7 +772,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
             sugg_box2[z].addEventListener("click", (e) => {
                 if (e.target.tagName === "LI") {
-                    select2(e.target.innerHTML, z);
+                    select2(e.target.innerText, z);
                 }
             });
 
