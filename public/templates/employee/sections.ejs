@@ -75,7 +75,7 @@
         <button type="button" class="card" style="position: relative;">
             <div class="card-content">
                 <div class="number" id="sick_leave">5 days</div>
-                <div class="card-name">Service Incentive Leave Form</div>
+                <div class="card-name">Sick Leave Form</div>
             </div>
             <div class="icon-box">
                 <i class="fa-solid fa-file-signature"></i>
@@ -88,11 +88,19 @@
         </div>
         <button type="button" class="card">
             <div class="card-content">
-                <div class="number" id="vacation_leave">30 days</div>
-                <div class="card-name">Sick / Vacation Leave Form</div>
+                <div class="number" id="vacation_leave">10 days</div>
+                <div class="card-name">Vacation Leave Form</div>
             </div>
             <div class="icon-box">
                 <i class="fa-solid fa-file-signature"></i>
+            </div>
+        </button>
+        <button type="button" class="card">
+            <div class="card-content">
+                <div class="card-name">Travel Order Form</div>
+            </div>
+            <div class="icon-box">
+                <i class="fa-solid fa-car-side"></i>
             </div>
         </button>
         <button type="button" class="card">
@@ -126,13 +134,13 @@
             <i class="fa-solid fa-circle-arrow-left"></i>
             Back
         </button>
-        <h2>SERVICE INCENTIVE FORM</h2><br>
+        <h2>SICK LEAVE FORM</h2><br>
         <input type="hidden" id="url" name="url">
         <input type="hidden" id="employee_id" name="employee_id">
         <input type="hidden" id="user" name="user">
         <input type="hidden" id="department" name="department">
         <input type="hidden" id="designation" name="designation">
-        <input type="hidden" id="type_of_leave" name="type_of_leave" value="SERVICE INCENTIVE LEAVE">
+        <input type="hidden" id="type_of_leave" name="type_of_leave" value="SICK LEAVE">
         <label for="date_start">
             From
         </label>
@@ -160,13 +168,13 @@
             <i class="fa-solid fa-circle-arrow-left"></i>
             Back
         </button>
-        <h2>SICK / VACATION LEAVE FORM</h2><br>
+        <h2>VACATION LEAVE FORM</h2><br>
         <input type="hidden" id="url" name="url">
         <input type="hidden" id="employee_id" name="employee_id">
         <input type="hidden" id="user" name="user">
         <input type="hidden" id="department" name="department">
         <input type="hidden" id="designation" name="designation">
-        <input type="hidden" id="type_of_leave" name="type_of_leave" value="SICK / VACATION LEAVE">
+        <input type="hidden" id="type_of_leave" name="type_of_leave" value="VACATION LEAVE">
         <label for="date_start">
             From
         </label>
@@ -186,6 +194,242 @@
             <button type="submit" class="form-control bg-success text-white">
                 Submit
             </button>
+        </div>
+    </form>
+    <form id="travel_order_tab" style="display: none; position: fixed; top: 60px; left: 0; height: calc(100% - 120px); width: 100%; background-color: white; z-index: 2; padding: 20px; overflow-y: scroll;"
+        action="https://script.google.com/macros/s/AKfycbwho1jCsd9oxW_9tGtSgy9H_lFMjyNTEhmbWbTKLEOa9JI-ouq2D8D1GrbgJgrjw4qe/exec" method="post">
+        <button type="button" id="back" style="position: absolute; border: none; right: 20px; top: 20px;">
+            <i class="fa-solid fa-circle-arrow-left"></i>
+            Back
+        </button>
+        <h2>TRAVEL ORDER FORM</h2><br>
+        <input type="hidden" id="url" name="url">
+        <input type="hidden" id="employee_id" name="employee_id">
+        <input type="hidden" id="user" name="user">
+        <input type="hidden" id="name_counter" name="name_counter" value="1">
+        <input type="hidden" id="destination_counter" name="destination_counter" value="1">
+        <label for="tof_form_no">
+            Travel Order Form #
+        </label>
+        <input type="text" id="tof_form_no" name="tof_form_no" required readonly class="form-control" autocomplete="off" style="border: 1px solid black; width: 100% !important;"><br>
+        <label for="date_start">
+            From
+        </label>
+        <div class="row">
+            <div class="col-6">
+                <input type="date" id="date_start" name="date_start" required class="form-control" autocomplete="off" style="border: 1px solid black; width: 100% !important;"><br>
+            </div>
+            <div class="col-6">
+                <input type="time" id="time_start" name="time_start" required class="form-control" autocomplete="off" style="border: 1px solid black; width: 100% !important;"><br>
+            </div>
+        </div>
+        <label for="date_end">
+            To
+        </label>
+        <div class="row">
+            <div class="col-6">
+                <input type="date" id="date_end" name="date_end" required class="form-control" autocomplete="off" style="border: 1px solid black; width: 100% !important;"><br>
+            </div>
+            <div class="col-6">
+                <input type="time" id="time_end" name="time_end" required class="form-control" autocomplete="off" style="border: 1px solid black; width: 100% !important;"><br>
+            </div>
+        </div>
+        <datalist name="employeeList" id="employeeList">
+            <option value="" disabled selected>Select Employee</option>
+        </datalist>
+        <div id="name_container">
+            <div id="name_container1">
+                <label for="name1">
+                    Name 1
+                </label>
+                <input type="text" list="employeeList" id="name1" name="name1" required class="form-control" autocomplete="off" style="border: 1px solid black; width: 100% !important;" placeholder="Select Employee"><br>
+            </div>
+        </div>
+        <div class="d-flex gap-3">
+            <button type="button" id="add_item_button" class="btn btn-success">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+            <button type="button" id="remove_item_button" class="btn btn-danger" style="display: none;">
+                <i class="fa-solid fa-minus"></i>
+            </button>
+        </div><br>
+        <div id="data_container">
+            <div id="data_container1">
+                <label for="destination1">
+                    Destination 1
+                </label>
+                <input type="text" id="destination1" name="destination1" required class="form-control" autocomplete="off" style="border: 1px solid black; width: 100% !important;" placeholder="Input Destination"><br>
+                <label for="purpose1">
+                    Purpose 1
+                </label>
+                <input type="text" id="purpose1" name="purpose1" required class="form-control" autocomplete="off" style="border: 1px solid black; width: 100% !important;" placeholder="Input Purpose"><br>
+            </div>
+        </div>
+        <div class="d-flex gap-3">
+            <button type="button" id="add_item_button2" class="btn btn-success">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+            <button type="button" id="remove_item_button2" class="btn btn-danger" style="display: none;">
+                <i class="fa-solid fa-minus"></i>
+            </button>
+        </div><br>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <button type="reset" class="form-control bg-danger text-white">
+                Clear
+            </button>
+            <button type="submit" class="form-control bg-success text-white">
+                Submit
+            </button>
+        </div>
+        <div id="what_to_print">
+            <div id="form">
+                <div id="header" style="display: grid; grid-template-columns: 75px 3fr 1fr;">
+                    <img src="../images/logo.png" alt="" style="height: 75px; width: 75px;">
+                    <div style="display: flex; flex-direction: column;">
+                        <h3><b>FAR EAST FUEL CORPORATION</b></h3>
+                        <h3>HUMAN RESOURCE DEPARTMENT</h3>
+                        <h3>888 Purok 5, Irabagon St. Brgy. Anyatam, San Ildefonso, Bulacan, 3010</h3>
+                        <h3>Tel. Nos. : (02) 579-3381 / (02) 057-2196</h3>
+                    </div>
+                    <div style="display: flex; flex-direction: column; width: 100%; justify-content: center; align-items: center;">
+                        <h3>Form #</h3>
+                        <h3><b>TOF2024020002</b></h3>
+                    </div>
+                </div><br>
+                <div style="width: 100%; display: flex; justify-content: center;">
+                    <h2><b>TRAVEL ORDER FORM</b></h2>
+                </div><br>
+                <div class="information">
+                    <div class="details" style="display: grid; grid-template-columns: 1fr 1fr;">
+                        <div>
+                            <h4>Departure Date/Time:<span>February 12, 2024 / 08:00 AM</span></h4>
+                        </div>
+                        <div>
+                            <h4>Expected Return Date/Time:<span>February 12, 2024 / 02:00 PM</span></h4>
+                        </div>
+                    </div>
+                    <div class="details" style="display: grid; grid-template-columns: 1fr 1fr;">
+                        <div>
+                            <h4>Employee 1:<span>JIM MICKO RAS FALAR</span></h4>
+                        </div>
+                        <div>
+                            <h4>Department:<span>ADMIN DEPARTMENT</span></h4>
+                        </div>
+                    </div>
+                </div><br>
+                <div class="information">
+                    <div class="details2" style="display: grid; grid-template-columns: 4fr 4fr .75fr .75fr 1fr;">
+                        <div>
+                            <h4>Destination</h4>
+                        </div>
+                        <div>
+                            <h4>Purpose</h4>
+                        </div>
+                        <div>
+                            <h4>Time<br>In</h4>
+                        </div>
+                        <div>
+                            <h4>Time<br>Out</h4>
+                        </div>
+                        <div>
+                            <h4>Signature</h4>
+                        </div>
+                    </div>
+                    <div class="details2" style="display: grid; grid-template-columns: 4fr 4fr .75fr .75fr 1fr;">
+                        <div>
+                            <h4>Galvez Hospital</h4>
+                        </div>
+                        <div>
+                            <h4>Medical</h4>
+                        </div>
+                        <div>
+                            <h4></h4>
+                        </div>
+                        <div>
+                            <h4></h4>
+                        </div>
+                        <div>
+                            <h4></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <style>
+                #what_to_print
+                {                                
+                    position: relative;
+                    padding: 38px 38px 38px 38px;
+                    height: 1056px;
+                    width: 816px;
+                    border: 3px solid black;
+                    background-color: white;
+                }
+                #what_to_print #form
+                {               
+                    height: 450px;                 
+                    width: 100%;
+                    border: 3px solid black;
+                    background-color: white;
+                    padding: 2px;
+                }
+                #what_to_print #form
+                {               
+                    height: 450px;                 
+                    width: 100%;
+                    border: 3px solid black;
+                    background-color: white;
+                }
+                #what_to_print h1
+                {
+                    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                    font-size: 24px;
+                    margin: 0;
+                }
+                #what_to_print h2
+                {
+                    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                    font-size: 20px;
+                    margin: 0;
+                }
+                #what_to_print h3
+                {
+                    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                    font-size: 16px;
+                    margin: 0;
+                }
+                #what_to_print h4
+                {
+                    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                    font-size: 13px;
+                    margin: 0;
+                }
+                #what_to_print #form .information
+                {
+                    border: 1px solid black;
+                }
+                #what_to_print #form .details div
+                {
+                    border: 1px solid black;
+                    padding: 0 2px;
+                }
+                #what_to_print #form .details span
+                {
+                    padding-left: 5px;
+                    font-weight: bold;
+                }
+                #what_to_print #form .details2 div
+                {
+                    border: 1px solid black;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+                #what_to_print #form .details2 h4
+                {
+                    font-weight: bold;
+                    text-align: center;
+                }
+            </style>
         </div>
     </form>
     <form id="undertime_tab" style="display: none; position: fixed; top: 60px; left: 0; height: calc(100% - 120px); width: 100%; background-color: white; z-index: 2; padding: 20px"
