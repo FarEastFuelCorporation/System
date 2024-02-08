@@ -146,20 +146,20 @@ document.addEventListener('DOMContentLoaded', async function() {
         
         // FORM GENERATOR
         // tof_data_list
-        const tof_form_no = travel_order_tab.querySelector("#tof_form_no");
-        var last_row = tof_data_list.content.length -1;        
-        var data_info = tof_data_list.content[last_row][findTextInArray(tof_data_list, "TOF #")];
-        var data_counter = data_info.substring(9,13);
-        var current_year = new Date().getFullYear();
-        var last_counter_year = data_info.substring(3,7);
-        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
-        data_counter = (parseInt(data_counter) +1).toString().padStart(4, "0");
-        if(last_counter_year == current_year){
-            tof_form_no.value = `TOF${last_counter_year}${month}${data_counter}`;
-        } else {
-            data_counter = (1).toString().padStart(4, "0");
-            tof_form_no.value = `TOF${current_year}${month}${data_counter}`;
-        }
+        // const tof_form_no = travel_order_tab.querySelector("#tof_form_no");
+        // var last_row = tof_data_list.content.length -1;        
+        // var data_info = tof_data_list.content[last_row][findTextInArray(tof_data_list, "TOF #")];
+        // var data_counter = data_info.substring(9,13);
+        // var current_year = new Date().getFullYear();
+        // var last_counter_year = data_info.substring(3,7);
+        // var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        // data_counter = (parseInt(data_counter) +1).toString().padStart(4, "0");
+        // if(last_counter_year == current_year){
+        //     tof_form_no.value = `TOF${last_counter_year}${month}${data_counter}`;
+        // } else {
+        //     data_counter = (1).toString().padStart(4, "0");
+        //     tof_form_no.value = `TOF${current_year}${month}${data_counter}`;
+        // }
 
         employee_data.forEach((data) => {
             var list = 
