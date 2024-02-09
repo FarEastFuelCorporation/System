@@ -253,6 +253,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${data_value_counter}</td>
                             <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "SF #")]}</td>
                             <td>${mtf}</td>
+                            <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "FORM #")]}</td>
                             <td>${date_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "HAULING DATE")])}</td>
                             <td>${date_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "COMPLETION DATE")])} /<br> ${time_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "COMPLETION TIME")])}</td>
                             <td>${findClientName(sf_data_list.content[j][findTextInArray(sf_data_list, "CLIENT ID")])}</td>
@@ -288,6 +289,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${data_value_counter}</td>
                             <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "SF #")]}</td>
                             <td>${mtf}</td>
+                            <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "FORM #")]}</td>
                             <td>${date_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "HAULING DATE")])}</td>
                             <td>${date_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "COMPLETION DATE")])} /<br> ${time_decoder(sf_data_list.content[j][findTextInArray(sf_data_list, "COMPLETION TIME")])}</td>
                             <td>${findClientName(sf_data_list.content[j][findTextInArray(sf_data_list, "CLIENT ID")])}</td>
@@ -323,6 +325,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${data_value_counter}</td>
                             <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]}</td>
                             <td>${mtf}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "PULL OUT FORM #")]}</td>
                             <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "HAULING DATE")])}</td>
                             <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}</td>
                             <td>${findClientName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
@@ -354,6 +357,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${data_value_counter}</td>
                             <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]}</td>
                             <td>${mtf}</td>
+                            <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "PULL OUT FORM #")]}</td>
                             <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "HAULING DATE")])}</td>
                             <td>${date_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL DATE")])} /<br> ${time_decoder(wcf_data_list.content[j][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}</td>
                             <td>${findClientName(wcf_data_list.content[j][findTextInArray(wcf_data_list, "CLIENT ID")])}</td>
@@ -432,6 +436,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             <td>${data_value_counter}</td>
                             <td>${wdf_data_list.content[j][findTextInArray(wdf_data_list, "WDF #")]}</td>
                             <td>${mtf}</td>
+                            <td></td>
                             <td>${date_decoder(wdf_data_list.content[j][findTextInArray(wdf_data_list, "HAULING DATE")])}</td>
                             <td>${date_decoder(wdf_data_list.content[j][findTextInArray(wdf_data_list, "DISPOSAL DATE")])} /<br> ${time_decoder(wdf_data_list.content[j][findTextInArray(wdf_data_list, "DISPOSAL TIME")])}</td>
                             <td>${findClientName(client_id)}</td>
