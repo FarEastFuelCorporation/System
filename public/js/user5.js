@@ -1438,7 +1438,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 credits_container.innerText = formatNumber(credits);
                 total_amount_due_container.innerText = formatNumber((non_vatable + vatable + (parseFloat(vatable))*.12) - parseFloat(credits));
                 due_date_container.innerHTML = `${parseInt(term)} days<br>from the date received`;
-                total_amount_container.innerText = formatNumber((non_vatable + vatable) - parseFloat(credits));
+                // total_amount_container.innerText = formatNumber((non_vatable + vatable) - parseFloat(credits));
                 si_vat_ex_container.innerText = formatNumber((parseFloat(si_total_amount))/1.12);
                 si_vat_container.innerText = formatNumber((parseFloat(si_total_amount)) - ((parseFloat(si_total_amount))/1.12));
                 si_credits_container.innerText = formatNumber(si_credits);
