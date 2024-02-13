@@ -980,7 +980,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         // cod_data_list
         // FORM GENERATOR
         const cod_form_no = document.getElementById("cod_form_no");
-        const df_no = document.getElementById("df_no");
         var last_row = cod_data_list.content.length -1;
         var data_info = cod_data_list.content[last_row][findTextInArray(cod_data_list, "COD #")];
         var data_counter;
@@ -996,11 +995,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         var last_counter_year = data_info.substring(3,7);
         if(last_counter_year == current_year){
             cod_form_no.value = `COD${last_counter_year}${month}${data_counter}`;
-            df_no.innerText = `COD${last_counter_year}${month}${data_counter}`;
         } else {
             data_counter = (1).toString().padStart(4, "0");
             cod_form_no.value = `COD${current_year}${month}${data_counter}`;
-            df_no.innerText = `COD${current_year}${month}${data_counter}`;
         }
     
         // tpf_data_list
@@ -1090,6 +1087,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             var table_data_input = "";
             var table_data_counter = 0;
             var total_cod_weight = 0;
+            const df_no = document.getElementById("df_no");
+            df_no.innerText = cod_form_no.value
             if(type_of_cod.value == "By Waste Description"){
                 const waste_description = document.getElementById("waste_description");
                 const year_covered = document.getElementById("year_covered");
