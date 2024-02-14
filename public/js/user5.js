@@ -881,6 +881,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const convertToPDF_button = billing_process_form.querySelector("#convertToPDF_button");
         const bpf_form_no_container = billing_process_form.querySelector("#bpf_form_no_container");
         const date_made_container = billing_process_form.querySelector("#date_made_container");
+        const billing_date_input = billing_process_form.querySelector("#billing_date_input");
         const client_name_container = billing_process_form.querySelector("#client_name_container");
         const address_container = billing_process_form.querySelector("#address_container");
         const tin_id_container = billing_process_form.querySelector("#tin_id_container");
@@ -962,7 +963,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             var max_capacity = 0;
             var quotation_no = "";
             var waste_id = "";
-            billing_date.value = date_decoder(new Date());
+            billing_date.value = date_decoder(billing_date_input.value);
+            date_made_container.innerText = date_decoder(billing_date_input.value);
             if(type_of_form.value == "By COD (Single Transaction)"){
                 for(let s = 1; s <= cod_counter.value; s++){
                     var individual_non_vatable = 0;
@@ -1090,7 +1092,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     var data3 = "";
                                     if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]){
                                         bpf_form_no_container.innerText = bpf_form_no.value;
-                                        date_made_container.innerText = date_decoder(new Date());
                                         client_name_container.innerHTML = client_name;
                                         si_client_name_container.innerText = client_name;
                                         address_container.innerText = address;
@@ -1568,7 +1569,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                         var data3 = "";
                         if(search_cod_form_no.value == cod_data_list.content[x][findTextInArray(cod_data_list, "COD #")]){
                             bpf_form_no_container.innerText = bpf_form_no.value;
-                            date_made_container.innerText = date_decoder(new Date());
                             client_name_container.innerHTML = client_name;
                             si_client_name_container.innerText = client_name;
                             address_container.innerText = address;
@@ -1930,7 +1930,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 }
                             }
                             bpf_form_no_container.innerText = bpf_form_no.value;
-                            date_made_container.innerText = date_decoder(new Date());
                             client_name_container.innerHTML = client_name;
                             si_client_name_container.innerText = client_name;
                             address_container.innerText = address;
