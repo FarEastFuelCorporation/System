@@ -318,7 +318,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     `
                 }
                 if (expiration === "") {
-                    if(employee_data_list.content[b][findTextInArray(employee_data_list, "EMPLOYEE TYPE")] != "TEMPORARY"){
+                    if(employee_type != "TEMPORARY"){
                         contract_list.insertAdjacentHTML("beforeend", employee_record)
                     }
                 }
