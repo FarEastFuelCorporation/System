@@ -485,17 +485,30 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         // contracts_section
         const contracts_section = document.querySelector("#contracts_section");
+        const regular_contract_button = contracts_section.querySelector("#regular_contract_button");
         const project_based_contract_button = contracts_section.querySelector("#project_based_contract_button");
         const logistics_contract_button = contracts_section.querySelector("#logistics_contract_button");
+        const regular_contract_form = contracts_section.querySelector("#regular_contract_form");
         const project_based_contract_form = contracts_section.querySelector("#project_based_contract_form");
         const logistics_contract_form = contracts_section.querySelector("#logistics_contract_form");
 
+        regular_contract_button.addEventListener("click", () => {
+            if(regular_contract_form.style.display == "block"){
+                regular_contract_form.style.display = "none";
+            }
+            else{
+                regular_contract_form.style.display = "block";
+                project_based_contract_form.style.display = "none";
+                logistics_contract_form.style.display = "none";
+            }
+        })
         project_based_contract_button.addEventListener("click", () => {
             if(project_based_contract_form.style.display == "block"){
                 project_based_contract_form.style.display = "none";
             }
             else{
                 project_based_contract_form.style.display = "block";
+                regular_contract_form.style.display = "none";
                 logistics_contract_form.style.display = "none";
             }
         })
@@ -505,10 +518,117 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             else{
                 logistics_contract_form.style.display = "block";
+                regular_contract_form.style.display = "none";
                 project_based_contract_form.style.display = "none";
             }
         })
 
+
+        // regular_contract_form
+        const search_employee_id_button_reg = regular_contract_form.querySelector("#search_employee_id_button");
+        const employee_id_reg = regular_contract_form.querySelector("#employee_id");
+        const gender_reg = regular_contract_form.querySelector("#gender");
+        const civil_status_reg = regular_contract_form.querySelector("#civil_status");
+        const first_name_reg = regular_contract_form.querySelector("#first_name");
+        const middle_name_reg = regular_contract_form.querySelector("#middle_name");
+        const last_name_reg = regular_contract_form.querySelector("#last_name");
+        const spouse_name_reg = regular_contract_form.querySelector("#spouse_name");
+        const spouse_name_container_reg = regular_contract_form.querySelector("#spouse_name_container");
+        const affix_reg = regular_contract_form.querySelector("#affix");
+        const affix_container_reg = regular_contract_form.querySelector("#affix_container");
+        const employee_type_reg = regular_contract_form.querySelector("#employee_type");
+        const details_reg = regular_contract_form.querySelector("#details");
+        const start_of_contract_reg = regular_contract_form.querySelector("#start_of_contract");
+        const contract_date = regular_contract_form.querySelector("#contract_date");
+        const fixed = regular_contract_form.querySelector("#fixed");
+        const content = regular_contract_form.querySelector("#content_input");
+        const address_input = regular_contract_form.querySelector("#address_input");
+        const employee_name_reg = regular_contract_form.querySelector("#employee_name");
+        const employee_name2_reg = regular_contract_form.querySelector("#employee_name2");
+        const address_reg = regular_contract_form.querySelector("#address");
+        const salutation_reg = regular_contract_form.querySelector("#salutation");
+        const designation_reg = regular_contract_form.querySelector("#designation");
+        const daily_rate_reg = regular_contract_form.querySelector("#daily_rate");
+        const department_reg = regular_contract_form.querySelector("#department");
+        const submit_btn_reg = regular_contract_form.querySelector("#submit_btn");
+        const generate_button_reg = regular_contract_form.querySelector("#generate_button");
+        const download_button_reg = regular_contract_form.querySelector("#download_button");
+        const download_and_submit_button_reg = regular_contract_form.querySelector("#download_and_submit_button");
+        const contract_container_reg = regular_contract_form.querySelector("#contract_container");
+
+
+        var first_name_data, middle_name_data, last_name_data, spouse_name_data, affix_data, gender_data, civil_status_data, employee_type_data, designation_data, daily_rate_data, department_data, address_data;
+        search_employee_id_button_reg.addEventListener("click", () => {
+            for(let x = 1; x < employee_data_list.content.length; x++){                
+                var employee_id_data2 = employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE ID")];
+                if(employee_id_reg.value == employee_id_data2){
+                    first_name_data = employee_data_list.content[x][findTextInArray(employee_data_list, "FIRST NAME")];
+                    middle_name_data = employee_data_list.content[x][findTextInArray(employee_data_list, "MIDDLE NAME")];
+                    last_name_data = employee_data_list.content[x][findTextInArray(employee_data_list, "LAST NAME")];
+                    spouse_name_data = employee_data_list.content[x][findTextInArray(employee_data_list, "SPOUSE NAME")];
+                    affix_data = employee_data_list.content[x][findTextInArray(employee_data_list, "AFFIX")];
+                    gender_data = employee_data_list.content[x][findTextInArray(employee_data_list, "GENDER")];
+                    civil_status_data = employee_data_list.content[x][findTextInArray(employee_data_list, "CIVIL STATUS")];
+                    employee_type_data = employee_data_list.content[x][findTextInArray(employee_data_list, "EMPLOYEE TYPE")];
+                    designation_data = employee_data_list.content[x][findTextInArray(employee_data_list, "DESIGNATION")];
+                    daily_rate_data = employee_data_list.content[x][findTextInArray(employee_data_list, "DAILY RATE")];
+                    department_data = employee_data_list.content[x][findTextInArray(employee_data_list, "DEPARTMENT")];
+                    address_data = employee_data_list.content[x][findTextInArray(employee_data_list, "PERMANENT ADDRESS")];
+                    if(gender_data == "MALE"){
+                        spouse_name_container_reg.style.display = "none"
+                        affix_container_reg.style.display = "block"
+                    }
+                    else if(gender_data == "FEMALE"){
+                        if(civil_status_data == "SINGLE"){
+                            affix_container_reg.style.display = "none"
+                            spouse_name_container_reg.style.display = "none"
+                        }
+                        else{
+                            spouse_name_container_reg.style.display = "block"
+                            affix_container_reg.style.display = "none"
+                        }
+                    }
+                }
+            }
+            gender_reg.value = gender_data;
+            civil_status_reg.value = civil_status_data;
+            first_name_reg.value = first_name_data;
+            middle_name_reg.value = middle_name_data;
+            last_name_reg.value = last_name_data;
+            spouse_name_reg.value = spouse_name_data;
+            affix_reg.value = affix_data;
+            employee_type_reg.value = employee_type_data;
+            designation_reg.value = designation_data;
+            daily_rate_reg.value = daily_rate_data;
+            department_reg.value = department_data;
+            address_input.value = address_data;
+            details_reg.style.display = "block"
+            generate_button_reg.style.display = "block"
+        })
+
+        generate_button_reg.addEventListener("click", ()  => {
+            if(gender_data == "MALE"){
+                employee_name_reg.innerText = `MR. ${first_name_data} ${last_name_data}`;
+                salutation_reg.innerHTML = `Dear Mr. <b>${last_name_data}</b>`;
+            } else {
+                employee_name_reg.innerText = `MS. ${first_name_data} ${last_name_data}`;
+                salutation_reg.innerHTML = `Dear Ms. <b>${last_name_data}</b>`;
+            }
+            if(fixed.checked){
+                var content_data = `As a regular employee, you will continue to receive the daily rate of <b>${amountInWords(parseFloat(610.00))} (${formatNumber(parseFloat(daily_rate_data))})</b> for eight hours of work. Your working schedule is from 8:00 AM to 5:00 PM from Monday through Saturday.`
+                content.innerHTML = content_data
+            } else {
+                var content_data = `As a regular employee, you will continue to receive the daily rate of <b>${amountInWords(parseFloat(610.00))} (${formatNumber(parseFloat(daily_rate_data))})</b> for eight hours of work. However, it is important to note that there may be occasions or instances when your working schedule needs to be adjusted or be changed based on the specific schedule provided by your immediate supervisor. Flexibility in working hours will be required to accommodate operational requirements and ensure smooth workflow.`
+                content.innerHTML = content_data
+            }
+            contract_date.innerText = date_decoder(new Date(start_of_contract_reg.value));
+            employee_name2_reg.innerText = `${first_name_data} ${last_name_data}`;
+            address_reg.innerText = address_input.value;
+            submit_btn_reg.style.display = "block"
+            download_button_reg.style.display = "block"
+            download_and_submit_button_reg.style.display = "block"
+            contract_container_reg.style.display = "block"
+        })
 
         // project_based_contract_form
         const search_employee_id_button_pb = project_based_contract_form.querySelector("#search_employee_id_button");
@@ -702,12 +822,43 @@ document.addEventListener('DOMContentLoaded', async function() {
             contract_container_log.style.display = "block"
         })
 
+        // reg_form_no
+        // FORM GENERATOR
+        const reg_form_no = regular_contract_form.querySelector("#reg_form_no");
+        var last_row = employee_contract_data_list.content.length -1;
+        var data_info;
+        var data_counter = 0;
+        var last_counter_year
+        if(last_row == 0){
+            data_counter = 0;
+        }
+        else{
+            for(let x = employee_contract_data_list.content.length -1; x >= 1; x--){
+                if(employee_contract_data_list.content[x][findTextInArray(employee_contract_data_list, "PCF # / LCF #")].toString().substring(0,3) == "REG"){
+                    data_info = employee_contract_data_list.content[x][findTextInArray(employee_contract_data_list, "PCF # / LCF #")]
+                    data_counter = data_info.substring(9,13);
+                    last_counter_year = data_info.substring(3,7);
+                    break
+                }
+            }
+        }
+        var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
+        data_counter = (parseInt(data_counter) +1).toString().padStart(4, "0");
+        var current_year = new Date().getFullYear();
+        if(last_counter_year == current_year){
+            reg_form_no.value = `REG${last_counter_year}${month}${data_counter}`;
+        } else {
+            data_counter = (1).toString().padStart(4, "0");
+            reg_form_no.value = `REG${current_year}${month}${data_counter}`;
+        }
+
         // pcf_form_no
         // FORM GENERATOR
         const pcf_form_no = project_based_contract_form.querySelector("#pcf_form_no");
         var last_row = employee_contract_data_list.content.length -1;
         var data_info;
-        var data_counter;
+        var data_counter = 0;
+        var last_counter_year
         if(last_row == 0){
             data_counter = 0;
         }
@@ -715,15 +866,15 @@ document.addEventListener('DOMContentLoaded', async function() {
             for(let x = employee_contract_data_list.content.length -1; x >= 1; x--){
                 if(employee_contract_data_list.content[x][findTextInArray(employee_contract_data_list, "PCF # / LCF #")].toString().substring(0,3) == "PCF"){
                     data_info = employee_contract_data_list.content[x][findTextInArray(employee_contract_data_list, "PCF # / LCF #")]
+                    data_counter = data_info.substring(9,13);
+                    last_counter_year = data_info.substring(3,7);
                     break
                 }
             }
-            data_counter = data_info.substring(9,13);
         }
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
         data_counter = (parseInt(data_counter) +1).toString().padStart(4, "0");
         var current_year = new Date().getFullYear();
-        var last_counter_year = data_info.substring(3,7);
         if(last_counter_year == current_year){
             pcf_form_no.value = `PCF${last_counter_year}${month}${data_counter}`;
         } else {
@@ -736,7 +887,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const lcf_form_no = logistics_contract_form.querySelector("#lcf_form_no");
         var last_row = employee_contract_data_list.content.length -1;
         var data_info;
-        var data_counter;
+        var data_counter = 0;
+        var last_counter_year
         if(last_row == 0){
             data_counter = 0;
         }
@@ -744,15 +896,15 @@ document.addEventListener('DOMContentLoaded', async function() {
             for(let x = employee_contract_data_list.content.length -1; x >= 1; x--){
                 if(employee_contract_data_list.content[x][findTextInArray(employee_contract_data_list, "PCF # / LCF #")].toString().substring(0,3) == "LCF"){
                     data_info = employee_contract_data_list.content[x][findTextInArray(employee_contract_data_list, "PCF # / LCF #")]
+                    data_counter = data_info.substring(9,13);
+                    last_counter_year = data_info.substring(3,7);
                     break
                 }
             }
-            data_counter = data_info.substring(9,13);
         }
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
         data_counter = (parseInt(data_counter) +1).toString().padStart(4, "0");
         var current_year = new Date().getFullYear();
-        var last_counter_year = data_info.substring(3,7);
         if(last_counter_year == current_year){
             lcf_form_no.value = `LCF${last_counter_year}${month}${data_counter}`;
         } else {

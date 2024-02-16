@@ -955,6 +955,59 @@ function weekNumberToPrevMonthAbbreviation(weekNumber) {
   return monthAbbreviation;
 }
 
+function amountInWords(amount) {
+  const units = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
+  const teens = ['', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+  const tens = ['', 'Ten', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+
+  function convertToWords(num) {
+    if (num === 0) {
+      return '';
+    } else if (num < 10) {
+      return units[num];
+    } else if (num == 10) {
+      return 'Ten';
+    } else if (num < 20) {
+      return teens[num - 10];
+    } else {
+      const digit = num % 10;
+      const tenDigit = Math.floor(num / 10);
+      return tens[tenDigit] + ' ' + units[digit];
+    }
+  }
+
+  function convertGroupToWords(num) {
+    if (num === 0) {
+      return '';
+    } else {
+      return convertToWords(Math.floor(num / 100)) + ' Hundred ' + convertToWords(num % 100);
+    }
+  }
+
+  function convertDecimalToWords(decimal) {
+    const centavos = Math.round(decimal * 100);
+    return convertGroupToWords(centavos) + ' Centavos';
+  }
+
+  if (amount === 0) {
+    return 'Zero Pesos';
+  }
+
+  const pesos = Math.floor(amount);
+  const centavos = amount - pesos;
+
+  let result = '';
+  if (pesos > 0) {
+    result += convertGroupToWords(pesos) + ' Pesos';
+  }
+
+  if (centavos > 0) {
+    result += ' and ' + convertDecimalToWords(centavos);
+  }
+
+  return result.trim();
+}
+
   // You might need to call adjustLayout whenever the content changes dynamically
   // For example, after adding or removing li elements.
 

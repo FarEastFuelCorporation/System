@@ -844,13 +844,221 @@
             <section class="hr" id="contracts_section">
                 <h2>CONTRACTS</h2>
                 <label class="d-flex gap-3">
-                    <button type="button" id="project_based_contract_button" class="form-control fw-bold fs-3 bg-success text-white">
+                    <button type="button" id="regular_contract_button" class="form-control fw-bold fs-3 bg-success text-white">
+                        REGULAR CONTRACT FORM
+                    </button>
+                    <button type="button" id="project_based_contract_button" class="form-control fw-bold fs-3">
                         PROJECT BASED CONTRACT FORM
                     </button>
                     <button type="button" id="logistics_contract_button" class="form-control fw-bold fs-3 bg-danger text-white">
                         LOGISTICS CONTRACT FORM
                     </button>
                 </label><br>
+                <form id="regular_contract_form" style="display: none; min-height: 75vh; position: absolute; z-index: 2; padding: 20px; background-color: white; max-height: 75vh; border: 3px solid #198754; border-radius: 10px; overflow-y: scroll; width: calc(100% - 40px);" 
+                    action="https://script.google.com/macros/s/AKfycbxi0BBjizRI0wh0Qz1lCWWHKE0jFE4nnrHP3wyM6goa7lTTtARLafMkaRd0uUOQiMo0/exec" method="post">
+                    <input type="hidden" name="user" id="user">
+                    <input type="text" name="pcf_form_no" id="reg_form_no">
+                    <input type="hidden" name="department" id="department">
+                    <h2>REGULAR CONTRACT FORM</h2>
+                    <label for="employee_id">
+                        <b>Employee ID</b>
+                        <div  class="d-flex gap-3">
+                            <div>
+                                <input type="text" name="employee_id" id="employee_id" class="form-control" required autocomplete="off" autocomplete="off">
+                            </div>
+                            <div>
+                                <button id="search_employee_id_button" type="button" class="form-control">
+                                    <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </label><br><br>
+                    <div id="details" style="display: none;">
+                        <label><b>Personal Information</b></label><br>
+                        <div class="line1">
+                            <label for="gender">
+                                Gender
+                                <input type="text" name="gender" id="gender" class="form-control" required readonly autocomplete="off">
+                            </label>
+                            <label for="civil_status">
+                                Civil Status
+                                <input type="text" name="civil_status" id="civil_status" class="form-control" required readonly autocomplete="off">
+                            </label>
+                            <label for="first_name">
+                                First Name
+                                <input type="text" name="first_name" id="first_name" class="form-control" required readonly autocomplete="off">
+                            </label>
+                            <label for="middle_name">
+                                Middle Name
+                                <input type="text" name="middle_name" id="middle_name" class="form-control" required readonly autocomplete="off">
+                            </label>
+                            <label for="last_name">
+                                Last Name
+                                <input type="text" name="last_name" id="last_name" class="form-control" required readonly autocomplete="off">
+                            </label>
+                            <label for="spouse_name" id="spouse_name_container">
+                                Spouse Name
+                                <input type="text" name="spouse_name" id="spouse_name" class="form-control" readonly autocomplete="off">
+                            </label>
+                            <label for="affix" id="affix_container">
+                                Affix
+                                <input type="text" name="affix" id="affix" class="form-control" readonly autocomplete="off" >
+                            </label>
+                        </div><br>
+                        <label><b>Contract Details</b></label><br>
+                        <div style="display: flex; gap: 20px;">
+                            <label for="employee_type">
+                                Employee Type
+                                <input type="text" name="employee_type" id="employee_type" class="form-control form" readonly autocomplete="off">
+                            </label>
+                            <label for="start_of_contract">
+                                Start of Contract
+                                <input type="date" name="start_of_contract" id="start_of_contract" class="form-control form" required autocomplete="off">
+                            </label>
+                            <label for="designation">
+                                Designation
+                                <input type="text" name="designation" id="designation" class="form-control form" required readonly autocomplete="off">
+                            </label>
+                            <label for="daily_rate">
+                                Daily Rate
+                                <input type="number" step="0.01" name="daily_rate" id="daily_rate" class="form-control form" required readonly autocomplete="off" value="0">
+                            </label>
+                        </div><br>
+                        <label id="type_of_contract_container" for="type_of_contract">
+                            Type of Contract
+                            <div class="d-flex">
+                                <div>
+                                    <input type="radio" name="type_of_contract" id="fixed" class="form" required autocomplete="off" value="true" checked>
+                                    Fixed Schedule
+                                </div>
+                                <div class="ps-5">
+                                    <input type="radio" name="type_of_contract" id="shifting" class="form" required autocomplete="off" value="false">
+                                    Shifting Schedule
+                                </div>
+                            </div>
+                        </label>
+                        <input type="hidden" name="address_input" id="address_input">
+                        <br><br> 
+                    </div>
+                    <div style="display: flex; gap: 20px;">
+                        <button type="button" id="generate_button" class="form-control" style="background-color: #198754; display: none;">
+                            <h4 style="margin: 0; color: white;">Generate</h4>
+                        </button>
+                        <button type="button" onclick="convertToPDF5()" id="download_button" class="form-control" style="background-color: #198754; display: none;">
+                            <h4 style="margin: 0; color: white;">Download</h4>
+                        </button>
+                        <button type="button" onclick="convertToPDFandDownload5()" id="download_and_submit_button" class="form-control" style="background-color: #198754; display: none;">
+                            <h4 style="margin: 0; color: white;">Download and Submit</h4>
+                        </button>
+                        <button type="submit" id="submit_btn" class="form-control" style="display: none">
+                            Submit
+                        </button>
+                    </div>
+                    <div id="contract_container" style="display: none;">
+                        <div id="contract" class="letter">
+                            <img src="../images/letterhead.jpg" id="background-image" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;">
+                            <div id="letter_container">
+                                <h3 id="contract_date">February 12,2023</h3>
+                                <br><br>
+                                <h3 class="bold" id="employee_name">MR. LAWRENCE ANTONIO</h3>
+                                <h3 id="address">Anyatam, San Ildefonso, Bulacan</h3>
+                                <br>
+                                <h3>SUBJECT: Regularization of Contract </h3>
+                                <br>
+                                <h3 id="salutation">Dear Mr. Antonio,</h3>
+                                <br>
+                                <h3>We are please to inform you that your employment with the company is now regularized.</h3>
+                                <br>
+                                <h3 style="text-align: justify !important;" id="content_input"></h3>
+                                <br>
+                                <h3>It is understood that you will continue to be bound by the Confidentiality Agreement and Non-Competition Clause. Such provisions shall be deemed incorporated as part of the terms and conditions of your regular employment with us.</h3>
+                                <br>
+                                <h3>We look forward to more years of faithful partnership with you.</h3>
+                                <br>
+                                <h3>Truly yours,</h3>
+                                <br><br>
+                                <h3 class="bold underline">DAISY M. CARDINEZ</h3>
+                                <h3 class="italic">Administrative Head</h3>
+                                <h3>Far East Fuel Corporation</h3>
+                                <br><br>
+                                <h3>WITH MY CONFORMITY</h3>
+                                <br><br>
+                                <h3 class="bold underline" id="employee_name2">LAWRENCE ANTONIO</h3>
+                                <br>
+                                <h3>Date:__________</h3>
+                            </div>>
+                        </div>
+                        <style>
+                            
+                            .letter
+                            {
+                                width: 816px;
+                                height: 1056px;
+                                border: 3px solid black;
+                                background-color: white;
+                                z-index: 4;
+                                position: relative;
+                                padding: 144px 38px 38px 64px;
+                                border: 3px solid black;
+                            }
+                            
+                            .letter h1
+                            {
+                                font-size: 18px;
+                                margin: 0;
+                            }
+        
+                            .letter h2
+                            {
+                                font-size: 16px;
+                                margin: 0;
+                            }
+        
+                            .letter h3
+                            {
+                                font-size: 16px;
+                                margin: 0;
+                            }
+
+        
+                            .letter h4
+                            {
+                                font-size: 12px;
+                                margin: 0;
+                            }
+        
+                            .letter h5
+                            {
+                                font-size: 10px;
+                                margin: 0;
+                            }
+                            
+                            .letter .bold
+                            {
+                                font-weight: bold;
+                            }
+                            
+                            .letter .underline
+                            {
+                                text-decoration: underline;
+                            }
+                            
+                            .letter .italic
+                            {
+                                font-style: italic;
+                            }
+        
+                            .letter #letter_container
+                            {
+                                padding: 4px 0 48px 20px;
+                                z-index: 10;
+                                position: relative;
+                            }
+        
+
+                        </style>
+                    </div>
+                </form>
                 <form id="project_based_contract_form" style="display: none; min-height: 75vh; position: absolute; z-index: 2; padding: 20px; background-color: white; max-height: 75vh; border: 3px solid #198754; border-radius: 10px; overflow-y: scroll; width: calc(100% - 40px);" 
                     action="https://script.google.com/macros/s/AKfycbzGTTl7XjKctGAnZHUnPt2l2qkt3C8wT_sLhIc8fvEHkYdjVdv_EJRktkuztjV1tpVE/exec" method="post">
                     <input type="hidden" name="user" id="user">
@@ -3080,6 +3288,89 @@
                 .then(() => {
                 element.style.transform = 'none';
                 html2pdf().set(opt).from(element).save(`${pcf_form_no}.pdf`).then(() => {
+                    // Call the submit button click event immediately after the PDF is downloaded
+                });
+            });
+        }
+        
+        
+        function convertToPDFandDownload5() {
+            const regular_contract_form = document.getElementById('regular_contract_form');
+            const element = regular_contract_form.querySelector('#contract_container');
+            const reg_form_no = regular_contract_form.querySelector('#reg_form_no').value;
+            const first_name = regular_contract_form.querySelector('#first_name').value;
+            const last_name = regular_contract_form.querySelector('#last_name').value;
+            const opt = {
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { scale: 10 },
+                jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
+            };
+
+            const marginTop = 12.70; // Top margin in mm
+            const pageHeight = 330.20; // Adjust the value based on your available space for each page
+
+            const totalPages = 1;
+
+            let promises = [];
+
+            for (let i = 0; i < totalPages; i++) {
+                const promise = html2pdf()
+                .set(opt)
+                .from(element)
+                .toContainer()
+                .then(() => {
+                    const newPosition = -pageHeight * (i + 1) - marginTop;
+                    element.style.transform = `translate(0, ${newPosition}px)`;
+                });
+
+                promises.push(promise);
+            }
+
+            Promise.all(promises)
+                .then(() => {
+                element.style.transform = 'none';
+                html2pdf().set(opt).from(element).save(`${reg_form_no} - ${first_name} ${last_name}.pdf`).then(() => {
+                    regular_contract_form.querySelector('#submit_btn').click();
+                });
+            });
+
+        }
+
+        function convertToPDF5() {
+            
+            const regular_contract_form = document.getElementById('regular_contract_form');
+            const element = regular_contract_form.querySelector('#contract_container');
+            const reg_form_no = regular_contract_form.querySelector('#reg_form_no').value;
+            const opt = {
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { scale: 10 },
+                jsPDF: { unit: 'mm', format: [215.90, 330.2], orientation: 'portrait' }
+            };
+
+            const marginTop = 12.70; // Top margin in mm
+            const pageHeight = 330.20; // Adjust the value based on your available space for each page
+
+            const totalPages = 1;
+
+            let promises = [];
+
+            for (let i = 0; i < totalPages; i++) {
+                const promise = html2pdf()
+                .set(opt)
+                .from(element)
+                .toContainer()
+                .then(() => {
+                    const newPosition = -pageHeight * (i + 1) - marginTop;
+                    element.style.transform = `translate(0, ${newPosition}px)`;
+                });
+
+                promises.push(promise);
+            }
+
+            Promise.all(promises)
+                .then(() => {
+                element.style.transform = 'none';
+                html2pdf().set(opt).from(element).save(`${reg_form_no} - ${first_name} ${last_name}.pdf`).then(() => {
                     // Call the submit button click event immediately after the PDF is downloaded
                 });
             });
