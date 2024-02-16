@@ -615,10 +615,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                 salutation_reg.innerHTML = `Dear Ms. <b>${last_name_data}</b>`;
             }
             if(fixed.checked){
-                var content_data = `As a regular employee, you will continue to receive the daily rate of <b>${amountInWords(parseFloat(610.00))} (${formatNumber(parseFloat(daily_rate_data))})</b> for eight hours of work. Your working schedule is from 8:00 AM to 5:00 PM from Monday through Saturday.`
+                var content_data = `As a regular employee, you will continue to receive the daily rate of <b>${amountInWords(parseFloat(daily_rate_data))} (${formatNumber(parseFloat(daily_rate_data))})</b> for eight hours of work. Your working schedule is from 8:00 AM to 5:00 PM from Monday through Saturday.`
                 content.innerHTML = content_data
             } else {
-                var content_data = `As a regular employee, you will continue to receive the daily rate of <b>${amountInWords(parseFloat(610.00))} (${formatNumber(parseFloat(daily_rate_data))})</b> for eight hours of work. However, it is important to note that there may be occasions or instances when your working schedule needs to be adjusted or be changed based on the specific schedule provided by your immediate supervisor. Flexibility in working hours will be required to accommodate operational requirements and ensure smooth workflow.`
+                var content_data = `As a regular employee, you will continue to receive the daily rate of <b>${amountInWords(parseFloat(daily_rate_data))} (${formatNumber(parseFloat(daily_rate_data))})</b> for eight hours of work. However, it is important to note that there may be occasions or instances when your working schedule needs to be adjusted or be changed based on the specific schedule provided by your immediate supervisor. Flexibility in working hours will be required to accommodate operational requirements and ensure smooth workflow.`
                 content.innerHTML = content_data
             }
             contract_date.innerText = date_decoder(new Date(start_of_contract_reg.value));
