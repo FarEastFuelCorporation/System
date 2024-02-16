@@ -3137,6 +3137,8 @@
             const project_based_contract_form = document.getElementById('project_based_contract_form');
             const element = project_based_contract_form.querySelector('#contract_container');
             const pcf_form_no = project_based_contract_form.querySelector('#pcf_form_no').value;
+            const first_name = project_based_contract_form.querySelector('#first_name').value;
+            const last_name = project_based_contract_form.querySelector('#last_name').value;
             const opt = {
                 image: { type: 'jpeg', quality: 1 },
                 html2canvas: { scale: 10 },
@@ -3166,7 +3168,7 @@
             Promise.all(promises)
                 .then(() => {
                 element.style.transform = 'none';
-                html2pdf().set(opt).from(element).save(`${pcf_form_no}.pdf`).then(() => {
+                html2pdf().set(opt).from(element).save(`${pcf_form_no} - ${first_name} ${last_name}.pdf`).then(() => {
                     project_based_contract_form.querySelector('#submit_btn').click();
                 });
             });
@@ -3178,6 +3180,8 @@
             const project_based_contract_form = document.getElementById('project_based_contract_form');
             const element = project_based_contract_form.querySelector('#contract_container');
             const pcf_form_no = project_based_contract_form.querySelector('#pcf_form_no').value;
+            const first_name = project_based_contract_form.querySelector('#first_name').value;
+            const last_name = project_based_contract_form.querySelector('#last_name').value;
             const opt = {
                 image: { type: 'jpeg', quality: 1 },
                 html2canvas: { scale: 10 },
@@ -3207,16 +3211,18 @@
             Promise.all(promises)
                 .then(() => {
                 element.style.transform = 'none';
-                html2pdf().set(opt).from(element).save(`${pcf_form_no}.pdf`).then(() => {
+                html2pdf().set(opt).from(element).save(`${pcf_form_no} - ${first_name} ${last_name}.pdf`).then(() => {
                     // Call the submit button click event immediately after the PDF is downloaded
                 });
             });
         }
         
         function convertToPDFandDownload4() {
-            const project_based_contract_form = document.getElementById('logistics_contract_form');
-            const element = project_based_contract_form.querySelector('#contract_container');
-            const pcf_form_no = project_based_contract_form.querySelector('#lcf_form_no').value;
+            const logistics_contract_form = document.getElementById('logistics_contract_form');
+            const element = logistics_contract_form.querySelector('#contract_container');
+            const lcf_form_no = logistics_contract_form.querySelector('#lcf_form_no').value;
+            const first_name = logistics_contract_form.querySelector('#first_name').value;
+            const last_name = logistics_contract_form.querySelector('#last_name').value;
             const opt = {
                 image: { type: 'jpeg', quality: 1 },
                 html2canvas: { scale: 10 },
@@ -3246,8 +3252,8 @@
             Promise.all(promises)
                 .then(() => {
                 element.style.transform = 'none';
-                html2pdf().set(opt).from(element).save(`${pcf_form_no}.pdf`).then(() => {
-                    project_based_contract_form.querySelector('#submit_btn').click();
+                html2pdf().set(opt).from(element).save(`${lcf_form_no} - ${first_name} ${last_name}.pdf`).then(() => {
+                    logistics_contract_form.querySelector('#submit_btn').click();
                 });
             });
 
@@ -3255,9 +3261,11 @@
 
         function convertToPDF4() {
             
-            const project_based_contract_form = document.getElementById('logistics_contract_form');
-            const element = project_based_contract_form.querySelector('#contract_container');
-            const pcf_form_no = project_based_contract_form.querySelector('#lcf_form_no').value;
+            const logistics_contract_form = document.getElementById('logistics_contract_form');
+            const element = logistics_contract_form.querySelector('#contract_container');
+            const lcf_form_no = logistics_contract_form.querySelector('#lcf_form_no').value;
+            const first_name = logistics_contract_form.querySelector('#first_name').value;
+            const last_name = logistics_contract_form.querySelector('#last_name').value;
             const opt = {
                 image: { type: 'jpeg', quality: 1 },
                 html2canvas: { scale: 10 },
@@ -3287,7 +3295,7 @@
             Promise.all(promises)
                 .then(() => {
                 element.style.transform = 'none';
-                html2pdf().set(opt).from(element).save(`${pcf_form_no}.pdf`).then(() => {
+                html2pdf().set(opt).from(element).save(`${lcf_form_no} - ${first_name} ${last_name}.pdf`).then(() => {
                     // Call the submit button click event immediately after the PDF is downloaded
                 });
             });
