@@ -2110,13 +2110,19 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 certification_month = convertToMonthName(month);
                                 if (waste_description.value == mtf) {
                                     var pull_out_form = ""
-                                    for(let y = 1; y < sf_data_list.content.length; y++){
-                                        if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "SF #")] == sf_data_list.content[y][findTextInArray(sf_data_list, "SF #")])
-                                        pull_out_form = sf_data_list.content[y][findTextInArray(sf_data_list, "FORM #")]
-                                    }
                                     for(let y = 1; y < wcf_data_list.content.length; y++){
-                                        if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "SF #")] == wcf_data_list.content[y][findTextInArray(wcf_data_list, "WCF #")])
-                                        pull_out_form = wcf_data_list.content[y][findTextInArray(wcf_data_list, "PULL OUT FORM #")]
+                                        if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "SF #")] == wcf_data_list.content[y][findTextInArray(wcf_data_list, "WCF #")]){
+                                            pull_out_form = wcf_data_list.content[y][findTextInArray(wcf_data_list, "PULL OUT FORM #")]
+                                            break
+                                        }
+                                    }
+                                    for(let y = 1; y < sf_data_list.content.length; y++){
+                                        console.log(tpf_data_list.content[x][findTextInArray(tpf_data_list, "SF #")])
+                                        if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "SF #")] == sf_data_list.content[y][findTextInArray(sf_data_list, "SF #")]){
+                                            console.log()
+                                            pull_out_form = sf_data_list.content[y][findTextInArray(sf_data_list, "FORM #")]
+                                            break
+                                        }
                                     }
                                     const type_of_weight = document.getElementById("type_of_weight");
                                     var cod_weight = 0;

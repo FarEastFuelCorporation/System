@@ -371,6 +371,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                 }
             }
+            console.log(pending_treatment_wdf)
             for(let i = 0; i < pending_treatment_wdf.length; i++){
                 for(let j = 1; j < wdf_data_list.content.length; j++){
                     if(pending_treatment_wdf[i] == wdf_data_list.content[j][findTextInArray(wdf_data_list, "WCF #")] &&

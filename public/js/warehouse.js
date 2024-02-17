@@ -565,7 +565,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
         data_counter = (parseInt(data_counter) +1).toString().padStart(4, "0");
         var current_year = new Date().getFullYear();
-        var last_counter_year = data_info.substring(4,7);
+        var last_counter_year = data_info.substring(3,7);
         if(last_counter_year == current_year){
             wdf_form_no.value = `WDF${last_counter_year}${month}${data_counter}`;
         } else {
