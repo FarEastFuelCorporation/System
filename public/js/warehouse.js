@@ -1975,7 +1975,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         var purchase_request_data_value_counter = 1;
         for(let x = 1; x < prf_data_list.content.length; x++){
             if(prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")] == "PURCHASED"){
-                console.log(prf_data_list.content[x][findTextInArray(prf_data_list, "STATUS")])
                 var pr_data = prf_data_list.content[x][findTextInArray(prf_data_list, "ITM #")]
                 var button = `
                 <form action="https://script.google.com/macros/s/AKfycbxMJ_VUlt6j5bXcSDzuGI8NNJXd2G5KhlvURMXTPaX6pAcFvQ6ZW8Bu--PG3rABBb0o/exec" method="post">
