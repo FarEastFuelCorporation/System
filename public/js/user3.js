@@ -225,8 +225,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             var chart = new ApexCharts(pieChart, options);
             chart.render();
             
-            var data_value = "";
             var data_value_counter = 1;
+            pending_list_treatment.innerHTML = "";
             for(let i = 0; i < pending_treatment_sf.length; i++){
                 for(let j = 1; j < sf_data_list.content.length; j++){
                     if(pending_treatment_sf[i] == sf_data_list.content[j][findTextInArray(sf_data_list, "SF #")] &&
@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 }
                             }
                         }
-                        data_value +=`
+                        var data_value =`
                         <tr>
                             <td>${data_value_counter}</td>
                             <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "SF #")]}</td>
@@ -264,6 +264,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </tr>
                         `
                         data_value_counter += 1;
+                        pending_list_treatment.insertAdjacentHTML("beforeend", data_value);
                     }
                     else if(pending_treatment_sf[i] == sf_data_list.content[j][findTextInArray(sf_data_list, "SF #")] &&
                     month_filter.value == "ALL"){
@@ -284,7 +285,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 }
                             }
                         }
-                        data_value +=`
+                        var data_value =`
                         <tr>
                             <td>${data_value_counter}</td>
                             <td>${sf_data_list.content[j][findTextInArray(sf_data_list, "SF #")]}</td>
@@ -300,6 +301,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </tr>
                         `
                         data_value_counter += 1;
+                        pending_list_treatment.insertAdjacentHTML("beforeend", data_value);
                     }
                 }
             }
@@ -320,7 +322,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 }
                             }
                         }
-                        data_value +=`
+                        var data_value =`
                         <tr>
                             <td>${data_value_counter}</td>
                             <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]}</td>
@@ -336,6 +338,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </tr>
                         `
                         data_value_counter += 1;
+                        pending_list_treatment.insertAdjacentHTML("beforeend", data_value);
                     }
                     else if(pending_treatment_wcf[i] == wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")] &&
                     month_filter.value == "ALL"){
@@ -352,7 +355,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 }
                             }
                         }
-                        data_value +=`
+                        var data_value =`
                         <tr>
                             <td>${data_value_counter}</td>
                             <td>${wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")]}</td>
@@ -368,48 +371,60 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </tr>
                         `
                         data_value_counter += 1;
+                        pending_list_treatment.insertAdjacentHTML("beforeend", data_value);
                     }
                 }
             }
             console.log(pending_treatment_wdf)
+            var wdf_wcf_array = [];
             for(let i = 0; i < pending_treatment_wdf.length; i++){
                 for(let j = 1; j < wdf_data_list.content.length; j++){
-                    if(pending_treatment_wdf[i] == wdf_data_list.content[j][findTextInArray(wdf_data_list, "WCF #")] &&
+                    if(pending_treatment_wdf[i] == wdf_data_list.content[j][findTextInArray(wdf_data_list, "WDF #")] &&
                     month_filter.value == formatMonth(wdf_data_list.content[j][findTextInArray(wdf_data_list, "HAULING DATE")])){
-                        var mtf, ltf, client_id, waste_id, weight_data;
-                        for(let k = 1; k < wcf_data_list.content.length; k++){
-                            if(wdf_data_list.content[j][findTextInArray(wdf_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
-                                if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
-                                    mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
-                                }else{
-                                    ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
-                                    for(let x = 1; x < ltf_data_list.content.length; x++){
-                                        if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
-                                            mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
-                                            break
+                        console.log(pending_treatment_wdf[i])
+                        console.log(wdf_data_list.content[j][findTextInArray(wdf_data_list, "WDF #")])
+                        console.log(wdf_data_list.content[j][findTextInArray(wdf_data_list, "WCF #")])
+                        if(!wdf_wcf_array.includes(wdf_data_list.content[j][findTextInArray(wdf_data_list, "WCF #")])){
+                            wdf_wcf_array.push(wdf_data_list.content[j][findTextInArray(wdf_data_list, "WCF #")])
+                            var mtf, ltf, client_id, waste_id, weight_data, pull_out_form;
+                            for(let k = 1; k < wcf_data_list.content.length; k++){
+                                if(wdf_data_list.content[j][findTextInArray(wdf_data_list, "WCF #")] == wcf_data_list.content[k][findTextInArray(wcf_data_list, "WCF #")]){
+                                    if((wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                        mtf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                    }else{
+                                        ltf = wcf_data_list.content[k][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                        for(let x = 1; x < ltf_data_list.content.length; x++){
+                                            if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                                mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                                break
+                                            }
                                         }
                                     }
+                                    pull_out_form = wcf_data_list.content[k][findTextInArray(wcf_data_list, "PULL OUT FORM #")]
+                                    client_id = wcf_data_list.content[k][findTextInArray(wcf_data_list, "CLIENT ID")]
+                                    waste_id = wcf_data_list.content[k][findTextInArray(wcf_data_list, "WASTE ID")]
+                                    weight_data = wcf_data_list.content[k][findTextInArray(wcf_data_list, "NET WEIGHT")]
                                 }
-                                client_id = wcf_data_list.content[k][findTextInArray(wcf_data_list, "CLIENT ID")]
-                                waste_id = wcf_data_list.content[k][findTextInArray(wcf_data_list, "WASTE ID")]
-                                weight_data = wcf_data_list.content[k][findTextInArray(wcf_data_list, "NET WEIGHT")]
                             }
+                            var data_value =`
+                            <tr>
+                                <td>${data_value_counter}</td>
+                                <td>${wdf_data_list.content[j][findTextInArray(wdf_data_list, "WDF #")]}</td>
+                                <td>${mtf}</td>
+                                <td>${pull_out_form}</td>
+                                <td>${date_decoder(wdf_data_list.content[j][findTextInArray(wdf_data_list, "HAULING DATE")])}</td>
+                                <td>${date_decoder(wdf_data_list.content[j][findTextInArray(wdf_data_list, "DISPOSAL DATE")])} /<br> ${time_decoder(wdf_data_list.content[j][findTextInArray(wdf_data_list, "DISPOSAL TIME")])}</td>
+                                <td>${findClientName(client_id)}</td>
+                                <td>${findWasteCode(waste_id)}</td>
+                                <td>${findWasteName(client_id, waste_id)}</td>
+                                <td>${wdf_data_list.content[j][findTextInArray(wdf_data_list, "DESTRUCTION PROCESS")]}</td>
+                                <td>${weight_data}</td>
+                            </tr>
+                            `
+                            data_value_counter += 1;
+                            pending_list_treatment.insertAdjacentHTML("beforeend", data_value);
+                            console.log("pass")
                         }
-                        data_value +=`
-                        <tr>
-                            <td>${data_value_counter}</td>
-                            <td>${wdf_data_list.content[j][findTextInArray(wdf_data_list, "WDF #")]}</td>
-                            <td>${mtf}</td>
-                            <td>${date_decoder(wdf_data_list.content[j][findTextInArray(wdf_data_list, "HAULING DATE")])}</td>
-                            <td>${date_decoder(wdf_data_list.content[j][findTextInArray(wdf_data_list, "DISPOSAL DATE")])} /<br> ${time_decoder(wdf_data_list.content[j][findTextInArray(wdf_data_list, "DISPOSAL TIME")])}</td>
-                            <td>${findClientName(client_id)}</td>
-                            <td>${findWasteCode(waste_id)}</td>
-                            <td>${findWasteName(client_id, waste_id)}</td>
-                            <td>${wdf_data_list.content[j][findTextInArray(wdf_data_list, "DESTRUCTION PROCESS")]}</td>
-                            <td>${weight_data}</td>
-                        </tr>
-                        `
-                        data_value_counter += 1;
                     }
                     else if(pending_treatment_wdf[i] == wdf_data_list.content[j][findTextInArray(wdf_data_list, "WCF #")] &&
                     month_filter.value == "ALL"){
@@ -432,7 +447,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 weight_data = wcf_data_list.content[k][findTextInArray(wcf_data_list, "NET WEIGHT")]
                             }
                         }
-                        data_value +=`
+                        var data_value =`
                         <tr>
                             <td>${data_value_counter}</td>
                             <td>${wdf_data_list.content[j][findTextInArray(wdf_data_list, "WDF #")]}</td>
@@ -448,10 +463,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </tr>
                         `
                         data_value_counter += 1;
+                        pending_list_treatment.insertAdjacentHTML("beforeend", data_value);
                     }
                 }
             }
-            pending_list_treatment.innerHTML = data_value;
+            console.log(wdf_wcf_array)
 
             // finished_list
             var data_value = "";
@@ -875,6 +891,140 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 add_item_button.style.display = "block";
                                 completion.style.display = "grid";
                                 buttons.style.display = "flex";    
+                            }
+                        }
+                    }
+                }
+                for(let c = 1; c < wdf_data_list.content.length; c++){
+                    if(search_sf_form_no.value == wdf_data_list.content[c][findTextInArray(wdf_data_list, "WDF #")]){
+                        for(let a = 1; a < wcf_data_list.content.length; a++){
+                            for(let b=0; b<=pending_treatment_wdf.length; b++){
+                                if(wdf_data_list.content[c][findTextInArray(wdf_data_list, "WCF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")]){
+                                    if(search_sf_form_no.value == pending_treatment_wdf[b]){
+                                        var mtf = "";
+                                        var ltf = "";
+                                        var process, client_weight;
+                                        if((wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")].substring(0,3) == "MTF")){
+                                            mtf = wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                        }
+                                        else{
+                                            ltf = wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")];
+                                            for(let x = 1; x < ltf_data_list.content.length; x++){
+                                                if(ltf == ltf_data_list.content[x][findTextInArray(ltf_data_list, "LTF #")]){
+                                                    mtf = ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+                                                    break
+                                                }
+                                            }
+                                        }
+                                        client_weight = wcf_data_list.content[a][findTextInArray(wcf_data_list, "CLIENT WEIGHT")]
+                                        process = wdf_data_list.content[c][findTextInArray(wdf_data_list, "DESTRUCTION PROCESS")]
+                                        mtf_form_no.value = mtf;
+                                        data_value = `
+                                        WCF #: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")]}<br>
+                                        CLIENT: ${findClientName(wcf_data_list.content[a][findTextInArray(wcf_data_list, "CLIENT ID")])}<br>
+                                        WASTE CODE: ${findWasteCode(wcf_data_list.content[a][findTextInArray(wcf_data_list, "WASTE ID")])}<br>
+                                        WASTE DESCRIPTION: ${findWasteName(wcf_data_list.content[a][findTextInArray(wcf_data_list, "CLIENT ID")], wcf_data_list.content[a][findTextInArray(wcf_data_list, "WASTE ID")])}<br>
+                                        DESTRUCTION PROCESS: ${findTreatmentProcess(wcf_data_list.content[a][findTextInArray(wcf_data_list, "WASTE ID")])}<br>
+                                        CLIENT BATCH WEIGHT: ${client_weight} kg.<br>
+                                        FEFC WEIGHT: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "NET WEIGHT")]} kg.<br>
+                                        HAULING DATE: ${date_decoder(wcf_data_list.content[a][findTextInArray(wcf_data_list, "HAULING DATE")])}<br>
+                                        ARRIVAL DATE: ${date_decoder(wcf_data_list.content[a][findTextInArray(wcf_data_list, "ARRIVAL DATE")])}<br>
+                                        ARRIVAL TIME: ${time_decoder(wcf_data_list.content[a][findTextInArray(wcf_data_list, "ARRIVAL TIME")])}<br>
+                                        SUBMITTED BY: ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "SUBMITTED BY")]}<br>
+                                        `
+                                        if(process == 'THERMAL GASIFIER'){
+                                            machine_list.innerHTML = `
+                                            <label for="tpf_form_no">
+                                                <i class="fa-solid fa-gears"></i>
+                                                Machine
+                                            </label><br>
+                                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px">
+                                                <div>
+                                                    <label for="machine1">
+                                                        <i class="fa-solid fa-gears"></i>
+                                                        Thermal Gasifier Alpha
+                                                    </label><br>
+                                                    <input type="number" autocomplete="off" name="weight1" id="weight1" step="0.01" class="form-control" placeholder="Input Weight">
+                                                    <input type="hidden" name="machine1" value="THERMAL GASIFIER ALPHA">
+                                                </div>
+                                                <div>
+                                                    <label for="machine2">
+                                                        <i class="fa-solid fa-gears"></i>
+                                                        Thermal Gasifier Bravo
+                                                    </label><br>
+                                                    <input type="number" autocomplete="off" name="weight2" id="weight2" step="0.01" class="form-control" placeholder="Input Weight">
+                                                    <input type="hidden" name="machine2" value="THERMAL GASIFIER BRAVO">
+                                                </div>
+                                                <div>
+                                                    <label for="machine3">
+                                                        <i class="fa-solid fa-gears"></i>
+                                                        Thermal Gasifier Charlie
+                                                    </label><br>
+                                                    <input type="number" autocomplete="off" name="weight3" id="weight3" step="0.01" class="form-control" placeholder="Input Weight">
+                                                    <input type="hidden" name="machine3" value="THERMAL GASIFIER CHARLIE">
+                                                </div>
+                                            </div><br>
+                                            `
+                                            machine_counter.value = 3
+                                        }
+                                        else if(process == 'ROTARY' || process == 'FURNACE'){
+                                            machine_list.innerHTML = `
+                                            <label for="tpf_form_no">
+                                                <i class="fa-solid fa-gears"></i>
+                                                Machine
+                                            </label><br>
+                                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 20px">
+                                                <div>
+                                                    <label for="machine1">
+                                                        <i class="fa-solid fa-gears"></i>
+                                                        Rotary 1
+                                                    </label><br>
+                                                    <input type="number" autocomplete="off" name="weight1" id="weight1" step="0.01" class="form-control" placeholder="Input Weight">
+                                                    <input type="hidden" name="machine1" value="Rotary 1">
+                                                </div>
+                                                <div>
+                                                    <label for="machine2">
+                                                        <i class="fa-solid fa-gears"></i>
+                                                        Rotary 2
+                                                    </label><br>
+                                                    <input type="number" autocomplete="off" name="weight2" id="weight2" step="0.01" class="form-control" placeholder="Input Weight">
+                                                    <input type="hidden" name="machine2" value="Rotary 2">
+                                                </div>
+                                                <div>
+                                                    <label for="machine3">
+                                                        <i class="fa-solid fa-gears"></i>
+                                                        Rotary 3
+                                                    </label><br>
+                                                    <input type="number" autocomplete="off" name="weight3" id="weight3" step="0.01" class="form-control" placeholder="Input Weight">
+                                                    <input type="hidden" name="machine3" value="Rotary 3">
+                                                </div>
+                                                <div>
+                                                    <label for="machine4">
+                                                        <i class="fa-solid fa-gears"></i>
+                                                        Furnace
+                                                    </label><br>
+                                                    <input type="number" autocomplete="off" name="weight4" id="weight4" step="0.01" class="form-control" placeholder="Input Weight">
+                                                    <input type="hidden" name="machine4" value="Furnace">
+                                                </div>
+                                            </div><br>
+                                            `
+                                            machine_counter.value = 4
+                                        }
+                                        wcf_form_no.value = wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")];
+                                        client.value = wcf_data_list.content[a][findTextInArray(wcf_data_list, "CLIENT ID")];
+                                        waste_description.value = wcf_data_list.content[a][findTextInArray(wcf_data_list, "WASTE ID")];
+                                        waste_code_input.value = findWasteName(wcf_data_list.content[a][findTextInArray(wcf_data_list, "CLIENT ID")], wcf_data_list.content[a][findTextInArray(wcf_data_list, "WASTE ID")]);
+                                        weight.value = wcf_data_list.content[a][findTextInArray(wcf_data_list, "NET WEIGHT")];
+                                        destruction_process.value = findTreatmentProcess(wcf_data_list.content[a][findTextInArray(wcf_data_list, "WASTE ID")]);
+                                        hauling_date.value = date_decoder(wcf_data_list.content[a][findTextInArray(wcf_data_list, "HAULING DATE")]);
+                                        var hauling_date_plus2 = new Date(date_decoder(wcf_data_list.content[a][findTextInArray(wcf_data_list, "HAULING DATE")]));
+                                        target_date_of_completion.value = date_decoder(hauling_date_plus2.setDate(hauling_date_plus2.getDate()+2));
+                                        additional_item1.style.display = "grid";
+                                        add_item_button.style.display = "block";
+                                        completion.style.display = "grid";
+                                        buttons.style.display = "flex";    
+                                    }
+                                }
                             }
                         }
                     }
