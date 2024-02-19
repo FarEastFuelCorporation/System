@@ -268,12 +268,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                         var finished_date;
                         var finished_time;
                         for(let k = 1; k < sf_data_list.content.length; k++){
-                            finished_date = date_decoder(sf_data_list.content[k][findTextInArray(sf_data_list, "COMPLETION DATE")]);
-                            finished_time = time_decoder(sf_data_list.content[k][findTextInArray(sf_data_list, "COMPLETION TIME")]);
-                            if(done_sorting_sorting[i] == sf_data_list.content[k][findTextInArray(sf_data_list, "WCF #")]){
-                                if(sf_data_list.content[k][findTextInArray(sf_data_list, "WASTE ID")] == "DISCREPANCY"){
-                                    discrepancy_weight = sf_data_list.content[k][findTextInArray(sf_data_list, "WEIGHT")];
-                                    discrepancy_remarks = sf_data_list.content[k][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")];
+                            if(wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")] == sf_data_list.content[k][findTextInArray(sf_data_list, "WCF #")]){
+                                finished_date = date_decoder(sf_data_list.content[k][findTextInArray(sf_data_list, "COMPLETION DATE")]);
+                                finished_time = time_decoder(sf_data_list.content[k][findTextInArray(sf_data_list, "COMPLETION TIME")]);
+                                if(done_sorting_sorting[i] == sf_data_list.content[k][findTextInArray(sf_data_list, "WCF #")]){
+                                    if(sf_data_list.content[k][findTextInArray(sf_data_list, "WASTE ID")] == "DISCREPANCY"){
+                                        discrepancy_weight = sf_data_list.content[k][findTextInArray(sf_data_list, "WEIGHT")];
+                                        discrepancy_remarks = sf_data_list.content[k][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")];
+                                    }
                                 }
                             }
                         }
@@ -314,12 +316,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                         var finished_date;
                         var finished_time;
                         for(let k = 1; k < sf_data_list.content.length; k++){
-                            finished_date = date_decoder(sf_data_list.content[k][findTextInArray(sf_data_list, "COMPLETION DATE")]);
-                            finished_time = time_decoder(sf_data_list.content[k][findTextInArray(sf_data_list, "COMPLETION TIME")]);
-                            if(done_sorting_sorting[i] == sf_data_list.content[k][findTextInArray(sf_data_list, "WCF #")]){
-                                if(sf_data_list.content[k][findTextInArray(sf_data_list, "WASTE ID")] == "DISCREPANCY"){
-                                    discrepancy_weight = sf_data_list.content[k][findTextInArray(sf_data_list, "WEIGHT")];
-                                    discrepancy_remarks = sf_data_list.content[k][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")];
+                            if(wcf_data_list.content[j][findTextInArray(wcf_data_list, "WCF #")] == sf_data_list.content[k][findTextInArray(sf_data_list, "WCF #")]){
+                                finished_date = date_decoder(sf_data_list.content[k][findTextInArray(sf_data_list, "COMPLETION DATE")]);
+                                finished_time = time_decoder(sf_data_list.content[k][findTextInArray(sf_data_list, "COMPLETION TIME")]);
+                                if(done_sorting_sorting[i] == sf_data_list.content[k][findTextInArray(sf_data_list, "WCF #")]){
+                                    if(sf_data_list.content[k][findTextInArray(sf_data_list, "WASTE ID")] == "DISCREPANCY"){
+                                        discrepancy_weight = sf_data_list.content[k][findTextInArray(sf_data_list, "WEIGHT")];
+                                        discrepancy_remarks = sf_data_list.content[k][findTextInArray(sf_data_list, "DESTRUCTION PROCESS / DISCREPANCY REMARKS")];
+                                    }
                                 }
                             }
                         }
