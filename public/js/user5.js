@@ -1097,7 +1097,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         address_container.innerText = address;
                                         si_address_container.innerText = address;
                                         tin_id_container.innerText = `TIN #:${tin_id}`;
-                                        nature_of_business_container.innerText = `BUSINESS TYPE: ${nature_of_business}`;                      
+                                        nature_of_business_container.innerText = `BUSINESS STYLE: ${nature_of_business}`;                      
                                         si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                                         si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                                         si_date_container.innerText = date_of_certification;
@@ -1569,7 +1569,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             address_container.innerText = address;
                             si_address_container.innerText = address;                      
                             tin_id_container.innerText = `TIN #:${tin_id}`;
-                            nature_of_business_container.innerText = `BUSINESS TYPE: ${nature_of_business}`;
+                            nature_of_business_container.innerText = `BUSINESS STYLE: ${nature_of_business}`;
                             si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                             si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                             si_date_container.innerText = date_of_certification;
@@ -1925,7 +1925,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             address_container.innerText = address;
                             si_address_container.innerText = address;
                             tin_id_container.innerText = `TIN #:${tin_id}`;
-                            nature_of_business_container.innerText = `BUSINESS TYPE: ${nature_of_business}`;
+                            nature_of_business_container.innerText = `BUSINESS STYLE: ${nature_of_business}`;
                             si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                             si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                             date_of_certification = date_decoder3(cod_data_list.content[x][findTextInArray(cod_data_list, "HAULING DATE")]);
