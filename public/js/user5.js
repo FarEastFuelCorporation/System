@@ -1455,13 +1455,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                     table_data.insertAdjacentHTML("beforeend", data5);
                 }
                 non_vatable_container.innerText = formatNumber(non_vatable);
-                vatable_container.innerText = formatNumber(total_amount / 1.12);
+                vatable_container.innerText = formatNumber((total_amount / 1.12));
                 vat_container.innerText = formatNumber(total_amount - (total_amount / 1.12));
-                total_amount_payable_container.innerText = formatNumber(total_amount);
+                total_amount_payable_container.innerText = formatNumber(total_amount + non_vatable);
                 credits_container.innerText = formatNumber(credits);
-                total_amount_due_container.innerText = formatNumber((total_amount) - parseFloat(credits));
+                total_amount_due_container.innerText = formatNumber((total_amount + non_vatable) - parseFloat(credits));
                 due_date_container.innerHTML = `${parseInt(term)} days<br>from the date received`;
-                total_amount_container.innerText = formatNumber(total_amount / 1.12);
+                total_amount_container.innerText = formatNumber((total_amount / 1.12) + non_vatable);
                 si_vat_ex_container.innerText = formatNumber((parseFloat(si_total_amount))/1.12);
                 si_vat_container.innerText = formatNumber((parseFloat(si_total_amount)) - ((parseFloat(si_total_amount))/1.12));
                 si_credits_container.innerText = formatNumber(si_credits);
@@ -1803,11 +1803,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                     table_data.insertAdjacentHTML("beforeend", data5);
                 }
                 non_vatable_container.innerText = formatNumber(non_vatable);
-                vatable_container.innerText = formatNumber(total_amount / 1.12);
+                vatable_container.innerText = formatNumber((total_amount / 1.12));
                 vat_container.innerText = formatNumber(total_amount - (total_amount / 1.12));
-                total_amount_payable_container.innerText = formatNumber(total_amount);
+                total_amount_payable_container.innerText = formatNumber(total_amount + non_vatable);
                 credits_container.innerText = formatNumber(credits);
-                total_amount_due_container.innerText = formatNumber((total_amount) - parseFloat(credits));
+                total_amount_due_container.innerText = formatNumber((total_amount + non_vatable) - parseFloat(credits));
                 due_date_container.innerHTML = `${parseInt(term)} days<br>from the date received`;
                 total_amount_container.innerText = formatNumber(total_amount / 1.12);
                 si_vat_ex_container.innerText = formatNumber((parseFloat(si_total_amount))/1.12);
