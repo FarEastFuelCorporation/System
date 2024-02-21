@@ -974,6 +974,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
             finished_list_certification.innerHTML = data_value;
+            console.log(pending_certification)
 
         }
 
@@ -2308,24 +2309,24 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         }
                                     }
                                     else if(tpf_data_list.content[x][findTextInArray(tpf_data_list, "CLIENT ID")] == "C2023024"){
-                                        var new_waste_name = ""
-                                        var pull_out_form
-                                        for(let a = 1; a < wcf_data_list.content.length; a++){
-                                            if(wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")] == tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")]){
-                                                pull_out_form = wcf_data_list.content[a][findTextInArray(wcf_data_list, "PULL OUT FORM #")]
-                                                if((wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).substring(0,3) == "MTF"){
+                                        // var new_waste_name = ""
+                                        // var pull_out_form
+                                        // for(let a = 1; a < wcf_data_list.content.length; a++){
+                                        //     if(wcf_data_list.content[a][findTextInArray(wcf_data_list, "WCF #")] == tpf_data_list.content[x][findTextInArray(tpf_data_list, "WCF #")]){
+                                        //         pull_out_form = wcf_data_list.content[a][findTextInArray(wcf_data_list, "PULL OUT FORM #")]
+                                        //         if((wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).substring(0,3) == "MTF"){
                                                     
-                                                }
-                                                else{
-                                                    new_waste_name = `${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]} <br> Plate No. ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "PLATE #")]} (FEFC)`
-                                                }
-                                            }
-                                        }
+                                        //         }
+                                        //         else{
+                                        //             new_waste_name = `${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]} <br> Plate No. ${wcf_data_list.content[a][findTextInArray(wcf_data_list, "PLATE #")]} (FEFC)`
+                                        //         }
+                                        //     }
+                                        // }
                                         table_data_value +=
                                         `
                                         <tr style="display: grid; grid-template-columns: 100px 1.3fr 80px 80px .7fr 100px;">
                                             <td>${date_decoder(tpf_data_list.content[x][findTextInArray(tpf_data_list, "HAULING DATE")])}</td>
-                                            <td>${new_waste_name}</td>
+                                            <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "WASTE NAME")]}</td>
                                             <td>${pull_out_form}</td>
                                             <td style="font-weight: bold">${formatNumber(cod_weight)} kgs.</td>
                                             <td>${tpf_data_list.content[x][findTextInArray(tpf_data_list, "DESTRUCTION PROCESS")]}</td>
