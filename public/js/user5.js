@@ -1600,7 +1600,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         si_amount = parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
                                         si_total_amount += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * (parseFloat(unit_price) + (parseFloat(unit_price)*.12));
                                     }
-                                    if(vat_calculation == "NON VATABLE"){
+                                    else if(vat_calculation == "NON VATABLE"){
                                         total_amount += (parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price));
                                         non_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
                                         individual_vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
@@ -1712,7 +1712,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 si_amount = (1 * (parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12)));
                                 si_total_amount += (1 * (parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12)));
                             }
-                            if(transportation_calculation == "NON VATABLE"){
+                            else if(transportation_calculation == "NON VATABLE"){
                                 total_amount += parseFloat(transportation_fee);
                                 non_vatable += parseFloat(transportation_fee);
                                 individual_vatable += parseFloat(transportation_fee);
