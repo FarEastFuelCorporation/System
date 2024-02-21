@@ -1033,6 +1033,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             if((wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).substring(0,3) == "MTF"){
                                                 for(let b = 1; b < mtf_data_list.content.length; b++){
                                                     if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "MTF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
+                                                        console.log("pass1")
                                                         for (let c = qlf_data_list.content.length - 1; c >= 1; c--) {
                                                             if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "QUOTATION CODE")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "QUOTATION CODE")] &&
                                                             mtf_data_list.content[b][findTextInArray(mtf_data_list, "TYPE OF VEHICLE")] == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
@@ -1052,6 +1053,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             else if((wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]).substring(0,3) == "LTF"){
                                                 for(let d = 1; d < ltf_data_list.content.length; d++){
                                                     if(ltf_data_list.content[d][findTextInArray(ltf_data_list, "LTF #")] == wcf_data_list.content[a][findTextInArray(wcf_data_list, "LTF/ MTF  #")]){
+                                                        console.log("pass2")
                                                         for(let b = 1; b < mtf_data_list.content.length; b++){
                                                             if(mtf_data_list.content[b][findTextInArray(mtf_data_list, "MTF #")] == ltf_data_list.content[d][findTextInArray(ltf_data_list, "MTF #")]){
                                                                 for (let c = qlf_data_list.content.length - 1; c >= 1; c--) {
@@ -1064,6 +1066,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                                                         term = qlf_data_list.content[c][findTextInArray(qlf_data_list, "TERMS CHARGE")]
                                                                         max_capacity = qlf_data_list.content[c][findTextInArray(qlf_data_list, "MAX CAPACITY")]
                                                                         quotation_no = mtf_data_list.content[b][findTextInArray(mtf_data_list, "QUOTATION CODE")]
+                                                                        console.log(quotation_no)
                                                                         break
                                                                     }
                                                                 }
@@ -1074,6 +1077,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             }
                                         }
                                     }
+                                    console.log(waste_id)
+                                    console.log(mode)
                                     for (let c = qlf_data_list.content.length - 1; c >= 1; c--) {
                                         if(quotation_no == qlf_data_list.content[c][findTextInArray(qlf_data_list, "QUOTATION CODE")] &&
                                         waste_id == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
@@ -1108,7 +1113,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             if(mode != "FREE OF CHARGE"){
                                                 var si_unit_price = 0;
                                                 var si_amount = 0;
+                                                console.log(mode)
                                                 if(mode == "CHARGE"){
+                                                    console.log("pass")
                                                     if(vat_calculation == "VAT EXCLUSIVE"){
                                                         total_amount += (parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price)) * 1.12;
                                                         vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
