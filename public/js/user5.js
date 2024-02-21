@@ -1263,7 +1263,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     var si_unit_price = 0;
                                     var si_amount = 0;
                                     if(transportation_calculation == "VAT EXCLUSIVE"){
-                                        console.log("pass2")
                                         total_amount += parseFloat(transportation_fee) * 1.12;
                                         individual_vatable += parseFloat(transportation_fee);
                                         individual_vatable += parseFloat(transportation_fee);
@@ -1272,7 +1271,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         si_total_amount += (1 * (parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12)));
                                     }
                                     else if(transportation_calculation == "NON VATABLE"){
-                                        console.log("pass3")
                                         non_vatable += parseFloat(transportation_fee);
                                         individual_vatable += parseFloat(transportation_fee);
                                         individual_vatable += parseFloat(transportation_fee);
@@ -1281,7 +1279,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                                         si_total_amount += (1 * (parseFloat(transportation_fee) + (parseFloat(transportation_fee)*.12)));
                                     }
                                     else{
-                                        console.log("pass")
                                         total_amount += parseFloat(transportation_fee);
                                         individual_vatable += parseFloat(transportation_fee);
                                         si_unit_price = parseFloat(transportation_fee);
