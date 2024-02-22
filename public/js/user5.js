@@ -1074,8 +1074,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             }
                                         }
                                     }
-                                    console.log(waste_id)
-                                    console.log(mode)
                                     for (let c = qlf_data_list.content.length - 1; c >= 1; c--) {
                                         if(quotation_no == qlf_data_list.content[c][findTextInArray(qlf_data_list, "QUOTATION CODE")] &&
                                         waste_id == qlf_data_list.content[c][findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")]){
@@ -1110,9 +1108,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                             if(mode != "FREE OF CHARGE"){
                                                 var si_unit_price = 0;
                                                 var si_amount = 0;
-                                                console.log(mode)
                                                 if(mode == "CHARGE"){
-                                                    console.log("pass")
                                                     if(vat_calculation == "VAT EXCLUSIVE"){
                                                         total_amount += (parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price)) * 1.12;
                                                         vatable += parseFloat(cod_data_list.content[x][findTextInArray(cod_data_list, "WEIGHT")]) * parseFloat(unit_price);
@@ -1345,6 +1341,23 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <td style="font-size: 10px !important">${vat_calculation}</td>
                                 </tr>
                                 `
+                                if(client_id.value == "C2023015"){
+                                    data2 += `
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td style="font-size: 9px !important; padding-top: 2px">TRANSPORTATION FEE:</td>
+                                        <td style="text-align: right; padding-right: 5px">${formatNumber(1)}</td>
+                                        <td>Trip</td>
+                                        <td style="text-align: right; padding-right: 5px"></td>
+                                        <td style="text-align: right; padding-right: 5px">${formatNumber(3000)}</td>
+                                        <td style="font-size: 10px !important">VAT EXCLUSIVE</td>
+                                    </tr>
+                                    `
+                                    total_amount += (3000) * 1.12;
+                                    vatable += (3000);
+                                }
                                 if(vat_calculation == "VAT EXCLUSIVE"){
                                     total_amount += (parseFloat(capacity - max_capacity) * parseFloat(unit_price)) + parseFloat(transportation_fee) * 1.12;
                                     vatable += (parseFloat(capacity - max_capacity) * parseFloat(unit_price)) + parseFloat(transportation_fee);
@@ -1389,6 +1402,23 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <td style="font-size: 10px !important">${transportation_calculation}</td>
                                 </tr>
                                 `
+                                if(client_id.value == "C2023015"){
+                                    data2 += `
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td style="font-size: 9px !important; padding-top: 2px">TRANSPORTATION FEE:</td>
+                                        <td style="text-align: right; padding-right: 5px">${formatNumber(1)}</td>
+                                        <td>Trip</td>
+                                        <td style="text-align: right; padding-right: 5px"></td>
+                                        <td style="text-align: right; padding-right: 5px">${formatNumber(3000)}</td>
+                                        <td style="font-size: 10px !important">VAT EXCLUSIVE</td>
+                                    </tr>
+                                    `
+                                    total_amount += (3000) * 1.12;
+                                    vatable += (3000);
+                                }
                                 if(vat_calculation == "VAT EXCLUSIVE"){
                                     total_amount += parseFloat(transportation_fee) * 1.12;
                                     vatable += parseFloat(transportation_fee);
@@ -1481,7 +1511,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     table_data_info = [];
                     table_data_transportation = [];
                     var individual_non_vatable = 0;
-                    var individual_vatable = 0;    
+                    var individual_vatable = 0;    conso
                     const search_cod_form_no = billing_process_form.querySelector(`#search_cod_form_no${s}`);
                     const service_invoice_no = billing_process_form.querySelector(`#service_invoice_no${s}`);
                     const total_vat_in = billing_process_form.querySelector(`#total_vat_in${s}`);
