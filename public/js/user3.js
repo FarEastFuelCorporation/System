@@ -168,7 +168,9 @@ document.addEventListener('DOMContentLoaded', async function() {
             pending_treatment_sf_wcf = wcf_transaction_sf.filter((element) => !wcf_done_list_tpf.includes(element));
             pending_treatment_wdf_wcf = wcf_transaction_wdf.filter((element) => !wcf_done_list_tpf.includes(element));
             finished_treatment = sf_wdf_done_list_tpf       
-
+            console.log(wcf_transaction_wdf)
+            console.log(wcf_done_list_tpf)
+            console.log(pending_treatment_wdf_wcf)
             // pending_list
             total_counter_treatment.innerText = pending_treatment_wcf.length + pending_treatment_sf_wcf.length + pending_treatment_wdf_wcf.length + wcf_done_list_tpf.length;
             pending_counter_treatment.innerText = pending_treatment_wcf.length + pending_treatment_sf_wcf.length + pending_treatment_wdf_wcf.length;
@@ -375,15 +377,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                 }
             }
-            console.log(pending_treatment_wdf)
             var wdf_wcf_array = [];
-            for(let i = 0; i < pending_treatment_wdf.length; i++){
+            for(let i = 0; i < pending_treatment_wdf_wcf.length; i++){
                 for(let j = 1; j < wdf_data_list.content.length; j++){
-                    if(pending_treatment_wdf[i] == wdf_data_list.content[j][findTextInArray(wdf_data_list, "WDF #")] &&
+                    if(pending_treatment_wdf_wcf[i] == wdf_data_list.content[j][findTextInArray(wdf_data_list, "WCF #")] &&
                     month_filter.value == formatMonth(wdf_data_list.content[j][findTextInArray(wdf_data_list, "HAULING DATE")])){
-                        console.log(pending_treatment_wdf[i])
-                        console.log(wdf_data_list.content[j][findTextInArray(wdf_data_list, "WDF #")])
-                        console.log(wdf_data_list.content[j][findTextInArray(wdf_data_list, "WCF #")])
                         if(!wdf_wcf_array.includes(wdf_data_list.content[j][findTextInArray(wdf_data_list, "WCF #")])){
                             wdf_wcf_array.push(wdf_data_list.content[j][findTextInArray(wdf_data_list, "WCF #")])
                             var mtf, ltf, client_id, waste_id, weight_data, pull_out_form;
@@ -423,7 +421,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                             `
                             data_value_counter += 1;
                             pending_list_treatment.insertAdjacentHTML("beforeend", data_value);
-                            console.log("pass")
                         }
                     }
                     else if(pending_treatment_wdf[i] == wdf_data_list.content[j][findTextInArray(wdf_data_list, "WCF #")] &&
@@ -467,7 +464,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                     }
                 }
             }
-            console.log(wdf_wcf_array)
 
             // finished_list
             var data_value = "";
