@@ -1616,9 +1616,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     convertToPDFandDownload_button.style.display = "block";    
                                     table_data.innerHTML = table_data_value;
                                     table_head_data.innerHTML = table_head_data_value;
-                                    certification.innerHTML = `17`;
-                                    certification2.innerHTML = `th`;
-                                    certification3.innerHTML = ` day of February 2024`;
+                                    certification.innerHTML = `${certification_day}`;
+                                    certification2.innerHTML = `${certification_day_ordinal}`;
+                                    certification3.innerHTML = ` day of ${certification_month} ${certification_year}`;
                                     result_remarks.innerHTML = "";
                                 }
                             }
