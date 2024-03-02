@@ -3008,7 +3008,6 @@ document.addEventListener("DOMContentLoaded", async function () {
           table_data_transportation = [];
           var individual_non_vatable = 0;
           var individual_vatable = 0;
-          conso;
           const search_cod_form_no = billing_process_form.querySelector(
             `#search_cod_form_no${s}`
           );
