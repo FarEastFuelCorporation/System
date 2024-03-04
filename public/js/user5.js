@@ -2781,7 +2781,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                 if (vat_calculation == "VAT EXCLUSIVE") {
                   total_amount +=
                     parseFloat(capacity - max_capacity) *
-                      parseFloat(unit_price) +
+                      parseFloat(unit_price) *
+                      1.12 +
                     parseFloat(transportation_fee) * 1.12;
                   vatable +=
                     parseFloat(capacity - max_capacity) *
