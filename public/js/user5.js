@@ -2984,9 +2984,18 @@ document.addEventListener("DOMContentLoaded", async function () {
         due_date_container.innerHTML = `${parseInt(
           term
         )} days<br>from the date received`;
-        total_amount_container.innerText = formatNumber(
-          total_amount - parseFloat(credits) + non_vatable
-        );
+        if (client_id.value == "C2023026") {
+          total_amount_container.innerText = formatNumber(
+            total_amount -
+              parseFloat(credits) +
+              non_vatable -
+              (total_amount - total_amount / 1.12)
+          );
+        } else {
+          total_amount_container.innerText = formatNumber(
+            total_amount - parseFloat(credits) + non_vatable
+          );
+        }
         si_vat_ex_container.innerText = formatNumber(
           parseFloat(si_total_amount) / 1.12
         );
@@ -3796,9 +3805,18 @@ document.addEventListener("DOMContentLoaded", async function () {
         due_date_container.innerHTML = `${parseInt(
           term
         )} days<br>from the date received`;
-        total_amount_container.innerText = formatNumber(
-          total_amount - parseFloat(credits) + non_vatable
-        );
+        if (client_id.value == "C2023026") {
+          total_amount_container.innerText = formatNumber(
+            total_amount -
+              parseFloat(credits) +
+              non_vatable -
+              (total_amount - total_amount / 1.12)
+          );
+        } else {
+          total_amount_container.innerText = formatNumber(
+            total_amount - parseFloat(credits) + non_vatable
+          );
+        }
         si_vat_ex_container.innerText = formatNumber(
           parseFloat(si_total_amount) / 1.12
         );
