@@ -2753,7 +2753,9 @@ document.addEventListener("DOMContentLoaded", async function () {
                                       capacity - max_capacity
                                     )}</td>
                                     <td>${unit}</td>
-                                    <td style="text-align: right; padding-right: 5px">${unit_price}</td>
+                                    <td style="text-align: right; padding-right: 5px">${formatNumber(
+                                      unit_price
+                                    )}</td>
                                     <td style="text-align: right; padding-right: 5px">${formatNumber(
                                       (capacity - max_capacity) * unit_price
                                     )}</td>
@@ -2923,7 +2925,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             );
           }
           var space = `
-                    <tr>
+                    <tr style="height: 18px !important">
                         <td></td>
                         <td></td>
                         <td></td>
@@ -2956,7 +2958,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         for (let x = 0; x < 20 - table_counter; x++) {
           var data5 = "";
           data5 = `
-                    <tr>
+          <tr style="height: 18px !important">
                         <td></td>
                         <td></td>
                         <td></td>
@@ -3760,7 +3762,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             );
           }
           var space = `
-                    <tr>
+          <tr style="height: 18px !important">
                         <td></td>
                         <td></td>
                         <td></td>
@@ -3777,7 +3779,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         for (let x = 0; x < 20 - table_counter; x++) {
           var data5 = "";
           data5 = `
-                    <tr>
+          <tr style="height: 18px !important">
                         <td></td>
                         <td></td>
                         <td></td>
@@ -4583,7 +4585,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             );
           }
           var space = `
-                    <tr>
+          <tr style="height: 18px !important">
                         <td></td>
                         <td></td>
                         <td></td>
@@ -4606,7 +4608,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         for (let x = 0; x < 20 - table_counter; x++) {
           var data5 = "";
           data5 = `
-                    <tr>
+          <tr style="height: 18px !important">
                         <td></td>
                         <td></td>
                         <td></td>
