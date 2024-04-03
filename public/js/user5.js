@@ -1804,6 +1804,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       date_made_container.innerText = date_decoder(billing_date_input.value);
       if (type_of_form.value == "By COD (Single Transaction)") {
         for (let s = 1; s <= cod_counter.value; s++) {
+          console.log("pass");
           var individual_non_vatable = 0;
           var individual_vatable = 0;
           capacity = 0;
@@ -1886,6 +1887,7 @@ document.addEventListener("DOMContentLoaded", async function () {
           var mode = "";
           var unit = "";
           var unit_price = "";
+          console.log(wasteIDArray);
           wasteIDArray.forEach((wasteId) => {
             for (let x = 1; x < cod_data_list.content.length; x++) {
               if (
@@ -2231,6 +2233,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                     si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                     si_date_container.innerText = date_of_certification;
+                    console.log("pass3");
                     if (
                       cod_data_list.content[x][
                         findTextInArray(cod_data_list, "WASTE NAME")
