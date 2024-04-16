@@ -2022,6 +2022,8 @@ document.addEventListener("DOMContentLoaded", async function () {
       marketing_signature_quotation_form.innerHTML = `<img src="../images/SORIANO_JOVELYN.png" alt="">`;
     } else if (user.value == "JOHONEY CANLAS") {
       marketing_signature_quotation_form.innerHTML = `<img src="../images/CANLAS_JOHONEY.png" alt="">`;
+    } else if (user.value == "ZANS NICOLE DOMINGUEZ") {
+      marketing_signature_quotation_form.innerHTML = `<img src="../images/DOMINGUEZ_ZANS_NICOLE.png" alt="">`;
     }
 
     accounting_head_signature_quotation_form.innerHTML = `<img src="../images/CARDINEZ_DAISY.png" alt="">`;
