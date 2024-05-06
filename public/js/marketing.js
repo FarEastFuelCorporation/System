@@ -66,6 +66,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     const void_response_promise = fetch(
       "https://script.google.com/macros/s/AKfycbzeHHk1OkGhQEmii69e_l0jQLo4zNsxIFTRj8cF4__Sbm_UeCdNzupkDHv_3ZgdFUPdAw/exec"
     );
+    const accomplishment_response_promise = fetch(
+      "https://script.google.com/macros/s/AKfycbwa4TtV5mhmZRWagXQWmEG6EVH_tlRvwSnIOBM6O6VF_wAd4qnvFGky-1WBsQ74bPI3JQ/exec"
+    );
 
     const [
       username_response,
@@ -90,6 +93,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       wsf_response,
       irf_response,
       void_response,
+      accomplishment_response,
     ] = await Promise.all([
       username_response_promise,
       client_list_response_promise,
@@ -113,6 +117,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       wsf_response_promise,
       irf_response_promise,
       void_response_promise,
+      accomplishment_response_promise,
     ]);
 
     const username_data_list = await username_response.json();
@@ -137,6 +142,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const wsf_data_list = await wsf_response.json();
     const irf_data_list = await irf_response.json();
     const void_data_list = await void_response.json();
+    const accomplishment_data_list = await accomplishment_response.json();
 
     // Code that depends on the fetched data
     // username_data_list3
