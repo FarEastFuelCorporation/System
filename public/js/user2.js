@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             wcf_response,
             sf_response,
             qlf_response,
+            accomplishment_response,
         ] = await Promise.all([
             username_response_promise,
             employee_response_promise,
@@ -36,8 +37,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             wcf_response_promise,
             sf_response_promise,
             qlf_response_promise,
+            accomplishment_response_promise,
         ]);
-        qlf_response_promise;
 
         const username_data_list  = await username_response.json();
         const employee_data_list  = await employee_response.json();
@@ -50,6 +51,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const wcf_data_list  = await wcf_response.json();
         const sf_data_list  = await sf_response.json();
         const qlf_data_list  = await qlf_response.json();
+        const accomplishment_data_list  = await accomplishment_response.json();
 
         // Code that depends on the fetched data
         // username_data_list
