@@ -59,13 +59,16 @@ document.addEventListener('DOMContentLoaded', async function() {
         const user_sidebar = document.getElementById("user_sidebar");
         const user_sidebar_officer = document.getElementById("user_sidebar_officer");
         const user_sidebar_department = document.getElementById("user_sidebar_department");
-        const user = document.getElementById("user");
+        const user_department = document.getElementById("user_department");
+        const users = document.querySelectorAll("#user");
 
         profile_picture.src = `../images/profile_picture/${username_data_list.content[2][findTextInArray(username_data_list, "PICTURE")]}`;
-        user.value = username_data_list.content[2][findTextInArray(username_data_list, "NAME")];
+        users.forEach((user) => {user.value = username_data_list.content[2][findTextInArray(username_data_list, "NAME")];
+          });
         user_sidebar.innerHTML = `<u>${username_data_list.content[2][findTextInArray(username_data_list, "NAME")]}</u>`;
         user_sidebar_officer.innerText = username_data_list.content[2][findTextInArray(username_data_list, "SECTIONS")];
         user_sidebar_department.innerText = username_data_list.content[2][findTextInArray(username_data_list, "DEPARTMENT")];
+        user_department.value = username_data_list.content[2][findTextInArray(username_data_list, "DEPARTMENT")];
 
         // sf_data_list
         // sorting_dashboard_section
@@ -188,6 +191,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             var chart = new ApexCharts(pieChart, options);
             chart.render();
+
+
             var data_value = "";
             var data_value_counter = 1;
             for(let i = 0; i < pending_sorting.length; i++){
@@ -891,6 +896,83 @@ document.addEventListener('DOMContentLoaded', async function() {
             type_of_waste__list_data_value_counter += 1;
         }
         type_of_waste_list.innerHTML = type_of_waste__list_data_value
+
+
+        // ACCOMPLISHMENT REPORT
+        const accomplishment_report_section = document.querySelector("#accomplishment_report");
+        const new_accomplishment_report_button = accomplishment_report_section.querySelector("#new_accomplishment_report_button");
+        const update_accomplishment_report_button = accomplishment_report_section.querySelector("#update_accomplishment_report_button");
+        const new_accomplishment_form_tab = accomplishment_report_section.querySelector("#new_accomplishment_form_tab");
+        const update_accomplishment_form_tab = accomplishment_report_section.querySelector("#update_accomplishment_form_tab");
+        const accomplishment_report_list = accomplishment_report_section.querySelector("#accomplishment_report_list");
+        const accomplishment_report_user = new_accomplishment_form_tab.querySelector("#user").value;
+
+        new_accomplishment_report_button.addEventListener("click", () => {
+            if (new_accomplishment_form_tab.style.display == "block") {
+                new_accomplishment_form_tab.style.display = "none";
+            } else { 
+                new_accomplishment_form_tab.style.display = "block";
+                update_accomplishment_form_tab.style.display = "none";
+            }
+        });
+        update_accomplishment_report_button.addEventListener("click", () => {
+            if (update_accomplishment_form_tab.style.display == "block") {
+                update_accomplishment_form_tab.style.display = "none";
+            } else {
+                update_accomplishment_form_tab.style.display = "block";
+                new_accomplishment_form_tab.style.display = "none";
+            }
+        });
+
+        console.log(accomplishment_report_user)
+        var data_value = "";
+        var data_value_counter = 1;
+        for(let j = 1; j < accomplishment_data_list.content.length; j++){
+            if(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "SUBMITTED BY")] == accomplishment_report_user){
+                data_value +=`
+                <tr>
+                    <td>${data_value_counter}</td>
+                    <td>${accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "ARID #")]}</td>
+                    <td>${accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "TASK ID #")]}</td>
+                    <td>${accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "TASKS")]}</td>
+                    <td>${accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "ACCOMPLISHMENT")]}</td>
+                    <td>${date_decoder(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "DATE START")])} /<br> ${time_decoder(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "TIME START")])}</td>
+                    <td>${date_decoder(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "DATE FINISHED")])} /<br> ${time_decoder(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "TIME FINISHED")])}</td>
+                    <td>${accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "PERCENTAGE")]}</td>
+                    <td class="progress_td"><div class="progress" id="progress${data_value_counter}"><div class="progress-done" id="progress-done${data_value_counter}"></div></div></td>
+                </tr>
+                `
+                data_value_counter++;
+
+                const progress = document.querySelector(`#progress-done1`);
+
+                let percentage = accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "PERCENTAGE")]
+                let fontColor;
+                let progressColor;
+                if(percentage <= 100/3){
+                    fontColor = "white"
+                    progressColor = "#dc3545"
+                }
+                else if(percentage <= 100/3*2){
+                    fontColor = "black"
+                    progressColor = "#ffbf00"
+                }
+                else{
+                    fontColor = "white"
+                    progressColor = "#198754"
+                }
+                progress.style.backgroundColor = 'green'
+                progress.style.color = 'white'
+                progress.style.width = 50 + '%'
+                progress.innerText = 50 + '%'
+                console.log(progress)
+            }
+        }
+        accomplishment_report_list.innerHTML = data_value;
+        
+
+        // const progress = document.querySelector(`#progress-done${data_value_counter}`);
+        // progress.style.width = accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "PERCENTAGE")] + '%'
 
 
         function findEmployeeName(employee_id){

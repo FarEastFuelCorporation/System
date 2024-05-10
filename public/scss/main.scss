@@ -6,6 +6,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: "poppins", "sans-serif";
 }
 
 .body{
@@ -504,6 +505,63 @@ nav{
     display: none; /* Initially hidden */
 }
 
+.range{
+    height: 80px;
+    width: 100%;
+    border: 3px solid orangered;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.range .field{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.range .sliderValue{
+    position: relative;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.range .field .value{
+    font-size: 18px;
+    font-weight: 600;
+    width: 50px;
+    text-align: center;
+}
+
+.range .field input{
+    -webkit-appearance: none;
+    height: 3px;
+    width: 100%;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+}
+
+.progress{
+    background-color: grey;
+    border-radius: 20px;
+    height: 30px;
+    width: 150px;
+    align-items: center;
+}
+
+.progress-done{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 70%;
+    transition: 1s ease 0.3s;
+}
+
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
@@ -564,6 +622,8 @@ nav{
 #inbox_section,
 #application_section,
 #profile_section,
+#profile_section,
+#accomplishment_report,
 #settingsSection,
 #helpSection
 {
@@ -618,6 +678,7 @@ nav{
 #inbox_section,
 #application_section,
 #profile_section,
+#accomplishment_report,
 #settingsSection,
 #helpSection,
 .section_container #marketing_dashboard,
@@ -4587,6 +4648,7 @@ input:disabled {
     #inbox_section,
     #application_section,
     #profile_section,
+    #accomplishment_report,
     #settingsSection,
     #helpSection    
     {
@@ -4793,6 +4855,7 @@ input:disabled {
     #inbox_section,
     #application_section,
     #profile_section,
+    #accomplishment_report,
     #settingsSection,
     #helpSection    
     {
