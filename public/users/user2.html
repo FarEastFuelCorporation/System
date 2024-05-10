@@ -1739,7 +1739,7 @@
                                 <th>ACCOMPLISHMENT</th>
                                 <th>START<br>DATE/TIME</th>
                                 <th>FINISH<br>DATE/TIME</th>
-                                <th>PERCENTAGE</th>
+                                <th style="width: 150px;">PERCENTAGE</th>
                             </thead>
                             <tbody id="accomplishment_report_list">
 
@@ -1760,11 +1760,6 @@
                                     Task
                                     </label><br>
                                 <input type="text" name="task" id="task" autocomplete="off" class="form-control" required placeholder="Input Task Name..."><br>
-                                <label for="accomplishment">
-                                    <i class="fa-solid fa-calendar-check"></i>
-                                    Accomplishment
-                                </label><br>
-                                <input type="text" name="accomplishment" id="accomplishment" autocomplete="off" class="form-control" required placeholder="Input Accomplishment..."><br>
                                 <label for="percentage">
                                     <i class="fa-solid fa-hourglass-half"></i>
                                     Percentage
@@ -1779,6 +1774,11 @@
                                         <div class="value right">100%</div>
                                     </div>
                                 </div><br>
+                                <label for="accomplishment">
+                                    <i class="fa-solid fa-calendar-check"></i>
+                                    Accomplishment
+                                </label><br>
+                                <input type="text" name="accomplishment" id="accomplishment" autocomplete="off" class="form-control" required placeholder="Input Accomplishment..."><br>
                                 <div class="row">
                                     <div class="col-6">
                                         <label for="ar_date_start">
@@ -1796,112 +1796,99 @@
                                             Date/Time Finished
                                         </label>
                                         <div>
-                                            <input type="date" id="ar_date_finished" name="ar_date_finished" class="form-control" required>
-                                            <input type="time" id="ar_time_finished" name="ar_time_finished" class="form-control" required>
+                                            <input type="date" id="ar_date_finished" name="ar_date_finished" class="form-control" readonly>
+                                            <input type="time" id="ar_time_finished" name="ar_time_finished" class="form-control" readonly>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <div class="buttons">
-                            <button type="submit" id="submit_btn" class="form-control">
-                                Submit
-                            </button>
-                            <button type="reset" id="reset" class="form-control" >
-                                Clear
-                            </button>
-                        </div>    
-                    </form>
-                </div>
-                <div id="update_accomplishment_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #dc3545; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
-                    <h2>UPDATE CLIENT FORM</h2><br>
-                    <form  action="https://script.google.com/macros/s/AKfycbxM0OLt_Mi9VYDcEQVGNImvLudTtifjnB5X6X8eOC-8kWWNPVj9go0Y0-cJmFVsDiFl/exec" method="post">
-                        <div style="display: flex; gap: 20px;">
-                            <div>
-                                <label for="client_id">
-                                    <i class="fa-solid fa-user"></i>
-                                    Search Client ID
-                                    </label><br>
-                                <input type="text" name="client_id" id="client_id" autocomplete="off" class="form-control form" required>
-                            </div>
-                            <div style="display: flex; align-items: end;">
-                                <button id="search_client_id_button" type="button" class="form-control" style="width: 60px; height: 60px;">
-                                    <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
-                                </button>
-                            </div>
-                        </div><br>
-                        <div id="update_client_form_tab_container">
-                            <div class="row">
-                                <div class="col-12 col-lg-6">
-                                    <label for="client_name">
-                                        <i class="fa-solid fa-user"></i>
-                                        Client
-                                        </label><br>
-                                    <input type="text" name="client_name" id="client_name" autocomplete="off" class="form-control" required placeholder="Input Client's Name..."><br>
-                                    <label for="address">
-                                        <i class="fa-solid fa-house-user"></i>
-                                        Address
-                                    </label><br>
-                                    <input type="text" name="address" id="address" autocomplete="off" class="form-control" required placeholder="Input Client's Address..."><br>
-                                    <label for="nature_of_business">
-                                        <i class="fa-solid fa-table-list"></i>
-                                        Nature of Business
-                                    </label><br>
-                                    <input type="text" name="nature_of_business" id="nature_of_business" autocomplete="off" class="form-control" required placeholder="Input Client's Nature of Business..."><br>
-                                    <label for="contact_number">
-                                        <i class="fa-solid fa-square-phone"></i>
-                                        Contact Number
-                                    </label><br>
-                                    <input type="text" name="contact_number" id="contact_number" autocomplete="off" class="form-control" required placeholder="Input Client's Contact Number..."><br>
-                                    <label for="tin_no">
-                                        <i class="fa-solid fa-table-list"></i>
-                                        Tin #
-                                    </label><br>
-                                    <input type="text" name="tin_no" id="tin_no" autocomplete="off" class="form-control" required placeholder="Input Client's Tin Number..."><br>
-                                </div>
-                                <div class="col-12 col-lg-6">
-                                    <label for="biller_name">
-                                        <i class="fa-solid fa-user"></i>
-                                        Biller Name
-                                        </label><br>
-                                    <input type="text" name="biller_name" id="biller_name" autocomplete="off" class="form-control" required placeholder="Input Biller's Name..."><br>
-                                    <label for="biller_address">
-                                        <i class="fa-solid fa-house-user"></i>
-                                        Biller Address
-                                    </label><br>
-                                    <input type="text" name="biller_address" id="biller_address" autocomplete="off" class="form-control" required placeholder="Input Biller's Address..."><br>
-                                    <label for="biller_contact_person">
-                                        <i class="fa-solid fa-house-user"></i>
-                                        Biller Contact Person
-                                    </label><br>
-                                    <input type="text" name="biller_contact_person" id="biller_contact_person" autocomplete="off" class="form-control" required placeholder="Input Biller's Contact Person..."><br>    
-                                    <label for="biller_contact_number">
-                                        <i class="fa-solid fa-square-phone"></i>
-                                        Biller Contact Number
-                                    </label><br>
-                                    <input type="text" name="biller_contact_number" id="biller_contact_number" autocomplete="off" class="form-control" required placeholder="Input Biller's Contact Number..."><br>
-                                    <label for="biller_nature_of_business">
-                                        <i class="fa-solid fa-table-list"></i>
-                                        Biller Nature of Business
-                                    </label><br>
-                                    <input type="text" name="biller_nature_of_business" id="biller_nature_of_business" autocomplete="off" class="form-control" required placeholder="Input Biller's Nature of Business..."><br>
-                                    <label for="biller_tin_no">
-                                        <i class="fa-solid fa-table-list"></i>
-                                        Biller Tin #
-                                    </label><br>
-                                    <input type="text" name="biller_tin_no" id="biller_tin_no" autocomplete="off" class="form-control" required placeholder="Input Biller's Tin Number..."><br>
-                                </div>
-                            </div>
-                            <input type="hidden" name="timestamp" id="timestamp">
                             <div class="buttons">
-                                <button type="submit" id="submit_btn" class="form-control" >
+                                <button type="submit" id="submit_btn" class="form-control">
                                     Submit
                                 </button>
                                 <button type="reset" id="reset" class="form-control" >
                                     Clear
                                 </button>
                             </div>    
+                        </div>
+                    </form>
+                </div>
+                <div id="update_accomplishment_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #dc3545; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
+                    <h2>UPDATE ACCOMPLISHMENT REPORT FORM</h2><br>
+                    <form  action="https://script.google.com/macros/s/AKfycbyfpK6rKZY6WEsQuvAuOSbIrVYUWJHECzX75IY2Et12qptEiuISIVEr2t5yYj_Uju0/exec" method="post">
+                        <input type="hidden" name="user" id="user">
+                        <input type="hidden" name="user_department" id="user_department">
+                        <div style="display: flex; gap: 20px;">
+                            <div>
+                                <label for="task_id">
+                                    <i class="fa-solid fa-bars-progress"></i>
+                                    Task ID
+                                    </label><br>
+                                <input type="text" name="task_id" id="task_id" autocomplete="off" class="form-control form" required>
+                            </div>
+                            <div style="display: flex; align-items: end;">
+                                <button id="task_id_button" type="button" class="form-control" style="width: 60px; height: 60px;">
+                                    <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
+                                </button>
+                            </div>
+                        </div><br>
+                        <div class="row" style="display: none;" id="ar_details">
+                            <div class="col-12 col-lg-6">
+                                <label for="task">
+                                    <i class="fa-solid fa-briefcase"></i>
+                                    Task
+                                    </label><br>
+                                <input type="text" name="task" id="task" autocomplete="off" class="form-control" required placeholder="Input Task Name..." readonly><br>
+                                <label for="percentage">
+                                    <i class="fa-solid fa-hourglass-half"></i>
+                                    Percentage
+                                </label><br>
+                                <div class="range">
+                                    <div class="sliderValue">
+                                        <span id="sliderValue">0%</span>
+                                    </div>
+                                    <div class="field">
+                                        <div class="value left">0%</div>
+                                        <input type="range" name="percentage" id="percentage" autocomplete="off" min="0" max="100" value="0" step="1" required>
+                                        <div class="value right">100%</div>
+                                    </div>
+                                </div><br>
+                                <label for="accomplishment">
+                                    <i class="fa-solid fa-calendar-check"></i>
+                                    Accomplishment
+                                </label><br>
+                                <input type="text" name="accomplishment" id="accomplishment" autocomplete="off" class="form-control" required placeholder="Input Accomplishment..."><br>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label for="ar_date_start">
+                                            <i class="fa-solid fa-calendar-days"></i>
+                                            Date/Time Start
+                                        </label>
+                                        <div>
+                                            <input type="date" id="ar_date_start" name="ar_date_start" class="form-control" readonly>
+                                            <input type="time" id="ar_time_start" name="ar_time_start" class="form-control" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="ar_date_finished">
+                                            <i class="fa-solid fa-calendar-days"></i>
+                                            Date/Time Finished
+                                        </label>
+                                        <div>
+                                            <input type="date" id="ar_date_finished" name="ar_date_finished" class="form-control" readonly>
+                                            <input type="time" id="ar_time_finished" name="ar_time_finished" class="form-control" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="buttons">
+                                <button type="submit" id="submit_btn" class="form-control">
+                                    Submit
+                                </button>
+                                <button type="reset" id="reset" class="form-control" >
+                                    Clear
+                                </button>
+                            </div>  
                         </div>
                     </form>
                 </div>
@@ -1953,12 +1940,51 @@
     <script src="../js/main.js"></script>
     <script src="../js/user2.js"></script>
     <script>
-        const slideValue = document.querySelector("#sliderValue")
-        const inputSlider = document.querySelector("#percentage")
+
+        const accomplishment_report_section = document.querySelector("#accomplishment_report");
+        const new_accomplishment_form_tab = accomplishment_report_section.querySelector("#new_accomplishment_form_tab");
+        const slideValue = new_accomplishment_form_tab.querySelector("#sliderValue")
+        const inputSlider = new_accomplishment_form_tab.querySelector("#percentage")
+        const ar_date_finished = new_accomplishment_form_tab.querySelector("#ar_date_finished")
+        const ar_time_finished = new_accomplishment_form_tab.querySelector("#ar_time_finished")
+
         inputSlider.oninput = (() => {
             let value = inputSlider.value;
             slideValue.textContent = value + "%";
             slideValue.style.left = (value/2) + "%";
+            if(value == 100){
+                ar_date_finished.removeAttribute('readonly');
+                ar_date_finished.setAttribute('required', true);
+                ar_time_finished.removeAttribute('readonly');
+                ar_time_finished.setAttribute('required', true);
+            } else {
+                ar_date_finished.setAttribute('readonly', true);
+                ar_date_finished.removeAttribute('required');
+                ar_time_finished.setAttribute('readonly', true);
+                ar_time_finished.removeAttribute('required');
+            }
+        })
+
+        const update_accomplishment_form_tab = accomplishment_report_section.querySelector("#update_accomplishment_form_tab");
+        const slideValue2 = update_accomplishment_form_tab.querySelector("#sliderValue")
+        const inputSlider2 = update_accomplishment_form_tab.querySelector("#percentage")
+        const ar_date_finished2 = update_accomplishment_form_tab.querySelector("#ar_date_finished")
+        const ar_time_finished2 = update_accomplishment_form_tab.querySelector("#ar_time_finished")
+        inputSlider2.oninput = (() => {
+            let value = inputSlider2.value;
+            slideValue2.textContent = value + "%";
+            slideValue2.style.left = (value/2) + "%";
+            if(value == 100){
+                ar_date_finished2.removeAttribute('readonly');
+                ar_date_finished2.setAttribute('required', true);
+                ar_time_finished2.removeAttribute('readonly');
+                ar_time_finished2.setAttribute('required', true);
+            } else {
+                ar_date_finished2.setAttribute('readonly', true);
+                ar_date_finished2.removeAttribute('required');
+                ar_time_finished2.setAttribute('readonly', true);
+                ar_time_finished2.removeAttribute('required');
+            }
         })
 
     </script>

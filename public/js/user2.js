@@ -906,6 +906,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         const update_accomplishment_form_tab = accomplishment_report_section.querySelector("#update_accomplishment_form_tab");
         const accomplishment_report_list = accomplishment_report_section.querySelector("#accomplishment_report_list");
         const accomplishment_report_user = new_accomplishment_form_tab.querySelector("#user").value;
+        const update_task_id_button = update_accomplishment_form_tab.querySelector("#task_id_button");
+        const update_task_id = update_accomplishment_form_tab.querySelector("#task_id");
+        const update_task = update_accomplishment_form_tab.querySelector("#task");
+        const update_ar_date_start = update_accomplishment_form_tab.querySelector("#ar_date_start");
+        const update_ar_time_start = update_accomplishment_form_tab.querySelector("#ar_time_start");
+        const update_percentage = update_accomplishment_form_tab.querySelector("#percentage");
+        const update_sliderValue = update_accomplishment_form_tab.querySelector("#sliderValue");
+        const update_ar_details = update_accomplishment_form_tab.querySelector("#ar_details");
 
         new_accomplishment_report_button.addEventListener("click", () => {
             if (new_accomplishment_form_tab.style.display == "block") {
@@ -924,56 +932,74 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         });
 
-        console.log(accomplishment_report_user)
         var data_value = "";
         var data_value_counter = 1;
-        for(let j = 1; j < accomplishment_data_list.content.length; j++){
+        let task_id = [];
+        for(let j = accomplishment_data_list.content.length - 1; j >= 1; j--){
             if(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "SUBMITTED BY")] == accomplishment_report_user){
-                data_value +=`
-                <tr>
-                    <td>${data_value_counter}</td>
-                    <td>${accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "ARID #")]}</td>
-                    <td>${accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "TASK ID #")]}</td>
-                    <td>${accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "TASKS")]}</td>
-                    <td>${accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "ACCOMPLISHMENT")]}</td>
-                    <td>${date_decoder(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "DATE START")])} /<br> ${time_decoder(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "TIME START")])}</td>
-                    <td>${date_decoder(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "DATE FINISHED")])} /<br> ${time_decoder(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "TIME FINISHED")])}</td>
-                    <td>${accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "PERCENTAGE")]}</td>
-                    <td class="progress_td"><div class="progress" id="progress${data_value_counter}"><div class="progress-done" id="progress-done${data_value_counter}"></div></div></td>
-                </tr>
-                `
-                data_value_counter++;
-
-                const progress = document.querySelector(`#progress-done1`);
-
-                let percentage = accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "PERCENTAGE")]
-                let fontColor;
-                let progressColor;
-                if(percentage <= 100/3){
-                    fontColor = "white"
-                    progressColor = "#dc3545"
+                if(!task_id.includes(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "TASK ID #")])){
+                    task_id.push(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "TASK ID #")])
+                    let  finished
+                    if(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "DATE FINISHED")] == ""){
+                        finished = "PENDING"
+                    }
+                    else{
+                        finished = `${date_decoder(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "DATE FINISHED")])} /<br> ${time_decoder(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "TIME FINISHED")])}`
+                    }
+                    data_value =`
+                    <tr>
+                        <td>${data_value_counter}</td>
+                        <td>${accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "ARID #")]}</td>
+                        <td>${accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "TASK ID #")]}</td>
+                        <td>${accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "TASKS")]}</td>
+                        <td>${accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "ACCOMPLISHMENT")]}</td>
+                        <td>${date_decoder(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "DATE START")])} /<br> ${time_decoder(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "TIME START")])}</td>
+                        <td>${finished}</td>
+                        <td class="progress_td"><div class="progress" id="progress${data_value_counter}"><div class="progress-done" id="progress-done${data_value_counter}"></div></div></td>
+                    </tr>
+                    `
+                    accomplishment_report_list.insertAdjacentHTML("beforeend", data_value)
+    
+                    let progress = document.getElementById(`progress-done${data_value_counter}`);
+    
+                    let percentage = accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "PERCENTAGE")]
+                    let fontColor;
+                    let progressColor;
+                    if(percentage <= 100/3){
+                        fontColor = "white"
+                        progressColor = "#dc3545"
+                    }
+                    else if(percentage <= 100/3*2){
+                        fontColor = "black"
+                        progressColor = "#ffbf00"
+                    }
+                    else{
+                        fontColor = "white"
+                        progressColor = "#198754"
+                    }
+                    progress.style.backgroundColor = progressColor;
+                    progress.style.color = fontColor;
+                    progress.style.width = percentage + '%'
+                    progress.innerText = percentage + '%'
+                    data_value_counter++;
                 }
-                else if(percentage <= 100/3*2){
-                    fontColor = "black"
-                    progressColor = "#ffbf00"
-                }
-                else{
-                    fontColor = "white"
-                    progressColor = "#198754"
-                }
-                progress.style.backgroundColor = 'green'
-                progress.style.color = 'white'
-                progress.style.width = 50 + '%'
-                progress.innerText = 50 + '%'
-                console.log(progress)
             }
         }
-        accomplishment_report_list.innerHTML = data_value;
         
 
-        // const progress = document.querySelector(`#progress-done${data_value_counter}`);
-        // progress.style.width = accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "PERCENTAGE")] + '%'
-
+        update_task_id_button.addEventListener("click", () => {
+            for(let j = accomplishment_data_list.content.length - 1; j >= 1; j--){
+                if(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "TASK ID #")] == update_task_id.value){
+                    update_task.value = accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "TASKS")];
+                    update_ar_date_start.value = date_decoder5(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "DATE START")]);
+                    update_ar_time_start.value = time_decoder5(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "TIME START")]);
+                    update_percentage.value = accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "PERCENTAGE")];
+                    update_sliderValue.textContent = accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "PERCENTAGE")] + "%";
+                    update_ar_details.style.display = "block";
+                    break
+                }
+            }
+        })
 
         function findEmployeeName(employee_id){
             var employee_name = "";

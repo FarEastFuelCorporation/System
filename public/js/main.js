@@ -80,6 +80,17 @@ function date_decoder4(utcTime, plusDays) {
   return formattedDate;
 }
 
+function date_decoder5(utcTime) {
+  var utcDate = new Date(utcTime);
+  var day = utcDate.getDate();
+  var month = utcDate.toLocaleString('default', { month: '2-digit' });
+  var year = utcDate.getFullYear();
+  
+  var formattedDate = `${year}-${month}-${day.toString().padStart(2, "0")}`;
+
+  return formattedDate;
+}
+
 function time_decoder(timestamp) {
   const date = new Date(timestamp);
 
@@ -176,6 +187,36 @@ function time_decoder3(timestamp) {
   minutes = minutes < 10 ? '0' + minutes : minutes;
 
   return `${hours}:${minutes} ${period}`;
+}
+
+function time_decoder5(timestamp) {
+  const date = new Date(timestamp);
+
+  // Add the timezone offset to the timestamp
+  date.setUTCHours(date.getUTCHours() + 8);
+  // date.setUTCMinutes(date.getUTCMinutes() + 23);
+
+  // Retrieve the hour and minute components
+  var hours = date.getUTCHours();
+  var minutes = date.getUTCMinutes();
+  var minutes_set = 0;
+  if (minutes >= 0 && minutes <= 22) {
+    // Code to be executed if minutes is between 0 and 22
+    if(hours >= 0 && minutes <= 22 && hours != 12){
+      hours = parseInt(hours) + 24 - 1;
+      minutes_set = parseInt(minutes) + 60 - 23;
+    } 
+    else {
+      hours = parseInt(hours) - 1;
+      minutes_set = parseInt(minutes) + 60 - 23;  
+    }
+  } else {
+    minutes_set = parseInt(minutes) - 23;
+  }
+
+  // Format the time string
+  const timeString = hours.toString().padStart(2, '0') + ':' + minutes_set.toString().padStart(2, '0');
+  return timeString;
 }
 
 function convertTo24HourFormat(timeStr) {
