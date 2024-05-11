@@ -939,12 +939,15 @@ document.addEventListener('DOMContentLoaded', async function() {
             if(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "SUBMITTED BY")] == accomplishment_report_user){
                 if(!task_id.includes(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "TASK ID #")])){
                     task_id.push(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "TASK ID #")])
-                    let  finished
+                    let  finished;
+                    let  duration;
                     if(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "DATE FINISHED")] == ""){
-                        finished = "PENDING"
+                        finished = "ONGOING"
+                        duration = "ONGOING"
                     }
                     else{
                         finished = `${date_decoder(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "DATE FINISHED")])} /<br> ${time_decoder(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "TIME FINISHED")])}`
+                        duration = `${calculateTravelTime(date_decoder(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "DATE START")]), time_decoder(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "TIME START")]), date_decoder(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "DATE FINISHED")]), time_decoder(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "TIME FINISHED")]))}`
                     }
                     data_value =`
                     <tr>
@@ -955,6 +958,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         <td>${accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "ACCOMPLISHMENT")]}</td>
                         <td>${date_decoder(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "DATE START")])} /<br> ${time_decoder(accomplishment_data_list.content[j][findTextInArray(accomplishment_data_list, "TIME START")])}</td>
                         <td>${finished}</td>
+                        <td>${duration}</td>
                         <td class="progress_td"><div class="progress" id="progress${data_value_counter}"><div class="progress-done" id="progress-done${data_value_counter}"></div></div></td>
                     </tr>
                     `
