@@ -244,6 +244,18 @@ document.addEventListener("DOMContentLoaded", async function () {
                   sf_data_list,
                   "DESTRUCTION PROCESS / DISCREPANCY REMARKS"
                 )
+              ] !== "RECLAMATION" &&
+              sf_data_list.content[i][
+                findTextInArray(
+                  sf_data_list,
+                  "DESTRUCTION PROCESS / DISCREPANCY REMARKS"
+                )
+              ] !== "COMBUSTION OF RECOVERED OF ALTERNATIVE FUEL" &&
+              sf_data_list.content[i][
+                findTextInArray(
+                  sf_data_list,
+                  "DESTRUCTION PROCESS / DISCREPANCY REMARKS"
+                )
               ] !== "CRUSHING" &&
               !sf_transaction_sf.includes(
                 sf_data_list.content[i][findTextInArray(sf_data_list, "SF #")]
