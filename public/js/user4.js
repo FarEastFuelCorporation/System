@@ -2885,6 +2885,15 @@ document.addEventListener("DOMContentLoaded", async function () {
                               findTextInArray(wcf_data_list, "LTF/ MTF  #")
                             ].substring(0, 3) == "MTF"
                           ) {
+                            new_waste_name = `${
+                              tpf_data_list.content[x][
+                                findTextInArray(tpf_data_list, "WASTE NAME")
+                              ]
+                            } <br> Plate No. ${
+                              wcf_data_list.content[a][
+                                findTextInArray(wcf_data_list, "PLATE #")
+                              ]
+                            }`;
                           } else {
                             new_waste_name = `${
                               tpf_data_list.content[x][
