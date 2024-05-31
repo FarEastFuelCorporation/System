@@ -2233,7 +2233,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                     si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                     si_tin_nature_of_business_container.innerText = `${nature_of_business}`;
                     si_date_container.innerText = date_of_certification;
-                    console.log("pass3");
                     if (
                       cod_data_list.content[x][
                         findTextInArray(cod_data_list, "WASTE NAME")
