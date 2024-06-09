@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const users = document.querySelectorAll("#user");
         const departments = document.querySelectorAll("#department");
         const irf_user = document.getElementById("irf_user");
-
+        
         const user_name = username_data_list.content[xValue][findTextInArray(username_data_list, "NAME")];
         profile_picture.src = `../images/profile_picture/${username_data_list.content[xValue][findTextInArray(username_data_list, "PICTURE")]}`;
         users.forEach(user => {user.value = username_data_list.content[xValue][findTextInArray(username_data_list, "NAME")]})
