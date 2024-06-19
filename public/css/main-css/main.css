@@ -107,7 +107,8 @@ nav {
   border-bottom: solid 1px #ff2b06;
 }
 
-.navbar, .topbar {
+.navbar,
+.topbar {
   position: fixed;
   background: #38fb30;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.08);
@@ -118,7 +119,8 @@ nav {
   z-index: 1;
 }
 
-.banner, .logo h2 {
+.banner,
+.logo h2 {
   color: #f6d754;
   font-weight: bolder;
   font-size: 30px;
@@ -1920,7 +1922,7 @@ section h2 {
   width: 100%;
   padding: 10px 0px 0 0px;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   grid-gap: 20px;
   background: #f5f5f5;
 }
@@ -4207,7 +4209,10 @@ input:disabled {
     margin-top: -9px !important;
   }
   #filter_button,
-  #generate_report_button, .header_date_time, .back_button, .refresh_button {
+  #generate_report_button,
+  .header_date_time,
+  .back_button,
+  .refresh_button {
     display: none !important;
   }
   #account_info {
@@ -4391,7 +4396,10 @@ input:disabled {
     margin-top: 650px;
   }
   #filter_button,
-  #generate_report_button, .header_date_time, .back_button, .refresh_button {
+  #generate_report_button,
+  .header_date_time,
+  .back_button,
+  .refresh_button {
     display: none !important;
   }
   #account_info {
@@ -4408,7 +4416,9 @@ input:disabled {
     display: flex !important;
     align-items: center !important;
   }
-  .cards, .cards2, .cards3 {
+  .cards,
+  .cards2,
+  .cards3 {
     width: 100%;
     height: 120px;
     padding: 10px 0px 0 0px;
