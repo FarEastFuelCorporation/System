@@ -1005,6 +1005,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         })
 
+        
+
         function findEmployeeName(employee_id){
             var employee_name = "";
             for(let c = 1; c < employee_data_list.content.length; c++){

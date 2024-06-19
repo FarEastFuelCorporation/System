@@ -33,6 +33,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     const prf_response_promise = fetch(
       "https://script.google.com/macros/s/AKfycbxZctLub-6PuQGykx298syeH7Qm__S37uqQrVFYsHVtv-Qk8M2oSkRIPIMVT_1WexqRZA/exec"
     );
+    const accomplishment_response_promise = fetch(
+      "https://script.google.com/macros/s/AKfycbwa4TtV5mhmZRWagXQWmEG6EVH_tlRvwSnIOBM6O6VF_wAd4qnvFGky-1WBsQ74bPI3JQ/exec"
+    );
 
     const [
       username_response,
@@ -46,6 +49,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       wcf_response,
       qlf_response,
       prf_response,
+      accomplishment_response,
     ] = await Promise.all([
       username_response_promise,
       employee_response_promise,
@@ -58,6 +62,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       wcf_response_promise,
       qlf_response_promise,
       prf_response_promise,
+      accomplishment_response_promise,
     ]);
 
     const username_data_list = await username_response.json();
@@ -71,6 +76,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const wcf_data_list = await wcf_response.json();
     const qlf_data_list = await qlf_response.json();
     const prf_data_list = await prf_response.json();
+    const accomplishment_data_list = await accomplishment_response.json();
 
     // Code that depends on the fetched data
     // username_data_list
@@ -1894,6 +1900,243 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     // multi section
+    // ACCOMPLISHMENT REPORT
+    const accomplishment_report_section = document.querySelector(
+      "#accomplishment_report"
+    );
+    const new_accomplishment_report_button =
+      accomplishment_report_section.querySelector(
+        "#new_accomplishment_report_button"
+      );
+    const update_accomplishment_report_button =
+      accomplishment_report_section.querySelector(
+        "#update_accomplishment_report_button"
+      );
+    const new_accomplishment_form_tab =
+      accomplishment_report_section.querySelector(
+        "#new_accomplishment_form_tab"
+      );
+    const update_accomplishment_form_tab =
+      accomplishment_report_section.querySelector(
+        "#update_accomplishment_form_tab"
+      );
+    const accomplishment_report_list =
+      accomplishment_report_section.querySelector(
+        "#accomplishment_report_list"
+      );
+    const accomplishment_report_user =
+      new_accomplishment_form_tab.querySelector("#user").value;
+    const update_task_id_button =
+      update_accomplishment_form_tab.querySelector("#task_id_button");
+    const update_task_id =
+      update_accomplishment_form_tab.querySelector("#task_id");
+    const update_task = update_accomplishment_form_tab.querySelector("#task");
+    const update_ar_date_start =
+      update_accomplishment_form_tab.querySelector("#ar_date_start");
+    const update_ar_time_start =
+      update_accomplishment_form_tab.querySelector("#ar_time_start");
+    const update_percentage =
+      update_accomplishment_form_tab.querySelector("#percentage");
+    const update_sliderValue =
+      update_accomplishment_form_tab.querySelector("#sliderValue");
+    const update_ar_details =
+      update_accomplishment_form_tab.querySelector("#ar_details");
+
+    new_accomplishment_report_button.addEventListener("click", () => {
+      if (new_accomplishment_form_tab.style.display == "block") {
+        new_accomplishment_form_tab.style.display = "none";
+      } else {
+        new_accomplishment_form_tab.style.display = "block";
+        update_accomplishment_form_tab.style.display = "none";
+      }
+    });
+    update_accomplishment_report_button.addEventListener("click", () => {
+      if (update_accomplishment_form_tab.style.display == "block") {
+        update_accomplishment_form_tab.style.display = "none";
+      } else {
+        update_accomplishment_form_tab.style.display = "block";
+        new_accomplishment_form_tab.style.display = "none";
+      }
+    });
+
+    var data_value = "";
+    var data_value_counter = 1;
+    let task_id = [];
+    for (let j = accomplishment_data_list.content.length - 1; j >= 1; j--) {
+      if (
+        accomplishment_data_list.content[j][
+          findTextInArray(accomplishment_data_list, "SUBMITTED BY")
+        ] == accomplishment_report_user
+      ) {
+        if (
+          !task_id.includes(
+            accomplishment_data_list.content[j][
+              findTextInArray(accomplishment_data_list, "TASK ID #")
+            ]
+          )
+        ) {
+          task_id.push(
+            accomplishment_data_list.content[j][
+              findTextInArray(accomplishment_data_list, "TASK ID #")
+            ]
+          );
+          let finished;
+          let duration;
+          if (
+            accomplishment_data_list.content[j][
+              findTextInArray(accomplishment_data_list, "DATE FINISHED")
+            ] == ""
+          ) {
+            finished = "ONGOING";
+            duration = "ONGOING";
+          } else {
+            finished = `${date_decoder(
+              accomplishment_data_list.content[j][
+                findTextInArray(accomplishment_data_list, "DATE FINISHED")
+              ]
+            )} /<br> ${time_decoder(
+              accomplishment_data_list.content[j][
+                findTextInArray(accomplishment_data_list, "TIME FINISHED")
+              ]
+            )}`;
+            duration = `${calculateTravelTime(
+              date_decoder(
+                accomplishment_data_list.content[j][
+                  findTextInArray(accomplishment_data_list, "DATE START")
+                ]
+              ),
+              time_decoder(
+                accomplishment_data_list.content[j][
+                  findTextInArray(accomplishment_data_list, "TIME START")
+                ]
+              ),
+              date_decoder(
+                accomplishment_data_list.content[j][
+                  findTextInArray(accomplishment_data_list, "DATE FINISHED")
+                ]
+              ),
+              time_decoder(
+                accomplishment_data_list.content[j][
+                  findTextInArray(accomplishment_data_list, "TIME FINISHED")
+                ]
+              )
+            )}`;
+          }
+          data_value = `
+                    <tr>
+                        <td>${data_value_counter}</td>
+                        <td>${
+                          accomplishment_data_list.content[j][
+                            findTextInArray(accomplishment_data_list, "ARID #")
+                          ]
+                        }</td>
+                        <td>${
+                          accomplishment_data_list.content[j][
+                            findTextInArray(
+                              accomplishment_data_list,
+                              "TASK ID #"
+                            )
+                          ]
+                        }</td>
+                        <td>${
+                          accomplishment_data_list.content[j][
+                            findTextInArray(accomplishment_data_list, "TASKS")
+                          ]
+                        }</td>
+                        <td>${
+                          accomplishment_data_list.content[j][
+                            findTextInArray(
+                              accomplishment_data_list,
+                              "ACCOMPLISHMENT"
+                            )
+                          ]
+                        }</td>
+                        <td>${date_decoder(
+                          accomplishment_data_list.content[j][
+                            findTextInArray(
+                              accomplishment_data_list,
+                              "DATE START"
+                            )
+                          ]
+                        )} /<br> ${time_decoder(
+            accomplishment_data_list.content[j][
+              findTextInArray(accomplishment_data_list, "TIME START")
+            ]
+          )}</td>
+                        <td>${finished}</td>
+                        <td>${duration}</td>
+                        <td class="progress_td"><div class="progress" id="progress${data_value_counter}"><div class="progress-done" id="progress-done${data_value_counter}"></div></div></td>
+                    </tr>
+                    `;
+          accomplishment_report_list.insertAdjacentHTML(
+            "beforeend",
+            data_value
+          );
+
+          let progress = document.getElementById(
+            `progress-done${data_value_counter}`
+          );
+
+          let percentage =
+            accomplishment_data_list.content[j][
+              findTextInArray(accomplishment_data_list, "PERCENTAGE")
+            ];
+          let fontColor;
+          let progressColor;
+          if (percentage <= 100 / 3) {
+            fontColor = "white";
+            progressColor = "#dc3545";
+          } else if (percentage <= (100 / 3) * 2) {
+            fontColor = "black";
+            progressColor = "#ffbf00";
+          } else {
+            fontColor = "white";
+            progressColor = "#198754";
+          }
+          progress.style.backgroundColor = progressColor;
+          progress.style.color = fontColor;
+          progress.style.width = percentage + "%";
+          progress.innerText = percentage + "%";
+          data_value_counter++;
+        }
+      }
+    }
+
+    update_task_id_button.addEventListener("click", () => {
+      for (let j = accomplishment_data_list.content.length - 1; j >= 1; j--) {
+        if (
+          accomplishment_data_list.content[j][
+            findTextInArray(accomplishment_data_list, "TASK ID #")
+          ] == update_task_id.value
+        ) {
+          update_task.value =
+            accomplishment_data_list.content[j][
+              findTextInArray(accomplishment_data_list, "TASKS")
+            ];
+          update_ar_date_start.value = date_decoder5(
+            accomplishment_data_list.content[j][
+              findTextInArray(accomplishment_data_list, "DATE START")
+            ]
+          );
+          update_ar_time_start.value = time_decoder5(
+            accomplishment_data_list.content[j][
+              findTextInArray(accomplishment_data_list, "TIME START")
+            ]
+          );
+          update_percentage.value =
+            accomplishment_data_list.content[j][
+              findTextInArray(accomplishment_data_list, "PERCENTAGE")
+            ];
+          update_sliderValue.textContent =
+            accomplishment_data_list.content[j][
+              findTextInArray(accomplishment_data_list, "PERCENTAGE")
+            ] + "%";
+          update_ar_details.style.display = "block";
+          break;
+        }
+      }
+    });
+
     // purchase_request_form
     const purchase_request_form = document.querySelector(
       "#purchase_request_form"

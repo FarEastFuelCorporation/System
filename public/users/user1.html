@@ -64,6 +64,12 @@
                 </li>
                 <li>
                     <a href="#">
+                        <i class="fa-solid fa-calendar-check"></i>
+                        Accomplishment Report
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
                         <i class="fa-solid fa-cart-shopping"></i>
                         Purchase Requests
                     </a>
@@ -565,6 +571,347 @@
                 </div>
             </form>
         </section>
+        <!-- accomplishment_report -->
+<section class="marketing" id="accomplishment_report">
+    <h2>ACCOMPLISHMENT REPORT</h2>
+    <div>
+      <label class="d-flex gap-3">
+        <button
+          type="button"
+          id="new_accomplishment_report_button"
+          class="form-control fw-bold fs-3 bg-success text-white"
+        >
+          <h2>NEW</h2>
+        </button>
+        <button
+          type="button"
+          id="update_accomplishment_report_button"
+          class="form-control fw-bold fs-3 bg-danger text-white"
+        >
+          <h2>UPDATE</h2>
+        </button> </label
+      ><br />
+    </div>
+    <div
+      class="table"
+      style="max-height: 70vh; align-items: start; overflow: scroll"
+    >
+      <div class="list">
+        <table>
+          <thead style="position: sticky; top: 0; background-color: black">
+            <th>#</th>
+            <th>AR ID #</th>
+            <th>TASK ID #</th>
+            <th>TASKS</th>
+            <th>ACCOMPLISHMENT</th>
+            <th>START<br />DATE/TIME</th>
+            <th>FINISH<br />DATE/TIME</th>
+            <th>DURATION</th>
+            <th style="width: 150px">PERCENTAGE</th>
+          </thead>
+          <tbody id="accomplishment_report_list"></tbody>
+        </table>
+        <div class="text-center text_end">>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+      </div>
+    </div>
+    <br />
+    <div
+      id="new_accomplishment_form_tab"
+      style="
+        display: none;
+        position: absolute;
+        top: 140px;
+        right: 20px;
+        width: calc(100% - 40px);
+        height: 75vh;
+        padding: 20px;
+        border: 3px solid #198754;
+        border-radius: 10px;
+        background-color: white;
+        overflow: scroll;
+        z-index: 2;
+      "
+    >
+      <h2>NEW ACCOMPLISHMENT REPORT FORM</h2>
+      <br />
+      <form
+        action="https://script.google.com/macros/s/AKfycbwgEc6ij6bHanbwPn4NH4Nak0uCfIC7vCwsm-sGK19EPCuVCHktMubyxfeu-bgd-46x6Q/exec"
+        method="post"
+      >
+        <input type="hidden" name="user" id="user" />
+        <input type="hidden" name="user_department" id="user_department" />
+        <div class="row">
+          <div class="col-12 col-lg-6">
+            <label for="task">
+              <i class="fa-solid fa-briefcase"></i>
+              Task </label
+            ><br />
+            <input
+              type="text"
+              name="task"
+              id="task"
+              autocomplete="off"
+              class="form-control"
+              required
+              placeholder="Input Task Name..."
+            /><br />
+            <label for="percentage">
+              <i class="fa-solid fa-hourglass-half"></i>
+              Percentage </label
+            ><br />
+            <div class="range">
+              <div class="sliderValue">
+                <span id="sliderValue">0%</span>
+              </div>
+              <div class="field">
+                <div class="value left">0%</div>
+                <input
+                  type="range"
+                  name="percentage"
+                  id="percentage"
+                  autocomplete="off"
+                  min="0"
+                  max="100"
+                  value="0"
+                  step="1"
+                  required
+                />
+                <div class="value right">100%</div>
+              </div>
+            </div>
+            <br />
+            <label for="accomplishment">
+              <i class="fa-solid fa-calendar-check"></i>
+              Accomplishment </label
+            ><br />
+            <input
+              type="text"
+              name="accomplishment"
+              id="accomplishment"
+              autocomplete="off"
+              class="form-control"
+              required
+              placeholder="Input Accomplishment..."
+            /><br />
+            <div class="row">
+              <div class="col-6">
+                <label for="ar_date_start">
+                  <i class="fa-solid fa-calendar-days"></i>
+                  Date/Time Start
+                </label>
+                <div>
+                  <input
+                    type="date"
+                    id="ar_date_start"
+                    name="ar_date_start"
+                    class="form-control"
+                    required
+                  />
+                  <input
+                    type="time"
+                    id="ar_time_start"
+                    name="ar_time_start"
+                    class="form-control"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="col-6">
+                <label for="ar_date_finished">
+                  <i class="fa-solid fa-calendar-days"></i>
+                  Date/Time Finished
+                </label>
+                <div>
+                  <input
+                    type="date"
+                    id="ar_date_finished"
+                    name="ar_date_finished"
+                    class="form-control"
+                    readonly
+                  />
+                  <input
+                    type="time"
+                    id="ar_time_finished"
+                    name="ar_time_finished"
+                    class="form-control"
+                    readonly
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="buttons">
+            <button type="submit" id="submit_btn" class="form-control">
+              Submit
+            </button>
+            <button type="reset" id="reset" class="form-control">Clear</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div
+      id="update_accomplishment_form_tab"
+      style="
+        display: none;
+        position: absolute;
+        top: 140px;
+        right: 20px;
+        width: calc(100% - 40px);
+        height: 75vh;
+        padding: 20px;
+        border: 3px solid #dc3545;
+        border-radius: 10px;
+        background-color: white;
+        overflow: scroll;
+        z-index: 2;
+      "
+    >
+      <h2>UPDATE ACCOMPLISHMENT REPORT FORM</h2>
+      <br />
+      <form
+        action="https://script.google.com/macros/s/AKfycbyfpK6rKZY6WEsQuvAuOSbIrVYUWJHECzX75IY2Et12qptEiuISIVEr2t5yYj_Uju0/exec"
+        method="post"
+      >
+        <input type="hidden" name="user" id="user" />
+        <input type="hidden" name="user_department" id="user_department" />
+        <div style="display: flex; gap: 20px">
+          <div>
+            <label for="task_id">
+              <i class="fa-solid fa-bars-progress"></i>
+              Task ID </label
+            ><br />
+            <input
+              type="text"
+              name="task_id"
+              id="task_id"
+              autocomplete="off"
+              class="form-control form"
+              required
+            />
+          </div>
+          <div style="display: flex; align-items: end">
+            <button
+              id="task_id_button"
+              type="button"
+              class="form-control"
+              style="width: 60px; height: 60px"
+            >
+              <i class="fa-solid fa-magnifying-glass" style="color: #ffffff"></i>
+            </button>
+          </div>
+        </div>
+        <br />
+        <div class="row" style="display: none" id="ar_details">
+          <div class="col-12 col-lg-6">
+            <label for="task">
+              <i class="fa-solid fa-briefcase"></i>
+              Task </label
+            ><br />
+            <input
+              type="text"
+              name="task"
+              id="task"
+              autocomplete="off"
+              class="form-control"
+              required
+              placeholder="Input Task Name..."
+              readonly
+            /><br />
+            <label for="percentage">
+              <i class="fa-solid fa-hourglass-half"></i>
+              Percentage </label
+            ><br />
+            <div class="range">
+              <div class="sliderValue">
+                <span id="sliderValue">0%</span>
+              </div>
+              <div class="field">
+                <div class="value left">0%</div>
+                <input
+                  type="range"
+                  name="percentage"
+                  id="percentage"
+                  autocomplete="off"
+                  min="0"
+                  max="100"
+                  value="0"
+                  step="1"
+                  required
+                />
+                <div class="value right">100%</div>
+              </div>
+            </div>
+            <br />
+            <label for="accomplishment">
+              <i class="fa-solid fa-calendar-check"></i>
+              Accomplishment </label
+            ><br />
+            <input
+              type="text"
+              name="accomplishment"
+              id="accomplishment"
+              autocomplete="off"
+              class="form-control"
+              required
+              placeholder="Input Accomplishment..."
+            /><br />
+            <div class="row">
+              <div class="col-6">
+                <label for="ar_date_start">
+                  <i class="fa-solid fa-calendar-days"></i>
+                  Date/Time Start
+                </label>
+                <div>
+                  <input
+                    type="date"
+                    id="ar_date_start"
+                    name="ar_date_start"
+                    class="form-control"
+                    readonly
+                  />
+                  <input
+                    type="time"
+                    id="ar_time_start"
+                    name="ar_time_start"
+                    class="form-control"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="col-6">
+                <label for="ar_date_finished">
+                  <i class="fa-solid fa-calendar-days"></i>
+                  Date/Time Finished
+                </label>
+                <div>
+                  <input
+                    type="date"
+                    id="ar_date_finished"
+                    name="ar_date_finished"
+                    class="form-control"
+                    readonly
+                  />
+                  <input
+                    type="time"
+                    id="ar_time_finished"
+                    name="ar_time_finished"
+                    class="form-control"
+                    readonly
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="buttons">
+            <button type="submit" id="submit_btn" class="form-control">
+              Submit
+            </button>
+            <button type="reset" id="reset" class="form-control">Clear</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
         <!-- purchase_request_form -->
         <section class="marketing" id="purchase_request_form">
             <h2>PURCHASE REQUESTS</h2>
@@ -779,5 +1126,54 @@
             })
         }
     </script>
+        <script>
+
+            const accomplishment_report_section = document.querySelector("#accomplishment_report");
+            const new_accomplishment_form_tab = accomplishment_report_section.querySelector("#new_accomplishment_form_tab");
+            const slideValue = new_accomplishment_form_tab.querySelector("#sliderValue")
+            const inputSlider = new_accomplishment_form_tab.querySelector("#percentage")
+            const ar_date_finished = new_accomplishment_form_tab.querySelector("#ar_date_finished")
+            const ar_time_finished = new_accomplishment_form_tab.querySelector("#ar_time_finished")
+    
+            inputSlider.oninput = (() => {
+                let value = inputSlider.value;
+                slideValue.textContent = value + "%";
+                slideValue.style.left = (value/2) + "%";
+                if(value == 100){
+                    ar_date_finished.removeAttribute('readonly');
+                    ar_date_finished.setAttribute('required', true);
+                    ar_time_finished.removeAttribute('readonly');
+                    ar_time_finished.setAttribute('required', true);
+                } else {
+                    ar_date_finished.setAttribute('readonly', true);
+                    ar_date_finished.removeAttribute('required');
+                    ar_time_finished.setAttribute('readonly', true);
+                    ar_time_finished.removeAttribute('required');
+                }
+            })
+    
+            const update_accomplishment_form_tab = accomplishment_report_section.querySelector("#update_accomplishment_form_tab");
+            const slideValue2 = update_accomplishment_form_tab.querySelector("#sliderValue")
+            const inputSlider2 = update_accomplishment_form_tab.querySelector("#percentage")
+            const ar_date_finished2 = update_accomplishment_form_tab.querySelector("#ar_date_finished")
+            const ar_time_finished2 = update_accomplishment_form_tab.querySelector("#ar_time_finished")
+            inputSlider2.oninput = (() => {
+                let value = inputSlider2.value;
+                slideValue2.textContent = value + "%";
+                slideValue2.style.left = (value/2) + "%";
+                if(value == 100){
+                    ar_date_finished2.removeAttribute('readonly');
+                    ar_date_finished2.setAttribute('required', true);
+                    ar_time_finished2.removeAttribute('readonly');
+                    ar_time_finished2.setAttribute('required', true);
+                } else {
+                    ar_date_finished2.setAttribute('readonly', true);
+                    ar_date_finished2.removeAttribute('required');
+                    ar_time_finished2.setAttribute('readonly', true);
+                    ar_time_finished2.removeAttribute('required');
+                }
+            })
+    
+        </script>
 </body>
 </html>
