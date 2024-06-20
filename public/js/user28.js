@@ -391,15 +391,28 @@ document.addEventListener("DOMContentLoaded", async function () {
         prf_data_list.content[last_row][
           findTextInArray(prf_data_list, "ITM #")
         ];
-      var data_counter = data_info.substring(9, 12) || 0;
-      var year = new Date().getFullYear();
+      var data_counter = data_info.substring(9, 13) || 0;
       var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
 
       for (let y = 1; y <= prf_counter.value; y++) {
         prf_form_no[y] = document.querySelector(`#prf_form_no${y}`);
-        prf_form_no[y].value = `ITM${year}${month}${(parseInt(data_counter) + y)
-          .toString()
-          .padStart(3, "0")}`;
+        var current_year = new Date().getFullYear();
+        var last_counter_year = data_info.substring(3, 7);
+        if (last_counter_year == current_year) {
+          data_counter = data_info.substring(9, 13) || 0;
+          prf_form_no[y].value = `ITM${last_counter_year}${month}${(
+            parseInt(data_counter) + y
+          )
+            .toString()
+            .padStart(4, "0")}`;
+        } else {
+          data_counter = (0).toString().padStart(4, "0");
+          prf_form_no[y].value = `ITM${current_year}${month}${(
+            parseInt(data_counter) + y
+          )
+            .toString()
+            .padStart(4, "0")}`;
+        }
       }
     }
 
