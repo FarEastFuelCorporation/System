@@ -1572,6 +1572,18 @@ document.addEventListener("DOMContentLoaded", async function () {
     const sugg_box = search_wrapper.querySelector(".autocom_box");
     var data_value = active_employee_name;
 
+    if (!Array.isArray(active_employee_name)) {
+      console.error(
+        "active_employee_name is not an array:",
+        active_employee_name
+      );
+    }
+
+    var data_value = active_employee_name;
+
+    console.log(data_value);
+
+    console.log(data_value);
     input_box.onkeyup = (e) => {
       let user_data = e.target.value;
       let empty_array = [];
