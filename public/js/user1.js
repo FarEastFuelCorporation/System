@@ -776,6 +776,14 @@ document.addEventListener("DOMContentLoaded", async function () {
                 findTextInArray(wcf_data_list, "TIME OUT")
               ]
             )}</td>
+                                                    <td>${
+                                                      wcf_data_list.content[j][
+                                                        findTextInArray(
+                                                          wcf_data_list,
+                                                          "SUBMIT TO"
+                                                        )
+                                                      ]
+                                                    }</td>
                             <td>${calculateTravelTime(
                               date_decoder(
                                 wcf_data_list.content[j][
@@ -904,6 +912,14 @@ document.addEventListener("DOMContentLoaded", async function () {
                 findTextInArray(wcf_data_list, "TIME OUT")
               ]
             )}</td>
+                                                    <td>${
+                                                      wcf_data_list.content[j][
+                                                        findTextInArray(
+                                                          wcf_data_list,
+                                                          "SUBMIT TO"
+                                                        )
+                                                      ]
+                                                    }</td>
                             <td>${calculateTravelTime(
                               date_decoder(
                                 wcf_data_list.content[j][
@@ -1047,6 +1063,14 @@ document.addEventListener("DOMContentLoaded", async function () {
                 findTextInArray(wcf_data_list, "TIME OUT")
               ]
             )}</td>
+                                                    <td>${
+                                                      wcf_data_list.content[j][
+                                                        findTextInArray(
+                                                          wcf_data_list,
+                                                          "SUBMIT TO"
+                                                        )
+                                                      ]
+                                                    }</td>
                             <td>${calculateTravelTime(
                               date_decoder(
                                 wcf_data_list.content[j][
@@ -1182,6 +1206,14 @@ document.addEventListener("DOMContentLoaded", async function () {
                 findTextInArray(wcf_data_list, "TIME OUT")
               ]
             )}</td>
+                                        <td>${
+                                          wcf_data_list.content[j][
+                                            findTextInArray(
+                                              wcf_data_list,
+                                              "SUBMIT TO"
+                                            )
+                                          ]
+                                        }</td>
                             <td>${calculateTravelTime(
                               date_decoder(
                                 wcf_data_list.content[j][
