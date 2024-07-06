@@ -214,138 +214,147 @@ document.addEventListener("DOMContentLoaded", async function () {
     var near_expired_data = 0;
     var pending_contract_data = 0;
     for (let b = 1; b < employee_data_list.content.length; b++) {
-      var employee_id_data =
+      var status =
         employee_data_list.content[b][
-          findTextInArray(employee_data_list, "EMPLOYEE ID")
-        ].toString();
-      var employee_type_data =
-        employee_data_list.content[b][
-          findTextInArray(employee_data_list, "EMPLOYEE TYPE")
+          findTextInArray(employee_data_list, "EMPLOYEE STATUS")
         ];
-      var employee_date_hire_data =
-        employee_data_list.content[b][
-          findTextInArray(employee_data_list, "DATE HIRE")
-        ];
-      var expiration = "";
-      for (
-        let x = employee_contract_data_list.content.length - 1;
-        x >= 1;
-        x--
-      ) {
-        var employee_id_data2 =
-          employee_contract_data_list.content[x][
-            findTextInArray(employee_contract_data_list, "EMPLOYEE ID")
+      if (status == "ACTIVE") {
+        console.log(status);
+        var employee_id_data =
+          employee_data_list.content[b][
+            findTextInArray(employee_data_list, "EMPLOYEE ID")
           ].toString();
-        if (employee_id_data == employee_id_data2) {
-          expiration =
+        var employee_type_data =
+          employee_data_list.content[b][
+            findTextInArray(employee_data_list, "EMPLOYEE TYPE")
+          ];
+        var employee_date_hire_data =
+          employee_data_list.content[b][
+            findTextInArray(employee_data_list, "DATE HIRE")
+          ];
+        var expiration = "";
+        for (
+          let x = employee_contract_data_list.content.length - 1;
+          x >= 1;
+          x--
+        ) {
+          var employee_id_data2 =
             employee_contract_data_list.content[x][
-              findTextInArray(employee_contract_data_list, "END OF CONTRACT")
-            ];
-          break;
+              findTextInArray(employee_contract_data_list, "EMPLOYEE ID")
+            ].toString();
+          if (employee_id_data == employee_id_data2) {
+            expiration =
+              employee_contract_data_list.content[x][
+                findTextInArray(employee_contract_data_list, "END OF CONTRACT")
+              ];
+            break;
+          }
         }
-      }
-      var color = "1D1D1F";
-      var font_color = "black";
-      if (employee_type_data != "REGULAR") {
-        if (expiration === "") {
-          // If expiration is blank, change the color to blue
-          color = "#0d6efd !important";
-          font_color = "white !important";
-        } else {
-          // If expiration is not blank, perform additional checks
-          var expirationDate = new Date(date_decoder(expiration));
-          var today = new Date();
-          if (expirationDate < today) {
-            // If expiration is in the past, change the color to red
-            color = "#dc3545 !important";
+        var color = "1D1D1F";
+        var font_color = "black";
+        if (employee_type_data != "REGULAR") {
+          if (expiration === "") {
+            // If expiration is blank, change the color to blue
+            color = "#0d6efd !important";
             font_color = "white !important";
           } else {
-            // Calculate the difference in days
-            var timeDifference = expirationDate.getTime() - today.getTime();
-            var daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+            // If expiration is not blank, perform additional checks
+            var expirationDate = new Date(date_decoder(expiration));
+            var today = new Date();
+            if (expirationDate < today) {
+              // If expiration is in the past, change the color to red
+              color = "#dc3545 !important";
+              font_color = "white !important";
+            } else {
+              // Calculate the difference in days
+              var timeDifference = expirationDate.getTime() - today.getTime();
+              var daysDifference = Math.ceil(
+                timeDifference / (1000 * 3600 * 24)
+              );
 
-            if (daysDifference <= 30) {
-              // If expiration is within the next 30 days, change the color to yellow
-              color = "#ffc107 !important";
-              font_color = "black !important";
+              if (daysDifference <= 30) {
+                // If expiration is within the next 30 days, change the color to yellow
+                color = "#ffc107 !important";
+                font_color = "black !important";
+              }
             }
           }
         }
+        var employee_record = "";
+        employee_record += `
+              <tr style="background-color: ${color};">
+                  <td style=" color: ${font_color}">${
+          employee_data_list.content[b][
+            findTextInArray(employee_data_list, "EMPLOYEE ID")
+          ]
+        }</td>
+                  <td style=" color: ${font_color}">${findEmployeeName(
+          employee_data_list.content[b][
+            findTextInArray(employee_data_list, "EMPLOYEE ID")
+          ]
+        )}</td>
+                  <td style=" color: ${font_color}">${
+          employee_data_list.content[b][
+            findTextInArray(employee_data_list, "DEPARTMENT")
+          ]
+        }</td>
+                  <td style=" color: ${font_color}">${
+          employee_data_list.content[b][
+            findTextInArray(employee_data_list, "DESIGNATION")
+          ]
+        }</td>
+                  <td style=" color: ${font_color}">${
+          employee_data_list.content[b][
+            findTextInArray(employee_data_list, "GENDER")
+          ]
+        }</td>
+                  <td style=" color: ${font_color}">${
+          employee_data_list.content[b][
+            findTextInArray(employee_data_list, "EMPLOYEE TYPE")
+          ]
+        }</td>
+                  <td style=" color: ${font_color}">${date_decoder(
+          employee_data_list.content[b][
+            findTextInArray(employee_data_list, "BIRTH DATE")
+          ]
+        )}</td>
+                  <td style=" color: ${font_color}">${
+          employee_data_list.content[b][
+            findTextInArray(employee_data_list, "MOBILE NO.")
+          ]
+        }</td>
+                  <td style=" color: ${font_color}">${date_decoder(
+          employee_data_list.content[b][
+            findTextInArray(employee_data_list, "DATE HIRE")
+          ]
+        )}</td>
+                  <td style=" color: ${font_color}">${
+          employee_data_list.content[b][
+            findTextInArray(employee_data_list, "TIN NO.")
+          ]
+        }</td>
+                  <td style=" color: ${font_color}">${
+          employee_data_list.content[b][
+            findTextInArray(employee_data_list, "SSS/GSIS NO.")
+          ]
+        }</td>
+                  <td style=" color: ${font_color}">${
+          employee_data_list.content[b][
+            findTextInArray(employee_data_list, "PHILHEALTH NO.")
+          ]
+        }</td>
+                  <td style=" color: ${font_color}">${
+          employee_data_list.content[b][
+            findTextInArray(employee_data_list, "PAG-IBIG NO.")
+          ]
+        }</td>
+                  <td style=" color: ${font_color}">${calculateLengthOfServiceString(
+          employee_date_hire_data
+        )}</td>
+              </tr>
+              `;
+        employee_list.insertAdjacentHTML("beforeend", employee_record);
       }
-      var employee_record = "";
-      employee_record += `
-            <tr style="background-color: ${color};">
-                <td style=" color: ${font_color}">${
-        employee_data_list.content[b][
-          findTextInArray(employee_data_list, "EMPLOYEE ID")
-        ]
-      }</td>
-                <td style=" color: ${font_color}">${findEmployeeName(
-        employee_data_list.content[b][
-          findTextInArray(employee_data_list, "EMPLOYEE ID")
-        ]
-      )}</td>
-                <td style=" color: ${font_color}">${
-        employee_data_list.content[b][
-          findTextInArray(employee_data_list, "DEPARTMENT")
-        ]
-      }</td>
-                <td style=" color: ${font_color}">${
-        employee_data_list.content[b][
-          findTextInArray(employee_data_list, "DESIGNATION")
-        ]
-      }</td>
-                <td style=" color: ${font_color}">${
-        employee_data_list.content[b][
-          findTextInArray(employee_data_list, "GENDER")
-        ]
-      }</td>
-                <td style=" color: ${font_color}">${
-        employee_data_list.content[b][
-          findTextInArray(employee_data_list, "EMPLOYEE TYPE")
-        ]
-      }</td>
-                <td style=" color: ${font_color}">${date_decoder(
-        employee_data_list.content[b][
-          findTextInArray(employee_data_list, "BIRTH DATE")
-        ]
-      )}</td>
-                <td style=" color: ${font_color}">${
-        employee_data_list.content[b][
-          findTextInArray(employee_data_list, "MOBILE NO.")
-        ]
-      }</td>
-                <td style=" color: ${font_color}">${date_decoder(
-        employee_data_list.content[b][
-          findTextInArray(employee_data_list, "DATE HIRE")
-        ]
-      )}</td>
-                <td style=" color: ${font_color}">${
-        employee_data_list.content[b][
-          findTextInArray(employee_data_list, "TIN NO.")
-        ]
-      }</td>
-                <td style=" color: ${font_color}">${
-        employee_data_list.content[b][
-          findTextInArray(employee_data_list, "SSS/GSIS NO.")
-        ]
-      }</td>
-                <td style=" color: ${font_color}">${
-        employee_data_list.content[b][
-          findTextInArray(employee_data_list, "PHILHEALTH NO.")
-        ]
-      }</td>
-                <td style=" color: ${font_color}">${
-        employee_data_list.content[b][
-          findTextInArray(employee_data_list, "PAG-IBIG NO.")
-        ]
-      }</td>
-                <td style=" color: ${font_color}">${calculateLengthOfServiceString(
-        employee_date_hire_data
-      )}</td>
-            </tr>
-            `;
-      employee_list.insertAdjacentHTML("beforeend", employee_record);
     }
 
     function calculateLengthOfServiceString(hireDateString) {
