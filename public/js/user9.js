@@ -1475,7 +1475,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 )}</td>
             </tr>
             `;
-      payroll_summary.insertAdjacentHTML("beforeend", payroll_record);
+      payroll_summary.insertAdjacentHTML("afterbegin", payroll_record);
       payroll_counter += 1;
     }
 
