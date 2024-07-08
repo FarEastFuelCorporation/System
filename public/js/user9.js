@@ -219,7 +219,6 @@ document.addEventListener("DOMContentLoaded", async function () {
           findTextInArray(employee_data_list, "EMPLOYEE STATUS")
         ];
       if (status == "ACTIVE") {
-        console.log(status);
         var employee_id_data =
           employee_data_list.content[b][
             findTextInArray(employee_data_list, "EMPLOYEE ID")
@@ -1590,14 +1589,11 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     var data_value = active_employee_name;
 
-    console.log(data_value);
-
-    console.log(data_value);
     input_box.onkeyup = (e) => {
       let user_data = e.target.value;
       let empty_array = [];
       if (user_data) {
-        empty_array = data_value.filter((data) => {
+        empty_array = active_employee_name.filter((data) => {
           return data
             .toLocaleLowerCase()
             .includes(user_data.toLocaleLowerCase());
@@ -2296,11 +2292,8 @@ document.addEventListener("DOMContentLoaded", async function () {
           for (let y = 1; y <= payroll_length; y++) {
             net_income += parseFloat(salary_day[y].value);
           }
-          console.log(net_income);
           // net_income -= (parseFloat(day_allowance.value) + parseFloat(daily_rate.value));
-          console.log(net_income);
-          console.log(parseFloat(day_allowance.value));
-          console.log(parseFloat(daily_rate.value));
+
           gross_salary.value = net_income.toFixed(2);
           var additional = 0;
           additional =
