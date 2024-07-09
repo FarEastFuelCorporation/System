@@ -246,32 +246,34 @@ document.addEventListener("DOMContentLoaded", async function () {
       }
       var color = "1D1D1F";
       var font_color = "black";
-      if (employee_type_data != "REGULAR") {
-        if (expiration === "") {
-          // If expiration is blank, change the color to blue
-          color = "#0d6efd !important";
-          font_color = "white !important";
-        } else {
-          // If expiration is not blank, perform additional checks
-          var expirationDate = new Date(date_decoder(expiration));
-          var today = new Date();
-          if (expirationDate < today) {
-            // If expiration is in the past, change the color to red
-            color = "#dc3545 !important";
-            font_color = "white !important";
-          } else {
-            // Calculate the difference in days
-            var timeDifference = expirationDate.getTime() - today.getTime();
-            var daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+      // if (employee_type_data != "REGULAR") {
+      //   if (expiration === "") {
+      //     // If expiration is blank, change the color to blue
+      //     color = "#0d6efd !important";
+      //     font_color = "white !important";
+      //   } else {
+      //     // If expiration is not blank, perform additional checks
+      //     var expirationDate = new Date(date_decoder(expiration));
+      //     var today = new Date();
+      //     if (expirationDate < today) {
+      //       // If expiration is in the past, change the color to red
+      //       color = "#dc3545 !important";
+      //       font_color = "white !important";
+      //     } else {
+      //       // Calculate the difference in days
+      //       var timeDifference = expirationDate.getTime() - today.getTime();
+      //       var daysDifference = Math.ceil(
+      //         timeDifference / (1000 * 3600 * 24)
+      //       );
 
-            if (daysDifference <= 30) {
-              // If expiration is within the next 30 days, change the color to yellow
-              color = "#ffc107 !important";
-              font_color = "black !important";
-            }
-          }
-        }
-      }
+      //       if (daysDifference <= 30) {
+      //         // If expiration is within the next 30 days, change the color to yellow
+      //         color = "#ffc107 !important";
+      //         font_color = "black !important";
+      //       }
+      //     }
+      //   }
+      // }
       var employee_record = "";
       employee_record += `
             <tr style="background-color: ${color};">
