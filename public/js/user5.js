@@ -2246,6 +2246,13 @@ document.addEventListener("DOMContentLoaded", async function () {
                     ) {
                       is_transportation = false;
                     }
+                    if (
+                      cod_data_list.content[x][
+                        findTextInArray(cod_data_list, "CLIENT ID")
+                      ] == "C2023057"
+                    ) {
+                      is_transportation = false;
+                    }
                     if (max_capacity == 0) {
                       if (mode != "FREE OF CHARGE") {
                         var si_unit_price = 0;
