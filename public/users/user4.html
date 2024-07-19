@@ -434,6 +434,14 @@
                             </div>
                         </div>
                     </div>
+                    <label for="type_of_certificate_selection">
+                        <i class="fa-solid fa-list-ol"></i>
+                        Type of Certificate
+                    </label><br>
+                    <select name="type_of_certificate_selection" id="type_of_certificate_selection" class="form-control">
+                        <option selected value="destruction">Certificate of Destruction</option>
+                        <option value="disposal">Certificate of Disposal</option>
+                    </select><br>
                     <label for="type_of_cod">
                         <i class="fa-solid fa-list-ol"></i>
                         Type of COD
@@ -506,7 +514,7 @@
                                 <div id="df_no" class="fw-bold"></div>    
                             </div><br>
                             <div class="header_detail">
-                                <h3 style="font-size: 15px !important;">Pursuant to the provisions of Republic Act 9003 also known as Ecological Solid Waste Management Act of 2000 we are issuing this certificate of destruction to:</h3>
+                                <h3 style="font-size: 15px !important;">Pursuant to the provisions of Republic Act 9003 also known as Ecological Solid Waste Management Act of 2000 we are issuing this certificate of <span id="type_of_certificate"></span> to:</h3>
                             </div><br>
                             <div class="company">
                                 <h2 id="table_company"></h2>

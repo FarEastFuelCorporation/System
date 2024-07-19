@@ -2062,6 +2062,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     const submit_button = document.getElementById("submit_button");
     const client_container = document.getElementById("client_container");
     const completion = document.getElementById("completion");
+    const type_of_certificate_selection = document.getElementById(
+      "type_of_certificate_selection"
+    );
+    const type_of_certificate = document.getElementById("type_of_certificate");
     const type_of_cod = document.getElementById("type_of_cod");
     const table_company = document.getElementById("table_company");
     const table_company_address = document.getElementById(
@@ -2100,6 +2104,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       var total_cod_weight = 0;
       const df_no = document.getElementById("df_no");
       df_no.innerText = cod_form_no.value;
+      type_of_certificate.innerText = type_of_certificate_selection.value;
       if (type_of_cod.value == "By Waste Description") {
         const waste_description = document.getElementById("waste_description");
         const year_covered = document.getElementById("year_covered");
