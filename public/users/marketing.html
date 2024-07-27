@@ -5508,159 +5508,177 @@
     
         <script src="../js/marketing.js"></script>
 <script>
-    function convertToPDFandDownload() {
-        // Assuming your form has an ID 'new_quotation_form_tab'
-        const new_quotation_form_tab = document.querySelector('#new_quotation_form_tab');
-        
-        // Perform form validation before proceeding
-        if (validateForm(new_quotation_form_tab)) {
-            const element = document.getElementById('what_to_print');
-            const quotation_no = new_quotation_form_tab.querySelector('#quotation_no').value;
-            const client = new_quotation_form_tab.querySelector('#client').value;
-            let modifiedCompanyName = client.replace(/\./g, '');
+  function convertToPDFandDownload() {
+    // Assuming your form has an ID 'new_quotation_form_tab'
+    const new_quotation_form_tab = document.querySelector(
+      "#new_quotation_form_tab"
+    );
 
-            const opt = {
-                filename: `${quotation_no} - ${client}`,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 10 },
-                jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
-            };
+    // Perform form validation before proceeding
+    if (validateForm(new_quotation_form_tab)) {
+      const element = document.getElementById("what_to_print");
+      const quotation_no =
+        new_quotation_form_tab.querySelector("#quotation_no").value;
+      const client = new_quotation_form_tab.querySelector("#client").value;
+      let modifiedCompanyName = client.replace(/\./g, "");
 
-            const marginTop = 32.5; // Top margin in mm
-            const marginBottom = 0; // Bottom margin in mm
+      const opt = {
+        filename: `${quotation_no} - ${client}`,
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 10 },
+        jsPDF: { unit: "mm", format: "letter", orientation: "portrait" },
+      };
 
-            // Set the page height to account for the top and bottom margins
-            const pageHeight = 279.4 - marginTop - marginBottom;
+      const marginTop = 32.5; // Top margin in mm
+      const marginBottom = 0; // Bottom margin in mm
 
-            // Reset the element's transform style
-            element.style.transform = 'none';
+      // Set the page height to account for the top and bottom margins
+      const pageHeight = 279.4 - marginTop - marginBottom;
 
-            // Generate the PDF with the adjusted options
-            html2pdf()
-                .set(opt)
-                .from(element)
-                .toContainer()
-                .then(() => {
-                    html2pdf().set(opt).from(element).save().then(() => {
-                        // Call the submit button click event immediately after the PDF is downloaded
-                        document.getElementById('submit_button').click();
-                    });
-                });
-        } else {
-            // Handle the case where the form is not valid
-            alert('Please fill out the form completely before downloading.');
-        }
-    }
+      // Reset the element's transform style
+      element.style.transform = "none";
 
-    // Function to validate the form
-    function validateForm(form) {
-        // Query all input elements with the 'required' attribute
-        const requiredInputs = form.querySelectorAll('input[required]');
-
-        // Check if all required inputs have a non-empty value
-        for (const input of requiredInputs) {
-            if (input.value.trim() === '') {
-                return false; // Form is not valid
-            }
-            // You can add more specific validation checks for different input types if needed
-        }
-
-        // Add more validation checks as needed
-
-        return true; // Form is valid
-    }
-
-    function convertToPDF() {
-        const element = document.getElementById('what_to_print');
-        const new_quotation_form_tab = document.querySelector('#new_quotation_form_tab');
-        const quotation_no = new_quotation_form_tab.querySelector('#quotation_no').value;
-        const client = new_quotation_form_tab.querySelector('#client').value;
-        let modifiedCompanyName = client.replace(/\./g, '');
-
-        const opt = {
-            filename: `${quotation_no} - ${client}`,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
-        };
-
-        const marginTop = 32.5; // Top margin in mm
-        const marginBottom = 0; // Bottom margin in mm
-        const pageHeight = 279.4; // Adjust the value based on your available space for each page
-
-        const totalPages = Math.ceil(element.clientHeight / pageHeight);
-
-        let promises = [];
-
-        for (let i = 0; i < totalPages; i++) {
-            const promise = html2pdf()
+      // Generate the PDF with the adjusted options
+      html2pdf()
+        .set(opt)
+        .from(element)
+        .toContainer()
+        .then(() => {
+          html2pdf()
             .set(opt)
             .from(element)
-            .toContainer()
+            .save()
             .then(() => {
-                const newPosition = -pageHeight * (i + 1) - marginTop;
-                element.style.transform = `translate(0, ${newPosition}px)`;
-            });
-
-            promises.push(promise);
-        }
-        Promise.all(promises)
-            .then(() => {
-            element.style.transform = 'none';
-            html2pdf().set(opt).from(element).save().then(() => {
-                // Call the submit button click event immediately after the PDF is downloaded
+              // Call the submit button click event immediately after the PDF is downloaded
+              document.getElementById("submit_button").click();
             });
         });
+    } else {
+      // Handle the case where the form is not valid
+      alert("Please fill out the form completely before downloading.");
+    }
+  }
+
+  // Function to validate the form
+  function validateForm(form) {
+    // Query all input elements with the 'required' attribute
+    const requiredInputs = form.querySelectorAll("input[required]");
+
+    // Check if all required inputs have a non-empty value
+    for (const input of requiredInputs) {
+      if (input.value.trim() === "") {
+        return false; // Form is not valid
+      }
+      // You can add more specific validation checks for different input types if needed
     }
 
-    function convertToPDF2() {
-        const element = document.getElementById('report_tab1');
-        const report_date_from = document.getElementById("report_date_from");
-        const report_date_to = document.getElementById("report_date_to");
-        var report_from = new Date(report_date_from.value)
-        var report_to = new Date(report_date_to.value)
+    // Add more validation checks as needed
 
-        const marginTop = 12.7; // Top margin in mm
-        const marginBottom = 12.7; // Bottom margin in mm
-        const pageHeight = 215.9; // Adjust the value based on your available space for each page
+    return true; // Form is valid
+  }
 
-        const pages =  document.querySelectorAll(".report_tab1")
+  function convertToPDF() {
+    const element = document.getElementById("what_to_print");
+    const new_quotation_form_tab = document.querySelector(
+      "#new_quotation_form_tab"
+    );
+    const quotation_no =
+      new_quotation_form_tab.querySelector("#quotation_no").value;
+    const client = new_quotation_form_tab.querySelector("#client").value;
+    let modifiedCompanyName = client.replace(/\./g, "");
 
-        pages.forEach((page, i) => {
-            const totalPages = Math.ceil(page.clientHeight / pageHeight);
+    const opt = {
+      filename: `${quotation_no} - ${client}`,
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "mm", format: "letter", orientation: "portrait" },
+    };
 
-            const opt = {
-                filename: `Marketing Transaction Report ${date_decoder(report_from)} - ${date_decoder(report_to)} Page ${i + 1} of ${pages.length}`,
-                image: { type: 'jpeg', quality: 1 },
-                html2canvas: { scale: 2 },
-                jsPDF: { unit: 'mm', format: 'letter', orientation: 'landscape' }
-            };
+    const marginTop = 32.5; // Top margin in mm
+    const marginBottom = 0; // Bottom margin in mm
+    const pageHeight = 279.4; // Adjust the value based on your available space for each page
 
-            let promises = [];
+    const totalPages = Math.ceil(element.clientHeight / pageHeight);
 
-            for (let i = 0; i < totalPages; i++) {
-                const promise = html2pdf()
-                .set(opt)
-                .from(page)
-                .toContainer()
-                .then(() => {
-                    const newPosition = -pageHeight * (i + 1) - marginTop;
-                    page.style.transform = `translate(0, ${newPosition}px)`;
-                });
+    let promises = [];
 
-                promises.push(promise);
-            }
+    for (let i = 0; i < totalPages; i++) {
+      const promise = html2pdf()
+        .set(opt)
+        .from(element)
+        .toContainer()
+        .then(() => {
+          const newPosition = -pageHeight * (i + 1) - marginTop;
+          element.style.transform = `translate(0, ${newPosition}px)`;
+        });
 
-            Promise.all(promises)
-                .then(() => {
-                    page.style.transform = 'none';
-                html2pdf().set(opt).from(page).save().then(() => {
-                    // Call the submit button click event immediately after the PDF is downloaded
-                });
-            });
-        })
+      promises.push(promise);
     }
+    Promise.all(promises).then(() => {
+      element.style.transform = "none";
+      html2pdf()
+        .set(opt)
+        .from(element)
+        .save()
+        .then(() => {
+          // Call the submit button click event immediately after the PDF is downloaded
+        });
+    });
+  }
+
+  function convertToPDF2() {
+    const report_date_from = document.getElementById("report_date_from");
+    const report_date_to = document.getElementById("report_date_to");
+    var report_from = new Date(report_date_from.value);
+    var report_to = new Date(report_date_to.value);
+
+    const marginTop = 12.7; // Top margin in mm
+    const marginBottom = 12.7; // Bottom margin in mm
+    const pageHeight = 215.9; // Adjust the value based on your available space for each page
+
+    const pages = document.querySelectorAll(".report_tab");
+
+    pages.forEach((page, i) => {
+      const totalPages = Math.ceil(page.clientHeight / pageHeight);
+
+      const opt = {
+        filename: `Marketing Transaction Report ${date_decoder(
+          report_from
+        )} - ${date_decoder(report_to)} Page ${i + 1} of ${pages.length}`,
+        image: { type: "jpeg", quality: 1 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: "mm", format: "letter", orientation: "landscape" },
+      };
+
+      let promises = [];
+
+      for (let i = 0; i < totalPages; i++) {
+        const promise = html2pdf()
+          .set(opt)
+          .from(page)
+          .toContainer()
+          .then(() => {
+            const newPosition = -pageHeight * (i + 1) - marginTop;
+            page.style.transform = `translate(0, ${newPosition}px)`;
+          });
+
+        promises.push(promise);
+      }
+
+      Promise.all(promises).then(() => {
+        page.style.transform = "none";
+        html2pdf()
+          .set(opt)
+          .from(page)
+          .save()
+          .then(() => {
+            // Call the submit button click event immediately after the PDF is downloaded
+          });
+      });
+    });
+  }
 </script>
+
     
 </body>
 </html>

@@ -2323,54 +2323,59 @@
     
         <script src="../js/logistics.js"></script>
 <script>
-    function convertToPDF() {
-        const report_date_from = document.getElementById("report_date_from");
-        const report_date_to = document.getElementById("report_date_to");
-        var report_from = new Date(report_date_from.value)
-        var report_to = new Date(report_date_to.value)
+  function convertToPDF() {
+    const report_date_from = document.getElementById("report_date_from");
+    const report_date_to = document.getElementById("report_date_to");
+    var report_from = new Date(report_date_from.value);
+    var report_to = new Date(report_date_to.value);
 
-        const marginTop = 12.7; // Top margin in mm
-        const marginBottom = 12.7; // Bottom margin in mm
-        const pageHeight = 215.9; // Adjust the value based on your available space for each page
+    const marginTop = 12.7; // Top margin in mm
+    const marginBottom = 12.7; // Bottom margin in mm
+    const pageHeight = 215.9; // Adjust the value based on your available space for each page
 
-        const pages =  document.querySelectorAll(".report_tab")
+    const pages = document.querySelectorAll(".report_tab");
 
-        pages.forEach((page, i) => {
-            const totalPages = Math.ceil(page.clientHeight / pageHeight);
+    pages.forEach((page, i) => {
+      const totalPages = Math.ceil(page.clientHeight / pageHeight);
 
-            const opt = {
-                filename: `Logistics Travel Transaction Report ${date_decoder(report_from)} - ${date_decoder(report_to)} Page ${i + 1} of ${pages.length}`,
-                image: { type: 'jpeg', quality: 1 },
-                html2canvas: { scale: 2 },
-                jsPDF: { unit: 'mm', format: 'letter', orientation: 'landscape' }
-            };
+      const opt = {
+        filename: `Logistics Travel Transaction Report ${date_decoder(
+          report_from
+        )} - ${date_decoder(report_to)} Page ${i + 1} of ${pages.length}`,
+        image: { type: "jpeg", quality: 1 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: "mm", format: "letter", orientation: "landscape" },
+      };
 
-            let promises = [];
+      let promises = [];
 
-            for (let i = 0; i < totalPages; i++) {
-                const promise = html2pdf()
-                .set(opt)
-                .from(page)
-                .toContainer()
-                .then(() => {
-                    const newPosition = -pageHeight * (i + 1) - marginTop;
-                    page.style.transform = `translate(0, ${newPosition}px)`;
-                });
+      for (let i = 0; i < totalPages; i++) {
+        const promise = html2pdf()
+          .set(opt)
+          .from(page)
+          .toContainer()
+          .then(() => {
+            const newPosition = -pageHeight * (i + 1) - marginTop;
+            page.style.transform = `translate(0, ${newPosition}px)`;
+          });
 
-                promises.push(promise);
-            }
+        promises.push(promise);
+      }
 
-            Promise.all(promises)
-                .then(() => {
-                    page.style.transform = 'none';
-                html2pdf().set(opt).from(page).save().then(() => {
-                    // Call the submit button click event immediately after the PDF is downloaded
-                });
-            });
-        })
-    }
+      Promise.all(promises).then(() => {
+        page.style.transform = "none";
+        html2pdf()
+          .set(opt)
+          .from(page)
+          .save()
+          .then(() => {
+            // Call the submit button click event immediately after the PDF is downloaded
+          });
+      });
+    });
+  }
 </script>
-</body>
+
     
 </body>
 </html>
