@@ -3465,7 +3465,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         legend: {
           show: true,
           position: "left", // Set the legend position to "left"
-          fontSize: "16px", // Increase legend font size as needed
+          fontSize: "20px", // Increase legend font size as needed
           formatter: function (seriesName, opts) {
             // Here, you should use the correct variable to get the series value
             var seriesValue = opts.w.globals.series[opts.seriesIndex];
