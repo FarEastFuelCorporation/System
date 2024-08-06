@@ -144,6 +144,191 @@ document.addEventListener("DOMContentLoaded", async function () {
     const void_data_list = await void_response.json();
     const accomplishment_data_list = await accomplishment_response.json();
 
+    // indexes
+    const username_data_list_NAME = findTextInArray(username_data_list, "NAME");
+    const username_data_list_PICTURE = findTextInArray(
+      username_data_list,
+      "PICTURE"
+    );
+    const username_data_list_DEPARTMENT = findTextInArray(
+      username_data_list,
+      "DEPARTMENT"
+    );
+    const username_data_list_SECTIONS = findTextInArray(
+      username_data_list,
+      "SECTIONS"
+    );
+    const vehicle_data_list_CODE = findTextInArray(vehicle_data_list, "CODE");
+    const mtf_data_list_SUBMIT_TO = findTextInArray(mtf_data_list, "SUBMIT TO");
+    const mtf_data_list_HAULING_DATE = findTextInArray(
+      mtf_data_list,
+      "HAULING DATE"
+    );
+    const mtf_data_list_TYPE_OF_VEHICLE = findTextInArray(
+      mtf_data_list,
+      "TYPE OF VEHICLE"
+    );
+    const mtf_data_list_PULL_OUT_FORM = findTextInArray(
+      mtf_data_list,
+      "PULL OUT FORM #"
+    );
+    const mtf_data_list_STATUS = findTextInArray(mtf_data_list, "STATUS");
+    const mtf_data_list_MTF = findTextInArray(mtf_data_list, "MTF #");
+    const wcf_data_list_LTF_MTF = findTextInArray(wcf_data_list, "LTF/ MTF  #");
+    const wcf_data_list_PULL_OUT_FORM = findTextInArray(
+      wcf_data_list,
+      "PULL OUT FORM #"
+    );
+    const wcf_data_list_PLATE = findTextInArray(wcf_data_list, "PLATE #");
+    const wcf_data_list_DRIVER_ID = findTextInArray(wcf_data_list, "DRIVER ID");
+    const ltf_data_list_MTF = findTextInArray(ltf_data_list, "MTF #");
+    const ltf_data_list_PLATE = findTextInArray(ltf_data_list, "PLATE #");
+    const ltf_data_list_DRIVER_ID = findTextInArray(ltf_data_list, "DRIVER ID");
+    const mtf_data_list_CREATED_AT = findTextInArray(
+      mtf_data_list,
+      "CREATED AT"
+    );
+    const mtf_data_list_HAULING_TIME = findTextInArray(
+      mtf_data_list,
+      "HAULING TIME"
+    );
+    const mtf_data_list_CLIENT_ID = findTextInArray(mtf_data_list, "CLIENT ID");
+    const mtf_data_list_WASTE_ID = findTextInArray(mtf_data_list, "WASTE ID");
+    const mtf_data_list_REMARKS = findTextInArray(mtf_data_list, "REMARKS");
+    const mtf_data_list_SUBMITTED_BY = findTextInArray(
+      mtf_data_list,
+      "SUBMITTED BY"
+    );
+    const bpf_data_list_HAULING_DATE = findTextInArray(
+      bpf_data_list,
+      "HAULING DATE"
+    );
+    const bpf_data_list_TOTAL_AMOUNT_DUE_VAT_INCLUSIVE = findTextInArray(
+      bpf_data_list,
+      "TOTAL AMOUNT DUE VAT INCLUSIVE"
+    );
+    const vehicle_data_list_TYPE_OF_VEHICLE = findTextInArray(
+      vehicle_data_list,
+      "TYPE OF VEHICLE"
+    );
+    const qlf_data_list_WASTE_ID_TYPE_OF_VEHICLE = findTextInArray(
+      qlf_data_list,
+      "WASTE ID/ TYPE OF VEHICLE"
+    );
+    const client_data_list_CLIENT_ID = findTextInArray(
+      client_data_list,
+      "CLIENT ID"
+    );
+    const client_data_list_CLIENT_NAME = findTextInArray(
+      client_data_list,
+      "CLIENT NAME"
+    );
+    const qlf_data_list_CLIENT_ID = findTextInArray(qlf_data_list, "CLIENT ID");
+    const qlf_data_list_WASTE_NAME = findTextInArray(
+      qlf_data_list,
+      "WASTE NAME"
+    );
+    const type_of_waste_data_list_WASTE_CODE = findTextInArray(
+      type_of_waste_data_list,
+      "WASTE CODE"
+    );
+    const type_of_waste_data_list_WASTE_ID = findTextInArray(
+      type_of_waste_data_list,
+      "WASTE ID"
+    );
+    const type_of_waste_data_list_WASTE_NAME = findTextInArray(
+      type_of_waste_data_list,
+      "WASTE NAME"
+    );
+    const qlf_data_list_QUOTATION_CODE = findTextInArray(
+      qlf_data_list,
+      "QUOTATION CODE"
+    );
+    const client_data_list_ADDRESS = findTextInArray(
+      client_data_list,
+      "ADDRESS"
+    );
+    const client_data_list_NATURE_OF_BUSINESS = findTextInArray(
+      client_data_list,
+      "NATURE OF BUSINESS"
+    );
+    const client_data_list_CONTACT_NUMBER = findTextInArray(
+      client_data_list,
+      "CONTACT NUMBER"
+    );
+    const client_data_list_TIN_ID = findTextInArray(client_data_list, "TIN ID");
+    const client_data_list_BILLER_NAME = findTextInArray(
+      client_data_list,
+      "BILLER NAME"
+    );
+    const client_data_list_BILLER_ADDRESS = findTextInArray(
+      client_data_list,
+      "BILLER ADDRESS"
+    );
+    const client_data_list_BILLER_CONTACT_PERSON = findTextInArray(
+      client_data_list,
+      "BILLER CONTACT PERSON"
+    );
+    const client_data_list_BILLER_CONTACT_NUMBER = findTextInArray(
+      client_data_list,
+      "BILLER CONTACT NUMBER"
+    );
+    const client_data_list_BILLER_NATURE_OF_BUSINESS = findTextInArray(
+      client_data_list,
+      "BILLER NATURE OF BUSINESS"
+    );
+    const client_data_list_BILLER_BILLER_TIN_ID = findTextInArray(
+      client_data_list,
+      "BILLER TIN ID"
+    );
+    const client_data_list_CREATED_AT = findTextInArray(
+      client_data_list,
+      "CREATED AT"
+    );
+    const type_of_waste_data_list_TREATMENT_PROCESS = findTextInArray(
+      type_of_waste_data_list,
+      "TREATMENT PROCESS"
+    );
+    const type_of_waste_data_list_CATEGORY = findTextInArray(
+      type_of_waste_data_list,
+      "CATEGORY"
+    );
+    const treatment_process_data_list_TREATMENT_PROCESS = findTextInArray(
+      treatment_process_data_list,
+      "TREATMENT PROCESS"
+    );
+    const qlf_data_list_UNIT = findTextInArray(qlf_data_list, "UNIT");
+    const qlf_data_list_VALIDITY = findTextInArray(qlf_data_list, "VALIDITY");
+    const qlf_data_list_MODE = findTextInArray(qlf_data_list, "MODE");
+    const qlf_data_list_UNIT_PRICE = findTextInArray(
+      qlf_data_list,
+      "UNIT PRICE"
+    );
+    const qlf_data_list_VAT_CALCULATION = findTextInArray(
+      qlf_data_list,
+      "VAT CALCULATION"
+    );
+    const qlf_data_list_TERMS_CHARGE = findTextInArray(
+      qlf_data_list,
+      "TERMS CHARGE"
+    );
+    const qlf_data_list_TERMS_BUYING = findTextInArray(
+      qlf_data_list,
+      "TERMS BUYING"
+    );
+    const qlf_data_list_SUBMITTED_BY = findTextInArray(
+      qlf_data_list,
+      "SUBMITTED BY"
+    );
+    const qlf_data_list_CREATED_AT = findTextInArray(
+      qlf_data_list,
+      "CREATED AT"
+    );
+    const qlf_data_list_TERMS_DAYS = findTextInArray(
+      qlf_data_list,
+      "TERMS DAYS"
+    );
+
     // Code that depends on the fetched data
     // username_data_list3
     const queryParams = new URLSearchParams(window.location.search);
@@ -160,39 +345,20 @@ document.addEventListener("DOMContentLoaded", async function () {
     const departments = document.querySelectorAll("#department");
 
     const user_name =
-      username_data_list.content[xValue][
-        findTextInArray(username_data_list, "NAME")
-      ];
-    profile_picture.src = `../images/profile_picture/${
-      username_data_list.content[xValue][
-        findTextInArray(username_data_list, "PICTURE")
-      ]
-    }`;
+      username_data_list.content[xValue][username_data_list_NAME];
+    profile_picture.src = `../images/profile_picture/${username_data_list.content[xValue][username_data_list_PICTURE]}`;
     users.forEach((user) => {
-      user.value =
-        username_data_list.content[xValue][
-          findTextInArray(username_data_list, "NAME")
-        ];
+      user.value = username_data_list.content[xValue][username_data_list_NAME];
     });
     departments.forEach((user) => {
       user.value =
-        username_data_list.content[xValue][
-          findTextInArray(username_data_list, "DEPARTMENT")
-        ];
+        username_data_list.content[xValue][username_data_list_DEPARTMENT];
     });
-    user_sidebar.innerHTML = `<u>${
-      username_data_list.content[xValue][
-        findTextInArray(username_data_list, "NAME")
-      ]
-    }</u>`;
+    user_sidebar.innerHTML = `<u>${username_data_list.content[xValue][username_data_list_NAME]}</u>`;
     user_sidebar_officer.innerText =
-      username_data_list.content[xValue][
-        findTextInArray(username_data_list, "SECTIONS")
-      ];
+      username_data_list.content[xValue][username_data_list_SECTIONS];
     user_sidebar_department.innerText =
-      username_data_list.content[xValue][
-        findTextInArray(username_data_list, "DEPARTMENT")
-      ];
+      username_data_list.content[xValue][username_data_list_DEPARTMENT];
 
     // marketing_dashboard
     const booked_transactions_marketing = document.getElementById(
@@ -234,27 +400,13 @@ document.addEventListener("DOMContentLoaded", async function () {
     for (let x = 1; x < vehicle_data_list.content.length; x++) {
       if (
         !vehicle_type.includes(
-          vehicle_data_list.content[x][
-            findTextInArray(vehicle_data_list, "CODE")
-          ]
+          vehicle_data_list.content[x][vehicle_data_list_CODE]
         )
       ) {
-        vehicle_type.push(
-          vehicle_data_list.content[x][
-            findTextInArray(vehicle_data_list, "CODE")
-          ]
-        );
-        total_vehicle[
-          vehicle_data_list.content[x][
-            findTextInArray(vehicle_data_list, "CODE")
-          ]
-        ] = 1;
+        vehicle_type.push(vehicle_data_list.content[x][vehicle_data_list_CODE]);
+        total_vehicle[vehicle_data_list.content[x][vehicle_data_list_CODE]] = 1;
       } else {
-        total_vehicle[
-          vehicle_data_list.content[x][
-            findTextInArray(vehicle_data_list, "CODE")
-          ]
-        ]++;
+        total_vehicle[vehicle_data_list.content[x][vehicle_data_list_CODE]]++;
       }
     }
 
@@ -330,26 +482,13 @@ document.addEventListener("DOMContentLoaded", async function () {
         var pull_out_slip = "TO FOLLOW";
         // for logistics
         if (
-          mtf_data_list.content[j][
-            findTextInArray(mtf_data_list, "SUBMIT TO")
-          ] == "LOGISTICS" &&
+          mtf_data_list.content[j][mtf_data_list_SUBMIT_TO] == "LOGISTICS" &&
           month_filter.value ==
-            formatMonth(
-              mtf_data_list.content[j][
-                findTextInArray(mtf_data_list, "HAULING DATE")
-              ]
-            )
+            formatMonth(mtf_data_list.content[j][mtf_data_list_HAULING_DATE])
         ) {
-          vehicle =
-            mtf_data_list.content[j][
-              findTextInArray(mtf_data_list, "TYPE OF VEHICLE")
-            ];
-          pull_out_slip =
-            mtf_data_list.content[j][
-              findTextInArray(mtf_data_list, "PULL OUT FORM #")
-            ];
-          status =
-            mtf_data_list.content[j][findTextInArray(mtf_data_list, "STATUS")];
+          vehicle = mtf_data_list.content[j][mtf_data_list_TYPE_OF_VEHICLE];
+          pull_out_slip = mtf_data_list.content[j][mtf_data_list_PULL_OUT_FORM];
+          status = mtf_data_list.content[j][mtf_data_list_STATUS];
           if (status == "FOR HAULING") {
             for_hauling_marketing += 1;
           } else if (status == "FOR RECEIVING") {
@@ -372,17 +511,11 @@ document.addEventListener("DOMContentLoaded", async function () {
             for_accounting_marketing += 1;
           }
         } else if (
-          mtf_data_list.content[j][
-            findTextInArray(mtf_data_list, "SUBMIT TO")
-          ] == "LOGISTICS" &&
+          mtf_data_list.content[j][mtf_data_list_SUBMIT_TO] == "LOGISTICS" &&
           month_filter.value == "ALL"
         ) {
-          vehicle =
-            mtf_data_list.content[j][
-              findTextInArray(mtf_data_list, "TYPE OF VEHICLE")
-            ];
-          status =
-            mtf_data_list.content[j][findTextInArray(mtf_data_list, "STATUS")];
+          vehicle = mtf_data_list.content[j][mtf_data_list_TYPE_OF_VEHICLE];
+          status = mtf_data_list.content[j][mtf_data_list_STATUS];
           if (status == "FOR HAULING") {
             for_hauling_marketing += 1;
           } else if (status == "FOR RECEIVING") {
@@ -407,19 +540,12 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
         // for receiving
         else if (
-          mtf_data_list.content[j][
-            findTextInArray(mtf_data_list, "SUBMIT TO")
-          ] == "RECEIVING" &&
+          mtf_data_list.content[j][mtf_data_list_SUBMIT_TO] == "RECEIVING" &&
           month_filter.value ==
-            formatMonth(
-              mtf_data_list.content[j][
-                findTextInArray(mtf_data_list, "HAULING DATE")
-              ]
-            )
+            formatMonth(mtf_data_list.content[j][mtf_data_list_HAULING_DATE])
         ) {
           vehicle = "PROVIDED BY CLIENT";
-          status =
-            mtf_data_list.content[j][findTextInArray(mtf_data_list, "STATUS")];
+          status = mtf_data_list.content[j][mtf_data_list_STATUS];
           if (status == "FOR HAULING") {
             for_hauling_marketing += 1;
           } else if (status == "FOR RECEIVING") {
@@ -442,14 +568,11 @@ document.addEventListener("DOMContentLoaded", async function () {
             for_accounting_marketing += 1;
           }
         } else if (
-          mtf_data_list.content[j][
-            findTextInArray(mtf_data_list, "SUBMIT TO")
-          ] == "RECEIVING" &&
+          mtf_data_list.content[j][mtf_data_list_SUBMIT_TO] == "RECEIVING" &&
           month_filter.value == "ALL"
         ) {
           vehicle = "PROVIDED BY CLIENT";
-          status =
-            mtf_data_list.content[j][findTextInArray(mtf_data_list, "STATUS")];
+          status = mtf_data_list.content[j][mtf_data_list_STATUS];
           if (status == "FOR HAULING") {
             for_hauling_marketing += 1;
           } else if (status == "FOR RECEIVING") {
@@ -474,43 +597,24 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
         var plate_no, driver_name;
         for (let x = 1; x < wcf_data_list.content.length; x++) {
-          var mtf_no =
-            mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")];
-          var mtf_wcf_no =
-            wcf_data_list.content[x][
-              findTextInArray(wcf_data_list, "LTF/ MTF  #")
-            ];
+          var mtf_no = mtf_data_list.content[j][mtf_data_list_MTF];
+          var mtf_wcf_no = wcf_data_list.content[x][wcf_data_list_LTF_MTF];
           if (mtf_no == mtf_wcf_no) {
             pull_out_slip =
-              wcf_data_list.content[x][
-                findTextInArray(wcf_data_list, "PULL OUT FORM #")
-              ];
-            plate_no =
-              wcf_data_list.content[x][
-                findTextInArray(wcf_data_list, "PLATE #")
-              ];
+              wcf_data_list.content[x][wcf_data_list_PULL_OUT_FORM];
+            plate_no = wcf_data_list.content[x][wcf_data_list_PLATE];
             driver_name = findEmployeeName(
-              wcf_data_list.content[x][
-                findTextInArray(wcf_data_list, "DRIVER ID")
-              ]
+              wcf_data_list.content[x][wcf_data_list_DRIVER_ID]
             );
             break;
           } else {
             for (let y = 1; y < ltf_data_list.content.length; y++) {
-              var mtf_no =
-                mtf_data_list.content[j][
-                  findTextInArray(mtf_data_list, "MTF #")
-                ];
-              var mtf_ltf_no =
-                ltf_data_list.content[y][
-                  findTextInArray(ltf_data_list, "MTF #")
-                ];
+              var mtf_no = mtf_data_list.content[j][mtf_data_list_MTF];
+              var mtf_ltf_no = ltf_data_list.content[y][ltf_data_list_MTF];
               if (mtf_no == mtf_ltf_no) {
                 if (mtf_wcf_no == mtf_ltf_no) {
                   pull_out_slip =
-                    wcf_data_list.content[x][
-                      findTextInArray(wcf_data_list, "PULL OUT FORM #")
-                    ];
+                    wcf_data_list.content[x][wcf_data_list_PULL_OUT_FORM];
                   break;
                 }
               }
@@ -520,19 +624,12 @@ document.addEventListener("DOMContentLoaded", async function () {
           }
         }
         for (let x = 1; x < ltf_data_list.content.length; x++) {
-          var mtf_no =
-            mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")];
-          var mtf_ltf_no =
-            ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+          var mtf_no = mtf_data_list.content[j][mtf_data_list_MTF];
+          var mtf_ltf_no = ltf_data_list.content[x][ltf_data_list_MTF];
           if (mtf_no == mtf_ltf_no) {
-            plate_no =
-              ltf_data_list.content[x][
-                findTextInArray(ltf_data_list, "PLATE #")
-              ];
+            plate_no = ltf_data_list.content[x][ltf_data_list_PLATE];
             driver_name = findEmployeeName(
-              ltf_data_list.content[x][
-                findTextInArray(ltf_data_list, "DRIVER ID")
-              ]
+              ltf_data_list.content[x][ltf_data_list_DRIVER_ID]
             );
             break;
           }
@@ -540,28 +637,18 @@ document.addEventListener("DOMContentLoaded", async function () {
         var color;
         var font_color = "black";
         var createdDateTime =
-          mtf_data_list.content[j][
-            findTextInArray(mtf_data_list, "CREATED AT")
-          ];
+          mtf_data_list.content[j][mtf_data_list_CREATED_AT];
         var haulingDate = date_decoder(
-          mtf_data_list.content[j][
-            findTextInArray(mtf_data_list, "HAULING DATE")
-          ]
+          mtf_data_list.content[j][mtf_data_list_HAULING_DATE]
         );
         var haulingTime = time_decoder(
-          mtf_data_list.content[j][
-            findTextInArray(mtf_data_list, "HAULING TIME")
-          ]
+          mtf_data_list.content[j][mtf_data_list_HAULING_TIME]
         );
         var haulingDateTime = new Date(`${haulingDate} ${haulingTime}`);
         var font_color = "black";
         if (
           month_filter.value ==
-          formatMonth(
-            mtf_data_list.content[j][
-              findTextInArray(mtf_data_list, "HAULING DATE")
-            ]
-          )
+          formatMonth(mtf_data_list.content[j][mtf_data_list_HAULING_DATE])
         ) {
           if (status == "FOR HAULING") {
             color = forHaulingColor;
@@ -600,54 +687,38 @@ document.addEventListener("DOMContentLoaded", async function () {
                     <tr style="background-color: ${color};">
                         <td ${style}>${data_value_counter}</td>
                         <td ${style}>${
-            mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")]
+            mtf_data_list.content[j][mtf_data_list_MTF]
           }</td>
                         <td ${style}>${date_decoder(
-            mtf_data_list.content[j][
-              findTextInArray(mtf_data_list, "CREATED AT")
-            ]
+            mtf_data_list.content[j][mtf_data_list_CREATED_AT]
           )} /<br> ${time_decoder3(
-            mtf_data_list.content[j][
-              findTextInArray(mtf_data_list, "CREATED AT")
-            ]
+            mtf_data_list.content[j][mtf_data_list_CREATED_AT]
           )}</td>
                         <td ${style}>${date_decoder(
-            mtf_data_list.content[j][
-              findTextInArray(mtf_data_list, "HAULING DATE")
-            ]
+            mtf_data_list.content[j][mtf_data_list_HAULING_DATE]
           )} /<br> ${time_decoder(
-            mtf_data_list.content[j][
-              findTextInArray(mtf_data_list, "HAULING TIME")
-            ]
+            mtf_data_list.content[j][mtf_data_list_HAULING_TIME]
           )}</td>
                         <td ${style}>${findClientName(
-            mtf_data_list.content[j][
-              findTextInArray(mtf_data_list, "CLIENT ID")
-            ]
+            mtf_data_list.content[j][mtf_data_list_CLIENT_ID]
           )}</td>
                         <td ${style}>${findWasteCode(
-            mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")]
+            mtf_data_list.content[j][mtf_data_list_WASTE_ID]
           )}</td>
                         <td ${style}>${findWasteName(
-            mtf_data_list.content[j][
-              findTextInArray(mtf_data_list, "CLIENT ID")
-            ],
-            mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")]
+            mtf_data_list.content[j][mtf_data_list_CLIENT_ID],
+            mtf_data_list.content[j][mtf_data_list_WASTE_ID]
           )}</td>
                         <td ${style}>${vehicle}</td>
                         <td ${style}>${pull_out_slip}</td>
                         <td ${style}>${
-            mtf_data_list.content[j][
-              findTextInArray(mtf_data_list, "SUBMIT TO")
-            ]
+            mtf_data_list.content[j][mtf_data_list_SUBMIT_TO]
           }</td>
                         <td ${style}>${
-            mtf_data_list.content[j][findTextInArray(mtf_data_list, "REMARKS")]
+            mtf_data_list.content[j][mtf_data_list_REMARKS]
           }</td>
                         <td ${style}>${
-            mtf_data_list.content[j][
-              findTextInArray(mtf_data_list, "SUBMITTED BY")
-            ]
+            mtf_data_list.content[j][mtf_data_list_SUBMITTED_BY]
           }</td>
                         <td ${style}>${plate_no}</td>
                         <td ${style}>${driver_name}</td>
@@ -662,54 +733,38 @@ document.addEventListener("DOMContentLoaded", async function () {
                     <tr style="background-color: ${color};">
                         <td ${style}>${data_value_counter}</td>
                         <td ${style}>${
-            mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")]
+            mtf_data_list.content[j][mtf_data_list_MTF]
           }</td>
                         <td ${style}>${date_decoder(
-            mtf_data_list.content[j][
-              findTextInArray(mtf_data_list, "CREATED AT")
-            ]
+            mtf_data_list.content[j][mtf_data_list_CREATED_AT]
           )} /<br> ${time_decoder3(
-            mtf_data_list.content[j][
-              findTextInArray(mtf_data_list, "CREATED AT")
-            ]
+            mtf_data_list.content[j][mtf_data_list_CREATED_AT]
           )}</td>
                         <td ${style}>${date_decoder(
-            mtf_data_list.content[j][
-              findTextInArray(mtf_data_list, "HAULING DATE")
-            ]
+            mtf_data_list.content[j][mtf_data_list_HAULING_DATE]
           )} /<br> ${time_decoder(
-            mtf_data_list.content[j][
-              findTextInArray(mtf_data_list, "HAULING TIME")
-            ]
+            mtf_data_list.content[j][mtf_data_list_HAULING_TIME]
           )}</td>
                         <td ${style}>${findClientName(
-            mtf_data_list.content[j][
-              findTextInArray(mtf_data_list, "CLIENT ID")
-            ]
+            mtf_data_list.content[j][mtf_data_list_CLIENT_ID]
           )}</td>
                         <td ${style}>${findWasteCode(
-            mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")]
+            mtf_data_list.content[j][mtf_data_list_WASTE_ID]
           )}</td>
                         <td ${style}>${findWasteName(
-            mtf_data_list.content[j][
-              findTextInArray(mtf_data_list, "CLIENT ID")
-            ],
-            mtf_data_list.content[j][findTextInArray(mtf_data_list, "WASTE ID")]
+            mtf_data_list.content[j][mtf_data_list_CLIENT_ID],
+            mtf_data_list.content[j][mtf_data_list_WASTE_ID]
           )}</td>
                         <td ${style}>${vehicle}</td>
                         <td ${style}>${pull_out_slip}</td>
                         <td ${style}>${
-            mtf_data_list.content[j][
-              findTextInArray(mtf_data_list, "SUBMIT TO")
-            ]
+            mtf_data_list.content[j][mtf_data_list_SUBMIT_TO]
           }</td>
                         <td ${style}>${
-            mtf_data_list.content[j][findTextInArray(mtf_data_list, "REMARKS")]
+            mtf_data_list.content[j][mtf_data_list_REMARKS]
           }</td>
                         <td ${style}>${
-            mtf_data_list.content[j][
-              findTextInArray(mtf_data_list, "SUBMITTED BY")
-            ]
+            mtf_data_list.content[j][mtf_data_list_SUBMITTED_BY]
           }</td>
                         <td ${style}>${plate_no}</td>
                         <td ${style}>${driver_name}</td>
@@ -724,15 +779,11 @@ document.addEventListener("DOMContentLoaded", async function () {
       for (let x = 1; x < bpf_data_list.content.length; x++) {
         if (
           month_filter.value ==
-          formatMonth(
-            bpf_data_list.content[x][
-              findTextInArray(bpf_data_list, "HAULING DATE")
-            ]
-          )
+          formatMonth(bpf_data_list.content[x][bpf_data_list_HAULING_DATE])
         ) {
           generated_income_marketing +=
             bpf_data_list.content[x][
-              findTextInArray(bpf_data_list, "TOTAL AMOUNT DUE VAT INCLUSIVE")
+              bpf_data_list_TOTAL_AMOUNT_DUE_VAT_INCLUSIVE
             ];
         }
       }
@@ -869,15 +920,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     for (let y = 1; y < vehicle_data_list.content.length; y++) {
       if (
         !vehicle_list.includes(
-          vehicle_data_list.content[y][
-            findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")
-          ]
+          vehicle_data_list.content[y][vehicle_data_list_TYPE_OF_VEHICLE]
         )
       ) {
         vehicle_list.push(
-          vehicle_data_list.content[y][
-            findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")
-          ]
+          vehicle_data_list.content[y][vehicle_data_list_TYPE_OF_VEHICLE]
         );
       }
     }
@@ -890,10 +937,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     var data_last_3digit = 0;
 
     for (x = 1; x < client_data_list.content.length; x++) {
-      data_info =
-        client_data_list.content[x][
-          findTextInArray(client_data_list, "CLIENT ID")
-        ];
+      data_info = client_data_list.content[x][client_data_list_CLIENT_ID];
 
       if (data_info.includes(code_year_month) == true) {
         data_last_3digit = data_info.slice(5);
@@ -974,15 +1018,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         for (let y = 1; y < client_data_list.content.length; y++) {
           if (
             select_user_data ==
-            client_data_list.content[y][
-              findTextInArray(client_data_list, "CLIENT NAME")
-            ]
+            client_data_list.content[y][client_data_list_CLIENT_NAME]
           ) {
             var client_id = "";
-            client_id =
-              client_data_list.content[y][
-                findTextInArray(client_data_list, "CLIENT ID")
-              ];
+            client_id = client_data_list.content[y][client_data_list_CLIENT_ID];
             client_id_input.value = client_id;
             search_client_id.forEach((data) => {
               data.value = client_id;
@@ -998,12 +1037,10 @@ document.addEventListener("DOMContentLoaded", async function () {
             for (let x = 1; x < qlf_data_list.content.length; x++) {
               if (
                 client_id ==
-                  qlf_data_list.content[x][
-                    findTextInArray(qlf_data_list, "CLIENT ID")
-                  ] &&
+                  qlf_data_list.content[x][qlf_data_list_CLIENT_ID] &&
                 !vehicle_list.includes(
                   qlf_data_list.content[x][
-                    findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")
+                    qlf_data_list_WASTE_ID_TYPE_OF_VEHICLE
                   ]
                 )
               ) {
@@ -1011,18 +1048,13 @@ document.addEventListener("DOMContentLoaded", async function () {
                 var data = `
                                 <option value="${
                                   qlf_data_list.content[x][
-                                    findTextInArray(
-                                      qlf_data_list,
-                                      "WASTE ID/ TYPE OF VEHICLE"
-                                    )
+                                    qlf_data_list_WASTE_ID_TYPE_OF_VEHICLE
                                   ]
                                 }">${
-                  qlf_data_list.content[x][
-                    findTextInArray(qlf_data_list, "WASTE NAME")
-                  ]
+                  qlf_data_list.content[x][qlf_data_list_WASTE_NAME]
                 } (${findWasteCode(
                   qlf_data_list.content[x][
-                    findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")
+                    qlf_data_list_WASTE_ID_TYPE_OF_VEHICLE
                   ]
                 )})</option>
                                 `;
@@ -1055,14 +1087,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     var waste_id_list = [];
     for (x = 1; x < type_of_waste_data_list.content.length; x++) {
       waste_name_list.push(
-        type_of_waste_data_list.content[x][
-          findTextInArray(type_of_waste_data_list, "WASTE CODE")
-        ]
+        type_of_waste_data_list.content[x][type_of_waste_data_list_WASTE_CODE]
       );
       waste_id_list.push(
-        type_of_waste_data_list.content[x][
-          findTextInArray(type_of_waste_data_list, "WASTE ID")
-        ]
+        type_of_waste_data_list.content[x][type_of_waste_data_list_WASTE_ID]
       );
     }
 
@@ -1077,25 +1105,17 @@ document.addEventListener("DOMContentLoaded", async function () {
       for (let x = 1; x < qlf_data_list.content.length; x++) {
         if (
           client_id_input.value ==
-            qlf_data_list.content[x][
-              findTextInArray(qlf_data_list, "CLIENT ID")
-            ] &&
+            qlf_data_list.content[x][qlf_data_list_CLIENT_ID] &&
           !vehicle_list.includes(
-            qlf_data_list.content[x][
-              findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")
-            ]
+            qlf_data_list.content[x][qlf_data_list_WASTE_ID_TYPE_OF_VEHICLE]
           )
         ) {
           if (
             type_of_waste.value ==
-            qlf_data_list.content[x][
-              findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")
-            ]
+            qlf_data_list.content[x][qlf_data_list_WASTE_ID_TYPE_OF_VEHICLE]
           ) {
             quotation_no.value =
-              qlf_data_list.content[x][
-                findTextInArray(qlf_data_list, "QUOTATION CODE")
-              ];
+              qlf_data_list.content[x][qlf_data_list_QUOTATION_CODE];
             break;
           } else {
             quotation_no.value = `N/A`;
@@ -1173,51 +1193,15 @@ document.addEventListener("DOMContentLoaded", async function () {
       client_data_list_value += `
             <tr>
                 <td>${data_value_counter}</td>
-                <td>${
-                  client_data_list.content[x][
-                    findTextInArray(client_data_list, "CLIENT ID")
-                  ]
-                }</td>
-                <td>${
-                  client_data_list.content[x][
-                    findTextInArray(client_data_list, "CLIENT NAME")
-                  ]
-                }</td>
-                <td>${
-                  client_data_list.content[x][
-                    findTextInArray(client_data_list, "ADDRESS")
-                  ]
-                }</td>
-                <td>${
-                  client_data_list.content[x][
-                    findTextInArray(client_data_list, "NATURE OF BUSINESS")
-                  ]
-                }</td>
-                <td>${
-                  client_data_list.content[x][
-                    findTextInArray(client_data_list, "CONTACT NUMBER")
-                  ]
-                }</td>
-                <td>${
-                  client_data_list.content[x][
-                    findTextInArray(client_data_list, "BILLER NAME")
-                  ]
-                }</td>
-                <td>${
-                  client_data_list.content[x][
-                    findTextInArray(client_data_list, "BILLER ADDRESS")
-                  ]
-                }</td>
-                <td>${
-                  client_data_list.content[x][
-                    findTextInArray(client_data_list, "BILLER CONTACT PERSON")
-                  ]
-                }</td>
-                <td>${
-                  client_data_list.content[x][
-                    findTextInArray(client_data_list, "BILLER CONTACT NUMBER")
-                  ]
-                }</td>
+                <td>${client_data_list.content[x][client_data_list_CLIENT_ID]}</td>
+                <td>${client_data_list.content[x][client_data_list_CLIENT_NAME]}</td>
+                <td>${client_data_list.content[x][client_data_list_ADDRESS]}</td>
+                <td>${client_data_list.content[x][client_data_list_NATURE_OF_BUSINESS]}</td>
+                <td>${client_data_list.content[x][client_data_list_CONTACT_NUMBER]}</td>
+                <td>${client_data_list.content[x][client_data_list_BILLER_NAME]}</td>
+                <td>${client_data_list.content[x][client_data_list_BILLER_ADDRESS]}</td>
+                <td>${client_data_list.content[x][client_data_list_BILLER_CONTACT_PERSON]}</td>
+                <td>${client_data_list.content[x][client_data_list_BILLER_CONTACT_NUMBER]}</td>
             </tr>
             `;
       data_value_counter += 1;
@@ -1230,34 +1214,11 @@ document.addEventListener("DOMContentLoaded", async function () {
       type_of_waste__list_data_value += `
             <tr>
                 <td>${type_of_waste__list_data_value_counter}</td>
-                <td>${
-                  type_of_waste_data_list.content[x][
-                    findTextInArray(type_of_waste_data_list, "WASTE ID")
-                  ]
-                }</td>
-                <td>${
-                  type_of_waste_data_list.content[x][
-                    findTextInArray(type_of_waste_data_list, "WASTE CODE")
-                  ]
-                }</td>
-                <td>${
-                  type_of_waste_data_list.content[x][
-                    findTextInArray(type_of_waste_data_list, "WASTE NAME")
-                  ]
-                }</td>
-                <td>${
-                  type_of_waste_data_list.content[x][
-                    findTextInArray(
-                      type_of_waste_data_list,
-                      "TREATMENT PROCESS"
-                    )
-                  ]
-                }</td>
-                <td>${
-                  type_of_waste_data_list.content[x][
-                    findTextInArray(type_of_waste_data_list, "CATEGORY")
-                  ]
-                }</td>
+                <td>${type_of_waste_data_list.content[x][type_of_waste_data_list_WASTE_ID]}</td>
+                <td>${type_of_waste_data_list.content[x][type_of_waste_data_list_WASTE_CODE]}</td>
+                <td>${type_of_waste_data_list.content[x][type_of_waste_data_list_WASTE_NAME]}</td>
+                <td>${type_of_waste_data_list.content[x][type_of_waste_data_list_TREATMENT_PROCESS]}</td>
+                <td>${type_of_waste_data_list.content[x][type_of_waste_data_list_CATEGORY]}</td>
             </tr>
             `;
       type_of_waste__list_data_value_counter += 1;
@@ -1269,13 +1230,13 @@ document.addEventListener("DOMContentLoaded", async function () {
       if (
         !treatment_process_list.includes(
           treatment_process_data_list.content[i][
-            findTextInArray(treatment_process_data_list, "TREATMENT PROCESS")
+            treatment_process_data_list_TREATMENT_PROCESS
           ]
         )
       ) {
         treatment_process_list.push(
           treatment_process_data_list.content[i][
-            findTextInArray(treatment_process_data_list, "TREATMENT PROCESS")
+            treatment_process_data_list_TREATMENT_PROCESS
           ]
         );
       }
@@ -1285,8 +1246,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     // mtf_data_list
     const mtf_form_no = document.getElementById("mtf_form_no");
     var last_row = mtf_data_list.content.length - 1;
-    var data_info =
-      mtf_data_list.content[last_row][findTextInArray(mtf_data_list, "MTF #")];
+    var data_info = mtf_data_list.content[last_row][mtf_data_list_MTF];
     var data_counter = data_info.substring(9, 13);
     var current_year = new Date().getFullYear();
     var last_counter_year = data_info.substring(3, 7);
@@ -1353,61 +1313,33 @@ document.addEventListener("DOMContentLoaded", async function () {
       for (let y = 1; y < client_data_list.content.length; y++) {
         if (client.value == client_data_list.content[y][1]) {
           var client_id = "";
-          client_id =
-            client_data_list.content[y][
-              findTextInArray(client_data_list, "CLIENT ID")
-            ];
+          client_id = client_data_list.content[y][client_data_list_CLIENT_ID];
           for (let x = 1; x < qlf_data_list.content.length; x++) {
             if (
-              client_id ==
-                qlf_data_list.content[x][
-                  findTextInArray(qlf_data_list, "CLIENT ID")
-                ] &&
-              qlf_data_list.content[x][
-                findTextInArray(qlf_data_list, "UNIT")
-              ] == "TRIP"
+              client_id == qlf_data_list.content[x][qlf_data_list_CLIENT_ID] &&
+              qlf_data_list.content[x][qlf_data_list_UNIT] == "TRIP"
             ) {
               if (
                 vehicle_list.includes(
                   qlf_data_list.content[x][
-                    findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")
+                    qlf_data_list_WASTE_ID_TYPE_OF_VEHICLE
                   ]
                 )
               ) {
                 if (
                   !done_vehicle.includes(
                     qlf_data_list.content[x][
-                      findTextInArray(
-                        qlf_data_list,
-                        "WASTE ID/ TYPE OF VEHICLE"
-                      )
+                      qlf_data_list_WASTE_ID_TYPE_OF_VEHICLE
                     ]
                   )
                 ) {
                   var data = `
-                                    <option value="${
-                                      qlf_data_list.content[x][
-                                        findTextInArray(
-                                          qlf_data_list,
-                                          "WASTE ID/ TYPE OF VEHICLE"
-                                        )
-                                      ]
-                                    }">${
-                    qlf_data_list.content[x][
-                      findTextInArray(
-                        qlf_data_list,
-                        "WASTE ID/ TYPE OF VEHICLE"
-                      )
-                    ]
-                  }</option>
+                                    <option value="${qlf_data_list.content[x][qlf_data_list_WASTE_ID_TYPE_OF_VEHICLE]}">${qlf_data_list.content[x][qlf_data_list_WASTE_ID_TYPE_OF_VEHICLE]}</option>
                                     `;
                   type_of_vehicle.insertAdjacentHTML("beforeend", data);
                   done_vehicle.push(
                     qlf_data_list.content[x][
-                      findTextInArray(
-                        qlf_data_list,
-                        "WASTE ID/ TYPE OF VEHICLE"
-                      )
+                      qlf_data_list_WASTE_ID_TYPE_OF_VEHICLE
                     ]
                   );
                 }
@@ -1600,26 +1532,18 @@ document.addEventListener("DOMContentLoaded", async function () {
             for (let x = 1; x < vehicle_data_list.content.length; x++) {
               if (
                 !vehicle_type_day.includes(
-                  vehicle_data_list.content[x][
-                    findTextInArray(vehicle_data_list, "CODE")
-                  ]
+                  vehicle_data_list.content[x][vehicle_data_list_CODE]
                 )
               ) {
                 vehicle_type_day.push(
-                  vehicle_data_list.content[x][
-                    findTextInArray(vehicle_data_list, "CODE")
-                  ]
+                  vehicle_data_list.content[x][vehicle_data_list_CODE]
                 );
                 total_vehicle_day[
-                  vehicle_data_list.content[x][
-                    findTextInArray(vehicle_data_list, "CODE")
-                  ]
+                  vehicle_data_list.content[x][vehicle_data_list_CODE]
                 ] = 1;
               } else {
                 total_vehicle_day[
-                  vehicle_data_list.content[x][
-                    findTextInArray(vehicle_data_list, "CODE")
-                  ]
+                  vehicle_data_list.content[x][vehicle_data_list_CODE]
                 ]++;
               }
             }
@@ -1639,30 +1563,23 @@ document.addEventListener("DOMContentLoaded", async function () {
               if (
                 date_format ==
                 date_decoder2(
-                  mtf_data_list.content[x][
-                    findTextInArray(mtf_data_list, "HAULING DATE")
-                  ]
+                  mtf_data_list.content[x][mtf_data_list_HAULING_DATE]
                 )
               ) {
                 if (
-                  mtf_data_list.content[x][
-                    findTextInArray(mtf_data_list, "SUBMIT TO")
-                  ] == "LOGISTICS"
+                  mtf_data_list.content[x][mtf_data_list_SUBMIT_TO] ==
+                  "LOGISTICS"
                 ) {
                   var vehicle_code;
                   for (let y = 1; y < vehicle_data_list.content.length; y++) {
                     if (
                       vehicle_data_list.content[y][
-                        findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")
+                        vehicle_data_list_TYPE_OF_VEHICLE
                       ] ==
-                      mtf_data_list.content[x][
-                        findTextInArray(mtf_data_list, "TYPE OF VEHICLE")
-                      ]
+                      mtf_data_list.content[x][mtf_data_list_TYPE_OF_VEHICLE]
                     ) {
                       vehicle_code =
-                        vehicle_data_list.content[y][
-                          findTextInArray(vehicle_data_list, "CODE")
-                        ];
+                        vehicle_data_list.content[y][vehicle_data_list_CODE];
                       break;
                     }
                   }
@@ -1674,9 +1591,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                   }
                   book_logistics += 1;
                 } else if (
-                  mtf_data_list.content[x][
-                    findTextInArray(mtf_data_list, "SUBMIT TO")
-                  ] == "RECEIVING"
+                  mtf_data_list.content[x][mtf_data_list_SUBMIT_TO] ==
+                  "RECEIVING"
                 ) {
                   book_receiving += 1;
                 }
@@ -1843,58 +1759,34 @@ document.addEventListener("DOMContentLoaded", async function () {
       for (let x = 1; x < client_data_list.content.length; x++) {
         if (
           search_client_id_update_client_form.value ==
-          client_data_list.content[x][
-            findTextInArray(client_data_list, "CLIENT ID")
-          ]
+          client_data_list.content[x][client_data_list_CLIENT_ID]
         ) {
           client_name_update_client_form.value =
-            client_data_list.content[x][
-              findTextInArray(client_data_list, "CLIENT NAME")
-            ];
+            client_data_list.content[x][client_data_list_CLIENT_NAME];
           address_update_client_form.value =
-            client_data_list.content[x][
-              findTextInArray(client_data_list, "ADDRESS")
-            ];
+            client_data_list.content[x][client_data_list_ADDRESS];
           nature_of_business_update_client_form.value =
-            client_data_list.content[x][
-              findTextInArray(client_data_list, "NATURE OF BUSINESS")
-            ];
+            client_data_list.content[x][client_data_list_NATURE_OF_BUSINESS];
           contact_number_update_client_form.value =
-            client_data_list.content[x][
-              findTextInArray(client_data_list, "CONTACT NUMBER")
-            ];
+            client_data_list.content[x][client_data_list_CONTACT_NUMBER];
           tin_no_update_client_form.value =
-            client_data_list.content[x][
-              findTextInArray(client_data_list, "TIN ID")
-            ];
+            client_data_list.content[x][client_data_list_TIN_ID];
           biller_name_update_client_form.value =
-            client_data_list.content[x][
-              findTextInArray(client_data_list, "BILLER NAME")
-            ];
+            client_data_list.content[x][client_data_list_BILLER_NAME];
           biller_address_update_client_form.value =
-            client_data_list.content[x][
-              findTextInArray(client_data_list, "BILLER ADDRESS")
-            ];
+            client_data_list.content[x][client_data_list_BILLER_ADDRESS];
           biller_contact_person_update_client_form.value =
-            client_data_list.content[x][
-              findTextInArray(client_data_list, "BILLER CONTACT PERSON")
-            ];
+            client_data_list.content[x][client_data_list_BILLER_CONTACT_PERSON];
           biller_contact_number_update_client_form.value =
-            client_data_list.content[x][
-              findTextInArray(client_data_list, "BILLER CONTACT NUMBER")
-            ];
+            client_data_list.content[x][client_data_list_BILLER_CONTACT_NUMBER];
           biller_nature_of_business_update_client_form.value =
             client_data_list.content[x][
-              findTextInArray(client_data_list, "BILLER NATURE OF BUSINESS")
+              client_data_list_BILLER_NATURE_OF_BUSINESS
             ];
           biller_tin_no_update_client_form.value =
-            client_data_list.content[x][
-              findTextInArray(client_data_list, "BILLER TIN ID")
-            ];
+            client_data_list.content[x][client_data_list_BILLER_BILLER_TIN_ID];
           timestamp_update_client_form.value =
-            client_data_list.content[x][
-              findTextInArray(client_data_list, "CREATED AT")
-            ];
+            client_data_list.content[x][client_data_list_CREATED_AT];
           update_client_form_tab_container_client_form.style.display = "block";
         }
       }
@@ -2052,42 +1944,24 @@ document.addEventListener("DOMContentLoaded", async function () {
       for (let x = 1; x < client_data_list.content.length; x++) {
         if (
           client_id_input_quotation_form.value ==
-          client_data_list.content[x][
-            findTextInArray(client_data_list, "CLIENT ID")
-          ]
+          client_data_list.content[x][client_data_list_CLIENT_ID]
         ) {
           client_name_container_quotation_form.innerText =
-            client_data_list.content[x][
-              findTextInArray(client_data_list, "BILLER NAME")
-            ];
+            client_data_list.content[x][client_data_list_BILLER_NAME];
           address_container_quotation_form.innerText =
-            client_data_list.content[x][
-              findTextInArray(client_data_list, "BILLER ADDRESS")
-            ];
+            client_data_list.content[x][client_data_list_BILLER_ADDRESS];
           nature_of_business_container_quotation_form.innerText =
-            client_data_list.content[x][
-              findTextInArray(client_data_list, "NATURE OF BUSINESS")
-            ];
+            client_data_list.content[x][client_data_list_NATURE_OF_BUSINESS];
           contact_number_quotation_form.innerText =
-            client_data_list.content[x][
-              findTextInArray(client_data_list, "BILLER CONTACT NUMBER")
-            ];
+            client_data_list.content[x][client_data_list_BILLER_CONTACT_NUMBER];
           client_name_container_quotation_form2.innerText =
-            client_data_list.content[x][
-              findTextInArray(client_data_list, "CLIENT NAME")
-            ];
+            client_data_list.content[x][client_data_list_CLIENT_NAME];
           address_container_quotation_form2.innerText =
-            client_data_list.content[x][
-              findTextInArray(client_data_list, "ADDRESS")
-            ];
+            client_data_list.content[x][client_data_list_ADDRESS];
           nature_of_business_container_quotation_form2.innerText =
-            client_data_list.content[x][
-              findTextInArray(client_data_list, "NATURE OF BUSINESS")
-            ];
+            client_data_list.content[x][client_data_list_NATURE_OF_BUSINESS];
           contact_number_quotation_form2.innerText =
-            client_data_list.content[x][
-              findTextInArray(client_data_list, "CONTACT NUMBER")
-            ];
+            client_data_list.content[x][client_data_list_CONTACT_NUMBER];
           contact_number_container_quotation_form.style.display = "flex";
           contact_number2_container_quotation_form2.style.display = "flex";
         }
@@ -2287,25 +2161,13 @@ document.addEventListener("DOMContentLoaded", async function () {
       for (let x = 1; x < vehicle_data_list.content.length; x++) {
         if (
           !type_of_vehicle.includes(
-            vehicle_data_list.content[x][
-              findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")
-            ]
+            vehicle_data_list.content[x][vehicle_data_list_TYPE_OF_VEHICLE]
           )
         ) {
           type_of_vehicle.push(
-            vehicle_data_list.content[x][
-              findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")
-            ]
+            vehicle_data_list.content[x][vehicle_data_list_TYPE_OF_VEHICLE]
           );
-          type_of_vehicle_selection += `<option value="${
-            vehicle_data_list.content[x][
-              findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")
-            ]
-          }">${
-            vehicle_data_list.content[x][
-              findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")
-            ]
-          }</option>`;
+          type_of_vehicle_selection += `<option value="${vehicle_data_list.content[x][vehicle_data_list_TYPE_OF_VEHICLE]}">${vehicle_data_list.content[x][vehicle_data_list_TYPE_OF_VEHICLE]}</option>`;
         }
       }
       type_of_vehicle_containers[
@@ -2324,25 +2186,13 @@ document.addEventListener("DOMContentLoaded", async function () {
       for (let x = 1; x < vehicle_data_list.content.length; x++) {
         if (
           !type_of_vehicle.includes(
-            vehicle_data_list.content[x][
-              findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")
-            ]
+            vehicle_data_list.content[x][vehicle_data_list_TYPE_OF_VEHICLE]
           )
         ) {
           type_of_vehicle.push(
-            vehicle_data_list.content[x][
-              findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")
-            ]
+            vehicle_data_list.content[x][vehicle_data_list_TYPE_OF_VEHICLE]
           );
-          type_of_vehicle_selection += `<option value="${
-            vehicle_data_list.content[x][
-              findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")
-            ]
-          }">${
-            vehicle_data_list.content[x][
-              findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")
-            ]
-          }</option>`;
+          type_of_vehicle_selection += `<option value="${vehicle_data_list.content[x][vehicle_data_list_TYPE_OF_VEHICLE]}">${vehicle_data_list.content[x][vehicle_data_list_TYPE_OF_VEHICLE]}</option>`;
         }
       }
       type_of_vehicle_containers[
@@ -2372,15 +2222,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     for (let y = 1; y < vehicle_data_list.content.length; y++) {
       if (
         !vehicle_list.includes(
-          vehicle_data_list.content[y][
-            findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")
-          ]
+          vehicle_data_list.content[y][vehicle_data_list_TYPE_OF_VEHICLE]
         )
       ) {
         vehicle_list.push(
-          vehicle_data_list.content[y][
-            findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")
-          ]
+          vehicle_data_list.content[y][vehicle_data_list_TYPE_OF_VEHICLE]
         );
       }
     }
@@ -2390,76 +2236,45 @@ document.addEventListener("DOMContentLoaded", async function () {
     for (let x = 1; x < qlf_data_list.content.length; x++) {
       if (
         !vehicle_list.includes(
-          qlf_data_list.content[x][
-            findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")
-          ]
+          qlf_data_list.content[x][qlf_data_list_WASTE_ID_TYPE_OF_VEHICLE]
         )
       ) {
         var qlf_data_value = `
                 <tr>
                     <td>${qlf_data_value_counter}</td>
                     <td>${
-                      qlf_data_list.content[x][
-                        findTextInArray(qlf_data_list, "QUOTATION CODE")
-                      ]
+                      qlf_data_list.content[x][qlf_data_list_QUOTATION_CODE]
                     }</td>
                     <td>${date_decoder(
-                      qlf_data_list.content[x][
-                        findTextInArray(qlf_data_list, "VALIDITY")
-                      ]
+                      qlf_data_list.content[x][qlf_data_list_VALIDITY]
                     )}</td>
                     <td>${findClientName(
-                      qlf_data_list.content[x][
-                        findTextInArray(qlf_data_list, "CLIENT ID")
-                      ]
+                      qlf_data_list.content[x][qlf_data_list_CLIENT_ID]
                     )}</td>
                     <td>${findWasteCode(
                       qlf_data_list.content[x][
-                        findTextInArray(
-                          qlf_data_list,
-                          "WASTE ID/ TYPE OF VEHICLE"
-                        )
+                        qlf_data_list_WASTE_ID_TYPE_OF_VEHICLE
                       ]
                     )}</td>
                     <td>${
-                      qlf_data_list.content[x][
-                        findTextInArray(qlf_data_list, "WASTE NAME")
-                      ]
+                      qlf_data_list.content[x][qlf_data_list_WASTE_NAME]
                     }</td>
-                    <td>${
-                      qlf_data_list.content[x][
-                        findTextInArray(qlf_data_list, "MODE")
-                      ]
-                    }</td>
-                    <td>${
-                      qlf_data_list.content[x][
-                        findTextInArray(qlf_data_list, "UNIT")
-                      ]
-                    }</td>
+                    <td>${qlf_data_list.content[x][qlf_data_list_MODE]}</td>
+                    <td>${qlf_data_list.content[x][qlf_data_list_UNIT]}</td>
                     <td>${formatNumber(
-                      qlf_data_list.content[x][
-                        findTextInArray(qlf_data_list, "UNIT PRICE")
-                      ]
+                      qlf_data_list.content[x][qlf_data_list_UNIT_PRICE]
                     )}</td>
                     <td>${
-                      qlf_data_list.content[x][
-                        findTextInArray(qlf_data_list, "VAT CALCULATION")
-                      ]
+                      qlf_data_list.content[x][qlf_data_list_VAT_CALCULATION]
                     }</td>
                     <td>${
-                      qlf_data_list.content[x][
-                        findTextInArray(qlf_data_list, "TERMS CHARGE")
-                      ]
+                      qlf_data_list.content[x][qlf_data_list_TERMS_CHARGE]
                     }</td>
                     <td>${
-                      qlf_data_list.content[x][
-                        findTextInArray(qlf_data_list, "TERMS BUYING")
-                      ]
+                      qlf_data_list.content[x][qlf_data_list_TERMS_BUYING]
                     }</td>
                     <td>${
-                      qlf_data_list.content[x][
-                        findTextInArray(qlf_data_list, "SUBMITTED BY")
-                      ]
+                      qlf_data_list.content[x][qlf_data_list_SUBMITTED_BY]
                     }</td>
                 </tr>
                 `;
@@ -2467,76 +2282,45 @@ document.addEventListener("DOMContentLoaded", async function () {
         qlf_data_value_counter += 1;
       } else if (
         vehicle_list.includes(
-          qlf_data_list.content[x][
-            findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")
-          ]
+          qlf_data_list.content[x][qlf_data_list_WASTE_ID_TYPE_OF_VEHICLE]
         )
       ) {
         var qlf_data_value2 = `
                 <tr>
                     <td>${qlf_data_value_counter}</td>
                     <td>${
-                      qlf_data_list.content[x][
-                        findTextInArray(qlf_data_list, "QUOTATION CODE")
-                      ]
+                      qlf_data_list.content[x][qlf_data_list_QUOTATION_CODE]
                     }</td>
                     <td>${date_decoder(
-                      qlf_data_list.content[x][
-                        findTextInArray(qlf_data_list, "VALIDITY")
-                      ]
+                      qlf_data_list.content[x][qlf_data_list_VALIDITY]
                     )}</td>
                     <td>${findClientName(
-                      qlf_data_list.content[x][
-                        findTextInArray(qlf_data_list, "CLIENT ID")
-                      ]
+                      qlf_data_list.content[x][qlf_data_list_CLIENT_ID]
                     )}</td>
                     <td>${
                       qlf_data_list.content[x][
-                        findTextInArray(
-                          qlf_data_list,
-                          "WASTE ID/ TYPE OF VEHICLE"
-                        )
+                        qlf_data_list_WASTE_ID_TYPE_OF_VEHICLE
                       ]
                     }</td>
                     <td>${
-                      qlf_data_list.content[x][
-                        findTextInArray(qlf_data_list, "WASTE NAME")
-                      ]
+                      qlf_data_list.content[x][qlf_data_list_WASTE_NAME]
                     }</td>
-                    <td>${
-                      qlf_data_list.content[x][
-                        findTextInArray(qlf_data_list, "MODE")
-                      ]
-                    }</td>
-                    <td>${
-                      qlf_data_list.content[x][
-                        findTextInArray(qlf_data_list, "UNIT")
-                      ]
-                    }</td>
+                    <td>${qlf_data_list.content[x][qlf_data_list_MODE]}</td>
+                    <td>${qlf_data_list.content[x][qlf_data_list_UNIT]}</td>
                     <td>${formatNumber(
-                      qlf_data_list.content[x][
-                        findTextInArray(qlf_data_list, "UNIT PRICE")
-                      ]
+                      qlf_data_list.content[x][qlf_data_list_UNIT_PRICE]
                     )}</td>
                     <td>${
-                      qlf_data_list.content[x][
-                        findTextInArray(qlf_data_list, "VAT CALCULATION")
-                      ]
+                      qlf_data_list.content[x][qlf_data_list_VAT_CALCULATION]
                     }</td>
                     <td>${
-                      qlf_data_list.content[x][
-                        findTextInArray(qlf_data_list, "TERMS CHARGE")
-                      ]
+                      qlf_data_list.content[x][qlf_data_list_TERMS_CHARGE]
                     }</td>
                     <td>${
-                      qlf_data_list.content[x][
-                        findTextInArray(qlf_data_list, "TERMS BUYING")
-                      ]
+                      qlf_data_list.content[x][qlf_data_list_TERMS_BUYING]
                     }</td>
                     <td>${
-                      qlf_data_list.content[x][
-                        findTextInArray(qlf_data_list, "SUBMITTED BY")
-                      ]
+                      qlf_data_list.content[x][qlf_data_list_SUBMITTED_BY]
                     }</td>
                 </tr>
                 `;
@@ -2846,60 +2630,38 @@ document.addEventListener("DOMContentLoaded", async function () {
         for (let y = 1; y < type_of_waste_data_list.content.length; y++) {
           if (
             quotation_no_quotation_form2.value ==
-              qlf_data_list.content[x][
-                findTextInArray(qlf_data_list, "QUOTATION CODE")
-              ] &&
+              qlf_data_list.content[x][qlf_data_list_QUOTATION_CODE] &&
             qlf_data_list.content[x][
-              findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")
+              qlf_data_list_WASTE_ID_TYPE_OF_VEHICLE
             ].substring(0, 8) ==
               type_of_waste_data_list.content[y][
-                findTextInArray(type_of_waste_data_list, "WASTE ID")
+                type_of_waste_data_list_WASTE_ID
               ]
           ) {
             if (waste_counter == 1) {
               timestamp_quotation_form2.value =
-                qlf_data_list.content[x][
-                  findTextInArray(qlf_data_list, "CREATED AT")
-                ];
+                qlf_data_list.content[x][qlf_data_list_CREATED_AT];
               validity_quotation_form2.value = date_decoder2(
-                qlf_data_list.content[x][
-                  findTextInArray(qlf_data_list, "VALIDITY")
-                ]
+                qlf_data_list.content[x][qlf_data_list_VALIDITY]
               );
               terms_quotation_form2.value =
-                qlf_data_list.content[x][
-                  findTextInArray(qlf_data_list, "TERMS DAYS")
-                ];
+                qlf_data_list.content[x][qlf_data_list_TERMS_DAYS];
               client_quotation_form2.value = findClientName(
-                qlf_data_list.content[x][
-                  findTextInArray(qlf_data_list, "CLIENT ID")
-                ]
+                qlf_data_list.content[x][qlf_data_list_CLIENT_ID]
               );
               waste_code1_quotation_form2.value = findWasteCode(
-                qlf_data_list.content[x][
-                  findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")
-                ]
+                qlf_data_list.content[x][qlf_data_list_WASTE_ID_TYPE_OF_VEHICLE]
               );
               waste_name1_quotation_form2.value =
-                qlf_data_list.content[x][
-                  findTextInArray(qlf_data_list, "WASTE NAME")
-                ];
+                qlf_data_list.content[x][qlf_data_list_WASTE_NAME];
               mode1_quotation_form2.value =
-                qlf_data_list.content[x][
-                  findTextInArray(qlf_data_list, "MODE")
-                ];
+                qlf_data_list.content[x][qlf_data_list_MODE];
               unit1_quotation_form2.value =
-                qlf_data_list.content[x][
-                  findTextInArray(qlf_data_list, "UNIT")
-                ];
+                qlf_data_list.content[x][qlf_data_list_UNIT];
               unit_price1_quotation_form2.value =
-                qlf_data_list.content[x][
-                  findTextInArray(qlf_data_list, "UNIT PRICE")
-                ];
+                qlf_data_list.content[x][qlf_data_list_UNIT_PRICE];
               vat_calculation1_quotation_form2.value =
-                qlf_data_list.content[x][
-                  findTextInArray(qlf_data_list, "VAT CALCULATION")
-                ];
+                qlf_data_list.content[x][qlf_data_list_VAT_CALCULATION];
               waste_counter += 1;
             } else if (waste_counter > 1) {
               addQuotationList();
@@ -2929,30 +2691,18 @@ document.addEventListener("DOMContentLoaded", async function () {
                 );
 
               waste_code1_quotation_form.value = findWasteCode(
-                qlf_data_list.content[x][
-                  findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")
-                ]
+                qlf_data_list.content[x][qlf_data_list_WASTE_ID_TYPE_OF_VEHICLE]
               );
               waste_name1_quotation_form.value =
-                qlf_data_list.content[x][
-                  findTextInArray(qlf_data_list, "WASTE NAME")
-                ];
+                qlf_data_list.content[x][qlf_data_list_WASTE_NAME];
               mode1_quotation_form.value =
-                qlf_data_list.content[x][
-                  findTextInArray(qlf_data_list, "MODE")
-                ];
+                qlf_data_list.content[x][qlf_data_list_MODE];
               unit1_quotation_form.value =
-                qlf_data_list.content[x][
-                  findTextInArray(qlf_data_list, "UNIT")
-                ];
+                qlf_data_list.content[x][qlf_data_list_UNIT];
               unit_price1_quotation_form.value =
-                qlf_data_list.content[x][
-                  findTextInArray(qlf_data_list, "UNIT PRICE")
-                ];
+                qlf_data_list.content[x][qlf_data_list_UNIT_PRICE];
               vat_calculation1_quotation_form.value =
-                qlf_data_list.content[x][
-                  findTextInArray(qlf_data_list, "VAT CALCULATION")
-                ];
+                qlf_data_list.content[x][qlf_data_list_VAT_CALCULATION];
               waste_counter += 1;
             }
           }
@@ -2960,12 +2710,9 @@ document.addEventListener("DOMContentLoaded", async function () {
         for (let y = 1; y < vehicle_list.length; y++) {
           if (
             quotation_no_quotation_form2.value ==
-              qlf_data_list.content[x][
-                findTextInArray(qlf_data_list, "QUOTATION CODE")
-              ] &&
-            qlf_data_list.content[x][
-              findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")
-            ] == vehicle_list[y]
+              qlf_data_list.content[x][qlf_data_list_QUOTATION_CODE] &&
+            qlf_data_list.content[x][qlf_data_list_WASTE_ID_TYPE_OF_VEHICLE] ==
+              vehicle_list[y]
           ) {
             addTransportationFeeList();
             var waste_code1_quotation_form =
@@ -2992,25 +2739,17 @@ document.addEventListener("DOMContentLoaded", async function () {
               );
 
             waste_code1_quotation_form.value =
-              qlf_data_list.content[x][
-                findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")
-              ];
+              qlf_data_list.content[x][qlf_data_list_WASTE_ID_TYPE_OF_VEHICLE];
             waste_name1_quotation_form.value =
-              qlf_data_list.content[x][
-                findTextInArray(qlf_data_list, "WASTE NAME")
-              ];
+              qlf_data_list.content[x][qlf_data_list_WASTE_NAME];
             mode1_quotation_form.value =
-              qlf_data_list.content[x][findTextInArray(qlf_data_list, "MODE")];
+              qlf_data_list.content[x][qlf_data_list_MODE];
             unit1_quotation_form.value =
-              qlf_data_list.content[x][findTextInArray(qlf_data_list, "UNIT")];
+              qlf_data_list.content[x][qlf_data_list_UNIT];
             unit_price1_quotation_form.value =
-              qlf_data_list.content[x][
-                findTextInArray(qlf_data_list, "UNIT PRICE")
-              ];
+              qlf_data_list.content[x][qlf_data_list_UNIT_PRICE];
             vat_calculation1_quotation_form.value =
-              qlf_data_list.content[x][
-                findTextInArray(qlf_data_list, "VAT CALCULATION")
-              ];
+              qlf_data_list.content[x][qlf_data_list_VAT_CALCULATION];
             counter += 1;
           }
         }
@@ -3476,6 +3215,58 @@ document.addEventListener("DOMContentLoaded", async function () {
       }
     });
 
+    // marketing_weekly_report
+
+    // Function to get the start of the week based on a given date
+    function getStartOfWeek(date) {
+      const currentDay = date.getDay();
+      const diff = currentDay < 6 ? currentDay + 1 : 0; // Adjust for Saturday (0) as the start of the week
+      const startOfWeek = new Date(date);
+      startOfWeek.setDate(date.getDate() - diff);
+      startOfWeek.setHours(0, 0, 0, 0);
+      return startOfWeek;
+    }
+
+    // Calculate the start dates for the current and previous weeks
+    const currentWeekStart = getStartOfWeek(today);
+    const lastWeekStart = new Date(currentWeekStart);
+    lastWeekStart.setDate(currentWeekStart.getDate() - 7);
+    const last2WeeksStart = new Date(currentWeekStart);
+    last2WeeksStart.setDate(currentWeekStart.getDate() - 14);
+    const last3WeeksStart = new Date(currentWeekStart);
+    last3WeeksStart.setDate(currentWeekStart.getDate() - 21);
+
+    // Arrays to store rows for each week
+    const currentWeek = [];
+    const lastWeek = [];
+    const last2Weeks = [];
+    const last3Weeks = [];
+
+    // Main logic to process the mtf_data_list array
+    const haulingDateIndex = mtf_data_list_HAULING_DATE;
+
+    for (let j = mtf_data_list.content.length - 1; j >= 1; j--) {
+      const haulingDateStr = mtf_data_list.content[j][haulingDateIndex];
+      const haulingDate = new Date(haulingDateStr);
+      const haulingWeekStart = getStartOfWeek(haulingDate);
+
+      if (haulingWeekStart.getTime() === currentWeekStart.getTime()) {
+        currentWeek.push(mtf_data_list.content[j]);
+      } else if (haulingWeekStart.getTime() === lastWeekStart.getTime()) {
+        lastWeek.push(mtf_data_list.content[j]);
+      } else if (haulingWeekStart.getTime() === last2WeeksStart.getTime()) {
+        last2Weeks.push(mtf_data_list.content[j]);
+      } else if (haulingWeekStart.getTime() === last3WeeksStart.getTime()) {
+        last3Weeks.push(mtf_data_list.content[j]);
+      }
+    }
+
+    // Output the results
+    console.log("Current Week:", currentWeek);
+    console.log("Last Week:", lastWeek);
+    console.log("Last 2 Weeks:", last2Weeks);
+    console.log("Last 3 Weeks:", last3Weeks);
+
     // // commission
     // const commission_form = document.querySelector("#commission_form");
     // const new_commission_button_commission = commission_form.querySelector(
@@ -3618,16 +3409,16 @@ document.addEventListener("DOMContentLoaded", async function () {
     //       if (
     //         quotation_selection.value ==
     //           qlf_data_list.content[x][
-    //             findTextInArray(qlf_data_list, "QUOTATION CODE")
+    //             qlf_data_list_QUOTATION_CODE
     //           ] &&
     //         waste_name_selection.value ==
     //           qlf_data_list.content[x][
-    //             findTextInArray(qlf_data_list, "WASTE NAME")
+    //             qlf_data_list_WASTE_NAME
     //           ]
     //       ) {
     //         waste_id_commission.value =
     //           qlf_data_list.content[x][
-    //             findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")
+    //             qlf_data_list_WASTE_ID_TYPE_OF_VEHICLE
     //           ];
     //       }
     //     }
@@ -3643,16 +3434,16 @@ document.addEventListener("DOMContentLoaded", async function () {
     //     if (
     //       quotation_selection.value ==
     //         qlf_data_list.content[x][
-    //           findTextInArray(qlf_data_list, "QUOTATION CODE")
+    //           qlf_data_list_QUOTATION_CODE
     //         ] &&
     //       waste_name_selection1.value ==
     //         qlf_data_list.content[x][
-    //           findTextInArray(qlf_data_list, "WASTE NAME")
+    //           qlf_data_list_WASTE_NAME
     //         ]
     //     ) {
     //       waste_id_commission1.value =
     //         qlf_data_list.content[x][
-    //           findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")
+    //           qlf_data_list_WASTE_ID_TYPE_OF_VEHICLE
     //         ];
     //     }
     //   }
@@ -3678,13 +3469,13 @@ document.addEventListener("DOMContentLoaded", async function () {
     //   if (
     //     !quotation_data.includes(
     //       qlf_data_list.content[x][
-    //         findTextInArray(qlf_data_list, "QUOTATION CODE")
+    //         qlf_data_list_QUOTATION_CODE
     //       ]
     //     )
     //   ) {
     //     quotation_data.push(
     //       qlf_data_list.content[x][
-    //         findTextInArray(qlf_data_list, "QUOTATION CODE")
+    //         qlf_data_list_QUOTATION_CODE
     //       ]
     //     );
     //   }
@@ -3702,28 +3493,28 @@ document.addEventListener("DOMContentLoaded", async function () {
     //     if (
     //       quotation_selection.value ==
     //       qlf_data_list.content[x][
-    //         findTextInArray(qlf_data_list, "QUOTATION CODE")
+    //         qlf_data_list_QUOTATION_CODE
     //       ]
     //     ) {
     //       client.value = findClientName(
     //         qlf_data_list.content[x][
-    //           findTextInArray(qlf_data_list, "CLIENT ID")
+    //           qlf_data_list_CLIENT_ID
     //         ]
     //       );
     //       client_id_commission.value =
     //         qlf_data_list.content[x][
-    //           findTextInArray(qlf_data_list, "CLIENT ID")
+    //           qlf_data_list_CLIENT_ID
     //         ];
     //       if (
     //         !vehicle_list.includes(
     //           qlf_data_list.content[x][
-    //             findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")
+    //             qlf_data_list_WASTE_ID_TYPE_OF_VEHICLE
     //           ]
     //         )
     //       ) {
     //         quotation_waste_data.push(
     //           qlf_data_list.content[x][
-    //             findTextInArray(qlf_data_list, "WASTE NAME")
+    //             qlf_data_list_WASTE_NAME
     //           ]
     //         );
     //       }
@@ -3885,17 +3676,17 @@ document.addEventListener("DOMContentLoaded", async function () {
     //         ) {
     //           if (
     //             wcf_data_list.content[k][
-    //               findTextInArray(wcf_data_list, "LTF/ MTF  #")
+    //               wcf_data_list_LTF_MTF
     //             ].substring(0, 3) == "MTF"
     //           ) {
     //             mtf =
     //               wcf_data_list.content[k][
-    //                 findTextInArray(wcf_data_list, "LTF/ MTF  #")
+    //                 wcf_data_list_LTF_MTF
     //               ];
     //           } else {
     //             ltf =
     //               wcf_data_list.content[k][
-    //                 findTextInArray(wcf_data_list, "LTF/ MTF  #")
+    //                 wcf_data_list_LTF_MTF
     //               ];
     //             for (let i = 1; i < ltf_data_list.content.length; i++) {
     //               if (
@@ -3906,7 +3697,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     //               ) {
     //                 mtf =
     //                   ltf_data_list.content[i][
-    //                     findTextInArray(ltf_data_list, "MTF #")
+    //                     ltf_data_list_MTF
     //                   ];
     //                 break;
     //               }
@@ -3967,7 +3758,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     //       bpf_data_list.content[y][findTextInArray(bpf_data_list, "COD #")];
     //     var hauling_date_bpf =
     //       bpf_data_list.content[y][
-    //         findTextInArray(bpf_data_list, "HAULING DATE")
+    //         bpf_data_list_HAULING_DATE
     //       ];
     //     var table_counter = 0;
     //     if (search_bpf_form_no_commission_form.value == bpf_no_bpf) {
@@ -4024,16 +3815,16 @@ document.addEventListener("DOMContentLoaded", async function () {
     //           for (let x = 1; x < qlf_data_list.content.length; x++) {
     //             var quotation_no_qlf =
     //               qlf_data_list.content[x][
-    //                 findTextInArray(qlf_data_list, "QUOTATION CODE")
+    //                 qlf_data_list_QUOTATION_CODE
     //               ];
     //             if (quotation_no_clf == quotation_no_qlf) {
     //               unit_qlf =
     //                 qlf_data_list.content[x][
-    //                   findTextInArray(qlf_data_list, "UNIT")
+    //                   qlf_data_list_UNIT
     //                 ];
     //               vat_calculation_qlf =
     //                 qlf_data_list.content[x][
-    //                   findTextInArray(qlf_data_list, "VAT CALCULATION")
+    //                   qlf_data_list_VAT_CALCULATION
     //                 ];
     //               break;
     //             }
@@ -4660,15 +4451,10 @@ document.addEventListener("DOMContentLoaded", async function () {
       var client_name = "";
       for (let c = 1; c < client_data_list.content.length; c++) {
         if (
-          client_id ==
-          client_data_list.content[c][
-            findTextInArray(client_data_list, "CLIENT ID")
-          ]
+          client_id == client_data_list.content[c][client_data_list_CLIENT_ID]
         ) {
           client_name =
-            client_data_list.content[c][
-              findTextInArray(client_data_list, "CLIENT NAME")
-            ];
+            client_data_list.content[c][client_data_list_CLIENT_NAME];
           break;
         }
       }
@@ -4679,12 +4465,10 @@ document.addEventListener("DOMContentLoaded", async function () {
       for (let c = 1; c < type_of_waste_data_list.content.length; c++) {
         if (
           waste_id.toString().substring(0, 8) ==
-          type_of_waste_data_list.content[c][
-            findTextInArray(type_of_waste_data_list, "WASTE ID")
-          ]
+          type_of_waste_data_list.content[c][type_of_waste_data_list_WASTE_ID]
         ) {
           waste_code = type_of_waste_data_list.content[c][
-            findTextInArray(type_of_waste_data_list, "WASTE CODE")
+            type_of_waste_data_list_WASTE_CODE
           ].substring(0, 4);
           break;
         } else {
@@ -4697,19 +4481,11 @@ document.addEventListener("DOMContentLoaded", async function () {
       var waste_name = "";
       for (let c = 1; c < qlf_data_list.content.length; c++) {
         if (
-          client_id ==
-            qlf_data_list.content[c][
-              findTextInArray(qlf_data_list, "CLIENT ID")
-            ] &&
+          client_id == qlf_data_list.content[c][qlf_data_list_CLIENT_ID] &&
           waste_id ==
-            qlf_data_list.content[c][
-              findTextInArray(qlf_data_list, "WASTE ID/ TYPE OF VEHICLE")
-            ]
+            qlf_data_list.content[c][qlf_data_list_WASTE_ID_TYPE_OF_VEHICLE]
         ) {
-          waste_name =
-            qlf_data_list.content[c][
-              findTextInArray(qlf_data_list, "WASTE NAME")
-            ];
+          waste_name = qlf_data_list.content[c][qlf_data_list_WASTE_NAME];
           break;
         } else if (waste_id == "W2023100") {
           waste_name = "ASSORTED NON-HAZARDOUS WASTE";
@@ -4772,24 +4548,15 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       for (let x = 1; x < mtf_data_list.content.length; x++) {
         var hauling_date = new Date(
-          mtf_data_list.content[x][
-            findTextInArray(mtf_data_list, "HAULING DATE")
-          ]
+          mtf_data_list.content[x][mtf_data_list_HAULING_DATE]
         );
-        var mtf_data =
-          mtf_data_list.content[x][findTextInArray(mtf_data_list, "MTF #")];
+        var mtf_data = mtf_data_list.content[x][mtf_data_list_MTF];
         var hauling_date_data =
-          mtf_data_list.content[x][
-            findTextInArray(mtf_data_list, "HAULING DATE")
-          ];
+          mtf_data_list.content[x][mtf_data_list_HAULING_DATE];
         var hauling_time_data =
-          mtf_data_list.content[x][
-            findTextInArray(mtf_data_list, "HAULING TIME")
-          ];
-        var client_id_data =
-          mtf_data_list.content[x][findTextInArray(mtf_data_list, "CLIENT ID")];
-        var waste_id_data =
-          mtf_data_list.content[x][findTextInArray(mtf_data_list, "WASTE ID")];
+          mtf_data_list.content[x][mtf_data_list_HAULING_TIME];
+        var client_id_data = mtf_data_list.content[x][mtf_data_list_CLIENT_ID];
+        var waste_id_data = mtf_data_list.content[x][mtf_data_list_WASTE_ID];
         var report_from = new Date(report_date_from.value);
         var report_to = new Date(report_date_to.value);
         var datePortion = hauling_date_data.split("T")[0];
