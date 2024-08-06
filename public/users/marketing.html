@@ -4437,12 +4437,53 @@
   </div>
 </section>
 <!-- commission_form -->
-<section class="marketing" id="marketing_weekly_report">
+<section
+  class="marketing"
+  id="marketing_weekly_report"
+  style="position: relative"
+>
+  <div
+    style="
+      position: absolute;
+      margin-top: -20px;
+      width: 500px;
+      height: 70px;
+      right: 0px;
+      background-color: #f5f5f7;
+      z-index: 1000;
+    "
+  ></div>
+  <div>
+    <div
+      id="week_selection"
+      style="
+        display: flex;
+        position: absolute;
+        top: 0px;
+        right: 20px;
+        z-index: 1001;
+        border: 3px solid #dc3545;
+        border-radius: 5px;
+        padding: 5px 20px;
+        background-color: #198754;
+      "
+    >
+      <label for="week_filter" style="font-weight: bold; color: #ffffff"
+        >WEEK NUMBER</label
+      >
+      <select
+        name="week_filter"
+        id="week_filter"
+        class="form-control"
+        style="cursor: pointer"
+      ></select>
+    </div>
+  </div>
   <h2>WEEKLY REPORT</h2>
   <div class="cards">
     <div class="card">
       <div class="card-content">
-        <div class="number" id="booked_transactions"></div>
+        <div class="number" id="total_transactions"></div>
         <div class="card-name">Booked</div>
       </div>
       <div class="icon-box">
@@ -4467,55 +4508,78 @@
         <i class="fa-solid fa-truck"></i>
       </div>
     </div>
+    <div class="card">
+      <div class="card-content">
+        <div class="number" id="cancelled_transactions"></div>
+        <div class="card-name">Cancelled Trips</div>
+      </div>
+      <div class="icon-box">
+        <i class="fa-solid fa-ban"></i>
+      </div>
+    </div>
     <div style="position: relative">
       <div id="pieChart" style="position: absolute; margin-top: 20px"></div>
     </div>
   </div>
   <br />
-  <h2>PENDING FOR COMMISSION TRANSACTION</h2>
-  <div
-    class="table"
-    style="max-height: 70vh; align-items: start; overflow-y: scroll"
-  >
-    <div class="list">
-      <table>
-        <thead style="position: sticky; top: 0; background-color: black">
-          <th>#</th>
-          <th>BPF #</th>
-          <th>MTF #</th>
-          <th>QUOTATION<br />CODE</th>
-          <th>AGENT NAME</th>
-          <th>CLIENT</th>
-          <th>WASTE NAME</th>
-          <th>QUANTITY</th>
-          <th>PRICE/UNIT</th>
-          <th>AMOUNT</th>
-          <th>SUBMITTED<br />BY</th>
-        </thead>
-        <tbody id="clf_pending_list"></tbody>
-      </table>
-      <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+  <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+    <div>
+      <h2>TRANSACTION PER CLIENT</h2>
+      <div
+        class="table"
+        style="width: 100%; align-items: start;"
+      >
+        <div class="list">
+          <table>
+            <thead style="position: sticky; top: 0; background-color: black">
+              <th>#</th>
+              <th>CLIENT</th>
+              <th>LOGISTICS</th>
+              <th>OTHER HAULER</th>
+              <th>CANCELED TRIPS</th>
+            </thead>
+            <tbody id="transaction_per_client"></tbody>
+          </table>
+          <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2>TRANSACTION COMPARISON</h2>
+      <div
+      class="table"
+      style="width: 100%; align-items: start;"
+    >
+      <div class="list">
+        <table>
+          <thead id="transaction_comparison_head" style="position: sticky; top: 0; background-color: black">
+            <th>DETAILS</th>
+            <th>CURRENT WEEK</th>
+            <th>PREVIOUS WEEK</th>
+          </thead>
+          <tbody id="transaction_comparison"></tbody>
+        </table>
+        <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+      </div>
     </div>
   </div>
-  <br />
-  <h2>LIST OF COMMISSION</h2>
+  </div>
+  <h2>TRANSACTION HISTORY</h2>
   <div
     class="table"
-    style="max-height: 70vh; align-items: start; overflow-y: scroll"
+    style="max-height: 60vh; align-items: start; overflow-y: scroll"
   >
     <div class="list">
       <table>
         <thead style="position: sticky; top: 0; background-color: black">
           <th>#</th>
-          <th>CLF #</th>
-          <th>QUOTATION<br />CODE</th>
-          <th>AGENT NAME</th>
+          <th>MTF #</td>
+          <th>HAULING DATE</th>
+          <th>HAULING TIME</th>
           <th>CLIENT</th>
-          <th>WASTE NAME</th>
-          <th>PRICE/UNIT</th>
-          <th>SUBMITTED<br />BY</th>
+          <th>TYPE OF WASTE</th>
         </thead>
-        <tbody id="clf_list"></tbody>
+        <tbody id="transaction_history"></tbody>
       </table>
       <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
     </div>

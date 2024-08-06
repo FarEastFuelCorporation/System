@@ -410,6 +410,43 @@ document.addEventListener("DOMContentLoaded", async function () {
       }
     }
 
+    // Main logic to process the mtf_data_list array
+    const haulingDateIndex = mtf_data_list_HAULING_DATE;
+    const today = new Date();
+
+    // Function to get the start of the week based on a given date
+    function getStartOfWeek(date) {
+      const currentDay = date.getDay();
+      const diff = currentDay < 6 ? currentDay + 1 : 0; // Adjust for Saturday (0) as the start of the week
+      const startOfWeek = new Date(date);
+      startOfWeek.setDate(date.getDate() - diff);
+      startOfWeek.setHours(0, 0, 0, 0);
+      return startOfWeek;
+    }
+
+    // Function to get the week number based on a date
+    function getWeekNumber(date) {
+      const startOfYear = new Date(date.getFullYear(), 0, 1);
+      const pastDaysOfYear =
+        (date - startOfYear) / 86400000 + startOfYear.getDay() + 1;
+      return Math.ceil(pastDaysOfYear / 7);
+    }
+
+    // Calculate the start dates for the current and previous weeks
+    const currentWeekStart = getStartOfWeek(today);
+    const lastWeekStart = new Date(currentWeekStart);
+    lastWeekStart.setDate(currentWeekStart.getDate() - 7);
+    const last2WeeksStart = new Date(currentWeekStart);
+    last2WeeksStart.setDate(currentWeekStart.getDate() - 14);
+    const last3WeeksStart = new Date(currentWeekStart);
+    last3WeeksStart.setDate(currentWeekStart.getDate() - 21);
+
+    // Arrays to store rows for each week
+    const currentWeek = [];
+    const lastWeek = [];
+    const last2Weeks = [];
+    const last3Weeks = [];
+
     function getCurrentMonthName() {
       const months = [
         "JANUARY",
@@ -774,6 +811,20 @@ document.addEventListener("DOMContentLoaded", async function () {
           data_value_counter += 1;
           pending_list_marketing.innerHTML = data_value;
         }
+
+        const haulingDateStr = mtf_data_list.content[j][haulingDateIndex];
+        const haulingDateNew = new Date(haulingDateStr);
+        const haulingWeekStart = getStartOfWeek(haulingDateNew);
+
+        if (haulingWeekStart.getTime() === currentWeekStart.getTime()) {
+          currentWeek.push(mtf_data_list.content[j]);
+        } else if (haulingWeekStart.getTime() === lastWeekStart.getTime()) {
+          lastWeek.push(mtf_data_list.content[j]);
+        } else if (haulingWeekStart.getTime() === last2WeeksStart.getTime()) {
+          last2Weeks.push(mtf_data_list.content[j]);
+        } else if (haulingWeekStart.getTime() === last3WeeksStart.getTime()) {
+          last3Weeks.push(mtf_data_list.content[j]);
+        }
       }
 
       for (let x = 1; x < bpf_data_list.content.length; x++) {
@@ -910,7 +961,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     const mtf_data = document.getElementById("mtf_data");
     const client_list = document.getElementById("client_list");
     const client_id = document.getElementById("client_id");
-    const today = new Date();
     const today_year = today.getFullYear();
     const today_month = today.getMonth() + 1;
     var code_year_month;
@@ -3217,55 +3267,222 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // marketing_weekly_report
 
-    // Function to get the start of the week based on a given date
-    function getStartOfWeek(date) {
-      const currentDay = date.getDay();
-      const diff = currentDay < 6 ? currentDay + 1 : 0; // Adjust for Saturday (0) as the start of the week
-      const startOfWeek = new Date(date);
-      startOfWeek.setDate(date.getDate() - diff);
-      startOfWeek.setHours(0, 0, 0, 0);
-      return startOfWeek;
+    // Get the week numbers
+    const currentWeekNumber = getWeekNumber(currentWeekStart);
+    const lastWeekNumber = getWeekNumber(lastWeekStart);
+    const last2WeeksNumber = getWeekNumber(last2WeeksStart);
+    const last3WeeksNumber = getWeekNumber(last3WeeksStart);
+
+    const weekArray = [
+      currentWeekNumber,
+      lastWeekNumber,
+      last2WeeksNumber,
+      last3WeeksNumber,
+    ];
+
+    const weekData = {
+      [currentWeekNumber]: currentWeek,
+      [lastWeekNumber]: lastWeek,
+      [last2WeeksNumber]: last2Weeks,
+      [last3WeeksNumber]: last3Weeks,
+    };
+
+    const week_filter = document.getElementById("week_filter");
+    const transaction_per_client = document.getElementById(
+      "transaction_per_client"
+    );
+    const transaction_comparison = document.getElementById(
+      "transaction_comparison"
+    );
+    const transaction_comparison_head = document.getElementById(
+      "transaction_comparison_head"
+    );
+    const transaction_history = document.getElementById("transaction_history");
+    const booked_transactions = document.getElementById("total_transactions");
+    const inhouse_logistics_transactions = document.getElementById(
+      "inhouse_logistics_transactions"
+    );
+    const other_logistics_transactions = document.getElementById(
+      "other_logistics_transactions"
+    );
+    const cancelled_transactions = document.getElementById(
+      "cancelled_transactions"
+    );
+
+    weekArray.forEach((item) => {
+      week_filter.insertAdjacentHTML(
+        "beforeend",
+        `<option value=${item}>Week ${item}</option>`
+      );
+    });
+
+    var inhouse_logistics_transactions_counter = 0;
+    var other_logistics_transactions_counter = 0;
+    var cancelled_transactions_counter = 0;
+    var previous_inhouse_logistics_transactions_counter = 0;
+    var previous_other_logistics_transactions_counter = 0;
+    var previous_cancelled_transactions_counter = 0;
+
+    function updateTransactionHistoryTable(weekNumber) {
+      inhouse_logistics_transactions_counter = 0;
+      other_logistics_transactions_counter = 0;
+      cancelled_transactions_counter = 0;
+      previous_inhouse_logistics_transactions_counter = 0;
+      previous_other_logistics_transactions_counter = 0;
+      previous_cancelled_transactions_counter = 0;
+
+      const data = weekData[weekNumber] || [];
+      const previous_data = weekData[weekNumber - 1] || [];
+
+      // Sort the data by date and time
+      data.sort((a, b) => {
+        const dateA = new Date(a[mtf_data_list_HAULING_DATE]);
+        const dateB = new Date(b[mtf_data_list_HAULING_DATE]);
+        const timeA = a[mtf_data_list_HAULING_TIME];
+        const timeB = b[mtf_data_list_HAULING_TIME];
+
+        if (dateA.getTime() === dateB.getTime()) {
+          return timeA.localeCompare(timeB);
+        }
+        return dateA - dateB;
+      });
+
+      // Aggregate data by client
+      const clientData = {};
+
+      // Update transaction_history table
+      transaction_history.innerHTML = "";
+      data.forEach((row, index) => {
+        if (row[mtf_data_list_SUBMIT_TO] === "LOGISTICS") {
+          inhouse_logistics_transactions_counter++;
+        } else if (row[mtf_data_list_SUBMIT_TO] === "RECEIVING") {
+          other_logistics_transactions_counter++;
+        } else {
+          cancelled_transactions_counter++;
+        }
+        const rowHtml = `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${row[mtf_data_list_MTF]}</td>
+            <td>${date_decoder(row[mtf_data_list_HAULING_DATE])}</td>
+            <td>${time_decoder(row[mtf_data_list_HAULING_TIME])}</td>
+            <td>${findClientName(row[mtf_data_list_CLIENT_ID])}</td>
+            <td>${findWasteName(
+              row[mtf_data_list_CLIENT_ID],
+              row[mtf_data_list_WASTE_ID]
+            )}</td>
+          </tr>
+        `;
+        transaction_history.insertAdjacentHTML("beforeend", rowHtml);
+
+        const clientId = row[mtf_data_list_CLIENT_ID];
+        const clientName = findClientName(clientId);
+        const isLogistics = row[mtf_data_list_SUBMIT_TO] === "LOGISTICS";
+        const isReceiving = row[mtf_data_list_SUBMIT_TO] === "RECEIVING";
+
+        if (!clientData[clientName]) {
+          clientData[clientName] = { logistics: 0, other: 0, cancel: 0 };
+        }
+
+        if (isLogistics) {
+          clientData[clientName].logistics++;
+        } else if (isReceiving) {
+          clientData[clientName].other++;
+        } else {
+          clientData[clientName].cancel++;
+        }
+      });
+
+      previous_data.forEach((row, index) => {
+        if (row[mtf_data_list_SUBMIT_TO] === "LOGISTICS") {
+          previous_inhouse_logistics_transactions_counter++;
+        } else if (row[mtf_data_list_SUBMIT_TO] === "RECEIVING") {
+          previous_other_logistics_transactions_counter++;
+        } else {
+          previous_cancelled_transactions_counter++;
+        }
+      });
+
+      transaction_comparison.insertAdjacentElement;
+
+      // Update counters
+      booked_transactions.innerText =
+        inhouse_logistics_transactions_counter +
+        other_logistics_transactions_counter +
+        cancelled_transactions_counter;
+      inhouse_logistics_transactions.innerText =
+        inhouse_logistics_transactions_counter;
+      other_logistics_transactions.innerText =
+        other_logistics_transactions_counter;
+      cancelled_transactions.innerText = cancelled_transactions_counter;
+
+      // Update transaction_per_client table
+      transaction_per_client.innerHTML = "";
+      Object.entries(clientData).forEach(([clientName, counts], index) => {
+        const rowHtml = `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${clientName}</td>
+            <td>${counts.logistics}</td>
+            <td>${counts.other}</td>
+            <td>${counts.cancel}</td>
+          </tr>
+        `;
+        transaction_per_client.insertAdjacentHTML("beforeend", rowHtml);
+      });
+
+      const comparison = `
+      <tr>
+        <td>LOGISTICS</td>
+        <td>${inhouse_logistics_transactions_counter}</td>
+        <td>${previous_inhouse_logistics_transactions_counter}</td>
+      </tr>
+      <tr>
+        <td>OTHER HAULER</td>
+        <td>${other_logistics_transactions_counter}</td>
+        <td>${previous_other_logistics_transactions_counter}</td>
+      </tr>
+      <tr>
+        <td>CANCELLED TRIPS</td>
+        <td>${cancelled_transactions_counter}</td>
+        <td>${previous_cancelled_transactions_counter}</td>
+      </tr>
+      <tr>
+        <td>TOTAL</td>
+        <td>${
+          inhouse_logistics_transactions_counter +
+          other_logistics_transactions_counter +
+          cancelled_transactions_counter
+        }</td>
+        <td>${
+          previous_inhouse_logistics_transactions_counter +
+          previous_other_logistics_transactions_counter +
+          previous_cancelled_transactions_counter
+        }</td>
+      </tr>
+    `;
+
+      const comparison_head = `
+      <tr>
+        <th>DETAILS</th>
+        <th>WEEK ${weekNumber}</th>
+        <th>WEEK ${weekNumber - 1}</th>
+      </tr>
+
+    `;
+
+      transaction_comparison.innerHTML = comparison;
+
+      transaction_comparison_head.innerHTML = comparison_head;
     }
 
-    // Calculate the start dates for the current and previous weeks
-    const currentWeekStart = getStartOfWeek(today);
-    const lastWeekStart = new Date(currentWeekStart);
-    lastWeekStart.setDate(currentWeekStart.getDate() - 7);
-    const last2WeeksStart = new Date(currentWeekStart);
-    last2WeeksStart.setDate(currentWeekStart.getDate() - 14);
-    const last3WeeksStart = new Date(currentWeekStart);
-    last3WeeksStart.setDate(currentWeekStart.getDate() - 21);
+    // Initialize the table with the current week's data
+    updateTransactionHistoryTable(currentWeekNumber);
 
-    // Arrays to store rows for each week
-    const currentWeek = [];
-    const lastWeek = [];
-    const last2Weeks = [];
-    const last3Weeks = [];
-
-    // Main logic to process the mtf_data_list array
-    const haulingDateIndex = mtf_data_list_HAULING_DATE;
-
-    for (let j = mtf_data_list.content.length - 1; j >= 1; j--) {
-      const haulingDateStr = mtf_data_list.content[j][haulingDateIndex];
-      const haulingDate = new Date(haulingDateStr);
-      const haulingWeekStart = getStartOfWeek(haulingDate);
-
-      if (haulingWeekStart.getTime() === currentWeekStart.getTime()) {
-        currentWeek.push(mtf_data_list.content[j]);
-      } else if (haulingWeekStart.getTime() === lastWeekStart.getTime()) {
-        lastWeek.push(mtf_data_list.content[j]);
-      } else if (haulingWeekStart.getTime() === last2WeeksStart.getTime()) {
-        last2Weeks.push(mtf_data_list.content[j]);
-      } else if (haulingWeekStart.getTime() === last3WeeksStart.getTime()) {
-        last3Weeks.push(mtf_data_list.content[j]);
-      }
-    }
-
-    // Output the results
-    console.log("Current Week:", currentWeek);
-    console.log("Last Week:", lastWeek);
-    console.log("Last 2 Weeks:", last2Weeks);
-    console.log("Last 3 Weeks:", last3Weeks);
+    week_filter.addEventListener("change", (event) => {
+      const selectedWeekNumber = event.target.value;
+      updateTransactionHistoryTable(selectedWeekNumber);
+    });
 
     // // commission
     // const commission_form = document.querySelector("#commission_form");
