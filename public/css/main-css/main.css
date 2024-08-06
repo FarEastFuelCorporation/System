@@ -1497,7 +1497,8 @@ section h2 {
   display: none;
 }
 
-#billing_dashboard .cards {
+#billing_dashboard .cards,
+#marketing_weekly_report .cards {
   width: 100%;
   height: 120px;
   padding: 10px 0px 0 0px;

@@ -432,6 +432,28 @@ document.addEventListener("DOMContentLoaded", async function () {
       return Math.ceil(pastDaysOfYear / 7);
     }
 
+    function getWeekStartEnd(weekNumber) {
+      const currentYear = new Date().getFullYear();
+      const startOfYear = new Date(currentYear, 0, 1);
+      const dayOfWeek = startOfYear.getDay();
+      const daysToAdd =
+        (weekNumber - 1) * 7 + (dayOfWeek > 6 ? 0 : 6 - dayOfWeek);
+
+      const startOfWeek = new Date(startOfYear);
+      startOfWeek.setDate(startOfYear.getDate() + daysToAdd);
+      startOfWeek.setHours(0, 0, 0, 0);
+
+      const endOfWeek = new Date(startOfWeek);
+      endOfWeek.setDate(startOfWeek.getDate() + 6);
+      endOfWeek.setHours(23, 59, 59, 999);
+
+      const options = { year: "numeric", month: "long", day: "numeric" };
+      const startFormatted = startOfWeek.toLocaleDateString("en-US", options);
+      const endFormatted = endOfWeek.toLocaleDateString("en-US", options);
+
+      return `${startFormatted} - ${endFormatted}`;
+    }
+
     // Calculate the start dates for the current and previous weeks
     const currentWeekStart = getStartOfWeek(today);
     const lastWeekStart = new Date(currentWeekStart);
@@ -3288,6 +3310,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     };
 
     const week_filter = document.getElementById("week_filter");
+    const week_dates = document.getElementById("week_dates");
     const transaction_per_client = document.getElementById(
       "transaction_per_client"
     );
@@ -3416,6 +3439,67 @@ document.addEventListener("DOMContentLoaded", async function () {
         other_logistics_transactions_counter;
       cancelled_transactions.innerText = cancelled_transactions_counter;
 
+      var options = {
+        series: [
+          inhouse_logistics_transactions_counter,
+          other_logistics_transactions_counter,
+          cancelled_transactions_counter,
+        ],
+        chart: {
+          width: 500, // Set the desired width
+          height: 550, // Set the desired height
+          type: "pie",
+        },
+        plotOptions: {
+          pie: {
+            startAngle: 0,
+            endAngle: 360,
+          },
+        },
+        dataLabels: {
+          enabled: false, // Disable data labels inside the pie chart
+        },
+        fill: {
+          type: "gradient", // Use solid fill type
+        },
+        legend: {
+          show: true,
+          position: "left", // Set the legend position to "left"
+          fontSize: "16px", // Increase legend font size as needed
+          formatter: function (seriesName, opts) {
+            // Here, you should use the correct variable to get the series value
+            var seriesValue = opts.w.globals.series[opts.seriesIndex];
+            var totalValue = opts.w.globals.series.reduce(
+              (acc, val) => acc + val,
+              0
+            );
+            var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
+            return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
+          },
+          labels: {
+            useSeriesColors: false, // Use custom color
+          },
+        },
+        labels: ["Logistics", "Other Hauler", "Cancelled Trips"],
+        colors: ["#198754", "#FFFF00", "#FF0000"],
+        responsive: [
+          {
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 200,
+              },
+            },
+          },
+        ],
+      };
+      const pieChart2 = document.querySelector("#pieChart2");
+      while (pieChart2.firstChild) {
+        pieChart2.removeChild(pieChart2.firstChild);
+      }
+      var chart = new ApexCharts(pieChart2, options);
+      chart.render();
+
       // Update transaction_per_client table
       transaction_per_client.innerHTML = "";
       Object.entries(clientData).forEach(([clientName, counts], index) => {
@@ -3474,6 +3558,8 @@ document.addEventListener("DOMContentLoaded", async function () {
       transaction_comparison.innerHTML = comparison;
 
       transaction_comparison_head.innerHTML = comparison_head;
+
+      week_dates.innerText = getWeekStartEnd(weekNumber);
     }
 
     // Initialize the table with the current week's data
