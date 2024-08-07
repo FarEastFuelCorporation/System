@@ -3359,43 +3359,48 @@ document.addEventListener("DOMContentLoaded", async function () {
       // Update transaction_history table
       transaction_history.innerHTML = "";
       data.forEach((row, index) => {
-        if (row[mtf_data_list_SUBMIT_TO] === "LOGISTICS") {
-          inhouse_logistics_transactions_counter++;
-        } else if (row[mtf_data_list_SUBMIT_TO] === "RECEIVING") {
-          other_logistics_transactions_counter++;
-        } else {
-          cancelled_transactions_counter++;
-        }
-        const rowHtml = `
-          <tr>
-            <td>${index + 1}</td>
-            <td>${row[mtf_data_list_MTF]}</td>
-            <td>${date_decoder(row[mtf_data_list_HAULING_DATE])}</td>
-            <td>${time_decoder(row[mtf_data_list_HAULING_TIME])}</td>
-            <td>${findClientName(row[mtf_data_list_CLIENT_ID])}</td>
-            <td>${findWasteName(
-              row[mtf_data_list_CLIENT_ID],
-              row[mtf_data_list_WASTE_ID]
-            )}</td>
-          </tr>
-        `;
-        transaction_history.insertAdjacentHTML("beforeend", rowHtml);
+        console.log(index);
+        console.log(row[mtf_data_list_MTF]);
+        console.log(row[mtf_data_list_STATUS]);
+        if (row[mtf_data_list_STATUS] != "FOR HAULING") {
+          if (row[mtf_data_list_SUBMIT_TO] === "LOGISTICS") {
+            inhouse_logistics_transactions_counter++;
+          } else if (row[mtf_data_list_SUBMIT_TO] === "RECEIVING") {
+            other_logistics_transactions_counter++;
+          } else {
+            cancelled_transactions_counter++;
+          }
+          const rowHtml = `
+            <tr>
+              <td>${index + 1}</td>
+              <td>${row[mtf_data_list_MTF]}</td>
+              <td>${date_decoder(row[mtf_data_list_HAULING_DATE])}</td>
+              <td>${time_decoder(row[mtf_data_list_HAULING_TIME])}</td>
+              <td>${findClientName(row[mtf_data_list_CLIENT_ID])}</td>
+              <td>${findWasteName(
+                row[mtf_data_list_CLIENT_ID],
+                row[mtf_data_list_WASTE_ID]
+              )}</td>
+            </tr>
+          `;
+          transaction_history.insertAdjacentHTML("beforeend", rowHtml);
 
-        const clientId = row[mtf_data_list_CLIENT_ID];
-        const clientName = findClientName(clientId);
-        const isLogistics = row[mtf_data_list_SUBMIT_TO] === "LOGISTICS";
-        const isReceiving = row[mtf_data_list_SUBMIT_TO] === "RECEIVING";
+          const clientId = row[mtf_data_list_CLIENT_ID];
+          const clientName = findClientName(clientId);
+          const isLogistics = row[mtf_data_list_SUBMIT_TO] === "LOGISTICS";
+          const isReceiving = row[mtf_data_list_SUBMIT_TO] === "RECEIVING";
 
-        if (!clientData[clientName]) {
-          clientData[clientName] = { logistics: 0, other: 0, cancel: 0 };
-        }
+          if (!clientData[clientName]) {
+            clientData[clientName] = { logistics: 0, other: 0, cancel: 0 };
+          }
 
-        if (isLogistics) {
-          clientData[clientName].logistics++;
-        } else if (isReceiving) {
-          clientData[clientName].other++;
-        } else {
-          clientData[clientName].cancel++;
+          if (isLogistics) {
+            clientData[clientName].logistics++;
+          } else if (isReceiving) {
+            clientData[clientName].other++;
+          } else {
+            clientData[clientName].cancel++;
+          }
         }
       });
 
