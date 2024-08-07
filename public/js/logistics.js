@@ -1061,8 +1061,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                       x + 1
                     }">${actual_count}/${count}</div>
                     <div class="card-name">${toProperCase(
-                      splitText(vehicle_type[x], 1)
-                    )}<br>${toProperCase(splitText(vehicle_type[x], 2))}</div>
+                      vehicle_type[x]
+                    )}</div>
                 </div>
                 <div class="icon-box">
                     <i class="fa-solid fa-truck-moving"></i>
