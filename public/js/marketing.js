@@ -3359,9 +3359,6 @@ document.addEventListener("DOMContentLoaded", async function () {
       // Update transaction_history table
       transaction_history.innerHTML = "";
       data.forEach((row, index) => {
-        console.log(index);
-        console.log(row[mtf_data_list_MTF]);
-        console.log(row[mtf_data_list_STATUS]);
         if (row[mtf_data_list_STATUS] != "FOR HAULING") {
           if (row[mtf_data_list_SUBMIT_TO] === "LOGISTICS") {
             inhouse_logistics_transactions_counter++;
