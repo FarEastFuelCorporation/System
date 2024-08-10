@@ -2317,10 +2317,24 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     var counter = 1;
     for (let x = tmt_data_list.content.length - 1; x > 1; x--) {
-      var treated_waste = 0;
       var operation_start = "";
       var operation_end = "";
       var duration = "";
+      var treated_waste = 0;
+      var ash = 0;
+
+      for (let y = tmtw_data_list.content.length - 1; y > 1; y--) {
+        if (
+          tmt_data_list.content[x][findTextInArray(tmt_data_list, "TMT ID")] ==
+          tmtw_data_list.content[y][findTextInArray(tmtw_data_list, "TMT ID")]
+        ) {
+          treated_waste +=
+            tmtw_data_list.content[y][
+              findTextInArray(tmtw_data_list, "WEIGHT")
+            ];
+        }
+      }
+
       if (
         tmt_data_list.content[x][findTextInArray(tmt_data_list, "STATUS")] ==
           "UNDER MAINTENANCE" ||
@@ -2330,6 +2344,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         operation_start = "";
         operation_end = "";
         duration = "";
+        treated_waste = "";
+        ash = "";
       } else {
         operation_start = time_decoder(
           tmt_data_list.content[x][
@@ -2353,19 +2369,16 @@ document.addEventListener("DOMContentLoaded", async function () {
             ]
           )
         );
+        treated_waste = `${treated_waste} Kg`;
+        ash = `${formatNumber(
+          parseFloat(
+            tmt_data_list.content[x][findTextInArray(tmt_data_list, "ASH")]
+              ? tmt_data_list.content[x][findTextInArray(tmt_data_list, "ASH")]
+              : 0
+          ) * 200
+        )} Kg`;
       }
 
-      for (let y = tmtw_data_list.content.length - 1; y > 1; y--) {
-        if (
-          tmt_data_list.content[x][findTextInArray(tmt_data_list, "TMT ID")] ==
-          tmtw_data_list.content[y][findTextInArray(tmtw_data_list, "TMT ID")]
-        ) {
-          treated_waste +=
-            tmtw_data_list.content[y][
-              findTextInArray(tmtw_data_list, "WEIGHT")
-            ];
-        }
-      }
       var list = `
         <tr>
           <td>${counter}</td>
@@ -2397,12 +2410,11 @@ document.addEventListener("DOMContentLoaded", async function () {
           <td>${
             tmt_data_list.content[x][findTextInArray(tmt_data_list, "OPERATOR")]
           }</td>
-          <td>${treated_waste}</td>
-                    <td>${
-                      tmt_data_list.content[x][
-                        findTextInArray(tmt_data_list, "REMARKS")
-                      ]
-                    }</td>
+          <td>${formatNumber(treated_waste)}</td>
+          <td>${ash}</td>
+          <td>${
+            tmt_data_list.content[x][findTextInArray(tmt_data_list, "REMARKS")]
+          }</td>
         </tr>
       `;
       treatment_machine_transaction_list.insertAdjacentHTML("beforeend", list);
