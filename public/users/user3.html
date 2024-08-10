@@ -70,6 +70,12 @@
                 </li>
                 <li>
                     <a href="#">
+                      <i class="fa-solid fa-calendar-check"></i>
+                      Weekly Report
+                    </a>
+                  </li>
+                <li>
+                    <a href="#">
                         <i class="fa-solid fa-calendar-check"></i>
                         Accomplishment Report
                     </a>
@@ -589,9 +595,9 @@
                         <th>DATE</th>
                         <th>SHIFT START<br />SHIFT END</th>
                         <th>OPERATION START<br />OPERATION END</th>
-                        <th>DURATION<br />(HOURS)</th>
                         <th>OPERATOR</th>
-                        <th>TREATED<br />WASTE</th>
+                        <th>TREATED<br />WASTE (Kg)</th>
+                        <th>DURATION<br />(Hour)</th>
                         <th>ASH</th>
                         <th>REMARKS</th>
                     </thead>
@@ -897,6 +903,154 @@
                     </div>
                 </form>
                 </div>
+            </section>
+            <!-- weekly_report -->
+            <section
+            class="marketing"
+            id="treatment_weekly_report"
+            style="position: relative"
+            >
+            <div
+                style="
+                position: absolute;
+                margin-top: -20px;
+                width: 500px;
+                height: 70px;
+                right: 0px;
+                background-color: #f5f5f7;
+                z-index: 1000;
+                "
+            ></div>
+            <div>
+                <div
+                id="week_selection"
+                style="
+                    display: flex;
+                    position: absolute;
+                    top: 0px;
+                    right: 20px;
+                    z-index: 1001;
+                    border: 3px solid #dc3545;
+                    border-radius: 5px;
+                    padding: 5px 20px;
+                    background-color: #198754;
+                "
+                >
+                <label for="week_filter" style="font-weight: bold; color: #ffffff"
+                    >WEEK NUMBER</label
+                >
+                <select
+                    name="week_filter"
+                    id="week_filter"
+                    class="form-control"
+                    style="cursor: pointer"
+                ></select>
+                </div>
+            </div>
+            <h2>WEEKLY REPORT</h2>
+            <h2 id="week_dates"></h2>
+            <div class="cards">
+                <div class="card">
+                <div class="card-content">
+                    <div class="number" id="tg_alpha"></div>
+                    <div class="card-name">Thermal Gasifier Alpha</div>
+                </div>
+                <div class="icon-box">
+                    <i class="fa-solid fa-fire-burner"></i>
+                </div>
+                </div>
+                <div class="card">
+                <div class="card-content">
+                    <div class="number" id="tg_bravo"></div>
+                    <div class="card-name">Thermal Gasifier Bravo</div>
+                </div>
+                <div class="icon-box">
+                    <i class="fa-solid fa-fire-burner"></i>
+                </div>
+                </div>
+                <div class="card">
+                <div class="card-content">
+                    <div class="number" id="tg_charlie"></div>
+                    <div class="card-name">Thermal Gasifier Charlie</div>
+                </div>
+                <div class="icon-box">
+                    <i class="fa-solid fa-fire-burner"></i>
+                </div>
+                </div>
+                <div style="position: relative; margin-top: -80px;" >
+                <div id="pieChart2" style="position: absolute; margin-top: 20px"></div>
+                </div>
+            </div>
+            <br />
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+                <div>
+                <h2>TRANSACTION PER OPERATOR</h2>
+                <div
+                    class="table"
+                    style="width: 100%; align-items: start;"
+                >
+                    <div class="list">
+                    <table>
+                        <thead style="position: sticky; top: 0; background-color: black">
+                        <th>#</th>
+                        <th>OPERATOR</th>
+                        <th>TREATED WASTE (Kg)</th>
+                        <th>DURATION (Hour)</th>
+                        <th>KG/HOUR</th>
+                        </thead>
+                        <tbody id="transaction_per_client"></tbody>
+                    </table>
+                    <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
+                </div>
+                </div>
+                <div>
+                <h2>TRANSACTION COMPARISON</h2>
+                <div
+                class="table"
+                style="width: 100%; align-items: start;"
+                >
+                <div class="list">
+                    <table>
+                    <thead id="transaction_comparison_head" style="position: sticky; top: 0; background-color: black">
+                        <th>DETAILS</th>
+                        <th>CURRENT WEEK</th>
+                        <th>PREVIOUS WEEK</th>
+                    </thead>
+                    <tbody id="transaction_comparison"></tbody>
+                    </table>
+                    <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                </div>
+                </div>
+            </div>
+            </div>
+            <h2>TRANSACTION HISTORY</h2>
+            <div
+                class="table"
+                style="max-height: 60vh; align-items: start; overflow-y: scroll"
+            >
+                <div class="list">
+                <table>
+                    <thead style="position: sticky; top: 0; background-color: black">
+                        <th>#</th>
+                        <th>TMT ID #</th>
+                        <th>STATUS</th>
+                        <th>MACHINE</th>
+                        <th>DATE</th>
+                        <th>SHIFT START<br />SHIFT END</th>
+                        <th>OPERATION START<br />OPERATION END</th>
+                        <th>OPERATOR</th>
+                        <th>TREATED<br />WASTE (Kg)</th>
+                        <th>DURATION<br />(Hour)</th>
+                        <th>ASH</th>
+                        <th>REMARKS</th>
+                    </thead>
+                    <tbody id="transaction_history"></tbody>
+                </table>
+                <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                </div>
+            </div>
+            <br />
             </section>
             <section class="marketing" id="accomplishment_report">
                 <h2>ACCOMPLISHMENT REPORT</h2>

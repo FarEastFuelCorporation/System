@@ -1253,6 +1253,19 @@ function convertTo24HourFormat(time) {
   return `${hours}:${minutes}:00`;
 }
 
+function convertTo24HourFormat(time) {
+  const [timePart, modifier] = time.split(" ");
+  let [hours, minutes] = timePart.split(":");
+
+  if (modifier === "PM" && hours !== "12") {
+    hours = parseInt(hours, 10) + 12;
+  } else if (modifier === "AM" && hours === "12") {
+    hours = "00";
+  }
+
+  return `${hours}:${minutes}:00`;
+}
+
 function calculateDuration(start, end) {
   // Convert times to 24-hour format
   const startTime24 = convertTo24HourFormat(start);
@@ -1270,13 +1283,11 @@ function calculateDuration(start, end) {
   // Calculate the difference in milliseconds
   const durationMs = endTime - startTime;
 
-  // Convert the difference to hours, minutes, and seconds
-  const hours = Math.floor(durationMs / (1000 * 60 * 60));
-  const minutes = Math.floor((durationMs % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((durationMs % (1000 * 60)) / 1000);
+  // Convert the difference to hours with a decimal fraction for minutes
+  const hours = durationMs / (1000 * 60 * 60);
 
-  // Return the duration as a formatted string
-  return `${hours}h ${minutes}m ${seconds}s`;
+  // Return the duration as a decimal value representing the total hours
+  return hours.toFixed(2); // Rounds to 2 decimal places
 }
 
 // You might need to call adjustLayout whenever the content changes dynamically

@@ -2311,6 +2311,63 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     // tmt_data_list
+    const today = new Date();
+
+    // Function to get the start of the week based on a given date
+    function getStartOfWeek(date) {
+      const currentDay = date.getDay();
+      const diff = currentDay < 6 ? currentDay + 1 : 0; // Adjust for Saturday (0) as the start of the week
+      const startOfWeek = new Date(date);
+      startOfWeek.setDate(date.getDate() - diff);
+      startOfWeek.setHours(0, 0, 0, 0);
+      return startOfWeek;
+    }
+
+    // Function to get the week number based on a date
+    function getWeekNumber(date) {
+      const startOfYear = new Date(date.getFullYear(), 0, 1);
+      const pastDaysOfYear =
+        (date - startOfYear) / 86400000 + startOfYear.getDay() + 1;
+      return Math.ceil(pastDaysOfYear / 7);
+    }
+
+    function getWeekStartEnd(weekNumber) {
+      const currentYear = new Date().getFullYear();
+      const startOfYear = new Date(currentYear, 0, 1);
+      const dayOfWeek = startOfYear.getDay();
+      const daysToAdd =
+        (weekNumber - 1) * 7 + (dayOfWeek > 6 ? 0 : 6 - dayOfWeek);
+
+      const startOfWeek = new Date(startOfYear);
+      startOfWeek.setDate(startOfYear.getDate() + daysToAdd);
+      startOfWeek.setHours(0, 0, 0, 0);
+
+      const endOfWeek = new Date(startOfWeek);
+      endOfWeek.setDate(startOfWeek.getDate() + 6);
+      endOfWeek.setHours(23, 59, 59, 999);
+
+      const options = { year: "numeric", month: "long", day: "numeric" };
+      const startFormatted = startOfWeek.toLocaleDateString("en-US", options);
+      const endFormatted = endOfWeek.toLocaleDateString("en-US", options);
+
+      return `${startFormatted} - ${endFormatted}`;
+    }
+
+    // Calculate the start dates for the current and previous weeks
+    const currentWeekStart = getStartOfWeek(today);
+    const lastWeekStart = new Date(currentWeekStart);
+    lastWeekStart.setDate(currentWeekStart.getDate() - 7);
+    const last2WeeksStart = new Date(currentWeekStart);
+    last2WeeksStart.setDate(currentWeekStart.getDate() - 14);
+    const last3WeeksStart = new Date(currentWeekStart);
+    last3WeeksStart.setDate(currentWeekStart.getDate() - 21);
+
+    // Arrays to store rows for each week
+    const currentWeek = [];
+    const lastWeek = [];
+    const last2Weeks = [];
+    const last3Weeks = [];
+
     const treatment_machine_transaction_list = document.querySelector(
       "#treatment_machine_transaction_list"
     );
@@ -2375,8 +2432,29 @@ document.addEventListener("DOMContentLoaded", async function () {
             tmt_data_list.content[x][findTextInArray(tmt_data_list, "ASH")]
               ? tmt_data_list.content[x][findTextInArray(tmt_data_list, "ASH")]
               : 0
-          ) * 200
+          )
         )} Kg`;
+      }
+
+      const haulingDateStr =
+        tmt_data_list.content[x][findTextInArray(tmt_data_list, "DATE")];
+      const haulingDateNew = new Date(haulingDateStr);
+      const haulingWeekStart = getStartOfWeek(haulingDateNew);
+
+      const itemWithTreatedWaste = {
+        ...tmt_data_list.content[x],
+        treated_waste: treated_waste, // Add the treated_waste property
+        ash: ash, // Add the treated_waste property
+      };
+
+      if (haulingWeekStart.getTime() === currentWeekStart.getTime()) {
+        currentWeek.push(itemWithTreatedWaste);
+      } else if (haulingWeekStart.getTime() === lastWeekStart.getTime()) {
+        lastWeek.push(itemWithTreatedWaste);
+      } else if (haulingWeekStart.getTime() === last2WeeksStart.getTime()) {
+        last2Weeks.push(itemWithTreatedWaste);
+      } else if (haulingWeekStart.getTime() === last3WeeksStart.getTime()) {
+        last3Weeks.push(itemWithTreatedWaste);
       }
 
       var list = `
@@ -2406,11 +2484,11 @@ document.addEventListener("DOMContentLoaded", async function () {
           )}
           </td>
           <td>${operation_start}<br />${operation_end}</td>
-          <td>${duration}</td>
           <td>${
             tmt_data_list.content[x][findTextInArray(tmt_data_list, "OPERATOR")]
           }</td>
           <td>${formatNumber(treated_waste)}</td>
+          <td>${duration}</td>
           <td>${ash}</td>
           <td>${
             tmt_data_list.content[x][findTextInArray(tmt_data_list, "REMARKS")]
@@ -2420,6 +2498,314 @@ document.addEventListener("DOMContentLoaded", async function () {
       treatment_machine_transaction_list.insertAdjacentHTML("beforeend", list);
       counter++;
     }
+
+    // weekly_report
+    console.log("currentWeek", currentWeek);
+    console.log("lastWeek", lastWeek);
+    console.log("last2Weeks", last2Weeks);
+    console.log("last3Weeks", last3Weeks);
+
+    const tg_alpha = document.querySelector("#tg_alpha");
+    const tg_bravo = document.querySelector("#tg_bravo");
+    const tg_charlie = document.querySelector("#tg_charlie");
+
+    var tg_alpha_counter = 0;
+    var tg_bravo_counter = 0;
+    var tg_charlie_counter = 0;
+    var previous_tg_alpha_counter = 0;
+    var previous_tg_bravo_counter = 0;
+    var previous_tg_charlie_counter = 0;
+
+    const currentWeekNumber = getWeekNumber(currentWeekStart);
+    const lastWeekNumber = getWeekNumber(lastWeekStart);
+    const last2WeeksNumber = getWeekNumber(last2WeeksStart);
+    const last3WeeksNumber = getWeekNumber(last3WeeksStart);
+
+    const weekArray = [
+      currentWeekNumber,
+      lastWeekNumber,
+      last2WeeksNumber,
+      last3WeeksNumber,
+    ];
+
+    const weekData = {
+      [currentWeekNumber]: currentWeek,
+      [lastWeekNumber]: lastWeek,
+      [last2WeeksNumber]: last2Weeks,
+      [last3WeeksNumber]: last3Weeks,
+    };
+
+    const week_filter = document.getElementById("week_filter");
+    const week_dates = document.getElementById("week_dates");
+    const transaction_history = document.getElementById("transaction_history");
+
+    weekArray.forEach((item) => {
+      week_filter.insertAdjacentHTML(
+        "beforeend",
+        `<option value=${item}>Week ${item}</option>`
+      );
+    });
+
+    function updateTransactionHistoryTable(weekNumber) {
+      tg_alpha_counter = 0;
+      tg_bravo_counter = 0;
+      tg_charlie_counter = 0;
+      previous_tg_alpha_counter = 0;
+      previous_tg_bravo_counter = 0;
+      previous_tg_charlie_counter = 0;
+
+      const data = weekData[weekNumber] || [];
+      const previous_data = weekData[weekNumber - 1] || [];
+
+      // Sort the data by date and time
+      data.sort((a, b) => {
+        const dateA = new Date(a[findTextInArray(tmt_data_list, "DATE")]);
+        const dateB = new Date(b[findTextInArray(tmt_data_list, "DATE")]);
+        const timeA = a[findTextInArray(tmt_data_list, "DATE")];
+        const timeB = b[findTextInArray(tmt_data_list, "DATE")];
+
+        if (dateA.getTime() === dateB.getTime()) {
+          return timeA.localeCompare(timeB);
+        }
+        return dateA - dateB;
+      });
+
+      // Aggregate data by operator
+      const operatorData = {};
+
+      // Update transaction_history table
+      transaction_history.innerHTML = "";
+      data.forEach((row, index) => {
+        var list = `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${row[findTextInArray(tmt_data_list, "TMT ID")]}</td>
+            <td>${row[findTextInArray(tmt_data_list, "STATUS")]}</td>
+            <td>${row[findTextInArray(tmt_data_list, "MACHINE")]}</td>
+            <td>${date_decoder(
+              row[findTextInArray(tmt_data_list, "DATE")]
+            )}</td>
+            <td>${time_decoder(
+              row[findTextInArray(tmt_data_list, "SHIFT START")]
+            )}<br />
+            ${time_decoder(row[findTextInArray(tmt_data_list, "SHIFT END")])}
+            </td>
+            <td>${operation_start}<br />${operation_end}</td>
+            <td>${row[findTextInArray(tmt_data_list, "OPERATOR")]}</td>
+            <td>${row["treated_waste"]}</td>
+            <td>${duration}</td>
+            <td>${row["ash"]}</td>
+            <td>${row[findTextInArray(tmt_data_list, "REMARKS")]}</td>
+          </tr>
+        `;
+        transaction_history.insertAdjacentHTML("beforeend", list);
+
+        if (
+          row[findTextInArray(tmt_data_list, "MACHINE")] ==
+          "THERMAL GASIFIER ALPHA"
+        ) {
+          tg_alpha_counter += row["treated_waste"]
+            ? parseFloat(row["treated_waste"])
+            : 0;
+        } else if (
+          row[findTextInArray(tmt_data_list, "MACHINE")] ==
+          "THERMAL GASIFIER BRAVO"
+        ) {
+          tg_bravo_counter += row["treated_waste"]
+            ? parseFloat(row["treated_waste"])
+            : 0;
+        } else if (
+          row[findTextInArray(tmt_data_list, "MACHINE")] ==
+          "THERMAL GASIFIER CHARLIE"
+        ) {
+          tg_charlie_counter += row["treated_waste"]
+            ? parseFloat(row["treated_waste"])
+            : 0;
+        }
+
+        if (!operatorData[row[findTextInArray(tmt_data_list, "OPERATOR")]]) {
+          operatorData[row[findTextInArray(tmt_data_list, "OPERATOR")]] = {
+            treated_waste: row["treated_waste"]
+              ? parseFloat(row["treated_waste"])
+              : 0,
+            duration: parseFloat(duration),
+          };
+        } else {
+          (operatorData[
+            row[findTextInArray(tmt_data_list, "OPERATOR")]
+          ].treated_waste += row["treated_waste"]
+            ? parseFloat(row["treated_waste"])
+            : 0),
+            (operatorData[
+              row[findTextInArray(tmt_data_list, "OPERATOR")]
+            ].duration += parseFloat(duration));
+        }
+      });
+
+      previous_data.forEach((row, index) => {
+        if (
+          row[findTextInArray(tmt_data_list, "MACHINE")] ==
+          "THERMAL GASIFIER ALPHA"
+        ) {
+          previous_tg_alpha_counter += row["treated_waste"]
+            ? parseFloat(row["treated_waste"])
+            : 0;
+        } else if (
+          row[findTextInArray(tmt_data_list, "MACHINE")] ==
+          "THERMAL GASIFIER BRAVO"
+        ) {
+          previous_tg_bravo_counter += row["treated_waste"]
+            ? parseFloat(row["treated_waste"])
+            : 0;
+        } else if (
+          row[findTextInArray(tmt_data_list, "MACHINE")] ==
+          "THERMAL GASIFIER CHARLIE"
+        ) {
+          previous_tg_charlie_counter += row["treated_waste"]
+            ? parseFloat(row["treated_waste"])
+            : 0;
+        }
+      });
+
+      // transaction_comparison.insertAdjacentElement;
+
+      // Update counters
+      tg_alpha.innerText = formatNumber(tg_alpha_counter);
+      tg_bravo.innerText = formatNumber(tg_bravo_counter);
+      tg_charlie.innerText = formatNumber(tg_charlie_counter);
+
+      var options = {
+        series: [tg_alpha_counter, tg_bravo_counter, tg_charlie_counter],
+        chart: {
+          width: 500, // Set the desired width
+          height: 550, // Set the desired height
+          type: "pie",
+        },
+        plotOptions: {
+          pie: {
+            startAngle: 0,
+            endAngle: 360,
+          },
+        },
+        dataLabels: {
+          enabled: false, // Disable data labels inside the pie chart
+        },
+        fill: {
+          type: "gradient", // Use solid fill type
+        },
+        legend: {
+          show: true,
+          position: "left", // Set the legend position to "left"
+          fontSize: "20px", // Increase legend font size as needed
+          formatter: function (seriesName, opts) {
+            // Here, you should use the correct variable to get the series value
+            var seriesValue = opts.w.globals.series[opts.seriesIndex];
+            var totalValue = opts.w.globals.series.reduce(
+              (acc, val) => acc + val,
+              0
+            );
+            var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
+            return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
+          },
+          labels: {
+            useSeriesColors: false, // Use custom color
+          },
+        },
+        labels: ["TG ALPHA", "TG BRAVO", "TG CHARLIE"],
+        colors: ["#198754", "#FFFF00", "#FF0000"],
+        responsive: [
+          {
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 200,
+              },
+            },
+          },
+        ],
+      };
+      const pieChart2 = document.querySelector("#pieChart2");
+      while (pieChart2.firstChild) {
+        pieChart2.removeChild(pieChart2.firstChild);
+      }
+      var chart = new ApexCharts(pieChart2, options);
+      chart.render();
+
+      // Update transaction_per_operator table
+      transaction_per_client.innerHTML = "";
+      Object.entries(operatorData)
+        .sort(([, a], [, b]) => {
+          // Sort by treated_waste / duration in descending order
+          const ratioA = a.treated_waste / a.duration;
+          const ratioB = b.treated_waste / b.duration;
+          return ratioB - ratioA;
+        })
+        .forEach(([operatorName, counts], index) => {
+          if (operatorName) {
+            const rowHtml = `
+            <tr>
+              <td>${index + 1}</td>
+              <td>${operatorName}</td>
+              <td>${formatNumber(counts.treated_waste)}</td>
+              <td>${formatNumber(counts.duration)}</td>
+              <td>${formatNumber(counts.treated_waste / counts.duration)}</td>
+            </tr>
+          `;
+            transaction_per_client.insertAdjacentHTML("beforeend", rowHtml);
+          }
+        });
+
+      const comparison = `
+        <tr>
+          <td>TG ALPHA</td>
+          <td>${formatNumber(tg_alpha_counter)}</td>
+          <td>${formatNumber(previous_tg_alpha_counter)}</td>
+        </tr>
+        <tr>
+          <td>TG BRAVO</td>
+          <td>${formatNumber(tg_bravo_counter)}</td>
+          <td>${formatNumber(previous_tg_bravo_counter)}</td>
+        </tr>
+        <tr>
+          <td>TG CHARLIE</td>
+          <td>${formatNumber(tg_charlie_counter)}</td>
+          <td>${formatNumber(previous_tg_charlie_counter)}</td>
+        </tr>
+        <tr>
+          <td>TOTAL</td>
+          <td>${formatNumber(
+            tg_alpha_counter + tg_bravo_counter + tg_charlie_counter
+          )}</td>
+          <td>${formatNumber(
+            previous_tg_alpha_counter +
+              previous_tg_bravo_counter +
+              previous_tg_charlie_counter
+          )}</td>
+        </tr>
+      `;
+
+      const comparison_head = `
+        <tr>
+          <th>DETAILS</th>
+          <th>WEEK ${weekNumber}</th>
+          <th>WEEK ${weekNumber - 1}</th>
+        </tr>
+        `;
+
+      transaction_comparison.innerHTML = comparison;
+
+      transaction_comparison_head.innerHTML = comparison_head;
+
+      week_dates.innerText = getWeekStartEnd(weekNumber);
+    }
+
+    // Initialize the table with the current week's data
+    updateTransactionHistoryTable(currentWeekNumber);
+
+    week_filter.addEventListener("change", (event) => {
+      const selectedWeekNumber = event.target.value;
+      updateTransactionHistoryTable(selectedWeekNumber);
+    });
 
     // multi section
 
