@@ -24,6 +24,12 @@ document.addEventListener("DOMContentLoaded", async function () {
     const tpf_response_promise = fetch(
       "https://script.google.com/macros/s/AKfycbwbKss2XtW5lylCrUe8IC-ZA4ffA5CM5tY6kqIja9t80NXJw2nB8RBOJFWbXQz0hWMadw/exec"
     );
+    const tmt_response_promise = fetch(
+      "https://script.google.com/macros/s/AKfycbw_TOB0NqxYrU9yQEYRqyvV2Ceb-M6GKaSv_DF7UQ2_1FTrfdFjy4cEj6Cin6_2vkOl/exec"
+    );
+    const tmtw_response_promise = fetch(
+      "https://script.google.com/macros/s/AKfycbwPH2Q2jHt2WxQvHXbAPpMVaxCtpitzjVTeY1LtO5zCCIEOKUA8NRgCc3edpINhRVwk/exec"
+    );
     const qlf_response_promise = fetch(
       "https://script.google.com/macros/s/AKfycbyFU_skru2tnyEiv8I5HkpRCXbUlQb5vlJUm8Le0nZBCvfZeFkQPd2Naljs5CZY41I17w/exec"
     );
@@ -43,6 +49,8 @@ document.addEventListener("DOMContentLoaded", async function () {
       sf_response,
       wdf_response,
       tpf_response,
+      tmt_response,
+      tmtw_response,
       qlf_response,
       prf_response,
       accomplishment_response,
@@ -55,6 +63,8 @@ document.addEventListener("DOMContentLoaded", async function () {
       sf_response_promise,
       wdf_response_promise,
       tpf_response_promise,
+      tmt_response_promise,
+      tmtw_response_promise,
       qlf_response_promise,
       prf_response_promise,
       accomplishment_response_promise,
@@ -68,6 +78,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     const sf_data_list = await sf_response.json();
     const wdf_data_list = await wdf_response.json();
     const tpf_data_list = await tpf_response.json();
+    const tmt_data_list = await tmt_response.json();
+    const tmtw_data_list = await tmtw_response.json();
     const qlf_data_list = await qlf_response.json();
     const prf_data_list = await prf_response.json();
     const accomplishment_data_list = await accomplishment_response.json();
@@ -2296,6 +2308,105 @@ document.addEventListener("DOMContentLoaded", async function () {
         item_counter_int -= 1;
         item_counter.value = item_counter_int;
       }
+    }
+
+    // tmt_data_list
+    const treatment_machine_transaction_list = document.querySelector(
+      "#treatment_machine_transaction_list"
+    );
+
+    var counter = 1;
+    for (let x = tmt_data_list.content.length - 1; x > 1; x--) {
+      var treated_waste = 0;
+      var operation_start = "";
+      var operation_end = "";
+      var duration = "";
+      if (
+        tmt_data_list.content[x][findTextInArray(tmt_data_list, "STATUS")] ==
+          "UNDER MAINTENANCE" ||
+        tmt_data_list.content[x][findTextInArray(tmt_data_list, "STATUS")] ==
+          "NO OPERATION"
+      ) {
+        operation_start = "";
+        operation_end = "";
+        duration = "";
+      } else {
+        operation_start = time_decoder(
+          tmt_data_list.content[x][
+            findTextInArray(tmt_data_list, "OPERATION START")
+          ]
+        );
+        operation_end = time_decoder(
+          tmt_data_list.content[x][
+            findTextInArray(tmt_data_list, "OPERATION END")
+          ]
+        );
+        duration = calculateDuration(
+          time_decoder(
+            tmt_data_list.content[x][
+              findTextInArray(tmt_data_list, "OPERATION START")
+            ]
+          ),
+          time_decoder(
+            tmt_data_list.content[x][
+              findTextInArray(tmt_data_list, "OPERATION END")
+            ]
+          )
+        );
+      }
+
+      for (let y = tmtw_data_list.content.length - 1; y > 1; y--) {
+        if (
+          tmt_data_list.content[x][findTextInArray(tmt_data_list, "TMT ID")] ==
+          tmtw_data_list.content[y][findTextInArray(tmtw_data_list, "TMT ID")]
+        ) {
+          treated_waste +=
+            tmtw_data_list.content[y][
+              findTextInArray(tmtw_data_list, "WEIGHT")
+            ];
+        }
+      }
+      var list = `
+        <tr>
+          <td>${counter}</td>
+          <td>${
+            tmt_data_list.content[x][findTextInArray(tmt_data_list, "TMT ID")]
+          }</td>
+          <td>${
+            tmt_data_list.content[x][findTextInArray(tmt_data_list, "STATUS")]
+          }</td>
+          <td>${
+            tmt_data_list.content[x][findTextInArray(tmt_data_list, "MACHINE")]
+          }</td>
+          <td>${date_decoder(
+            tmt_data_list.content[x][findTextInArray(tmt_data_list, "DATE")]
+          )}</td>
+          <td>${time_decoder(
+            tmt_data_list.content[x][
+              findTextInArray(tmt_data_list, "SHIFT START")
+            ]
+          )}<br />
+          ${time_decoder(
+            tmt_data_list.content[x][
+              findTextInArray(tmt_data_list, "SHIFT END")
+            ]
+          )}
+          </td>
+          <td>${operation_start}<br />${operation_end}</td>
+          <td>${duration}</td>
+          <td>${
+            tmt_data_list.content[x][findTextInArray(tmt_data_list, "OPERATOR")]
+          }</td>
+          <td>${treated_waste}</td>
+                    <td>${
+                      tmt_data_list.content[x][
+                        findTextInArray(tmt_data_list, "REMARKS")
+                      ]
+                    }</td>
+        </tr>
+      `;
+      treatment_machine_transaction_list.insertAdjacentHTML("beforeend", list);
+      counter++;
     }
 
     // multi section
