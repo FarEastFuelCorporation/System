@@ -1498,7 +1498,8 @@ section h2 {
 
 // billing_dashboard
 #billing_dashboard .cards,
-#marketing_weekly_report .cards {
+#marketing_weekly_report .cards,
+#treatment_weekly_report .cards {
   width: 100%;
   height: 120px;
   padding: 10px 0px 0 0px;
@@ -1509,8 +1510,7 @@ section h2 {
 }
 
 // collection_dashboard
-#collection_dashboard .cards,
-#treatment_weekly_report .cards {
+#collection_dashboard .cards {
   width: 100%;
   height: 120px;
   padding: 10px 0px 0 0px;

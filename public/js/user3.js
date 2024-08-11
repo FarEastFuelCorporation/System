@@ -2508,6 +2508,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     const tg_alpha = document.querySelector("#tg_alpha");
     const tg_bravo = document.querySelector("#tg_bravo");
     const tg_charlie = document.querySelector("#tg_charlie");
+    const total_treated_waste = document.querySelector("#total_treated_waste");
+    const tg_alpha_ash = document.querySelector("#tg_alpha_ash");
+    const tg_bravo_ash = document.querySelector("#tg_bravo_ash");
+    const tg_charlie_ash = document.querySelector("#tg_charlie_ash");
+    const total_ash = document.querySelector("#total_ash");
 
     var tg_alpha_counter = 0;
     var tg_bravo_counter = 0;
@@ -2515,6 +2520,12 @@ document.addEventListener("DOMContentLoaded", async function () {
     var previous_tg_alpha_counter = 0;
     var previous_tg_bravo_counter = 0;
     var previous_tg_charlie_counter = 0;
+    var tg_alpha_counter_ash = 0;
+    var tg_bravo_counter_ash = 0;
+    var tg_charlie_counter_ash = 0;
+    var previous_tg_alpha_counter_ash = 0;
+    var previous_tg_bravo_counter_ash = 0;
+    var previous_tg_charlie_counter_ash = 0;
 
     const currentWeekNumber = getWeekNumber(currentWeekStart);
     const lastWeekNumber = getWeekNumber(lastWeekStart);
@@ -2538,6 +2549,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const week_filter = document.getElementById("week_filter");
     const week_dates = document.getElementById("week_dates");
     const transaction_history = document.getElementById("transaction_history");
+    const graph_data = document.getElementById("graph_data");
 
     weekArray.forEach((item) => {
       week_filter.insertAdjacentHTML(
@@ -2546,6 +2558,162 @@ document.addEventListener("DOMContentLoaded", async function () {
       );
     });
 
+    var weight = {};
+
+    function classify(day, treatedWaste, ash, machine) {
+      // Check if the machine key exists in the weight object
+      if (!weight[machine]) {
+        weight[machine] = {}; // If not, initialize it as an empty object
+      }
+
+      // Check if the day key exists under the machine in the weight object
+      if (!weight[machine][day]) {
+        weight[machine][day] = { waste: 0, ash: 0 }; // Initialize with waste and ash attributes
+      }
+
+      // Add treated waste and ash to the existing values
+      weight[machine][day].waste += treatedWaste;
+      weight[machine][day].ash += ash;
+    }
+
+    // Function to round up to the nearest thousand
+    function roundUpToNearestThousand(num) {
+      return Math.ceil(num / 1000) * 1000;
+    }
+
+    // Function to get maximum weight and round it up
+    function getMaxWeightAndRound(weight) {
+      let maxWasteWeight = 0;
+      let maxAshWeight = 0;
+
+      for (let machine in weight) {
+        for (let day in weight[machine]) {
+          if (weight[machine][day].waste > maxWasteWeight) {
+            maxWasteWeight = weight[machine][day].waste;
+          }
+          if (weight[machine][day].ash > maxAshWeight) {
+            maxAshWeight = weight[machine][day].ash;
+          }
+        }
+      }
+
+      // Round up the maximum waste and ash weights to the nearest thousand
+      return {
+        maxWasteWeight: roundUpToNearestThousand(maxWasteWeight),
+        maxAshWeight: roundUpToNearestThousand(maxAshWeight),
+      };
+    }
+
+    // Function to calculate weight percentages
+    function calculateWeightPercentage(weight, roundedMaxWeights) {
+      let weightPercentage = {};
+
+      for (let machine in weight) {
+        weightPercentage[machine] = {};
+
+        for (let day in weight[machine]) {
+          let wastePercentage =
+            (weight[machine][day].waste / roundedMaxWeights.maxWasteWeight) *
+            100;
+          let ashPercentageByMaxWasteWeight =
+            (weight[machine][day].ash / roundedMaxWeights.maxWasteWeight) * 100;
+          let ashPercentageByMaxAshWeight =
+            (weight[machine][day].ash / roundedMaxWeights.maxAshWeight) * 100;
+          weightPercentage[machine][day] = {
+            waste: wastePercentage,
+            ashPercentageByMaxWasteWeight: ashPercentageByMaxWasteWeight,
+            ashPercentageByMaxAshWeight: ashPercentageByMaxAshWeight,
+          };
+        }
+      }
+
+      return weightPercentage;
+    }
+
+    function generateHTML(weightPercentage) {
+      const daysInWeek = [
+        "Saturday",
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+      ];
+      const machines = [
+        "THERMAL GASIFIER ALPHA",
+        "THERMAL GASIFIER BRAVO",
+        "THERMAL GASIFIER CHARLIE",
+      ];
+
+      let htmlContent = `
+          <div style="height: 200px; display: flex; justify-content: space-between;">
+      `;
+
+      daysInWeek.forEach((day) => {
+        htmlContent += `
+              <div style="display: flex; flex-direction: column;">
+                  <div style="height: 175px; display: flex; flex-direction: row; align-items: flex-end;">
+          `;
+
+        machines.forEach((machine) => {
+          let heightPercentage = weightPercentage[machine]?.[day].waste || 0;
+          let ashPercentageByMaxWasteWeight =
+            weightPercentage[machine]?.[day].ashPercentageByMaxWasteWeight || 0;
+          let ashPercentageByMaxAshWeight =
+            weightPercentage[machine]?.[day].ashPercentageByMaxAshWeight || 0;
+
+          if (graph_data.value === "All") {
+            htmlContent += `
+              <div style="position: relative; width: 50px; height: ${heightPercentage}%; background-color: ${
+              machine === "THERMAL GASIFIER ALPHA"
+                ? "#198754"
+                : machine === "THERMAL GASIFIER BRAVO"
+                ? "#FFFF00"
+                : "#FF0000"
+            };">
+                <div style="position: absolute; bottom: 0; left: 0; width: 50px; height: ${ashPercentageByMaxWasteWeight}%; background-color: #808080;">
+                </div>
+              </div>
+                `;
+          } else if (graph_data.value === "Treated Waste") {
+            htmlContent += `
+              <div style="position: relative; width: 50px; height: ${heightPercentage}%; background-color: ${
+              machine === "THERMAL GASIFIER ALPHA"
+                ? "#198754"
+                : machine === "THERMAL GASIFIER BRAVO"
+                ? "#FFFF00"
+                : "#FF0000"
+            };">
+              </div>
+                `;
+          } else if (graph_data.value === "Ash") {
+            htmlContent += `
+              <div style="position: relative; width: 50px; height: ${ashPercentageByMaxAshWeight}%; background-color: ${
+              machine === "THERMAL GASIFIER ALPHA"
+                ? "#198754"
+                : machine === "THERMAL GASIFIER BRAVO"
+                ? "#FFFF00"
+                : "#FF0000"
+            };">
+              </div>
+                `;
+          }
+        });
+
+        htmlContent += `
+                  </div>
+                  <div style="height: 50px; text-align: center;">
+                      <h5 style="font-weight: bold">${day}</h5>
+                  </div>
+              </div>
+          `;
+      });
+
+      htmlContent += "</div>";
+      return htmlContent;
+    }
+
     function updateTransactionHistoryTable(weekNumber) {
       tg_alpha_counter = 0;
       tg_bravo_counter = 0;
@@ -2553,6 +2721,13 @@ document.addEventListener("DOMContentLoaded", async function () {
       previous_tg_alpha_counter = 0;
       previous_tg_bravo_counter = 0;
       previous_tg_charlie_counter = 0;
+      tg_alpha_counter_ash = 0;
+      tg_bravo_counter_ash = 0;
+      tg_charlie_counter_ash = 0;
+      previous_tg_alpha_counter_ash = 0;
+      previous_tg_bravo_counter_ash = 0;
+      previous_tg_charlie_counter_ash = 0;
+      weight = {};
 
       const data = weekData[weekNumber] || [];
       const previous_data = weekData[weekNumber - 1] || [];
@@ -2576,15 +2751,26 @@ document.addEventListener("DOMContentLoaded", async function () {
       // Update transaction_history table
       transaction_history.innerHTML = "";
       data.forEach((row, index) => {
+        // Get the date from the row (assuming it comes from the row and your findTextInArray function)
+        const date = row[findTextInArray(tmt_data_list, "DATE")];
+        const machine = row[findTextInArray(tmt_data_list, "MACHINE")];
+
+        // Get the corresponding day of the week
+        const day = getDayOfWeek(date);
+
+        // Get the treated waste value, or default to 0 if not available
+        const treatedWaste = row["treated_waste"]
+          ? parseFloat(row["treated_waste"])
+          : 0;
+        const ash = row["ash"] ? parseFloat(row["ash"]) : 0;
+
         var list = `
           <tr>
             <td>${index + 1}</td>
             <td>${row[findTextInArray(tmt_data_list, "TMT ID")]}</td>
             <td>${row[findTextInArray(tmt_data_list, "STATUS")]}</td>
-            <td>${row[findTextInArray(tmt_data_list, "MACHINE")]}</td>
-            <td>${date_decoder(
-              row[findTextInArray(tmt_data_list, "DATE")]
-            )}</td>
+            <td>${machine}</td>
+            <td>${date_decoder(date)}</td>
             <td>${time_decoder(
               row[findTextInArray(tmt_data_list, "SHIFT START")]
             )}<br />
@@ -2600,27 +2786,17 @@ document.addEventListener("DOMContentLoaded", async function () {
         `;
         transaction_history.insertAdjacentHTML("beforeend", list);
 
-        if (
-          row[findTextInArray(tmt_data_list, "MACHINE")] ==
-          "THERMAL GASIFIER ALPHA"
-        ) {
-          tg_alpha_counter += row["treated_waste"]
-            ? parseFloat(row["treated_waste"])
-            : 0;
-        } else if (
-          row[findTextInArray(tmt_data_list, "MACHINE")] ==
-          "THERMAL GASIFIER BRAVO"
-        ) {
-          tg_bravo_counter += row["treated_waste"]
-            ? parseFloat(row["treated_waste"])
-            : 0;
-        } else if (
-          row[findTextInArray(tmt_data_list, "MACHINE")] ==
-          "THERMAL GASIFIER CHARLIE"
-        ) {
-          tg_charlie_counter += row["treated_waste"]
-            ? parseFloat(row["treated_waste"])
-            : 0;
+        classify(day, treatedWaste, ash, machine);
+
+        if (machine == "THERMAL GASIFIER ALPHA") {
+          tg_alpha_counter += treatedWaste;
+          tg_alpha_counter_ash += ash;
+        } else if (machine == "THERMAL GASIFIER BRAVO") {
+          tg_bravo_counter += treatedWaste;
+          tg_bravo_counter_ash += ash;
+        } else if (machine == "THERMAL GASIFIER CHARLIE") {
+          tg_charlie_counter += treatedWaste;
+          tg_charlie_counter_ash += ash;
         }
 
         if (!operatorData[row[findTextInArray(tmt_data_list, "OPERATOR")]]) {
@@ -2633,9 +2809,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         } else {
           (operatorData[
             row[findTextInArray(tmt_data_list, "OPERATOR")]
-          ].treated_waste += row["treated_waste"]
-            ? parseFloat(row["treated_waste"])
-            : 0),
+          ].treated_waste += treatedWaste),
             (operatorData[
               row[findTextInArray(tmt_data_list, "OPERATOR")]
             ].duration += parseFloat(duration));
@@ -2643,36 +2817,56 @@ document.addEventListener("DOMContentLoaded", async function () {
       });
 
       previous_data.forEach((row, index) => {
-        if (
-          row[findTextInArray(tmt_data_list, "MACHINE")] ==
-          "THERMAL GASIFIER ALPHA"
-        ) {
+        const machine = row[findTextInArray(tmt_data_list, "MACHINE")];
+        if (machine == "THERMAL GASIFIER ALPHA") {
           previous_tg_alpha_counter += row["treated_waste"]
             ? parseFloat(row["treated_waste"])
             : 0;
-        } else if (
-          row[findTextInArray(tmt_data_list, "MACHINE")] ==
-          "THERMAL GASIFIER BRAVO"
-        ) {
+          previous_tg_alpha_counter_ash += row["ash"]
+            ? parseFloat(row["ash"])
+            : 0;
+        } else if (machine == "THERMAL GASIFIER BRAVO") {
           previous_tg_bravo_counter += row["treated_waste"]
             ? parseFloat(row["treated_waste"])
             : 0;
-        } else if (
-          row[findTextInArray(tmt_data_list, "MACHINE")] ==
-          "THERMAL GASIFIER CHARLIE"
-        ) {
+          previous_tg_bravo_counter_ash += row["ash"]
+            ? parseFloat(row["ash"])
+            : 0;
+        } else if (machine == "THERMAL GASIFIER CHARLIE") {
           previous_tg_charlie_counter += row["treated_waste"]
             ? parseFloat(row["treated_waste"])
+            : 0;
+          previous_tg_charlie_counter_ash += row["ash"]
+            ? parseFloat(row["ash"])
             : 0;
         }
       });
 
-      // transaction_comparison.insertAdjacentElement;
+      var roundedMaxWeight = getMaxWeightAndRound(weight);
+      var weightPercentage = calculateWeightPercentage(
+        weight,
+        roundedMaxWeight
+      );
+
+      console.log(weight);
+      console.log(weightPercentage);
+
+      document.getElementById("bargraph").innerHTML =
+        generateHTML(weightPercentage);
 
       // Update counters
       tg_alpha.innerText = formatNumber(tg_alpha_counter);
       tg_bravo.innerText = formatNumber(tg_bravo_counter);
       tg_charlie.innerText = formatNumber(tg_charlie_counter);
+      total_treated_waste.innerText = formatNumber(
+        tg_alpha_counter + tg_bravo_counter + tg_charlie_counter
+      );
+      tg_alpha_ash.innerText = formatNumber(tg_alpha_counter_ash);
+      tg_bravo_ash.innerText = formatNumber(tg_bravo_counter_ash);
+      tg_charlie_ash.innerText = formatNumber(tg_charlie_counter_ash);
+      total_ash.innerText = formatNumber(
+        tg_alpha_counter_ash + tg_bravo_counter_ash + tg_charlie_counter_ash
+      );
 
       var options = {
         series: [tg_alpha_counter, tg_bravo_counter, tg_charlie_counter],
@@ -2731,6 +2925,67 @@ document.addEventListener("DOMContentLoaded", async function () {
       var chart = new ApexCharts(pieChart2, options);
       chart.render();
 
+      var options = {
+        series: [
+          tg_alpha_counter_ash,
+          tg_bravo_counter_ash,
+          tg_charlie_counter_ash,
+        ],
+        chart: {
+          width: 500, // Set the desired width
+          height: 550, // Set the desired height
+          type: "pie",
+        },
+        plotOptions: {
+          pie: {
+            startAngle: 0,
+            endAngle: 360,
+          },
+        },
+        dataLabels: {
+          enabled: false, // Disable data labels inside the pie chart
+        },
+        fill: {
+          type: "gradient", // Use solid fill type
+        },
+        legend: {
+          show: true,
+          position: "left", // Set the legend position to "left"
+          fontSize: "20px", // Increase legend font size as needed
+          formatter: function (seriesName, opts) {
+            // Here, you should use the correct variable to get the series value
+            var seriesValue = opts.w.globals.series[opts.seriesIndex];
+            var totalValue = opts.w.globals.series.reduce(
+              (acc, val) => acc + val,
+              0
+            );
+            var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
+            return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
+          },
+          labels: {
+            useSeriesColors: false, // Use custom color
+          },
+        },
+        labels: ["TG ALPHA ASH", "TG BRAVO ASH", "TG CHARLIE ASH"],
+        colors: ["#198754", "#FFFF00", "#FF0000"],
+        responsive: [
+          {
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 200,
+              },
+            },
+          },
+        ],
+      };
+      const pieChart3 = document.querySelector("#pieChart3");
+      while (pieChart3.firstChild) {
+        pieChart3.removeChild(pieChart3.firstChild);
+      }
+      var chart = new ApexCharts(pieChart3, options);
+      chart.render();
+
       // Update transaction_per_operator table
       transaction_per_client.innerHTML = "";
       Object.entries(operatorData)
@@ -2786,15 +3041,54 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       const comparison_head = `
         <tr>
-          <th>DETAILS</th>
+          <th>TREATED WASTE</th>
+          <th>WEEK ${weekNumber}</th>
+          <th>WEEK ${weekNumber - 1}</th>
+        </tr>
+        `;
+
+      const comparison2 = `
+        <tr>
+          <td>TG ALPHA</td>
+          <td>${formatNumber(tg_alpha_counter_ash)}</td>
+          <td>${formatNumber(previous_tg_alpha_counter_ash)}</td>
+        </tr>
+        <tr>
+          <td>TG BRAVO</td>
+          <td>${formatNumber(tg_bravo_counter_ash)}</td>
+          <td>${formatNumber(previous_tg_bravo_counter_ash)}</td>
+        </tr>
+        <tr>
+          <td>TG CHARLIE</td>
+          <td>${formatNumber(tg_charlie_counter_ash)}</td>
+          <td>${formatNumber(previous_tg_charlie_counter_ash)}</td>
+        </tr>
+        <tr>
+          <td>TOTAL</td>
+          <td>${formatNumber(
+            tg_alpha_counter_ash + tg_bravo_counter_ash + tg_charlie_counter_ash
+          )}</td>
+          <td>${formatNumber(
+            previous_tg_alpha_counter_ash +
+              previous_tg_bravo_counter_ash +
+              previous_tg_charlie_counter_ash
+          )}</td>
+        </tr>
+      `;
+
+      const comparison_head2 = `
+        <tr>
+          <th>ASH</th>
           <th>WEEK ${weekNumber}</th>
           <th>WEEK ${weekNumber - 1}</th>
         </tr>
         `;
 
       transaction_comparison.innerHTML = comparison;
+      transaction_comparison2.innerHTML = comparison2;
 
       transaction_comparison_head.innerHTML = comparison_head;
+      transaction_comparison_head2.innerHTML = comparison_head2;
 
       week_dates.innerText = getWeekStartEnd(weekNumber);
     }
@@ -2807,8 +3101,12 @@ document.addEventListener("DOMContentLoaded", async function () {
       updateTransactionHistoryTable(selectedWeekNumber);
     });
 
-    // multi section
+    graph_data.addEventListener("change", (event) => {
+      const selectedWeekNumber = week_filter.value;
+      updateTransactionHistoryTable(selectedWeekNumber);
+    });
 
+    // multi section
     // ACCOMPLISHMENT REPORT
     const accomplishment_report_section = document.querySelector(
       "#accomplishment_report"

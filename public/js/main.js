@@ -1290,6 +1290,22 @@ function calculateDuration(start, end) {
   return hours.toFixed(2); // Rounds to 2 decimal places
 }
 
+// Function to get the day of the week
+function getDayOfWeek(dateString) {
+  var daysInWeek = [
+    "Saturday",
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+  ];
+  const date = new Date(dateString);
+  const dayIndex = date.getDay();
+  return daysInWeek[dayIndex];
+}
+
 // You might need to call adjustLayout whenever the content changes dynamically
 // For example, after adding or removing li elements.
 

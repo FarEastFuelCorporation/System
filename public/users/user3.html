@@ -949,39 +949,97 @@
             </div>
             <h2>WEEKLY REPORT</h2>
             <h2 id="week_dates"></h2>
+            <h3 style="margin: 20px 0 0 0">TREATED WASTE DETAILS (Kg)</h3>
             <div class="cards">
                 <div class="card">
-                <div class="card-content">
-                    <div class="number" id="tg_alpha"></div>
-                    <div class="card-name">Thermal Gasifier Alpha</div>
-                </div>
-                <div class="icon-box">
-                    <i class="fa-solid fa-fire-burner"></i>
-                </div>
-                </div>
-                <div class="card">
-                <div class="card-content">
-                    <div class="number" id="tg_bravo"></div>
-                    <div class="card-name">Thermal Gasifier Bravo</div>
-                </div>
-                <div class="icon-box">
-                    <i class="fa-solid fa-fire-burner"></i>
-                </div>
+                    <div class="card-content">
+                        <div class="number" id="tg_alpha"></div>
+                        <div class="card-name">Thermal Gasifier Alpha</div>
+                    </div>
+                    <div class="icon-box">
+                        <i class="fa-solid fa-fire-burner"></i>
+                    </div>
                 </div>
                 <div class="card">
-                <div class="card-content">
-                    <div class="number" id="tg_charlie"></div>
-                    <div class="card-name">Thermal Gasifier Charlie</div>
+                    <div class="card-content">
+                        <div class="number" id="tg_bravo"></div>
+                        <div class="card-name">Thermal Gasifier Bravo</div>
+                    </div>
+                    <div class="icon-box">
+                        <i class="fa-solid fa-fire-burner"></i>
+                    </div>
                 </div>
-                <div class="icon-box">
-                    <i class="fa-solid fa-fire-burner"></i>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="number" id="tg_charlie"></div>
+                        <div class="card-name">Thermal Gasifier Charlie</div>
+                    </div>
+                    <div class="icon-box">
+                        <i class="fa-solid fa-fire-burner"></i>
+                    </div>
                 </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="number" id="total_treated_waste"></div>
+                        <div class="card-name">Total Treated Waste</div>
+                    </div>
+                    <div class="icon-box">
+                        <i class="fa-solid fa-fire-burner"></i>
+                    </div>
                 </div>
                 <div style="position: relative; margin-top: -80px;" >
-                <div id="pieChart2" style="position: absolute; margin-top: 20px"></div>
+                    <div id="pieChart2" style="position: absolute; margin-top: 20px"></div>
+                </div>
+            </div>
+            <h3 style="margin: 20px 0 0 0">ASH DETAILS (Kg)</h3>
+            <div class="cards">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="number" id="tg_alpha_ash"></div>
+                        <div class="card-name">Thermal Gasifier Alpha</div>
+                    </div>
+                    <div class="icon-box">
+                        <i class="fa-solid fa-fire-burner"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="number" id="tg_bravo_ash"></div>
+                        <div class="card-name">Thermal Gasifier Bravo</div>
+                    </div>
+                    <div class="icon-box">
+                        <i class="fa-solid fa-fire-burner"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="number" id="tg_charlie_ash"></div>
+                        <div class="card-name">Thermal Gasifier Charlie</div>
+                    </div>
+                    <div class="icon-box">
+                        <i class="fa-solid fa-fire-burner"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="number" id="total_ash"></div>
+                        <div class="card-name">Total Ash</div>
+                    </div>
+                    <div class="icon-box">
+                        <i class="fa-solid fa-fire-burner"></i>
+                    </div>
+                </div>
+                <div style="position: relative; margin-top: -80px;" >
+                    <div id="pieChart3" style="position: absolute; margin-top: 20px"></div>
                 </div>
             </div>
             <br />
+            <select name="graph_data" id="graph_data">
+                <option value="All" selected>All</option>
+                <option value="Treated Waste">Treated Waste</option>
+                <option value="Ash">Ash</option>
+            </select>
+            <div id="bargraph"></div>
             <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
                 <div>
                 <h2>TRANSACTION PER OPERATOR</h2>
@@ -1013,11 +1071,17 @@
                 <div class="list">
                     <table>
                     <thead id="transaction_comparison_head" style="position: sticky; top: 0; background-color: black">
-                        <th>DETAILS</th>
+                        <th>TREATED WASTE</th>
                         <th>CURRENT WEEK</th>
                         <th>PREVIOUS WEEK</th>
                     </thead>
                     <tbody id="transaction_comparison"></tbody>
+                    <thead id="transaction_comparison_head2" style="position: sticky; top: 0; background-color: black">
+                        <th>ASH</th>
+                        <th>CURRENT WEEK</th>
+                        <th>PREVIOUS WEEK</th>
+                    </thead>
+                    <tbody id="transaction_comparison2"></tbody>
                     </table>
                     <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
                 </div>
