@@ -1290,19 +1290,30 @@ function calculateDuration(start, end) {
   return hours.toFixed(2); // Rounds to 2 decimal places
 }
 
-// Function to get the day of the week
+// Function to get the day of the week, considering time zone adjustment
 function getDayOfWeek(dateString) {
   var daysInWeek = [
-    "Saturday",
     "Sunday",
     "Monday",
     "Tuesday",
     "Wednesday",
     "Thursday",
     "Friday",
+    "Saturday",
   ];
+
+  // Create a date object from the ISO string
   const date = new Date(dateString);
+
+  // Add the offset (e.g., 8 hours) to the date
+  date.setHours(date.getHours() + 8);
+
+  // Get the day index (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
   const dayIndex = date.getDay();
+
+  console.log(dateString);
+  console.log(date); // Local time with the added offset
+  console.log(daysInWeek[dayIndex]);
   return daysInWeek[dayIndex];
 }
 

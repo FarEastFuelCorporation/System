@@ -2313,12 +2313,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     // tmt_data_list
     const today = new Date();
 
-    // Function to get the start of the week based on a given date
     function getStartOfWeek(date) {
       const currentDay = date.getDay();
-      const diff = currentDay < 6 ? currentDay + 1 : 0; // Adjust for Saturday (0) as the start of the week
+      const diff = currentDay >= 6 ? 0 : -(currentDay + 1); // Adjust so that Saturday is the start of the week
       const startOfWeek = new Date(date);
-      startOfWeek.setDate(date.getDate() - diff);
+      startOfWeek.setDate(date.getDate() + diff);
       startOfWeek.setHours(0, 0, 0, 0);
       return startOfWeek;
     }
@@ -2353,10 +2352,37 @@ document.addEventListener("DOMContentLoaded", async function () {
       return `${startFormatted} - ${endFormatted}`;
     }
 
+    function normalizeToMidnightUTC(date) {
+      const normalizedDate = new Date(date);
+      normalizedDate.setUTCHours(0, 0, 0, 0);
+      return normalizedDate;
+    }
+
+    function extractDatePart(input) {
+      let dateString;
+
+      // Check if input is a string and use it directly
+      if (typeof input === "string") {
+        dateString = input;
+      } else if (input instanceof Date) {
+        // Convert Date object to ISO string
+        dateString = input.toISOString();
+      } else {
+        throw new Error(
+          "Invalid input type. Expected a string or Date object."
+        );
+      }
+
+      // Split the ISO string to get the date part
+      return dateString.split("T")[0];
+    }
+
     // Calculate the start dates for the current and previous weeks
     const currentWeekStart = getStartOfWeek(today);
+    console.log(currentWeekStart);
     const lastWeekStart = new Date(currentWeekStart);
     lastWeekStart.setDate(currentWeekStart.getDate() - 7);
+    console.log(lastWeekStart);
     const last2WeeksStart = new Date(currentWeekStart);
     last2WeeksStart.setDate(currentWeekStart.getDate() - 14);
     const last3WeeksStart = new Date(currentWeekStart);
@@ -2447,13 +2473,25 @@ document.addEventListener("DOMContentLoaded", async function () {
         ash: ash, // Add the treated_waste property
       };
 
-      if (haulingWeekStart.getTime() === currentWeekStart.getTime()) {
+      if (
+        normalizeToMidnightUTC(haulingWeekStart).getTime() ===
+        normalizeToMidnightUTC(currentWeekStart).getTime()
+      ) {
         currentWeek.push(itemWithTreatedWaste);
-      } else if (haulingWeekStart.getTime() === lastWeekStart.getTime()) {
+      } else if (
+        normalizeToMidnightUTC(haulingWeekStart).getTime() ===
+        normalizeToMidnightUTC(lastWeekStart).getTime()
+      ) {
         lastWeek.push(itemWithTreatedWaste);
-      } else if (haulingWeekStart.getTime() === last2WeeksStart.getTime()) {
+      } else if (
+        normalizeToMidnightUTC(haulingWeekStart).getTime() ===
+        normalizeToMidnightUTC(last2WeeksStart).getTime()
+      ) {
         last2Weeks.push(itemWithTreatedWaste);
-      } else if (haulingWeekStart.getTime() === last3WeeksStart.getTime()) {
+      } else if (
+        normalizeToMidnightUTC(haulingWeekStart).getTime() ===
+        normalizeToMidnightUTC(last3WeeksStart).getTime()
+      ) {
         last3Weeks.push(itemWithTreatedWaste);
       }
 
@@ -2513,6 +2551,18 @@ document.addEventListener("DOMContentLoaded", async function () {
     const tg_bravo_ash = document.querySelector("#tg_bravo_ash");
     const tg_charlie_ash = document.querySelector("#tg_charlie_ash");
     const total_ash = document.querySelector("#total_ash");
+    const tg_alpha_ash_percentage = document.querySelector(
+      "#tg_alpha_ash_percentage"
+    );
+    const tg_bravo_ash_percentage = document.querySelector(
+      "#tg_bravo_ash_percentage"
+    );
+    const tg_charlie_ash_percentage = document.querySelector(
+      "#tg_charlie_ash_percentage"
+    );
+    const total_ash_percentage = document.querySelector(
+      "#total_ash_percentage"
+    );
 
     var tg_alpha_counter = 0;
     var tg_bravo_counter = 0;
@@ -2848,9 +2898,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         roundedMaxWeight
       );
 
-      console.log(weight);
-      console.log(weightPercentage);
-
       document.getElementById("bargraph").innerHTML =
         generateHTML(weightPercentage);
 
@@ -2867,6 +2914,37 @@ document.addEventListener("DOMContentLoaded", async function () {
       total_ash.innerText = formatNumber(
         tg_alpha_counter_ash + tg_bravo_counter_ash + tg_charlie_counter_ash
       );
+      tg_alpha_ash_percentage.innerText = `${
+        isNaN(tg_alpha_counter_ash / tg_alpha_counter)
+          ? 0
+          : formatNumber((tg_alpha_counter_ash / tg_alpha_counter) * 100)
+      } %`;
+      tg_bravo_ash_percentage.innerText = `${
+        isNaN(tg_bravo_counter_ash / tg_bravo_counter)
+          ? 0
+          : formatNumber((tg_bravo_counter_ash / tg_bravo_counter) * 100)
+      } %`;
+      tg_charlie_ash_percentage.innerText = `${
+        isNaN(tg_charlie_counter_ash / tg_charlie_counter)
+          ? 0
+          : formatNumber((tg_charlie_counter_ash / tg_charlie_counter) * 100)
+      } %`;
+      total_ash_percentage.innerText = `${
+        isNaN(
+          (tg_alpha_counter_ash +
+            tg_bravo_counter_ash +
+            tg_charlie_counter_ash) /
+            (tg_alpha_counter + tg_bravo_counter + tg_charlie_counter)
+        )
+          ? 0
+          : formatNumber(
+              ((tg_alpha_counter_ash +
+                tg_bravo_counter_ash +
+                tg_charlie_counter_ash) /
+                (tg_alpha_counter + tg_bravo_counter + tg_charlie_counter)) *
+                100
+            )
+      } %`;
 
       var options = {
         series: [tg_alpha_counter, tg_bravo_counter, tg_charlie_counter],
