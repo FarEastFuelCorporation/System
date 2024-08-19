@@ -1683,6 +1683,27 @@
             <option value="COMPUTER">COMPUTER</option>
           </select>
         </div>
+        <div>
+          <label for="priority_level">
+            <i class="fa-regular fa-rectangle-list"></i>
+            Priority Level</label
+          ><br />
+          <select
+            type="text"
+            autocomplete="off"
+            name="priority_level"
+            id="priority_level"
+            class="form-control form"
+            required
+          >
+            <option value="">SELECT</option>
+            <option value="CARPENTRY">EMERGENCY</option>
+            <option value="MASONRY">HIGH PRIORITY</option>
+            <option value="PLUMBING">MEDIUM PRIORITY</option>
+            <option value="METAL WORKS">LOW PRIORITY</option>
+            <option value="ELECTRICAL">SCHEDULED</option>
+          </select>
+        </div>
       </div>
       <br />
       <label for="for_maintenance">
@@ -1716,6 +1737,13 @@
         </button>
         <button type="reset" id="reset" class="form-control">Clear</button>
       </div>
+      <br />
+      <h5 style="font-weight: bold">Legend</h5>
+      <h6><b>Emergency: </b>Within 1 to 4 hours</h6>
+      <h6><b>High Priority: </b>Within 24 hours</h6>
+      <h6><b>Medium Priority: </b>Within 3 to 5 days</h6>
+      <h6><b>Low Priority: </b>Within 1 to 2 weeks</h6>
+      <h6><b>Scheduled: </b>Monthly/Quarterly</h6>
     </form>
   </div>
   <div
