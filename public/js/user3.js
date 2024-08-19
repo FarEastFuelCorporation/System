@@ -2804,6 +2804,14 @@ document.addEventListener("DOMContentLoaded", async function () {
         // Get the date from the row (assuming it comes from the row and your findTextInArray function)
         const date = row[findTextInArray(tmt_data_list, "DATE")];
         const machine = row[findTextInArray(tmt_data_list, "MACHINE")];
+        const operation_start =
+          row[findTextInArray(tmt_data_list, "OPERATION START")];
+        const operation_end =
+          row[findTextInArray(tmt_data_list, "OPERATION END")];
+        const duration = calculateDuration(
+          time_decoder(row[findTextInArray(tmt_data_list, "OPERATION START")]),
+          time_decoder(row[findTextInArray(tmt_data_list, "OPERATION END")])
+        );
 
         // Get the corresponding day of the week
         const day = getDayOfWeek(date);
@@ -2826,10 +2834,11 @@ document.addEventListener("DOMContentLoaded", async function () {
             )}<br />
             ${time_decoder(row[findTextInArray(tmt_data_list, "SHIFT END")])}
             </td>
-            <td>${operation_start}<br />${operation_end}</td>
+            <td>${operation_start ? time_decoder(operation_start) : ""}<br />
+            ${operation_end ? time_decoder(operation_end) : ""}</td>
             <td>${row[findTextInArray(tmt_data_list, "OPERATOR")]}</td>
             <td>${row["treated_waste"]}</td>
-            <td>${duration}</td>
+            <td>${isNaN(duration) ? "" : duration}</td>
             <td>${row["ash"]}</td>
             <td>${row[findTextInArray(tmt_data_list, "REMARKS")]}</td>
           </tr>
