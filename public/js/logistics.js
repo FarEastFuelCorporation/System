@@ -18,8 +18,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     const vehicle_log_response_promise = fetch(
       "https://script.google.com/macros/s/AKfycbwOVO1qi9ac0YojlrZUh-XMYMe_gAeO2bg_wU_lSRdBkLgmJKQuzQuq41lzvSOjKfzA/exec"
     );
-    const vehicle_maintenance_response_promise = fetch(
-      "https://script.google.com/macros/s/AKfycbwB-vjJrQoSk9Q0L5DoLKFdaSPtENNC60VfpIWG8IuHHXC_Nq6HU0bKhmektlKMMPqa/exec"
+    const maintenance_job_order_response_promise = fetch(
+      "https://script.google.com/macros/s/AKfycbxN9q1p4FSHbE-grd4AIE5cqPJh__dALmmWT9FEZorl2Q-aQsUgYQlIBtCi9COs7mD6/exec"
     );
     const vehicle_inspection_response_promise = fetch(
       "https://script.google.com/macros/s/AKfycbzSzf8eUNedKDZaRX5ge_GL8KzQ3d8uXpeH6rE4EFp0YH7tc5D4T4OSEif2kEE-qoh2/exec"
@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       employee_response,
       vehicle_response,
       vehicle_log_response,
-      vehicle_maintenance_response,
+      maintenance_job_order_response,
       vehicle_inspection_response,
       mtf_response,
       ltf_response,
@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       employee_response_promise,
       vehicle_response_promise,
       vehicle_log_response_promise,
-      vehicle_maintenance_response_promise,
+      maintenance_job_order_response_promise,
       vehicle_inspection_response_promise,
       mtf_response_promise,
       ltf_response_promise,
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const employee_data_list = await employee_response.json();
     const vehicle_data_list = await vehicle_response.json();
     const vehicle_log_data_list = await vehicle_log_response.json();
-    const vmr_data_list = await vehicle_maintenance_response.json();
+    const mjo_data_list = await maintenance_job_order_response.json();
     const vif_data_list = await vehicle_inspection_response.json();
     const mtf_data_list = await mtf_response.json();
     const ltf_data_list = await ltf_response.json();
@@ -1910,23 +1910,22 @@ document.addEventListener("DOMContentLoaded", async function () {
       }
     });
 
-    // vehicle_maintenance_form
-    const vehicle_maintenance_form = document.querySelector(
-      "#vehicle_maintenance_form"
+    // maintenance_job_order_form
+    const maintenance_job_order_form = document.querySelector(
+      "#maintenance_job_order_form"
     );
-    const vehicle_maintenance_tab = vehicle_maintenance_form.querySelector(
-      "#vehicle_maintenance_tab"
+    const maintenance_job_order_tab = maintenance_job_order_form.querySelector(
+      "#maintenance_job_order_tab"
     );
-    const vehicle_maintenance_button = vehicle_maintenance_form.querySelector(
-      "#vehicle_maintenance_button"
-    );
+    const maintenance_job_order_button =
+      maintenance_job_order_form.querySelector("#maintenance_job_order_button");
 
-    vehicle_maintenance_button.addEventListener("click", () => {
-      if (vehicle_maintenance_tab.style.display == "block") {
-        vehicle_maintenance_tab.style.display = "none";
+    maintenance_job_order_button.addEventListener("click", () => {
+      if (maintenance_job_order_tab.style.display == "block") {
+        maintenance_job_order_tab.style.display = "none";
         // update_vehicle_tab.style.display = "none";
       } else {
-        vehicle_maintenance_tab.style.display = "block";
+        maintenance_job_order_tab.style.display = "block";
         // update_vehicle_tab.style.display = "none";
       }
     });
@@ -1941,156 +1940,59 @@ document.addEventListener("DOMContentLoaded", async function () {
     //     }
     // })
 
-    // vmr_data_list
-    // FORM GENERATOR
-    const vmr_form_no = vehicle_maintenance_form.querySelector("#vmr_form_no");
-    var last_row = vmr_data_list.content.length - 1;
-    var data_info =
-      vmr_data_list.content[last_row][findTextInArray(vmr_data_list, "VMR #")];
-    var data_counter;
-    if (last_row == 0) {
-      data_counter = 0;
-    } else {
-      data_counter = data_info.substring(9, 12);
-    }
-    var month = (new Date().getMonth() + 1).toString().padStart(2, "0");
-    data_counter = (parseInt(data_counter) + 1).toString().padStart(4, "0");
-    var current_year = new Date().getFullYear();
-    var last_counter_year = data_info.substring(3, 7);
-    if (last_counter_year == current_year) {
-      vmr_form_no.value = `VMR${last_counter_year}${month}${data_counter}`;
-    } else {
-      data_counter = (1).toString().padStart(4, "0");
-      vmr_form_no.value = `VMR${current_year}${month}${data_counter}`;
-    }
-
-    var plate_no_data = [];
-    for (x = 1; x < vehicle_data_list.content.length; x++) {
-      plate_no_data.push(
-        vehicle_data_list.content[x][
-          findTextInArray(vehicle_data_list, "PLATE #")
-        ]
-      );
-    }
-
-    searchPlateNo();
-
-    function searchPlateNo() {
-      const search_wrapper3 =
-        vehicle_maintenance_form.querySelector("#search_plate_no");
-      const input_box3 = search_wrapper3.querySelector("input");
-      const sugg_box3 = search_wrapper3.querySelector(".autocom_box");
-      input_box3.onkeyup = (e) => {
-        let user_data = e.target.value;
-        let empty_array = [];
-        if (user_data) {
-          empty_array = plate_no_data.filter((data) => {
-            return data
-              .toLocaleLowerCase()
-              .includes(user_data.toLocaleLowerCase());
-          });
-          empty_array = empty_array.map((data) => {
-            return "<li>" + data + "</li>";
-          });
-          search_wrapper3.classList.add("active");
-          show_suggestions3(empty_array);
-        } else {
-          search_wrapper3.classList.remove("active");
-        }
-      };
-
-      sugg_box3.addEventListener("click", (e) => {
-        if (e.target.tagName === "LI") {
-          select3(e.target.innerHTML);
-        }
-      });
-
-      function select3(element) {
-        let select_user_data = element;
-        input_box3.value = select_user_data;
-        search_wrapper3.classList.remove("active");
-      }
-
-      function show_suggestions3(list) {
-        let list_data;
-        if (!list.length) {
-          user_value = input_box3.value;
-          list_data = "<li>" + user_value + "</li>";
-        } else {
-          list_data = list.join("");
-        }
-        sugg_box3.innerHTML = list_data;
-      }
-    }
-
-    const vehicle_maintenance_request_list =
-      vehicle_maintenance_form.querySelector(
-        "#vehicle_maintenance_request_list"
+    // mjo_data_list
+    const maintenance_job_order_request_list =
+      maintenance_job_order_form.querySelector(
+        "#maintenance_job_order_request_list"
       );
     var data_value = "";
     var data_value_counter = 1;
-    for (let x = 1; x < vmr_data_list.content.length; x++) {
-      var type_of_vehicle;
-      var vehicle;
-      for (let y = 1; y < vehicle_data_list.content.length; y++) {
-        if (
-          vmr_data_list.content[x][findTextInArray(vmr_data_list, "PLATE #")] ==
-          vehicle_data_list.content[y][
-            findTextInArray(vehicle_data_list, "PLATE #")
-          ]
-        ) {
-          vehicle =
-            vehicle_data_list.content[y][
-              findTextInArray(vehicle_data_list, "VEHICLE")
-            ];
-          type_of_vehicle =
-            vehicle_data_list.content[y][
-              findTextInArray(vehicle_data_list, "TYPE OF VEHICLE")
-            ];
-        }
-      }
+    for (let x = 1; x < mjo_data_list.content.length; x++) {
       data_value += `
             <tr>
                 <td>${data_value_counter}</td>
                 <td>${
-                  vmr_data_list.content[x][
-                    findTextInArray(vmr_data_list, "VMR #")
+                  mjo_data_list.content[x][
+                    findTextInArray(mjo_data_list, "MJO #")
                   ]
                 }</td>
                 <td>${date_decoder(
-                  vmr_data_list.content[x][
-                    findTextInArray(vmr_data_list, "CREATED AT")
+                  mjo_data_list.content[x][
+                    findTextInArray(mjo_data_list, "CREATED AT")
                   ]
                 )} /<br> ${time_decoder(
-        vmr_data_list.content[x][findTextInArray(vmr_data_list, "CREATED AT")]
+        mjo_data_list.content[x][findTextInArray(mjo_data_list, "CREATED AT")]
       )}</td>
                 <td>${
-                  vmr_data_list.content[x][
-                    findTextInArray(vmr_data_list, "PLATE #")
-                  ]
-                }</td>
-                <td>${vehicle}</td>
-                <td>${type_of_vehicle}</td>
-                <td>${
-                  vmr_data_list.content[x][
-                    findTextInArray(vmr_data_list, "DETAILS")
+                  mjo_data_list.content[x][
+                    findTextInArray(mjo_data_list, "JOB CATEGORY")
                   ]
                 }</td>
                 <td>${
-                  vmr_data_list.content[x][
-                    findTextInArray(vmr_data_list, "REQUISITIONER")
+                  mjo_data_list.content[x][
+                    findTextInArray(mjo_data_list, "FOR MAINTENANCE")
                   ]
                 }</td>
                 <td>${
-                  vmr_data_list.content[x][
-                    findTextInArray(vmr_data_list, "SUBMITTED BY")
+                  mjo_data_list.content[x][
+                    findTextInArray(mjo_data_list, "DETAILS")
+                  ]
+                }</td>
+                <td>${
+                  mjo_data_list.content[x][
+                    findTextInArray(mjo_data_list, "REQUISITIONER")
+                  ]
+                }</td>
+                <td>${
+                  mjo_data_list.content[x][
+                    findTextInArray(mjo_data_list, "DEPARTMENT")
                   ]
                 }</td>
             </tr>
             `;
       data_value_counter += 1;
     }
-    vehicle_maintenance_request_list.innerHTML = data_value;
+    maintenance_job_order_request_list.innerHTML = data_value;
 
     // vehicle_inspection
     // vif_data_list
