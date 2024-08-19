@@ -176,6 +176,20 @@ document.addEventListener("DOMContentLoaded", async function () {
         findTextInArray(username_data_list, "DEPARTMENT")
       ];
 
+    const mtf_data_list_SUBMIT_TO = findTextInArray(mtf_data_list, "SUBMIT TO");
+    const mtf_data_list_STATUS = findTextInArray(mtf_data_list, "STATUS");
+    const mtf_data_list_MTF = findTextInArray(mtf_data_list, "MTF #");
+    const mtf_data_list_HAULING_DATE = findTextInArray(
+      mtf_data_list,
+      "HAULING DATE"
+    );
+    const mtf_data_list_HAULING_TIME = findTextInArray(
+      mtf_data_list,
+      "HAULING TIME"
+    );
+    const mtf_data_list_CLIENT_ID = findTextInArray(mtf_data_list, "CLIENT ID");
+    const mtf_data_list_WASTE_ID = findTextInArray(mtf_data_list, "WASTE ID");
+
     // logistic_dashboard
     const logistic_dashboard = document.querySelector("#logistic_dashboard");
     const booked_transactions_logistics = logistic_dashboard.querySelector(
@@ -205,6 +219,66 @@ document.addEventListener("DOMContentLoaded", async function () {
     var newElements_logistics = [];
     var newElements2_logistics = [];
     var newElements3_logistics = [];
+
+    // Main logic to process the mtf_data_list array
+    const haulingDateIndex = mtf_data_list_HAULING_DATE;
+    const today = new Date();
+
+    // Function to get the start of the week based on a given date
+    function getStartOfWeek(date) {
+      const currentDay = date.getDay();
+      const diff = currentDay < 6 ? currentDay + 1 : 0; // Adjust for Saturday (0) as the start of the week
+      const startOfWeek = new Date(date);
+      startOfWeek.setDate(date.getDate() - diff);
+      startOfWeek.setHours(0, 0, 0, 0);
+      return startOfWeek;
+    }
+
+    // Function to get the week number based on a date
+    function getWeekNumber(date) {
+      const startOfYear = new Date(date.getFullYear(), 0, 1);
+      const pastDaysOfYear =
+        (date - startOfYear) / 86400000 + startOfYear.getDay() + 1;
+      return Math.ceil(pastDaysOfYear / 7);
+    }
+
+    function getWeekStartEnd(weekNumber) {
+      const currentYear = new Date().getFullYear();
+      const startOfYear = new Date(currentYear, 0, 1);
+      const dayOfWeek = startOfYear.getDay();
+      const daysToAdd =
+        (weekNumber - 1) * 7 + (dayOfWeek > 6 ? 0 : 6 - dayOfWeek);
+
+      const startOfWeek = new Date(startOfYear);
+      startOfWeek.setDate(startOfYear.getDate() + daysToAdd);
+      startOfWeek.setHours(0, 0, 0, 0);
+
+      const endOfWeek = new Date(startOfWeek);
+      endOfWeek.setDate(startOfWeek.getDate() + 6);
+      endOfWeek.setHours(23, 59, 59, 999);
+
+      const options = { year: "numeric", month: "long", day: "numeric" };
+      const startFormatted = startOfWeek.toLocaleDateString("en-US", options);
+      const endFormatted = endOfWeek.toLocaleDateString("en-US", options);
+
+      return `${startFormatted} - ${endFormatted}`;
+    }
+
+    // Calculate the start dates for the current and previous weeks
+    const currentWeekStart = getStartOfWeek(today);
+    const lastWeekStart = new Date(currentWeekStart);
+    lastWeekStart.setDate(currentWeekStart.getDate() - 7);
+    const last2WeeksStart = new Date(currentWeekStart);
+    last2WeeksStart.setDate(currentWeekStart.getDate() - 14);
+    const last3WeeksStart = new Date(currentWeekStart);
+    last3WeeksStart.setDate(currentWeekStart.getDate() - 21);
+
+    // Arrays to store rows for each week
+    const currentWeek = [];
+    const lastWeek = [];
+    const last2Weeks = [];
+    const last3Weeks = [];
+
     function getCurrentMonthName() {
       const months = [
         "JANUARY",
@@ -270,6 +344,20 @@ document.addEventListener("DOMContentLoaded", async function () {
               mtf_data_list.content[i][findTextInArray(mtf_data_list, "MTF #")]
             );
           }
+        }
+
+        const haulingDateStr = mtf_data_list.content[i][haulingDateIndex];
+        const haulingDateNew = new Date(haulingDateStr);
+        const haulingWeekStart = getStartOfWeek(haulingDateNew);
+
+        if (haulingWeekStart.getTime() === currentWeekStart.getTime()) {
+          currentWeek.push(mtf_data_list.content[i]);
+        } else if (haulingWeekStart.getTime() === lastWeekStart.getTime()) {
+          lastWeek.push(mtf_data_list.content[i]);
+        } else if (haulingWeekStart.getTime() === last2WeeksStart.getTime()) {
+          last2Weeks.push(mtf_data_list.content[i]);
+        } else if (haulingWeekStart.getTime() === last3WeeksStart.getTime()) {
+          last3Weeks.push(mtf_data_list.content[i]);
         }
       }
 
@@ -2273,6 +2361,290 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // Initialize counts and percentage on page load
     updateCounts();
+
+    // marketing_weekly_report
+    // Get the week numbers
+    const currentWeekNumber = getWeekNumber(currentWeekStart);
+    const lastWeekNumber = getWeekNumber(lastWeekStart);
+    const last2WeeksNumber = getWeekNumber(last2WeeksStart);
+    const last3WeeksNumber = getWeekNumber(last3WeeksStart);
+
+    const weekArray = [
+      currentWeekNumber,
+      lastWeekNumber,
+      last2WeeksNumber,
+      last3WeeksNumber,
+    ];
+
+    const weekData = {
+      [currentWeekNumber]: currentWeek,
+      [lastWeekNumber]: lastWeek,
+      [last2WeeksNumber]: last2Weeks,
+      [last3WeeksNumber]: last3Weeks,
+    };
+
+    const week_filter = document.getElementById("week_filter");
+    const week_dates = document.getElementById("week_dates");
+    const transaction_per_client = document.getElementById(
+      "transaction_per_client"
+    );
+    const transaction_comparison = document.getElementById(
+      "transaction_comparison"
+    );
+    const transaction_comparison_head = document.getElementById(
+      "transaction_comparison_head"
+    );
+    const transaction_history = document.getElementById("transaction_history");
+    const booked_transactions = document.getElementById("total_transactions");
+    const inhouse_logistics_transactions = document.getElementById(
+      "inhouse_logistics_transactions"
+    );
+    const other_logistics_transactions = document.getElementById(
+      "other_logistics_transactions"
+    );
+    const cancelled_transactions = document.getElementById(
+      "cancelled_transactions"
+    );
+
+    weekArray.forEach((item) => {
+      week_filter.insertAdjacentHTML(
+        "beforeend",
+        `<option value=${item}>Week ${item}</option>`
+      );
+    });
+
+    var inhouse_logistics_transactions_counter = 0;
+    var other_logistics_transactions_counter = 0;
+    var cancelled_transactions_counter = 0;
+    var previous_inhouse_logistics_transactions_counter = 0;
+    var previous_other_logistics_transactions_counter = 0;
+    var previous_cancelled_transactions_counter = 0;
+
+    function updateTransactionHistoryTable(weekNumber) {
+      inhouse_logistics_transactions_counter = 0;
+      other_logistics_transactions_counter = 0;
+      cancelled_transactions_counter = 0;
+      previous_inhouse_logistics_transactions_counter = 0;
+      previous_other_logistics_transactions_counter = 0;
+      previous_cancelled_transactions_counter = 0;
+
+      const data = weekData[weekNumber] || [];
+      const previous_data = weekData[weekNumber - 1] || [];
+
+      // Sort the data by date and time
+      data.sort((a, b) => {
+        const dateA = new Date(a[mtf_data_list_HAULING_DATE]);
+        const dateB = new Date(b[mtf_data_list_HAULING_DATE]);
+        const timeA = a[mtf_data_list_HAULING_TIME];
+        const timeB = b[mtf_data_list_HAULING_TIME];
+
+        if (dateA.getTime() === dateB.getTime()) {
+          return timeA.localeCompare(timeB);
+        }
+        return dateA - dateB;
+      });
+
+      // Aggregate data by client
+      const clientData = {};
+
+      // Update transaction_history table
+      transaction_history.innerHTML = "";
+      data.forEach((row, index) => {
+        if (row[mtf_data_list_STATUS] != "FOR HAULING") {
+          if (row[mtf_data_list_SUBMIT_TO] === "LOGISTICS") {
+            inhouse_logistics_transactions_counter++;
+          } else if (row[mtf_data_list_SUBMIT_TO] === "RECEIVING") {
+            other_logistics_transactions_counter++;
+          } else {
+            cancelled_transactions_counter++;
+          }
+          const rowHtml = `
+            <tr>
+              <td>${index + 1}</td>
+              <td>${row[mtf_data_list_MTF]}</td>
+              <td>${date_decoder(row[mtf_data_list_HAULING_DATE])}</td>
+              <td>${time_decoder(row[mtf_data_list_HAULING_TIME])}</td>
+              <td>${findClientName(row[mtf_data_list_CLIENT_ID])}</td>
+              <td>${findWasteName(
+                row[mtf_data_list_CLIENT_ID],
+                row[mtf_data_list_WASTE_ID]
+              )}</td>
+            </tr>
+          `;
+          transaction_history.insertAdjacentHTML("beforeend", rowHtml);
+
+          const clientId = row[mtf_data_list_CLIENT_ID];
+          const clientName = findClientName(clientId);
+          const isLogistics = row[mtf_data_list_SUBMIT_TO] === "LOGISTICS";
+          const isReceiving = row[mtf_data_list_SUBMIT_TO] === "RECEIVING";
+
+          if (!clientData[clientName]) {
+            clientData[clientName] = { logistics: 0, other: 0, cancel: 0 };
+          }
+
+          if (isLogistics) {
+            clientData[clientName].logistics++;
+          } else if (isReceiving) {
+            clientData[clientName].other++;
+          } else {
+            clientData[clientName].cancel++;
+          }
+        }
+      });
+
+      previous_data.forEach((row, index) => {
+        if (row[mtf_data_list_SUBMIT_TO] === "LOGISTICS") {
+          previous_inhouse_logistics_transactions_counter++;
+        } else if (row[mtf_data_list_SUBMIT_TO] === "RECEIVING") {
+          previous_other_logistics_transactions_counter++;
+        } else {
+          previous_cancelled_transactions_counter++;
+        }
+      });
+
+      transaction_comparison.insertAdjacentElement;
+
+      // Update counters
+      booked_transactions.innerText =
+        inhouse_logistics_transactions_counter +
+        other_logistics_transactions_counter +
+        cancelled_transactions_counter;
+      inhouse_logistics_transactions.innerText =
+        inhouse_logistics_transactions_counter;
+      other_logistics_transactions.innerText =
+        other_logistics_transactions_counter;
+      cancelled_transactions.innerText = cancelled_transactions_counter;
+
+      var options = {
+        series: [
+          inhouse_logistics_transactions_counter,
+          other_logistics_transactions_counter,
+          cancelled_transactions_counter,
+        ],
+        chart: {
+          width: 500, // Set the desired width
+          height: 550, // Set the desired height
+          type: "pie",
+        },
+        plotOptions: {
+          pie: {
+            startAngle: 0,
+            endAngle: 360,
+          },
+        },
+        dataLabels: {
+          enabled: false, // Disable data labels inside the pie chart
+        },
+        fill: {
+          type: "gradient", // Use solid fill type
+        },
+        legend: {
+          show: true,
+          position: "left", // Set the legend position to "left"
+          fontSize: "20px", // Increase legend font size as needed
+          formatter: function (seriesName, opts) {
+            // Here, you should use the correct variable to get the series value
+            var seriesValue = opts.w.globals.series[opts.seriesIndex];
+            var totalValue = opts.w.globals.series.reduce(
+              (acc, val) => acc + val,
+              0
+            );
+            var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
+            return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
+          },
+          labels: {
+            useSeriesColors: false, // Use custom color
+          },
+        },
+        labels: ["Logistics", "Other Hauler", "Cancelled Trips"],
+        colors: ["#198754", "#FFFF00", "#FF0000"],
+        responsive: [
+          {
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 200,
+              },
+            },
+          },
+        ],
+      };
+      const pieChart2 = document.querySelector("#pieChart2");
+      while (pieChart2.firstChild) {
+        pieChart2.removeChild(pieChart2.firstChild);
+      }
+      var chart = new ApexCharts(pieChart2, options);
+      chart.render();
+
+      // Update transaction_per_client table
+      transaction_per_client.innerHTML = "";
+      Object.entries(clientData).forEach(([clientName, counts], index) => {
+        const rowHtml = `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${clientName}</td>
+            <td>${counts.logistics}</td>
+            <td>${counts.other}</td>
+            <td>${counts.cancel}</td>
+          </tr>
+        `;
+        transaction_per_client.insertAdjacentHTML("beforeend", rowHtml);
+      });
+
+      const comparison = `
+      <tr>
+        <td>LOGISTICS</td>
+        <td>${inhouse_logistics_transactions_counter}</td>
+        <td>${previous_inhouse_logistics_transactions_counter}</td>
+      </tr>
+      <tr>
+        <td>OTHER HAULER</td>
+        <td>${other_logistics_transactions_counter}</td>
+        <td>${previous_other_logistics_transactions_counter}</td>
+      </tr>
+      <tr>
+        <td>CANCELLED TRIPS</td>
+        <td>${cancelled_transactions_counter}</td>
+        <td>${previous_cancelled_transactions_counter}</td>
+      </tr>
+      <tr>
+        <td>TOTAL</td>
+        <td>${
+          inhouse_logistics_transactions_counter +
+          other_logistics_transactions_counter +
+          cancelled_transactions_counter
+        }</td>
+        <td>${
+          previous_inhouse_logistics_transactions_counter +
+          previous_other_logistics_transactions_counter +
+          previous_cancelled_transactions_counter
+        }</td>
+      </tr>
+    `;
+
+      const comparison_head = `
+      <tr>
+        <th>DETAILS</th>
+        <th>WEEK ${weekNumber}</th>
+        <th>WEEK ${weekNumber - 1}</th>
+      </tr>
+
+    `;
+
+      transaction_comparison.innerHTML = comparison;
+
+      transaction_comparison_head.innerHTML = comparison_head;
+
+      week_dates.innerText = getWeekStartEnd(weekNumber);
+    }
+
+    // Initialize the table with the current week's data
+    updateTransactionHistoryTable(currentWeekNumber);
+
+    week_filter.addEventListener("change", (event) => {
+      const selectedWeekNumber = event.target.value;
+      updateTransactionHistoryTable(selectedWeekNumber);
+    });
 
     // multi section
     // ACCOMPLISHMENT REPORT
