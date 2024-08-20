@@ -1970,6 +1970,11 @@ document.addEventListener("DOMContentLoaded", async function () {
                 }</td>
                 <td>${
                   mjo_data_list.content[x][
+                    findTextInArray(mjo_data_list, "PRIORITY LEVEL")
+                  ]
+                }</td>
+                <td>${
+                  mjo_data_list.content[x][
                     findTextInArray(mjo_data_list, "FOR MAINTENANCE")
                   ]
                 }</td>
