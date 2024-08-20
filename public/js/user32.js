@@ -68,37 +68,37 @@ document.addEventListener("DOMContentLoaded", async function () {
     const departments = document.querySelectorAll("#department");
 
     const user_name =
-      username_data_list.content[29][
+      username_data_list.content[32][
         findTextInArray(username_data_list, "NAME")
       ];
     profile_picture.src = `../images/profile_picture/${
-      username_data_list.content[29][
+      username_data_list.content[32][
         findTextInArray(username_data_list, "PICTURE")
       ]
     }`;
     users.forEach((user) => {
       user.value =
-        username_data_list.content[29][
+        username_data_list.content[32][
           findTextInArray(username_data_list, "NAME")
         ];
     });
     departments.forEach((user) => {
       user.value =
-        username_data_list.content[29][
+        username_data_list.content[32][
           findTextInArray(username_data_list, "DEPARTMENT")
         ];
     });
     user_sidebar.innerHTML = `<u>${
-      username_data_list.content[29][
+      username_data_list.content[32][
         findTextInArray(username_data_list, "NAME")
       ]
     }</u>`;
     user_sidebar_officer.innerText =
-      username_data_list.content[29][
+      username_data_list.content[32][
         findTextInArray(username_data_list, "SECTIONS")
       ];
     user_sidebar_department.innerText =
-      username_data_list.content[29][
+      username_data_list.content[32][
         findTextInArray(username_data_list, "DEPARTMENT")
       ];
 
@@ -180,12 +180,7 @@ document.addEventListener("DOMContentLoaded", async function () {
           ? "PENDING"
           : "APPROVED";
         if (
-          (mjo_data_list.content[i][mjo_data_list_JOB_CATEGORY] ===
-            "CARPENTRY" ||
-            mjo_data_list.content[i][mjo_data_list_JOB_CATEGORY] ===
-              "MASONRY" ||
-            mjo_data_list.content[i][mjo_data_list_JOB_CATEGORY] ===
-              "PLUMBING") &&
+          mjo_data_list.content[i][mjo_data_list_JOB_CATEGORY] === "COMPUTER" &&
           month_filter.value ==
             formatMonth(mjo_data_list.content[i][mjo_data_list_CREATED_AT])
         ) {

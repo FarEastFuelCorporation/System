@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     const username_response_promise = fetch(
       "https://script.google.com/macros/s/AKfycbwmA97K4sdfq6dhzSsp14JU9KgQrFgSARNZbvSfiU7vuH8oEipt6TmcFo_o-jCI0kiQ/exec"
     );
+    const maintenance_job_order_response_promise = fetch(
+      "https://script.google.com/macros/s/AKfycbxN9q1p4FSHbE-grd4AIE5cqPJh__dALmmWT9FEZorl2Q-aQsUgYQlIBtCi9COs7mD6/exec"
+    );
     const employee_response_promise = fetch(
       "https://script.google.com/macros/s/AKfycbwns5R6TA8U64ywbb9hwYu4LKurAjTM0Z18NYNZMt0Ft0m-_NUHYbYqblk_5KWugvt7lA/exec"
     );
@@ -24,6 +27,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     const [
       username_response,
+      maintenance_job_order_response,
       employee_response,
       client_list_response,
       type_of_waste_response,
@@ -32,6 +36,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       accomplishment_response,
     ] = await Promise.all([
       username_response_promise,
+      maintenance_job_order_response_promise,
       employee_response_promise,
       client_list_response_promise,
       type_of_waste_response_promise,
@@ -41,6 +46,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     ]);
 
     const username_data_list = await username_response.json();
+    const mjo_data_list = await maintenance_job_order_response.json();
     const employee_data_list = await employee_response.json();
     const client_data_list = await client_list_response.json();
     const type_of_waste_data_list = await type_of_waste_response.json();
@@ -96,9 +102,47 @@ document.addEventListener("DOMContentLoaded", async function () {
         findTextInArray(username_data_list, "DEPARTMENT")
       ];
 
+    const mjo_data_list_MJO = findTextInArray(mjo_data_list, "MJO #");
+    const mjo_data_list_JOB_CATEGORY = findTextInArray(
+      mjo_data_list,
+      "JOB CATEGORY"
+    );
+    const mjo_data_list_PRIORITY_LEVEL = findTextInArray(
+      mjo_data_list,
+      "PRIORITY LEVEL"
+    );
+    const mjo_data_list_FOR_MAINTENANCE = findTextInArray(
+      mjo_data_list,
+      "FOR MAINTENANCE"
+    );
+    const mjo_data_list_DETAILS = findTextInArray(mjo_data_list, "DETAILS");
+    const mjo_data_list_REQUISITIONER = findTextInArray(
+      mjo_data_list,
+      "REQUISITIONER"
+    );
+    const mjo_data_list_DEPARTMENT = findTextInArray(
+      mjo_data_list,
+      "DEPARTMENT"
+    );
+    const mjo_data_list_CREATED_AT = findTextInArray(
+      mjo_data_list,
+      "CREATED AT"
+    );
+    const mjo_data_list_ASSIGNED_WORKER = findTextInArray(
+      mjo_data_list,
+      "ASSIGNED WORKER"
+    );
+
     // dashboard
-    const dashboard_section = document.querySelector(
-      "#sorting_dashboard_section"
+    const dashboard_section = document.querySelector("#dashboard_section");
+    const job_order = dashboard_section.querySelector("#job_order");
+    const pending = dashboard_section.querySelector("#pending");
+    const accomplished = dashboard_section.querySelector("#accomplished");
+    const maintenance_job_order_request_list = dashboard_section.querySelector(
+      "#maintenance_job_order_request_list"
+    );
+    const accomplished_transactions = dashboard_section.querySelector(
+      "#accomplished_transactions"
     );
 
     const month_filter = document.getElementById("month_filter");
@@ -126,7 +170,116 @@ document.addEventListener("DOMContentLoaded", async function () {
     month_filter.value = getCurrentMonthName();
     month_filter.addEventListener("change", generatePending);
     generatePending();
-    function generatePending() {}
+    function generatePending() {
+      var pending_data_value = "";
+      var pending_data_value_counter = 0;
+      var accomplished_data_value = "";
+      var accomplished_data_value_counter = 0;
+      for (let i = mjo_data_list.content.length - 1; i >= 1; i--) {
+        var status = mjo_data_list.content[i][mjo_data_list_JOB_CATEGORY]
+          ? "PENDING"
+          : "APPROVED";
+        if (
+          (mjo_data_list.content[i][mjo_data_list_JOB_CATEGORY] ===
+            "METAL WORKS" ||
+            mjo_data_list.content[i][mjo_data_list_JOB_CATEGORY] ===
+              "ELECTRICAL") &&
+          month_filter.value ==
+            formatMonth(mjo_data_list.content[i][mjo_data_list_CREATED_AT])
+        ) {
+          if (status === "PENDING") {
+            pending_data_value_counter += 1;
+            pending_data_value += `
+            <tr>
+                <td>${pending_data_value_counter}</td>
+                <td>${mjo_data_list.content[i][mjo_data_list_MJO]}</td>
+                <td>${date_decoder(
+                  mjo_data_list.content[i][mjo_data_list_CREATED_AT]
+                )} /<br> ${time_decoder(
+              mjo_data_list.content[i][mjo_data_list_CREATED_AT]
+            )}</td>
+                <td>${mjo_data_list.content[i][mjo_data_list_JOB_CATEGORY]}</td>
+                <td>${
+                  mjo_data_list.content[i][mjo_data_list_PRIORITY_LEVEL]
+                }</td>
+                <td>${
+                  mjo_data_list.content[i][mjo_data_list_FOR_MAINTENANCE]
+                }</td>
+                <td>${mjo_data_list.content[i][mjo_data_list_DETAILS]}</td>
+                <td>${mjo_data_list.content[i][mjo_data_list_DEPARTMENT]}</td>
+                <td>${
+                  mjo_data_list.content[i][mjo_data_list_REQUISITIONER]
+                }</td>
+                <td>${status}</td>
+            </tr>
+            `;
+          }
+        }
+      }
+      pending.innerText = pending_data_value_counter;
+      accomplished.innerText = accomplished_data_value_counter;
+      job_order.innerText =
+        pending_data_value_counter + accomplished_data_value_counter;
+      maintenance_job_order_request_list.innerHTML = pending_data_value;
+      accomplished_transactions.innerHTML = accomplished_data_value;
+
+      var options = {
+        series: [pending_data_value_counter, accomplished_data_value_counter],
+        chart: {
+          width: 500, // Set the desired width
+          height: 550, // Set the desired height
+          type: "pie",
+        },
+        plotOptions: {
+          pie: {
+            startAngle: 0,
+            endAngle: 360,
+          },
+        },
+        dataLabels: {
+          enabled: false, // Disable data labels inside the pie chart
+        },
+        fill: {
+          type: "gradient", // Use solid fill type
+        },
+        legend: {
+          show: true,
+          position: "left", // Set the legend position to "left"
+          fontSize: "20px", // Increase legend font size as needed
+          formatter: function (seriesName, opts) {
+            // Here, you should use the correct variable to get the series value
+            var seriesValue = opts.w.globals.series[opts.seriesIndex];
+            var totalValue = opts.w.globals.series.reduce(
+              (acc, val) => acc + val,
+              0
+            );
+            var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
+            return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
+          },
+          labels: {
+            useSeriesColors: false, // Use custom color
+          },
+        },
+        labels: ["Pending", "Accomplished"],
+        colors: ["#dc3545", "#198754"], // Specify solid colors here
+        responsive: [
+          {
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 200,
+              },
+            },
+          },
+        ],
+      };
+      const pieChart = document.querySelector("#pieChart");
+      while (pieChart.firstChild) {
+        pieChart.removeChild(pieChart.firstChild);
+      }
+      var chart = new ApexCharts(pieChart, options);
+      chart.render();
+    }
 
     // ACCOMPLISHMENT REPORT
     const accomplishment_report_section = document.querySelector(
