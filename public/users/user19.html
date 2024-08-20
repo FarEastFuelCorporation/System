@@ -58,14 +58,8 @@
                 </li>
                 <li>
                     <a href="#">
-                        <i class="fa-solid fa-wrench"></i>
-                        Vehicle Maintenance Transactions
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa-solid fa-screwdriver-wrench"></i>
-                        Preventive Maintenance Transactions
+                        <i class="fa-solid fa-calendar-check"></i>
+                        Accomplishment Report
                     </a>
                 </li>
                 <li>
@@ -293,285 +287,266 @@
             </div>
         </div>
         <!-- dashboard -->
-        <section id="sorting_dashboard_section">
-            <h2>DASHBOARD</h2><br>
-            <h2>MAINTENANCE SUMMARY</h2>
-            <div class="cards">
-                <div class="card">
-                    <div class="card-content">
-                        <div class="number" id="to_received"></div>
-                        <div class="card-name">Maintenance Requests</div>
-                    </div>
-                    <div class="icon-box">
-                        <i class="fa-solid fa-clipboard-list"></i>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-content">
-                        <div class="number" id="pending"></div>
-                        <div class="card-name">Pending Transaction</div>
-                    </div>
-                    <div class="icon-box">
-                        <i class="fa-solid fa-toolbox"></i>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-content">
-                        <div class="number" id="received"></div>
-                        <div class="card-name">Repaired Transaction</div>
-                    </div>
-                    <div class="icon-box">
-                        <i class="fa-solid fa-wrench"></i>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-content">
-                        <div class="number" id="preventive_maintenance"></div>
-                        <div class="card-name">Preventive Maintenance</div>
-                    </div>
-                    <div class="icon-box">
-                        <i class="fa-solid fa-screwdriver-wrench"></i>
-                    </div>
-                </div>
-                <div style="position: relative;">
-                    <div id="pieChart" style="position: absolute; margin-top: -40px;">
-                    </div>
-                </div>
-            </div><br>
-            <h2>PENDING TRANSACTIONS</h2>
-            <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
-                <div class="list">
-                    <table>
-                        <thead style="position: sticky; top: 0; background-color: black;">
-                            <th>#</th>
-                            <th>VMR #</th>
-                            <th>REQUEST<br>DATE/TIME</th>
-                            <th>PLATE #</th>
-                            <th>VEHICLE NAME</th>
-                            <th>TYPE OF VEHICLE</th>
-                            <th>DETAILS FOR REPAIR</th>
-                            <th>REQUISITIONER</th>
-                            <th>SUBMITTED BY</th>
-                        </thead>
-                        <tbody id="pending_list"></tbody>
-                    </table>
-                    <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
-                </div>
-            </div><br>
-            <h2>TRANSACTION HISTORY</h2>
-            <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
-                <div class="list">
-                    <table>
-                        <thead style="position: sticky; top: 0; background-color: black;">
-                            <th>#</th>
-                            <th>VMF #/<br>PMF #</th>
-                            <th>VMR #</th>
-                            <th>MAINTENANCE<br>DATE/TIME</th>
-                            <th>PLATE #</th>
-                            <th>VEHICLE NAME</th>
-                            <th>TYPE OF VEHICLE</th>
-                            <th>DETAILS FOR REPAIR</th>
-                            <th>REQUISITIONER</th>
-                            <th>MECHANIC NAME</th>
-                            <th>SUBMITTED BY</th>
-                        </thead>
-                        <tbody id="received_list">
-
-                        </tbody>
-                    </table>
-                    <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
-                </div>
-            </div>
-        </section>
-        <!-- VEHICLE MAINTENANCE FORM -->
-        <section id="waste_collection_form">
-            <h2>VEHICLE MAINTENANCE FORM</h2><br>
-            <form id="form_id" action="https://script.google.com/macros/s/AKfycbxECjQTqJQx7XJN_L7913FL6k7y7UOWhjdxr-1fq9UdounJntHW-dikM4zrXs8ZnYrWHw/exec" method="post">
-                <input type="hidden" name="user" id="user">
-                <div class="vmf_form_no">
-                    <div>
-                        <label for="wcf_form_no">
-                            <i class="fa-solid fa-list-ol"></i>
-                            VMF #
-                        </label><br>
-                        <div class="form">
-                            <input type="text" id="vmf_form_no" autocomplete="off" name="vmf_form_no" class="form-control" readonly><br>
+            <section id="dashboard_section">
+                <h2>DASHBOARD</h2><br>
+                <h2>MAINTENANCE JOB ORDER SUMMARY</h2>
+                <div class="cards2">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="job_order"></div>
+                            <div class="card-name">Job Order</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-wrench"></i>
                         </div>
                     </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="pending"></div>
+                            <div class="card-name">Pending</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-clipboard-list"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="number" id="accomplished"></div>
+                            <div class="card-name">Accomplished</div>
+                        </div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-clipboard-check"></i>
+                        </div>
+                    </div>
+                    <div style="position: relative;">
+                        <div id="pieChart" style="position: absolute; margin-top: -40px;">
+                        </div>
+                    </div>
+                </div><br>
+                <h2>PENDING TRANSACTIONS</h2>
+                <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
+                    <div class="list">
+                        <table>
+                            <thead style="position: sticky; top: 0; background-color: black;">
+                                <th>#</th>
+                                <th>MJO #</th>
+                                <th>REQUEST<br />DATE/TIME</th>
+                                <th>JOB CATEGORY</th>
+                                <th>PRIORITY LEVEL</th>
+                                <th>FOR MAINTENANCE</th>
+                                <th>DETAILS FOR REPAIR</th>
+                                <th>REQUISITIONER</th>
+                                <th>DEPARTMENT</th>
+                                <th>STATUS</th>
+                            </thead>
+                            <tbody id="maintenance_job_order_request_list"></tbody>
+                        </table>
+                        <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
+                </div><br>
+                <h2>TRANSACTION HISTORY</h2>
+                <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
+                    <div class="list">
+                        <table>
+                            <thead style="position: sticky; top: 0; background-color: black;">
+                                <th>#</th>
+                                <th>MJO #</th>
+                                <th>REQUEST<br />DATE/TIME</th>
+                                <th>JOB CATEGORY</th>
+                                <th>PRIORITY LEVEL</th>
+                                <th>FOR MAINTENANCE</th>
+                                <th>DETAILS FOR REPAIR</th>
+                                <th>REQUISITIONER</th>
+                                <th>DEPARTMENT</th>
+                                <th>STATUS</th>
+                            </thead>
+                            <tbody id="accomplished_transactions">
+
+                            </tbody>
+                        </table>
+                        <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
                 </div>
-                <div class="wcf_form">
-                    <div>
-                        <label for="search_vmr_form_no">
-                            <i class="fa-solid fa-list-ol"></i>
-                            Search VMR #
-                        </label>
-                        <div class="wcf_form">
-                            <div class="form">
-                                <input type="text" id="search_vmr_form_no" autocomplete="off" name="search_vmr_form_no" class="form-control"><br>
+            </section>
+            <!-- accomplishment_report -->
+            <section class="marketing" id="accomplishment_report">
+                <h2>ACCOMPLISHMENT REPORT</h2>
+                <div>
+                    <label class="d-flex gap-3">
+                        <button type="button" id="new_accomplishment_report_button" class="form-control fw-bold fs-3 bg-success text-white">
+                            <h2>NEW</h2>
+                        </button>
+                        <button type="button" id="update_accomplishment_report_button" class="form-control fw-bold fs-3 bg-danger text-white">
+                            <h2>UPDATE</h2>
+                        </button>
+                    </label><br>
+                </div>
+                <div class="table" style="max-height: 70vh; align-items: start; overflow: scroll;">                            
+                    <div class="list">
+                        <table>
+                            <thead style="position: sticky; top: 0; background-color: black;">
+                                <th>#</th>
+                                <th>AR ID #</th>
+                                <th>TASK ID #</th>
+                                <th>TASKS</th>
+                                <th>ACCOMPLISHMENT</th>
+                                <th>START<br>DATE/TIME</th>
+                                <th>FINISH<br>DATE/TIME</th>
+                                <th>DURATION</th>
+                                <th style="width: 150px;">PERCENTAGE</th>
+                            </thead>
+                            <tbody id="accomplishment_report_list">
+
+                            </tbody>
+                        </table>
+                        <div class="text-center text_end">>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    </div>
+                </div><br>
+                <div id="new_accomplishment_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
+                    <h2>NEW ACCOMPLISHMENT REPORT FORM</h2><br>
+                    <form  action="https://script.google.com/macros/s/AKfycbwgEc6ij6bHanbwPn4NH4Nak0uCfIC7vCwsm-sGK19EPCuVCHktMubyxfeu-bgd-46x6Q/exec" method="post">
+                        <input type="hidden" name="user" id="user">
+                        <input type="hidden" name="user_department" id="user_department">
+                        <div class="row">
+                            <div class="col-12 col-lg-6">
+                                <label for="task">
+                                    <i class="fa-solid fa-briefcase"></i>
+                                    Task
+                                    </label><br>
+                                <input type="text" name="task" id="task" autocomplete="off" class="form-control" required placeholder="Input Task Name..."><br>
+                                <label for="percentage">
+                                    <i class="fa-solid fa-hourglass-half"></i>
+                                    Percentage
+                                </label><br>
+                                <div class="range">
+                                    <div class="sliderValue">
+                                        <span id="sliderValue">0%</span>
+                                    </div>
+                                    <div class="field">
+                                        <div class="value left">0%</div>
+                                        <input type="range" name="percentage" id="percentage" autocomplete="off" min="0" max="100" value="0" step="1" required>
+                                        <div class="value right">100%</div>
+                                    </div>
+                                </div><br>
+                                <label for="accomplishment">
+                                    <i class="fa-solid fa-calendar-check"></i>
+                                    Accomplishment
+                                </label><br>
+                                <input type="text" name="accomplishment" id="accomplishment" autocomplete="off" class="form-control" required placeholder="Input Accomplishment..."><br>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label for="ar_date_start">
+                                            <i class="fa-solid fa-calendar-days"></i>
+                                            Date/Time Start
+                                        </label>
+                                        <div>
+                                            <input type="date" id="ar_date_start" name="ar_date_start" class="form-control" required>
+                                            <input type="time" id="ar_time_start" name="ar_time_start" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="ar_date_finished">
+                                            <i class="fa-solid fa-calendar-days"></i>
+                                            Date/Time Finished
+                                        </label>
+                                        <div>
+                                            <input type="date" id="ar_date_finished" name="ar_date_finished" class="form-control" readonly>
+                                            <input type="time" id="ar_time_finished" name="ar_time_finished" class="form-control" readonly>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            <div class="buttons">
+                                <button type="submit" id="submit_btn" class="form-control">
+                                    Submit
+                                </button>
+                                <button type="reset" id="reset" class="form-control" >
+                                    Clear
+                                </button>
+                            </div>    
+                        </div>
+                    </form>
+                </div>
+                <div id="update_accomplishment_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #dc3545; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
+                    <h2>UPDATE ACCOMPLISHMENT REPORT FORM</h2><br>
+                    <form  action="https://script.google.com/macros/s/AKfycbyfpK6rKZY6WEsQuvAuOSbIrVYUWJHECzX75IY2Et12qptEiuISIVEr2t5yYj_Uju0/exec" method="post">
+                        <input type="hidden" name="user" id="user">
+                        <input type="hidden" name="user_department" id="user_department">
+                        <div style="display: flex; gap: 20px;">
                             <div>
-                                <button id="search_vmr_form_no_button" class="form-control" type="button">
+                                <label for="task_id">
+                                    <i class="fa-solid fa-bars-progress"></i>
+                                    Task ID
+                                    </label><br>
+                                <input type="text" name="task_id" id="task_id" autocomplete="off" class="form-control form" required>
+                            </div>
+                            <div style="display: flex; align-items: end;">
+                                <button id="task_id_button" type="button" class="form-control" style="width: 60px; height: 60px;">
                                     <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
                                 </button>
                             </div>
-                            <div>
-                                <button id="clear_vmr_form_no_button" type="button" class="form-control">
-                                    <i class="fa-solid fa-rectangle-xmark" style="color: #ffffff;"></i>
-                                </button>
+                        </div><br>
+                        <div class="row" style="display: none;" id="ar_details">
+                            <div class="col-12 col-lg-6">
+                                <label for="task">
+                                    <i class="fa-solid fa-briefcase"></i>
+                                    Task
+                                    </label><br>
+                                <input type="text" name="task" id="task" autocomplete="off" class="form-control" required placeholder="Input Task Name..." readonly><br>
+                                <label for="percentage">
+                                    <i class="fa-solid fa-hourglass-half"></i>
+                                    Percentage
+                                </label><br>
+                                <div class="range">
+                                    <div class="sliderValue">
+                                        <span id="sliderValue">0%</span>
+                                    </div>
+                                    <div class="field">
+                                        <div class="value left">0%</div>
+                                        <input type="range" name="percentage" id="percentage" autocomplete="off" min="0" max="100" value="0" step="1" required>
+                                        <div class="value right">100%</div>
+                                    </div>
+                                </div><br>
+                                <label for="accomplishment">
+                                    <i class="fa-solid fa-calendar-check"></i>
+                                    Accomplishment
+                                </label><br>
+                                <input type="text" name="accomplishment" id="accomplishment" autocomplete="off" class="form-control" required placeholder="Input Accomplishment..."><br>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label for="ar_date_start">
+                                            <i class="fa-solid fa-calendar-days"></i>
+                                            Date/Time Start
+                                        </label>
+                                        <div>
+                                            <input type="date" id="ar_date_start" name="ar_date_start" class="form-control" readonly>
+                                            <input type="time" id="ar_time_start" name="ar_time_start" class="form-control" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="ar_date_finished">
+                                            <i class="fa-solid fa-calendar-days"></i>
+                                            Date/Time Finished
+                                        </label>
+                                        <div>
+                                            <input type="date" id="ar_date_finished" name="ar_date_finished" class="form-control" readonly>
+                                            <input type="time" id="ar_time_finished" name="ar_time_finished" class="form-control" readonly>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            <div class="buttons">
+                                <button type="submit" id="submit_btn" class="form-control">
+                                    Submit
+                                </button>
+                                <button type="reset" id="reset" class="form-control" >
+                                    Clear
+                                </button>
+                            </div>  
                         </div>
-                    </div>
+                    </form>
                 </div>
-                <div id="search_vmr_result"></div>
-                <div id="vmr_data" style="display: none;">
-                    <div>
-                        <label for="type_of_repair">
-                            <i class="fa-solid fa-wrench"></i>
-                            Type of Repair
-                        </label><br>
-                        <select name="type_of_repair" id="" class="form-control form" required>
-                            <option value="">SELECT</option>
-                            <option value="MECHANICAL">MECHANICAL</option>
-                            <option value="ELECTRICAL">ELECTRICAL</option>
-                        </select>
-                    </div><br>
-                    <div style="display: flex; gap: 20px;">
-                        <div>
-                            <label for="date_start">
-                                <i class="fa-solid fa-calendar-days"></i>
-                                Date Start
-                            </label><br>
-                            <input type="date" id="date_start" name="date_start" class="form-control form" required autocomplete="off">
-                        </div>
-                        <div>
-                            <label for="date_finish">
-                                <i class="fa-solid fa-calendar-days"></i>
-                                Date Finish
-                            </label><br>
-                            <input type="date" id="date_finish" name="date_finish" class="form-control form" required autocomplete="off">
-                        </div>
-                    </div><br>
-                    <div>
-                        <label for="repair">
-                            <i class="fa-solid fa-toolbox"></i>
-                            Repair Details
-                        </label><br>
-                        <input type="text" id="repair" name="repair" class="form-control" required placeholder="Input Repair Details" autocomplete="off">
-                    </div><br>
-                    <div>
-                        <label for="name_of_mechanic">
-                            <i class="fa-solid fa-toolbox"></i>
-                            Mechanic Name
-                        </label><br>
-                        <input type="text" id="name_of_mechanic" name="name_of_mechanic" class="form-control" required placeholder="Input Name of Mechanic" autocomplete="off">
-                    </div><br>
-                    <div>
-                        <label for="pr_no">
-                            <i class="fa-solid fa-toolbox"></i>
-                            Purchase Request #
-                        </label><br>
-                        <input type="text" id="pr_no" name="pr_no" class="form-control form" placeholder="Input PR # if there is" autocomplete="off">
-                    </div>
-                    <div class="buttons">
-                        <button type="submit" id="submit_btn" class="form-control" >
-                            Submit
-                        </button>
-                        <button type="reset" id="reset" class="form-control">
-                            Clear
-                        </button>
-                    </div>    
-                </div>
-            </form>
-        </section>
-        <!-- VEHICLE MAINTENANCE FORM -->
-        <section id="waste_collection_form">
-            <h2>PREVENTIVE MAINTENANCE TRANSACTIONS</h2><br>
-            <form id="form_id" action="https://script.google.com/macros/s/AKfycbxYVGhnkt5lNz5_c47uWy9ujYXFx0Pm-G9ubxIVP0SEhJH8iuYagbL8bIduRL61I_Rr/exec" method="post">
-                <input type="hidden" name="user" id="user">
-                <div class="wcf_form">
-                    <div>
-                        <label for="pmf_form_no">
-                            <i class="fa-solid fa-list-ol"></i>
-                            PMF #
-                        </label><br>
-                        <div class="form">
-                            <input type="text" id="pmf_form_no" autocomplete="off" name="pmf_form_no" class="form-control" readonly><br>
-                        </div>
-                    </div>
-                </div>
-                <div id="search_vmr_result"></div>
-                <div class="wrapper" style="max-width: 250px;">
-                    <label for="plate_no">
-                        <i class="fa-solid fa-truck"></i>
-                        Plate #
-                    </label><br>
-                    <div class="search_input" id="search_plate_no">
-                        <input type="text" autocomplete="off" name="plate_no" id="plate_no" class="form-control form" required placeholder="Type to Search Plate #...">
-                        <div class="autocom_box">
-                        </div>
-                        <div class="icon"><i class="fas fa-search"></i></div>
-                    </div>
-                </div><br>
-                <div>
-                    <div>
-                        <label for="type_of_repair">
-                            <i class="fa-solid fa-wrench"></i>
-                            Type of Maintenance
-                        </label><br>
-                        <select name="type_of_repair" id="" class="form-control form" required>
-                            <option value="">SELECT</option>
-                            <option value="MECHANICAL">MECHANICAL</option>
-                            <option value="ELECTRICAL">ELECTRICAL</option>
-                        </select>
-                    </div><br>
-                    <div style="display: flex; gap: 20px;">
-                        <div>
-                            <label for="date_start">
-                                <i class="fa-solid fa-calendar-days"></i>
-                                Date Start
-                            </label><br>
-                            <input type="date" id="date_start" name="date_start" class="form-control form" required autocomplete="off">
-                        </div>
-                        <div>
-                            <label for="date_finish">
-                                <i class="fa-solid fa-calendar-days"></i>
-                                Date Finish
-                            </label><br>
-                            <input type="date" id="date_finish" name="date_finish" class="form-control form" required autocomplete="off">
-                        </div>
-                    </div><br>
-                    <div>
-                        <label for="repair">
-                            <i class="fa-solid fa-toolbox"></i>
-                            Maintenance Details
-                        </label><br>
-                        <input type="text" id="repair" name="repair" class="form-control" required placeholder="Input Maintenance Details" autocomplete="off">
-                    </div><br>
-                    <div>
-                        <label for="name_of_mechanic">
-                            <i class="fa-solid fa-toolbox"></i>
-                            Mechanic Name
-                        </label><br>
-                        <input type="text" id="name_of_mechanic" name="name_of_mechanic" class="form-control" required placeholder="Input Name of Mechanic" autocomplete="off">
-                    </div><br>
-                    <div>
-                        <label for="pr_no">
-                            <i class="fa-solid fa-toolbox"></i>
-                            Purchase Request #
-                        </label><br>
-                        <input type="text" id="pr_no" name="pr_no" class="form-control form" placeholder="Input PR # if there is" autocomplete="off">
-                    </div>
-                    <div class="buttons">
-                        <button type="submit" id="submit_btn" class="form-control" >
-                            Submit
-                        </button>
-                        <button type="reset" id="reset" class="form-control">
-                            Clear
-                        </button>
-                    </div>    
-                </div>
-            </form>
-        </section>
+            </section>
         <!-- purchase_request_form -->
         <section class="marketing" id="purchase_request_form">
             <h2>PURCHASE REQUESTS</h2>
@@ -786,5 +761,54 @@
             })
         }
     </script>
+        <script>
+
+            const accomplishment_report_section = document.querySelector("#accomplishment_report");
+            const new_accomplishment_form_tab = accomplishment_report_section.querySelector("#new_accomplishment_form_tab");
+            const slideValue = new_accomplishment_form_tab.querySelector("#sliderValue")
+            const inputSlider = new_accomplishment_form_tab.querySelector("#percentage")
+            const ar_date_finished = new_accomplishment_form_tab.querySelector("#ar_date_finished")
+            const ar_time_finished = new_accomplishment_form_tab.querySelector("#ar_time_finished")
+    
+            inputSlider.oninput = (() => {
+                let value = inputSlider.value;
+                slideValue.textContent = value + "%";
+                slideValue.style.left = (value/2) + "%";
+                if(value == 100){
+                    ar_date_finished.removeAttribute('readonly');
+                    ar_date_finished.setAttribute('required', true);
+                    ar_time_finished.removeAttribute('readonly');
+                    ar_time_finished.setAttribute('required', true);
+                } else {
+                    ar_date_finished.setAttribute('readonly', true);
+                    ar_date_finished.removeAttribute('required');
+                    ar_time_finished.setAttribute('readonly', true);
+                    ar_time_finished.removeAttribute('required');
+                }
+            })
+    
+            const update_accomplishment_form_tab = accomplishment_report_section.querySelector("#update_accomplishment_form_tab");
+            const slideValue2 = update_accomplishment_form_tab.querySelector("#sliderValue")
+            const inputSlider2 = update_accomplishment_form_tab.querySelector("#percentage")
+            const ar_date_finished2 = update_accomplishment_form_tab.querySelector("#ar_date_finished")
+            const ar_time_finished2 = update_accomplishment_form_tab.querySelector("#ar_time_finished")
+            inputSlider2.oninput = (() => {
+                let value = inputSlider2.value;
+                slideValue2.textContent = value + "%";
+                slideValue2.style.left = (value/2) + "%";
+                if(value == 100){
+                    ar_date_finished2.removeAttribute('readonly');
+                    ar_date_finished2.setAttribute('required', true);
+                    ar_time_finished2.removeAttribute('readonly');
+                    ar_time_finished2.setAttribute('required', true);
+                } else {
+                    ar_date_finished2.setAttribute('readonly', true);
+                    ar_date_finished2.removeAttribute('required');
+                    ar_time_finished2.setAttribute('readonly', true);
+                    ar_time_finished2.removeAttribute('required');
+                }
+            })
+    
+        </script>
 </body>
 </html>
