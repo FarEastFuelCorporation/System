@@ -176,6 +176,11 @@ document.addEventListener("DOMContentLoaded", async function () {
         findTextInArray(username_data_list, "DEPARTMENT")
       ];
 
+    const user =
+      username_data_list.content[xValue][
+        findTextInArray(username_data_list, "NAME")
+      ];
+
     const mtf_data_list_SUBMIT_TO = findTextInArray(mtf_data_list, "SUBMIT TO");
     const mtf_data_list_STATUS = findTextInArray(mtf_data_list, "STATUS");
     const mtf_data_list_MTF = findTextInArray(mtf_data_list, "MTF #");
@@ -1929,16 +1934,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         // update_vehicle_tab.style.display = "none";
       }
     });
-    // update_vehicle_button.addEventListener("click", () => {
-    //     if(update_vehicle_tab.style.display == "block"){
-    //         update_vehicle_tab.style.display = "none";
-    //         new_vehicle_tab.style.display = "none";
-    //     }
-    //     else{
-    //         update_vehicle_tab.style.display = "block";
-    //         new_vehicle_tab.style.display = "none";
-    //     }
-    // })
 
     // mjo_data_list
     const maintenance_job_order_request_list =
@@ -1948,7 +1943,12 @@ document.addEventListener("DOMContentLoaded", async function () {
     var data_value = "";
     var data_value_counter = 1;
     for (let x = 1; x < mjo_data_list.content.length; x++) {
-      data_value += `
+      if (
+        mjo_data_list.content[x][
+          findTextInArray(mjo_data_list, "REQUISITIONER")
+        ] == user
+      )
+        data_value += `
             <tr>
                 <td>${data_value_counter}</td>
                 <td>${
@@ -1961,8 +1961,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                     findTextInArray(mjo_data_list, "CREATED AT")
                   ]
                 )} /<br> ${time_decoder(
-        mjo_data_list.content[x][findTextInArray(mjo_data_list, "CREATED AT")]
-      )}</td>
+          mjo_data_list.content[x][findTextInArray(mjo_data_list, "CREATED AT")]
+        )}</td>
                 <td>${
                   mjo_data_list.content[x][
                     findTextInArray(mjo_data_list, "JOB CATEGORY")
