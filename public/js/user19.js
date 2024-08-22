@@ -184,7 +184,10 @@ document.addEventListener("DOMContentLoaded", async function () {
           ? "PENDING"
           : "APPROVED";
         if (
-          mjo_data_list.content[i][mjo_data_list_JOB_CATEGORY] === "COMPUTER" &&
+          (mjo_data_list.content[i][mjo_data_list_JOB_CATEGORY] ===
+            "AUTO ELECTRICAL" ||
+            mjo_data_list.content[i][mjo_data_list_JOB_CATEGORY] ===
+              "AUTO MECHANICAL") &&
           month_filter.value ==
             formatMonth(mjo_data_list.content[i][mjo_data_list_CREATED_AT])
         ) {

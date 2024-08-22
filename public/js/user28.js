@@ -187,7 +187,9 @@ document.addEventListener("DOMContentLoaded", async function () {
           (mjo_data_list.content[i][mjo_data_list_JOB_CATEGORY] ===
             "METAL WORKS" ||
             mjo_data_list.content[i][mjo_data_list_JOB_CATEGORY] ===
-              "ELECTRICAL") &&
+              "ELECTRICAL" ||
+            mjo_data_list.content[i][mjo_data_list_JOB_CATEGORY] ===
+              "MECHANICAL") &&
           month_filter.value ==
             formatMonth(mjo_data_list.content[i][mjo_data_list_CREATED_AT])
         ) {
