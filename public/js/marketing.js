@@ -1945,7 +1945,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       new_quotation_form_tab.querySelector("#accounting_head_signature");
     const vice_president_signature_quotation_form =
       new_quotation_form_tab.querySelector("#vice_president_signature");
-    const user = new_quotation_form_tab.querySelector("#user");
+    const user_value = new_quotation_form_tab.querySelector("#user");
     const convertToPDFandDownload_button = new_quotation_form_tab.querySelector(
       "#convertToPDFandDownload_button"
     );
@@ -1969,18 +1969,18 @@ document.addEventListener("DOMContentLoaded", async function () {
     const remarks_quotation_form =
       new_quotation_form_tab.querySelector("#remarks");
 
-    marketing_user_quotation_form.innerText = user.value
+    marketing_user_quotation_form.innerText = user_value.value
       .toLowerCase()
       .replace(/\b\w/g, function (char) {
         return char.toUpperCase();
       });
-    if (user.value == "JEMINA CENTENO") {
+    if (user_value.value == "JEMINA CENTENO") {
       marketing_signature_quotation_form.innerHTML = `<img src="../images/CENTENO_JEMINA.png" alt="">`;
-    } else if (user.value == "JOVELYN SORIANO") {
+    } else if (user_value.value == "JOVELYN SORIANO") {
       marketing_signature_quotation_form.innerHTML = `<img src="../images/SORIANO_JOVELYN.png" alt="">`;
-    } else if (user.value == "JOHONEY CANLAS") {
+    } else if (user_value.value == "JOHONEY CANLAS") {
       marketing_signature_quotation_form.innerHTML = `<img src="../images/CANLAS_JOHONEY.png" alt="">`;
-    } else if (user.value == "ZANS NICOLE DOMINGUEZ") {
+    } else if (user_value.value == "ZANS NICOLE DOMINGUEZ") {
       marketing_signature_quotation_form.innerHTML = `<img src="../images/DOMINGUEZ_ZANS_NICOLE.png" alt="">`;
     }
 
