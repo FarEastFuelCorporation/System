@@ -36,6 +36,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     const accomplishment_response_promise = fetch(
       "https://script.google.com/macros/s/AKfycbwa4TtV5mhmZRWagXQWmEG6EVH_tlRvwSnIOBM6O6VF_wAd4qnvFGky-1WBsQ74bPI3JQ/exec"
     );
+    const maintenance_job_order_response_promise = fetch(
+      "https://script.google.com/macros/s/AKfycbxN9q1p4FSHbE-grd4AIE5cqPJh__dALmmWT9FEZorl2Q-aQsUgYQlIBtCi9COs7mD6/exec"
+    );
 
     const [
       username_response,
@@ -50,6 +53,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       qlf_response,
       prf_response,
       accomplishment_response,
+      maintenance_job_order_response,
     ] = await Promise.all([
       username_response_promise,
       employee_response_promise,
@@ -63,6 +67,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       qlf_response_promise,
       prf_response_promise,
       accomplishment_response_promise,
+      maintenance_job_order_response_promise,
     ]);
 
     const username_data_list = await username_response.json();
@@ -77,6 +82,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const qlf_data_list = await qlf_response.json();
     const prf_data_list = await prf_response.json();
     const accomplishment_data_list = await accomplishment_response.json();
+    const mjo_data_list = await maintenance_job_order_response.json();
 
     // Code that depends on the fetched data
     // username_data_list
@@ -122,6 +128,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     user_sidebar_department.innerText =
       username_data_list.content[1][
         findTextInArray(username_data_list, "DEPARTMENT")
+      ];
+    const user =
+      username_data_list.content[1][
+        findTextInArray(username_data_list, "NAME")
       ];
 
     // receiving_dashboard
@@ -2168,6 +2178,90 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
       }
     });
+
+    // maintenance_job_order_form
+    const maintenance_job_order_form = document.querySelector(
+      "#maintenance_job_order_form"
+    );
+    const maintenance_job_order_tab = maintenance_job_order_form.querySelector(
+      "#maintenance_job_order_tab"
+    );
+    const maintenance_job_order_button =
+      maintenance_job_order_form.querySelector("#maintenance_job_order_button");
+
+    maintenance_job_order_button.addEventListener("click", () => {
+      if (maintenance_job_order_tab.style.display == "block") {
+        maintenance_job_order_tab.style.display = "none";
+        // update_vehicle_tab.style.display = "none";
+      } else {
+        maintenance_job_order_tab.style.display = "block";
+        // update_vehicle_tab.style.display = "none";
+      }
+    });
+
+    // mjo_data_list
+    const maintenance_job_order_request_list =
+      maintenance_job_order_form.querySelector(
+        "#maintenance_job_order_request_list"
+      );
+    var data_value = "";
+    var data_value_counter = 1;
+    for (let x = 1; x < mjo_data_list.content.length; x++) {
+      if (
+        mjo_data_list.content[x][
+          findTextInArray(mjo_data_list, "REQUISITIONER")
+        ] == user
+      )
+        data_value += `
+                <tr>
+                    <td>${data_value_counter}</td>
+                    <td>${
+                      mjo_data_list.content[x][
+                        findTextInArray(mjo_data_list, "MJO #")
+                      ]
+                    }</td>
+                    <td>${date_decoder(
+                      mjo_data_list.content[x][
+                        findTextInArray(mjo_data_list, "CREATED AT")
+                      ]
+                    )} /<br> ${time_decoder(
+          mjo_data_list.content[x][findTextInArray(mjo_data_list, "CREATED AT")]
+        )}</td>
+                    <td>${
+                      mjo_data_list.content[x][
+                        findTextInArray(mjo_data_list, "JOB CATEGORY")
+                      ]
+                    }</td>
+                    <td>${
+                      mjo_data_list.content[x][
+                        findTextInArray(mjo_data_list, "PRIORITY LEVEL")
+                      ]
+                    }</td>
+                    <td>${
+                      mjo_data_list.content[x][
+                        findTextInArray(mjo_data_list, "FOR MAINTENANCE")
+                      ]
+                    }</td>
+                    <td>${
+                      mjo_data_list.content[x][
+                        findTextInArray(mjo_data_list, "DETAILS")
+                      ]
+                    }</td>
+                    <td>${
+                      mjo_data_list.content[x][
+                        findTextInArray(mjo_data_list, "REQUISITIONER")
+                      ]
+                    }</td>
+                    <td>${
+                      mjo_data_list.content[x][
+                        findTextInArray(mjo_data_list, "DEPARTMENT")
+                      ]
+                    }</td>
+                </tr>
+                `;
+      data_value_counter += 1;
+    }
+    maintenance_job_order_request_list.innerHTML = data_value;
 
     // purchase_request_form
     const purchase_request_form = document.querySelector(

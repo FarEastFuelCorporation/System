@@ -12,6 +12,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     const vehicle_response_promise = fetch(
       "https://script.google.com/macros/s/AKfycbw-JCnctX1x1W1ogGbrkhNdIGd9q6bYjy_nvaYeoiaBf7HreB2a1tKJZaJHw2wu4wmpcA/exec"
     );
+    const employee_response_promise = fetch(
+      "https://script.google.com/macros/s/AKfycbwns5R6TA8U64ywbb9hwYu4LKurAjTM0Z18NYNZMt0Ft0m-_NUHYbYqblk_5KWugvt7lA/exec"
+    );
     const mtf_response_promise = fetch(
       "https://script.google.com/macros/s/AKfycbzkzS4OVm3IfNl6KwOfLZq_uO3MnsXfu-oS5Su_1kxhfo1mMoKpYDm8a4RxWqsQh0qv/exec"
     );
@@ -42,12 +45,16 @@ document.addEventListener("DOMContentLoaded", async function () {
     const accomplishment_response_promise = fetch(
       "https://script.google.com/macros/s/AKfycbwa4TtV5mhmZRWagXQWmEG6EVH_tlRvwSnIOBM6O6VF_wAd4qnvFGky-1WBsQ74bPI3JQ/exec"
     );
+    const maintenance_job_order_response_promise = fetch(
+      "https://script.google.com/macros/s/AKfycbxN9q1p4FSHbE-grd4AIE5cqPJh__dALmmWT9FEZorl2Q-aQsUgYQlIBtCi9COs7mD6/exec"
+    );
 
     const [
       username_response,
       client_list_response,
       type_of_waste_response,
       vehicle_response,
+      employee_response,
       mtf_response,
       ltf_response,
       wcf_response,
@@ -58,11 +65,13 @@ document.addEventListener("DOMContentLoaded", async function () {
       ctf_response,
       qlf_response,
       accomplishment_response,
+      maintenance_job_order_response,
     ] = await Promise.all([
       username_response_promise,
       client_list_response_promise,
       type_of_waste_response_promise,
       vehicle_response_promise,
+      employee_response_promise,
       mtf_response_promise,
       ltf_response_promise,
       wcf_response_promise,
@@ -73,12 +82,14 @@ document.addEventListener("DOMContentLoaded", async function () {
       ctf_response_promise,
       qlf_response_promise,
       accomplishment_response_promise,
+      maintenance_job_order_response_promise,
     ]);
 
     const username_data_list = await username_response.json();
     const client_data_list = await client_list_response.json();
     const type_of_waste_data_list = await type_of_waste_response.json();
     const vehicle_data_list = await vehicle_response.json();
+    const employee_data_list = await employee_response.json();
     const mtf_data_list = await mtf_response.json();
     const ltf_data_list = await ltf_response.json();
     const wcf_data_list = await wcf_response.json();
@@ -89,6 +100,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const ctf_data_list = await ctf_response.json();
     const qlf_data_list = await qlf_response.json();
     const accomplishment_data_list = await accomplishment_response.json();
+    const mjo_data_list = await maintenance_job_order_response.json();
 
     // Code that depends on the fetched data
     // username_data_list
@@ -124,6 +136,38 @@ document.addEventListener("DOMContentLoaded", async function () {
       username_data_list.content[5][
         findTextInArray(username_data_list, "DEPARTMENT")
       ];
+    const user =
+      username_data_list.content[5][
+        findTextInArray(username_data_list, "NAME")
+      ];
+
+    // marketing_dashboard
+    const marketing_dashboard_pco = document.getElementById(
+      "marketing_dashboard_pco"
+    );
+    const booked_transactions_marketing = marketing_dashboard_pco.querySelector(
+      "#booked_transactions"
+    );
+    const for_hauling_container_marketing =
+      marketing_dashboard_pco.querySelector("#for_hauling");
+    const for_receiving_container_marketing =
+      marketing_dashboard_pco.querySelector("#for_receiving");
+    const for_warehousing_container_marketing =
+      marketing_dashboard_pco.querySelector("#for_warehousing");
+    const for_sorting_container_marketing =
+      marketing_dashboard_pco.querySelector("#for_sorting");
+    const for_treatment_container_marketing =
+      marketing_dashboard_pco.querySelector("#for_treatment");
+    const for_certification_container_marketing =
+      marketing_dashboard_pco.querySelector("#for_certification");
+    const for_billing_container_marketing =
+      marketing_dashboard_pco.querySelector("#for_billing");
+    const for_collection_container_marketing =
+      marketing_dashboard_pco.querySelector("#for_collection");
+    const finished_marketing =
+      marketing_dashboard_pco.querySelector("#finished");
+    const pending_list_marketing =
+      marketing_dashboard_pco.querySelector("#pending_list");
 
     // billing_dashboard
     const billing_dashboard = document.querySelector("#billing_dashboard");
@@ -160,6 +204,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       collection_dashboard.querySelector("#collected_counter_amount");
     const pending_list_collection =
       collection_dashboard.querySelector("#pending_list");
+
     // collection_dashboard
     let bpf_transaction_collection = {};
     let bpf_ctf_transaction_collection = {};
@@ -195,6 +240,428 @@ document.addEventListener("DOMContentLoaded", async function () {
     month_filter.addEventListener("change", generatePending);
     generatePending();
     function generatePending() {
+      var for_hauling_marketing = 0;
+      var for_receiving_marketing = 0;
+      var for_warehousing_marketing = 0;
+      var for_sorting_marketing = 0;
+      var for_treatment_marketing = 0;
+      var for_certification_marketing = 0;
+      var for_billing_marketing = 0;
+      var for_collection_marketing = 0;
+      var for_accounting_marketing = 0;
+      var data_value_counter = 1;
+      var data_value = "";
+      for (let j = mtf_data_list.content.length - 1; j >= 1; j--) {
+        var status = "";
+        var vehicle = "";
+        // for logistics
+        if (
+          mtf_data_list.content[j][
+            findTextInArray(mtf_data_list, "SUBMIT TO")
+          ] == "LOGISTICS" &&
+          month_filter.value ==
+            formatMonth(
+              mtf_data_list.content[j][
+                findTextInArray(mtf_data_list, "HAULING DATE")
+              ]
+            )
+        ) {
+          vehicle =
+            mtf_data_list.content[j][
+              findTextInArray(mtf_data_list, "TYPE OF VEHICLE")
+            ];
+          status =
+            mtf_data_list.content[j][findTextInArray(mtf_data_list, "STATUS")];
+          if (status == "FOR HAULING") {
+            for_hauling_marketing += 1;
+          } else if (status == "FOR RECEIVING") {
+            for_receiving_marketing += 1;
+          } else if (status == "FOR SORTING") {
+            for_sorting_marketing += 1;
+          } else if (status == "FOR TREATMENT") {
+            for_treatment_marketing += 1;
+          } else if (status == "FOR CERTIFICATION") {
+            for_certification_marketing += 1;
+          } else if (status == "FOR BILLING") {
+            for_billing_marketing += 1;
+          } else if (status == "FOR COLLECTION") {
+            for_collection_marketing += 1;
+          } else if (status == "FOR WAREHOUSING") {
+            for_warehousing_marketing += 1;
+          } else if (status == "FOR ACCOUNTING") {
+            for_accounting_marketing += 1;
+          }
+        } else if (
+          mtf_data_list.content[j][
+            findTextInArray(mtf_data_list, "SUBMIT TO")
+          ] == "LOGISTICS" &&
+          month_filter.value == "ALL"
+        ) {
+          vehicle =
+            mtf_data_list.content[j][
+              findTextInArray(mtf_data_list, "TYPE OF VEHICLE")
+            ];
+          status =
+            mtf_data_list.content[j][findTextInArray(mtf_data_list, "STATUS")];
+          if (status == "FOR HAULING") {
+            for_hauling_marketing += 1;
+          } else if (status == "FOR RECEIVING") {
+            for_receiving_marketing += 1;
+          } else if (status == "FOR SORTING") {
+            for_sorting_marketing += 1;
+          } else if (status == "FOR TREATMENT") {
+            for_treatment_marketing += 1;
+          } else if (status == "FOR CERTIFICATION") {
+            for_certification_marketing += 1;
+          } else if (status == "FOR BILLING") {
+            for_billing_marketing += 1;
+          } else if (status == "FOR COLLECTION") {
+            for_collection_marketing += 1;
+          } else if (status == "FOR WAREHOUSING") {
+            for_warehousing_marketing += 1;
+          } else if (status == "FOR ACCOUNTING") {
+            for_accounting_marketing += 1;
+          }
+        }
+        // for receiving
+        else if (
+          mtf_data_list.content[j][
+            findTextInArray(mtf_data_list, "SUBMIT TO")
+          ] == "RECEIVING" &&
+          month_filter.value ==
+            formatMonth(
+              mtf_data_list.content[j][
+                findTextInArray(mtf_data_list, "HAULING DATE")
+              ]
+            )
+        ) {
+          vehicle = "PROVIDED BY CLIENT";
+          status =
+            mtf_data_list.content[j][findTextInArray(mtf_data_list, "STATUS")];
+          if (status == "FOR HAULING") {
+            for_hauling_marketing += 1;
+          } else if (status == "FOR RECEIVING") {
+            for_receiving_marketing += 1;
+          } else if (status == "FOR SORTING") {
+            for_sorting_marketing += 1;
+          } else if (status == "FOR TREATMENT") {
+            for_treatment_marketing += 1;
+          } else if (status == "FOR CERTIFICATION") {
+            for_certification_marketing += 1;
+          } else if (status == "FOR BILLING") {
+            for_billing_marketing += 1;
+          } else if (status == "FOR COLLECTION") {
+            for_collection_marketing += 1;
+          } else if (status == "FOR WAREHOUSING") {
+            for_warehousing_marketing += 1;
+          } else if (status == "FOR ACCOUNTING") {
+            for_accounting_marketing += 1;
+          }
+        } else if (
+          mtf_data_list.content[j][
+            findTextInArray(mtf_data_list, "SUBMIT TO")
+          ] == "RECEIVING" &&
+          month_filter.value == "ALL"
+        ) {
+          vehicle = "PROVIDED BY CLIENT";
+          status =
+            mtf_data_list.content[j][findTextInArray(mtf_data_list, "STATUS")];
+          if (status == "FOR HAULING") {
+            for_hauling_marketing += 1;
+          } else if (status == "FOR RECEIVING") {
+            for_receiving_marketing += 1;
+          } else if (status == "FOR SORTING") {
+            for_sorting_marketing += 1;
+          } else if (status == "FOR TREATMENT") {
+            for_treatment_marketing += 1;
+          } else if (status == "FOR CERTIFICATION") {
+            for_certification_marketing += 1;
+          } else if (status == "FOR BILLING") {
+            for_billing_marketing += 1;
+          } else if (status == "FOR COLLECTION") {
+            for_collection_marketing += 1;
+          } else if (status == "FOR WAREHOUSING") {
+            for_warehousing_marketing += 1;
+          } else if (status == "FOR ACCOUNTING") {
+            for_accounting_marketing += 1;
+          }
+        }
+        var plate_no, driver_name;
+        for (let x = 1; x < wcf_data_list.content.length; x++) {
+          var mtf_no =
+            mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")];
+          var mtf_wcf_no =
+            wcf_data_list.content[x][
+              findTextInArray(wcf_data_list, "LTF/ MTF  #")
+            ];
+          if (mtf_no == mtf_wcf_no) {
+            plate_no =
+              wcf_data_list.content[x][
+                findTextInArray(wcf_data_list, "PLATE #")
+              ];
+            driver_name = findEmployeeName(
+              wcf_data_list.content[x][
+                findTextInArray(wcf_data_list, "DRIVER ID")
+              ]
+            );
+            break;
+          } else {
+            plate_no = "PENDING";
+            driver_name = "PENDING";
+          }
+        }
+        for (let x = 1; x < ltf_data_list.content.length; x++) {
+          var mtf_no =
+            mtf_data_list.content[j][findTextInArray(mtf_data_list, "MTF #")];
+          var mtf_ltf_no =
+            ltf_data_list.content[x][findTextInArray(ltf_data_list, "MTF #")];
+          if (mtf_no == mtf_ltf_no) {
+            plate_no =
+              ltf_data_list.content[x][
+                findTextInArray(ltf_data_list, "PLATE #")
+              ];
+            driver_name = findEmployeeName(
+              ltf_data_list.content[x][
+                findTextInArray(ltf_data_list, "DRIVER ID")
+              ]
+            );
+            break;
+          }
+        }
+        if (
+          month_filter.value ==
+          formatMonth(
+            mtf_data_list.content[j][
+              findTextInArray(mtf_data_list, "HAULING DATE")
+            ]
+          )
+        ) {
+          data_value += `
+                    <tr>
+                        <td>${data_value_counter}</td>
+                        <td>${
+                          mtf_data_list.content[j][
+                            findTextInArray(mtf_data_list, "MTF #")
+                          ]
+                        }</td>
+                        <td>${date_decoder(
+                          mtf_data_list.content[j][
+                            findTextInArray(mtf_data_list, "HAULING DATE")
+                          ]
+                        )} /<br> ${time_decoder(
+            mtf_data_list.content[j][
+              findTextInArray(mtf_data_list, "HAULING TIME")
+            ]
+          )}</td>
+                        <td>${findClientName(
+                          mtf_data_list.content[j][
+                            findTextInArray(mtf_data_list, "CLIENT ID")
+                          ]
+                        )}</td>
+                        <td>${findWasteCode(
+                          mtf_data_list.content[j][
+                            findTextInArray(mtf_data_list, "WASTE ID")
+                          ]
+                        )}</td>
+                        <td>${findWasteName(
+                          mtf_data_list.content[j][
+                            findTextInArray(mtf_data_list, "CLIENT ID")
+                          ],
+                          mtf_data_list.content[j][
+                            findTextInArray(mtf_data_list, "WASTE ID")
+                          ]
+                        )}</td>
+                        <td>${vehicle}</td>
+                        <td>${
+                          mtf_data_list.content[j][
+                            findTextInArray(mtf_data_list, "SUBMIT TO")
+                          ]
+                        }</td>
+                        <td>${
+                          mtf_data_list.content[j][
+                            findTextInArray(mtf_data_list, "REMARKS")
+                          ]
+                        }</td>
+                        <td>${
+                          mtf_data_list.content[j][
+                            findTextInArray(mtf_data_list, "SUBMITTED BY")
+                          ]
+                        }</td>
+                        <td>${plate_no}</td>
+                        <td>${driver_name}</td>
+                        <td>${status}</td>
+                    </tr>
+                    `;
+          data_value_counter += 1;
+          pending_list_marketing.innerHTML = data_value;
+        } else if (month_filter.value == "ALL") {
+          data_value += `
+                    <tr>
+                        <td>${data_value_counter}</td>
+                        <td>${
+                          mtf_data_list.content[j][
+                            findTextInArray(mtf_data_list, "MTF #")
+                          ]
+                        }</td>
+                        <td>${date_decoder(
+                          mtf_data_list.content[j][
+                            findTextInArray(mtf_data_list, "HAULING DATE")
+                          ]
+                        )} /<br> ${time_decoder(
+            mtf_data_list.content[j][
+              findTextInArray(mtf_data_list, "HAULING TIME")
+            ]
+          )}</td>
+                        <td>${findClientName(
+                          mtf_data_list.content[j][
+                            findTextInArray(mtf_data_list, "CLIENT ID")
+                          ]
+                        )}</td>
+                        <td>${findWasteCode(
+                          mtf_data_list.content[j][
+                            findTextInArray(mtf_data_list, "WASTE ID")
+                          ]
+                        )}</td>
+                        <td>${findWasteName(
+                          mtf_data_list.content[j][
+                            findTextInArray(mtf_data_list, "CLIENT ID")
+                          ],
+                          mtf_data_list.content[j][
+                            findTextInArray(mtf_data_list, "WASTE ID")
+                          ]
+                        )}</td>
+                        <td>${vehicle}</td>
+                        <td>${
+                          mtf_data_list.content[j][
+                            findTextInArray(mtf_data_list, "SUBMIT TO")
+                          ]
+                        }</td>
+                        <td>${
+                          mtf_data_list.content[j][
+                            findTextInArray(mtf_data_list, "REMARKS")
+                          ]
+                        }</td>
+                        <td>${
+                          mtf_data_list.content[j][
+                            findTextInArray(mtf_data_list, "SUBMITTED BY")
+                          ]
+                        }</td>
+                        <td>${plate_no}</td>
+                        <td>${driver_name}</td>
+                        <td>${status}</td>
+                    </tr>
+                    `;
+          data_value_counter += 1;
+          pending_list_marketing.innerHTML = data_value;
+        }
+      }
+      booked_transactions_marketing.innerText =
+        for_hauling_marketing +
+        for_receiving_marketing +
+        for_warehousing_marketing +
+        for_sorting_marketing +
+        for_treatment_marketing +
+        for_certification_marketing +
+        for_billing_marketing +
+        for_collection_marketing +
+        for_accounting_marketing;
+      for_hauling_container_marketing.innerText = for_hauling_marketing;
+      for_receiving_container_marketing.innerText = for_receiving_marketing;
+      for_warehousing_container_marketing.innerText = for_warehousing_marketing;
+      for_sorting_container_marketing.innerText = for_sorting_marketing;
+      for_treatment_container_marketing.innerText = for_treatment_marketing;
+      for_certification_container_marketing.innerText =
+        for_certification_marketing;
+      for_billing_container_marketing.innerText = for_billing_marketing;
+      for_collection_container_marketing.innerText = for_collection_marketing;
+      finished_marketing.innerText = for_accounting_marketing;
+      var options = {
+        series: [
+          for_hauling_marketing,
+          for_receiving_marketing,
+          for_warehousing_marketing,
+          for_sorting_marketing,
+          for_treatment_marketing,
+          for_certification_marketing,
+          for_billing_marketing,
+          for_collection_marketing,
+          for_accounting_marketing,
+        ],
+        chart: {
+          width: 500, // Set the desired width
+          height: 550, // Set the desired height
+          type: "pie",
+        },
+        plotOptions: {
+          pie: {
+            startAngle: 0,
+            endAngle: 360,
+          },
+        },
+        dataLabels: {
+          enabled: false, // Disable data labels inside the pie chart
+        },
+        fill: {
+          type: "gradient", // Use solid fill type
+        },
+        legend: {
+          show: true,
+          position: "left", // Set the legend position to "left"
+          fontSize: "20px", // Increase legend font size as needed
+          formatter: function (seriesName, opts) {
+            // Here, you should use the correct variable to get the series value
+            var seriesValue = opts.w.globals.series[opts.seriesIndex];
+            var totalValue = opts.w.globals.series.reduce(
+              (acc, val) => acc + val,
+              0
+            );
+            var percentage = ((seriesValue / totalValue) * 100).toFixed(2); // Calculate and format the percentage
+            return `${percentage}% ${seriesName}`; // Format legend label as "47.06% Pending"
+          },
+          labels: {
+            useSeriesColors: false, // Use custom color
+          },
+        },
+        labels: [
+          "For Hauling",
+          "For Receiving",
+          "For Warehousing",
+          "For Sorting",
+          "For Treatment",
+          "For Certification",
+          "For Billing",
+          "For Collection",
+          "Finished",
+        ],
+        colors: [
+          "#dc3545",
+          "#ffc107",
+          "#c3c3c3",
+          "#fd7e14",
+          "#0d6efd",
+          "#6610f2",
+          "#0dcaf0",
+          "#d63384",
+          "#198754",
+        ], // Specify solid colors here
+        responsive: [
+          {
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 200,
+              },
+            },
+          },
+        ],
+      };
+      const pieChart3 = document.querySelector("#pieChart3");
+      while (pieChart3.firstChild) {
+        pieChart3.removeChild(pieChart3.firstChild);
+      }
+      var chart = new ApexCharts(pieChart3, options);
+      chart.render();
+
       // billing
       sf_transaction_billing = [];
       sf_tpf_transaction_billing = [];
@@ -5136,14 +5603,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                         findTextInArray(qlf_data_list, "CLIENT ID")
                       ]
                     )}</td>
-                    <td>${findWasteCode(
-                      qlf_data_list.content[x][
-                        findTextInArray(
-                          qlf_data_list,
-                          "WASTE ID/ TYPE OF VEHICLE"
-                        )
-                      ]
-                    )}</td>
+
                     <td>${
                       qlf_data_list.content[x][
                         findTextInArray(qlf_data_list, "WASTE NAME")
@@ -5503,6 +5963,114 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
       }
     });
+
+    // maintenance_job_order_form
+    const maintenance_job_order_form = document.querySelector(
+      "#maintenance_job_order_form"
+    );
+    const maintenance_job_order_tab = maintenance_job_order_form.querySelector(
+      "#maintenance_job_order_tab"
+    );
+    const maintenance_job_order_button =
+      maintenance_job_order_form.querySelector("#maintenance_job_order_button");
+
+    maintenance_job_order_button.addEventListener("click", () => {
+      if (maintenance_job_order_tab.style.display == "block") {
+        maintenance_job_order_tab.style.display = "none";
+        // update_vehicle_tab.style.display = "none";
+      } else {
+        maintenance_job_order_tab.style.display = "block";
+        // update_vehicle_tab.style.display = "none";
+      }
+    });
+
+    // mjo_data_list
+    const maintenance_job_order_request_list =
+      maintenance_job_order_form.querySelector(
+        "#maintenance_job_order_request_list"
+      );
+    var data_value = "";
+    var data_value_counter = 1;
+    for (let x = 1; x < mjo_data_list.content.length; x++) {
+      if (
+        mjo_data_list.content[x][
+          findTextInArray(mjo_data_list, "REQUISITIONER")
+        ] == user
+      )
+        data_value += `
+                                  <tr>
+                                      <td>${data_value_counter}</td>
+                                      <td>${
+                                        mjo_data_list.content[x][
+                                          findTextInArray(
+                                            mjo_data_list,
+                                            "MJO #"
+                                          )
+                                        ]
+                                      }</td>
+                                      <td>${date_decoder(
+                                        mjo_data_list.content[x][
+                                          findTextInArray(
+                                            mjo_data_list,
+                                            "CREATED AT"
+                                          )
+                                        ]
+                                      )} /<br> ${time_decoder(
+          mjo_data_list.content[x][findTextInArray(mjo_data_list, "CREATED AT")]
+        )}</td>
+                                      <td>${
+                                        mjo_data_list.content[x][
+                                          findTextInArray(
+                                            mjo_data_list,
+                                            "JOB CATEGORY"
+                                          )
+                                        ]
+                                      }</td>
+                                      <td>${
+                                        mjo_data_list.content[x][
+                                          findTextInArray(
+                                            mjo_data_list,
+                                            "PRIORITY LEVEL"
+                                          )
+                                        ]
+                                      }</td>
+                                      <td>${
+                                        mjo_data_list.content[x][
+                                          findTextInArray(
+                                            mjo_data_list,
+                                            "FOR MAINTENANCE"
+                                          )
+                                        ]
+                                      }</td>
+                                      <td>${
+                                        mjo_data_list.content[x][
+                                          findTextInArray(
+                                            mjo_data_list,
+                                            "DETAILS"
+                                          )
+                                        ]
+                                      }</td>
+                                      <td>${
+                                        mjo_data_list.content[x][
+                                          findTextInArray(
+                                            mjo_data_list,
+                                            "REQUISITIONER"
+                                          )
+                                        ]
+                                      }</td>
+                                      <td>${
+                                        mjo_data_list.content[x][
+                                          findTextInArray(
+                                            mjo_data_list,
+                                            "DEPARTMENT"
+                                          )
+                                        ]
+                                      }</td>
+                                  </tr>
+                                  `;
+      data_value_counter += 1;
+    }
+    maintenance_job_order_request_list.innerHTML = data_value;
 
     function findEmployeeName(employee_id) {
       var employee_name = "";

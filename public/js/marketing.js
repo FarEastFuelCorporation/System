@@ -69,6 +69,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     const accomplishment_response_promise = fetch(
       "https://script.google.com/macros/s/AKfycbwa4TtV5mhmZRWagXQWmEG6EVH_tlRvwSnIOBM6O6VF_wAd4qnvFGky-1WBsQ74bPI3JQ/exec"
     );
+    const maintenance_job_order_response_promise = fetch(
+      "https://script.google.com/macros/s/AKfycbxN9q1p4FSHbE-grd4AIE5cqPJh__dALmmWT9FEZorl2Q-aQsUgYQlIBtCi9COs7mD6/exec"
+    );
 
     const [
       username_response,
@@ -94,6 +97,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       irf_response,
       void_response,
       accomplishment_response,
+      maintenance_job_order_response,
     ] = await Promise.all([
       username_response_promise,
       client_list_response_promise,
@@ -118,6 +122,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       irf_response_promise,
       void_response_promise,
       accomplishment_response_promise,
+      maintenance_job_order_response_promise,
     ]);
 
     const username_data_list = await username_response.json();
@@ -143,6 +148,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const irf_data_list = await irf_response.json();
     const void_data_list = await void_response.json();
     const accomplishment_data_list = await accomplishment_response.json();
+    const mjo_data_list = await maintenance_job_order_response.json();
 
     // indexes
     const username_data_list_NAME = findTextInArray(username_data_list, "NAME");
