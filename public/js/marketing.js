@@ -1409,6 +1409,7 @@ document.addEventListener("DOMContentLoaded", async function () {
           if (submit_to.value == "RECEIVING") {
             var data = `
                         <option value="CLIENT VEHICLE">CLIENT VEHICLE</option>
+                        <option value="FEFC VISMIN VEHICLE">FEFC VISMIN VEHICLE</option>
                         `;
             type_of_vehicle.insertAdjacentHTML("beforeend", data);
           }
