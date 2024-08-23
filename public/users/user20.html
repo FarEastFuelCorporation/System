@@ -51,17 +51,29 @@
                     </div>
                 </div><hr>
                 <li class="hover">
-                    <a onclick="" href="#">
+                    <a href="#">
                         <i class="fas fa-th-large"></i>
                         Dashboard
                     </a>
                 </li>
-                <!-- <li>
+                <li>
                     <a href="#">
-                        <i class="fas fa-chart-bar"></i>
-                        Sorting Transactions
+                        <i class="fa-solid fa-calendar-check"></i>
+                        Accomplishment Report
                     </a>
-                </li> -->
+                </li>
+                <li>
+                    <a href="#">
+                      <i class="fa-solid fa-wrench"></i>
+                      Maintenance Job Order
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        Purchase Requests
+                    </a>
+                </li>
                 <li>
                     <a href="#">
                         <i class="fas fa-cog"></i>
@@ -97,1602 +109,898 @@
                 </button>
             </div>
             <div class="refresh_button">
-                <button onclick="refreshPage()">
-                    <i class="fa-solid fa-arrows-rotate"></i>
+                            <div class="header_date_time">
+                <div class="header_date">
+                    <div id="exactDate"></div>
+                </div>
+                <div class="header_time">
+                    <div id="exactTime"></div>    
+                </div>
+            </div>
+            <button onclick="refreshPage()">
+                <i class="fa-solid fa-arrows-rotate"></i>
+            </button>
+        </div>
+        <div style="display: flex; position: absolute; top: 60px; right: 20px; z-index: 2; border: 3px solid #dc3545; border-radius: 5px; padding: 5px 20px; background-color: #198754;">
+            <label for="month_filter" style="font-weight: bold; color: #ffffff;">FILTER MONTH</label>
+            <select name="month_filter" id="month_filter" class="form-control">
+                <option value="ALL">ALL</option>
+                <option value="JANUARY">JANUARY</option>
+                <option value="FEBRUARY">FEBRUARY</option>
+                <option value="MARCH">MARCH</option>
+                <option value="APRIL">APRIL</option>
+                <option value="MAY">MAY</option>
+                <option value="JUNE">JUNE</option>
+                <option value="JULY">JULY</option>
+                <option value="AUGUST">AUGUST</option>
+                <option value="SEPTEMBER">SEPTEMBER</option>
+                <option value="OCTOBER">OCTOBER</option>
+                <option value="NOVEMBER">NOVEMBER</option>
+                <option value="DECEMBER">DECEMBER</option>
+            </select>
+        </div>
+        <button id="generate_report_button" style="display: flex; position: absolute; top: 60px; right: 330px; z-index: 2; border: 3px solid #dc3545; border-radius: 5px; padding: 5px 20px; background-color: #198754;">
+            <p style="margin: 0; font-weight: bold; color: white;">GENERATE<br>REPORT</p>
+        </button>
+        <div id="generate_report_tab" style="display: none;">
+            <div style="position: absolute; height: 100%; width: 100%; backdrop-filter: blur(5px); z-index: 2;"></div>
+            <div style="position: absolute; padding: 20px; width: 500px; background-color: white; z-index: 2; top: 50%; left: 100px; transform: translate(0, -50%); border-radius: 20px; border: 3px solid #dc3545;">
+                <button id="close_report_button" style="border: none; position: absolute; right: 20px;">
+                    <i class="fa-regular fa-rectangle-xmark" style="color: #ff0000;"></i>
+                </button>
+                <h2 style="font-weight: bold; margin: 0;">GENERATE REPORT</h2><br>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;" >
+                    <div>
+                        <label for="report_date_from">From</label>
+                        <input type="date" id="report_date_from" class="form-control" style="border: 3px solid #dc3545;">
+                    </div>
+                    <div>
+                        <label for="report_date_to">To</label>
+                        <input type="date" id="report_date_to" class="form-control" style="border: 3px solid #dc3545;">
+                    </div>
+                </div><br>
+                <button id="report_generate_button" class="form-control" style="background-color: #198754;">
+                    <h4 style="margin: 0; color: white;">Generate</h4>
+                </button>
+                <button onclick="convertToPDF()" id="report_download_button" class="form-control" style="background-color: #198754; display: none;">
+                    <h4 style="margin: 0; color: white;">Download</h4>
                 </button>
             </div>
-            <div style="display: flex; position: absolute; top: 60px; right: 20px; z-index: 2; border: 3px solid #dc3545; border-radius: 5px; padding: 5px 20px; background-color: #198754;">
-                <label for="month_filter" style="font-weight: bold; color: #ffffff;">FILTER MONTH</label>
-                <select name="month_filter" id="month_filter" class="form-control">
-                    <option value="ALL">ALL</option>
-                    <option value="JANUARY">JANUARY</option>
-                    <option value="FEBRUARY">FEBRUARY</option>
-                    <option value="MARCH">MARCH</option>
-                    <option value="APRIL">APRIL</option>
-                    <option value="MAY">MAY</option>
-                    <option value="JUNE">JUNE</option>
-                    <option value="JULY">JULY</option>
-                    <option value="AUGUST">AUGUST</option>
-                    <option value="SEPTEMBER">SEPTEMBER</option>
-                    <option value="OCTOBER">OCTOBER</option>
-                    <option value="NOVEMBER">NOVEMBER</option>
-                    <option value="DECEMBER">DECEMBER</option>
-                </select>
-            </div>
-            <button id="generate_report_button" style="display: flex; position: absolute; top: 60px; right: 330px; z-index: 2; border: 3px solid #dc3545; border-radius: 5px; padding: 5px 20px; background-color: #198754;">
-                <p style="margin: 0; font-weight: bold; color: white;">GENERATE<br>REPORT</p>
-            </button>
-            <div id="generate_report_tab" style="display: none;">
-                <div style="position: absolute; height: 100%; width: 100%; backdrop-filter: blur(5px); z-index: 2;"></div>
-                <div style="position: absolute; padding: 20px; width: 500px; background-color: white; z-index: 2; top: 50%; left: 100px; transform: translate(0, -50%); border-radius: 20px; border: 3px solid #dc3545;">
-                    <button id="close_report_button" style="border: none; position: absolute; right: 20px;">
-                        <i class="fa-regular fa-rectangle-xmark" style="color: #ff0000;"></i>
-                    </button>
-                    <h2 style="font-weight: bold; margin: 0;">GENERATE REPORT</h2><br>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;" >
-                        <div>
-                            <label for="report_date_from">From</label>
-                            <input type="date" id="report_date_from" class="form-control" style="border: 3px solid #dc3545;">
-                        </div>
-                        <div>
-                            <label for="report_date_to">To</label>
-                            <input type="date" id="report_date_to" class="form-control" style="border: 3px solid #dc3545;">
-                        </div>
-                    </div><br>
-                    <button id="report_generate_button" class="form-control" style="background-color: #198754;">
-                        <h4 style="margin: 0; color: white;">Generate</h4>
-                    </button>
-                    <button onclick="convertToPDF()" id="report_download_button" class="form-control" style="background-color: #198754; display: none;">
-                        <h4 style="margin: 0; color: white;">Download</h4>
-                    </button>
-                </div>
-                <input type="hidden" id="page_number" value="1">
-                <div id="report_tab_container" style="position: absolute; top: 0; right: 0;">
-                    <div id="report_tab1" class="report_tab">
-                        <img src="../images/logo.png" alt="logo" style="height: 50px;">
-                        <img src="../images/logo_name2.png" alt="logo" style="height: 50px; margin-top: 10px;"><hr>
-                        <div style="position: relative;">
-                            <h1 style="text-align: center; font-weight: bold; font-size: 32px;">WEEKLY REPORT</h1>
-                            <h1 style="text-align: center; font-weight: bold;">SORTING TRANSACTIONS</h1>
-                            <h1 style="text-align: center; font-weight: bold;">MATERIAL RECOVERY FACILITY DEPARTMENT</h1>
-                            <h3 id="date_covered" style="text-align: center;"></h3><br>
-                            <div style="display: flex; position: absolute; right: 0; top: 0;">
-                                <h6 id="page_counter1" style="margin-right: 5px;"></h6>
-                                <h6 style="margin-right: 5px;">of</h6>
-                                <h6 id="page_max_counter"></h6>
-                            </div>
-                        </div>
-                        <div id="table_info">
-                            <table>
-                                <thead id="report_head">
-                                    <tr>
-                                        <th>SF #</td>
-                                        <th>MTF #</td>
-                                        <th>HAULING DATE</th>
-                                        <th>SORTING DATE</th>
-                                        <th>SORTING TIME</th>
-                                        <th>CLIENT</th>
-                                        <th>WASTE NAME</th>
-                                        <th>WEIGHT (kg)</th>
-                                        <th>TREATMENT PROCESS</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="report_body"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <style>
-                        .report_tab
-                        {
-                            width: 1056px;
-                            height: 816px;
-                            border: 3px solid black;
-                            background-color: white;
-                            z-index: 4;
-                            position: relative;
-                            padding: 38px;
-                        }
-                        
-                        .report_tab h1
-                        {
-                            font-size: 18px;
-                            margin: 0;
-                        }
-    
-                        .report_tab h2
-                        {
-                            font-size: 16px;
-                            margin: 0;
-                        }
-    
-                        .report_tab h3
-                        {
-                            font-size: 14px;
-                            margin: 0;
-                        }
-    
-                        .report_tab h4
-                        {
-                            font-size: 12px;
-                            margin: 0;
-                        }
-    
-                        .report_tab h5
-                        {
-                            font-size: 10px;
-                            margin: 0;
-                        }
-    
-                        .report_tab table
-                        {
-                            width: 100%;
-                        }
-    
-                        .report_tab #report_head tr,
-                        .report_tab tbody tr
-                        {
-                            width: 100%;
-                            display: grid;
-                            grid-template-columns: 1fr 1fr 1.1fr 1.1fr 1fr 3fr 2fr .8fr 2fr;
-                        }
-    
-                        .report_tab #report_head tr th
-                        {
-                            text-align: center;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            border-top: 1px solid black;
-                            border-bottom: 1px solid black;
-                            border-right: 1px solid black;
-                            font-size: 12px;
-                        }
-    
-                        .report_tab #report_head tr th:first-child
-                        {
-                            border: 1px solid black;
-                        }
-    
-                        .report_tab tbody tr td
-                        {
-                            text-align: center;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            border-bottom: 1px solid black;
-                            border-right: 1px solid black;
-                            font-size: 10px;
-                        }
-    
-                        .report_tab tbody tr td:first-child
-                        {
-                            border-bottom: 1px solid black;
-                            border-right: 1px solid black;
-                            border-left: 1px solid black;
-                        }
-                    </style>
-                </div>
-            </div>
-            <!-- dashboard -->
-            <section id="dashboard_section">
-                <h2>DASHBOARD</h2><br>
-                <h2>TRANSACTION SUMMARY</h2>
-                <div class="cards">
-                    <div class="card">
-                        <div class="card-content">
-                            <div class="number" id="total"></div>
-                            <div class="card-name">NCR Transaction</div>
-                        </div>
-                        <div class="icon-box">
-                            <i class="fa-sharp fa-solid fa-dumpster"></i>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-content">
-                            <div class="number" id="unsorted"></div>
-                            <div class="card-name">Pending Transaction</div>
-                        </div>
-                        <div class="icon-box">
-                            <i class="fa-solid fa-clipboard-list"></i>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-content">
-                            <div class="number" id="sorted"></div>
-                            <div class="card-name">Finished Transaction</div>
-                        </div>
-                        <div class="icon-box">
-                            <i class="fa-solid fa-clipboard-check"></i>
-                        </div>
-                    </div>
-
+            <input type="hidden" id="page_number" value="1">
+            <div id="report_tab_container" style="position: absolute; top: 0; right: 0;">
+                <div id="report_tab1" class="report_tab">
+                    <img src="../images/logo.png" alt="logo" style="height: 50px;">
+                    <img src="../images/logo_name2.png" alt="logo" style="height: 50px; margin-top: 10px;"><hr>
                     <div style="position: relative;">
-                        <div id="pieChart" style="position: absolute; margin-top: -40px;">
+                        <h1 style="text-align: center; font-weight: bold; font-size: 32px;">WEEKLY REPORT</h1>
+                        <h1 style="text-align: center; font-weight: bold;">MAINTENANCE TRANSACTION</h1>
+                        <h1 style="text-align: center; font-weight: bold;">MOTORPOOL</h1>
+                        <h3 id="date_covered" style="text-align: center;"></h3><br>
+                        <div style="display: flex; position: absolute; right: 0; top: 0;">
+                            <h6 id="page_counter1" style="margin-right: 5px;"></h6>
+                            <h6 style="margin-right: 5px;">of</h6>
+                            <h6 id="page_max_counter"></h6>
                         </div>
                     </div>
-                </div><br>
-                <h2>PENDING TRANSACTIONS</h2>
-                <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
-                    <div class="list">
+                    <div id="table_info">
                         <table>
-                            <thead style="position: sticky; top: 0; background-color: black;">
-                                <th>#</th>
+                            <thead id="report_head">
+                                <tr>
+                                    <th>VMF #/<br>PMF #</th>
+                                    <th>VMR #</th>
+                                    <th>MAINTENANCE<br>DATE/TIME</th>
+                                    <th>PLATE #</th>
+                                    <th>VEHICLE NAME</th>
+                                    <th>TYPE OF VEHICLE</th>
+                                    <th>DETAILS FOR REPAIR</th>
+                                    <th>MECHANIC NAME</th>
+                                </tr>
                             </thead>
-                            <tbody id="pending_list">
-
-                            </tbody>
+                            <tbody id="report_body"></tbody>
                         </table>
-                        <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
                     </div>
-                </div><br>
-                <!-- <h2>SORTING HISTORY</h2>
-                <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
-                    <div class="list">
-                        <table>
-                            <thead style="position: sticky; top: 0; background-color: black;">
-                                <th>#</th>
-                                <th>WCF #</th>
-                                <th>MTF #</th>
-                                <th>HAULING<br>DATE</th>
-                                <th>RECEIVING<br>DATE/TIME</th>
-                                <th>CLIENT</th>
-                                <th>BATCH<br>WEIGHT</th>
-                                <th>DISCREPANCY<br>WEIGHT</th>
-                                <th>REMARKS</th>
-                                <th>FINISHED<br>DATE/TIME</th>
-                                <th>DURATION</th>
-                            </thead>
-                            <tbody id="sorted_list">
+                </div>
+                <style>
+                    .report_tab
+                    {
+                        width: 1056px;
+                        height: 816px;
+                        border: 3px solid black;
+                        background-color: white;
+                        z-index: 4;
+                        position: relative;
+                        padding: 38px;
+                    }
+                    
+                    .report_tab h1
+                    {
+                        font-size: 18px;
+                        margin: 0;
+                    }
 
-                            </tbody>
-                        </table>
-                        <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
-                    </div>
-                </div><br>
-                <h2>SORTED ITEMS</h2>
-                <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
-                    <div class="list">
-                        <table>
-                            <thead style="position: sticky; top: 0; background-color: black;">
-                                <th>#</th>
-                                <th>SF #</th>
-                                <th>WCF #</th>
-                                <th>MTF #</th>
-                                <th>HAULING<br>DATE</th>
-                                <th>SORTED<br>DATE/TIME</th>
-                                <th>CLIENT</th>
-                                <th>WASTE<br>CODE</th>
-                                <th>WASTE NAME</th>
-                                <th>WEIGHT</th>
-                                <th>TREATMENT PROCESS</th>
-                            </thead>
-                            <tbody id="sorted_items_list">
+                    .report_tab h2
+                    {
+                        font-size: 16px;
+                        margin: 0;
+                    }
 
-                            </tbody>
-                        </table>
-                        <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                    .report_tab h3
+                    {
+                        font-size: 14px;
+                        margin: 0;
+                    }
+
+                    .report_tab h4
+                    {
+                        font-size: 12px;
+                        margin: 0;
+                    }
+
+                    .report_tab h5
+                    {
+                        font-size: 10px;
+                        margin: 0;
+                    }
+
+                    .report_tab table
+                    {
+                        width: 100%;
+                    }
+
+                    .report_tab #report_head tr,
+                    .report_tab tbody tr
+                    {
+                        width: 100%;
+                        display: grid;
+                        grid-template-columns: 80px 80px 95px 70px 2fr 2fr 2fr 1fr;
+                    }
+
+                    .report_tab #report_head tr th
+                    {
+                        text-align: center;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        border-top: 1px solid black;
+                        border-bottom: 1px solid black;
+                        border-right: 1px solid black;
+                        font-size: 12px;
+                    }
+
+                    .report_tab #report_head tr th:first-child
+                    {
+                        border: 1px solid black;
+                    }
+
+                    .report_tab tbody tr td
+                    {
+                        text-align: center;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        border-bottom: 1px solid black;
+                        border-right: 1px solid black;
+                        font-size: 10px;
+                    }
+
+                    .report_tab tbody tr td:first-child
+                    {
+                        border-bottom: 1px solid black;
+                        border-right: 1px solid black;
+                        border-left: 1px solid black;
+                    }
+                </style>
+            </div>
+        </div>
+        <!-- dashboard -->
+        <section id="dashboard_section">
+            <h2>DASHBOARD</h2><br>
+            <h2>MAINTENANCE JOB ORDER SUMMARY</h2>
+            <div class="cards2">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="number" id="job_order"></div>
+                        <div class="card-name">Job Order</div>
                     </div>
-                </div> -->
-            </section>     
-            <!-- Sorting -->
-            <!-- <section id="sorting_form">
-                <h2>SORTING TRANSACTIONS</h2><br>
-                <form id="sorting_form_id" action="https://script.google.com/macros/s/AKfycbynk59dM0EJo_EFfY4Y_F2OmGPmmS3JxC25tn_5gMYpgadsTS_MJ-dj1Wf7XC29sdIm/exec" method="post">
+                    <div class="icon-box">
+                        <i class="fa-solid fa-wrench"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="number" id="pending"></div>
+                        <div class="card-name">Pending</div>
+                    </div>
+                    <div class="icon-box">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="number" id="accomplished"></div>
+                        <div class="card-name">Accomplished</div>
+                    </div>
+                    <div class="icon-box">
+                        <i class="fa-solid fa-clipboard-check"></i>
+                    </div>
+                </div>
+                <div style="position: relative;">
+                    <div id="pieChart" style="position: absolute; margin-top: -40px;">
+                    </div>
+                </div>
+            </div><br>
+            <h2>PENDING TRANSACTIONS</h2>
+            <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
+                <div class="list">
+                    <table>
+                        <thead style="position: sticky; top: 0; background-color: black;">
+                            <th>#</th>
+                            <th>MJO #</th>
+                            <th>REQUEST<br />DATE/TIME</th>
+                            <th>JOB CATEGORY</th>
+                            <th>PRIORITY LEVEL</th>
+                            <th>FOR MAINTENANCE</th>
+                            <th>DETAILS FOR REPAIR</th>
+                            <th>REQUISITIONER</th>
+                            <th>DEPARTMENT</th>
+                            <th>STATUS</th>
+                        </thead>
+                        <tbody id="maintenance_job_order_request_list_dashboard"></tbody>
+                    </table>
+                    <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                </div>
+            </div><br>
+            <h2>TRANSACTION HISTORY</h2>
+            <div class="table" style="max-height: 40vh; align-items: start; overflow-y: scroll;">                            
+                <div class="list">
+                    <table>
+                        <thead style="position: sticky; top: 0; background-color: black;">
+                            <th>#</th>
+                            <th>MJO #</th>
+                            <th>REQUEST<br />DATE/TIME</th>
+                            <th>JOB CATEGORY</th>
+                            <th>PRIORITY LEVEL</th>
+                            <th>FOR MAINTENANCE</th>
+                            <th>DETAILS FOR REPAIR</th>
+                            <th>REQUISITIONER</th>
+                            <th>DEPARTMENT</th>
+                            <th>STATUS</th>
+                        </thead>
+                        <tbody id="accomplished_transactions">
+
+                        </tbody>
+                    </table>
+                    <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                </div>
+            </div>
+        </section>
+        <!-- accomplishment_report -->
+        <section class="marketing" id="accomplishment_report">
+            <h2>ACCOMPLISHMENT REPORT</h2>
+            <div>
+                <label class="d-flex gap-3">
+                    <button type="button" id="new_accomplishment_report_button" class="form-control fw-bold fs-3 bg-success text-white">
+                        <h2>NEW</h2>
+                    </button>
+                    <button type="button" id="update_accomplishment_report_button" class="form-control fw-bold fs-3 bg-danger text-white">
+                        <h2>UPDATE</h2>
+                    </button>
+                </label><br>
+            </div>
+            <div class="table" style="max-height: 70vh; align-items: start; overflow: scroll;">                            
+                <div class="list">
+                    <table>
+                        <thead style="position: sticky; top: 0; background-color: black;">
+                            <th>#</th>
+                            <th>AR ID #</th>
+                            <th>TASK ID #</th>
+                            <th>TASKS</th>
+                            <th>ACCOMPLISHMENT</th>
+                            <th>START<br>DATE/TIME</th>
+                            <th>FINISH<br>DATE/TIME</th>
+                            <th>DURATION</th>
+                            <th style="width: 150px;">PERCENTAGE</th>
+                        </thead>
+                        <tbody id="accomplishment_report_list">
+
+                        </tbody>
+                    </table>
+                    <div class="text-center text_end">>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                </div>
+            </div><br>
+            <div id="new_accomplishment_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
+                <h2>NEW ACCOMPLISHMENT REPORT FORM</h2><br>
+                <form  action="https://script.google.com/macros/s/AKfycbwgEc6ij6bHanbwPn4NH4Nak0uCfIC7vCwsm-sGK19EPCuVCHktMubyxfeu-bgd-46x6Q/exec" method="post">
                     <input type="hidden" name="user" id="user">
-                    <input type="hidden" name="hauling_date" id="hauling_date">
-                    <input type="hidden" name="mtf_form_no" id="mtf_form_no">
-                    <div class="sf_form">
+                    <input type="hidden" name="user_department" id="user_department">
+                    <div class="row">
+                        <div class="col-12 col-lg-6">
+                            <label for="task">
+                                <i class="fa-solid fa-briefcase"></i>
+                                Task
+                                </label><br>
+                            <input type="text" name="task" id="task" autocomplete="off" class="form-control" required placeholder="Input Task Name..."><br>
+                            <label for="percentage">
+                                <i class="fa-solid fa-hourglass-half"></i>
+                                Percentage
+                            </label><br>
+                            <div class="range">
+                                <div class="sliderValue">
+                                    <span id="sliderValue">0%</span>
+                                </div>
+                                <div class="field">
+                                    <div class="value left">0%</div>
+                                    <input type="range" name="percentage" id="percentage" autocomplete="off" min="0" max="100" value="0" step="1" required>
+                                    <div class="value right">100%</div>
+                                </div>
+                            </div><br>
+                            <label for="accomplishment">
+                                <i class="fa-solid fa-calendar-check"></i>
+                                Accomplishment
+                            </label><br>
+                            <input type="text" name="accomplishment" id="accomplishment" autocomplete="off" class="form-control" required placeholder="Input Accomplishment..."><br>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="ar_date_start">
+                                        <i class="fa-solid fa-calendar-days"></i>
+                                        Date/Time Start
+                                    </label>
+                                    <div>
+                                        <input type="date" id="ar_date_start" name="ar_date_start" class="form-control" required>
+                                        <input type="time" id="ar_time_start" name="ar_time_start" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <label for="ar_date_finished">
+                                        <i class="fa-solid fa-calendar-days"></i>
+                                        Date/Time Finished
+                                    </label>
+                                    <div>
+                                        <input type="date" id="ar_date_finished" name="ar_date_finished" class="form-control" readonly>
+                                        <input type="time" id="ar_time_finished" name="ar_time_finished" class="form-control" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="buttons">
+                            <button type="submit" id="submit_btn" class="form-control">
+                                Submit
+                            </button>
+                            <button type="reset" id="reset" class="form-control" >
+                                Clear
+                            </button>
+                        </div>    
+                    </div>
+                </form>
+            </div>
+            <div id="update_accomplishment_form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #dc3545; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
+                <h2>UPDATE ACCOMPLISHMENT REPORT FORM</h2><br>
+                <form  action="https://script.google.com/macros/s/AKfycbyfpK6rKZY6WEsQuvAuOSbIrVYUWJHECzX75IY2Et12qptEiuISIVEr2t5yYj_Uju0/exec" method="post">
+                    <input type="hidden" name="user" id="user">
+                    <input type="hidden" name="user_department" id="user_department">
+                    <div style="display: flex; gap: 20px;">
                         <div>
-                            <label for="search_sf_wcf_form_no">
-                                <i class="fa-solid fa-list-ol"></i>
-                                Search WCF #
-                            </label>
-                            <div class="sf_form">
-                                <div class="form">
-                                    <input type="text" id="search_sf_wcf_form_no" autocomplete="off" name="search_sf_wcf_form_no" class="form-control"><br>
-                                </div>
-                                <div>
-                                    <button id="search_sf_wcf_form_no_button" class="form-control" type="button">
-                                        <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
-                                    </button>
-                                </div>
-                                <div>
-                                    <button id="clear_sf_wcf_form_no_button" type="button" class="form-control">
-                                        <i class="fa-solid fa-rectangle-xmark" style="color: #ffffff;"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <input type="hidden" id="sf_wcf_client" name="sf_wcf_client">
-                    <div id="search_sf_wcf_result">
-
-                    </div>
-                    <div class="sf_form" id="batch_weight_list">
-                        <div class="form">
-                            <label for="batch_weight">
-                                <i class="fa-solid fa-weight-scale"></i>
-                                Batch Weight
-                            </label>
-                            <input type="number" id="batch_weight" class="form-control" readonly>
-                        </div>
-                    </div><br>
-                    <div id="header">
-                        <div>
-                            <label for="type_of_waste1">
-                                <i class="fa-solid fa-table-list"></i>
-                                Items
-                            </label>
-                        </div>
-                    </div>
-                    <div class="items_header" id="additional_item1">
-                        <div class="wrapper">
-                            <label for="type_of_waste1">
-                                <i class="fa-solid fa-trash-can"></i>
-                                #1 Type of Waste
-                            </label><br>
-                            <div class="search_input search_input_type" id="search_type_of_waste1">
-                                <input type="text" name="type_of_waste1" id="type_of_waste1" autocomplete="off" class="form-control" required placeholder="Type to Search Type of Waste...">
-                                <input type="hidden" name="waste_id1" id="waste_id1">
-                                <input type="hidden" name="waste_name1" id="waste_name1">
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="weight1">
-                                <i class="fa-solid fa-weight-scale"></i>
-                                Weight (kg.)
-                            </label>
-                            <div class="search_input">
-                                <input type="number" autocomplete="off" name="weight1" id="weight1" class="form-control" required>
-                            </div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
-                            <div class="wrapper">
-                                <label for="destruction_process1">
-                                    <i class="fa-solid fa-dumpster-fire"></i>
-                                    Treatment Process
-                                </label>
-                                <div class="search_input search_treatment_type"  id="search_type_of_treatment1">
-                                    <input type="text" autocomplete="off" name="destruction_process1" id="destruction_process1" class="form-control" required readonly>
-                                    <div class="autocom_box"></div>
-                                    <div class="icon"><i class="fas fa-search"></i></div>
-                                </div>
-                            </div>
-                            <div class="wrapper">
-                                <label for="form_no1">
-                                    <i class="fa-solid fa-list-ol"></i>
-                                    Gate Pass # / Truck Scale #
+                            <label for="task_id">
+                                <i class="fa-solid fa-bars-progress"></i>
+                                Task ID
                                 </label><br>
-                                <div>
-                                    <input type="text" id="form_no1" autocomplete="off" name="form_no1" class="form-control" style="height: 55px;">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="sf_form_no1">
-                                <i class="fa-solid fa-list-ol"></i>
-                                SF #
-                            </label><br>
-                            <div class="search_input">
-                                <input type="text" id="sf_form_no1" autocomplete="off" name="sf_form_no1" class="form-control" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <input type="hidden" id="item_counter" name="item_counter" value="1">
-                    <div class="items" id="additional_item2">
-                        <div class="wrapper">
-                            <label for="type_of_waste2">
-                                <i class="fa-solid fa-trash-can"></i>
-                                #2 Type of Waste
-                            </label><br>
-                            <div class="search_input search_input_type" id="search_type_of_waste2">
-                                <input type="text" name="type_of_waste2" id="type_of_waste2" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
-                                <input type="hidden" name="waste_id2" id="waste_id2">
-                                <input type="hidden" name="waste_name2" id="waste_name2">
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="weight2">
-                                <i class="fa-solid fa-weight-scale"></i>
-                                Weight (kg.)
-                            </label>
-                            <div class="search_input">
-                                <input type="number" autocomplete="off" name="weight2" id="weight2" class="form-control">
-                            </div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
-                            <div class="wrapper">
-                                <label for="destruction_process2">
-                                    <i class="fa-solid fa-dumpster-fire"></i>
-                                    Treatment Process
-                                </label>
-                                <div class="search_input search_treatment_type"  id="search_type_of_treatment2">
-                                    <input type="text" autocomplete="off" name="destruction_process2" id="destruction_process2" class="form-control" required readonly>
-                                    <div class="autocom_box"></div>
-                                    <div class="icon"><i class="fas fa-search"></i></div>
-                                </div>
-                            </div>
-                            <div class="wrapper">
-                                <label for="form_no2">
-                                    <i class="fa-solid fa-list-ol"></i>
-                                    Gate Pass # / Truck Scale #
-                                </label><br>
-                                <div>
-                                    <input type="text" id="form_no2" autocomplete="off" name="form_no2" class="form-control" style="height: 55px;">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="sf_form_no2">
-                                <i class="fa-solid fa-list-ol"></i>
-                                SF #
-                            </label><br>
-                            <div class="search_input">
-                                <input type="text" id="sf_form_no2" autocomplete="off" name="sf_form_no2" class="form-control" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="items" id="additional_item3">
-                        <div class="wrapper">
-                            <label for="type_of_waste3">
-                                <i class="fa-solid fa-trash-can"></i>
-                                #3 Type of Waste
-                            </label><br>
-                            <div class="search_input search_input_type" id="search_type_of_waste3">
-                                <input type="text" name="type_of_waste3" id="type_of_waste3" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
-                                <input type="hidden" name="waste_id3" id="waste_id3">
-                                <input type="hidden" name="waste_name3" id="waste_name3">
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="weight3">
-                                <i class="fa-solid fa-weight-scale"></i>
-                                Weight (kg.)
-                            </label>
-                            <div class="search_input">
-                                <input type="number" autocomplete="off" name="weight3" id="weight3" class="form-control">
-                            </div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
-                            <div class="wrapper">
-                                <label for="destruction_process3">
-                                    <i class="fa-solid fa-dumpster-fire"></i>
-                                    Treatment Process
-                                </label>
-                                <div class="search_input search_treatment_type"  id="search_type_of_treatment3">
-                                    <input type="text" autocomplete="off" name="destruction_process3" id="destruction_process3" class="form-control" required readonly>
-                                    <div class="autocom_box"></div>
-                                    <div class="icon"><i class="fas fa-search"></i></div>
-                                </div>
-                            </div>
-                            <div class="wrapper">
-                                <label for="form_no3">
-                                    <i class="fa-solid fa-list-ol"></i>
-                                    Gate Pass # / Truck Scale #
-                                </label><br>
-                                <div>
-                                    <input type="text" id="form_no3" autocomplete="off" name="form_no3" class="form-control" style="height: 55px;">
-                                </div>
-                            </div>
-                        </div>  
-                        <div class="wrapper">
-                            <label for="sf_form_no3">
-                                <i class="fa-solid fa-list-ol"></i>
-                                SF #
-                            </label><br>
-                            <div class="search_input">
-                                <input type="text" id="sf_form_no3" autocomplete="off" name="sf_form_no3" class="form-control" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="items" id="additional_item4">
-                        <div class="wrapper">
-                            <label for="type_of_waste4">
-                                <i class="fa-solid fa-trash-can"></i>
-                                #4 Type of Waste
-                            </label><br>
-                            <div class="search_input search_input_type" id="search_type_of_waste4">
-                                <input type="text" name="type_of_waste4" id="type_of_waste4" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
-                                <input type="hidden" name="waste_id4" id="waste_id4">
-                                <input type="hidden" name="waste_name4" id="waste_name4">
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="weight4">
-                                <i class="fa-solid fa-weight-scale"></i>
-                                Weight (kg.)
-                            </label>
-                            <div class="search_input">
-                                <input type="number" autocomplete="off" name="weight4" id="weight4" class="form-control">
-                            </div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
-                            <div class="wrapper">
-                                <label for="destruction_process4">
-                                    <i class="fa-solid fa-dumpster-fire"></i>
-                                    Treatment Process
-                                </label>
-                                <div class="search_input search_treatment_type"  id="search_type_of_treatment4">
-                                    <input type="text" autocomplete="off" name="destruction_process4" id="destruction_process4" class="form-control" required readonly>
-                                    <div class="autocom_box"></div>
-                                    <div class="icon"><i class="fas fa-search"></i></div>
-                                </div>
-                            </div>
-                            <div class="wrapper">
-                                <label for="form_no4">
-                                    <i class="fa-solid fa-list-ol"></i>
-                                    Gate Pass # / Truck Scale #
-                                </label><br>
-                                <div>
-                                    <input type="text" id="form_no4" autocomplete="off" name="form_no4" class="form-control" style="height: 55px;">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="sf_form_no4">
-                                <i class="fa-solid fa-list-ol"></i>
-                                SF #
-                            </label><br>
-                            <div class="search_input">
-                                <input type="text" id="sf_form_no4" autocomplete="off" name="sf_form_no4" class="form-control" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="items" id="additional_item5">
-                        <div class="wrapper">
-                            <label for="type_of_waste5">
-                                <i class="fa-solid fa-trash-can"></i>
-                                #5 Type of Waste
-                            </label><br>
-                            <div class="search_input search_input_type" id="search_type_of_waste5">
-                                <input type="text" name="type_of_waste5" id="type_of_waste5" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
-                                <input type="hidden" name="waste_id5" id="waste_id5">
-                                <input type="hidden" name="waste_name5" id="waste_name5">
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="weight5">
-                                <i class="fa-solid fa-weight-scale"></i>
-                                Weight (kg.)
-                            </label>
-                            <div class="search_input">
-                                <input type="number" autocomplete="off" name="weight5" id="weight5" class="form-control">
-                            </div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
-                            <div class="wrapper">
-                                <label for="destruction_process5">
-                                    <i class="fa-solid fa-dumpster-fire"></i>
-                                    Treatment Process
-                                </label>
-                                <div class="search_input search_treatment_type"  id="search_type_of_treatment5">
-                                    <input type="text" autocomplete="off" name="destruction_process5" id="destruction_process5" class="form-control" required readonly>
-                                    <div class="autocom_box"></div>
-                                    <div class="icon"><i class="fas fa-search"></i></div>
-                                </div>
-                            </div>
-                            <div class="wrapper">
-                                <label for="form_no5">
-                                    <i class="fa-solid fa-list-ol"></i>
-                                    Gate Pass # / Truck Scale #
-                                </label><br>
-                                <div>
-                                    <input type="text" id="form_no5" autocomplete="off" name="form_no5" class="form-control" style="height: 55px;">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="sf_form_no5">
-                                <i class="fa-solid fa-list-ol"></i>
-                                SF #
-                            </label><br>
-                            <div class="search_input">
-                                <input type="text" id="sf_form_no5" autocomplete="off" name="sf_form_no5" class="form-control" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="items" id="additional_item6">
-                        <div class="wrapper">
-                            <label for="type_of_waste6">
-                                <i class="fa-solid fa-trash-can"></i>
-                                #6 Type of Waste
-                            </label><br>
-                            <div class="search_input search_input_type" id="search_type_of_waste6">
-                                <input type="text" name="type_of_waste6" id="type_of_waste6" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
-                                <input type="hidden" name="waste_id6" id="waste_id6">
-                                <input type="hidden" name="waste_name6" id="waste_name6">
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="weight6">
-                                <i class="fa-solid fa-weight-scale"></i>
-                                Weight (kg.)
-                            </label>
-                            <div class="search_input">
-                                <input type="number" autocomplete="off" name="weight6" id="weight6" class="form-control">
-                            </div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
-                            <div class="wrapper">
-                                <label for="destruction_process6">
-                                    <i class="fa-solid fa-dumpster-fire"></i>
-                                    Treatment Process
-                                </label>
-                                <div class="search_input search_treatment_type"  id="search_type_of_treatment6">
-                                    <input type="text" autocomplete="off" name="destruction_process6" id="destruction_process6" class="form-control" required readonly>
-                                    <div class="autocom_box"></div>
-                                    <div class="icon"><i class="fas fa-search"></i></div>
-                                </div>
-                            </div>
-                            <div class="wrapper">
-                                <label for="form_no6">
-                                    <i class="fa-solid fa-list-ol"></i>
-                                    Gate Pass # / Truck Scale #
-                                </label><br>
-                                <div>
-                                    <input type="text" id="form_no6" autocomplete="off" name="form_no6" class="form-control" style="height: 55px;">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="sf_form_no6">
-                                <i class="fa-solid fa-list-ol"></i>
-                                SF #
-                            </label><br>
-                            <div class="search_input">
-                                <input type="text" id="sf_form_no6" autocomplete="off" name="sf_form_no6" class="form-control" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="items" id="additional_item7">
-                        <div class="wrapper">
-                            <label for="type_of_waste7">
-                                <i class="fa-solid fa-trash-can"></i>
-                                #7 Type of Waste
-                            </label><br>
-                            <div class="search_input search_input_type" id="search_type_of_waste7">
-                                <input type="text" name="type_of_waste7" id="type_of_waste7" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
-                                <input type="hidden" name="waste_id7" id="waste_id7">
-                                <input type="hidden" name="waste_name7" id="waste_name7">
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="weight7">
-                                <i class="fa-solid fa-weight-scale"></i>
-                                Weight (kg.)
-                            </label>
-                            <div class="search_input">
-                                <input type="number" autocomplete="off" name="weight7" id="weight7" class="form-control">
-                            </div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
-                            <div class="wrapper">
-                                <label for="destruction_process7">
-                                    <i class="fa-solid fa-dumpster-fire"></i>
-                                    Treatment Process
-                                </label>
-                                <div class="search_input search_treatment_type"  id="search_type_of_treatment7">
-                                    <input type="text" autocomplete="off" name="destruction_process7" id="destruction_process7" class="form-control" required readonly>
-                                    <div class="autocom_box"></div>
-                                    <div class="icon"><i class="fas fa-search"></i></div>
-                                </div>
-                            </div>
-                            <div class="wrapper">
-                                <label for="form_no7">
-                                    <i class="fa-solid fa-list-ol"></i>
-                                    Gate Pass # / Truck Scale #
-                                </label><br>
-                                <div>
-                                    <input type="text" id="form_no7" autocomplete="off" name="form_no7" class="form-control" style="height: 55px;">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="sf_form_no7">
-                                <i class="fa-solid fa-list-ol"></i>
-                                SF #
-                            </label><br>
-                            <div class="search_input">
-                                <input type="text" id="sf_form_no7" autocomplete="off" name="sf_form_no7" class="form-control" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="items" id="additional_item8">
-                        <div class="wrapper">
-                            <label for="type_of_waste8">
-                                <i class="fa-solid fa-trash-can"></i>
-                                #8 Type of Waste
-                            </label><br>
-                            <div class="search_input search_input_type" id="search_type_of_waste8">
-                                <input type="text" name="type_of_waste8" id="type_of_waste8" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
-                                <input type="hidden" name="waste_id8" id="waste_id8">
-                                <input type="hidden" name="waste_name8" id="waste_name8">
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="weight8">
-                                <i class="fa-solid fa-weight-scale"></i>
-                                Weight (kg.)
-                            </label>
-                            <div class="search_input">
-                                <input type="number" autocomplete="off" name="weight8" id="weight8" class="form-control">
-                            </div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
-                            <div class="wrapper">
-                                <label for="destruction_process8">
-                                    <i class="fa-solid fa-dumpster-fire"></i>
-                                    Treatment Process
-                                </label>
-                                <div class="search_input search_treatment_type"  id="search_type_of_treatment8">
-                                    <input type="text" autocomplete="off" name="destruction_process8" id="destruction_process8" class="form-control" required readonly>
-                                    <div class="autocom_box"></div>
-                                    <div class="icon"><i class="fas fa-search"></i></div>
-                                </div>
-                            </div>
-                            <div class="wrapper">
-                                <label for="form_no8">
-                                    <i class="fa-solid fa-list-ol"></i>
-                                    Gate Pass # / Truck Scale #
-                                </label><br>
-                                <div>
-                                    <input type="text" id="form_no8" autocomplete="off" name="form_no8" class="form-control" style="height: 55px;">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="sf_form_no8">
-                                <i class="fa-solid fa-list-ol"></i>
-                                SF #
-                            </label><br>
-                            <div class="search_input">
-                                <input type="text" id="sf_form_no8" autocomplete="off" name="sf_form_no8" class="form-control" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="items" id="additional_item9">
-                        <div class="wrapper">                            
-                            <label for="type_of_waste9">
-                                <i class="fa-solid fa-trash-can"></i>
-                                #9 Type of Waste
-                            </label><br>
-                            <div class="search_input search_input_type" id="search_type_of_waste9">
-                                <input type="text" name="type_of_waste9" id="type_of_waste9" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
-                                <input type="hidden" name="waste_id9" id="waste_id9">
-                                <input type="hidden" name="waste_name9" id="waste_name9">
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="weight9">
-                                <i class="fa-solid fa-weight-scale"></i>
-                                Weight (kg.)
-                            </label>
-                            <div class="search_input">
-                                <input type="number" autocomplete="off" name="weight9" id="weight9" class="form-control">
-                            </div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
-                            <div class="wrapper">
-                                <label for="destruction_process9">
-                                    <i class="fa-solid fa-dumpster-fire"></i>
-                                    Treatment Process
-                                </label>
-                                <div class="search_input search_treatment_type"  id="search_type_of_treatment9">
-                                    <input type="text" autocomplete="off" name="destruction_process9" id="destruction_process9" class="form-control" required readonly>
-                                    <div class="autocom_box"></div>
-                                    <div class="icon"><i class="fas fa-search"></i></div>
-                                </div>
-                            </div>
-                            <div class="wrapper">
-                                <label for="form_no9">
-                                    <i class="fa-solid fa-list-ol"></i>
-                                    Gate Pass # / Truck Scale #
-                                </label><br>
-                                <div>
-                                    <input type="text" id="form_no9" autocomplete="off" name="form_no9" class="form-control" style="height: 55px;">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="sf_form_no9">
-                                <i class="fa-solid fa-list-ol"></i>
-                                SF #
-                            </label><br>
-                            <div class="search_input">
-                                <input type="text" id="sf_form_no9" autocomplete="off" name="sf_form_no9" class="form-control" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="items" id="additional_item10">
-                        <div class="wrapper">
-                            <label for="type_of_waste10">
-                                <i class="fa-solid fa-trash-can"></i>
-                                #10 Type of Waste
-                            </label><br>
-                            <div class="search_input search_input_type" id="search_type_of_waste10">
-                                <input type="text" name="type_of_waste10" id="type_of_waste10" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
-                                <input type="hidden" name="waste_id10" id="waste_id10">
-                                <input type="hidden" name="waste_name10" id="waste_name10">
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="weight10">
-                                <i class="fa-solid fa-weight-scale"></i>
-                                Weight (kg.)
-                            </label>
-                            <div class="search_input">
-                                <input type="number" autocomplete="off" name="weight10" id="weight10" class="form-control">
-                            </div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
-                            <div class="wrapper">
-                                <label for="destruction_process10">
-                                    <i class="fa-solid fa-dumpster-fire"></i>
-                                    Treatment Process
-                                </label>
-                                <div class="search_input search_treatment_type"  id="search_type_of_treatment10">
-                                    <input type="text" autocomplete="off" name="destruction_process10" id="destruction_process10" class="form-control" required readonly>
-                                    <div class="autocom_box"></div>
-                                    <div class="icon"><i class="fas fa-search"></i></div>
-                                </div>
-                            </div>
-                            <div class="wrapper">
-                                <label for="form_no10">
-                                    <i class="fa-solid fa-list-ol"></i>
-                                    Gate Pass # / Truck Scale #
-                                </label><br>
-                                <div>
-                                    <input type="text" id="form_no10" autocomplete="off" name="form_no10" class="form-control" style="height: 55px;">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="sf_form_no10">
-                                <i class="fa-solid fa-list-ol"></i>
-                                SF #
-                            </label><br>
-                            <div class="search_input">
-                                <input type="text" id="sf_form_no10" autocomplete="off" name="sf_form_no10" class="form-control" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="items" id="additional_item11">
-                        <div class="wrapper">
-                            <label for="type_of_waste11">
-                                <i class="fa-solid fa-trash-can"></i>
-                                #11 Type of Waste
-                            </label><br>
-                            <div class="search_input search_input_type" id="search_type_of_waste11">
-                                <input type="text" name="type_of_waste11" id="type_of_waste11" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
-                                <input type="hidden" name="waste_id11" id="waste_id11">
-                                <input type="hidden" name="waste_name11" id="waste_name11">
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="weight11">
-                                <i class="fa-solid fa-weight-scale"></i>
-                                Weight (kg.)
-                            </label>
-                            <div class="search_input">
-                                <input type="number" autocomplete="off" name="weight11" id="weight11" class="form-control">
-                            </div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
-                            <div class="wrapper">
-                                <label for="destruction_process11">
-                                    <i class="fa-solid fa-dumpster-fire"></i>
-                                    Treatment Process
-                                </label>
-                                <div class="search_input search_treatment_type"  id="search_type_of_treatment11">
-                                    <input type="text" autocomplete="off" name="destruction_process11" id="destruction_process11" class="form-control" required readonly>
-                                    <div class="autocom_box"></div>
-                                    <div class="icon"><i class="fas fa-search"></i></div>
-                                </div>
-                            </div>
-                            <div class="wrapper">
-                                <label for="form_no11">
-                                    <i class="fa-solid fa-list-ol"></i>
-                                    Gate Pass # / Truck Scale #
-                                </label><br>
-                                <div>
-                                    <input type="text" id="form_no11" autocomplete="off" name="form_no11" class="form-control" style="height: 55px;">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="sf_form_no11">
-                                <i class="fa-solid fa-list-ol"></i>
-                                SF #
-                            </label><br>
-                            <div class="search_input">
-                                <input type="text" id="sf_form_no11" autocomplete="off" name="sf_form_no11" class="form-control" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="items" id="additional_item12">
-                        <div class="wrapper">
-                            <label for="type_of_waste12">
-                                <i class="fa-solid fa-trash-can"></i>
-                                #12 Type of Waste
-                            </label><br>
-                            <div class="search_input search_input_type" id="search_type_of_waste12">
-                                <input type="text" name="type_of_waste12" id="type_of_waste12" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
-                                <input type="hidden" name="waste_id12" id="waste_id12">
-                                <input type="hidden" name="waste_name12" id="waste_name12">
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="weight12">
-                                <i class="fa-solid fa-weight-scale"></i>
-                                Weight (kg.)
-                            </label>
-                            <div class="search_input">
-                                <input type="number" autocomplete="off" name="weight12" id="weight12" class="form-control">
-                            </div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
-                            <div class="wrapper">
-                                <label for="destruction_process12">
-                                    <i class="fa-solid fa-dumpster-fire"></i>
-                                    Treatment Process
-                                </label>
-                                <div class="search_input search_treatment_type"  id="search_type_of_treatment12">
-                                    <input type="text" autocomplete="off" name="destruction_process12" id="destruction_process12" class="form-control" required readonly>
-                                    <div class="autocom_box"></div>
-                                    <div class="icon"><i class="fas fa-search"></i></div>
-                                </div>
-                            </div>
-                            <div class="wrapper">
-                                <label for="form_no12">
-                                    <i class="fa-solid fa-list-ol"></i>
-                                    Gate Pass # / Truck Scale #
-                                </label><br>
-                                <div>
-                                    <input type="text" id="form_no12" autocomplete="off" name="form_no12" class="form-control" style="height: 55px;">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="sf_form_no12">
-                                <i class="fa-solid fa-list-ol"></i>
-                                SF #
-                            </label><br>
-                            <div class="search_input">
-                                <input type="text" id="sf_form_no12" autocomplete="off" name="sf_form_no12" class="form-control" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="items" id="additional_item13">
-                        <div class="wrapper">
-                            <label for="type_of_waste13">
-                                <i class="fa-solid fa-trash-can"></i>
-                                #13 Type of Waste
-                            </label><br>
-                            <div class="search_input search_input_type" id="search_type_of_waste13">
-                                <input type="text" name="type_of_waste13" id="type_of_waste13" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
-                                <input type="hidden" name="waste_id13" id="waste_id13">
-                                <input type="hidden" name="waste_name13" id="waste_name13">
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="weight13">
-                                <i class="fa-solid fa-weight-scale"></i>
-                                Weight (kg.)
-                            </label>
-                            <div class="search_input">
-                                <input type="number" autocomplete="off" name="weight13" id="weight13" class="form-control">
-                            </div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
-                            <div class="wrapper">
-                                <label for="destruction_process13">
-                                    <i class="fa-solid fa-dumpster-fire"></i>
-                                    Treatment Process
-                                </label>
-                                <div class="search_input search_treatment_type"  id="search_type_of_treatment13">
-                                    <input type="text" autocomplete="off" name="destruction_process13" id="destruction_process13" class="form-control" required readonly>
-                                    <div class="autocom_box"></div>
-                                    <div class="icon"><i class="fas fa-search"></i></div>
-                                </div>
-                            </div>
-                            <div class="wrapper">
-                                <label for="form_no13">
-                                    <i class="fa-solid fa-list-ol"></i>
-                                    Gate Pass # / Truck Scale #
-                                </label><br>
-                                <div>
-                                    <input type="text" id="form_no13" autocomplete="off" name="form_no13" class="form-control" style="height: 55px;">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="sf_form_no13">
-                                <i class="fa-solid fa-list-ol"></i>
-                                SF #
-                            </label><br>
-                            <div class="search_input">
-                                <input type="text" id="sf_form_no13" autocomplete="off" name="sf_form_no13" class="form-control" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="items" id="additional_item14">
-                        <div class="wrapper">
-                            <label for="type_of_waste14">
-                                <i class="fa-solid fa-trash-can"></i>
-                                #14 Type of Waste
-                            </label><br>
-                            <div class="search_input search_input_type" id="search_type_of_waste14">
-                                <input type="text" name="type_of_waste14" id="type_of_waste14" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
-                                <input type="hidden" name="waste_id14" id="waste_id14">
-                                <input type="hidden" name="waste_name14" id="waste_name14">
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="weight14">
-                                <i class="fa-solid fa-weight-scale"></i>
-                                Weight (kg.)
-                            </label>
-                            <div class="search_input">
-                                <input type="number" autocomplete="off" name="weight14" id="weight14" class="form-control">
-                            </div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
-                            <div class="wrapper">
-                                <label for="destruction_process14">
-                                    <i class="fa-solid fa-dumpster-fire"></i>
-                                    Treatment Process
-                                </label>
-                                <div class="search_input search_treatment_type"  id="search_type_of_treatment14">
-                                    <input type="text" autocomplete="off" name="destruction_process14" id="destruction_process14" class="form-control" required readonly>
-                                    <div class="autocom_box"></div>
-                                    <div class="icon"><i class="fas fa-search"></i></div>
-                                </div>
-                            </div>
-                            <div class="wrapper">
-                                <label for="form_no14">
-                                    <i class="fa-solid fa-list-ol"></i>
-                                    Gate Pass # / Truck Scale #
-                                </label><br>
-                                <div>
-                                    <input type="text" id="form_no14" autocomplete="off" name="form_no14" class="form-control" style="height: 55px;">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="sf_form_no14">
-                                <i class="fa-solid fa-list-ol"></i>
-                                SF #
-                            </label><br>
-                            <div class="search_input">
-                                <input type="text" id="sf_form_no14" autocomplete="off" name="sf_form_no14" class="form-control" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="items" id="additional_item15">
-                        <div class="wrapper">
-                            <label for="type_of_waste15">
-                                <i class="fa-solid fa-trash-can"></i>
-                                #15 Type of Waste
-                            </label><br>
-                            <div class="search_input search_input_type" id="search_type_of_waste15">
-                                <input type="text" name="type_of_waste15" id="type_of_waste15" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
-                                <input type="hidden" name="waste_id15" id="waste_id15">
-                                <input type="hidden" name="waste_name15" id="waste_name15">
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="weight15">
-                                <i class="fa-solid fa-weight-scale"></i>
-                                Weight (kg.)
-                            </label>
-                            <div class="search_input">
-                                <input type="number" autocomplete="off" name="weight15" id="weight15" class="form-control">
-                            </div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
-                            <div class="wrapper">
-                                <label for="destruction_process15">
-                                    <i class="fa-solid fa-dumpster-fire"></i>
-                                    Treatment Process
-                                </label>
-                                <div class="search_input search_treatment_type"  id="search_type_of_treatment15">
-                                    <input type="text" autocomplete="off" name="destruction_process15" id="destruction_process15" class="form-control" required readonly>
-                                    <div class="autocom_box"></div>
-                                    <div class="icon"><i class="fas fa-search"></i></div>
-                                </div>
-                            </div>
-                            <div class="wrapper">
-                                <label for="form_no15">
-                                    <i class="fa-solid fa-list-ol"></i>
-                                    Gate Pass # / Truck Scale #
-                                </label><br>
-                                <div>
-                                    <input type="text" id="form_no15" autocomplete="off" name="form_no15" class="form-control" style="height: 55px;">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="sf_form_no15">
-                                <i class="fa-solid fa-list-ol"></i>
-                                SF #
-                            </label><br>
-                            <div class="search_input">
-                                <input type="text" id="sf_form_no15" autocomplete="off" name="sf_form_no15" class="form-control" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="items" id="additional_item16">
-                        <div class="wrapper">
-                            <label for="type_of_waste16">
-                                <i class="fa-solid fa-trash-can"></i>
-                                #16 Type of Waste
-                            </label><br>
-                            <div class="search_input search_input_type" id="search_type_of_waste16">
-                                <input type="text" name="type_of_waste16" id="type_of_waste16" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
-                                <input type="hidden" name="waste_id16" id="waste_id16">
-                                <input type="hidden" name="waste_name16" id="waste_name16">
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="weight16">
-                                <i class="fa-solid fa-weight-scale"></i>
-                                Weight (kg.)
-                            </label>
-                            <div class="search_input">
-                                <input type="number" autocomplete="off" name="weight16" id="weight16" class="form-control">
-                            </div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
-                            <div class="wrapper">
-                                <label for="destruction_process16">
-                                    <i class="fa-solid fa-dumpster-fire"></i>
-                                    Treatment Process
-                                </label>
-                                <div class="search_input search_treatment_type"  id="search_type_of_treatment16">
-                                    <input type="text" autocomplete="off" name="destruction_process16" id="destruction_process16" class="form-control" required readonly>
-                                    <div class="autocom_box"></div>
-                                    <div class="icon"><i class="fas fa-search"></i></div>
-                                </div>
-                            </div>
-                            <div class="wrapper">
-                                <label for="form_no16">
-                                    <i class="fa-solid fa-list-ol"></i>
-                                    Gate Pass # / Truck Scale #
-                                </label><br>
-                                <div>
-                                    <input type="text" id="form_no16" autocomplete="off" name="form_no16" class="form-control" style="height: 55px;">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="sf_form_no16">
-                                <i class="fa-solid fa-list-ol"></i>
-                                SF #
-                            </label><br>
-                            <div class="search_input">
-                                <input type="text" id="sf_form_no16" autocomplete="off" name="sf_form_no16" class="form-control" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="items" id="additional_item17">
-                        <div class="wrapper">
-                            <label for="type_of_waste17">
-                                <i class="fa-solid fa-trash-can"></i>
-                                #17 Type of Waste
-                            </label><br>
-                            <div class="search_input search_input_type" id="search_type_of_waste17">
-                                <input type="text" name="type_of_waste17" id="type_of_waste17" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
-                                <input type="hidden" name="waste_id17" id="waste_id17">
-                                <input type="hidden" name="waste_name17" id="waste_name17">
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="weight17">
-                                <i class="fa-solid fa-weight-scale"></i>
-                                Weight (kg.)
-                            </label>
-                            <div class="search_input">
-                                <input type="number" autocomplete="off" name="weight17" id="weight17" class="form-control">
-                            </div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
-                            <div class="wrapper">
-                                <label for="destruction_process17">
-                                    <i class="fa-solid fa-dumpster-fire"></i>
-                                    Treatment Process
-                                </label>
-                                <div class="search_input search_treatment_type"  id="search_type_of_treatment17">
-                                    <input type="text" autocomplete="off" name="destruction_process17" id="destruction_process17" class="form-control" required readonly>
-                                    <div class="autocom_box"></div>
-                                    <div class="icon"><i class="fas fa-search"></i></div>
-                                </div>
-                            </div>
-                            <div class="wrapper">
-                                <label for="form_no17">
-                                    <i class="fa-solid fa-list-ol"></i>
-                                    Gate Pass # / Truck Scale #
-                                </label><br>
-                                <div>
-                                    <input type="text" id="form_no17" autocomplete="off" name="form_no17" class="form-control" style="height: 55px;">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="sf_form_no17">
-                                <i class="fa-solid fa-list-ol"></i>
-                                SF #
-                            </label><br>
-                            <div class="search_input">
-                                <input type="text" id="sf_form_no17" autocomplete="off" name="sf_form_no17" class="form-control" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="items" id="additional_item18">
-                        <div class="wrapper">
-                            <label for="type_of_waste18">
-                                <i class="fa-solid fa-trash-can"></i>
-                                #18 Type of Waste
-                            </label><br>
-                            <div class="search_input search_input_type" id="search_type_of_waste18">
-                                <input type="text" name="type_of_waste18" id="type_of_waste18" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
-                                <input type="hidden" name="waste_id18" id="waste_id18">
-                                <input type="hidden" name="waste_name18" id="waste_name18">
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="weight18">
-                                <i class="fa-solid fa-weight-scale"></i>
-                                Weight (kg.)
-                            </label>
-                            <div class="search_input">
-                                <input type="number" autocomplete="off" name="weight18" id="weight18" class="form-control">
-                            </div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
-                            <div class="wrapper">
-                                <label for="destruction_process18">
-                                    <i class="fa-solid fa-dumpster-fire"></i>
-                                    Treatment Process
-                                </label>
-                                <div class="search_input search_treatment_type"  id="search_type_of_treatment18">
-                                    <input type="text" autocomplete="off" name="destruction_process18" id="destruction_process18" class="form-control" required readonly>
-                                    <div class="autocom_box"></div>
-                                    <div class="icon"><i class="fas fa-search"></i></div>
-                                </div>
-                            </div>
-                            <div class="wrapper">
-                                <label for="form_no18">
-                                    <i class="fa-solid fa-list-ol"></i>
-                                    Gate Pass # / Truck Scale #
-                                </label><br>
-                                <div>
-                                    <input type="text" id="form_no18" autocomplete="off" name="form_no18" class="form-control" style="height: 55px;">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="sf_form_no18">
-                                <i class="fa-solid fa-list-ol"></i>
-                                SF #
-                            </label><br>
-                            <div class="search_input">
-                                <input type="text" id="sf_form_no18" autocomplete="off" name="sf_form_no18" class="form-control" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="items" id="additional_item19">
-                        <div class="wrapper">
-                            <label for="type_of_waste19">
-                                <i class="fa-solid fa-trash-can"></i>
-                                #19 Type of Waste
-                            </label><br>
-                            <div class="search_input search_input_type" id="search_type_of_waste19">
-                                <input type="text" name="type_of_waste19" id="type_of_waste19" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
-                                <input type="hidden" name="waste_id19" id="waste_id19">
-                                <input type="hidden" name="waste_name19" id="waste_name19">
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="weight19">
-                                <i class="fa-solid fa-weight-scale"></i>
-                                Weight (kg.)
-                            </label>
-                            <div class="search_input">
-                                <input type="number" autocomplete="off" name="weight19" id="weight19" class="form-control">
-                            </div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
-                            <div class="wrapper">
-                                <label for="destruction_process19">
-                                    <i class="fa-solid fa-dumpster-fire"></i>
-                                    Treatment Process
-                                </label>
-                                <div class="search_input search_treatment_type"  id="search_type_of_treatment19">
-                                    <input type="text" autocomplete="off" name="destruction_process19" id="destruction_process19" class="form-control" required readonly>
-                                    <div class="autocom_box"></div>
-                                    <div class="icon"><i class="fas fa-search"></i></div>
-                                </div>
-                            </div>
-                            <div class="wrapper">
-                                <label for="form_no19">
-                                    <i class="fa-solid fa-list-ol"></i>
-                                    Gate Pass # / Truck Scale #
-                                </label><br>
-                                <div>
-                                    <input type="text" id="form_no19" autocomplete="off" name="form_no19" class="form-control" style="height: 55px;">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="sf_form_no19">
-                                <i class="fa-solid fa-list-ol"></i>
-                                SF #
-                            </label><br>
-                            <div class="search_input">
-                                <input type="text" id="sf_form_no19" autocomplete="off" name="sf_form_no19" class="form-control" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="items" id="additional_item20">
-                        <div class="wrapper">
-                            <label for="type_of_waste20">
-                                <i class="fa-solid fa-trash-can"></i>
-                                #20 Type of Waste
-                            </label><br>
-                            <div class="search_input search_input_type" id="search_type_of_waste20">
-                                <input type="text" name="type_of_waste20" id="type_of_waste20" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
-                                <input type="hidden" name="waste_id20" id="waste_id20">
-                                <input type="hidden" name="waste_name20" id="waste_name20">
-                                <div class="autocom_box"></div>
-                                <div class="icon"><i class="fas fa-search"></i></div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="weight20">
-                                <i class="fa-solid fa-weight-scale"></i>
-                                Weight (kg.)
-                            </label>
-                            <div class="search_input">
-                                <input type="number" autocomplete="off" name="weight20" id="weight20" class="form-control">
-                            </div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
-                            <div class="wrapper">
-                                <label for="destruction_process20">
-                                    <i class="fa-solid fa-dumpster-fire"></i>
-                                    Treatment Process
-                                </label>
-                                <div class="search_input search_treatment_type"  id="search_type_of_treatment20">
-                                    <input type="text" autocomplete="off" name="destruction_process20" id="destruction_process20" class="form-control" required readonly>
-                                    <div class="autocom_box"></div>
-                                    <div class="icon"><i class="fas fa-search"></i></div>
-                                </div>
-                            </div>
-                            <div class="wrapper">
-                                <label for="form_no20">
-                                    <i class="fa-solid fa-list-ol"></i>
-                                    Gate Pass # / Truck Scale #
-                                </label><br>
-                                <div>
-                                    <input type="text" id="form_no20" autocomplete="off" name="form_no20" class="form-control" style="height: 55px;">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <label for="sf_form_no20">
-                                <i class="fa-solid fa-list-ol"></i>
-                                SF #
-                            </label><br>
-                            <div class="search_input">
-                                <input type="text" id="sf_form_no20" autocomplete="off" name="sf_form_no20" class="form-control" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="sf_form" id="weights">
-                        <div class="form">
-                            <label for="total_weight">
-                                <i class="fa-solid fa-weight-scale"></i>
-                                Total Weight
-                            </label>
-                            <input type="number" id="total_weight" class="form-control" readonly>
-                        </div>
-                        <div class="form">
-                            <label for="rem_weight">
-                                <i class="fa-solid fa-weight-scale"></i>
-                                Rem. Weight
-                            </label>
-                            <input type="number" id="rem_weight" name="rem_weight" class="form-control" readonly>
-                        </div>
-                        <div class="discrepancy_button_holder">
-                            <button type="button" id="discrepancy_button" class="form-control">
-                                Discrepancy
+                            <input type="text" name="task_id" id="task_id" autocomplete="off" class="form-control form" required>
+                        </div>
+                        <div style="display: flex; align-items: end;">
+                            <button id="task_id_button" type="button" class="form-control" style="width: 60px; height: 60px;">
+                                <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
                             </button>
                         </div>
-                        <div class="add_item">
-                            <div class="item_buttons">
-                                <button type="button" id="add_item_button" class="form-control">
-                                    <i class="fa-solid fa-plus"></i>
-                                </button>
-                                <button type="button" id="remove_item_button" class="form-control">
-                                    <i class="fa-solid fa-minus"></i>
-                                </button>
-                            </div>
-                        </div>
                     </div><br>
-                    <input type="hidden" name="is_discrepancy" id="is_discrepancy" value="false">
-                    <div class="items" id="discrepancy">
-                        <div>
-                            <div class="wrapper">
-                                <label for="discrepancy_remarks">
-                                    <i class="fa-solid fa-table-list"></i>
-                                    Discrepancy
-                                    <input type="hidden" name="discrepancy_input" id="discrepancy_input" value="DISCREPANCY">
-                                    <input type="hidden" name="discrepancy_name" id="discrepancy_name" value="N/A">
-                                </label>
-                                <div class="search_input">
-                                    <textarea class="form-control" name="discrepancy_remarks" id="discrepancy_remarks" placeholder="Type the Discrepancy Remarks"></textarea>
+                    <div class="row" style="display: none;" id="ar_details">
+                        <div class="col-12 col-lg-6">
+                            <label for="task">
+                                <i class="fa-solid fa-briefcase"></i>
+                                Task
+                                </label><br>
+                            <input type="text" name="task" id="task" autocomplete="off" class="form-control" required placeholder="Input Task Name..." readonly><br>
+                            <label for="percentage">
+                                <i class="fa-solid fa-hourglass-half"></i>
+                                Percentage
+                            </label><br>
+                            <div class="range">
+                                <div class="sliderValue">
+                                    <span id="sliderValue">0%</span>
+                                </div>
+                                <div class="field">
+                                    <div class="value left">0%</div>
+                                    <input type="range" name="percentage" id="percentage" autocomplete="off" min="0" max="100" value="0" step="1" required>
+                                    <div class="value right">100%</div>
+                                </div>
+                            </div><br>
+                            <label for="accomplishment">
+                                <i class="fa-solid fa-calendar-check"></i>
+                                Accomplishment
+                            </label><br>
+                            <input type="text" name="accomplishment" id="accomplishment" autocomplete="off" class="form-control" required placeholder="Input Accomplishment..."><br>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="ar_date_start">
+                                        <i class="fa-solid fa-calendar-days"></i>
+                                        Date/Time Start
+                                    </label>
+                                    <div>
+                                        <input type="date" id="ar_date_start" name="ar_date_start" class="form-control" readonly>
+                                        <input type="time" id="ar_time_start" name="ar_time_start" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <label for="ar_date_finished">
+                                        <i class="fa-solid fa-calendar-days"></i>
+                                        Date/Time Finished
+                                    </label>
+                                    <div>
+                                        <input type="date" id="ar_date_finished" name="ar_date_finished" class="form-control" readonly>
+                                        <input type="time" id="ar_time_finished" name="ar_time_finished" class="form-control" readonly>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <div class="wrapper">
-                                <label for="weight21">
-                                    <i class="fa-solid fa-weight-scale"></i>
-                                    Weight (kg.)
-                                </label>
-                                <div class="search_input">
-                                    <input type="number" autocomplete="off" name="weight21" id="weight21" class="form-control" step="0.01">
+                        <div class="buttons">
+                            <button type="submit" id="submit_btn" class="form-control">
+                                Submit
+                            </button>
+                            <button type="reset" id="reset" class="form-control" >
+                                Clear
+                            </button>
+                        </div>  
+                    </div>
+                </form>
+            </div>
+        </section>
+        <!-- maintenance_job_order_form -->
+        <section class="logistic" id="maintenance_job_order_form">
+            <h2>MAINTENANCE JOB ORDER</h2>
+            <div>
+                <label class="d-flex gap-3">
+                    <button type="button" id="maintenance_job_order_button" class="form-control fw-bold fs-3 bg-success text-white">
+                        <h2>MAINTENANCE JOB ORDER FORM</h2>
+                    </button>
+                    <button type="button" id="maintenance_job_order_transaction_button" class="form-control fw-bold fs-3 bg-danger text-white">
+                        <h2>MAINTENANCE JOB ORDER TRANSACTION</h2>
+                    </button>
+                </label><br>
+            </div>
+            <div
+            id="maintenance_job_order_tab"
+            style="
+                display: none;
+                position: absolute;
+                top: 140px;
+                right: 20px;
+                width: calc(100% - 40px);
+                height: 75vh;
+                padding: 20px;
+                border: 3px solid #198754;
+                border-radius: 10px;
+                background-color: white;
+                overflow: scroll;
+                z-index: 2;
+            "
+            >
+            <h2>MAINTENANCE JOB ORDER FORM</h2>
+            <br />
+            <form
+                action="https://script.google.com/macros/s/AKfycbwTDszb0wqjkq6pYbGNJHir6EGepwTjfOhCNw6V6hzhMg_kahZDunzRsailXu4SK6FN/exec"
+                method="post"
+            >
+                <input type="hidden" name="user" id="user" />
+                <input type="hidden" name="department" id="department" />
+                <div style="display: flex; gap: 20px">
+                <div>
+                    <label for="job_category">
+                    <i class="fa-regular fa-rectangle-list"></i>
+                    Job Category</label
+                    ><br />
+                    <select
+                    type="text"
+                    autocomplete="off"
+                    name="job_category"
+                    id="job_category"
+                    class="form-control form"
+                    required
+                    >
+                    <option value="">SELECT</option>
+                    <option value="CARPENTRY">CARPENTRY</option>
+                    <option value="MASONRY">MASONRY</option>
+                    <option value="PLUMBING">PLUMBING</option>
+                    <option value="METAL WORKS">METAL WORKS</option>
+                    <option value="ELECTRICAL">ELECTRICAL</option>
+                    <option value="MECHANICAL">MECHANICAL</option>
+                    <option value="AUTO ELECTRICAL">AUTO ELECTRICAL</option>
+                    <option value="AUTO MECHANICAL">AUTO MECHANICAL</option>
+                    <option value="COMPUTER">COMPUTER</option>
+                    <option value="IT SUPPORT">IT SUPPORT</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="priority_level">
+                    <i class="fa-regular fa-rectangle-list"></i>
+                    Priority Level</label
+                    ><br />
+                    <select
+                    type="text"
+                    autocomplete="off"
+                    name="priority_level"
+                    id="priority_level"
+                    class="form-control form"
+                    required
+                    >
+                    <option value="">SELECT</option>
+                    <option value="EMERGENCY">EMERGENCY</option>
+                    <option value="HIGH PRIORITY">HIGH PRIORITY</option>
+                    <option value="MEDIUM PRIORITY">MEDIUM PRIORITY</option>
+                    <option value="LOW PRIORITY">LOW PRIORITY</option>
+                    <option value="SCHEDULED">SCHEDULED</option>
+                    </select>
+                </div>
+                </div>
+                <br />
+                <label for="for_maintenance">
+                <i class="fa-regular fa-rectangle-list"></i>
+                Equipment/Vehicle/Machine</label
+                ><br />
+                <input
+                type="text"
+                autocomplete="off"
+                name="for_maintenance"
+                id="for_maintenance"
+                class="form-control"
+                required
+                /><br />
+                <label for="details">
+                <i class="fa-regular fa-rectangle-list"></i>
+                Details For Repair </label
+                ><br />
+                <input
+                type="text"
+                autocomplete="off"
+                name="details"
+                id="details"
+                class="form-control"
+                required
+                placeholder="Input Details For Repair..."
+                /><br />
+                <div class="buttons">
+                <button type="submit" id="submit_btn" class="form-control">
+                    Submit
+                </button>
+                <button type="reset" id="reset" class="form-control">Clear</button>
+                </div>
+                <br />
+                <h5 style="font-weight: bold">Legend</h5>
+                <h6><b>Emergency: </b>Within 1 to 4 hours</h6>
+                <h6><b>High Priority: </b>Within 24 hours</h6>
+                <h6><b>Medium Priority: </b>Within 3 to 5 days</h6>
+                <h6><b>Low Priority: </b>Within 1 to 2 weeks</h6>
+                <h6><b>Scheduled: </b>Monthly/Quarterly</h6>
+            </form>
+            </div>
+            <div
+            id="maintenance_job_order_transaction_tab"
+            style="
+                display: none;
+                position: absolute;
+                top: 140px;
+                right: 20px;
+                width: calc(100% - 40px);
+                height: 75vh;
+                padding: 20px;
+                border: 3px solid #198754;
+                border-radius: 10px;
+                background-color: white;
+                overflow: scroll;
+                z-index: 2;
+            "
+            >
+            <h2>MAINTENANCE JOB ORDER TRANSACTION</h2>
+            <br />
+            <form
+                action="https://script.google.com/macros/s/AKfycbwpr6tfBkrsTMTtv6CQOm3NreMxWp-ADEwNM0SmhxRns6is9Kw3C53HklIrNqhcCsp1/exec"
+                method="post"
+            >
+                <input type="hidden" name="user" id="user" />
+                <input type="hidden" name="department" id="department" />
+                <div style="display: flex; gap: 20px;">
+                    <div>
+                        <label for="mjo_no">
+                            <i class="fa-solid fa-bars-progress"></i>
+                            MJO #
+                            </label><br>
+                        <input type="text" name="mjo_no" id="mjo_no" autocomplete="off" class="form-control form" required>
+                    </div>
+                    <div style="display: flex; align-items: end;">
+                        <button id="mjo_no_button" type="button" class="form-control" style="width: 60px; height: 60px;">
+                            <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
+                        </button>
+                    </div>
+                </div><br>
+                <div style="display: flex; gap: 20px">
+                    <div>
+                        <label for="estimated_start_date">
+                        <i class="fa-regular fa-rectangle-list"></i>
+                        Estimated Start</label
+                        ><br />
+                        <input
+                        type="date"
+                        autocomplete="off"
+                        name="estimated_start_date"
+                        id="estimated_start_date"
+                        class="form-control"
+                        required
+                        />
+                        <input
+                        type="time"
+                        autocomplete="off"
+                        name="estimated_start_time"
+                        id="estimated_start_time"
+                        class="form-control"
+                        required
+                        />
+                    </div>
+                    <div>
+                        <label for="estimated_completion_date">
+                        <i class="fa-regular fa-rectangle-list"></i>
+                        Estimated Completion</label
+                        ><br />
+                        <input
+                        type="date"
+                        autocomplete="off"
+                        name="estimated_completion_date"
+                        id="estimated_completion_date"
+                        class="form-control"
+                        required
+                        />
+                        <input
+                        type="time"
+                        autocomplete="off"
+                        name="estimated_completion_time"
+                        id="estimated_completion_time"
+                        class="form-control"
+                        required
+                        />
+                    </div>
+                </div>
+                <br />
+                <label for="assigned_worker">
+                <i class="fa-regular fa-rectangle-list"></i>
+                Assigned Worker</label
+                ><br />
+                <input
+                type="text"
+                autocomplete="off"
+                name="assigned_worker"
+                id="assigned_worker"
+                class="form-control"
+                placeholder="Input Assigned Worker..."
+                required
+                /><br />
+                <label for="tools_materials_required">
+                <i class="fa-regular fa-rectangle-list"></i>
+                Tools/Materials Required </label
+                ><br />
+                <input
+                type="text"
+                autocomplete="off"
+                name="tools_materials_required"
+                id="tools_materials_required"
+                class="form-control"
+                required
+                placeholder="Input Tools/Materials Required..."
+                /><br />
+                <div class="buttons">
+                <button type="submit" id="submit_btn" class="form-control">
+                    Submit
+                </button>
+                <button type="reset" id="reset" class="form-control">Clear</button>
+                </div>
+                <br />
+                <h5 style="font-weight: bold">Legend</h5>
+                <h6><b>Emergency: </b>Within 1 to 4 hours</h6>
+                <h6><b>High Priority: </b>Within 24 hours</h6>
+                <h6><b>Medium Priority: </b>Within 3 to 5 days</h6>
+                <h6><b>Low Priority: </b>Within 1 to 2 weeks</h6>
+                <h6><b>Scheduled: </b>Monthly/Quarterly</h6>
+            </form>
+            </div>
+            <div
+            class="table"
+            style="max-height: 70vh; align-items: start; overflow-y: scroll"
+            >
+            <div class="list">
+                <table>
+                <thead style="position: sticky; top: 0; background-color: black">
+                    <th>#</th>
+                    <th>MJO #</th>
+                    <th>REQUEST<br />DATE/TIME</th>
+                    <th>JOB CATEGORY</th>
+                    <th>PRIORITY LEVEL</th>
+                    <th>FOR MAINTENANCE</th>
+                    <th>DETAILS FOR REPAIR</th>
+                    <th>REQUISITIONER</th>
+                    <th>DEPARTMENT</th>
+                    <th>STATUS</th>
+                </thead>
+                <tbody id="maintenance_job_order_request_list"></tbody>
+                </table>
+                <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+            </div>
+            </div>
+            <br />
+        </section>
+        <!-- purchase_request_form -->
+        <section class="marketing" id="purchase_request_form">
+            <h2>PURCHASE REQUESTS</h2>
+            <div>
+                <label class="d-flex gap-3">
+                    <button type="button" id="purchase_request_form_button" class="form-control fw-bold fs-3 bg-success text-white" style="width: 50%;">
+                        PURCHASE REQUEST FORM
+                    </button>
+                </label><br>
+            </div>
+            <div id="form_tab" style="display: none; position: absolute; top: 140px; right: 20px; width: calc(100% - 40px); height: 75vh; padding: 20px; border: 3px solid #198754; border-radius: 10px; background-color: white; overflow: scroll; z-index: 2;">
+                <form action="https://script.google.com/macros/s/AKfycbxi30lvC_N0zF6nXUDt9vgGJZEuERdNLYFy4ozdaqrtnwTszhuYJCJOA2EP1hV6D8wXBg/exec" method="post">
+                    <input type="hidden" name="user" id="user">
+                    <input type="hidden" name="department" id="department">
+                    <input type="hidden" name="prf_counter" id="prf_counter" value="1">
+                    <div id="prf_item_container">
+                        <div id="prf_item1">
+                            <div>
+                                <div>
+                                    <label for="prf_form_no1">
+                                        <i class="fa-solid fa-list-ol"></i>
+                                        ITM #
+                                    </label><br>
+                                    <div class="form">
+                                        <input type="text" id="prf_form_no1" name="prf_form_no1" autocomplete="off" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="item1">
+                                        <i class="fa-solid fa-list-ol"></i>
+                                        Item 1
+                                    </label>
+                                    <div>
+                                        <input type="text" id="item1" name="item1" autocomplete="off" class="form-control" required placeholder="Item Name">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="quantity1">
+                                        <i class="fa-solid fa-list-ol"></i>
+                                        Quantity
+                                    </label>
+                                    <div>
+                                        <input type="number" id="quantity1" name="quantity1" autocomplete="off" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="unit1">
+                                        <i class="fa-solid fa-list-ol"></i>
+                                        Unit
+                                    </label>
+                                    <div>
+                                        <input type="text" id="unit1" name="unit1" autocomplete="off" class="form-control" required placeholder="ex. kg/pc/box/set">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="wrapper">
-                                <label for="sf_discrepancy">
-                                    <i class="fa-solid fa-list-ol"></i>
-                                    SF #
-                                </label><br>
-                                <div class="search_input">
-                                    <input type="text" id="sf_discrepancy" autocomplete="off" name="sf_discrepancy" class="form-control" readonly>
-                                    <input type="hidden" id="sf_form_no21" autocomplete="off" name="sf_form_no21" class="form-control" readonly>
-                                    <input type="hidden" id="form_no21" autocomplete="off" name="form_no21" class="form-control" style="height: 55px;">
+                            <div>
+                                <div>
+                                    <label for="details1">
+                                        <i class="fa-solid fa-list-ol"></i>
+                                        Details
+                                    </label>
+                                    <div>
+                                        <input type="text" id="details1" name="details1" autocomplete="off" class="form-control" required placeholder="Brand/Unit/Specifications">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="wrapper d-none">
-                                <label for="type_of_waste21">
-                                    <i class="fa-solid fa-trash-can"></i>
-                                    #21 Type of Waste
-                                </label><br>
-                                <div class="search_input search_input_type" id="search_type_of_waste21">
-                                    <input type="text" name="type_of_waste21" id="type_of_waste21" autocomplete="off" class="form-control" placeholder="Type to Search Type of Waste...">
-                                    <input type="hidden" name="waste_id21" id="waste_id21">
-                                    <div class="autocom_box"></div>
-                                    <div class="icon"><i class="fas fa-search"></i></div>
-                                </div>
-                            </div>
-                            <div class="wrapper d-none">
-                                <label for="destruction_process21">
-                                    <i class="fa-solid fa-dumpster-fire"></i>
-                                    Treatment Process
-                                </label>
-                                <div class="search_input search_treatment_type"  id="search_type_of_treatment21">
-                                    <input type="text" autocomplete="off" name="destruction_process21" id="destruction_process21" class="form-control" required readonly>
-                                    <div class="autocom_box"></div>
-                                    <div class="icon"><i class="fas fa-search"></i></div>
+                                <div>
+                                    <label for="remarks1">
+                                        <i class="fa-solid fa-list-ol"></i>
+                                        Remarks
+                                    </label>
+                                    <div>
+                                        <input type="text" id="remarks1" name="remarks1" autocomplete="off" class="form-control" required placeholder="Where to use">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="completion" id="completion">
-                        <div class="">
-                            <label for="date_of_completion">
-                                <i class="fa-solid fa-right-to-bracket"></i>
-                                Date of Completion
-                            </label>
-                            <input type="date" autocomplete="off" name="date_of_completion" id="date_of_completion" class="form-control" required>
-                        </div>
-                        <div class="">
-                            <label for="time_of_completion">
-                            <i class="fa-solid fa-right-from-bracket"></i>
-                                Time of Completion
-                            </label>
-                            <input type="time" autocomplete="off" name="time_of_completion" id="time_of_completion" class="form-control" required><br>
+                    <div class="add_item pt-3">
+                        <div class="item_buttons">
+                            <button type="button" id="remove_item_button" class="form-control">
+                                <i class="fa-solid fa-minus"></i>
+                            </button>
+                            <button type="button" id="add_item_button" class="form-control">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
                         </div>
                     </div>
-                    <div class="buttons" id="buttons">
+                    <div class="buttons">
                         <button type="submit" id="submit_btn" class="form-control" >
                             Submit
                         </button>
                         <button type="reset" id="reset" class="form-control" >
                             Clear
                         </button>
-                    </div>
+                    </div> 
                 </form>
-            </section> -->
-            <!-- settings -->
-            <section id="settingsSection">
-                <h2>SETTINGS</h2><br>
-            </section>
-            <!-- help -->
-            <section class="all" id="helpSection">
-                <h2>HELP</h2><br>
-                <form action="https://script.google.com/macros/s/AKfycbxikTLqNb0ote-pFoUabyNVphtpqvh1rWSi7bNrAkncoP6-a3BTXhn9jVu8Ka9YXjVA/exec" method="post">
-                    <h2>VOID TRANSACTIONS</h2><br>
-                    <input type="hidden" name="user" id="user">
-                    <div style="font-size: 20px !important;">
-                        <div>
-                            <label for="transaction_no">
-                                <i class="fa-solid fa-list-ol"></i>
-                                Transaction #
-                            </label><br>
-                            <div class="form">
-                                <input type="text" id="transaction_no" autocomplete="off" name="transaction_no" class="form-control form" required style="border: 3px solid #198754; max-width: 250px;"><br>
-                            </div>
+            </div>
+            <div class="table" style="max-height: 70vh; align-items: start; overflow-y: scroll;">                            
+                <div class="list">
+                    <table>
+                        <thead style="position: sticky; top: 0; background-color: black;">
+                            <th>#</th>
+                            <th>ITM #</th>
+                            <th>REQUEST<br>DATE/TIME</th>
+                            <th>ITEM</th>
+                            <th>QTY</th>
+                            <th>UNIT</th>
+                            <th>DETAILS</th>
+                            <th>REMARKS</th>
+                            <th>SUBMITTED<br>BY</th>
+                            <th>STATUS</th>
+                            <th></th>
+                        </thead>
+                        <tbody id="purchase_request_list">
+
+                        </tbody>
+                    </table>
+                    <div class="text-center text_end">>>>>>>>>>> END OF LIST <<<<<<<<<<</div>
+                </div>
+            </div><br>
+        </section>
+        <!-- settings -->
+        <section id="settingsSection">
+            <h2>SETTINGS</h2><br>
+        </section>
+        <!-- help -->
+        <section class="all" id="helpSection">
+            <h2>HELP</h2><br>
+            <form action="https://script.google.com/macros/s/AKfycbxikTLqNb0ote-pFoUabyNVphtpqvh1rWSi7bNrAkncoP6-a3BTXhn9jVu8Ka9YXjVA/exec" method="post">
+                <h2>VOID TRANSACTIONS</h2><br>
+                <input type="hidden" name="user" id="user">
+                <div style="font-size: 20px !important;">
+                    <div>
+                        <label for="transaction_no">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Transaction #
+                        </label><br>
+                        <div class="form">
+                            <input type="text" id="transaction_no" autocomplete="off" name="transaction_no" class="form-control form" required style="border: 3px solid #198754; max-width: 250px;"><br>
                         </div>
-                        <div>
-                            <label for="reason">
-                                <i class="fa-solid fa-list-ol"></i>
-                                Reason for Void
-                            </label><br>
-                            <div class="form">
-                                <input type="text" id="reason" autocomplete="off" name="reason" class="form-control" required style="border: 3px solid #198754;"><br>
-                            </div>
-                        </div>
-                        <div class="buttons" style="display: flex; gap: 20px;">
-                            <button type="submit" id="submit_btn" class="form-control bg-success text-white" style="width: 200px; font-size: 20px !important;">
-                                Submit
-                            </button>
-                            <button type="reset" id="reset" class="form-control bg-danger text-white" style="width: 200px; font-size: 20px !important;">
-                                Clear
-                            </button>
-                        </div> 
                     </div>
-                </form>
-            </section>
-        </div>
+                    <div>
+                        <label for="reason">
+                            <i class="fa-solid fa-list-ol"></i>
+                            Reason for Void
+                        </label><br>
+                        <div class="form">
+                            <input type="text" id="reason" autocomplete="off" name="reason" class="form-control" required style="border: 3px solid #198754;"><br>
+                        </div>
+                    </div>
+                    <div class="buttons" style="display: flex; gap: 20px;">
+                        <button type="submit" id="submit_btn" class="form-control bg-success text-white" style="width: 200px; font-size: 20px !important;">
+                            Submit
+                        </button>
+                        <button type="reset" id="reset" class="form-control bg-danger text-white" style="width: 200px; font-size: 20px !important;">
+                            Clear
+                        </button>
+                    </div> 
+                </div>
+            </form>
+        </section>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.37.1/apexcharts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="../js/main.js"></script>
     <script src="../js/user20.js"></script>
     <script>
         function convertToPDF() {
-            const element = document.getElementById('report_tab1');
             const report_date_from = document.getElementById("report_date_from");
             const report_date_to = document.getElementById("report_date_to");
             var report_from = new Date(report_date_from.value)
@@ -1708,7 +1016,7 @@
                 const totalPages = Math.ceil(page.clientHeight / pageHeight);
 
                 const opt = {
-                    filename: `Sorting Transaction Report ${date_decoder(report_from)} - ${date_decoder(report_to)} Page ${i + 1} of ${pages.length}`,
+                    filename: `Motorpool Maintenance Transaction Report ${date_decoder(report_from)} - ${date_decoder(report_to)} Page ${i + 1} of ${pages.length}`,
                     image: { type: 'jpeg', quality: 1 },
                     html2canvas: { scale: 2 },
                     jsPDF: { unit: 'mm', format: 'letter', orientation: 'landscape' }
@@ -1739,5 +1047,54 @@
             })
         }
     </script>
+        <script>
+
+            const accomplishment_report_section = document.querySelector("#accomplishment_report");
+            const new_accomplishment_form_tab = accomplishment_report_section.querySelector("#new_accomplishment_form_tab");
+            const slideValue = new_accomplishment_form_tab.querySelector("#sliderValue")
+            const inputSlider = new_accomplishment_form_tab.querySelector("#percentage")
+            const ar_date_finished = new_accomplishment_form_tab.querySelector("#ar_date_finished")
+            const ar_time_finished = new_accomplishment_form_tab.querySelector("#ar_time_finished")
+    
+            inputSlider.oninput = (() => {
+                let value = inputSlider.value;
+                slideValue.textContent = value + "%";
+                slideValue.style.left = (value/2) + "%";
+                if(value == 100){
+                    ar_date_finished.removeAttribute('readonly');
+                    ar_date_finished.setAttribute('required', true);
+                    ar_time_finished.removeAttribute('readonly');
+                    ar_time_finished.setAttribute('required', true);
+                } else {
+                    ar_date_finished.setAttribute('readonly', true);
+                    ar_date_finished.removeAttribute('required');
+                    ar_time_finished.setAttribute('readonly', true);
+                    ar_time_finished.removeAttribute('required');
+                }
+            })
+    
+            const update_accomplishment_form_tab = accomplishment_report_section.querySelector("#update_accomplishment_form_tab");
+            const slideValue2 = update_accomplishment_form_tab.querySelector("#sliderValue")
+            const inputSlider2 = update_accomplishment_form_tab.querySelector("#percentage")
+            const ar_date_finished2 = update_accomplishment_form_tab.querySelector("#ar_date_finished")
+            const ar_time_finished2 = update_accomplishment_form_tab.querySelector("#ar_time_finished")
+            inputSlider2.oninput = (() => {
+                let value = inputSlider2.value;
+                slideValue2.textContent = value + "%";
+                slideValue2.style.left = (value/2) + "%";
+                if(value == 100){
+                    ar_date_finished2.removeAttribute('readonly');
+                    ar_date_finished2.setAttribute('required', true);
+                    ar_time_finished2.removeAttribute('readonly');
+                    ar_time_finished2.setAttribute('required', true);
+                } else {
+                    ar_date_finished2.setAttribute('readonly', true);
+                    ar_date_finished2.removeAttribute('required');
+                    ar_time_finished2.setAttribute('readonly', true);
+                    ar_time_finished2.removeAttribute('required');
+                }
+            })
+    
+        </script>
 </body>
 </html>
