@@ -557,16 +557,14 @@
         <section class="logistic" id="maintenance_job_order_form">
             <h2>MAINTENANCE JOB ORDER</h2>
             <div>
-            <label class="d-flex gap-3">
-                <button
-                type="button"
-                id="maintenance_job_order_button"
-                class="form-control fw-bold fs-3 bg-success text-white"
-                style="width: calc((100% - 20px) / 2)"
-                >
-                <h2>MAINTENANCE JOB ORDER FORM</h2>
-                </button> </label
-            ><br />
+                <label class="d-flex gap-3">
+                    <button type="button" id="maintenance_job_order_button" class="form-control fw-bold fs-3 bg-success text-white">
+                        <h2>MAINTENANCE JOB ORDER FORM</h2>
+                    </button>
+                    <button type="button" id="maintenance_job_order_transaction_button" class="form-control fw-bold fs-3 bg-danger text-white">
+                        <h2>MAINTENANCE JOB ORDER TRANSACTION</h2>
+                    </button>
+                </label><br>
             </div>
             <div
             id="maintenance_job_order_tab"
@@ -667,6 +665,133 @@
                 class="form-control"
                 required
                 placeholder="Input Details For Repair..."
+                /><br />
+                <div class="buttons">
+                <button type="submit" id="submit_btn" class="form-control">
+                    Submit
+                </button>
+                <button type="reset" id="reset" class="form-control">Clear</button>
+                </div>
+                <br />
+                <h5 style="font-weight: bold">Legend</h5>
+                <h6><b>Emergency: </b>Within 1 to 4 hours</h6>
+                <h6><b>High Priority: </b>Within 24 hours</h6>
+                <h6><b>Medium Priority: </b>Within 3 to 5 days</h6>
+                <h6><b>Low Priority: </b>Within 1 to 2 weeks</h6>
+                <h6><b>Scheduled: </b>Monthly/Quarterly</h6>
+            </form>
+            </div>
+            <div
+            id="maintenance_job_order_transaction_tab"
+            style="
+                display: none;
+                position: absolute;
+                top: 140px;
+                right: 20px;
+                width: calc(100% - 40px);
+                height: 75vh;
+                padding: 20px;
+                border: 3px solid #198754;
+                border-radius: 10px;
+                background-color: white;
+                overflow: scroll;
+                z-index: 2;
+            "
+            >
+            <h2>MAINTENANCE JOB ORDER TRANSACTION</h2>
+            <br />
+            <form
+                action="https://script.google.com/macros/s/AKfycbwTDszb0wqjkq6pYbGNJHir6EGepwTjfOhCNw6V6hzhMg_kahZDunzRsailXu4SK6FN/exec"
+                method="post"
+            >
+                <input type="hidden" name="user" id="user" />
+                <input type="hidden" name="department" id="department" />
+                <div style="display: flex; gap: 20px;">
+                    <div>
+                        <label for="mjo_no">
+                            <i class="fa-solid fa-bars-progress"></i>
+                            MJO #
+                            </label><br>
+                        <input type="text" name="mjo_no" id="mjo_no" autocomplete="off" class="form-control form" required>
+                    </div>
+                    <div style="display: flex; align-items: end;">
+                        <button id="mjo_no_button" type="button" class="form-control" style="width: 60px; height: 60px;">
+                            <i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
+                        </button>
+                    </div>
+                </div><br>
+                <div style="display: flex; gap: 20px">
+                    <div>
+                        <label for="estimated_start_date">
+                        <i class="fa-regular fa-rectangle-list"></i>
+                        Estimated Start</label
+                        ><br />
+                        <input
+                        type="date"
+                        autocomplete="off"
+                        name="estimated_start_date"
+                        id="estimated_start_date"
+                        class="form-control"
+                        required
+                        />
+                        <input
+                        type="time"
+                        autocomplete="off"
+                        name="estimated_start_time"
+                        id="estimated_start_time"
+                        class="form-control"
+                        required
+                        />
+                    </div>
+                    <div>
+                        <label for="estimated_completion_date">
+                        <i class="fa-regular fa-rectangle-list"></i>
+                        Estimated Completion</label
+                        ><br />
+                        <input
+                        type="date"
+                        autocomplete="off"
+                        name="estimated_completion_date"
+                        id="estimated_completion_date"
+                        class="form-control"
+                        required
+                        />
+                        <input
+                        type="time"
+                        autocomplete="off"
+                        name="estimated_completion_time"
+                        id="estimated_completion_time"
+                        class="form-control"
+                        required
+                        />
+                    </div>
+                </div>
+                <br />
+                <label for="assigned_worker">
+                <i class="fa-regular fa-rectangle-list"></i>
+                Assigned Worker</label
+                ><br />
+                <input
+                type="text"
+                autocomplete="off"
+                name="assigned_worker"
+                id="assigned_worker"
+                class="form-control"
+                placeholder="Input Assigned Worker..."
+                required
+                /><br />
+                <label for="tools_materials_required">
+                <i class="fa-regular fa-rectangle-list"></i>
+                Tools/Materials Required </label
+                ><br />
+                <input
+                type="text"
+                autocomplete="off"
+                name="tools_materials_required"
+                id="tools_materials_required"
+                class="form-control"
+                required
+                placeholder="Input Tools/Materials Required..."
                 /><br />
                 <div class="buttons">
                 <button type="submit" id="submit_btn" class="form-control">

@@ -534,14 +534,32 @@ document.addEventListener("DOMContentLoaded", async function () {
     );
     const maintenance_job_order_button =
       maintenance_job_order_form.querySelector("#maintenance_job_order_button");
+    const maintenance_job_order_transaction_tab =
+      maintenance_job_order_form.querySelector(
+        "#maintenance_job_order_transaction_tab"
+      );
+    const maintenance_job_order_transaction_button =
+      maintenance_job_order_form.querySelector(
+        "#maintenance_job_order_transaction_button"
+      );
 
     maintenance_job_order_button.addEventListener("click", () => {
       if (maintenance_job_order_tab.style.display == "block") {
         maintenance_job_order_tab.style.display = "none";
-        // update_vehicle_tab.style.display = "none";
+        maintenance_job_order_transaction_tab.style.display = "none";
       } else {
         maintenance_job_order_tab.style.display = "block";
-        // update_vehicle_tab.style.display = "none";
+        maintenance_job_order_transaction_tab.style.display = "none";
+      }
+    });
+
+    maintenance_job_order_transaction_button.addEventListener("click", () => {
+      if (maintenance_job_order_transaction_tab.style.display == "block") {
+        maintenance_job_order_transaction_tab.style.display = "none";
+        maintenance_job_order_tab.style.display = "none";
+      } else {
+        maintenance_job_order_transaction_tab.style.display = "block";
+        maintenance_job_order_tab.style.display = "none";
       }
     });
 

@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }`;
     users.forEach((user) => {
       user.value =
-        username_data_list.content[5][
+        username_data_list.content[8][
           findTextInArray(username_data_list, "NAME")
         ];
     });
