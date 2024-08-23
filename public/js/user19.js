@@ -142,9 +142,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     const job_order = dashboard_section.querySelector("#job_order");
     const pending = dashboard_section.querySelector("#pending");
     const accomplished = dashboard_section.querySelector("#accomplished");
-    const maintenance_job_order_request_list = dashboard_section.querySelector(
-      "#maintenance_job_order_request_list"
-    );
+    const maintenance_job_order_request_list_dashboard =
+      dashboard_section.querySelector(
+        "#maintenance_job_order_request_list_dashboard"
+      );
     const accomplished_transactions = dashboard_section.querySelector(
       "#accomplished_transactions"
     );
@@ -224,7 +225,8 @@ document.addEventListener("DOMContentLoaded", async function () {
       accomplished.innerText = accomplished_data_value_counter;
       job_order.innerText =
         pending_data_value_counter + accomplished_data_value_counter;
-      maintenance_job_order_request_list.innerHTML = pending_data_value;
+      maintenance_job_order_request_list_dashboard.innerHTML =
+        pending_data_value;
       accomplished_transactions.innerHTML = accomplished_data_value;
 
       var options = {
@@ -544,6 +546,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
 
     // mjo_data_list
+    const maintenance_job_order_request_list =
+      maintenance_job_order_form.querySelector(
+        "#maintenance_job_order_request_list"
+      );
     var data_value = "";
     var data_value_counter = 1;
     for (let x = 1; x < mjo_data_list.content.length; x++) {
