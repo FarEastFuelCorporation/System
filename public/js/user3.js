@@ -2402,9 +2402,40 @@ document.addEventListener("DOMContentLoaded", async function () {
     const last2Weeks = [];
     const last3Weeks = [];
 
+    const treatment_machine_transaction = document.querySelector(
+      "#treatment_machine_transaction"
+    );
+    const new_transaction_button = treatment_machine_transaction.querySelector(
+      "#new_transaction_button"
+    );
+    const update_transaction_button =
+      treatment_machine_transaction.querySelector("#update_transaction_button");
+    const new_transaction_form_tab =
+      treatment_machine_transaction.querySelector("#new_transaction_form_tab");
+    const update_transaction_form_tab =
+      treatment_machine_transaction.querySelector(
+        "#update_transaction_form_tab"
+      );
     const treatment_machine_transaction_list = document.querySelector(
       "#treatment_machine_transaction_list"
     );
+
+    new_transaction_button.addEventListener("click", () => {
+      if (new_transaction_form_tab.style.display == "block") {
+        new_transaction_form_tab.style.display = "none";
+      } else {
+        new_transaction_form_tab.style.display = "block";
+        update_transaction_form_tab.style.display = "none";
+      }
+    });
+    update_transaction_button.addEventListener("click", () => {
+      if (update_transaction_form_tab.style.display == "block") {
+        update_transaction_form_tab.style.display = "none";
+      } else {
+        update_transaction_form_tab.style.display = "block";
+        new_transaction_form_tab.style.display = "none";
+      }
+    });
 
     var counter = 1;
     for (let x = tmt_data_list.content.length - 1; x > 1; x--) {
