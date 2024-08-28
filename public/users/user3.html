@@ -633,7 +633,7 @@
                 <h2>NEW TRANSACTION FORM</h2>
                 <br />
                 <form
-                    action="https://script.google.com/macros/s/AKfycbwgEc6ij6bHanbwPn4NH4Nak0uCfIC7vCwsm-sGK19EPCuVCHktMubyxfeu-bgd-46x6Q/exec"
+                    action="https://script.google.com/macros/s/AKfycbwY1C20BiDJBdqhTcTe-_ubZJ-NJnr1Gc50VjEBZtHTmunHe-YC8igzY_oOObcoWoHHWw/exec"
                     method="post"
                 >
                     <input type="hidden" name="user" id="user" />
@@ -655,13 +655,13 @@
                                 />
                             </div>
                             <div>
-                                <label for="date_input">
+                                <label for="shift_input">
                                 <i class="fa-solid fa-briefcase"></i>
                                 Shift </label
                                 ><br />
                                 <select
-                                name="date_input"
-                                id="date_input"
+                                name="shift_input"
+                                id="shift_input"
                                 autocomplete="off"
                                 class="form-control form"
                                 required
@@ -697,59 +697,21 @@
                                     <option value="NO OPERATION">NO OPERATION</option>
                                     </select>
                                 </div>
-                                <div style="display: grid; grid-template-columns: 3fr 1fr; gap: 20px;">
-                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                                        <div>
-                                            <label for="time_start_input1">
-                                            <i class="fa-solid fa-briefcase"></i>
-                                            Operation Start </label
-                                            ><br />
-                                            <input
-                                            type="time"
-                                            name="time_start_input1"
-                                            id="time_start_input1"
-                                            autocomplete="off"
-                                            class="form-control"
-                                            required
-                                            style="width: 100%;"
-                                            />
-                                        </div>
-                                        <div>
-                                            <label for="time_end_input1">
-                                            <i class="fa-solid fa-briefcase"></i>
-                                            Operation End </label
-                                            ><br />
-                                            <input
-                                            type="time"
-                                            name="time_end_input1"
-                                            id="time_end_input1"
-                                            autocomplete="off"
-                                            class="form-control"
-                                            required
-                                            style="width: 100%;"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div>
-                                            <label for="ash1">
-                                            <i class="fa-solid fa-briefcase"></i>
-                                            Ash (Kg) </label
-                                            ><br />
-                                            <input
-                                            type="number"
-                                            name="ash1"
-                                            id="ash1"
-                                            autocomplete="off"
-                                            class="form-control"
-                                            required
-                                            style="width: 100%;"
-                                            value="0"
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
                                 <div id="waste1"></div>
+                                <div>
+                                    <label for="remarks1">
+                                    <i class="fa-solid fa-briefcase"></i>
+                                    Remarks </label
+                                    ><br />
+                                    <input
+                                    type="text"
+                                    name="remarks1"
+                                    id="remarks1"
+                                    autocomplete="off"
+                                    class="form-control"
+                                    placeholder="Remarks Optional"
+                                    />
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <h3 style="text-align: center;">
@@ -772,59 +734,21 @@
                                     <option value="NO OPERATION">NO OPERATION</option>
                                     </select>
                                 </div>
-                                <div style="display: grid; grid-template-columns: 3fr 1fr; gap: 20px;">
-                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                                        <div>
-                                            <label for="time_start_input2">
-                                            <i class="fa-solid fa-briefcase"></i>
-                                            Operation Start </label
-                                            ><br />
-                                            <input
-                                            type="time"
-                                            name="time_start_input2"
-                                            id="time_start_input2"
-                                            autocomplete="off"
-                                            class="form-control"
-                                            required
-                                            style="width: 100%;"
-                                            />
-                                        </div>
-                                        <div>
-                                            <label for="time_end_input2">
-                                            <i class="fa-solid fa-briefcase"></i>
-                                            Operation End </label
-                                            ><br />
-                                            <input
-                                            type="time"
-                                            name="time_end_input2"
-                                            id="time_end_input2"
-                                            autocomplete="off"
-                                            class="form-control"
-                                            required
-                                            style="width: 100%;"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div>
-                                            <label for="ash2">
-                                            <i class="fa-solid fa-briefcase"></i>
-                                            Ash (Kg) </label
-                                            ><br />
-                                            <input
-                                            type="number"
-                                            name="ash2"
-                                            id="ash2"
-                                            autocomplete="off"
-                                            class="form-control"
-                                            required
-                                            style="width: 100%;"
-                                            value="0"
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
                                 <div id="waste2"></div>
+                                <div>
+                                    <label for="remarks2">
+                                    <i class="fa-solid fa-briefcase"></i>
+                                    Remarks </label
+                                    ><br />
+                                    <input
+                                    type="text"
+                                    name="remarks2"
+                                    id="remarks2"
+                                    autocomplete="off"
+                                    class="form-control"
+                                    placeholder="Remarks Optional"
+                                    />
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <h3 style="text-align: center;">
@@ -847,59 +771,21 @@
                                     <option value="NO OPERATION">NO OPERATION</option>
                                     </select>
                                 </div>
-                                <div style="display: grid; grid-template-columns: 3fr 1fr; gap: 20px;">
-                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                                        <div>
-                                            <label for="time_start_input3">
-                                            <i class="fa-solid fa-briefcase"></i>
-                                            Operation Start </label
-                                            ><br />
-                                            <input
-                                            type="time"
-                                            name="time_start_input3"
-                                            id="time_start_input3"
-                                            autocomplete="off"
-                                            class="form-control"
-                                            required
-                                            style="width: 100%;"
-                                            />
-                                        </div>
-                                        <div>
-                                            <label for="time_end_input3">
-                                            <i class="fa-solid fa-briefcase"></i>
-                                            Operation End </label
-                                            ><br />
-                                            <input
-                                            type="time"
-                                            name="time_end_input3"
-                                            id="time_end_input3"
-                                            autocomplete="off"
-                                            class="form-control"
-                                            required
-                                            style="width: 100%;"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div>
-                                            <label for="ash3">
-                                            <i class="fa-solid fa-briefcase"></i>
-                                            Ash (Kg) </label
-                                            ><br />
-                                            <input
-                                            type="number"
-                                            name="ash3"
-                                            id="ash3"
-                                            autocomplete="off"
-                                            class="form-control"
-                                            required
-                                            style="width: 100%;"
-                                            value="0"
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
                                 <div id="waste3"></div>
+                                <div>
+                                    <label for="remarks3">
+                                    <i class="fa-solid fa-briefcase"></i>
+                                    Remarks </label
+                                    ><br />
+                                    <input
+                                    type="text"
+                                    name="remarks3"
+                                    id="remarks3"
+                                    autocomplete="off"
+                                    class="form-control"
+                                    placeholder="Remarks Optional"
+                                    />
+                                </div>
                             </div>
                         </div>
                         <div class="buttons">

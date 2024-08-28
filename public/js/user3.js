@@ -9,6 +9,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     const type_of_waste_response_promise = fetch(
       "https://script.google.com/macros/s/AKfycbw0yC-8_V38Zl1-KGyBwX1JmfTEW1jwyFxgpZ-oNC2lvtoAraUtkLCS27HfNbXi_l4IPg/exec"
     );
+    const employee_response_promise = fetch(
+      "https://script.google.com/macros/s/AKfycbwns5R6TA8U64ywbb9hwYu4LKurAjTM0Z18NYNZMt0Ft0m-_NUHYbYqblk_5KWugvt7lA/exec"
+    );
     const ltf_response_promise = fetch(
       "https://script.google.com/macros/s/AKfycbxBLMvyNDsT9_dlVO4Qc31dI4ErcymUHbzKimOpCZHgbJxip2XxCl7Wk3hJyqcdtrxU/exec"
     );
@@ -47,6 +50,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       username_response,
       client_list_response,
       type_of_waste_response,
+      employee_response,
       ltf_response,
       wcf_response,
       sf_response,
@@ -62,6 +66,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       username_response_promise,
       client_list_response_promise,
       type_of_waste_response_promise,
+      employee_response_promise,
       ltf_response_promise,
       wcf_response_promise,
       sf_response_promise,
@@ -78,6 +83,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const username_data_list = await username_response.json();
     const client_data_list = await client_list_response.json();
     const type_of_waste_data_list = await type_of_waste_response.json();
+    const employee_data_list = await employee_response.json();
     const ltf_data_list = await ltf_response.json();
     const wcf_data_list = await wcf_response.json();
     const sf_data_list = await sf_response.json();
@@ -2428,33 +2434,202 @@ document.addEventListener("DOMContentLoaded", async function () {
         update_transaction_form_tab.style.display = "none";
       }
     });
-    update_transaction_button.addEventListener("click", () => {
-      if (update_transaction_form_tab.style.display == "block") {
-        update_transaction_form_tab.style.display = "none";
-      } else {
-        update_transaction_form_tab.style.display = "block";
-        new_transaction_form_tab.style.display = "none";
-      }
-    });
+    // update_transaction_button.addEventListener("click", () => {
+    //   if (update_transaction_form_tab.style.display == "block") {
+    //     update_transaction_form_tab.style.display = "none";
+    //   } else {
+    //     update_transaction_form_tab.style.display = "block";
+    //     new_transaction_form_tab.style.display = "none";
+    //   }
+    // });
 
     const status1 = new_transaction_form_tab.querySelector("#status1");
     const waste1 = new_transaction_form_tab.querySelector("#waste1");
-    const add_1 = new_transaction_form_tab.querySelector("#add_1");
-    const remove_1 = new_transaction_form_tab.querySelector("#remove_1");
-    const counter_1 = new_transaction_form_tab.querySelector("#counter_1");
     const status2 = new_transaction_form_tab.querySelector("#status2");
     const waste2 = new_transaction_form_tab.querySelector("#waste2");
-    const add_2 = new_transaction_form_tab.querySelector("#add_2");
-    const remove_2 = new_transaction_form_tab.querySelector("#remove_2");
-    const counter_2 = new_transaction_form_tab.querySelector("#counter_2");
     const status3 = new_transaction_form_tab.querySelector("#status3");
     const waste3 = new_transaction_form_tab.querySelector("#waste3");
-    const add_3 = new_transaction_form_tab.querySelector("#add_3");
-    const remove_3 = new_transaction_form_tab.querySelector("#remove_3");
-    const counter_3 = new_transaction_form_tab.querySelector("#counter_3");
 
-    function wasteInput(value) {
+    // operator
+
+    function createAutoComplete(searchWrapperId) {
+      const searchWrapper = document.getElementById(searchWrapperId);
+      const inputBox = searchWrapper.querySelector("input");
+      const suggBox = searchWrapper.querySelector(".autocom_box");
+
+      let driverData = [];
+
+      // Populate the driver data based on employee status and gender
+      for (let x = 1; x < employee_data_list.content.length; x++) {
+        if (
+          employee_data_list.content[x][
+            findTextInArray(employee_data_list, "EMPLOYEE STATUS")
+          ] == "ACTIVE"
+        ) {
+          let gender =
+            employee_data_list.content[x][
+              findTextInArray(employee_data_list, "GENDER")
+            ];
+          let fullName;
+
+          if (gender == "MALE") {
+            fullName = `${
+              employee_data_list.content[x][
+                findTextInArray(employee_data_list, "FIRST NAME")
+              ]
+            } ${
+              employee_data_list.content[x][
+                findTextInArray(employee_data_list, "LAST NAME")
+              ]
+            } ${
+              employee_data_list.content[x][
+                findTextInArray(employee_data_list, "AFFIX")
+              ]
+            }`;
+          } else {
+            fullName = `${
+              employee_data_list.content[x][
+                findTextInArray(employee_data_list, "FIRST NAME")
+              ]
+            } ${
+              employee_data_list.content[x][
+                findTextInArray(employee_data_list, "LAST NAME")
+              ]
+            } ${
+              employee_data_list.content[x][
+                findTextInArray(employee_data_list, "AFFIX")
+              ]
+            }`;
+          }
+
+          driverData.push(fullName);
+        }
+      }
+
+      // Event listener for input keyup
+      inputBox.onkeyup = (e) => {
+        let userData = e.target.value;
+        let emptyArray = [];
+
+        if (userData) {
+          emptyArray = driverData.filter((data) => {
+            return data
+              .toLocaleLowerCase()
+              .includes(userData.toLocaleLowerCase());
+          });
+
+          emptyArray = emptyArray.map((data) => {
+            return "<li>" + data + "</li>";
+          });
+
+          searchWrapper.classList.add("active");
+          showSuggestions(emptyArray);
+        } else {
+          searchWrapper.classList.remove("active");
+        }
+      };
+
+      // Event listener for suggestion click
+      suggBox.addEventListener("click", (e) => {
+        if (e.target.tagName === "LI") {
+          select(e.target.innerHTML);
+        }
+      });
+
+      // Function to handle selection
+      function select(element) {
+        inputBox.value = element;
+        searchWrapper.classList.remove("active");
+      }
+
+      // Function to show suggestions
+      function showSuggestions(list) {
+        let listData;
+
+        if (!list.length) {
+          let userValue = inputBox.value;
+          listData = "<li>" + userValue + "</li>";
+        } else {
+          listData = list.join("");
+        }
+
+        suggBox.innerHTML = listData;
+      }
+    }
+
+    function wasteInput(value, status) {
       var data = `
+        <div style="display: grid; grid-template-columns: 3fr 1fr; gap: 20px;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+              <div>
+                  <label for="time_start_input${value}">
+                  <i class="fa-solid fa-briefcase"></i>
+                  Operation Start </label
+                  ><br />
+                  <input
+                  type="time"
+                  name="time_start_input${value}"
+                  id="time_start_input${value}"
+                  autocomplete="off"
+                  class="form-control"
+                  required
+                  style="width: 100%;"
+                  />
+              </div>
+              <div>
+                  <label for="time_end_input${value}">
+                  <i class="fa-solid fa-briefcase"></i>
+                  Operation End </label
+                  ><br />
+                  <input
+                  type="time"
+                  name="time_end_input${value}"
+                  id="time_end_input${value}"
+                  autocomplete="off"
+                  class="form-control"
+                  required
+                  style="width: 100%;"
+                  />
+              </div>
+          </div>
+          <div>
+              <div>
+                  <label for="ash${value}">
+                  <i class="fa-solid fa-briefcase"></i>
+                  Ash (Kg) </label
+                  ><br />
+                  <input
+                  type="number"
+                  name="ash${value}"
+                  id="ash${value}"
+                  autocomplete="off"
+                  class="form-control"
+                  required
+                  style="width: 100%;"
+                  value="0"
+                  />
+              </div>
+          </div>
+      </div>
+      <div>
+          <label for="operator${value}">
+          <i class="fa-solid fa-briefcase"></i>
+          Operator </label
+          ><br />
+          <div class="search_input" id="search_operator${value}">
+                  <input
+                  type="text"
+                  autocomplete="off"
+                  name="operator${value}"
+                  id="operator${value}"
+                  class="form-control"
+                  required
+                  placeholder="Type to Search Operator Name..."
+                  />
+              <div class="autocom_box"></div>
+              <div class="icon"><i class="fas fa-search"></i></div>
+          </div>
+      </div>
       <div style="display: grid; grid-template-columns: 3fr 1fr; gap: 20px;">
           <div>
               <label for="waste_description_${value}_1">
@@ -2502,32 +2677,126 @@ document.addEventListener("DOMContentLoaded", async function () {
           <button type="button" id="remove_${value}" class="form-control" style="display: none; width: 60px; height: 60px; border-radius: 100%;"><i class="fa-solid fa-minus"></i></button>
       </div>
       `;
-      if (value === 1) {
-        waste1.innerHTML = data;
-      } else if (value === 2) {
-        waste2.innerHTML = data;
+      var data2 = `
+        <div style="display: grid; grid-template-columns: 3fr 1fr; gap: 20px;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+              <div>
+                  <label for="time_start_input${value}">
+                  <i class="fa-solid fa-briefcase"></i>
+                  Operation Start </label
+                  ><br />
+                  <input
+                  type="time"
+                  name="time_start_input${value}"
+                  id="time_start_input${value}"
+                  autocomplete="off"
+                  class="form-control"
+                  required
+                  style="width: 100%;"
+                  />
+              </div>
+              <div>
+                  <label for="time_end_input${value}">
+                  <i class="fa-solid fa-briefcase"></i>
+                  Operation End </label
+                  ><br />
+                  <input
+                  type="time"
+                  name="time_end_input${value}"
+                  id="time_end_input${value}"
+                  autocomplete="off"
+                  class="form-control"
+                  required
+                  style="width: 100%;"
+                  />
+              </div>
+          </div>
+          <div>
+              <div>
+                  <label for="ash${value}">
+                  <i class="fa-solid fa-briefcase"></i>
+                  Ash (Kg) </label
+                  ><br />
+                  <input
+                  type="number"
+                  name="ash${value}"
+                  id="ash${value}"
+                  autocomplete="off"
+                  class="form-control"
+                  required
+                  style="width: 100%;"
+                  value="0"
+                  />
+              </div>
+          </div>
+      </div>
+      <div>
+          <label for="operator${value}">
+          <i class="fa-solid fa-briefcase"></i>
+          Operator </label
+          ><br />
+          <div class="search_input" id="search_operator${value}">
+                  <input
+                  type="text"
+                  autocomplete="off"
+                  name="operator${value}"
+                  id="operator${value}"
+                  class="form-control"
+                  required
+                  placeholder="Type to Search Operator Name..."
+                  />
+              <div class="autocom_box"></div>
+              <div class="icon"><i class="fas fa-search"></i></div>
+          </div>
+      </div>
+      `;
+
+      if (status === "ACTIVE") {
+        if (value === 1) {
+          waste1.innerHTML = data;
+          createAutoComplete("search_operator1");
+        } else if (value === 2) {
+          waste2.innerHTML = data;
+          createAutoComplete("search_operator2");
+        } else {
+          waste3.innerHTML = data;
+          createAutoComplete("search_operator3");
+        }
+        const add = new_transaction_form_tab.querySelector(`#add_${value}`);
+        const remove = new_transaction_form_tab.querySelector(
+          `#remove_${value}`
+        );
+
+        add.addEventListener("click", () => {
+          addWasteRow(value);
+        });
+        remove.addEventListener("click", () => {
+          removeWasteRow(value);
+        });
       } else {
-        waste3.innerHTML = data;
+        if (value === 1) {
+          waste1.innerHTML = data2;
+          createAutoComplete("search_operator1");
+        } else if (value === 2) {
+          waste2.innerHTML = data2;
+          createAutoComplete("search_operator2");
+        } else {
+          waste3.innerHTML = data2;
+          createAutoComplete("search_operator3");
+        }
       }
-
-      const add = new_transaction_form_tab.querySelector(`#add_${value}`);
-      const remove = new_transaction_form_tab.querySelector(`#remove_${value}`);
-
-      add.addEventListener("click", () => {
-        addWasteRow(value);
-      });
-      remove.addEventListener("click", () => {
-        removeWasteRow(value);
-      });
     }
 
-    wasteInput(1);
-    wasteInput(2);
-    wasteInput(3);
+    wasteInput(1, "ACTIVE");
+    wasteInput(2, "ACTIVE");
+    wasteInput(3, "ACTIVE");
 
     status1.addEventListener("change", () => {
       if (status1.value === "ACTIVE") {
-        wasteInput(1);
+        waste1.innerHTML = "";
+        wasteInput(1, "ACTIVE");
+      } else if (status1.value === "UNLOADING OF ASH") {
+        wasteInput(1, "UNLOADING OF ASH");
       } else {
         waste1.innerHTML = "";
       }
@@ -2535,7 +2804,10 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     status2.addEventListener("change", () => {
       if (status2.value === "ACTIVE") {
-        wasteInput(2);
+        waste2.innerHTML = "";
+        wasteInput(2, "ACTIVE");
+      } else if (status2.value === "UNLOADING OF ASH") {
+        wasteInput(2, "UNLOADING OF ASH");
       } else {
         waste2.innerHTML = "";
       }
@@ -2543,7 +2815,10 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     status3.addEventListener("change", () => {
       if (status3.value === "ACTIVE") {
-        wasteInput(3);
+        waste3.innerHTML = "";
+        wasteInput(3, "ACTIVE");
+      } else if (status3.value === "UNLOADING OF ASH") {
+        wasteInput(3, "UNLOADING OF ASH");
       } else {
         waste3.innerHTML = "";
       }
@@ -2581,8 +2856,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                 <div>
                     <input
                         type="text"
-                        name="waste_description_1_${counter}"
-                        id="waste_description_1_${counter}"
+                        name="waste_description_${value}_${counter}"
+                        id="waste_description_${value}_${counter}"
                         autocomplete="off"
                         class="form-control"
                         required
@@ -2591,8 +2866,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                 <div>
                     <input
                         type="number"
-                        name="weight_1_${counter}"
-                        id="weight_1_${counter}"
+                        name="weight_${value}_${counter}"
+                        id="weight_${value}_${counter}"
                         autocomplete="off"
                         class="form-control"
                         required
