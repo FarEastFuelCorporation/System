@@ -2437,6 +2437,223 @@ document.addEventListener("DOMContentLoaded", async function () {
       }
     });
 
+    const status1 = new_transaction_form_tab.querySelector("#status1");
+    const waste1 = new_transaction_form_tab.querySelector("#waste1");
+    const add_1 = new_transaction_form_tab.querySelector("#add_1");
+    const remove_1 = new_transaction_form_tab.querySelector("#remove_1");
+    const counter_1 = new_transaction_form_tab.querySelector("#counter_1");
+    const status2 = new_transaction_form_tab.querySelector("#status2");
+    const waste2 = new_transaction_form_tab.querySelector("#waste2");
+    const add_2 = new_transaction_form_tab.querySelector("#add_2");
+    const remove_2 = new_transaction_form_tab.querySelector("#remove_2");
+    const counter_2 = new_transaction_form_tab.querySelector("#counter_2");
+    const status3 = new_transaction_form_tab.querySelector("#status3");
+    const waste3 = new_transaction_form_tab.querySelector("#waste3");
+    const add_3 = new_transaction_form_tab.querySelector("#add_3");
+    const remove_3 = new_transaction_form_tab.querySelector("#remove_3");
+    const counter_3 = new_transaction_form_tab.querySelector("#counter_3");
+
+    function wasteInput(value) {
+      var data = `
+      <div style="display: grid; grid-template-columns: 3fr 1fr; gap: 20px;">
+          <div>
+              <label for="waste_description_${value}_1">
+              <i class="fa-solid fa-briefcase"></i>
+              Waste Description </label
+              ><br />
+          </div>
+          <div>
+              <label for="weight_${value}_1">
+              <i class="fa-solid fa-briefcase"></i>
+              Weight </label
+              ><br />
+          </div>
+      </div>
+      <input type="hidden" name="counter_${value}" id="counter_${value}">
+      <div id="wasteContainer_${value}" style="display: grid; gap: 20px;">
+          <div class="waste-row">
+              <div style="display: grid; grid-template-columns: 3fr 1fr; gap: 20px;">
+                  <div>
+                      <input
+                          type="text"
+                          name="waste_description_${value}_1"
+                          id="waste_description_${value}_1"
+                          autocomplete="off"
+                          class="form-control"
+                          required
+                      />
+                  </div>
+                  <div>
+                      <input
+                          type="number"
+                          name="weight_${value}_1"
+                          id="weight_${value}_1"
+                          autocomplete="off"
+                          class="form-control"
+                          required
+                      />
+                  </div>
+              </div>
+          </div>
+      </div>
+      
+      <div style="margin-top: 20px; display: flex; gap: 20px;">
+          <button type="button" id="add_${value}" class="form-control" style="width: 60px; height: 60px; border-radius: 100%;"><i class="fa-solid fa-plus"></i></button>
+          <button type="button" id="remove_${value}" class="form-control" style="display: none; width: 60px; height: 60px; border-radius: 100%;"><i class="fa-solid fa-minus"></i></button>
+      </div>
+      `;
+      if (value === 1) {
+        waste1.innerHTML = data;
+      } else if (value === 2) {
+        waste2.innerHTML = data;
+      } else {
+        waste3.innerHTML = data;
+      }
+
+      const add = new_transaction_form_tab.querySelector(`#add_${value}`);
+      const remove = new_transaction_form_tab.querySelector(`#remove_${value}`);
+
+      add.addEventListener("click", () => {
+        addWasteRow(value);
+      });
+      remove.addEventListener("click", () => {
+        removeWasteRow(value);
+      });
+    }
+
+    wasteInput(1);
+    wasteInput(2);
+    wasteInput(3);
+
+    status1.addEventListener("change", () => {
+      if (status1.value === "ACTIVE") {
+        wasteInput(1);
+      } else {
+        waste1.innerHTML = "";
+      }
+    });
+
+    status2.addEventListener("change", () => {
+      if (status2.value === "ACTIVE") {
+        wasteInput(2);
+      } else {
+        waste2.innerHTML = "";
+      }
+    });
+
+    status3.addEventListener("change", () => {
+      if (status3.value === "ACTIVE") {
+        wasteInput(3);
+      } else {
+        waste3.innerHTML = "";
+      }
+    });
+
+    let wasteCount_1 = 1;
+    let wasteCount_2 = 1;
+    let wasteCount_3 = 1;
+
+    function addWasteRow(value) {
+      let counter;
+      if (value === 1) {
+        wasteCount_1++;
+        counter = wasteCount_1;
+        const remove_1 = new_transaction_form_tab.querySelector("#remove_1");
+        remove_1.style.display = "block";
+      } else if (value === 2) {
+        wasteCount_2++;
+        counter = wasteCount_2;
+        const remove_2 = new_transaction_form_tab.querySelector("#remove_2");
+        remove_2.style.display = "block";
+      } else {
+        wasteCount_3++;
+        counter = wasteCount_3;
+        const remove_3 = new_transaction_form_tab.querySelector("#remove_3");
+        remove_3.style.display = "block";
+      }
+
+      const wasteContainer = document.getElementById(`wasteContainer_${value}`);
+
+      const newRow = document.createElement("div");
+      newRow.classList.add("waste-row");
+      newRow.innerHTML = `
+            <div style="display: grid; grid-template-columns: 3fr 1fr; gap: 20px;">
+                <div>
+                    <input
+                        type="text"
+                        name="waste_description_1_${counter}"
+                        id="waste_description_1_${counter}"
+                        autocomplete="off"
+                        class="form-control"
+                        required
+                    />
+                </div>
+                <div>
+                    <input
+                        type="number"
+                        name="weight_1_${counter}"
+                        id="weight_1_${counter}"
+                        autocomplete="off"
+                        class="form-control"
+                        required
+                    />
+                </div>
+            </div>
+        `;
+      wasteContainer.appendChild(newRow);
+
+      if (value === 1) {
+        const counter_1 = new_transaction_form_tab.querySelector("#counter_1");
+        counter_1.value = wasteCount_1;
+      } else if (value === 2) {
+        const counter_2 = new_transaction_form_tab.querySelector("#counter_2");
+        counter_2.value = wasteCount_2;
+      } else {
+        const counter_3 = new_transaction_form_tab.querySelector("#counter_3");
+        counter_3.value = wasteCount_3;
+      }
+    }
+
+    function removeWasteRow(value) {
+      let counter;
+      const wasteContainer = document.getElementById(`wasteContainer_${value}`);
+      if (wasteContainer.children.length > 1) {
+        wasteContainer.removeChild(wasteContainer.lastChild);
+        if (value === 1) {
+          wasteCount_1--;
+          counter = wasteCount_1;
+          const counter_1 =
+            new_transaction_form_tab.querySelector("#counter_1");
+          counter_1.value = wasteCount_1;
+        } else if (value === 2) {
+          wasteCount_2--;
+          counter = wasteCount_2;
+          const counter_2 =
+            new_transaction_form_tab.querySelector("#counter_2");
+          counter_2.value = wasteCount_2;
+        } else {
+          wasteCount_3--;
+          counter = wasteCount_2;
+          const counter_3 =
+            new_transaction_form_tab.querySelector("#counter_3");
+          counter_3.value = wasteCount_3;
+        }
+      }
+
+      if (counter === 1) {
+        if (value === 1) {
+          const remove_1 = new_transaction_form_tab.querySelector("#remove_1");
+          wasteCount_1 === 1 ? (remove_1.style.display = "none") : "";
+        } else if (value === 2) {
+          const remove_2 = new_transaction_form_tab.querySelector("#remove_2");
+          wasteCount_2 === 1 ? (remove_2.style.display = "none") : "";
+        } else {
+          const remove_3 = new_transaction_form_tab.querySelector("#remove_3");
+          wasteCount_3 === 1 ? (remove_3.style.display = "none") : "";
+        }
+      }
+    }
+
     var counter = 1;
     for (let x = tmt_data_list.content.length - 1; x > 1; x--) {
       var operation_start = "";
