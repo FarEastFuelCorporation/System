@@ -2401,12 +2401,27 @@ document.addEventListener("DOMContentLoaded", async function () {
     last2WeeksStart.setDate(currentWeekStart.getDate() - 14);
     const last3WeeksStart = new Date(currentWeekStart);
     last3WeeksStart.setDate(currentWeekStart.getDate() - 21);
+    const last4WeeksStart = new Date(currentWeekStart);
+    last4WeeksStart.setDate(currentWeekStart.getDate() - 28);
+    const last5WeeksStart = new Date(currentWeekStart);
+    last5WeeksStart.setDate(currentWeekStart.getDate() - 35);
+    const last6WeeksStart = new Date(currentWeekStart);
+    last6WeeksStart.setDate(currentWeekStart.getDate() - 42);
+    const last7WeeksStart = new Date(currentWeekStart);
+    last7WeeksStart.setDate(currentWeekStart.getDate() - 49);
+    const last8WeeksStart = new Date(currentWeekStart);
+    last8WeeksStart.setDate(currentWeekStart.getDate() - 56);
 
     // Arrays to store rows for each week
     const currentWeek = [];
     const lastWeek = [];
     const last2Weeks = [];
     const last3Weeks = [];
+    const last4Weeks = [];
+    const last5Weeks = [];
+    const last6Weeks = [];
+    const last7Weeks = [];
+    const last8Weeks = [];
 
     const treatment_machine_transaction = document.querySelector(
       "#treatment_machine_transaction"
@@ -2984,12 +2999,10 @@ document.addEventListener("DOMContentLoaded", async function () {
           )
         );
         treated_waste = `${treated_waste} Kg`;
-        ash = `${formatNumber(
-          parseFloat(
-            tmt_data_list.content[x][findTextInArray(tmt_data_list, "ASH")]
-              ? tmt_data_list.content[x][findTextInArray(tmt_data_list, "ASH")]
-              : 0
-          )
+        ash = `${parseFloat(
+          tmt_data_list.content[x][findTextInArray(tmt_data_list, "ASH")]
+            ? tmt_data_list.content[x][findTextInArray(tmt_data_list, "ASH")]
+            : 0
         )} Kg`;
       }
 
@@ -3024,6 +3037,31 @@ document.addEventListener("DOMContentLoaded", async function () {
         normalizeToMidnightUTC(last3WeeksStart).getTime()
       ) {
         last3Weeks.push(itemWithTreatedWaste);
+      } else if (
+        normalizeToMidnightUTC(haulingWeekStart).getTime() ===
+        normalizeToMidnightUTC(last4WeeksStart).getTime()
+      ) {
+        last4Weeks.push(itemWithTreatedWaste);
+      } else if (
+        normalizeToMidnightUTC(haulingWeekStart).getTime() ===
+        normalizeToMidnightUTC(last5WeeksStart).getTime()
+      ) {
+        last5Weeks.push(itemWithTreatedWaste);
+      } else if (
+        normalizeToMidnightUTC(haulingWeekStart).getTime() ===
+        normalizeToMidnightUTC(last6WeeksStart).getTime()
+      ) {
+        last6Weeks.push(itemWithTreatedWaste);
+      } else if (
+        normalizeToMidnightUTC(haulingWeekStart).getTime() ===
+        normalizeToMidnightUTC(last7WeeksStart).getTime()
+      ) {
+        last7Weeks.push(itemWithTreatedWaste);
+      } else if (
+        normalizeToMidnightUTC(haulingWeekStart).getTime() ===
+        normalizeToMidnightUTC(last8WeeksStart).getTime()
+      ) {
+        last8Weeks.push(itemWithTreatedWaste);
       }
 
       var list = `
@@ -3107,12 +3145,22 @@ document.addEventListener("DOMContentLoaded", async function () {
     const lastWeekNumber = getWeekNumber(lastWeekStart);
     const last2WeeksNumber = getWeekNumber(last2WeeksStart);
     const last3WeeksNumber = getWeekNumber(last3WeeksStart);
+    const last4WeeksNumber = getWeekNumber(last4WeeksStart);
+    const last5WeeksNumber = getWeekNumber(last5WeeksStart);
+    const last6WeeksNumber = getWeekNumber(last6WeeksStart);
+    const last7WeeksNumber = getWeekNumber(last7WeeksStart);
+    const last8WeeksNumber = getWeekNumber(last8WeeksStart);
 
     const weekArray = [
       currentWeekNumber,
       lastWeekNumber,
       last2WeeksNumber,
       last3WeeksNumber,
+      last4WeeksNumber,
+      last5WeeksNumber,
+      last6WeeksNumber,
+      last7WeeksNumber,
+      last8WeeksNumber,
     ];
 
     const weekData = {
@@ -3120,6 +3168,11 @@ document.addEventListener("DOMContentLoaded", async function () {
       [lastWeekNumber]: lastWeek,
       [last2WeeksNumber]: last2Weeks,
       [last3WeeksNumber]: last3Weeks,
+      [last4WeeksNumber]: last4Weeks,
+      [last5WeeksNumber]: last5Weeks,
+      [last6WeeksNumber]: last6Weeks,
+      [last7WeeksNumber]: last7Weeks,
+      [last8WeeksNumber]: last8Weeks,
     };
 
     const week_filter = document.getElementById("week_filter");
@@ -3324,7 +3377,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       // Aggregate data by operator
       const operatorData = {};
-
+      console.log(data);
       // Update transaction_history table
       transaction_history.innerHTML = "";
       data.forEach((row, index) => {
@@ -3347,6 +3400,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         const treatedWaste = row["treated_waste"]
           ? parseFloat(row["treated_waste"])
           : 0;
+        console.log(row);
+        console.log(row["ash"]);
         const ash = row["ash"] ? parseFloat(row["ash"]) : 0;
 
         var list = `
@@ -3377,12 +3432,15 @@ document.addEventListener("DOMContentLoaded", async function () {
         if (machine == "THERMAL GASIFIER ALPHA") {
           tg_alpha_counter += treatedWaste;
           tg_alpha_counter_ash += ash;
+          console.log(ash);
         } else if (machine == "THERMAL GASIFIER BRAVO") {
           tg_bravo_counter += treatedWaste;
           tg_bravo_counter_ash += ash;
+          console.log(ash);
         } else if (machine == "THERMAL GASIFIER CHARLIE") {
           tg_charlie_counter += treatedWaste;
           tg_charlie_counter_ash += ash;
+          console.log(ash);
         }
 
         if (!operatorData[row[findTextInArray(tmt_data_list, "OPERATOR")]]) {

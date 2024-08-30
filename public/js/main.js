@@ -1311,9 +1311,6 @@ function getDayOfWeek(dateString) {
   // Get the day index (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
   const dayIndex = date.getDay();
 
-  console.log(dateString);
-  console.log(date); // Local time with the added offset
-  console.log(daysInWeek[dayIndex]);
   return daysInWeek[dayIndex];
 }
 
