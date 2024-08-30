@@ -3231,13 +3231,14 @@ document.addEventListener("DOMContentLoaded", async function () {
               <div style="display: flex; flex-direction: column;">
                   <div style="height: 175px; display: flex; flex-direction: row; align-items: flex-end;">
           `;
-
+        console.log(weightPercentage);
         machines.forEach((machine) => {
-          let heightPercentage = weightPercentage[machine]?.[day].waste || 0;
+          let heightPercentage = weightPercentage[machine]?.[day]?.waste || 0;
           let ashPercentageByMaxWasteWeight =
-            weightPercentage[machine]?.[day].ashPercentageByMaxWasteWeight || 0;
+            weightPercentage[machine]?.[day]?.ashPercentageByMaxWasteWeight ||
+            0;
           let ashPercentageByMaxAshWeight =
-            weightPercentage[machine]?.[day].ashPercentageByMaxAshWeight || 0;
+            weightPercentage[machine]?.[day]?.ashPercentageByMaxAshWeight || 0;
 
           if (graph_data.value === "All") {
             htmlContent += `
