@@ -3235,6 +3235,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // Function to calculate weight percentages
     function calculateWeightPercentage(weight, roundedMaxWeights) {
+      console.log(weight);
       let weightPercentage = {};
 
       for (let machine in weight) {
@@ -3250,6 +3251,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             (weight[machine][day].ash / roundedMaxWeights.maxAshWeight) * 100;
           weightPercentage[machine][day] = {
             waste: wastePercentage,
+            ash: weight[machine][day].ash,
             ashPercentageByMaxWasteWeight: ashPercentageByMaxWasteWeight,
             ashPercentageByMaxAshWeight: ashPercentageByMaxAshWeight,
           };
@@ -3295,6 +3297,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
           if (graph_data.value === "All") {
             htmlContent += `
+            <div style="position: relative; height: 175px; display: flex; flex-direction: row; align-items: flex-end;">
               <div style="position: relative; width: 50px; height: ${heightPercentage}%; background-color: ${
               machine === "THERMAL GASIFIER ALPHA"
                 ? "#198754"
@@ -3302,12 +3305,14 @@ document.addEventListener("DOMContentLoaded", async function () {
                 ? "#FFFF00"
                 : "#FF0000"
             };">
-                <div style="position: absolute; bottom: 0; left: 0; width: 50px; height: ${ashPercentageByMaxWasteWeight}%; background-color: #808080;">
-                </div>
               </div>
-                `;
+              <div style="position: absolute; bottom: 0; left: 0; width: 50px; height: ${ashPercentageByMaxWasteWeight}%; background-color: #808080;">
+              </div>
+            </div>
+            `;
           } else if (graph_data.value === "Treated Waste") {
             htmlContent += `
+            <div style="position: relative; height: 175px; display: flex; flex-direction: row; align-items: flex-end;">
               <div style="position: relative; width: 50px; height: ${heightPercentage}%; background-color: ${
               machine === "THERMAL GASIFIER ALPHA"
                 ? "#198754"
@@ -3316,18 +3321,23 @@ document.addEventListener("DOMContentLoaded", async function () {
                 : "#FF0000"
             };">
               </div>
-                `;
+            </div>
+            `;
           } else if (graph_data.value === "Ash") {
             htmlContent += `
-              <div style="position: relative; width: 50px; height: ${ashPercentageByMaxAshWeight}%; background-color: ${
+            <div style="position: relative; height: 175px; display: flex; flex-direction: row; align-items: flex-end;">
+              <div style="position: relative; width: 50px; height: ${heightPercentage}%; background-color: ${
               machine === "THERMAL GASIFIER ALPHA"
-                ? "#198754"
+                ? "#F5F5F7"
                 : machine === "THERMAL GASIFIER BRAVO"
-                ? "#FFFF00"
-                : "#FF0000"
+                ? "#F5F5F7"
+                : "#F5F5F7"
             };">
               </div>
-                `;
+              <div style="position: absolute; bottom: 0; left: 0; width: 50px; height: ${ashPercentageByMaxWasteWeight}%; background-color: #808080;">
+              </div>
+            </div>
+            `;
           }
         });
 
