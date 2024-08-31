@@ -3242,7 +3242,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         weightPercentage[machine] = {};
 
         for (let day in weight[machine]) {
-          let wastePercentage =
+          let wastePercentageByMaxWasteWeight =
             (weight[machine][day].waste / roundedMaxWeights.maxWasteWeight) *
             100;
           let ashPercentageByMaxWasteWeight =
@@ -3250,8 +3250,9 @@ document.addEventListener("DOMContentLoaded", async function () {
           let ashPercentageByMaxAshWeight =
             (weight[machine][day].ash / roundedMaxWeights.maxAshWeight) * 100;
           weightPercentage[machine][day] = {
-            waste: wastePercentage,
             ash: weight[machine][day].ash,
+            waste: weight[machine][day].waste,
+            wastePercentageByMaxWasteWeight: wastePercentageByMaxWasteWeight,
             ashPercentageByMaxWasteWeight: ashPercentageByMaxWasteWeight,
             ashPercentageByMaxAshWeight: ashPercentageByMaxAshWeight,
           };
@@ -3288,7 +3289,11 @@ document.addEventListener("DOMContentLoaded", async function () {
           `;
         console.log(weightPercentage);
         machines.forEach((machine) => {
-          let heightPercentage = weightPercentage[machine]?.[day]?.waste || 0;
+          let ash = weightPercentage[machine]?.[day]?.ash || 0;
+          let waste = weightPercentage[machine]?.[day]?.waste || 0;
+          let wastePercentageByMaxWasteWeight =
+            weightPercentage[machine]?.[day]?.wastePercentageByMaxWasteWeight ||
+            0;
           let ashPercentageByMaxWasteWeight =
             weightPercentage[machine]?.[day]?.ashPercentageByMaxWasteWeight ||
             0;
@@ -3298,13 +3303,22 @@ document.addEventListener("DOMContentLoaded", async function () {
           if (graph_data.value === "All") {
             htmlContent += `
             <div style="position: relative; height: 175px; display: flex; flex-direction: row; align-items: flex-end;">
-              <div style="position: relative; width: 50px; height: ${heightPercentage}%; background-color: ${
+              <div style="position: relative; width: 50px; height: ${wastePercentageByMaxWasteWeight}%; background-color: ${
               machine === "THERMAL GASIFIER ALPHA"
                 ? "#198754"
                 : machine === "THERMAL GASIFIER BRAVO"
                 ? "#FFFF00"
                 : "#FF0000"
             };">
+                <div style="height: 100%; display: flex; justify-content: center; align-items: center; font-weight: bold; color: ${
+                  machine === "THERMAL GASIFIER ALPHA"
+                    ? "#FFFFFF"
+                    : machine === "THERMAL GASIFIER BRAVO"
+                    ? "#212529"
+                    : "#FFFFFF"
+                };">
+                  ${formatNumber2(waste)}
+                </div>
               </div>
               <div style="position: absolute; bottom: 0; left: 0; width: 50px; height: ${ashPercentageByMaxWasteWeight}%; background-color: #808080;">
               </div>
@@ -3312,21 +3326,28 @@ document.addEventListener("DOMContentLoaded", async function () {
             `;
           } else if (graph_data.value === "Treated Waste") {
             htmlContent += `
-            <div style="position: relative; height: 175px; display: flex; flex-direction: row; align-items: flex-end;">
-              <div style="position: relative; width: 50px; height: ${heightPercentage}%; background-color: ${
+            <div style="position: relative; width: 50px; height: ${wastePercentageByMaxWasteWeight}%; background-color: ${
               machine === "THERMAL GASIFIER ALPHA"
                 ? "#198754"
                 : machine === "THERMAL GASIFIER BRAVO"
                 ? "#FFFF00"
                 : "#FF0000"
             };">
+                <div style="height: 100%; display: flex; justify-content: center; align-items: center; font-weight: bold; color: ${
+                  machine === "THERMAL GASIFIER ALPHA"
+                    ? "#FFFFFF"
+                    : machine === "THERMAL GASIFIER BRAVO"
+                    ? "#212529"
+                    : "#FFFFFF"
+                };">
+                  ${formatNumber2(waste)}
+                </div>
               </div>
-            </div>
             `;
           } else if (graph_data.value === "Ash") {
             htmlContent += `
             <div style="position: relative; height: 175px; display: flex; flex-direction: row; align-items: flex-end;">
-              <div style="position: relative; width: 50px; height: ${heightPercentage}%; background-color: ${
+              <div style="position: relative; width: 50px; height: ${wastePercentageByMaxWasteWeight}%; background-color: ${
               machine === "THERMAL GASIFIER ALPHA"
                 ? "#F5F5F7"
                 : machine === "THERMAL GASIFIER BRAVO"
@@ -3334,7 +3355,10 @@ document.addEventListener("DOMContentLoaded", async function () {
                 : "#F5F5F7"
             };">
               </div>
-              <div style="position: absolute; bottom: 0; left: 0; width: 50px; height: ${ashPercentageByMaxWasteWeight}%; background-color: #808080;">
+              <div style="position: absolute; bottom: 0; left: 0; width: 50px; height: ${ashPercentageByMaxAshWeight}%; background-color: #808080;">
+                <div style="height: 100%; display: flex; justify-content: center; align-items: center; font-weight: bold; color: "#F5F5F7";">
+                  ${formatNumber2(ash)}
+                </div>
               </div>
             </div>
             `;
