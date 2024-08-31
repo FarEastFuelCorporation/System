@@ -1044,7 +1044,9 @@ document.addEventListener("DOMContentLoaded", async function () {
       var data_value = [];
 
       for (x = 1; x < client_data_list.content.length; x++) {
-        data_value.push(client_data_list.content[x][1]);
+        data_value.push(
+          client_data_list.content[x][client_data_list_CLIENT_NAME]
+        );
       }
       const input_box = search_wrapper.querySelector("input");
       const sugg_box = search_wrapper.querySelector(".autocom_box");
