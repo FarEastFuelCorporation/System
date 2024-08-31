@@ -3279,7 +3279,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       ];
 
       let htmlContent = `
-          <div style="height: 200px; display: flex; justify-content: space-between;">
+          <div style="height: 225px; display: flex; justify-content: space-between;">
       `;
 
       daysInWeek.forEach((day) => {
@@ -3287,7 +3287,12 @@ document.addEventListener("DOMContentLoaded", async function () {
               <div style="display: flex; flex-direction: column;">
                   <div style="height: 175px; display: flex; flex-direction: row; align-items: flex-end;">
           `;
+
+        var day_weight = 0;
+        var day_ash = 0;
+
         console.log(weightPercentage);
+
         machines.forEach((machine) => {
           let ash = weightPercentage[machine]?.[day]?.ash || 0;
           let waste = weightPercentage[machine]?.[day]?.waste || 0;
@@ -3300,9 +3305,12 @@ document.addEventListener("DOMContentLoaded", async function () {
           let ashPercentageByMaxAshWeight =
             weightPercentage[machine]?.[day]?.ashPercentageByMaxAshWeight || 0;
 
+          day_weight += weightPercentage[machine]?.[day]?.waste || 0;
+          day_ash += weightPercentage[machine]?.[day]?.ash || 0;
+
           if (graph_data.value === "All") {
             htmlContent += `
-            <div style="position: relative; height: 175px; display: flex; flex-direction: row; align-items: flex-end;">
+            <div style="position: relative; height: 175px; display: flex; flex-direction: row; align-items: flex-end; border-bottom: 2px solid black;">
               <div style="position: relative; width: 50px; height: ${wastePercentageByMaxWasteWeight}%; background-color: ${
               machine === "THERMAL GASIFIER ALPHA"
                 ? "#198754"
@@ -3326,7 +3334,8 @@ document.addEventListener("DOMContentLoaded", async function () {
             `;
           } else if (graph_data.value === "Treated Waste") {
             htmlContent += `
-            <div style="position: relative; width: 50px; height: ${wastePercentageByMaxWasteWeight}%; background-color: ${
+            <div style="position: relative; height: 175px; display: flex; flex-direction: row; align-items: flex-end;">
+              <div style="position: relative; width: 50px; height: ${wastePercentageByMaxWasteWeight}%; background-color: ${
               machine === "THERMAL GASIFIER ALPHA"
                 ? "#198754"
                 : machine === "THERMAL GASIFIER BRAVO"
@@ -3343,6 +3352,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                   ${formatNumber2(waste)}
                 </div>
               </div>
+            </div>
             `;
           } else if (graph_data.value === "Ash") {
             htmlContent += `
@@ -3366,11 +3376,16 @@ document.addEventListener("DOMContentLoaded", async function () {
         });
 
         htmlContent += `
-                  </div>
-                  <div style="height: 50px; text-align: center;">
-                      <h5 style="font-weight: bold">${day}</h5>
-                  </div>
-              </div>
+          </div>
+            <div style="height: 50px; text-align: center;">
+                <h5 style="font-weight: bold; margin: 0;">${formatNumber2(
+                  graph_data.value === "Ash" ? day_ash : day_weight
+                )}</h5>
+            </div>
+            <div style="height: 50px; text-align: center;">
+                <h5 style="font-weight: bold">${day}</h5>
+            </div>
+          </div>
           `;
       });
 

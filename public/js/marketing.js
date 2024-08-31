@@ -1379,7 +1379,10 @@ document.addEventListener("DOMContentLoaded", async function () {
       const submit_to = marketing_transaction_form.querySelector(`#submit_to`);
       var done_vehicle = [];
       for (let y = 1; y < client_data_list.content.length; y++) {
-        if (client.value == client_data_list.content[y][1]) {
+        if (
+          client.value ==
+          client_data_list.content[y][client_data_list_CLIENT_NAME]
+        ) {
           var client_id = "";
           client_id = client_data_list.content[y][client_data_list_CLIENT_ID];
           for (let x = 1; x < qlf_data_list.content.length; x++) {
@@ -1419,6 +1422,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                         <option value="CLIENT VEHICLE">CLIENT VEHICLE</option>
                         <option value="FEFC VISMIN VEHICLE">FEFC VISMIN VEHICLE</option>
                         `;
+            type_of_vehicle.innerHTML = ` <option value="">SELECT</option>`;
             type_of_vehicle.insertAdjacentHTML("beforeend", data);
           }
         }
