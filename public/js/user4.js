@@ -2280,7 +2280,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     ] == "C2023015"
                   ) {
                     table_data_value += `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 60px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 60px 90px 1fr 105px;">
                                             <td>${date_decoder(
                                               tpf_data_list.content[x][
                                                 findTextInArray(
@@ -2320,7 +2320,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         </tr>
                                         `;
                     table_head_data_value = `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 60px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 60px 90px 1fr 105px;">
                                             <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>TS No.</th>
@@ -2423,7 +2423,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     ] == "C2024013"
                   ) {
                     table_data_value += `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 50px 90px 1fr 105px;">
                                             <td>${date_decoder(
                                               tpf_data_list.content[x][
                                                 findTextInArray(
@@ -2463,7 +2463,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         </tr>
                                         `;
                     table_head_data_value = `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 50px 90px 1fr 105px;">
                                             <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>Gate pass No.</th>
@@ -2601,7 +2601,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                         }
                       }
                       table_data_value += `
-                                            <tr style="display: grid; grid-template-columns: 100px 1.3fr 70px 90px .7fr 100px;">
+                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 70px 90px .7fr 105px;">
                                                 <td>${date_decoder(
                                                   tpf_data_list.content[x][
                                                     findTextInArray(
@@ -2634,7 +2634,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                             </tr>
                                             `;
                       table_head_data_value = `
-                                            <tr style="display: grid; grid-template-columns: 100px 1.3fr 70px 90px .7fr 100px;">
+                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 70px 90px .7fr 105px;">
                                                 <th>Date Hauled</th>
                                                 <th>Class and Description of Waste</th>
                                                 <th>Truck Scale Form #</th>
@@ -2730,7 +2730,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                             `;
                     } else {
                       table_data_value += `
-                                            <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                            <tr style="display: grid; grid-template-columns: 105px .9fr 70px 90px 1fr 105px;">
                                                 <td>${date_decoder(
                                                   tpf_data_list.content[x][
                                                     findTextInArray(
@@ -2777,7 +2777,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                             </tr>
                                             `;
                       table_head_data_value = `
-                                            <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                            <tr style="display: grid; grid-template-columns: 105px .9fr 70px 90px 1fr 105px;">
                                                 <th>Date Hauled</th>
                                                 <th>Class and Description of Waste</th>
                                                 <th>Truck Scale Form #</th>
@@ -3335,7 +3335,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                             `;
                     } else {
                       table_data_value += `
-                                            <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                            <tr style="display: grid; grid-template-columns: 105px .9fr 70px 90px 1fr 105px;">
                                                 <td>${date_decoder(
                                                   tpf_data_list.content[x][
                                                     findTextInArray(
@@ -3382,7 +3382,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                             </tr>
                                             `;
                       table_head_data_value = `
-                                            <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                            <tr style="display: grid; grid-template-columns: 105px .9fr 70px 90px 1fr 105px;">
                                                 <th>Date Hauled</th>
                                                 <th>Class and Description of Waste</th>
                                                 <th>Truck Scale Form #</th>
@@ -3489,7 +3489,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     ] == "C2023016"
                   ) {
                     table_data_value += `
-                                        <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px .9fr 70px 90px 1fr 105px;">
                                             <td>${date_decoder(
                                               tpf_data_list.content[x][
                                                 findTextInArray(
@@ -3529,7 +3529,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         </tr>
                                         `;
                     table_head_data_value = `
-                                        <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px .9fr 70px 90px 1fr 105px;">
                                             <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>Gate Pass No.</th>
@@ -3629,7 +3629,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     ] == "C2023036"
                   ) {
                     table_data_value += `
-                                        <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px .9fr 70px 90px 1fr 105px;">
                                             <td>${date_decoder(
                                               tpf_data_list.content[x][
                                                 findTextInArray(
@@ -3669,7 +3669,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         </tr>
                                         `;
                     table_head_data_value = `
-                                        <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px .9fr 70px 90px 1fr 105px;">
                                             <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>Pull Out Slip No.</th>
@@ -3769,7 +3769,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     ] == "C2023014"
                   ) {
                     table_data_value += `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 80px 160px 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 50px 80px 160px 105px;">
                                             <td>${date_decoder(
                                               tpf_data_list.content[x][
                                                 findTextInArray(
@@ -3816,7 +3816,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         </tr>
                                         `;
                     table_head_data_value = `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 80px 160px 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 50px 80px 160px 105px;">
                                             <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>Waste Code</th>
@@ -3912,7 +3912,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         `;
                   } else {
                     table_data_value += `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 50px 90px 1fr 105px;">
                                             <td>${date_decoder(
                                               tpf_data_list.content[x][
                                                 findTextInArray(
@@ -3959,7 +3959,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         </tr>
                                         `;
                     table_head_data_value = `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 50px 90px 1fr 105px;">
                                             <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>Waste Code</th>
@@ -4268,7 +4268,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     ] == "C2023015"
                   ) {
                     table_data_value += `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 60px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 60px 90px 1fr 105px;">
                                             <td>${date_decoder(
                                               tpf_data_list.content[x][
                                                 findTextInArray(
@@ -4308,7 +4308,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         </tr>
                                         `;
                     table_head_data_value = `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 60px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 60px 90px 1fr 105px;">
                                             <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>TS No.</th>
@@ -4411,7 +4411,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     ] == "C2024013"
                   ) {
                     table_data_value += `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 50px 90px 1fr 105px;">
                                             <td>${date_decoder(
                                               tpf_data_list.content[x][
                                                 findTextInArray(
@@ -4451,7 +4451,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         </tr>
                                         `;
                     table_head_data_value = `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 50px 90px 1fr 105px;">
                                             <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>Gate pass No.</th>
@@ -4589,7 +4589,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                         }
                       }
                       table_data_value += `
-                                            <tr style="display: grid; grid-template-columns: 100px 1.3fr 70px 90px .7fr 100px;">
+                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 70px 90px .7fr 105px;">
                                                 <td>${date_decoder(
                                                   tpf_data_list.content[x][
                                                     findTextInArray(
@@ -4622,7 +4622,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                             </tr>
                                             `;
                       table_head_data_value = `
-                                            <tr style="display: grid; grid-template-columns: 100px 1.3fr 70px 90px .7fr 100px;">
+                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 70px 90px .7fr 105px;">
                                                 <th>Date Hauled</th>
                                                 <th>Class and Description of Waste</th>
                                                 <th>Truck Scale Form #</th>
@@ -4718,7 +4718,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                             `;
                     } else {
                       table_data_value += `
-                                            <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                            <tr style="display: grid; grid-template-columns: 105px .9fr 70px 90px 1fr 105px;">
                                                 <td>${date_decoder(
                                                   tpf_data_list.content[x][
                                                     findTextInArray(
@@ -4765,7 +4765,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                             </tr>
                                             `;
                       table_head_data_value = `
-                                            <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                            <tr style="display: grid; grid-template-columns: 105px .9fr 70px 90px 1fr 105px;">
                                                 <th>Date Hauled</th>
                                                 <th>Class and Description of Waste</th>
                                                 <th>Truck Scale Form #</th>
@@ -4905,7 +4905,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                       }
                     }
                     table_data_value += `
-                                        <tr style="display: grid; grid-template-columns: 100px 1.3fr 80px 80px .7fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1.3fr 80px 80px .7fr 105px;">
                                             <td>${date_decoder(
                                               tpf_data_list.content[x][
                                                 findTextInArray(
@@ -4938,7 +4938,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         </tr>
                                         `;
                     table_head_data_value = `
-                                        <tr style="display: grid; grid-template-columns: 100px 1.3fr 80px 80px .7fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1.3fr 80px 80px .7fr 105px;">
                                             <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>Truck Scale Form #</th>
@@ -5038,7 +5038,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     ] == "C2023016"
                   ) {
                     table_data_value += `
-                                        <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px .9fr 70px 90px 1fr 105px;">
                                             <td>${date_decoder(
                                               tpf_data_list.content[x][
                                                 findTextInArray(
@@ -5078,7 +5078,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         </tr>
                                         `;
                     table_head_data_value = `
-                                        <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px .9fr 70px 90px 1fr 105px;">
                                             <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>Gate Pass No.</th>
@@ -5178,7 +5178,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     ] == "C2023036"
                   ) {
                     table_data_value += `
-                                        <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px .9fr 70px 90px 1fr 105px;">
                                             <td>${date_decoder(
                                               tpf_data_list.content[x][
                                                 findTextInArray(
@@ -5218,7 +5218,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         </tr>
                                         `;
                     table_head_data_value = `
-                                        <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px .9fr 70px 90px 1fr 105px;">
                                             <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>Pull Out Slip No.</th>
@@ -5318,7 +5318,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     ] == "C2023014"
                   ) {
                     table_data_value += `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 80px 160px 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 50px 80px 160px 105px;">
                                             <td>${date_decoder(
                                               tpf_data_list.content[x][
                                                 findTextInArray(
@@ -5365,7 +5365,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         </tr>
                                         `;
                     table_head_data_value = `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 80px 160px 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 50px 80px 160px 105px;">
                                             <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>Waste Code</th>
@@ -5461,7 +5461,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         `;
                   } else {
                     table_data_value += `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 50px 90px 1fr 105px;">
                                             <td>${date_decoder(
                                               tpf_data_list.content[x][
                                                 findTextInArray(
@@ -5508,7 +5508,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         </tr>
                                         `;
                     table_head_data_value = `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 50px 90px 1fr 105px;">
                                             <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>Waste Code</th>
@@ -5827,7 +5827,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     ] == "C2023015"
                   ) {
                     table_data_value += `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 60px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 60px 90px 1fr 105px;">
                                             <td>${date_decoder(
                                               tpf_data_list.content[x][
                                                 findTextInArray(
@@ -5867,7 +5867,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         </tr>
                                         `;
                     table_head_data_value = `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 60px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 60px 90px 1fr 105px;">
                                             <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>TS No.</th>
@@ -5970,7 +5970,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     ] == "C2024013"
                   ) {
                     table_data_value += `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 50px 90px 1fr 105px;">
                                             <td>${date_decoder(
                                               tpf_data_list.content[x][
                                                 findTextInArray(
@@ -6010,7 +6010,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         </tr>
                                         `;
                     table_head_data_value = `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 50px 90px 1fr 105px;">
                                             <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>Gate pass No.</th>
@@ -6148,7 +6148,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                         }
                       }
                       table_data_value += `
-                                            <tr style="display: grid; grid-template-columns: 100px 1.3fr 70px 90px .7fr 100px;">
+                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 70px 90px .7fr 105px;">
                                                 <td>${date_decoder(
                                                   tpf_data_list.content[x][
                                                     findTextInArray(
@@ -6181,7 +6181,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                             </tr>
                                             `;
                       table_head_data_value = `
-                                            <tr style="display: grid; grid-template-columns: 100px 1.3fr 70px 90px .7fr 100px;">
+                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 70px 90px .7fr 105px;">
                                                 <th>Date Hauled</th>
                                                 <th>Class and Description of Waste</th>
                                                 <th>Truck Scale Form #</th>
@@ -6277,7 +6277,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                             `;
                     } else {
                       table_data_value += `
-                                            <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                            <tr style="display: grid; grid-template-columns: 105px .9fr 70px 90px 1fr 105px;">
                                                 <td>${date_decoder(
                                                   tpf_data_list.content[x][
                                                     findTextInArray(
@@ -6324,7 +6324,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                             </tr>
                                             `;
                       table_head_data_value = `
-                                            <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                            <tr style="display: grid; grid-template-columns: 105px .9fr 70px 90px 1fr 105px;">
                                                 <th>Date Hauled</th>
                                                 <th>Class and Description of Waste</th>
                                                 <th>Truck Scale Form #</th>
@@ -6471,7 +6471,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                       }
                       console.log(pull_out_form);
                       table_data_value += `
-                                            <tr style="display: grid; grid-template-columns: 100px 1.3fr 60px 80px 80px 110px 100px;">
+                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 60px 80px 80px 110px 105px;">
                                                 <td>${date_decoder(
                                                   tpf_data_list.content[x][
                                                     findTextInArray(
@@ -6505,7 +6505,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                             </tr>
                                             `;
                       table_head_data_value = `
-                                            <tr style="display: grid; grid-template-columns: 100px 1.3fr 60px 80px 80px 110px 100px;">
+                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 60px 80px 80px 110px 105px;">
                                                 <th>Date Hauled</th>
                                                 <th>Class and Description of Waste</th>
                                                 <th>Steam #</th>
@@ -6648,7 +6648,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                         }
                       }
                       table_data_value += `
-                                          <tr style="display: grid; grid-template-columns: 100px 1.3fr 80px 80px .7fr 100px;">
+                                          <tr style="display: grid; grid-template-columns: 105px 1.3fr 80px 80px .7fr 105px;">
                                               <td>${date_decoder(
                                                 tpf_data_list.content[x][
                                                   findTextInArray(
@@ -6688,7 +6688,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                           </tr>
                                           `;
                       table_head_data_value = `
-                                          <tr style="display: grid; grid-template-columns: 100px 1.3fr 80px 80px .7fr 100px;">
+                                          <tr style="display: grid; grid-template-columns: 105px 1.3fr 80px 80px .7fr 105px;">
                                               <th>Date Hauled</th>
                                               <th>Class and Description of Waste</th>
                                               <th>Truck Scale Form #</th>
@@ -6829,7 +6829,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                       }
                       console.log(pull_out_form);
                       table_data_value += `
-                                            <tr style="display: grid; grid-template-columns: 100px 1.3fr 60px 80px 80px 110px 100px;">
+                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 60px 80px 80px 110px 105px;">
                                                 <td>${date_decoder(
                                                   tpf_data_list.content[x][
                                                     findTextInArray(
@@ -6863,7 +6863,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                             </tr>
                                             `;
                       table_head_data_value = `
-                                            <tr style="display: grid; grid-template-columns: 100px 1.3fr 60px 80px 80px 110px 100px;">
+                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 60px 80px 80px 110px 105px;">
                                                 <th>Date Hauled</th>
                                                 <th>Class and Description of Waste</th>
                                                 <th>Steam #</th>
@@ -6989,7 +6989,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                       }
                       console.log(pull_out_form);
                       table_data_value += `
-                                            <tr style="display: grid; grid-template-columns: 100px 1.3fr 80px 80px .7fr 100px;">
+                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 80px 80px .7fr 105px;">
                                                 <td>${date_decoder(
                                                   tpf_data_list.content[x][
                                                     findTextInArray(
@@ -7029,7 +7029,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                             </tr>
                                             `;
                       table_head_data_value = `
-                                            <tr style="display: grid; grid-template-columns: 100px 1.3fr 80px 80px .7fr 100px;">
+                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 80px 80px .7fr 105px;">
                                                 <th>Date Hauled</th>
                                                 <th>Class and Description of Waste</th>
                                                 <th>Truck Scale Form #</th>
@@ -7130,7 +7130,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     ] == "C2023016"
                   ) {
                     table_data_value += `
-                                        <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px .9fr 70px 90px 1fr 105px;">
                                             <td>${date_decoder(
                                               tpf_data_list.content[x][
                                                 findTextInArray(
@@ -7170,7 +7170,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         </tr>
                                         `;
                     table_head_data_value = `
-                                        <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px .9fr 70px 90px 1fr 105px;">
                                             <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>Gate Pass No.</th>
@@ -7270,7 +7270,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     ] == "C2023036"
                   ) {
                     table_data_value += `
-                                        <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px .9fr 70px 90px 1fr 105px;">
                                             <td>${date_decoder(
                                               tpf_data_list.content[x][
                                                 findTextInArray(
@@ -7310,7 +7310,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         </tr>
                                         `;
                     table_head_data_value = `
-                                        <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px .9fr 70px 90px 1fr 105px;">
                                             <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>Pull Out Slip No.</th>
@@ -7410,7 +7410,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     ] == "C2023014"
                   ) {
                     table_data_value += `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 80px 160px 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 50px 80px 160px 105px;">
                                             <td>${date_decoder(
                                               tpf_data_list.content[x][
                                                 findTextInArray(
@@ -7457,7 +7457,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         </tr>
                                         `;
                     table_head_data_value = `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 80px 160px 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 50px 80px 160px 105px;">
                                             <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>Waste Code</th>
@@ -7553,7 +7553,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         `;
                   } else {
                     table_data_value += `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 50px 90px 1fr 105px;">
                                             <td>${date_decoder(
                                               tpf_data_list.content[x][
                                                 findTextInArray(
@@ -7600,7 +7600,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         </tr>
                                         `;
                     table_head_data_value = `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 50px 90px 1fr 105px;">
                                             <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>Waste Code</th>
@@ -7910,7 +7910,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     ] == "C2023015"
                   ) {
                     table_data_value += `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 60px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 60px 90px 1fr 105px;">
                                             <td>${date_decoder(
                                               tpf_data_list.content[x][
                                                 findTextInArray(
@@ -7950,7 +7950,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         </tr>
                                         `;
                     table_head_data_value = `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 60px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 60px 90px 1fr 105px;">
                                             <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>TS No.</th>
@@ -8053,7 +8053,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     ] == "C2024013"
                   ) {
                     table_data_value += `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 50px 90px 1fr 105px;">
                                             <td>${date_decoder(
                                               tpf_data_list.content[x][
                                                 findTextInArray(
@@ -8093,7 +8093,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         </tr>
                                         `;
                     table_head_data_value = `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 50px 90px 1fr 105px;">
                                             <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>Gate pass No.</th>
@@ -8231,7 +8231,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                         }
                       }
                       table_data_value += `
-                                            <tr style="display: grid; grid-template-columns: 100px 1.3fr 70px 90px .7fr 100px;">
+                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 70px 90px .7fr 105px;">
                                                 <td>${date_decoder(
                                                   tpf_data_list.content[x][
                                                     findTextInArray(
@@ -8264,7 +8264,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                             </tr>
                                             `;
                       table_head_data_value = `
-                                            <tr style="display: grid; grid-template-columns: 100px 1.3fr 70px 90px .7fr 100px;">
+                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 70px 90px .7fr 105px;">
                                                 <th>Date Hauled</th>
                                                 <th>Class and Description of Waste</th>
                                                 <th>Truck Scale Form #</th>
@@ -8360,7 +8360,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                             `;
                     } else {
                       table_data_value += `
-                                            <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                            <tr style="display: grid; grid-template-columns: 105px .9fr 70px 90px 1fr 105px;">
                                                 <td>${date_decoder(
                                                   tpf_data_list.content[x][
                                                     findTextInArray(
@@ -8407,7 +8407,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                             </tr>
                                             `;
                       table_head_data_value = `
-                                            <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                            <tr style="display: grid; grid-template-columns: 105px .9fr 70px 90px 1fr 105px;">
                                                 <th>Date Hauled</th>
                                                 <th>Class and Description of Waste</th>
                                                 <th>Truck Scale Form #</th>
@@ -8552,7 +8552,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                         }
                       }
                       table_data_value += `
-                                            <tr style="display: grid; grid-template-columns: 100px 1.3fr 70px 90px .7fr 100px;">
+                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 70px 90px .7fr 105px;">
                                                 <td>${date_decoder(
                                                   tpf_data_list.content[x][
                                                     findTextInArray(
@@ -8585,7 +8585,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                             </tr>
                                             `;
                       table_head_data_value = `
-                                            <tr style="display: grid; grid-template-columns: 100px 1.3fr 70px 90px .7fr 100px;">
+                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 70px 90px .7fr 105px;">
                                                 <th>Date Hauled</th>
                                                 <th>Class and Description of Waste</th>
                                                 <th>Truck Scale Form #</th>
@@ -8681,7 +8681,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                             `;
                     } else {
                       table_data_value += `
-                                            <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                            <tr style="display: grid; grid-template-columns: 105px .9fr 70px 90px 1fr 105px;">
                                                 <td>${date_decoder(
                                                   tpf_data_list.content[x][
                                                     findTextInArray(
@@ -8728,7 +8728,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                             </tr>
                                             `;
                       table_head_data_value = `
-                                            <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                            <tr style="display: grid; grid-template-columns: 105px .9fr 70px 90px 1fr 105px;">
                                                 <th>Date Hauled</th>
                                                 <th>Class and Description of Waste</th>
                                                 <th>Truck Scale Form #</th>
@@ -8835,7 +8835,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     ] == "C2023016"
                   ) {
                     table_data_value += `
-                                        <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px .9fr 70px 90px 1fr 105px;">
                                             <td>${date_decoder(
                                               tpf_data_list.content[x][
                                                 findTextInArray(
@@ -8875,7 +8875,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         </tr>
                                         `;
                     table_head_data_value = `
-                                        <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px .9fr 70px 90px 1fr 105px;">
                                             <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>Gate Pass No.</th>
@@ -8975,7 +8975,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     ] == "C2023036"
                   ) {
                     table_data_value += `
-                                        <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px .9fr 70px 90px 1fr 105px;">
                                             <td>${date_decoder(
                                               tpf_data_list.content[x][
                                                 findTextInArray(
@@ -9015,7 +9015,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         </tr>
                                         `;
                     table_head_data_value = `
-                                        <tr style="display: grid; grid-template-columns: 100px .9fr 70px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px .9fr 70px 90px 1fr 105px;">
                                             <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>Pull Out Slip No.</th>
@@ -9115,7 +9115,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     ] == "C2023014"
                   ) {
                     table_data_value += `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 80px 160px 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 50px 80px 160px 105px;">
                                             <td>${date_decoder(
                                               tpf_data_list.content[x][
                                                 findTextInArray(
@@ -9162,7 +9162,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         </tr>
                                         `;
                     table_head_data_value = `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 80px 160px 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 50px 80px 160px 105px;">
                                             <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>Waste Code</th>
@@ -9258,7 +9258,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         `;
                   } else {
                     table_data_value += `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 50px 90px 1fr 105px;">
                                             <td>${date_decoder(
                                               tpf_data_list.content[x][
                                                 findTextInArray(
@@ -9305,7 +9305,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                         </tr>
                                         `;
                     table_head_data_value = `
-                                        <tr style="display: grid; grid-template-columns: 100px 1fr 50px 90px 1fr 100px;">
+                                        <tr style="display: grid; grid-template-columns: 105px 1fr 50px 90px 1fr 105px;">
                                             <th>Date Hauled</th>
                                             <th>Class and Description of Waste</th>
                                             <th>Waste Code</th>
