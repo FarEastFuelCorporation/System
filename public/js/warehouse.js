@@ -54,6 +54,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     const irf_response_promise = fetch(
       "https://script.google.com/macros/s/AKfycbzTmhNOz5cXeKitSXAriUJ_FEahAQugYEKIRwDuFt9tjhj2AtPKEf2H4yTMmZ1igpUxlQ/exec"
     );
+    const maintenance_job_order_response_promise = fetch(
+      "https://script.google.com/macros/s/AKfycbxN9q1p4FSHbE-grd4AIE5cqPJh__dALmmWT9FEZorl2Q-aQsUgYQlIBtCi9COs7mD6/exec"
+    );
 
     const [
       username_response,
@@ -74,6 +77,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       iid_response,
       wsf_response,
       irf_response,
+      maintenance_job_order_response,
     ] = await Promise.all([
       username_response_promise,
       client_list_response_promise,
@@ -93,6 +97,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       iid_response_promise,
       wsf_response_promise,
       irf_response_promise,
+      maintenance_job_order_response_promise,
     ]);
 
     const username_data_list = await username_response.json();
@@ -113,6 +118,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const iid_data_list = await iid_response.json();
     const wsf_data_list = await wsf_response.json();
     const irf_data_list = await irf_response.json();
+    const mjo_data_list = await maintenance_job_order_response.json();
 
     // Code that depends on the fetched data
     // username_data_list3
