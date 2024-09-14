@@ -3235,7 +3235,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // Function to calculate weight percentages
     function calculateWeightPercentage(weight, roundedMaxWeights) {
-      console.log(weight);
       let weightPercentage = {};
 
       for (let machine in weight) {
@@ -3290,8 +3289,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         var day_weight = 0;
         var day_ash = 0;
-
-        console.log(weightPercentage);
 
         machines.forEach((machine) => {
           let ash = weightPercentage[machine]?.[day]?.ash || 0;
@@ -3426,7 +3423,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       // Aggregate data by operator
       const operatorData = {};
-      console.log(data);
+
       // Update transaction_history table
       transaction_history.innerHTML = "";
       data.forEach((row, index) => {
@@ -3449,8 +3446,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         const treatedWaste = row["treated_waste"]
           ? parseFloat(row["treated_waste"])
           : 0;
-        console.log(row);
-        console.log(row["ash"]);
+
         const ash = row["ash"] ? parseFloat(row["ash"]) : 0;
 
         var list = `
@@ -3481,15 +3477,12 @@ document.addEventListener("DOMContentLoaded", async function () {
         if (machine == "THERMAL GASIFIER ALPHA") {
           tg_alpha_counter += treatedWaste;
           tg_alpha_counter_ash += ash;
-          console.log(ash);
         } else if (machine == "THERMAL GASIFIER BRAVO") {
           tg_bravo_counter += treatedWaste;
           tg_bravo_counter_ash += ash;
-          console.log(ash);
         } else if (machine == "THERMAL GASIFIER CHARLIE") {
           tg_charlie_counter += treatedWaste;
           tg_charlie_counter_ash += ash;
-          console.log(ash);
         }
 
         if (!operatorData[row[findTextInArray(tmt_data_list, "OPERATOR")]]) {
@@ -3706,7 +3699,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       }
       var chart = new ApexCharts(pieChart3, options);
       chart.render();
-
+      removeEmptyKey(operatorData);
       // Update transaction_per_operator table
       transaction_per_client.innerHTML = "";
       Object.entries(operatorData)

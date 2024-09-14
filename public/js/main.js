@@ -1314,6 +1314,15 @@ function getDayOfWeek(dateString) {
   return daysInWeek[dayIndex];
 }
 
+function removeEmptyKey(obj) {
+  for (const key in obj) {
+    if (key === "") {
+      delete obj[key]; // Remove the key-value pair if the key is an empty string
+    }
+  }
+  return obj;
+}
+
 // You might need to call adjustLayout whenever the content changes dynamically
 // For example, after adding or removing li elements.
 
