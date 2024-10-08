@@ -3157,8 +3157,22 @@ document.addEventListener("DOMContentLoaded", async function () {
                           }
                         }
                       }
+                      for (let y = 1; y < sf_data_list.content.length; y++) {
+                        if (
+                          tpf_data_list.content[x][
+                            findTextInArray(tpf_data_list, "SF #")
+                          ] ==
+                          sf_data_list.content[y][
+                            findTextInArray(sf_data_list, "SF #")
+                          ]
+                        )
+                          pull_out_form =
+                            sf_data_list.content[y][
+                              findTextInArray(sf_data_list, "FORM #")
+                            ];
+                      }
                       table_data_value += `
-                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 70px 90px .7fr 105px;">
+                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 80px 90px .7fr 105px;">
                                                 <td>${date_decoder(
                                                   tpf_data_list.content[x][
                                                     findTextInArray(
@@ -3198,7 +3212,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                             </tr>
                                             `;
                       table_head_data_value = `
-                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 70px 90px .7fr 105px;">
+                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 80px 90px .7fr 105px;">
                                                 <th>Date Hauled</th>
                                                 <th>Class and Description of Waste</th>
                                                 <th>Truck Scale Form #</th>
@@ -5111,6 +5125,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                           }
                         }
                       }
+
                       var prefix = pull_out_form.slice(0, 6);
                       var numbers = pull_out_form.slice(6);
                       var steam_no = [];
@@ -5328,8 +5343,22 @@ document.addEventListener("DOMContentLoaded", async function () {
                           }
                         }
                       }
+                      for (let y = 1; y < sf_data_list.content.length; y++) {
+                        if (
+                          tpf_data_list.content[x][
+                            findTextInArray(tpf_data_list, "SF #")
+                          ] ==
+                          sf_data_list.content[y][
+                            findTextInArray(sf_data_list, "SF #")
+                          ]
+                        )
+                          pull_out_form =
+                            sf_data_list.content[y][
+                              findTextInArray(sf_data_list, "FORM #")
+                            ];
+                      }
                       table_data_value += `
-                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 70px 90px .7fr 105px;">
+                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 80px 90px .7fr 105px;">
                                                 <td>${date_decoder(
                                                   tpf_data_list.content[x][
                                                     findTextInArray(
@@ -5369,7 +5398,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                             </tr>
                                             `;
                       table_head_data_value = `
-                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 70px 90px .7fr 105px;">
+                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 80px 90px .7fr 105px;">
                                                 <th>Date Hauled</th>
                                                 <th>Class and Description of Waste</th>
                                                 <th>Truck Scale Form #</th>
@@ -7138,8 +7167,22 @@ document.addEventListener("DOMContentLoaded", async function () {
                           }
                         }
                       }
+                      for (let y = 1; y < sf_data_list.content.length; y++) {
+                        if (
+                          tpf_data_list.content[x][
+                            findTextInArray(tpf_data_list, "SF #")
+                          ] ==
+                          sf_data_list.content[y][
+                            findTextInArray(sf_data_list, "SF #")
+                          ]
+                        )
+                          pull_out_form =
+                            sf_data_list.content[y][
+                              findTextInArray(sf_data_list, "FORM #")
+                            ];
+                      }
                       table_data_value += `
-                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 70px 90px .7fr 105px;">
+                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 80px 90px .7fr 105px;">
                                                 <td>${date_decoder(
                                                   tpf_data_list.content[x][
                                                     findTextInArray(
@@ -7179,7 +7222,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                             </tr>
                                             `;
                       table_head_data_value = `
-                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 70px 90px .7fr 105px;">
+                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 80px 90px .7fr 105px;">
                                                 <th>Date Hauled</th>
                                                 <th>Class and Description of Waste</th>
                                                 <th>Truck Scale Form #</th>
@@ -9276,8 +9319,22 @@ document.addEventListener("DOMContentLoaded", async function () {
                           }
                         }
                       }
+                      for (let y = 1; y < sf_data_list.content.length; y++) {
+                        if (
+                          tpf_data_list.content[x][
+                            findTextInArray(tpf_data_list, "SF #")
+                          ] ==
+                          sf_data_list.content[y][
+                            findTextInArray(sf_data_list, "SF #")
+                          ]
+                        )
+                          pull_out_form =
+                            sf_data_list.content[y][
+                              findTextInArray(sf_data_list, "FORM #")
+                            ];
+                      }
                       table_data_value += `
-                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 70px 90px .7fr 105px;">
+                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 80px 90px .7fr 105px;">
                                                 <td>${date_decoder(
                                                   tpf_data_list.content[x][
                                                     findTextInArray(
@@ -9317,7 +9374,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                             </tr>
                                             `;
                       table_head_data_value = `
-                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 70px 90px .7fr 105px;">
+                                            <tr style="display: grid; grid-template-columns: 105px 1.3fr 80px 90px .7fr 105px;">
                                                 <th>Date Hauled</th>
                                                 <th>Class and Description of Waste</th>
                                                 <th>Truck Scale Form #</th>
