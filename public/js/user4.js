@@ -8809,7 +8809,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                             <tr style="display: grid; grid-template-columns: 105px 1.3fr 70px 90px .7fr 105px;">
                                                 <th>Date Hauled</th>
                                                 <th>Class and Description of Waste</th>
-                                                <th>Truck Scale Form #</th>
+                                                <th>Pull Out Form #</th>
                                                 <th>Quantity</th>
                                                 <th>Destruction Process</th>
                                                 <th>Date of Completion</th>
