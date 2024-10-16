@@ -2758,14 +2758,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                                 }</td>
                                                 <td>${pull_out_form}</td>
                                                 <td style="font-weight: bold">${formatNumber(
-                                                  findClientWeight(
-                                                    tpf_data_list.content[x][
-                                                      findTextInArray(
-                                                        tpf_data_list,
-                                                        "WCF #"
-                                                      )
-                                                    ]
-                                                  )
+                                                  cod_weight
                                                 )} kgs.</td>
                                                 <td>${
                                                   tpf_data_list.content[x][
@@ -3551,14 +3544,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                                 }</td>
                                                 <td>${pull_out_form}</td>
                                                 <td style="font-weight: bold">${formatNumber(
-                                                  findClientWeight(
-                                                    tpf_data_list.content[x][
-                                                      findTextInArray(
-                                                        tpf_data_list,
-                                                        "WCF #"
-                                                      )
-                                                    ]
-                                                  )
+                                                  cod_weight
                                                 )} kgs.</td>
                                                 <td>${
                                                   tpf_data_list.content[x][
@@ -4944,14 +4930,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                                 }</td>
                                                 <td>${pull_out_form}</td>
                                                 <td style="font-weight: bold">${formatNumber(
-                                                  findClientWeight(
-                                                    tpf_data_list.content[x][
-                                                      findTextInArray(
-                                                        tpf_data_list,
-                                                        "WCF #"
-                                                      )
-                                                    ]
-                                                  )
+                                                  cod_weight
                                                 )} kgs.</td>
                                                 <td>${
                                                   tpf_data_list.content[x][
@@ -6769,14 +6748,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                                 }</td>
                                                 <td>${pull_out_form}</td>
                                                 <td style="font-weight: bold">${formatNumber(
-                                                  findClientWeight(
-                                                    tpf_data_list.content[x][
-                                                      findTextInArray(
-                                                        tpf_data_list,
-                                                        "WCF #"
-                                                      )
-                                                    ]
-                                                  )
+                                                  cod_weight
                                                 )} kgs.</td>
                                                 <td>${
                                                   tpf_data_list.content[x][
@@ -8921,14 +8893,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                                 }</td>
                                                 <td>${pull_out_form}</td>
                                                 <td style="font-weight: bold">${formatNumber(
-                                                  findClientWeight(
-                                                    tpf_data_list.content[x][
-                                                      findTextInArray(
-                                                        tpf_data_list,
-                                                        "WCF #"
-                                                      )
-                                                    ]
-                                                  )
+                                                  cod_weight
                                                 )} kgs.</td>
                                                 <td>${
                                                   tpf_data_list.content[x][
@@ -9251,14 +9216,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                                 }</td>
                                                 <td>${pull_out_form}</td>
                                                 <td style="font-weight: bold">${formatNumber(
-                                                  findClientWeight(
-                                                    tpf_data_list.content[x][
-                                                      findTextInArray(
-                                                        tpf_data_list,
-                                                        "WCF #"
-                                                      )
-                                                    ]
-                                                  )
+                                                  cod_weight
                                                 )} kgs.</td>
                                                 <td>${
                                                   tpf_data_list.content[x][
