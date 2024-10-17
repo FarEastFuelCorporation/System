@@ -3434,7 +3434,7 @@ document.addEventListener("DOMContentLoaded", async function () {
           "beforeend",
           si_table_data_transportation[0]
         );
-        for (let x = 0; x < 20 - table_counter; x++) {
+        for (let x = 0; x < 22 - table_counter; x++) {
           var data5 = "";
           data5 = `
           <tr style="height: 18px !important">
@@ -4255,7 +4255,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     `;
           table_data.insertAdjacentHTML("beforeend", space);
         }
-        for (let x = 0; x < 20 - table_counter; x++) {
+        for (let x = 0; x < 22 - table_counter; x++) {
           var data5 = "";
           data5 = `
           <tr style="height: 18px !important">
@@ -5084,7 +5084,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             );
           }
         }
-        for (let x = 0; x < 20 - table_counter; x++) {
+        for (let x = 0; x < 22 - table_counter; x++) {
           var data5 = "";
           data5 = `
           <tr style="height: 18px !important">
