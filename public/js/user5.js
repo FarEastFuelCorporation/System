@@ -3465,9 +3465,9 @@ document.addEventListener("DOMContentLoaded", async function () {
         total_amount_due_container.innerText = formatNumber(
           total_amount + non_vatable - parseFloat(credits)
         );
-        due_date_container.innerHTML = `${parseInt(
-          term
-        )} days<br>from the date received`;
+        due_date_container.innerHTML = !isNaN(parseInt(term, 10))
+          ? `${parseInt(term, 10)} days<br>from the date received`
+          : `${term}`;
         // if (client_id.value == "C2023026") {
         //   total_amount_container.innerText = formatNumber(
         //     total_amount -
@@ -4289,9 +4289,9 @@ document.addEventListener("DOMContentLoaded", async function () {
         total_amount_due_container.innerText = formatNumber(
           total_amount - parseFloat(credits)
         );
-        due_date_container.innerHTML = `${parseInt(
-          term
-        )} days<br>from the date received`;
+        due_date_container.innerHTML = !isNaN(parseInt(term, 10))
+          ? `${parseInt(term, 10)} days<br>from the date received`
+          : `${term}`;
         // if (client_id.value == "C2023026") {
         //   total_amount_container.innerText = formatNumber(
         //     total_amount -
@@ -5127,9 +5127,9 @@ document.addEventListener("DOMContentLoaded", async function () {
         total_amount_due_container.innerText = formatNumber(
           total_amount - parseFloat(credits)
         );
-        due_date_container.innerHTML = `${parseInt(
-          term
-        )} days<br>from the date received`;
+        due_date_container.innerHTML = !isNaN(parseInt(term, 10))
+          ? `${parseInt(term, 10)} days<br>from the date received`
+          : `${term}`;
         // total_amount_container.innerText = formatNumber(
         //   total_amount - parseFloat(credits) + non_vatable
         // );
