@@ -3489,7 +3489,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         si_credits_container.innerText = formatNumber(si_credits);
         si_total_amount_container.innerText = formatNumber(si_total_amount);
         si_total_sales_container.innerText = formatNumber(si_total_amount);
-        si_terms_container.innerText = `${term} Days Term`;
+        si_terms_container.innerText = !isNaN(parseInt(term, 10))
+          ? `${parseInt(term, 10)} Days Term`
+          : term;
+
         terms.value = term;
         convertToPDFandDownload_button.style.display = "block";
         convertToPDF_button.style.display = "block";
@@ -4310,7 +4313,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         si_credits_container.innerText = formatNumber(si_credits);
         si_total_amount_container.innerText = formatNumber(si_total_amount);
         si_total_sales_container.innerText = formatNumber(si_total_amount);
-        si_terms_container.innerText = `${term} Days Term`;
+        si_terms_container.innerText = !isNaN(parseInt(term, 10))
+          ? `${parseInt(term, 10)} Days Term`
+          : term;
+
         terms.value = term;
         convertToPDFandDownload_button.style.display = "block";
         convertToPDF_button.style.display = "block";
@@ -5136,7 +5142,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         si_credits_container.innerText = formatNumber(si_credits);
         si_total_amount_container.innerText = formatNumber(si_total_amount);
         si_total_sales_container.innerText = formatNumber(si_total_amount);
-        si_terms_container.innerText = `${term} Days Term`;
+        si_terms_container.innerText = !isNaN(parseInt(term, 10))
+          ? `${parseInt(term, 10)} Days Term`
+          : term;
+
         terms.value = term;
         convertToPDFandDownload_button.style.display = "block";
         convertToPDF_button.style.display = "block";
