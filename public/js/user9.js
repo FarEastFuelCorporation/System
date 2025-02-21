@@ -1116,7 +1116,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
 
     generate_button_pb.addEventListener("click", () => {
-      first_name2_pb.innerText = first_name_data;
+      first_name2_pb.innerText = `${first_name_data} ${affix_data}`;
       middle_name2_pb.innerText = middle_name_data;
       last_name2_pb.innerText = last_name_data;
       designation2_pb.innerText = designation_data;
